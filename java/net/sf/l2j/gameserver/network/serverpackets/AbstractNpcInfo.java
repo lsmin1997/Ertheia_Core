@@ -41,7 +41,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 	protected boolean _isAttackable, _isSummoned;
 	protected int _mAtkSpd, _pAtkSpd;
 	protected int _runSpd, _walkSpd, _swimRunSpd, _swimWalkSpd, _flRunSpd, _flWalkSpd, _flyRunSpd, _flyWalkSpd;
-	protected int _rhand, _lhand, _chest, _val;
+	protected int _rhand, _lhand, _chest;
     protected int _collisionHeight, _collisionRadius;
     protected String _name = "";
     protected String _title = "";
@@ -140,7 +140,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeC(_npc.isRunning() ? 1 : 0);
 			writeC(_npc.isInCombat() ? 1 : 0);
 			writeC(_npc.isAlikeDead() ? 1 : 0);
-			writeC(_isSummoned ? 2 : _val); // 0=teleported 1=default 2=summoned
+			writeC(_isSummoned ? 2 : 0); // 0=teleported 1=default 2=summoned
 			writeS(_name);
 			writeS(_title);
 			writeD(0x00); // Title color 0=client default
@@ -220,7 +220,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
     		writeC(_trap.isRunning() ? 1 : 0);
     		writeC(_trap.isInCombat() ? 1 : 0);
     		writeC(_trap.isAlikeDead() ? 1 : 0);
-    		writeC(_isSummoned ? 2 : _val); //  0=teleported  1=default   2=summoned
+    		writeC(_isSummoned ? 2 : 0); //  0=teleported  1=default   2=summoned
     		writeS(_name);
     		writeS(_title);
     		writeD(0x00);  // title color 0 = client default
@@ -259,7 +259,9 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 		{
 			super(cha);
 			
-			if (_idTemplate <= 13070 || _idTemplate >= 13077)
+			_idTemplate = cha.getTemplate().idTemplate;
+			
+			if (_idTemplate < 13071 || _idTemplate > 13076)
 			{
 				if (Config.ASSERT)
 					throw new AssertionError("Using DecoyInfo packet with an unsupported decoy template");
@@ -268,8 +270,6 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			}
 			
 			_decoy = cha;
-			
-			_idTemplate = cha.getTemplate().idTemplate;
 			_heading = cha.getOwner().getHeading();
 			// _mAtkSpd = cha.getMAtkSpd(); on abstract constructor
 			_pAtkSpd = cha.getOwner().getPAtkSpd();
@@ -497,6 +497,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 	{
 		private L2Summon _summon;
 		private int _form = 0;
+		private int _val = 0;
 		
 		public SummonInfo(L2Summon cha, L2Character attacker, int val)
 		{
@@ -533,6 +534,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			_name = cha.getName();
 	        _title = cha.getOwner() != null ? (cha.getOwner().isOnline() == 0 ? "" : cha.getOwner().getName()) : ""; // when owner online, summon will show in title owner name
 	        _idTemplate = cha.getTemplate().idTemplate;
+	        _collisionHeight = cha.getTemplate().collisionHeight;
+	        _collisionRadius = cha.getTemplate().collisionRadius;
 	        
 			// few fields needing fix from AbstractNpcInfo
 			_runSpd = cha.getPetSpeed();
@@ -577,7 +580,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeC(1);
 			writeC(_summon.isInCombat() ? 1 : 0);
 			writeC(_summon.isAlikeDead() ? 1 : 0);
-			writeC(_isSummoned ? 2 : _val); //  0=teleported  1=default   2=summoned
+			writeC(_val); //  0=teleported  1=default   2=summoned
 			writeS(_name);
 			writeS(_title);
 			writeD(0x01);// Title color 0=client default
