@@ -335,7 +335,7 @@ public class TradeList
         {
             if (checkitem.getObjectId() == objectId) return null;
         }
-	TradeItem titem = new TradeItem(item, count, price);
+        TradeItem titem = new TradeItem(item, count, price);
         _items.add(titem);
 
         // If Player has already confirmed this trade, invalidate the confirmation
@@ -825,6 +825,8 @@ public class TradeList
             
             if (price == -1)
             	continue;
+            
+            totalprice += price*item.getCount();
             
             // Check if requested item is available for manipulation
             L2ItemInstance oldItem = player.checkItemManipulation(item.getObjectId(), item.getCount(), "sell");
