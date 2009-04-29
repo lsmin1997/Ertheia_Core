@@ -158,6 +158,9 @@ public class EnterWorld extends L2GameClientPacket
 		if (activeChar.getCurrentHp() < 0.5)
 			activeChar.setIsDead(true);
 
+		// pledge class for heroes and nobles
+		setPledgeClass(activeChar);	
+		
 		// Clan related checks are here
 		if (activeChar.getClan() != null)
 		{
@@ -202,9 +205,6 @@ public class EnterWorld extends L2GameClientPacket
 			sendPacket(new PledgeShowMemberListAll(activeChar.getClan(), activeChar));
 			sendPacket(new PledgeStatusChanged(activeChar.getClan()));
 		}
-		
-		// pledge class for heroes and nobles
-		setPledgeClass(activeChar);
 
 		// Set Hero status if it applies
 		if (Hero.getInstance().getHeroes() != null && Hero.getInstance().getHeroes().containsKey(activeChar.getObjectId()))
