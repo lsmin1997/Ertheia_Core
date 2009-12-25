@@ -399,6 +399,15 @@ public class EnterWorld extends L2GameClientPacket
 				i.scheduleLifeTimeTask();
 			}
 		}
+		
+		for (L2ItemInstance i : activeChar.getWarehouse().getItems())
+		{
+			if (i.isTimeLimitedItem())
+			{
+				i.scheduleLifeTimeTask();
+			}
+		}
+		
 		if (Olympiad.getInstance().playerInStadia(activeChar))
 		{
 			activeChar.doRevive();
