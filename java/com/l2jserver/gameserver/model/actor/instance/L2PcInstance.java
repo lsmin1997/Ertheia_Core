@@ -6455,6 +6455,7 @@ public final class L2PcInstance extends L2Playable
 			_lvlJoinedAcademy = 0;
 			_apprentice = 0;
 			_sponsor = 0;
+			_activeWarehouse = null;
 			if (_isOnline)
 				CommunityServerThread.getInstance().sendPacket(new WorldInfo(this, null, WorldInfo.TYPE_UPDATE_PLAYER_DATA));
 			return;
