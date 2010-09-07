@@ -470,10 +470,11 @@ public class LoginServerThread extends Thread
 	
 	public void doKickPlayer(String account)
 	{
-		if (_accountsInGameServer.get(account) != null)
+		L2GameClient client = _accountsInGameServer.get(account);
+		if (client != null)
 		{
-			L2GameClient client = _accountsInGameServer.get(account);
-	    	LogRecord record = new LogRecord(Level.WARNING, "Kicked by login");
+			client.cancelCleanup(); // delayed cleanup
+			LogRecord record = new LogRecord(Level.WARNING, "Kicked by login");
 	    	record.setParameters(new Object[]{client});
 			_logAccounting.log(record);
 			final L2PcInstance player = client.getActiveChar();
@@ -484,7 +485,8 @@ public class LoginServerThread extends Thread
 				{
 					public void run()
 					{
-						player.logout(false);
+						if (player.isOnline() > 0)
+							player.logout(false);
 					}
 				} , 400);
 			}

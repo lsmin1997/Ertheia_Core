@@ -384,7 +384,7 @@ public final class L2PcInstance extends L2Playable
 	private String _lang = null;
 	private String _htmlPrefix = null;
 
-	private boolean _isOnline = false;
+	private volatile boolean _isOnline = false;
 	private long _onlineTime;
 	private long _onlineBeginTime;
 	private long _lastAccess;
@@ -11612,6 +11612,17 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void deleteMe(boolean closeClient)
 	{
+		
+		// Set the online Flag to True or False and update the characters table of the database with online status and lastAccess (called when login and logout)
+		try
+		{
+			setOnlineStatus(false);
+		}
+		catch (Exception e)
+		{
+			_log.log(Level.SEVERE, "deleteMe()", e);
+		}
+		
 		try
 		{
 			abortAttack();
@@ -11685,16 +11696,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			_log.log(Level.SEVERE, "deleteMe()", e);
 		}
-		
-		// Set the online Flag to True or False and update the characters table of the database with online status and lastAccess (called when login and logout)
-		try
-		{
-			setOnlineStatus(false);
-		}
-		catch (Exception e)
-		{
-			_log.log(Level.SEVERE, "deleteMe()", e);
-		}
+
 		
 		// Stop the HP/MP/CP Regeneration task (scheduled tasks)
 		try

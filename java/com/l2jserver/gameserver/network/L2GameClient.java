@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.ReentrantLock;
@@ -692,7 +693,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>>
 		}
 		catch (Exception e1)
 		{
-			_log.log(Level.WARNING, "Error during cleanup.", e1);			
+			_log.log(Level.WARNING, "Error during cleanup.", e1);
 		}
 	}
 		
@@ -800,5 +801,15 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>>
 	public int[][] getTrace()
 	{
 		return trace;
+	}
+	
+	public boolean cancelCleanup()
+	{
+		Future<?> task = _cleanupTask;
+		if (task != null)
+		{
+			return task.cancel(true);
+		}
+		return false;
 	}
 }
