@@ -241,14 +241,6 @@
                 <include name="**/*.html"/>
             </fileset>
         </copy>
-    	
-        
-        <mkdir dir="${build.dist.game}/data/stats" />
-        <copy todir="${build.dist.game}/data/stats">
-            <fileset dir="data/stats">
-                <include name="**/*.xml"/>
-            </fileset>
-        </copy>
 
         <zip destfile="${build}/l2j-server.zip"
              basedir="${build.dist}" />
