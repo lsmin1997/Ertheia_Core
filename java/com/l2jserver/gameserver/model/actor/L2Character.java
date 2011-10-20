@@ -2040,32 +2040,6 @@ public abstract class L2Character extends L2Object
 			return false;
 		}
 		
-		//Avoid a player to buff/heal another player from the same IP if it's outside a pace zone.
-		if (skill.getSkillType() == L2SkillType.BUFF || skill.getSkillType() == L2SkillType.HEAL || skill.getSkillType() == L2SkillType.HEAL_PERCENT)
-		{
-			if (!(isInsideZone(ZONE_PEACE) || isInsideZone(ZONE_TOWN)))
-			{
-				final L2PcInstance player = getActingPlayer();
-				if (player != null)
-				{
-					final L2Object[] targets = skill.getTargetList(this);
-					for (L2Object targetObj : targets)
-					{
-						if ((targetObj != null) && (targetObj instanceof L2PcInstance) && (targetObj != player))
-						{
-							final L2PcInstance target = (L2PcInstance) targetObj;
-							if ((target.getClient() == null) || target.getClient().getConnectionAddress().equals(player.getClient().getConnectionAddress()))
-							{   
-								player.sendMessage("You cannot buff/heal your own character unless you are inside a Town Area.");
-								sendPacket(ActionFailed.STATIC_PACKET);
-								return false;
-							}
-						}
-					}
-				}
-			}
-		}
-		
 		if(!skill.isPotion())
 		{
 			// Check if the skill is a magic spell and if the L2Character is not muted
