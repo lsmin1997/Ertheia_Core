@@ -146,9 +146,19 @@ public final class SkillTreesData
 	 */
 	private boolean loadFiles()
 	{
-		File folder = new File(Config.DATAPACK_ROOT, "data/skillTrees/");
-		File[] listOfFiles = folder.listFiles();
-		for (File f : listOfFiles)
+		final File folder = new File(Config.DATAPACK_ROOT, "data/skillTrees/");
+		if (!folder.exists())
+		{
+			_log.warning(getClass().getSimpleName() + ": Folder " + folder.getAbsolutePath() + " doesn't exist!");
+			return false;
+		}
+		final File[] listOfFiles = folder.listFiles();
+		if (listOfFiles == null)
+		{
+			_log.warning(getClass().getSimpleName() + ": Folder " + folder.getAbsolutePath() + " is empty!");
+			return false;
+		}
+		for (File f : folder.listFiles())
 		{
 			if (f.getName().endsWith(".xml"))
 			{
@@ -645,10 +655,11 @@ public final class SkillTreesData
 		}
 		
 		final L2Skill[] oldSkills = player.getAllSkills();
+		final Race playerRace = player.getRace();
 		for (L2SkillLearn temp : skills.values())
 		{
-			// If skill is Dwarven only and player is not Dwarven.
-			if ((temp.getRaces() != null) && Util.contains(temp.getRaces(), 4) && !player.hasDwarvenCraft())
+			// If skill is Race specific and the player's race isn't allowed, skip it.
+			if ((temp.getRaces() != null) && !Util.contains(temp.getRaces(), playerRace))
 			{
 				continue;
 			}
@@ -1119,7 +1130,7 @@ public final class SkillTreesData
 		{
 			for (L2SkillLearn s : _fishingSkillTree.values())
 			{
-				if ((s.getRaces() != null) && Util.contains(s.getRaces(), r.ordinal()))
+				if ((s.getRaces() != null) && Util.contains(s.getRaces(), r))
 				{
 					list.add(SkillTable.getSkillHashCode(s.getSkillId(), s.getSkillLevel()));
 				}
@@ -1127,7 +1138,7 @@ public final class SkillTreesData
 			
 			for (L2SkillLearn s : _transformSkillTree.values())
 			{
-				if ((s.getRaces() != null) && Util.contains(s.getRaces(), r.ordinal()))
+				if ((s.getRaces() != null) && Util.contains(s.getRaces(), r))
 				{
 					list.add(SkillTable.getSkillHashCode(s.getSkillId(), s.getSkillLevel()));
 				}
@@ -1227,7 +1238,7 @@ public final class SkillTreesData
 		}
 		
 		// Exclude Transfer Skills from this check.
-		if (getTransferSkill(skill.getId(), skill.getLevel(), player.getClassId()) != null)
+		if (getTransferSkill(skill.getId(), Math.min(skill.getLevel(), maxLvl), player.getClassId()) != null)
 		{
 			return true;
 		}
