@@ -152,7 +152,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 				}
 				else
 				{
-					final L2SkillLearn s = SkillTreesData.getInstance().getClassSkill(_id, _level, activeChar.getClassId());
+					final L2SkillLearn s = SkillTreesData.getInstance().getClassSkill(_id, _level, activeChar.getLearningClass());
 					if (checkPlayerSkill(activeChar, trainer, s))
 					{
 						giveSkill(activeChar, trainer, skill);
@@ -411,6 +411,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 	 * @param player the skill learning player.
 	 * @param trainer the skills teaching Npc.
 	 * @param s the skill to be learn.
+	 * @return {@code true} if all requirements are meet, {@code false} otherwise.
 	 */
 	private boolean checkPlayerSkill(L2PcInstance player, L2Npc trainer, L2SkillLearn s)
 	{
@@ -421,16 +422,16 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 				//Hack check.
 				if (s.getGetLevel() > player.getLevel())
 				{
-					player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_DONT_MEET_SKILL_LEVEL_REQUIREMENTS));
+					player.sendPacket(SystemMessageId.YOU_DONT_MEET_SKILL_LEVEL_REQUIREMENTS);
 					Util.handleIllegalPlayerAction(player, "Player " + player.getName() + ", level " + player.getLevel() + " is requesting skill Id: " + _id + " level " + _level + " without having minimum required level, " + s.getGetLevel() + "!", 0);
 					return false;
 				}
 				
-				//First it checks that the skill require SP and the player has enough SP to learn it.
-				final int levelUpSp = s.getLevelUpSp();
+				// First it checks that the skill require SP and the player has enough SP to learn it.
+				final int levelUpSp = s.getCalculatedLevelUpSp(player.getClassId(), player.getLearningClass());
 				if ((levelUpSp > 0) && (levelUpSp > player.getSp()))
 				{
-					player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NOT_ENOUGH_SP_TO_LEARN_SKILL));
+					player.sendPacket(SystemMessageId.NOT_ENOUGH_SP_TO_LEARN_SKILL);
 					showSkillList(trainer, player);
 					return false;
 				}
@@ -451,7 +452,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 						if (reqItemCount < itemIdCount[1])
 						{
 							//Player doesn't have required item.
-							player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ITEM_MISSING_TO_LEARN_SKILL));
+							player.sendPacket(SystemMessageId.ITEM_MISSING_TO_LEARN_SKILL);
 							showSkillList(trainer, player);
 							return false;
 						}
@@ -555,7 +556,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 		}
 		else
 		{
-			L2NpcInstance.showSkillList(player, trainer, player.getClassId());
+			L2NpcInstance.showSkillList(player, trainer, player.getLearningClass());
 		}
 	}
 	

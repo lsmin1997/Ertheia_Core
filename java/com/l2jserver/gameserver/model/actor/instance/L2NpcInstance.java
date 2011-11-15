@@ -38,14 +38,11 @@ import com.l2jserver.util.StringUtil;
 
 public class L2NpcInstance extends L2Npc
 {
-	private final ClassId[] _classesToTeach;
-	
 	public L2NpcInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2NpcInstance);
 		setIsInvul(false);
-		_classesToTeach = template.getTeachInfo();
 	}
 	
 	@Override
@@ -71,7 +68,7 @@ public class L2NpcInstance extends L2Npc
 	
 	public ClassId[] getClassesToTeach()
 	{
-		return _classesToTeach;
+		return getTemplate().getTeachInfo();
 	}
 	
 	/**
@@ -134,7 +131,7 @@ public class L2NpcInstance extends L2Npc
 			return;
 		}
 		
-		if (((L2NpcInstance)npc).getClassesToTeach() == null)
+		if (((L2NpcInstance) npc).getClassesToTeach() == null)
 		{
 			NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
 			final String sb = StringUtil.concat(
@@ -151,17 +148,17 @@ public class L2NpcInstance extends L2Npc
 			return;
 		}
 		
-		//Normal skills, No LearnedByFS, no AutoGet skills.
+		// Normal skills, No LearnedByFS, no AutoGet skills.
 		final FastList<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableSkills(player, classId, false, false);
 		final AcquireSkillList asl = new AcquireSkillList(AcquireSkillList.SkillType.ClassTransform);
 		int count = 0;
 		
-		for (L2SkillLearn s: skills)
+		player.setLearningClass(classId);
+		for (L2SkillLearn s : skills)
 		{
-			final L2Skill sk = SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel());
-			if (sk != null)
+			if (SkillTable.getInstance().getInfo(s.getSkillId(), s.getSkillLevel()) != null)
 			{
-				asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getLevelUpSp(), 0);
+				asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getCalculatedLevelUpSp(player.getClassId(), classId), 0);
 				count++;
 			}
 		}
@@ -179,7 +176,6 @@ public class L2NpcInstance extends L2Npc
 			}
 			else
 			{
-				//TODO: Is this SysMsg really used here?
 				if (player.getClassId().level() == 1)
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.NO_SKILLS_TO_LEARN_RETURN_AFTER_S1_CLASS_CHANGE);
