@@ -1,18 +1,18 @@
 /*
  * Copyright (C) 2004-2014 L2J Server
- * 
+ *
  * This file is part of L2J Server.
- * 
+ *
  * L2J Server is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * L2J Server is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.model.CharSelectInfoPackage;
 import com.l2jserver.gameserver.model.L2Clan;
+import com.l2jserver.gameserver.model.entity.Hero;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.network.L2GameClient;
 
@@ -73,16 +74,18 @@ public class CharSelectionInfo extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0x09);
-		int size = (_characterPackages.length);
-		writeD(size);
+		writeC(0x09); // packet id
+		int size = _characterPackages.length;
+		writeD(size); // How many char there is on this account
 		
 		// Can prevent players from creating new characters (if 0); (if 1, the client will ask if chars may be created (0x13) Response: (0x0D) )
 		writeD(Config.MAX_CHARACTERS_NUMBER_PER_ACCOUNT);
-		writeC(0x00);
+		writeC(size == Config.MAX_CHARACTERS_NUMBER_PER_ACCOUNT ? 0x01 : 0x00); // if 1 can't create new char
+		writeC(0x01); // play mode, if 1 can create only 2 char in regular lobby
+		writeD(0x02); // if 1, korean client
+		writeC(0x00); // if 1 suggest premium account
 		
 		long lastAccess = 0L;
-		
 		if (_activeId == -1)
 		{
 			for (int i = 0; i < size; i++)
@@ -99,15 +102,15 @@ public class CharSelectionInfo extends L2GameServerPacket
 		{
 			CharSelectInfoPackage charInfoPackage = _characterPackages[i];
 			
-			writeS(charInfoPackage.getName());
-			writeD(charInfoPackage.getObjectId());
-			writeS(_loginName);
-			writeD(_sessionId);
-			writeD(charInfoPackage.getClanId());
+			writeS(charInfoPackage.getName()); // char name
+			writeD(charInfoPackage.getObjectId()); // char id
+			writeS(_loginName); // login
+			writeD(_sessionId); // session id
+			writeD(0x00); // ??
 			writeD(0x00); // ??
 			
-			writeD(charInfoPackage.getSex());
-			writeD(charInfoPackage.getRace());
+			writeD(charInfoPackage.getSex()); // sex
+			writeD(charInfoPackage.getRace()); // race
 			
 			if (charInfoPackage.getClassId() == charInfoPackage.getBaseClassId())
 			{
@@ -118,19 +121,17 @@ public class CharSelectionInfo extends L2GameServerPacket
 				writeD(charInfoPackage.getBaseClassId());
 			}
 			
-			writeD(0x01); // active ??
+			writeD(0x01); // server id ??
 			
 			writeD(charInfoPackage.getX());
 			writeD(charInfoPackage.getY());
 			writeD(charInfoPackage.getZ());
-			
 			writeF(charInfoPackage.getCurrentHp());
 			writeF(charInfoPackage.getCurrentMp());
 			
-			writeD(charInfoPackage.getSp());
+			writeQ(charInfoPackage.getSp());
 			writeQ(charInfoPackage.getExp());
 			writeF((float) (charInfoPackage.getExp() - ExperienceTable.getInstance().getExpForLevel(charInfoPackage.getLevel())) / (ExperienceTable.getInstance().getExpForLevel(charInfoPackage.getLevel() + 1) - ExperienceTable.getInstance().getExpForLevel(charInfoPackage.getLevel()))); // High Five
-																																																																								// exp %
 			writeD(charInfoPackage.getLevel());
 			
 			writeD(charInfoPackage.getKarma());
@@ -145,10 +146,35 @@ public class CharSelectionInfo extends L2GameServerPacket
 			writeD(0x00);
 			writeD(0x00);
 			
+			writeD(0x00); // Erthreia
+			writeD(0x00); // Erthreia
+			
 			for (int slot : getPaperdollOrder())
 			{
 				writeD(charInfoPackage.getPaperdollItemId(slot));
 			}
+			
+			writeD(0x00); // Brooch
+			writeD(0x00); // Jewel 1
+			writeD(0x00); // Jewel 2
+			writeD(0x00); // Jewel 3
+			writeD(0x00); // Jewel 4
+			writeD(0x00); // Jewel 5
+			writeD(0x00); // Jewel 6
+			
+			writeD(0x00); // rhand item visual id
+			writeD(0x00); // lhand item visual id
+			writeD(0x00); // gloves item visual id
+			writeD(0x00); // chest item visual id
+			writeD(0x00); // legs item visual id
+			writeD(0x00); // feet item visual id
+			writeD(0x00); // hair item visual id
+			writeD(0x00); // hair 2 item visual id
+			
+			writeD(0x00); // ??
+			writeD(0x00); // ??
+			writeD(0x00); // ??
+			writeH(0x00); // ??
 			
 			writeD(charInfoPackage.getHairStyle());
 			writeD(charInfoPackage.getHairColor());
@@ -157,22 +183,12 @@ public class CharSelectionInfo extends L2GameServerPacket
 			writeF(charInfoPackage.getMaxHp()); // hp max
 			writeF(charInfoPackage.getMaxMp()); // mp max
 			
-			long deleteTime = charInfoPackage.getDeleteTimer();
-			int deletedays = 0;
-			if (deleteTime > 0)
-			{
-				deletedays = (int) ((deleteTime - System.currentTimeMillis()) / 1000);
-			}
-			writeD(deletedays); // days left before
-			// delete .. if != 0
-			// then char is inactive
+			writeD(charInfoPackage.getDeleteTimer() > 0 ? (int) ((charInfoPackage.getDeleteTimer() - System.currentTimeMillis()) / 1000) : 0);
 			writeD(charInfoPackage.getClassId());
-			writeD(i == _activeId ? 0x01 : 0x00); // c3 auto-select char
+			writeD(i == _activeId ? 1 : 0);
 			
 			writeC(charInfoPackage.getEnchantEffect() > 127 ? 127 : charInfoPackage.getEnchantEffect());
-			writeH(0x00);
-			writeH(0x00);
-			// writeD(charInfoPackage.getAugmentationId());
+			writeD(charInfoPackage.getAugmentationId());
 			
 			// writeD(charInfoPackage.getTransformId()); // Used to display Transformations
 			writeD(0x00); // Currently on retail when you are on character select you don't see your transformation.
@@ -187,6 +203,12 @@ public class CharSelectionInfo extends L2GameServerPacket
 			
 			// High Five by Vistall:
 			writeD(charInfoPackage.getVitalityPoints()); // H5 Vitality
+			writeD(0x00); // Vitality Exp Bonus
+			writeD(0x00); // Vitality items used, such as potion
+			writeD(charInfoPackage.getAccessLevel() == -100 ? 0x00 : 0x01); // Char is active or not
+			writeC(0x00); // is noble
+			writeC(Hero.getInstance().isHero(charInfoPackage.getObjectId()) ? 0x01 : 0x00); // hero glow
+			writeC(charInfoPackage.isHairAccessoryEnabled() ? 0x01 : 0x00); // show hair accessory if enabled
 		}
 	}
 	
@@ -264,7 +286,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 			}
 		}
 		
-		CharSelectInfoPackage charInfopackage = new CharSelectInfoPackage(objectId, name);
+		final CharSelectInfoPackage charInfopackage = new CharSelectInfoPackage(objectId, name);
 		charInfopackage.setAccessLevel(chardata.getInt("accesslevel"));
 		charInfopackage.setLevel(chardata.getInt("level"));
 		charInfopackage.setMaxHp(chardata.getInt("maxhp"));
@@ -280,7 +302,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 		charInfopackage.setSex(chardata.getInt("sex"));
 		
 		charInfopackage.setExp(chardata.getLong("exp"));
-		charInfopackage.setSp(chardata.getInt("sp"));
+		charInfopackage.setSp(chardata.getLong("sp"));
 		charInfopackage.setVitalityPoints(chardata.getInt("vitality_points"));
 		charInfopackage.setClanId(chardata.getInt("clanid"));
 		

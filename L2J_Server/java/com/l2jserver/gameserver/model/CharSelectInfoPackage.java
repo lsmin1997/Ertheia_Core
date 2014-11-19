@@ -20,6 +20,7 @@ package com.l2jserver.gameserver.model;
 
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
+import com.l2jserver.gameserver.model.variables.PlayerVariables;
 
 /**
  * Used to Store data sent to Client for Character.<br>
@@ -31,7 +32,7 @@ public class CharSelectInfoPackage
 	private String _name;
 	private int _objectId = 0;
 	private long _exp = 0;
-	private int _sp = 0;
+	private long _sp = 0;
 	private int _clanId = 0;
 	private int _race = 0;
 	private int _classId = 0;
@@ -58,6 +59,7 @@ public class CharSelectInfoPackage
 	private String _htmlPrefix = null;
 	private int _vitalityPoints = 0;
 	private int _accessLevel = 0;
+	private final PlayerVariables _vars;
 	
 	/**
 	 * Constructor for CharSelectInfoPackage.
@@ -69,6 +71,7 @@ public class CharSelectInfoPackage
 		setObjectId(objectId);
 		_name = name;
 		_paperdoll = PcInventory.restoreVisibleInventory(objectId);
+		_vars = new PlayerVariables(_objectId);
 	}
 	
 	/**
@@ -182,7 +185,7 @@ public class CharSelectInfoPackage
 	
 	public int getFace()
 	{
-		return _face;
+		return _vars.getInt("visualFaceId", _face);
 	}
 	
 	public void setFace(int face)
@@ -192,7 +195,7 @@ public class CharSelectInfoPackage
 	
 	public int getHairColor()
 	{
-		return _hairColor;
+		return _vars.getInt("visualHairColorId", _hairColor);
 	}
 	
 	public void setHairColor(int hairColor)
@@ -202,7 +205,7 @@ public class CharSelectInfoPackage
 	
 	public int getHairStyle()
 	{
-		return _hairStyle;
+		return _vars.getInt("visualHairId", _hairStyle);
 	}
 	
 	public void setHairStyle(int hairStyle)
@@ -218,6 +221,11 @@ public class CharSelectInfoPackage
 	public int getPaperdollItemId(int slot)
 	{
 		return _paperdoll[slot][1];
+	}
+	
+	public int getPaperdollItemVisualId(int slot)
+	{
+		return _paperdoll[slot][3];
 	}
 	
 	public int getLevel()
@@ -280,22 +288,18 @@ public class CharSelectInfoPackage
 		_sex = sex;
 	}
 	
-	public int getSp()
+	public long getSp()
 	{
 		return _sp;
 	}
 	
-	public void setSp(int sp)
+	public void setSp(long sp)
 	{
 		_sp = sp;
 	}
 	
 	public int getEnchantEffect()
 	{
-		if (_paperdoll[Inventory.PAPERDOLL_RHAND][2] > 0)
-		{
-			return _paperdoll[Inventory.PAPERDOLL_RHAND][2];
-		}
 		return _paperdoll[Inventory.PAPERDOLL_RHAND][2];
 	}
 	
@@ -387,5 +391,10 @@ public class CharSelectInfoPackage
 	public int getVitalityPoints()
 	{
 		return _vitalityPoints;
+	}
+	
+	public boolean isHairAccessoryEnabled()
+	{
+		return _vars.getBoolean("hairAccessoryEnabled", true);
 	}
 }
