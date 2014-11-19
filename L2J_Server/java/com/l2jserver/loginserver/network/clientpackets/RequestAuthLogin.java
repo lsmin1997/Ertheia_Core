@@ -50,7 +50,9 @@ public class RequestAuthLogin extends L2LoginClientPacket
 {
 	private static Logger _log = Logger.getLogger(RequestAuthLogin.class.getName());
 	
-	private final byte[] _raw = new byte[128];
+	private final byte[] _raw1 = new byte[128];
+	private final byte[] _raw2 = new byte[128];
+	private boolean _newAuthMethod = false;
 	
 	private String _user;
 	private String _password;
@@ -80,9 +82,16 @@ public class RequestAuthLogin extends L2LoginClientPacket
 	@Override
 	public boolean readImpl()
 	{
-		if (super._buf.remaining() >= 128)
+		if (super._buf.remaining() >= 256)
 		{
-			readB(_raw);
+			_newAuthMethod = true;
+			readB(_raw1);
+			readB(_raw2);
+			return true;
+		}
+		else if (super._buf.remaining() >= 128)
+		{
+			readB(_raw1);
 			return true;
 		}
 		return false;
@@ -91,13 +100,18 @@ public class RequestAuthLogin extends L2LoginClientPacket
 	@Override
 	public void run()
 	{
-		byte[] decrypted = null;
+		byte[] decUser = null;
+		byte[] decPass = null;
 		final L2LoginClient client = getClient();
 		try
 		{
 			final Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
 			rsaCipher.init(Cipher.DECRYPT_MODE, client.getRSAPrivateKey());
-			decrypted = rsaCipher.doFinal(_raw, 0x00, 0x80);
+			decUser = rsaCipher.doFinal(_raw1, 0x00, 0x80);
+			if (_newAuthMethod)
+			{
+				decPass = rsaCipher.doFinal(_raw2, 0x00, 0x80);
+			}
 		}
 		catch (GeneralSecurityException e)
 		{
@@ -107,12 +121,20 @@ public class RequestAuthLogin extends L2LoginClientPacket
 		
 		try
 		{
-			_user = new String(decrypted, 0x5E, 14).trim().toLowerCase();
-			_password = new String(decrypted, 0x6C, 16).trim();
-			_ncotp = decrypted[0x7c];
-			_ncotp |= decrypted[0x7d] << 8;
-			_ncotp |= decrypted[0x7e] << 16;
-			_ncotp |= decrypted[0x7f] << 24;
+			if (_newAuthMethod)
+			{
+				_user = new String(decUser, 0x4E, 0xE).trim().toLowerCase();
+				_password = new String(decPass, 0x5C, 0x10).trim();
+			}
+			else
+			{
+				_user = new String(decUser, 0x5E, 0xE).trim().toLowerCase();
+				_password = new String(decUser, 0x6C, 0x10).trim();
+			}
+			_ncotp = decUser[0x7c];
+			_ncotp |= decUser[0x7d] << 8;
+			_ncotp |= decUser[0x7e] << 16;
+			_ncotp |= decUser[0x7f] << 24;
 		}
 		catch (Exception e)
 		{
