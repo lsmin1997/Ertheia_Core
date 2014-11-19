@@ -126,7 +126,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								msg = new RequestEx2ndPasswordReq();
 								break;
 							case 0xA9:
-								// msg = new RequestCharacterNameCreatable();
+								msg = new RequestCharacterNameCreatable();
 								break;
 							default:
 								printDebugDoubleOpcode(opcode, id2, buf, state, client);
