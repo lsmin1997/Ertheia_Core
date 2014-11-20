@@ -63,12 +63,14 @@ import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.Die;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
+import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
 import com.l2jserver.gameserver.network.serverpackets.FriendList;
 import com.l2jserver.gameserver.network.serverpackets.HennaInfo;
@@ -346,6 +348,12 @@ public class EnterWorld extends L2GameClientPacket
 		activeChar.checkRecoBonusTask();
 		
 		activeChar.broadcastUserInfo();
+		
+		// Send Inventory Info
+		activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
+		
+		// Send Adena Info
+		activeChar.sendPacket(new ExAdenaInvenCount(activeChar));
 		
 		// Send Macro List
 		activeChar.getMacros().sendUpdate();
