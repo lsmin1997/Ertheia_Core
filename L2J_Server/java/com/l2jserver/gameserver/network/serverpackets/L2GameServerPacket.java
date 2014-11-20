@@ -95,6 +95,25 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 		writeD(loc.getZ());
 	}
 	
+	/**
+	 * Write String
+	 * @param str
+	 */
+	protected void writeString(String str)
+	{
+		if ((str == null) || str.isEmpty())
+		{
+			writeH(0x00);
+			return;
+		}
+		final char[] chars = str.toCharArray();
+		writeH(chars.length);
+		for (char ch : chars)
+		{
+			_buf.putChar(ch);
+		}
+	}
+	
 	protected int[] getPaperdollOrder()
 	{
 		return PAPERDOLL_ORDER;
