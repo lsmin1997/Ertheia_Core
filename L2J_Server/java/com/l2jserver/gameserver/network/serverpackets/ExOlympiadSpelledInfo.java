@@ -46,7 +46,7 @@ public class ExOlympiadSpelledInfo extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0x7B);
+		writeH(0x7C);
 		writeD(_playerId);
 		writeD(_effects.size());
 		for (BuffInfo info : _effects)

@@ -51,7 +51,7 @@ public class ExReplyReceivedPost extends AbstractItemPacket
 	protected void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0xab);
+		writeH(0xAC);
 		writeD(_msg.getId());
 		writeD(_msg.isLocked() ? 1 : 0);
 		writeD(0x00); // Unknown

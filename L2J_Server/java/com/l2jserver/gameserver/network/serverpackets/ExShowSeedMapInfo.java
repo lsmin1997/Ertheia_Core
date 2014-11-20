@@ -32,7 +32,7 @@ public class ExShowSeedMapInfo extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		writeC(0xFE); // Id
-		writeH(0xA1); // SubId
+		writeH(0xA2); // SubId
 		
 		writeD(2); // seed count
 		

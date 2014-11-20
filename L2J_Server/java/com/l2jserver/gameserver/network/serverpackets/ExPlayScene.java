@@ -33,6 +33,6 @@ public class ExPlayScene extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0x5C);
+		writeH(0x5D);
 	}
 }

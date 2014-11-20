@@ -42,8 +42,8 @@ public class ExValidateLocationInAirShip extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x6F);
+		writeC(0xFE);
+		writeH(0x70);
 		writeD(_activeChar.getObjectId());
 		writeD(shipId);
 		writeD(x);

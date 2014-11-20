@@ -85,8 +85,8 @@ public final class ExEnchantSkillInfo extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x2a);
+		writeC(0xFE);
+		writeH(0x2A);
 		writeD(_id);
 		writeD(_lvl);
 		writeD(_maxEnchanted ? 0 : 1);

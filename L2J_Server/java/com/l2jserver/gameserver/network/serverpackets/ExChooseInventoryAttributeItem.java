@@ -44,8 +44,8 @@ public class ExChooseInventoryAttributeItem extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x62);
+		writeC(0xFE);
+		writeH(0x63);
 		writeD(_itemId);
 		// Structure for now
 		// Must be 0x01 for stone/crystal attribute type

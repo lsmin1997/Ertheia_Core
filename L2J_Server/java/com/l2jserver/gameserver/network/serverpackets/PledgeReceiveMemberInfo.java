@@ -38,8 +38,8 @@ public class PledgeReceiveMemberInfo extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x3e);
+		writeC(0xFE);
+		writeH(0x3F);
 		
 		writeD(_member.getPledgeType());
 		writeS(_member.getName());

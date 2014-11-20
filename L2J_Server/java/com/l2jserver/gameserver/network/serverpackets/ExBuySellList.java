@@ -44,7 +44,7 @@ public class ExBuySellList extends AbstractItemPacket
 	protected final void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0xB7);
+		writeH(0xB8);
 		writeD(0x01);
 		
 		if ((_sellList != null))

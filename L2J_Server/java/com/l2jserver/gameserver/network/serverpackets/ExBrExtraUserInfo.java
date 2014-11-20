@@ -45,7 +45,7 @@ public class ExBrExtraUserInfo extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0xDA);
+		writeH(0xDB);
 		writeD(_charObjId);
 		writeD(_abnormalVisualEffectsEvent);
 		writeC(_lectureMark);

@@ -42,8 +42,8 @@ public class ExMoveToLocationInAirShip extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x6D);
+		writeC(0xFE);
+		writeH(0x6E);
 		writeD(_charObjId);
 		writeD(_airShipId);
 		writeD(_destination.getX());

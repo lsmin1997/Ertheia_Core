@@ -119,7 +119,7 @@ public class ExEnchantSkillInfoDetail extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0x5E);
+		writeH(0x5F);
 		
 		writeD(_type);
 		writeD(_skillid);

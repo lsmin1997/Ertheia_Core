@@ -43,7 +43,7 @@ public class ExGetPremiumItemList extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0x86);
+		writeH(0x87);
 		writeD(_map.size());
 		for (Entry<Integer, L2PremiumItem> entry : _map.entrySet())
 		{

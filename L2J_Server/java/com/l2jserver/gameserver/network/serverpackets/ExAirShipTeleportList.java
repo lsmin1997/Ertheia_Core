@@ -36,8 +36,8 @@ public class ExAirShipTeleportList extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x9a);
+		writeC(0xFE);
+		writeH(0x9B);
 		
 		writeD(_dockId);
 		if (_teleports != null)

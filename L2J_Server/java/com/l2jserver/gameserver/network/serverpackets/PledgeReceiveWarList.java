@@ -38,8 +38,8 @@ public class PledgeReceiveWarList extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x3f);
+		writeC(0xFE);
+		writeH(0x40);
 		
 		writeD(_tab); // type : 0 = Declared, 1 = Under Attack
 		writeD(0x00); // page
