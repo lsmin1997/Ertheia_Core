@@ -71,6 +71,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
+import com.l2jserver.gameserver.network.serverpackets.ExVitalityEffectInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
 import com.l2jserver.gameserver.network.serverpackets.FriendList;
 import com.l2jserver.gameserver.network.serverpackets.HennaInfo;
@@ -336,13 +337,17 @@ public class EnterWorld extends L2GameClientPacket
 			activeChar.removeSkill(CommonSkill.THE_VANQUISHED_OF_WAR.getSkill());
 		}
 		
-		if (Config.ENABLE_VITALITY && Config.RECOVER_VITALITY_ON_RECONNECT)
+		if (Config.ENABLE_VITALITY)
 		{
-			float points = (Config.RATE_RECOVERY_ON_RECONNECT * (System.currentTimeMillis() - activeChar.getLastAccess())) / 60000;
-			if (points > 0)
+			if (Config.RECOVER_VITALITY_ON_RECONNECT)
 			{
-				activeChar.updateVitalityPoints(points, false, true);
+				float points = (Config.RATE_RECOVERY_ON_RECONNECT * (System.currentTimeMillis() - activeChar.getLastAccess())) / 60000;
+				if (points > 0)
+				{
+					activeChar.updateVitalityPoints(points, false, true);
+				}
 			}
+			activeChar.sendPacket(new ExVitalityEffectInfo(activeChar));
 		}
 		
 		activeChar.checkRecoBonusTask();
