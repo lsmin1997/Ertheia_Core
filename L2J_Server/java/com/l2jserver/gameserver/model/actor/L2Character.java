@@ -24,6 +24,7 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_FOLLOW;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -130,7 +131,6 @@ import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.Attack;
 import com.l2jserver.gameserver.network.serverpackets.ChangeMoveType;
@@ -141,6 +141,7 @@ import com.l2jserver.gameserver.network.serverpackets.MagicSkillCanceld;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillLaunched;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.MoveToLocation;
+import com.l2jserver.gameserver.network.serverpackets.NpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.Revive;
 import com.l2jserver.gameserver.network.serverpackets.ServerObjectInfo;
 import com.l2jserver.gameserver.network.serverpackets.SetupGauge;
@@ -254,6 +255,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	private int _abnormalVisualEffectsSpecial;
 	/** Map 32 bits, containing all event abnormal visual effects in progress. */
 	private int _abnormalVisualEffectsEvent;
+	/** Set containg all event abnormal visual effects ID in progress */
+	private final Set<Integer> _abnormalVisualEffectsList = Collections.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>());
 	
 	/** Movement data of this L2Character */
 	protected MoveData _move;
@@ -2958,7 +2961,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				}
 				else
 				{
-					player.sendPacket(new AbstractNpcInfo.NpcInfo((L2Npc) this, player));
+					player.sendPacket(new NpcInfo((L2Npc) this));
 				}
 			}
 		}
@@ -3170,6 +3173,15 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	}
 	
 	/**
+	 * Gets the event abnormal visual effects affecting this character.
+	 * @return a sets containing all event abnormal visual effects ID in progress for this character
+	 */
+	public Set<Integer> getAbnormalVisualEffectsList()
+	{
+		return _abnormalVisualEffectsList;
+	}
+	
+	/**
 	 * Verify if this creature is affected by the given abnormal visual effect.
 	 * @param ave the abnormal visual effect
 	 * @return {@code true} if the creature is affected by the abnormal visual effect, {@code false} otherwise
@@ -3210,6 +3222,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				_abnormalVisualEffects |= ave.getMask();
 			}
+			_abnormalVisualEffectsList.add(ave.ordinal());
 		}
 		if (update)
 		{
@@ -3238,6 +3251,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				_abnormalVisualEffects &= ~ave.getMask();
 			}
+			_abnormalVisualEffectsList.remove(ave.ordinal());
 		}
 		if (update)
 		{
@@ -3910,7 +3924,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 						}
 						else
 						{
-							player.sendPacket(new AbstractNpcInfo.NpcInfo((L2Npc) this, player));
+							player.sendPacket(new NpcInfo((L2Npc) this));
 						}
 					}
 				}

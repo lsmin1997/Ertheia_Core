@@ -87,11 +87,11 @@ import com.l2jserver.gameserver.model.skills.targets.L2TargetType;
 import com.l2jserver.gameserver.model.variables.NpcVariables;
 import com.l2jserver.gameserver.model.zone.type.L2TownZone;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.ExChangeNpcState;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
+import com.l2jserver.gameserver.network.serverpackets.NpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ServerObjectInfo;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
@@ -567,7 +567,7 @@ public class L2Npc extends L2Character
 			}
 			else
 			{
-				player.sendPacket(new AbstractNpcInfo.NpcInfo(this, player));
+				player.sendPacket(new NpcInfo(this));
 			}
 		}
 	}
@@ -1565,7 +1565,7 @@ public class L2Npc extends L2Character
 			}
 			else
 			{
-				activeChar.sendPacket(new AbstractNpcInfo.NpcInfo(this, activeChar));
+				activeChar.sendPacket(new NpcInfo(this));
 			}
 		}
 	}

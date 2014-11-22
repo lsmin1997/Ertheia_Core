@@ -36,8 +36,8 @@ import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.Skill;
-import com.l2jserver.gameserver.network.serverpackets.AbstractNpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.NpcInfo;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.network.serverpackets.StopMove;
 import com.l2jserver.util.Rnd;
@@ -262,7 +262,7 @@ public final class L2TamedBeastInstance extends L2FeedableBeastInstance
 			setTitle(owner.getName());
 			// broadcast the new title
 			setShowSummonAnimation(true);
-			broadcastPacket(new AbstractNpcInfo.NpcInfo(this, owner));
+			broadcastPacket(new NpcInfo(this));
 			
 			owner.addTrainedBeast(this);
 			
