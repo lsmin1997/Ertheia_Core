@@ -47,6 +47,11 @@ public final class RelationChanged extends L2GameServerPacket
 	public static final int RELATION_ALLY_MEMBER = 0x10000; // clan is in alliance
 	public static final int RELATION_TERRITORY_WAR = 0x80000; // show Territory War icon
 	
+	// Masks
+	public static final byte SEND_ONE = (byte) 0x00;
+	public static final byte SEND_DEFAULT = (byte) 0x01;
+	public static final byte SEND_MULTI = (byte) 0x04;
+	
 	protected static class Relation
 	{
 		int _objId, _relation, _autoAttackable, _karma, _pvpFlag;
@@ -54,9 +59,12 @@ public final class RelationChanged extends L2GameServerPacket
 	
 	private Relation _singled;
 	private List<Relation> _multi;
+	private byte _mask = (byte) 0x00;
 	
 	public RelationChanged(L2Playable activeChar, int relation, boolean autoattackable)
 	{
+		_mask |= SEND_ONE;
+		
 		_singled = new Relation();
 		_singled._objId = activeChar.getObjectId();
 		_singled._relation = relation;
@@ -68,6 +76,8 @@ public final class RelationChanged extends L2GameServerPacket
 	
 	public RelationChanged()
 	{
+		_mask |= SEND_MULTI;
+		
 		_multi = FastList.newInstance();
 	}
 	
@@ -81,7 +91,7 @@ public final class RelationChanged extends L2GameServerPacket
 		r._objId = activeChar.getObjectId();
 		r._relation = relation;
 		r._autoAttackable = autoattackable ? 1 : 0;
-		r._karma = activeChar.getKarma();
+		r._karma = 1 - activeChar.getKarma();
 		r._pvpFlag = activeChar.getPvpFlag();
 		_multi.add(r);
 	}
@@ -89,15 +99,15 @@ public final class RelationChanged extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0xce);
+		writeC(0xCE);
+		writeC(_mask);
 		if (_multi == null)
 		{
-			writeD(1);
 			writeRelation(_singled);
 		}
 		else
 		{
-			writeD(_multi.size());
+			writeH(_multi.size());
 			for (Relation r : _multi)
 			{
 				writeRelation(r);
@@ -109,9 +119,13 @@ public final class RelationChanged extends L2GameServerPacket
 	private void writeRelation(Relation relation)
 	{
 		writeD(relation._objId);
-		writeD(relation._relation);
-		writeD(relation._autoAttackable);
-		writeD(relation._karma);
-		writeD(relation._pvpFlag);
+		
+		if ((_mask & SEND_DEFAULT) == 0)
+		{
+			writeD(relation._relation);
+			writeC(relation._autoAttackable);
+			writeD(relation._karma);
+			writeC(relation._pvpFlag);
+		}
 	}
 }
