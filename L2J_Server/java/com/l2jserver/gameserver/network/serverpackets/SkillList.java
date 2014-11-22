@@ -59,8 +59,10 @@ public final class SkillList extends L2GameServerPacket
 			writeD(temp.passive ? 1 : 0);
 			writeD(temp.level);
 			writeD(temp.id);
-			writeC(temp.disabled ? 1 : 0);
-			writeC(temp.enchanted ? 1 : 0);
+			writeD(-1); // GOD ReuseDelayShareGroupID
+			writeC(temp.disabled ? 1 : 0); // iSkillDisabled
+			writeC(temp.enchanted ? 1 : 0); // CanEnchant
 		}
+		writeD(0x00); // GOD Unknown
 	}
 }
