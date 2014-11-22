@@ -45,7 +45,7 @@ public class Attack extends L2GameServerPacket
 	{
 		_attackerObjId = attacker.getObjectId();
 		_soulshot = useShots;
-		_ssGrade = ssGrade;
+		_ssGrade = Math.min(ssGrade, 6);
 		_attackerLoc = new Location(attacker);
 		_targetLoc = new Location(target);
 	}
@@ -87,17 +87,23 @@ public class Attack extends L2GameServerPacket
 	{
 		writeD(hit.getTargetId());
 		writeD(hit.getDamage());
-		writeC(hit.getFlags());
+		writeD(hit.getFlags());
+		writeD(hit.getGrade()); // GOD
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
 		final Iterator<Hit> it = _hits.iterator();
+		final Hit firstHit = it.next();
 		writeC(0x33);
 		
 		writeD(_attackerObjId);
-		writeHit(it.next());
+		writeD(firstHit.getTargetId());
+		writeD(0x00); // Ertheia Unknown
+		writeD(firstHit.getDamage());
+		writeD(firstHit.getFlags());
+		writeD(firstHit.getGrade()); // GOD
 		writeLoc(_attackerLoc);
 		
 		writeH(_hits.size() - 1);

@@ -1001,6 +1001,11 @@ public abstract class L2Object extends ListenersContainer implements IIdentifiab
 		}
 	}
 	
+	public boolean isInvul()
+	{
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj)
 	{
