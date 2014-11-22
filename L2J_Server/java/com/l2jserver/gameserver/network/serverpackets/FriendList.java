@@ -39,13 +39,17 @@ public class FriendList extends L2GameServerPacket
 	{
 		int _objId;
 		String _name;
+		int _level;
+		int _classId;
 		boolean _online;
 		
-		public FriendInfo(int objId, String name, boolean online)
+		public FriendInfo(int objId, String name, boolean online, int level, int classId)
 		{
 			_objId = objId;
 			_name = name;
 			_online = online;
+			_level = level;
+			_classId = classId;
 		}
 	}
 	
@@ -57,11 +61,16 @@ public class FriendList extends L2GameServerPacket
 			String name = CharNameTable.getInstance().getNameById(objId);
 			L2PcInstance player1 = L2World.getInstance().getPlayer(objId);
 			boolean online = false;
-			if ((player1 != null) && player1.isOnline())
+			int level = 0;
+			int classId = 0;
+			
+			if (player1 != null)
 			{
 				online = true;
+				level = player1.getLevel();
+				classId = player1.getClassId().getId();
 			}
-			_info.add(new FriendInfo(objId, name, online));
+			_info.add(new FriendInfo(objId, name, online, level, classId));
 		}
 	}
 	
@@ -76,6 +85,9 @@ public class FriendList extends L2GameServerPacket
 			writeS(info._name);
 			writeD(info._online ? 0x01 : 0x00); // online
 			writeD(info._online ? info._objId : 0x00); // object id if online
+			writeD(info._level);
+			writeD(info._classId);
+			writeH(0x00);
 		}
 	}
 }
