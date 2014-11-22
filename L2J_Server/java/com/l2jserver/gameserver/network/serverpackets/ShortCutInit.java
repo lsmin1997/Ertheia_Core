@@ -59,12 +59,14 @@ public final class ShortCutInit extends L2GameServerPacket
 					writeD(0x00);
 					writeH(0x00);
 					writeH(0x00);
+					writeD(0x00); // GOD Unknown
 					break;
 				}
 				case SKILL:
 				{
 					writeD(sc.getId());
 					writeD(sc.getLevel());
+					writeD(0x00); // GOD Unknown
 					writeC(0x00); // C5
 					writeD(0x01); // C6
 					break;
