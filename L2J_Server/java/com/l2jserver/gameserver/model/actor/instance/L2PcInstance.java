@@ -274,6 +274,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExSetCompassZoneCode;
 import com.l2jserver.gameserver.network.serverpackets.ExStartScenePlayer;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoAbnormalVisualEffect;
 import com.l2jserver.gameserver.network.serverpackets.FlyToLocation.FlyType;
 import com.l2jserver.gameserver.network.serverpackets.FriendStatusPacket;
 import com.l2jserver.gameserver.network.serverpackets.GameGuardQuery;
@@ -9212,7 +9213,8 @@ public final class L2PcInstance extends L2Playable
 	@Override
 	public void updateAbnormalEffect()
 	{
-		broadcastUserInfo();
+		sendPacket(new ExUserInfoAbnormalVisualEffect(this));
+		broadcastPacket(new CharInfo(this));
 	}
 	
 	/**
