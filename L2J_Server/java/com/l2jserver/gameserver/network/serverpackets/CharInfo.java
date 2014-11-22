@@ -19,14 +19,11 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
 import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.actor.L2Decoy;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
-import com.l2jserver.gameserver.model.skills.AbnormalVisualEffect;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 
 public class CharInfo extends L2GameServerPacket
@@ -43,6 +40,8 @@ public class CharInfo extends L2GameServerPacket
 	private final int _flyWalkSpd;
 	private final double _moveMultiplier;
 	private final float _attackSpeedMultiplier;
+	private int _enchantLevel = 0;
+	private int _armorEnchant = 0;
 	
 	private int _vehicleId = 0;
 	
@@ -59,16 +58,7 @@ public class CharInfo extends L2GameServerPacket
 		Inventory.PAPERDOLL_CLOAK,
 		Inventory.PAPERDOLL_RHAND,
 		Inventory.PAPERDOLL_HAIR,
-		Inventory.PAPERDOLL_HAIR2,
-		Inventory.PAPERDOLL_RBRACELET,
-		Inventory.PAPERDOLL_LBRACELET,
-		Inventory.PAPERDOLL_DECO1,
-		Inventory.PAPERDOLL_DECO2,
-		Inventory.PAPERDOLL_DECO3,
-		Inventory.PAPERDOLL_DECO4,
-		Inventory.PAPERDOLL_DECO5,
-		Inventory.PAPERDOLL_DECO6,
-		Inventory.PAPERDOLL_BELT
+		Inventory.PAPERDOLL_HAIR2
 	};
 	
 	public CharInfo(L2PcInstance cha)
@@ -101,6 +91,8 @@ public class CharInfo extends L2GameServerPacket
 		_swimWalkSpd = (int) Math.round(cha.getSwimWalkSpeed() / _moveMultiplier);
 		_flyRunSpd = cha.isFlying() ? _runSpd : 0;
 		_flyWalkSpd = cha.isFlying() ? _walkSpd : 0;
+		_enchantLevel = cha.getInventory().getWeaponEnchant();
+		_armorEnchant = 0;
 	}
 	
 	public CharInfo(L2Decoy decoy)
@@ -127,206 +119,149 @@ public class CharInfo extends L2GameServerPacket
 			}
 		}
 		
-		final L2NpcTemplate template = _activeChar.getPoly().isMorphed() ? NpcData.getInstance().getTemplate(_activeChar.getPoly().getPolyId()) : null;
-		if (template != null)
+		writeC(0x31);
+		writeD(_x); // Confirmed
+		writeD(_y); // Confirmed
+		writeD(_z); // Confirmed
+		writeD(_vehicleId); // Confirmed
+		writeD(_objId); // Confirmed
+		writeS(_activeChar.getAppearance().getVisibleName()); // Confirmed
+		writeH(_activeChar.getRace().ordinal()); // Confirmed
+		writeC(_activeChar.getAppearance().getSex() ? 0x01 : 0x00); // Confirmed
+		writeD(_activeChar.getBaseClass()); // Confirmed
+		
+		for (int slot : getPaperdollOrder())
 		{
-			writeC(0x0C);
-			writeD(_objId);
-			writeD(template.getId() + 1000000); // npctype id
-			writeD(_activeChar.getKarma() > 0 ? 1 : 0);
-			writeD(_x);
-			writeD(_y);
-			writeD(_z);
-			writeD(_heading);
-			writeD(0x00);
-			writeD(_mAtkSpd);
-			writeD(_pAtkSpd);
-			writeD(_runSpd);
-			writeD(_walkSpd);
-			writeD(_swimRunSpd);
-			writeD(_swimWalkSpd);
-			writeD(_flyRunSpd);
-			writeD(_flyWalkSpd);
-			writeD(_flyRunSpd);
-			writeD(_flyWalkSpd);
-			writeF(_moveMultiplier);
-			writeF(_attackSpeedMultiplier);
-			writeF(template.getfCollisionRadius());
-			writeF(template.getfCollisionHeight());
-			writeD(template.getRHandId()); // right hand weapon
-			writeD(template.getChestId()); // chest
-			writeD(template.getLHandId()); // left hand weapon
-			writeC(1); // name above char 1=true ... ??
-			writeC(_activeChar.isRunning() ? 1 : 0);
-			writeC(_activeChar.isInCombat() ? 1 : 0);
-			writeC(_activeChar.isAlikeDead() ? 1 : 0);
-			writeC(!gmSeeInvis && _invisible ? 1 : 0); // invisible ?? 0=false 1=true 2=summoned (only works if model has a summon animation)
-			
-			writeD(-1); // High Five NPCString ID
-			writeS(_activeChar.getAppearance().getVisibleName());
-			writeD(-1); // High Five NPCString ID
-			writeS(gmSeeInvis ? "Invisible" : _activeChar.getAppearance().getVisibleTitle());
-			
-			writeD(_activeChar.getAppearance().getTitleColor()); // Title color 0=client default
-			writeD(_activeChar.getPvpFlag()); // pvp flag
-			writeD(_activeChar.getKarma()); // karma ??
-			
-			writeD(gmSeeInvis ? (_activeChar.getAbnormalVisualEffects() | AbnormalVisualEffect.STEALTH.getMask()) : _activeChar.getAbnormalVisualEffects()); // C2
-			
-			writeD(_activeChar.getClanId()); // clan id
-			writeD(_activeChar.getClanCrestId()); // crest id
-			writeD(_activeChar.getAllyId()); // ally id
-			writeD(_activeChar.getAllyCrestId()); // all crest
-			
-			writeC(_activeChar.isFlying() ? 2 : 0); // is Flying
-			writeC(_activeChar.getTeam().getId());
-			
-			writeF(template.getfCollisionRadius());
-			writeF(template.getfCollisionHeight());
-			
-			writeD(0x00); // enchant effect
-			writeD(_activeChar.isFlying() ? 2 : 0); // is Flying again?
-			
-			writeD(0x00);
-			
-			writeD(0x00); // CT1.5 Pet form and skills, Color effect
-			writeC(template.isTargetable() ? 1 : 0); // targetable
-			writeC(template.isShowName() ? 1 : 0); // show name
-			writeC(_activeChar.getAbnormalVisualEffectSpecial());
-			writeD(0x00);
+			writeD(_activeChar.getInventory().getPaperdollItemDisplayId(slot)); // Confirmed
+		}
+		
+		for (int slot : getPaperdollOrderAugument())
+		{
+			writeD(_activeChar.getInventory().getPaperdollAugmentationId(slot)); // Confirmed
+		}
+		
+		writeC(_armorEnchant);
+		
+		writeD(0x00); // rhand item visual id
+		writeD(0x00); // lhand item visual id
+		writeD(0x00); // gloves item visual id
+		writeD(0x00); // chest item visual id
+		writeD(0x00); // legs item visual id
+		writeD(0x00); // feet item visual id
+		writeD(0x00); // hair item visual id
+		writeD(0x00); // hair 2 item visual id
+		
+		writeC(_activeChar.getPvpFlag());
+		writeD(_activeChar.getKarma());
+		
+		writeD(_mAtkSpd);
+		writeD(_pAtkSpd);
+		
+		writeH(_runSpd);
+		writeH(_walkSpd);
+		writeH(_swimRunSpd);
+		writeH(_swimWalkSpd);
+		writeH(_flyRunSpd);
+		writeH(_flyWalkSpd);
+		writeH(_flyRunSpd);
+		writeH(_flyWalkSpd);
+		writeF(_moveMultiplier);
+		writeF(_attackSpeedMultiplier);
+		
+		writeF(_activeChar.getCollisionRadius());
+		writeF(_activeChar.getCollisionHeight());
+		
+		writeD(_activeChar.getAppearance().getHairStyle());
+		writeD(_activeChar.getAppearance().getHairColor());
+		writeD(_activeChar.getAppearance().getFace());
+		
+		writeS(gmSeeInvis ? "Invisible" : _activeChar.getAppearance().getVisibleTitle());
+		
+		if (!_activeChar.isCursedWeaponEquipped())
+		{
+			writeD(_activeChar.getClanId());
+			writeD(_activeChar.getClanCrestId());
+			writeD(_activeChar.getAllyId());
+			writeD(_activeChar.getAllyCrestId());
 		}
 		else
 		{
-			writeC(0x31);
-			writeD(_x);
-			writeD(_y);
-			writeD(_z);
-			writeD(_vehicleId);
-			writeD(_objId);
-			writeS(_activeChar.getAppearance().getVisibleName());
-			writeD(_activeChar.getRace().ordinal());
-			writeD(_activeChar.getAppearance().getSex() ? 1 : 0);
-			writeD(_activeChar.getBaseClass());
-			
-			for (int slot : getPaperdollOrder())
-			{
-				writeD(_activeChar.getInventory().getPaperdollItemDisplayId(slot));
-			}
-			
-			for (int slot : getPaperdollOrder())
-			{
-				writeD(_activeChar.getInventory().getPaperdollAugmentationId(slot));
-			}
-			
-			writeD(_activeChar.getInventory().getTalismanSlots());
-			writeD(_activeChar.getInventory().canEquipCloak() ? 1 : 0);
-			
-			writeD(_activeChar.getPvpFlag());
-			writeD(_activeChar.getKarma());
-			
-			writeD(_mAtkSpd);
-			writeD(_pAtkSpd);
-			
-			writeD(0x00); // ?
-			
-			writeD(_runSpd);
-			writeD(_walkSpd);
-			writeD(_swimRunSpd);
-			writeD(_swimWalkSpd);
-			writeD(_flyRunSpd);
-			writeD(_flyWalkSpd);
-			writeD(_flyRunSpd);
-			writeD(_flyWalkSpd);
-			writeF(_moveMultiplier);
-			writeF(_activeChar.getAttackSpeedMultiplier());
-			
-			writeF(_activeChar.getCollisionRadius());
-			writeF(_activeChar.getCollisionHeight());
-			
-			writeD(_activeChar.getAppearance().getHairStyle());
-			writeD(_activeChar.getAppearance().getHairColor());
-			writeD(_activeChar.getAppearance().getFace());
-			
-			writeS(gmSeeInvis ? "Invisible" : _activeChar.getAppearance().getVisibleTitle());
-			
-			if (!_activeChar.isCursedWeaponEquipped())
-			{
-				writeD(_activeChar.getClanId());
-				writeD(_activeChar.getClanCrestId());
-				writeD(_activeChar.getAllyId());
-				writeD(_activeChar.getAllyCrestId());
-			}
-			else
-			{
-				writeD(0x00);
-				writeD(0x00);
-				writeD(0x00);
-				writeD(0x00);
-			}
-			
-			writeC(_activeChar.isSitting() ? 0 : 1); // standing = 1 sitting = 0
-			writeC(_activeChar.isRunning() ? 1 : 0); // running = 1 walking = 0
-			writeC(_activeChar.isInCombat() ? 1 : 0);
-			
-			writeC(!_activeChar.isInOlympiadMode() && _activeChar.isAlikeDead() ? 1 : 0);
-			
-			writeC(!gmSeeInvis && _invisible ? 1 : 0); // invisible = 1 visible =0
-			
-			writeC(_activeChar.getMountType().ordinal()); // 1-on Strider, 2-on Wyvern, 3-on Great Wolf, 0-no mount
-			writeC(_activeChar.getPrivateStoreType().getId());
-			
-			writeH(_activeChar.getCubics().size());
-			for (int cubicId : _activeChar.getCubics().keySet())
-			{
-				writeH(cubicId);
-			}
-			
-			writeC(_activeChar.isInPartyMatchRoom() ? 1 : 0);
-			
-			writeD(gmSeeInvis ? (_activeChar.getAbnormalVisualEffects() | AbnormalVisualEffect.STEALTH.getMask()) : _activeChar.getAbnormalVisualEffects());
-			
-			writeC(_activeChar.isInsideZone(ZoneId.WATER) ? 1 : _activeChar.isFlyingMounted() ? 2 : 0);
-			
-			writeH(_activeChar.getRecomHave()); // Blue value for name (0 = white, 255 = pure blue)
-			writeD(_activeChar.getMountNpcId() + 1000000);
-			writeD(_activeChar.getClassId().getId());
-			writeD(0x00); // ?
-			writeC(_activeChar.isMounted() ? 0 : _activeChar.getEnchantEffect());
-			
-			writeC(_activeChar.getTeam().getId());
-			
-			writeD(_activeChar.getClanCrestLargeId());
-			writeC(_activeChar.isNoble() ? 1 : 0); // Symbol on char menu ctrl+I
-			writeC(_activeChar.isHero() || (_activeChar.isGM() && Config.GM_HERO_AURA) ? 1 : 0); // Hero Aura
-			
-			writeC(_activeChar.isFishing() ? 1 : 0); // 0x01: Fishing Mode (Cant be undone by setting back to 0)
-			writeD(_activeChar.getFishx());
-			writeD(_activeChar.getFishy());
-			writeD(_activeChar.getFishz());
-			
-			writeD(_activeChar.getAppearance().getNameColor());
-			
-			writeD(_heading);
-			
-			writeD(_activeChar.getPledgeClass());
-			writeD(_activeChar.getPledgeType());
-			
-			writeD(_activeChar.getAppearance().getTitleColor());
-			
-			writeD(_activeChar.isCursedWeaponEquipped() ? CursedWeaponsManager.getInstance().getLevel(_activeChar.getCursedWeaponEquippedId()) : 0);
-			
-			writeD(_activeChar.getClanId() > 0 ? _activeChar.getClan().getReputationScore() : 0);
-			
-			// T1
-			writeD(_activeChar.getTransformationDisplayId());
-			writeD(_activeChar.getAgathionId());
-			
-			// T2
-			writeD(0x01);
-			
-			// T2.3
-			writeD(_activeChar.getAbnormalVisualEffectSpecial());
+			writeD(0x00);
+			writeD(0x00);
+			writeD(0x00);
+			writeD(0x00);
 		}
+		
+		writeC(_activeChar.isSitting() ? 0x00 : 0x01); // Confirmed
+		writeC(_activeChar.isRunning() ? 0x01 : 0x00); // Confirmed
+		writeC(_activeChar.isInCombat() ? 0x01 : 0x00); // Confirmed
+		
+		writeC(!_activeChar.isInOlympiadMode() && _activeChar.isAlikeDead() ? 0x01 : 0x00); // Confirmed
+		
+		writeC(_invisible ? 0x01 : 0x00); // Find me
+		
+		writeC(_activeChar.getMountType().ordinal()); // 1-on Strider, 2-on Wyvern, 3-on Great Wolf, 0-no mount
+		writeC(_activeChar.getPrivateStoreType().getId()); // Confirmed
+		
+		writeH(_activeChar.getCubics().size()); // Confirmed
+		for (int cubicId : _activeChar.getCubics().keySet())
+		{
+			writeH(cubicId); // Confirmed
+		}
+		
+		writeC(_activeChar.isInPartyMatchRoom() ? 0x01 : 0x00); // Confirmed
+		
+		writeC(_activeChar.isInsideZone(ZoneId.WATER) ? 1 : _activeChar.isFlyingMounted() ? 2 : 0);
+		writeH(_activeChar.getRecomHave()); // Confirmed
+		writeD(_activeChar.getMountNpcId() == 0 ? 0 : _activeChar.getMountNpcId() + 1000000);
+		
+		writeD(_activeChar.getClassId().getId()); // Confirmed
+		writeD(0x00); // Find me
+		writeC(_activeChar.isMounted() ? 0 : _enchantLevel); // Confirmed
+		
+		writeC(_activeChar.getTeam().getId()); // Confirmed
+		
+		writeD(_activeChar.getClanCrestLargeId());
+		writeC(_activeChar.isNoble() ? 1 : 0); // Confirmed
+		writeC(_activeChar.isHero() || (_activeChar.isGM() && Config.GM_HERO_AURA) ? 1 : 0); // Confirmed
+		
+		writeC(_activeChar.isFishing() ? 1 : 0); // Confirmed
+		writeD(_activeChar.getFishx()); // Confirmed
+		writeD(_activeChar.getFishy()); // Confirmed
+		writeD(_activeChar.getFishz()); // Confirmed
+		
+		writeD(_activeChar.getAppearance().getNameColor()); // Confirmed
+		
+		writeD(_heading); // Confirmed
+		
+		writeC(_activeChar.getPledgeClass());
+		writeH(_activeChar.getPledgeType());
+		
+		writeD(_activeChar.getAppearance().getTitleColor()); // Confirmed
+		
+		writeC(_activeChar.isCursedWeaponEquipped() ? CursedWeaponsManager.getInstance().getLevel(_activeChar.getCursedWeaponEquippedId()) : 0); // Find me
+		
+		writeD(_activeChar.getClanId() > 0 ? _activeChar.getClan().getReputationScore() : 0);
+		writeD(_activeChar.getTransformationDisplayId()); // Confirmed
+		writeD(_activeChar.getAgathionId()); // Confirmed
+		
+		writeC(0x00); // Find me
+		
+		writeD((int) Math.round(_activeChar.getCurrentCp())); // Confirmed
+		writeD(_activeChar.getMaxHp()); // Confirmed
+		writeD((int) Math.round(_activeChar.getCurrentHp())); // Confirmed
+		writeD(_activeChar.getMaxMp()); // Confirmed
+		writeD((int) Math.round(_activeChar.getCurrentMp())); // Confirmed
+		
+		writeC(0x00); // Find me
+		writeD(_activeChar.getAbnormalVisualEffectsList().size()); // Confirmed
+		for (int abnormalId : _activeChar.getAbnormalVisualEffectsList())
+		{
+			writeH(abnormalId); // Confirmed
+		}
+		writeC(0x00); // Find me
+		writeC(0x01); // Hair accessory
+		writeC(0x00); // Used Ability Points
 	}
 	
 	@Override
