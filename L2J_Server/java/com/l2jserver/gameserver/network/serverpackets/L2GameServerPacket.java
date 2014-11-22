@@ -66,6 +66,26 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 		Inventory.PAPERDOLL_BELT
 	};
 	
+	private static final int[] PAPERDOLL_ORDER_AUGMENT = new int[]
+	{
+		Inventory.PAPERDOLL_RHAND,
+		Inventory.PAPERDOLL_LHAND,
+		Inventory.PAPERDOLL_RHAND
+	};
+	
+	private static final int[] PAPERDOLL_ORDER_VISUAL_ID = new int[]
+	{
+		Inventory.PAPERDOLL_RHAND,
+		Inventory.PAPERDOLL_LHAND,
+		Inventory.PAPERDOLL_RHAND,
+		Inventory.PAPERDOLL_GLOVES,
+		Inventory.PAPERDOLL_CHEST,
+		Inventory.PAPERDOLL_LEGS,
+		Inventory.PAPERDOLL_FEET,
+		Inventory.PAPERDOLL_HAIR,
+		Inventory.PAPERDOLL_HAIR2
+	};
+	
 	/**
 	 * @return True if packet originated from invisible character.
 	 */
@@ -117,6 +137,16 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 	protected int[] getPaperdollOrder()
 	{
 		return PAPERDOLL_ORDER;
+	}
+	
+	protected int[] getPaperdollOrderAugument()
+	{
+		return PAPERDOLL_ORDER_AUGMENT;
+	}
+	
+	protected int[] getPaperdollOrderVisualId()
+	{
+		return PAPERDOLL_ORDER_VISUAL_ID;
 	}
 	
 	@Override
