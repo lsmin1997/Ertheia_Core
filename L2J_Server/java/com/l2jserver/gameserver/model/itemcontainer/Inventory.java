@@ -44,6 +44,7 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.items.type.EtcItemType;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.model.skills.Skill;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
 import com.l2jserver.util.StringUtil;
 
@@ -1093,6 +1094,10 @@ public abstract class Inventory extends ItemContainer
 					listener.notifyUnequiped(slot, old, this);
 				}
 				old.updateDatabase();
+				if (getOwner().isPlayer())
+				{
+					getOwner().sendPacket(new ExUserInfoEquipSlot(getOwner().getActingPlayer()));
+				}
 			}
 			// Add new item in slot of paperdoll
 			if (item != null)
@@ -1111,6 +1116,10 @@ public abstract class Inventory extends ItemContainer
 					listener.notifyEquiped(slot, item, this);
 				}
 				item.updateDatabase();
+				if (getOwner().isPlayer())
+				{
+					getOwner().sendPacket(new ExUserInfoEquipSlot(getOwner().getActingPlayer()));
+				}
 			}
 		}
 		return old;
@@ -1776,6 +1785,10 @@ public abstract class Inventory extends ItemContainer
 				listener.notifyUnequiped(slot, item, this);
 				listener.notifyEquiped(slot, item, this);
 			}
+		}
+		if (getOwner().isPlayer())
+		{
+			getOwner().sendPacket(new ExUserInfoEquipSlot(getOwner().getActingPlayer()));
 		}
 	}
 }
