@@ -70,6 +70,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
+import com.l2jserver.gameserver.network.serverpackets.ExUnReadMailCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ExVitalityEffectInfo;
@@ -363,6 +364,12 @@ public class EnterWorld extends L2GameClientPacket
 		
 		// Send Equipped Items
 		activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
+		
+		// Send Unread Mail Count
+		if (MailManager.getInstance().hasUnreadPost(activeChar))
+		{
+			activeChar.sendPacket(new ExUnReadMailCount(activeChar));
+		}
 		
 		// Send Macro List
 		activeChar.getMacros().sendUpdate();

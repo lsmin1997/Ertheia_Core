@@ -40,6 +40,7 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Message;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
+import com.l2jserver.gameserver.network.serverpackets.ExUnReadMailCount;
 
 /**
  * @author Migi, DS
@@ -153,6 +154,11 @@ public final class MailManager
 		return inbox;
 	}
 	
+	public final long getUnreadCount(L2PcInstance player)
+	{
+		return getInbox(player.getObjectId()).stream().filter(Message::isUnread).count();
+	}
+	
 	public final List<Message> getOutbox(int objectId)
 	{
 		final List<Message> outbox = new FastList<>();
@@ -183,6 +189,7 @@ public final class MailManager
 		if (receiver != null)
 		{
 			receiver.sendPacket(ExNoticePostArrived.valueOf(true));
+			receiver.sendPacket(new ExUnReadMailCount(receiver));
 		}
 		
 		ThreadPoolManager.getInstance().scheduleGeneral(new MessageDeletionTask(msg.getId()), msg.getExpiration() - System.currentTimeMillis());
