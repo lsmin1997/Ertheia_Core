@@ -18,20 +18,21 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import com.l2jserver.gameserver.enums.MacroUpdateType;
 import com.l2jserver.gameserver.model.Macro;
 import com.l2jserver.gameserver.model.MacroCmd;
 
 public class SendMacroList extends L2GameServerPacket
 {
-	private final int _rev;
 	private final int _count;
 	private final Macro _macro;
+	private final MacroUpdateType _updateType;
 	
-	public SendMacroList(int rev, int count, Macro macro)
+	public SendMacroList(int count, Macro macro, MacroUpdateType updateType)
 	{
-		_rev = rev;
 		_count = count;
 		_macro = macro;
+		_updateType = updateType;
 	}
 	
 	@Override
@@ -39,12 +40,12 @@ public class SendMacroList extends L2GameServerPacket
 	{
 		writeC(0xE8);
 		
-		writeD(_rev); // macro change revision (changes after each macro edition)
-		writeC(0x00); // unknown
+		writeC(_updateType.getId());
+		writeD(_updateType != MacroUpdateType.LIST ? _macro.getId() : 0x00); // modified, created or deleted macro's id
 		writeC(_count); // count of Macros
 		writeC(_macro != null ? 1 : 0); // unknown
 		
-		if (_macro != null)
+		if ((_macro != null) && (_updateType != MacroUpdateType.DELETE))
 		{
 			writeD(_macro.getId()); // Macro ID
 			writeS(_macro.getName()); // Macro Name

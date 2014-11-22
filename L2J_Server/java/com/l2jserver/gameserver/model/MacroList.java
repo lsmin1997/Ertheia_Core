@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.enums.MacroType;
+import com.l2jserver.gameserver.enums.MacroUpdateType;
 import com.l2jserver.gameserver.enums.ShortcutType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.interfaces.IRestorable;
@@ -44,20 +45,13 @@ public class MacroList implements IRestorable
 	private static final Logger _log = Logger.getLogger(MacroList.class.getName());
 	
 	private final L2PcInstance _owner;
-	private int _revision;
 	private int _macroId;
 	private final Map<Integer, Macro> _macroses = Collections.synchronizedMap(new LinkedHashMap<Integer, Macro>());
 	
 	public MacroList(L2PcInstance owner)
 	{
 		_owner = owner;
-		_revision = 1;
 		_macroId = 1000;
-	}
-	
-	public int getRevision()
-	{
-		return _revision;
 	}
 	
 	public Map<Integer, Macro> getAllMacroses()
@@ -67,6 +61,7 @@ public class MacroList implements IRestorable
 	
 	public void registerMacro(Macro macro)
 	{
+		MacroUpdateType updateType = MacroUpdateType.ADD;
 		if (macro.getId() == 0)
 		{
 			macro.setId(_macroId++);
@@ -79,6 +74,7 @@ public class MacroList implements IRestorable
 		}
 		else
 		{
+			updateType = MacroUpdateType.MODIFY;
 			final Macro old = _macroses.put(macro.getId(), macro);
 			if (old != null)
 			{
@@ -86,7 +82,7 @@ public class MacroList implements IRestorable
 			}
 			registerMacroInDb(macro);
 		}
-		sendUpdate();
+		_owner.sendPacket(new SendMacroList(1, macro, updateType));
 	}
 	
 	public void deleteMacro(int id)
@@ -105,25 +101,25 @@ public class MacroList implements IRestorable
 				_owner.deleteShortCut(sc.getSlot(), sc.getPage());
 			}
 		}
-		
-		sendUpdate();
+		_owner.sendPacket(new SendMacroList(0, removed, MacroUpdateType.DELETE));
 	}
 	
-	public void sendUpdate()
+	public void sendAllMacros()
 	{
-		_revision++;
 		final Collection<Macro> allMacros = _macroses.values();
+		final int count = allMacros.size();
+		
 		synchronized (_macroses)
 		{
 			if (allMacros.isEmpty())
 			{
-				_owner.sendPacket(new SendMacroList(_revision, 0, null));
+				_owner.sendPacket(new SendMacroList(0, null, MacroUpdateType.LIST));
 			}
 			else
 			{
 				for (Macro m : allMacros)
 				{
-					_owner.sendPacket(new SendMacroList(_revision, allMacros.size(), m));
+					_owner.sendPacket(new SendMacroList(count, m, MacroUpdateType.LIST));
 				}
 			}
 		}
