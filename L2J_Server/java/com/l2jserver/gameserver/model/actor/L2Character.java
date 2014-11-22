@@ -136,6 +136,7 @@ import com.l2jserver.gameserver.network.serverpackets.Attack;
 import com.l2jserver.gameserver.network.serverpackets.ChangeMoveType;
 import com.l2jserver.gameserver.network.serverpackets.ChangeWaitType;
 import com.l2jserver.gameserver.network.serverpackets.ExRotation;
+import com.l2jserver.gameserver.network.serverpackets.ExTeleportToLocationActivate;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillCanceld;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillLaunched;
@@ -743,6 +744,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		
 		// Send a Server->Client packet TeleportToLocationt to the L2Character AND to all L2PcInstance in the _KnownPlayers of the L2Character
 		broadcastPacket(new TeleportToLocation(this, x, y, z, heading));
+		sendPacket(new ExTeleportToLocationActivate(this));
 		
 		// remove the object from its old location
 		decayMe();
