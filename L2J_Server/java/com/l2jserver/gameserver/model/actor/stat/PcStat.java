@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.datatables.PetDataTable;
+import com.l2jserver.gameserver.enums.PartySmallWindowUpdateType;
 import com.l2jserver.gameserver.model.L2PetLevelData;
 import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.actor.instance.L2ClassMasterInstance;
@@ -41,6 +42,7 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVitalityPointInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
+import com.l2jserver.gameserver.network.serverpackets.PartySmallWindowUpdate;
 import com.l2jserver.gameserver.network.serverpackets.PledgeShowMemberListUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
@@ -320,6 +322,12 @@ public class PcStat extends PlayableStat
 		getActiveChar().sendPacket(new UserInfo(getActiveChar()));
 		getActiveChar().sendPacket(new ExBrExtraUserInfo(getActiveChar()));
 		getActiveChar().sendPacket(new ExVoteSystemInfo(getActiveChar()));
+		if (getActiveChar().isInParty())
+		{
+			final PartySmallWindowUpdate partyWindow = new PartySmallWindowUpdate(getActiveChar(), false);
+			partyWindow.addUpdateType(PartySmallWindowUpdateType.LEVEL);
+			getActiveChar().getParty().broadcastToPartyMembers(getActiveChar(), partyWindow);
+		}
 		
 		return levelIncreased;
 	}
@@ -721,7 +729,14 @@ public class PcStat extends PlayableStat
 		
 		_vitalityPoints = points;
 		updateVitalityLevel(quiet);
-		getActiveChar().sendPacket(new ExVitalityPointInfo(getVitalityPoints()));
+		final L2PcInstance player = getActiveChar();
+		player.sendPacket(new ExVitalityPointInfo(getVitalityPoints()));
+		if (player.isInParty())
+		{
+			final PartySmallWindowUpdate partyWindow = new PartySmallWindowUpdate(player, false);
+			partyWindow.addUpdateType(PartySmallWindowUpdateType.VITALITY_POINTS);
+			player.getParty().broadcastToPartyMembers(player, partyWindow);
+		}
 	}
 	
 	public synchronized void updateVitalityPoints(float points, boolean useRates, boolean quiet)

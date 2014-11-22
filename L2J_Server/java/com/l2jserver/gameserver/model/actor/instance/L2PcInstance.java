@@ -88,6 +88,7 @@ import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.MountType;
 import com.l2jserver.gameserver.enums.PartyDistributionType;
+import com.l2jserver.gameserver.enums.PartySmallWindowUpdateType;
 import com.l2jserver.gameserver.enums.PlayerAction;
 import com.l2jserver.gameserver.enums.PrivateStoreType;
 import com.l2jserver.gameserver.enums.Race;
@@ -2351,7 +2352,7 @@ public final class L2PcInstance extends L2Playable
 			// Update class icon in party and clan
 			if (isInParty())
 			{
-				getParty().broadcastPacket(new PartySmallWindowUpdate(this));
+				getParty().broadcastPacket(new PartySmallWindowUpdate(this, true));
 			}
 			
 			if (getClan() != null)
@@ -4186,11 +4187,28 @@ public final class L2PcInstance extends L2Playable
 		
 		final boolean needCpUpdate = needCpUpdate();
 		final boolean needHpUpdate = needHpUpdate();
+		final boolean needMpUpdate = needMpUpdate();
 		
 		// Check if a party is in progress and party window update is usefull
-		if (isInParty() && (needCpUpdate || needHpUpdate || needMpUpdate()))
+		if (isInParty() && (needCpUpdate || needHpUpdate || needMpUpdate))
 		{
-			getParty().broadcastToPartyMembers(this, new PartySmallWindowUpdate(this));
+			final PartySmallWindowUpdate partyWindow = new PartySmallWindowUpdate(this, false);
+			if (needCpUpdate)
+			{
+				partyWindow.addUpdateType(PartySmallWindowUpdateType.CURRENT_CP);
+				partyWindow.addUpdateType(PartySmallWindowUpdateType.MAX_CP);
+			}
+			if (needHpUpdate)
+			{
+				partyWindow.addUpdateType(PartySmallWindowUpdateType.CURRENT_HP);
+				partyWindow.addUpdateType(PartySmallWindowUpdateType.MAX_HP);
+			}
+			if (needMpUpdate)
+			{
+				partyWindow.addUpdateType(PartySmallWindowUpdateType.CURRENT_MP);
+				partyWindow.addUpdateType(PartySmallWindowUpdateType.MAX_MP);
+			}
+			getParty().broadcastToPartyMembers(this, partyWindow);
 		}
 		
 		if (isInOlympiadMode() && isOlympiadStart() && (needCpUpdate || needHpUpdate))

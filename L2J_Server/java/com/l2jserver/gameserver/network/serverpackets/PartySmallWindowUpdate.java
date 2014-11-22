@@ -18,15 +18,29 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import com.l2jserver.gameserver.enums.PartySmallWindowUpdateType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 public final class PartySmallWindowUpdate extends L2GameServerPacket
 {
 	private final L2PcInstance _member;
+	private int _flags = 0;
 	
-	public PartySmallWindowUpdate(L2PcInstance member)
+	public PartySmallWindowUpdate(L2PcInstance member, boolean addAllFlags)
 	{
 		_member = member;
+		if (addAllFlags)
+		{
+			for (PartySmallWindowUpdateType type : PartySmallWindowUpdateType.values())
+			{
+				addUpdateType(type);
+			}
+		}
+	}
+	
+	public void addUpdateType(PartySmallWindowUpdateType type)
+	{
+		_flags |= type.getMask();
 	}
 	
 	@Override
@@ -34,17 +48,42 @@ public final class PartySmallWindowUpdate extends L2GameServerPacket
 	{
 		writeC(0x52);
 		writeD(_member.getObjectId());
-		writeS(_member.getName());
-		
-		writeD((int) _member.getCurrentCp()); // c4
-		writeD(_member.getMaxCp()); // c4
-		
-		writeD((int) _member.getCurrentHp());
-		writeD(_member.getMaxHp());
-		writeD((int) _member.getCurrentMp());
-		writeD(_member.getMaxMp());
-		writeD(_member.getLevel());
-		writeD(_member.getClassId().getId());
-		
+		writeH(_flags);
+		if (containsMask(_flags, PartySmallWindowUpdateType.CURRENT_CP))
+		{
+			writeD((int) _member.getCurrentCp()); // c4
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.MAX_CP))
+		{
+			writeD(_member.getMaxCp()); // c4
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.CURRENT_HP))
+		{
+			writeD((int) _member.getCurrentHp());
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.MAX_HP))
+		{
+			writeD(_member.getMaxHp());
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.CURRENT_MP))
+		{
+			writeD((int) _member.getCurrentMp());
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.MAX_MP))
+		{
+			writeD(_member.getMaxMp());
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.LEVEL))
+		{
+			writeC(_member.getLevel());
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.CLASS_ID))
+		{
+			writeH(_member.getClassId().getId());
+		}
+		if (containsMask(_flags, PartySmallWindowUpdateType.VITALITY_POINTS))
+		{
+			writeD(_member.getVitalityPoints());
+		}
 	}
 }
