@@ -27,24 +27,26 @@ import com.l2jserver.gameserver.model.zone.ZoneId;
 public class EtcStatusUpdate extends L2GameServerPacket
 {
 	private final L2PcInstance _activeChar;
+	private int _mask;
 	
 	public EtcStatusUpdate(L2PcInstance activeChar)
 	{
 		_activeChar = activeChar;
+		_mask = _activeChar.getMessageRefusal() || _activeChar.isChatBanned() || _activeChar.isSilenceMode() ? 1 : 0;
+		_mask |= _activeChar.isInsideZone(ZoneId.DANGER_AREA) ? 2 : 0;
+		_mask |= _activeChar.hasCharmOfCourage() ? 4 : 0;
 	}
 	
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xf9); // several icons to a separate line (0 = disabled)
-		writeD(_activeChar.getCharges()); // 1-7 increase force, lvl
+		writeC(0xF9); // several icons to a separate line (0 = disabled)
+		writeC(_activeChar.getCharges()); // 1-7 increase force, lvl
 		writeD(_activeChar.getWeightPenalty()); // 1-4 weight penalty, lvl (1=50%, 2=66.6%, 3=80%, 4=100%)
-		writeD((_activeChar.getMessageRefusal() || _activeChar.isChatBanned() || _activeChar.isSilenceMode()) ? 1 : 0); // 1 = block all chat
-		writeD(_activeChar.isInsideZone(ZoneId.DANGER_AREA) ? 1 : 0); // 1 = danger area
-		writeD(_activeChar.getExpertiseWeaponPenalty()); // Weapon Grade Penalty [1-4]
-		writeD(_activeChar.getExpertiseArmorPenalty()); // Armor Grade Penalty [1-4]
-		writeD(_activeChar.hasCharmOfCourage() ? 1 : 0); // 1 = charm of courage (allows resurrection on the same spot upon death on the siege battlefield)
-		writeD(_activeChar.getDeathPenaltyBuffLevel()); // 1-15 death penalty, lvl (combat ability decreased due to death)
-		writeD(_activeChar.getChargedSouls());
+		writeC(_activeChar.getExpertiseWeaponPenalty()); // Weapon Grade Penalty [1-4]
+		writeC(_activeChar.getExpertiseArmorPenalty()); // Armor Grade Penalty [1-4]
+		writeC(_activeChar.getDeathPenaltyBuffLevel()); // 1-15 death penalty, lvl (combat ability decreased due to death)
+		writeC(_activeChar.getChargedSouls());
+		writeC(_mask);
 	}
 }
