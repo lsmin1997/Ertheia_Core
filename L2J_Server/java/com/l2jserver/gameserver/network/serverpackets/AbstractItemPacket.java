@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import com.l2jserver.gameserver.enums.ItemListType;
 import com.l2jserver.gameserver.model.ItemInfo;
 import com.l2jserver.gameserver.model.TradeItem;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
@@ -26,8 +27,24 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 /**
  * @author UnAfraid
  */
-public abstract class AbstractItemPacket extends L2GameServerPacket
+public abstract class AbstractItemPacket extends AbstractMaskPacket<ItemListType>
 {
+	private static final byte[] MASKS =
+	{
+		0x00
+	};
+	
+	@Override
+	protected byte[] getMasks()
+	{
+		return MASKS;
+	}
+	
+	@Override
+	protected void onNewMaskAdded(ItemListType component)
+	{
+	}
+	
 	protected void writeItem(TradeItem item)
 	{
 		writeItem(new ItemInfo(item));
@@ -40,23 +57,85 @@ public abstract class AbstractItemPacket extends L2GameServerPacket
 	
 	protected void writeItem(ItemInfo item)
 	{
+		final int mask = calculateMask(item);
+		// cddcQcchQccddc
+		writeC(mask);
 		writeD(item.getObjectId()); // ObjectId
 		writeD(item.getItem().getDisplayId()); // ItemId
-		writeD(item.getLocation()); // T1
+		writeC(item.getEquipped() == 0 ? item.getLocation() : 0xFF); // T1
 		writeQ(item.getCount()); // Quantity
-		writeH(item.getItem().getType2()); // Item Type 2 : 00-weapon, 01-shield/armor, 02-ring/earring/necklace, 03-questitem, 04-adena, 05-item
-		writeH(item.getCustomType1()); // Filler (always 0)
+		writeC(item.getItem().getType2()); // Item Type 2 : 00-weapon, 01-shield/armor, 02-ring/earring/necklace, 03-questitem, 04-adena, 05-item
+		writeC(item.getCustomType1()); // Filler (always 0)
 		writeH(item.getEquipped()); // Equipped : 00-No, 01-yes
-		writeD(item.getItem().getBodyPart()); // Slot : 0006-lr.ear, 0008-neck, 0030-lr.finger, 0040-head, 0100-l.hand, 0200-gloves, 0400-chest, 0800-pants, 1000-feet, 4000-r.hand, 8000-r.hand
+		writeQ(item.getItem().getBodyPart()); // Slot : 0006-lr.ear, 0008-neck, 0030-lr.finger, 0040-head, 0100-l.hand, 0200-gloves, 0400-chest, 0800-pants, 1000-feet, 4000-r.hand, 8000-r.hand
 		writeH(item.getEnchant()); // Enchant level (pet level shown in control item)
-		writeH(item.getCustomType2()); // Pet name exists or not shown in control item
-		writeD(item.getAugmentationBonus());
 		writeD(item.getMana());
 		writeD(item.getTime());
-		writeItemElementalAndEnchant(item);
+		writeC(0x01); // GOD Item enabled = 1 disabled (red) = 0
+		if (containsMask(mask, ItemListType.AUGMENT_BONUS))
+		{
+			writeD(item.getAugmentationBonus());
+		}
+		if (containsMask(mask, ItemListType.ELEMENTAL_ATTRIBUTE))
+		{
+			writeItemElemental(item);
+		}
+		if (containsMask(mask, ItemListType.ENCHANT_EFFECT))
+		{
+			writeItemEnchantEffect(item);
+		}
+		if (containsMask(mask, ItemListType.VISUAL_ID))
+		{
+			writeD(0x00); // Item remodel visual ID
+		}
+	}
+	
+	protected static final int calculateMask(ItemInfo item)
+	{
+		int mask = 0;
+		if (item.getAugmentationBonus() > 0)
+		{
+			mask |= ItemListType.AUGMENT_BONUS.getMask();
+		}
+		
+		if (item.getAttackElementType() >= 0)
+		{
+			mask |= ItemListType.ELEMENTAL_ATTRIBUTE.getMask();
+		}
+		else
+		{
+			for (byte i = 0; i < 6; i++)
+			{
+				if (item.getElementDefAttr(i) >= 0)
+				{
+					mask |= ItemListType.ELEMENTAL_ATTRIBUTE.getMask();
+					break;
+				}
+			}
+		}
+		
+		if (item.getEnchantOptions() != null)
+		{
+			for (int id : item.getEnchantOptions())
+			{
+				if (id > 0)
+				{
+					mask |= ItemListType.ENCHANT_EFFECT.getMask();
+					break;
+				}
+			}
+		}
+		
+		return mask;
 	}
 	
 	protected void writeItemElementalAndEnchant(ItemInfo item)
+	{
+		writeItemElemental(item);
+		writeItemEnchantEffect(item);
+	}
+	
+	protected void writeItemElemental(ItemInfo item)
 	{
 		writeH(item.getAttackElementType());
 		writeH(item.getAttackElementPower());
@@ -64,6 +143,10 @@ public abstract class AbstractItemPacket extends L2GameServerPacket
 		{
 			writeH(item.getElementDefAttr(i));
 		}
+	}
+	
+	protected void writeItemEnchantEffect(ItemInfo item)
+	{
 		// Enchant Effects
 		for (int op : item.getEnchantOptions())
 		{

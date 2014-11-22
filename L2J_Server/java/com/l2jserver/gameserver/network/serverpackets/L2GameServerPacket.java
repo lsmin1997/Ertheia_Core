@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import org.mmocore.network.SendablePacket;
 
 import com.l2jserver.gameserver.model.interfaces.IPositionable;
+import com.l2jserver.gameserver.model.interfaces.IUpdateTypeComponent;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.network.L2GameClient;
 
@@ -168,4 +169,9 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 	}
 	
 	protected abstract void writeImpl();
+	
+	protected static boolean containsMask(int masks, IUpdateTypeComponent type)
+	{
+		return (masks & type.getMask()) == type.getMask();
+	}
 }
