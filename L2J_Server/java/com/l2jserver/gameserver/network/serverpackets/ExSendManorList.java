@@ -41,7 +41,6 @@ public final class ExSendManorList extends L2GameServerPacket
 		for (Castle castle : castles)
 		{
 			writeD(castle.getResidenceId());
-			writeS(castle.getName().toLowerCase());
 		}
 	}
 }
