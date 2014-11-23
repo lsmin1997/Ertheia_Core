@@ -56,7 +56,7 @@ public class SkillCoolTime extends L2GameServerPacket
 		for (TimeStamp ts : _skillReuseTimeStamps)
 		{
 			writeD(ts.getSkillId());
-			writeD(ts.getSkillLvl());
+			writeD(0x00); // ?
 			writeD((int) ts.getReuse() / 1000);
 			writeD((int) ts.getRemaining() / 1000);
 		}
