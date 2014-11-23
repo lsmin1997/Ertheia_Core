@@ -55,12 +55,18 @@ public final class HennaInfo extends L2GameServerPacket
 		writeC(_activeChar.getHennaStatMEN()); // equip MEN
 		writeC(_activeChar.getHennaStatDEX()); // equip DEX
 		writeC(_activeChar.getHennaStatWIT()); // equip WIT
-		writeD(3); // Slots
+		writeC(_activeChar.getHennaStatWIT()); // equip WIT
+		writeC(0x00); // equip LUC
+		writeC(0x00); // equip CHA
+		writeD(3 - _activeChar.getHennaEmptySlots()); // Slots
 		writeD(_hennas.size()); // Size
 		for (L2Henna henna : _hennas)
 		{
 			writeD(henna.getDyeId());
-			writeD(0x01);
+			writeD(henna.isAllowedClass(_activeChar.getClassId()) ? 0x01 : 0x00);
 		}
+		writeD(0x00); // Unknown
+		writeD(0x00); // Unknown
+		writeD(0x00); // Unknown
 	}
 }
