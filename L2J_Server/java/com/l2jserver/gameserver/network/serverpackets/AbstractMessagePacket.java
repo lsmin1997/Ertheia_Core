@@ -96,9 +96,8 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 		}
 	}
 	
-	// TODO: UnAfraid: Check/Implement id's: 14,15.
-	// 15 exists in goddess of destruction but also may works in h5 needs to be verified!
-	// private static final byte TYPE_CLASS_ID = 15;
+	private static final byte TYPE_POPUP_ID = 16;
+	private static final byte TYPE_CLASS_ID = 15;
 	// id 14 unknown
 	private static final byte TYPE_SYSTEM_STRING = 13;
 	private static final byte TYPE_PLAYER_NAME = 12;
@@ -348,6 +347,28 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 	}
 	
 	/**
+	 * ID from ClassInfo-e.dat
+	 * @param type
+	 * @return
+	 */
+	public final T addClassId(final int type)
+	{
+		append(new SMParam(TYPE_CLASS_ID, type));
+		return (T) this;
+	}
+	
+	public final T addPopup(int target, int attacker, int damage)
+	{
+		append(new SMParam(TYPE_POPUP_ID, new int[]
+		{
+			target,
+			attacker,
+			damage
+		}));
+		return (T) this;
+	}
+	
+	/**
 	 * Instance name from instantzonedata-e.dat
 	 * @param type id of instance
 	 * @return
@@ -358,16 +379,25 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 		return (T) this;
 	}
 	
+	protected void writeParamsSize(int size)
+	{
+		writeC(size);
+	}
+	
+	protected void writeParamType(int type)
+	{
+		writeC(type);
+	}
+	
 	protected final void writeMe()
 	{
-		writeD(getId());
-		writeD(_params.length);
+		writeParamsSize(_params.length);
 		SMParam param;
 		for (int i = 0; i < _paramIndex; i++)
 		{
 			param = _params[i];
 			
-			writeD(param.getType());
+			writeParamType(param.getType());
 			switch (param.getType())
 			{
 				case TYPE_TEXT:
@@ -391,6 +421,7 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 				case TYPE_SYSTEM_STRING:
 				case TYPE_INSTANCE_NAME:
 				case TYPE_DOOR_NAME:
+				case TYPE_CLASS_ID:
 				{
 					writeD(param.getIntValue());
 					break;
@@ -400,10 +431,11 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 				{
 					final int[] array = param.getIntArrayValue();
 					writeD(array[0]); // SkillId
-					writeD(array[1]); // SkillLevel
+					writeH(array[1]); // SkillLevel
 					break;
 				}
 				
+				case TYPE_POPUP_ID:
 				case TYPE_ZONE_NAME:
 				{
 					final int[] array = param.getIntArrayValue();
@@ -448,8 +480,18 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 				case TYPE_SYSTEM_STRING:
 				case TYPE_INSTANCE_NAME:
 				case TYPE_DOOR_NAME:
+				case TYPE_CLASS_ID:
 				{
 					out.println(param.getIntValue());
+					break;
+				}
+				
+				case TYPE_POPUP_ID:
+				{
+					final int[] array = param.getIntArrayValue();
+					out.println(array[0]); // Target
+					out.println(array[1]); // Attacker
+					out.println(array[2]); // Value
 					break;
 				}
 				
@@ -543,6 +585,12 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 				case TYPE_SYSTEM_STRING:
 				{
 					params[i] = "SYS-S-" + param.getIntValue(); // writeD(param.getIntValue());
+					break;
+				}
+				
+				case TYPE_CLASS_ID:
+				{
+					params[i] = "CLASS_ID-N-" + param.getIntValue(); // writeD(param.getIntValue());
 					break;
 				}
 				

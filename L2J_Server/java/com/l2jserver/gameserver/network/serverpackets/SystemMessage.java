@@ -84,6 +84,7 @@ public final class SystemMessage extends AbstractMessagePacket<SystemMessage>
 	protected final void writeImpl()
 	{
 		writeC(0x62);
+		writeH(getId());
 		writeMe();
 	}
 }
