@@ -49,12 +49,14 @@ public final class MultiSellList extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xd0);
+		writeC(0xD0);
 		writeD(_list.getListId()); // list id
+		writeC(0x00); // GOD Unknown
 		writeD(1 + (_index / PAGE_SIZE)); // page started from 1
-		writeD(_finished ? 1 : 0); // finished
+		writeD(_finished ? 0x01 : 0x00); // finished
 		writeD(PAGE_SIZE); // size of pages
 		writeD(_size); // list length
+		writeC(0x00); // new multisell window if 1
 		
 		Entry ent;
 		while (_size-- > 0)
@@ -62,17 +64,17 @@ public final class MultiSellList extends L2GameServerPacket
 			ent = _list.getEntries().get(_index++);
 			writeD(ent.getEntryId());
 			writeC(ent.isStackable() ? 1 : 0);
-			writeH(0x00); // C6
-			writeD(0x00); // C6
-			writeD(0x00); // T1
-			writeH(65534); // T1
-			writeH(0x00); // T1
-			writeH(0x00); // T1
-			writeH(0x00); // T1
-			writeH(0x00); // T1
-			writeH(0x00); // T1
-			writeH(0x00); // T1
-			writeH(0x00); // T1
+			writeH(0x00);
+			writeD(0x00);
+			writeD(0x00);
+			writeH(0x00);
+			writeH(0x00);
+			writeH(0x00);
+			writeH(0x00);
+			writeH(0x00);
+			writeH(0x00);
+			writeH(0x00);
+			writeH(0x00);
 			
 			writeH(ent.getProducts().size());
 			writeH(ent.getIngredients().size());
@@ -82,20 +84,21 @@ public final class MultiSellList extends L2GameServerPacket
 				writeD(ing.getItemId());
 				if (ing.getTemplate() != null)
 				{
-					writeD(ing.getTemplate().getBodyPart());
+					writeQ(ing.getTemplate().getBodyPart());
 					writeH(ing.getTemplate().getType2());
 				}
 				else
 				{
-					writeD(0);
+					writeQ(0);
 					writeH(65535);
 				}
 				writeQ(ing.getItemCount());
 				if (ing.getItemInfo() != null)
 				{
 					writeH(ing.getItemInfo().getEnchantLevel()); // enchant level
-					writeD(ing.getItemInfo().getAugmentId()); // augment id
+					writeD(ing.getItemInfo().getAugmentId()); // augment id / chance if new multisell
 					writeD(0x00); // mana
+					writeD(0x00); // time ?
 					writeH(ing.getItemInfo().getElementId()); // attack element
 					writeH(ing.getItemInfo().getElementPower()); // element power
 					writeH(ing.getItemInfo().getElementals()[0]); // fire
@@ -110,6 +113,7 @@ public final class MultiSellList extends L2GameServerPacket
 					writeH(0x00); // enchant level
 					writeD(0x00); // augment id
 					writeD(0x00); // mana
+					writeD(0x00); // time ?
 					writeH(0x00); // attack element
 					writeH(0x00); // element power
 					writeH(0x00); // fire
@@ -129,7 +133,7 @@ public final class MultiSellList extends L2GameServerPacket
 				if (ing.getItemInfo() != null)
 				{
 					writeH(ing.getItemInfo().getEnchantLevel()); // enchant level
-					writeD(ing.getItemInfo().getAugmentId()); // augment id
+					writeD(ing.getItemInfo().getAugmentId()); // augment id / chance if new window
 					writeD(0x00); // mana
 					writeH(ing.getItemInfo().getElementId()); // attack element
 					writeH(ing.getItemInfo().getElementPower()); // element power
