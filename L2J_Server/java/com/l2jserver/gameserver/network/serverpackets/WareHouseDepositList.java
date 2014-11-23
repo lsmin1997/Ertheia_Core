@@ -31,7 +31,9 @@ public final class WareHouseDepositList extends AbstractItemPacket
 	public static final int CASTLE = 3; // not sure
 	public static final int FREIGHT = 1;
 	private final long _playerAdena;
+	private final int _invSize;
 	private final List<L2ItemInstance> _items = new ArrayList<>();
+	private final List<Integer> _itemsStackable = new ArrayList<>();
 	/**
 	 * <ul>
 	 * <li>0x01-Private Warehouse</li>
@@ -46,6 +48,7 @@ public final class WareHouseDepositList extends AbstractItemPacket
 	{
 		_whType = type;
 		_playerAdena = player.getAdena();
+		_invSize = player.getInventory().getSize();
 		
 		final boolean isPrivate = _whType == PRIVATE;
 		for (L2ItemInstance temp : player.getInventory().getAvailableItems(true, isPrivate, false))
@@ -53,6 +56,10 @@ public final class WareHouseDepositList extends AbstractItemPacket
 			if ((temp != null) && temp.isDepositable(isPrivate))
 			{
 				_items.add(temp);
+			}
+			if ((temp != null) && temp.isDepositable(isPrivate) && temp.isStackable())
+			{
+				_itemsStackable.add(temp.getDisplayId());
 			}
 		}
 	}
@@ -63,6 +70,14 @@ public final class WareHouseDepositList extends AbstractItemPacket
 		writeC(0x41);
 		writeH(_whType);
 		writeQ(_playerAdena);
+		writeD(_invSize);
+		writeH(_itemsStackable.size());
+		
+		for (int itemId : _itemsStackable)
+		{
+			writeD(itemId);
+		}
+		
 		writeH(_items.size());
 		
 		for (L2ItemInstance item : _items)

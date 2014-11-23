@@ -18,6 +18,9 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
@@ -29,7 +32,9 @@ public final class WareHouseWithdrawalList extends AbstractItemPacket
 	public static final int FREIGHT = 1;
 	private L2PcInstance _activeChar;
 	private long _playerAdena;
+	private final int _invSize;
 	private L2ItemInstance[] _items;
+	private final List<Integer> _itemsStackable = new ArrayList<>();
 	/**
 	 * <ul>
 	 * <li>0x01-Private Warehouse</li>
@@ -46,6 +51,7 @@ public final class WareHouseWithdrawalList extends AbstractItemPacket
 		_whType = type;
 		
 		_playerAdena = _activeChar.getAdena();
+		_invSize = player.getInventory().getSize();
 		if (_activeChar.getActiveWarehouse() == null)
 		{
 			_log.warning("error while sending withdraw request to: " + _activeChar.getName());
@@ -53,6 +59,14 @@ public final class WareHouseWithdrawalList extends AbstractItemPacket
 		}
 		
 		_items = _activeChar.getActiveWarehouse().getItems();
+		
+		for (L2ItemInstance item : _items)
+		{
+			if (item.isStackable())
+			{
+				_itemsStackable.add(item.getDisplayId());
+			}
+		}
 	}
 	
 	@Override
@@ -62,11 +76,18 @@ public final class WareHouseWithdrawalList extends AbstractItemPacket
 		writeH(_whType);
 		writeQ(_playerAdena);
 		writeH(_items.length);
-		
+		writeH(_itemsStackable.size());
+		for (int itemId : _itemsStackable)
+		{
+			writeD(itemId);
+		}
+		writeD(_invSize);
 		for (L2ItemInstance item : _items)
 		{
 			writeItem(item);
 			writeD(item.getObjectId());
+			writeD(0);
+			writeD(0);
 		}
 	}
 }
