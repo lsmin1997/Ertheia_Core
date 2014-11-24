@@ -23,9 +23,9 @@ import com.l2jserver.gameserver.model.L2Augmentation;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ExVariationResult;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 
 /**
  * Format:(ch) dddd
@@ -130,9 +130,7 @@ public final class RequestRefine extends AbstractRefinePacket
 		iu.addModifiedItem(targetItem);
 		activeChar.sendPacket(iu);
 		
-		StatusUpdate su = new StatusUpdate(activeChar);
-		su.addAttribute(StatusUpdate.CUR_LOAD, activeChar.getCurrentLoad());
-		activeChar.sendPacket(su);
+		activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
 	}
 	
 	@Override

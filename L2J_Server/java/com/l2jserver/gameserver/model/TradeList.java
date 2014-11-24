@@ -34,9 +34,9 @@ import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 
@@ -656,12 +656,8 @@ public class TradeList
 			}
 			
 			// Update current load as well
-			StatusUpdate playerSU = new StatusUpdate(_owner);
-			playerSU.addAttribute(StatusUpdate.CUR_LOAD, _owner.getCurrentLoad());
-			_owner.sendPacket(playerSU);
-			playerSU = new StatusUpdate(_partner);
-			playerSU.addAttribute(StatusUpdate.CUR_LOAD, _partner.getCurrentLoad());
-			_partner.sendPacket(playerSU);
+			_owner.sendPacket(new ExUserInfoInvenWeight(_owner));
+			_owner.sendPacket(new ExUserInfoInvenWeight(_partner));
 			
 			success = true;
 		}

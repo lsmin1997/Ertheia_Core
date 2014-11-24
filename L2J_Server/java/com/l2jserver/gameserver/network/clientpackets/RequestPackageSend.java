@@ -29,9 +29,9 @@ import com.l2jserver.gameserver.model.itemcontainer.ItemContainer;
 import com.l2jserver.gameserver.model.itemcontainer.PcFreight;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.util.Util;
 
 /**
@@ -203,9 +203,7 @@ public class RequestPackageSend extends L2GameClientPacket
 		sendPacket(playerIU != null ? playerIU : new ItemList(player, false));
 		
 		// Update current load status on player
-		final StatusUpdate su = new StatusUpdate(player);
-		su.addAttribute(StatusUpdate.CUR_LOAD, player.getCurrentLoad());
-		sendPacket(su);
+		player.sendPacket(new ExUserInfoInvenWeight(player));
 	}
 	
 	@Override

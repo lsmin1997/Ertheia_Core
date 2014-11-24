@@ -277,6 +277,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExStartScenePlayer;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoAbnormalVisualEffect;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.FlyToLocation.FlyType;
 import com.l2jserver.gameserver.network.serverpackets.FriendStatusPacket;
 import com.l2jserver.gameserver.network.serverpackets.GameGuardQuery;
@@ -3222,9 +3223,7 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			// Update current load as well
-			StatusUpdate su = new StatusUpdate(this);
-			su.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-			sendPacket(su);
+			sendPacket(new ExUserInfoInvenWeight(this));
 			
 			// If over capacity, drop the item
 			if (!canOverrideCond(PcCondOverride.ITEM_CONDITIONS) && !_inventory.validateCapacity(0, item.isQuestItem()) && newitem.isDropable() && (!newitem.isStackable() || (newitem.getLastChange() != L2ItemInstance.MODIFIED)))
@@ -3426,9 +3425,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Update current load as well
-		StatusUpdate su = new StatusUpdate(this);
-		su.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-		sendPacket(su);
+		sendPacket(new ExUserInfoInvenWeight(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -3545,9 +3542,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Update current load as well
-		StatusUpdate su = new StatusUpdate(this);
-		su.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-		sendPacket(su);
+		sendPacket(new ExUserInfoInvenWeight(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -3614,9 +3609,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Update current load as well
-		StatusUpdate playerSU = new StatusUpdate(this);
-		playerSU.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-		sendPacket(playerSU);
+		sendPacket(new ExUserInfoInvenWeight(this));
 		
 		// Send target update packet
 		if (target instanceof PcInventory)
@@ -3644,9 +3637,7 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			// Update current load as well
-			playerSU = new StatusUpdate(targetPlayer);
-			playerSU.addAttribute(StatusUpdate.CUR_LOAD, targetPlayer.getCurrentLoad());
-			targetPlayer.sendPacket(playerSU);
+			sendPacket(new ExUserInfoInvenWeight(this));
 		}
 		else if (target instanceof PetInventory)
 		{
@@ -3776,9 +3767,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Update current load as well
-		StatusUpdate su = new StatusUpdate(this);
-		su.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-		sendPacket(su);
+		sendPacket(new ExUserInfoInvenWeight(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -3868,9 +3857,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Update current load as well
-		StatusUpdate su = new StatusUpdate(this);
-		su.addAttribute(StatusUpdate.CUR_LOAD, getCurrentLoad());
-		sendPacket(su);
+		sendPacket(new ExUserInfoInvenWeight(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)

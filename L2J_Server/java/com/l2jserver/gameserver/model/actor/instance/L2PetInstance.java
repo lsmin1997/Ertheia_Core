@@ -68,9 +68,9 @@ import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.ExChangeNpcState;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.PetInventoryUpdate;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.StopMove;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
@@ -786,9 +786,7 @@ public class L2PetInstance extends L2Summon
 				
 				owner.sendPacket(iu);
 				
-				StatusUpdate su = new StatusUpdate(owner);
-				su.addAttribute(StatusUpdate.CUR_LOAD, owner.getCurrentLoad());
-				owner.sendPacket(su);
+				owner.sendPacket(new ExUserInfoInvenWeight(owner));
 				
 				owner.broadcastUserInfo();
 				

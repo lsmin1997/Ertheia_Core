@@ -43,6 +43,7 @@ import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.RecipeBookItemList;
@@ -455,9 +456,7 @@ public class RecipeController
 		
 		private void updateCurLoad()
 		{
-			StatusUpdate su = new StatusUpdate(_target);
-			su.addAttribute(StatusUpdate.CUR_LOAD, _target.getCurrentLoad());
-			_target.sendPacket(su);
+			_target.sendPacket(new ExUserInfoInvenWeight(_target));
 		}
 		
 		private void updateCurMp()

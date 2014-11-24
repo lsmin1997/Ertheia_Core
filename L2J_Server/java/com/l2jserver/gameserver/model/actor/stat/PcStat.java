@@ -24,6 +24,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.datatables.PetDataTable;
 import com.l2jserver.gameserver.enums.PartySmallWindowUpdateType;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.model.L2PetLevelData;
 import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.actor.instance.L2ClassMasterInstance;
@@ -339,10 +340,9 @@ public class PcStat extends PlayableStat
 		{
 			return false;
 		}
-		
-		StatusUpdate su = new StatusUpdate(getActiveChar());
-		su.addAttribute(StatusUpdate.SP, getSp());
-		getActiveChar().sendPacket(su);
+		UserInfo ui = new UserInfo(getActiveChar(), false);
+		ui.addComponentType(UserInfoType.CURRENT_HPMPCP_EXP_SP);
+		getActiveChar().sendPacket(ui);
 		
 		return true;
 	}

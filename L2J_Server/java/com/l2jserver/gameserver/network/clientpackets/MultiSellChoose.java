@@ -34,8 +34,8 @@ import com.l2jserver.gameserver.model.multisell.Entry;
 import com.l2jserver.gameserver.model.multisell.Ingredient;
 import com.l2jserver.gameserver.model.multisell.PreparedListContainer;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
@@ -450,10 +450,7 @@ public class MultiSellChoose extends L2GameClientPacket
 					}
 					player.sendPacket(new ItemList(player, false));
 					
-					StatusUpdate su = new StatusUpdate(player);
-					su.addAttribute(StatusUpdate.CUR_LOAD, player.getCurrentLoad());
-					player.sendPacket(su);
-					su = null;
+					player.sendPacket(new ExUserInfoInvenWeight(player));
 				}
 				finally
 				{

@@ -36,10 +36,10 @@ import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.EnchantResult;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 
@@ -389,9 +389,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 				}
 			}
 			
-			final StatusUpdate su = new StatusUpdate(activeChar);
-			su.addAttribute(StatusUpdate.CUR_LOAD, activeChar.getCurrentLoad());
-			activeChar.sendPacket(su);
+			activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
 			if (!Config.FORCE_INVENTORY_UPDATE)
 			{
 				if (scroll.getCount() == 0)

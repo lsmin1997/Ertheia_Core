@@ -76,10 +76,10 @@ import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.DropItem;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.GetItem;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SpawnItem;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.GMAudit;
 
@@ -1368,9 +1368,7 @@ public final class L2ItemInstance extends L2Object
 					iu.addRemovedItem(this);
 					player.sendPacket(iu);
 					
-					StatusUpdate su = new StatusUpdate(player);
-					su.addAttribute(StatusUpdate.CUR_LOAD, player.getCurrentLoad());
-					player.sendPacket(su);
+					player.sendPacket(new ExUserInfoInvenWeight(player));
 					
 				}
 				else
@@ -1867,9 +1865,7 @@ public final class L2ItemInstance extends L2Object
 				iu.addRemovedItem(this);
 				player.sendPacket(iu);
 				
-				StatusUpdate su = new StatusUpdate(player);
-				su.addAttribute(StatusUpdate.CUR_LOAD, player.getCurrentLoad());
-				player.sendPacket(su);
+				player.sendPacket(new ExUserInfoInvenWeight(player));
 				
 			}
 			else

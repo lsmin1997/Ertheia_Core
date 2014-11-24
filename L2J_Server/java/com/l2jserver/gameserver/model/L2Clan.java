@@ -40,6 +40,7 @@ import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.datatables.CrestTable;
 import com.l2jserver.gameserver.datatables.SkillData;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
@@ -71,7 +72,6 @@ import com.l2jserver.gameserver.network.serverpackets.PledgeShowMemberListUpdate
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillList;
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillList.SubPledgeSkill;
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillListAdd;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.util.Util;
@@ -2776,9 +2776,9 @@ public class L2Clan implements IIdentifiable, INamable
 		}
 		
 		// the player should know that he has less sp now :p
-		StatusUpdate su = new StatusUpdate(player);
-		su.addAttribute(StatusUpdate.SP, player.getSp());
-		player.sendPacket(su);
+		UserInfo ui = new UserInfo(player, false);
+		ui.addComponentType(UserInfoType.CURRENT_HPMPCP_EXP_SP);
+		player.sendPacket(ui);
 		
 		ItemList il = new ItemList(player, false);
 		player.sendPacket(il);

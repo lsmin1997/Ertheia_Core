@@ -42,9 +42,9 @@ import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnP
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.util.Util;
 
 public class PcInventory extends Inventory
@@ -566,9 +566,7 @@ public class PcInventory extends Inventory
 				}
 				
 				// Update current load as well
-				StatusUpdate su = new StatusUpdate(actor);
-				su.addAttribute(StatusUpdate.CUR_LOAD, actor.getCurrentLoad());
-				actor.sendPacket(su);
+				actor.sendPacket(new ExUserInfoInvenWeight(actor));
 				
 				// Notify to scripts
 				EventDispatcher.getInstance().notifyEventAsync(new OnPlayerItemAdd(actor, item), item.getItem());

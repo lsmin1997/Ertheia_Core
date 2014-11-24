@@ -24,6 +24,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.ClanPrivilege;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -48,8 +49,8 @@ import com.l2jserver.gameserver.network.serverpackets.AcquireSkillDone;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillList;
-import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.util.Util;
 
 /**
@@ -498,9 +499,9 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 				if (levelUpSp > 0)
 				{
 					player.setSp(player.getSp() - levelUpSp);
-					final StatusUpdate su = new StatusUpdate(player);
-					su.addAttribute(StatusUpdate.SP, player.getSp());
-					player.sendPacket(su);
+					UserInfo ui = new UserInfo(player, false);
+					ui.addComponentType(UserInfoType.CURRENT_HPMPCP_EXP_SP);
+					player.sendPacket(ui);
 				}
 				return true;
 			}
