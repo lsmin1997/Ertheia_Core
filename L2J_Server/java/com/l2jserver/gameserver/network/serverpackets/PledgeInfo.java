@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2Clan;
 
 public class PledgeInfo extends L2GameServerPacket
@@ -33,6 +34,7 @@ public class PledgeInfo extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x89);
+		writeD(Config.SERVER_ID);
 		writeD(_clan.getId());
 		writeS(_clan.getName());
 		writeS(_clan.getAllyName());
