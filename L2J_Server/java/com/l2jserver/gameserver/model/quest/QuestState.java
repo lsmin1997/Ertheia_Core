@@ -370,7 +370,7 @@ public final class QuestState
 		final Quest q = getQuest();
 		if (!q.isCustomQuest() && (cond > 0))
 		{
-			_player.sendPacket(new ExShowQuestMark(q.getId()));
+			_player.sendPacket(new ExShowQuestMark(q.getId(), getCond()));
 		}
 	}
 	

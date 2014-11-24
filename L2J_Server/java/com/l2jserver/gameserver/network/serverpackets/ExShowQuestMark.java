@@ -24,17 +24,20 @@ package com.l2jserver.gameserver.network.serverpackets;
 public class ExShowQuestMark extends L2GameServerPacket
 {
 	private final int _questId;
+	private final int _questState;
 	
-	public ExShowQuestMark(int questId)
+	public ExShowQuestMark(int questId, int questState)
 	{
 		_questId = questId;
+		_questState = questState;
 	}
 	
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
+		writeC(0xFE);
 		writeH(0x21);
 		writeD(_questId);
+		writeD(_questState);
 	}
 }
