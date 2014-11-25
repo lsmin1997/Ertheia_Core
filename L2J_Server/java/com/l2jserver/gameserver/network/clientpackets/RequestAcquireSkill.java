@@ -46,7 +46,7 @@ import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillDone;
-import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquirableSkillListByClass;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillList;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
@@ -391,25 +391,14 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 	public static void showSubUnitSkillList(L2PcInstance activeChar)
 	{
 		final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableSubPledgeSkills(activeChar.getClan());
-		final AcquireSkillList asl = new AcquireSkillList(AcquireSkillType.SUBPLEDGE);
-		int count = 0;
 		
-		for (L2SkillLearn s : skills)
-		{
-			if (SkillData.getInstance().getSkill(s.getSkillId(), s.getSkillLevel()) != null)
-			{
-				asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getLevelUpSp(), 0);
-				++count;
-			}
-		}
-		
-		if (count == 0)
+		if (skills.isEmpty())
 		{
 			activeChar.sendPacket(SystemMessageId.NO_MORE_SKILLS_TO_LEARN);
 		}
 		else
 		{
-			activeChar.sendPacket(asl);
+			activeChar.sendPacket(new ExAcquirableSkillListByClass(skills, AcquireSkillType.SUBPLEDGE));
 		}
 	}
 	
