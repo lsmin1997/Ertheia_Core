@@ -27,7 +27,7 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 public final class WareHouseWithdrawalList extends AbstractItemPacket
 {
 	public static final int PRIVATE = 1;
-	public static final int CLAN = 4;
+	public static final int CLAN = 2;
 	public static final int CASTLE = 3; // not sure
 	public static final int FREIGHT = 1;
 	private L2PcInstance _activeChar;
