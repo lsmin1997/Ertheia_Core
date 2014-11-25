@@ -46,9 +46,13 @@ import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillDone;
+import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExAcquirableSkillListByClass;
+import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
+import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillList;
+import com.l2jserver.gameserver.network.serverpackets.ShortCutInit;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.util.Util;
@@ -102,12 +106,12 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 		}
 		
 		final L2Npc trainer = activeChar.getLastFolkNPC();
-		if (!(trainer instanceof L2NpcInstance))
+		if (!(trainer instanceof L2NpcInstance) && (_skillType != AcquireSkillType.CLASS))
 		{
 			return;
 		}
 		
-		if (!trainer.canInteract(activeChar) && !activeChar.isGM())
+		if ((_skillType != AcquireSkillType.CLASS) && !trainer.canInteract(activeChar) && !activeChar.isGM())
 		{
 			return;
 		}
@@ -484,11 +488,12 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 						}
 					}
 				}
+				
 				// If the player has SP and all required items then consume SP.
 				if (levelUpSp > 0)
 				{
 					player.setSp(player.getSp() - levelUpSp);
-					UserInfo ui = new UserInfo(player, false);
+					UserInfo ui = new UserInfo(player);
 					ui.addComponentType(UserInfoType.CURRENT_HPMPCP_EXP_SP);
 					player.sendPacket(ui);
 				}
@@ -511,9 +516,11 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 		sm.addSkillName(skill);
 		player.sendPacket(sm);
 		
-		player.sendPacket(new AcquireSkillDone());
-		
 		player.addSkill(skill, true);
+		
+		player.sendPacket(new ItemList(player, false));
+		player.sendPacket(new ShortCutInit(player));
+		player.sendPacket(new ExBasicActionList(ExBasicActionList.DEFAULT_ACTION_LIST));
 		player.sendSkillList();
 		
 		player.updateShortCuts(_id, _level);
@@ -526,7 +533,14 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 		}
 		
 		// Notify scripts of the skill learn.
-		EventDispatcher.getInstance().notifyEventAsync(new OnPlayerSkillLearn(trainer, player, skill, _skillType), trainer);
+		if (trainer != null)
+		{
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerSkillLearn(trainer, player, skill, _skillType), trainer);
+		}
+		else
+		{
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerSkillLearn(trainer, player, skill, _skillType), player);
+		}
 	}
 	
 	/**
@@ -548,7 +562,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 		}
 		else
 		{
-			L2NpcInstance.showSkillList(player, trainer, player.getLearningClass());
+			player.sendPacket(new AcquireSkillList(player));
 		}
 	}
 	
