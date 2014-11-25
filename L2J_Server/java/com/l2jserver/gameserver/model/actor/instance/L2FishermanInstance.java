@@ -20,15 +20,13 @@ package com.l2jserver.gameserver.model.actor.instance;
 
 import java.util.List;
 
-import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.L2SkillLearn;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.base.AcquireSkillType;
-import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquirableSkillListByClass;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 public final class L2FishermanInstance extends L2MerchantInstance
@@ -72,23 +70,8 @@ public final class L2FishermanInstance extends L2MerchantInstance
 	public static void showFishSkillList(L2PcInstance player)
 	{
 		final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableFishingSkills(player);
-		final AcquireSkillList asl = new AcquireSkillList(AcquireSkillType.FISHING);
 		
-		int count = 0;
-		
-		for (L2SkillLearn s : skills)
-		{
-			final Skill sk = SkillData.getInstance().getSkill(s.getSkillId(), s.getSkillLevel());
-			
-			if (sk == null)
-			{
-				continue;
-			}
-			count++;
-			asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getLevelUpSp(), 1);
-		}
-		
-		if (count == 0)
+		if (!skills.isEmpty())
 		{
 			final int minlLevel = SkillTreesData.getInstance().getMinLevelForNewSkill(player, SkillTreesData.getInstance().getFishingSkillTree());
 			if (minlLevel > 0)
@@ -104,7 +87,7 @@ public final class L2FishermanInstance extends L2MerchantInstance
 		}
 		else
 		{
-			player.sendPacket(asl);
+			player.sendPacket(new ExAcquirableSkillListByClass(skills, AcquireSkillType.FISHING));
 		}
 	}
 }
