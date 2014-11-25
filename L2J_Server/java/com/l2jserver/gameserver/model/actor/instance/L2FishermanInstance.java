@@ -71,7 +71,7 @@ public final class L2FishermanInstance extends L2MerchantInstance
 	{
 		final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableFishingSkills(player);
 		
-		if (!skills.isEmpty())
+		if (skills.isEmpty())
 		{
 			final int minlLevel = SkillTreesData.getInstance().getMinLevelForNewSkill(player, SkillTreesData.getInstance().getFishingSkillTree());
 			if (minlLevel > 0)

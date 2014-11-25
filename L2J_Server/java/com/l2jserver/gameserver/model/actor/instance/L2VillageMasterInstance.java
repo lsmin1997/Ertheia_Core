@@ -49,8 +49,8 @@ import com.l2jserver.gameserver.model.entity.Fort;
 import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquirableSkillListByClass;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillLaunched;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
@@ -1183,16 +1183,8 @@ public class L2VillageMasterInstance extends L2NpcInstance
 		}
 		
 		final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailablePledgeSkills(player.getClan());
-		final AcquireSkillList asl = new AcquireSkillList(AcquireSkillType.PLEDGE);
-		int counts = 0;
 		
-		for (L2SkillLearn s : skills)
-		{
-			asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getLevelUpSp(), s.getSocialClass().ordinal());
-			counts++;
-		}
-		
-		if (counts == 0)
+		if (skills.isEmpty())
 		{
 			if (player.getClan().getLevel() < 8)
 			{
@@ -1216,7 +1208,7 @@ public class L2VillageMasterInstance extends L2NpcInstance
 		}
 		else
 		{
-			player.sendPacket(asl);
+			player.sendPacket(new ExAcquirableSkillListByClass(skills, AcquireSkillType.PLEDGE));
 		}
 		player.sendPacket(ActionFailed.STATIC_PACKET);
 	}
