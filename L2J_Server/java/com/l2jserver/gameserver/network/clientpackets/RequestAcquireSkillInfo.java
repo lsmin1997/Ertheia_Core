@@ -28,6 +28,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.base.AcquireSkillType;
 import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillInfo;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquireSkillInfo;
 
 /**
  * Request Acquire Skill Info client packet implementation.
@@ -65,12 +66,12 @@ public final class RequestAcquireSkillInfo extends L2GameClientPacket
 		}
 		
 		final L2Npc trainer = activeChar.getLastFolkNPC();
-		if (!(trainer instanceof L2NpcInstance))
+		if (!(trainer instanceof L2NpcInstance) && (_skillType != AcquireSkillType.CLASS))
 		{
 			return;
 		}
 		
-		if (!trainer.canInteract(activeChar) && !activeChar.isGM())
+		if ((_skillType != AcquireSkillType.CLASS) && !trainer.canInteract(activeChar) && !activeChar.isGM())
 		{
 			return;
 		}
@@ -115,10 +116,10 @@ public final class RequestAcquireSkillInfo extends L2GameClientPacket
 			}
 			case CLASS:
 			{
-				if (trainer.getTemplate().canTeach(activeChar.getLearningClass()))
+				if ((trainer == null) || trainer.getTemplate().canTeach(activeChar.getLearningClass()))
 				{
 					final int customSp = s.getCalculatedLevelUpSp(activeChar.getClassId(), activeChar.getLearningClass());
-					sendPacket(new AcquireSkillInfo(_skillType, s, customSp));
+					sendPacket(new ExAcquireSkillInfo(activeChar, s, customSp));
 				}
 				break;
 			}
