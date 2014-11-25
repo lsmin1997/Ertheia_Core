@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.model.L2SkillLearn;
@@ -31,9 +30,8 @@ import com.l2jserver.gameserver.model.actor.status.FolkStatus;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.base.AcquireSkillType;
 import com.l2jserver.gameserver.model.base.ClassId;
-import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquirableSkillListByClass;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.util.StringUtil;
@@ -81,21 +79,8 @@ public class L2NpcInstance extends L2Npc
 		if (npcId == 32611) // Tolonis (Officer)
 		{
 			final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableCollectSkills(player);
-			final AcquireSkillList asl = new AcquireSkillList(AcquireSkillType.COLLECT);
 			
-			int counts = 0;
-			for (L2SkillLearn s : skills)
-			{
-				final Skill sk = SkillData.getInstance().getSkill(s.getSkillId(), s.getSkillLevel());
-				
-				if (sk != null)
-				{
-					counts++;
-					asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), 0, 1);
-				}
-			}
-			
-			if (counts == 0) // No more skills to learn, come back when you level.
+			if (skills.isEmpty()) // No more skills to learn, come back when you level.
 			{
 				final int minLevel = SkillTreesData.getInstance().getMinLevelForNewSkill(player, SkillTreesData.getInstance().getCollectSkillTree());
 				if (minLevel > 0)
@@ -111,7 +96,7 @@ public class L2NpcInstance extends L2Npc
 			}
 			else
 			{
-				player.sendPacket(asl);
+				player.sendPacket(new ExAcquirableSkillListByClass(skills, AcquireSkillType.COLLECT));
 			}
 			return;
 		}
@@ -133,19 +118,9 @@ public class L2NpcInstance extends L2Npc
 		
 		// Normal skills, No LearnedByFS, no AutoGet skills.
 		final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableSkills(player, classId, false, false);
-		final AcquireSkillList asl = new AcquireSkillList(AcquireSkillType.CLASS);
-		int count = 0;
 		player.setLearningClass(classId);
-		for (L2SkillLearn s : skills)
-		{
-			if (SkillData.getInstance().getSkill(s.getSkillId(), s.getSkillLevel()) != null)
-			{
-				asl.addSkill(s.getSkillId(), s.getSkillLevel(), s.getSkillLevel(), s.getCalculatedLevelUpSp(player.getClassId(), classId), 0);
-				count++;
-			}
-		}
 		
-		if (count == 0)
+		if (skills.isEmpty())
 		{
 			final Map<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(classId);
 			final int minLevel = SkillTreesData.getInstance().getMinLevelForNewSkill(player, skillTree);
@@ -171,7 +146,7 @@ public class L2NpcInstance extends L2Npc
 		}
 		else
 		{
-			player.sendPacket(asl);
+			player.sendPacket(new ExAcquirableSkillListByClass(skills, AcquireSkillType.CLASS));
 		}
 	}
 }
