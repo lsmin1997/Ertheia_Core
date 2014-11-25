@@ -1,90 +1,67 @@
 /*
- * Copyright (C) 2004-2014 L2J Server
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
  * 
- * This file is part of L2J Server.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * L2J Server is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * L2J Server is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import com.l2jserver.gameserver.model.base.AcquireSkillType;
+import com.l2jserver.gameserver.datatables.SkillData;
+import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.model.L2SkillLearn;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.holders.ItemHolder;
 
 /**
- * Acquire Skill List server packet implementation.
+ * @author Sdw
  */
-public final class AcquireSkillList extends L2GameServerPacket
+public class AcquireSkillList extends L2GameServerPacket
 {
-	private final List<Skill> _skills;
-	private final AcquireSkillType _skillType;
+	final L2PcInstance _activeChar;
 	
-	/**
-	 * Private class containing learning skill information.
-	 */
-	private static class Skill
+	public AcquireSkillList(L2PcInstance activeChar)
 	{
-		public int id;
-		public int nextLevel;
-		public int maxLevel;
-		public int spCost;
-		public int requirements;
-		
-		public Skill(int pId, int pNextLevel, int pMaxLevel, int pSpCost, int pRequirements)
-		{
-			id = pId;
-			nextLevel = pNextLevel;
-			maxLevel = pMaxLevel;
-			spCost = pSpCost;
-			requirements = pRequirements;
-		}
-	}
-	
-	public AcquireSkillList(AcquireSkillType type)
-	{
-		_skillType = type;
-		_skills = new ArrayList<>();
-	}
-	
-	public void addSkill(int id, int nextLevel, int maxLevel, int spCost, int requirements)
-	{
-		_skills.add(new Skill(id, nextLevel, maxLevel, spCost, requirements));
+		_activeChar = activeChar;
 	}
 	
 	@Override
 	protected void writeImpl()
 	{
-		if (_skills.isEmpty())
-		{
-			return;
-		}
+		final List<L2SkillLearn> learnable = SkillTreesData.getInstance().getAvailableSkills(_activeChar, _activeChar.getClassId(), false, false);
+		List<Integer> re = Collections.emptyList();
 		
 		writeC(0x90);
-		writeD(_skillType.ordinal());
-		writeD(_skills.size());
-		
-		for (Skill temp : _skills)
+		writeH(learnable.size());
+		for (L2SkillLearn skill : learnable)
 		{
-			writeD(temp.id);
-			writeD(temp.nextLevel);
-			writeD(temp.maxLevel);
-			writeD(temp.spCost);
-			writeD(temp.requirements);
-			if (_skillType == AcquireSkillType.SUBPLEDGE)
+			writeD(skill.getSkillId());
+			writeH(skill.getSkillLevel());
+			writeQ(skill.getLevelUpSp());
+			writeC(skill.getGetLevel());
+			writeC(0x00); // Dual Class Level Required
+			writeC(skill.getRequiredItems().size());
+			for (ItemHolder item : skill.getRequiredItems())
 			{
-				writeD(0); // TODO: ?
+				writeD(item.getId());
+				writeQ(item.getCount());
+			}
+			
+			writeC(re.size());
+			for (int skillId : re)
+			{
+				writeD(skillId);
+				writeH(SkillData.getInstance().getMaxLevel(skillId));
 			}
 		}
 	}
