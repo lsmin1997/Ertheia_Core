@@ -111,10 +111,8 @@ public abstract class L2Summon extends L2Playable
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2Summon);
-		
 		setInstanceId(owner.getInstanceId()); // set instance to same as owner
-		
-		_showSummonAnimation = true;
+		setShowSummonAnimation(true);
 		_owner = owner;
 		getAI();
 		
@@ -333,7 +331,7 @@ public abstract class L2Summon extends L2Playable
 				// get the mobs which have aggro on the this instance
 				if (TgMob instanceof L2Attackable)
 				{
-					if (((L2Attackable) TgMob).isDead())
+					if (TgMob.isDead())
 					{
 						continue;
 					}

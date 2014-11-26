@@ -36,7 +36,6 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2Augmentation;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.options.Options;
 import com.l2jserver.gameserver.network.clientpackets.AbstractRefinePacket;
@@ -538,7 +537,7 @@ public class AugmentationData
 		int stat34 = 0;
 		if (Config.RETAIL_LIKE_AUGMENTATION)
 		{
-			if (((L2Weapon) item.getItem()).isMagicWeapon())
+			if (item.getItem().isMagicWeapon())
 			{
 				List<AugmentationChance> _selectedChances12 = new ArrayList<>();
 				List<AugmentationChance> _selectedChances34 = new ArrayList<>();

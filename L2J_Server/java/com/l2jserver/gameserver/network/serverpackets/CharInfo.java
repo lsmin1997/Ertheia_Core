@@ -82,7 +82,7 @@ public class CharInfo extends L2GameServerPacket
 		_mAtkSpd = _activeChar.getMAtkSpd();
 		_pAtkSpd = _activeChar.getPAtkSpd();
 		_attackSpeedMultiplier = _activeChar.getAttackSpeedMultiplier();
-		_invisible = cha.isInvisible();
+		setInvisible(cha.isInvisible());
 		
 		_moveMultiplier = cha.getMovementSpeedMultiplier();
 		_runSpd = (int) Math.round(cha.getRunSpeed() / _moveMultiplier);
@@ -110,7 +110,7 @@ public class CharInfo extends L2GameServerPacket
 	{
 		boolean gmSeeInvis = false;
 		
-		if (_invisible)
+		if (isInvisible())
 		{
 			final L2PcInstance activeChar = getClient().getActiveChar();
 			if ((activeChar != null) && activeChar.canOverrideCond(PcCondOverride.SEE_ALL_PLAYERS))
@@ -198,7 +198,7 @@ public class CharInfo extends L2GameServerPacket
 		
 		writeC(!_activeChar.isInOlympiadMode() && _activeChar.isAlikeDead() ? 0x01 : 0x00); // Confirmed
 		
-		writeC(_invisible ? 0x01 : 0x00); // Find me
+		writeC(!gmSeeInvis && isInvisible() ? 0x01 : 0x00); // Find me
 		
 		writeC(_activeChar.getMountType().ordinal()); // 1-on Strider, 2-on Wyvern, 3-on Great Wolf, 0-no mount
 		writeC(_activeChar.getPrivateStoreType().getId()); // Confirmed
