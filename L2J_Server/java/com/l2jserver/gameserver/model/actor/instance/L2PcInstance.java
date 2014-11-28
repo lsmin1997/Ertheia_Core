@@ -96,6 +96,7 @@ import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.enums.ShortcutType;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.enums.Team;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.handler.IItemHandler;
 import com.l2jserver.gameserver.handler.ItemHandler;
 import com.l2jserver.gameserver.idfactory.IdFactory;
@@ -262,6 +263,7 @@ import com.l2jserver.gameserver.network.serverpackets.CharInfo;
 import com.l2jserver.gameserver.network.serverpackets.ConfirmDlg;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ExAbnormalStatusUpdateFromTarget;
+import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExAutoSoulShot;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExDominionWarStart;
@@ -1700,7 +1702,9 @@ public final class L2PcInstance extends L2Playable
 		}
 		setPvpFlag(value);
 		
-		sendPacket(new UserInfo(this));
+		UserInfo ui = new UserInfo(this, false);
+		ui.addComponentType(UserInfoType.SOCIAL);
+		sendPacket(ui);
 		sendPacket(new ExBrExtraUserInfo(this));
 		
 		// If this player has a pet update the pets pvp flag as well
@@ -2080,7 +2084,9 @@ public final class L2PcInstance extends L2Playable
 					removeSkill(getKnownSkill(4270), false, true);
 					setIsOverloaded(false);
 				}
-				sendPacket(new UserInfo(this));
+				UserInfo ui = new UserInfo(this, false);
+				ui.addComponentType(UserInfoType.ENCHANTLEVEL);
+				sendPacket(ui);
 				sendPacket(new EtcStatusUpdate(this));
 				broadcastPacket(new CharInfo(this));
 				broadcastPacket(new ExBrExtraUserInfo(this));
@@ -3225,6 +3231,7 @@ public final class L2PcInstance extends L2Playable
 			
 			// Update current load as well
 			sendPacket(new ExUserInfoInvenWeight(this));
+			sendPacket(new ExAdenaInvenCount(this));
 			
 			// If over capacity, drop the item
 			if (!canOverrideCond(PcCondOverride.ITEM_CONDITIONS) && !_inventory.validateCapacity(0, item.isQuestItem()) && newitem.isDropable() && (!newitem.isStackable() || (newitem.getLastChange() != L2ItemInstance.MODIFIED)))
@@ -3427,6 +3434,7 @@ public final class L2PcInstance extends L2Playable
 		
 		// Update current load as well
 		sendPacket(new ExUserInfoInvenWeight(this));
+		sendPacket(new ExAdenaInvenCount(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -3544,6 +3552,7 @@ public final class L2PcInstance extends L2Playable
 		
 		// Update current load as well
 		sendPacket(new ExUserInfoInvenWeight(this));
+		sendPacket(new ExAdenaInvenCount(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -3611,6 +3620,7 @@ public final class L2PcInstance extends L2Playable
 		
 		// Update current load as well
 		sendPacket(new ExUserInfoInvenWeight(this));
+		sendPacket(new ExAdenaInvenCount(this));
 		
 		// Send target update packet
 		if (target instanceof PcInventory)
@@ -3639,6 +3649,7 @@ public final class L2PcInstance extends L2Playable
 			
 			// Update current load as well
 			sendPacket(new ExUserInfoInvenWeight(this));
+			sendPacket(new ExAdenaInvenCount(this));
 		}
 		else if (target instanceof PetInventory)
 		{
@@ -3769,6 +3780,7 @@ public final class L2PcInstance extends L2Playable
 		
 		// Update current load as well
 		sendPacket(new ExUserInfoInvenWeight(this));
+		sendPacket(new ExAdenaInvenCount(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -4238,7 +4250,9 @@ public final class L2PcInstance extends L2Playable
 	public final void broadcastTitleInfo()
 	{
 		// Send a Server->Client packet UserInfo to this L2PcInstance
-		sendPacket(new UserInfo(this));
+		UserInfo ui = new UserInfo(this, false);
+		ui.addComponentType(UserInfoType.CLAN);
+		sendPacket(ui);
 		sendPacket(new ExBrExtraUserInfo(this));
 		
 		// Send a Server->Client packet TitleUpdate to all L2PcInstance in _KnownPlayers of the L2PcInstance
@@ -5510,7 +5524,9 @@ public final class L2PcInstance extends L2Playable
 			setPvpKills(getPvpKills() + 1);
 			
 			// Send a Server->Client UserInfo packet to attacker with its Karma and PK Counter
-			sendPacket(new UserInfo(this));
+			UserInfo ui = new UserInfo(this, false);
+			ui.addComponentType(UserInfoType.SOCIAL);
+			sendPacket(ui);
 			sendPacket(new ExBrExtraUserInfo(this));
 		}
 	}
@@ -5537,7 +5553,9 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Update player's UI.
-		sendPacket(new UserInfo(this));
+		UserInfo ui = new UserInfo(this, false);
+		ui.addComponentType(UserInfoType.SOCIAL);
+		sendPacket(ui);
 		sendPacket(new ExBrExtraUserInfo(this));
 	}
 	
@@ -6701,7 +6719,9 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setKarmaFlag(int flag)
 	{
-		sendPacket(new UserInfo(this));
+		StatusUpdate su = new StatusUpdate(this);
+		su.addAttribute(StatusUpdate.PVP_FLAG, getKarma());
+		sendPacket(su);
 		sendPacket(new ExBrExtraUserInfo(this));
 		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
 		for (L2PcInstance player : plrs)
@@ -8110,7 +8130,9 @@ public final class L2PcInstance extends L2Playable
 		sendPacket(new HennaInfo(this));
 		
 		// Send Server->Client UserInfo packet to this L2PcInstance
-		sendPacket(new UserInfo(this));
+		UserInfo ui = new UserInfo(this, false);
+		ui.addComponentType(UserInfoType.BASE_STATS, UserInfoType.MAX_HPCPMP, UserInfoType.STATS, UserInfoType.SPEED);
+		sendPacket(ui);
 		sendPacket(new ExBrExtraUserInfo(this));
 		// Add the recovered dyes to the player's inventory and notify them.
 		getInventory().addItem("Henna", henna.getDyeItemId(), henna.getCancelCount(), this, null);
@@ -8161,7 +8183,9 @@ public final class L2PcInstance extends L2Playable
 				sendPacket(new HennaInfo(this));
 				
 				// Send Server->Client UserInfo packet to this L2PcInstance
-				sendPacket(new UserInfo(this));
+				UserInfo ui = new UserInfo(this, false);
+				ui.addComponentType(UserInfoType.BASE_STATS, UserInfoType.MAX_HPCPMP, UserInfoType.STATS, UserInfoType.SPEED);
+				sendPacket(ui);
 				sendPacket(new ExBrExtraUserInfo(this));
 				
 				// Notify to scripts
