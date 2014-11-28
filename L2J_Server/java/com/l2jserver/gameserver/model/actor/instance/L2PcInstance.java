@@ -261,6 +261,7 @@ import com.l2jserver.gameserver.network.serverpackets.ChangeWaitType;
 import com.l2jserver.gameserver.network.serverpackets.CharInfo;
 import com.l2jserver.gameserver.network.serverpackets.ConfirmDlg;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
+import com.l2jserver.gameserver.network.serverpackets.ExAbnormalStatusUpdateFromTarget;
 import com.l2jserver.gameserver.network.serverpackets.ExAutoSoulShot;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExDominionWarStart;
@@ -4875,6 +4876,9 @@ public final class L2PcInstance extends L2Playable
 			
 			// To others the new target, and not yourself!
 			Broadcast.toKnownPlayers(this, new TargetSelected(getObjectId(), newTarget.getObjectId(), getX(), getY(), getZ()));
+			
+			// Send buffs
+			sendPacket(new ExAbnormalStatusUpdateFromTarget(target));
 		}
 		
 		// Target was removed?
