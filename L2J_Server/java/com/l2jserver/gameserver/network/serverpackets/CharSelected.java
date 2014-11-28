@@ -54,7 +54,6 @@ public class CharSelected extends L2GameServerPacket
 		writeD(_activeChar.getX());
 		writeD(_activeChar.getY());
 		writeD(_activeChar.getZ());
-		
 		writeF(_activeChar.getCurrentHp());
 		writeF(_activeChar.getCurrentMp());
 		writeQ(_activeChar.getSp());
@@ -62,19 +61,26 @@ public class CharSelected extends L2GameServerPacket
 		writeD(_activeChar.getLevel());
 		writeD(_activeChar.getKarma()); // thx evill33t
 		writeD(_activeChar.getPkKills());
-		
 		writeD(GameTimeController.getInstance().getGameTime() % (24 * 60)); // "reset" on 24th hour
-		
 		writeD(_activeChar.getClassId().getId());
 		
 		writeD(0x00);
+		
+		writeB(new byte[16]);
+		
 		writeD(0x00);
 		writeD(0x00);
 		writeD(0x00);
 		writeD(0x00);
 		
-		writeB(new byte[350]);
-		writeB(new byte[60]);
+		writeD(0x00);
+		
+		writeD(0x00);
+		writeD(0x00);
+		writeD(0x00);
+		writeD(0x00);
+		
+		writeB(new byte[28]);
 		writeD(0x00);
 	}
 }
