@@ -39,13 +39,11 @@ public class ExPartyPetWindowUpdate extends L2GameServerPacket
 		writeH(0x19);
 		writeD(_summon.getObjectId());
 		writeD(_summon.getTemplate().getDisplayId() + 1000000);
-		writeD(_summon.getSummonType());
+		writeC(_summon.getSummonType());
 		writeD(_summon.getOwner().getObjectId());
-		writeS(_summon.getName());
 		writeD((int) _summon.getCurrentHp());
 		writeD(_summon.getMaxHp());
 		writeD((int) _summon.getCurrentMp());
 		writeD(_summon.getMaxMp());
-		writeD(_summon.getLevel());
 	}
 }
