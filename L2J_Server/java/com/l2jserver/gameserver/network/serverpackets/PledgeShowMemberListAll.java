@@ -21,56 +21,43 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2Clan.SubPledge;
 import com.l2jserver.gameserver.model.L2ClanMember;
+import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 public class PledgeShowMemberListAll extends L2GameServerPacket
 {
 	private final L2Clan _clan;
-	private final L2PcInstance _activeChar;
 	private final L2ClanMember[] _members;
 	private int _pledgeType;
 	
-	public PledgeShowMemberListAll(L2Clan clan, L2PcInstance activeChar)
+	public PledgeShowMemberListAll(L2Clan clan)
 	{
 		_clan = clan;
-		_activeChar = activeChar;
 		_members = _clan.getMembers();
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
-		_pledgeType = 0;
-		// FIXME: That's wrong on retail sends this whole packet few times (depending how much sub pledges it has)
-		writePledge(0);
+		// write main Clan
+		writePledge(null, _clan.getLeaderName());
 		
 		for (SubPledge subPledge : _clan.getAllSubPledges())
 		{
-			_activeChar.sendPacket(new PledgeReceiveSubPledgeCreated(subPledge, _clan));
+			L2PcInstance pLeader = L2World.getInstance().getPlayer(subPledge.getLeaderId());
+			writePledge(subPledge, (pLeader == null ? "" : pLeader.getName()));
 		}
-		
-		for (L2ClanMember m : _members)
-		{
-			if (m.getPledgeType() == 0)
-			{
-				continue;
-			}
-			_activeChar.sendPacket(new PledgeShowMemberListAdd(m));
-		}
-		
-		// unless this is sent sometimes, the client doesn't recognise the player as the leader
-		_activeChar.sendPacket(new UserInfo(_activeChar));
-		_activeChar.sendPacket(new ExBrExtraUserInfo(_activeChar));
-		
 	}
 	
-	private void writePledge(int mainOrSubpledge)
+	private void writePledge(SubPledge pledge, String name)
 	{
+		final int pledgeId = (pledge == null ? 0x00 : pledge.getId());
 		writeC(0x5a);
 		
-		writeD(mainOrSubpledge);
+		writeD(pledge == null ? 0 : 1);
 		writeD(_clan.getId());
-		writeD(_pledgeType);
+		writeD(0x00); // pledge db id
+		writeD(pledgeId);
 		writeS(_clan.getName());
 		writeS(_clan.getLeaderName());
 		
@@ -79,6 +66,7 @@ public class PledgeShowMemberListAll extends L2GameServerPacket
 		writeD(_clan.getCastleId());
 		writeD(_clan.getHideoutId());
 		writeD(_clan.getFortId());
+		writeD(0x00);
 		writeD(_clan.getRank());
 		writeD(_clan.getReputationScore());
 		writeD(0x00); // 0

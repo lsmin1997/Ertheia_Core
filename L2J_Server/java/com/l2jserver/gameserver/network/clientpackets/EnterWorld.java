@@ -291,7 +291,7 @@ public class EnterWorld extends L2GameClientPacket
 				}
 			}
 			
-			sendPacket(new PledgeShowMemberListAll(activeChar.getClan(), activeChar));
+			sendPacket(new PledgeShowMemberListAll(activeChar.getClan()));
 			sendPacket(new PledgeStatusChanged(activeChar.getClan()));
 			
 			// Residential skills support
