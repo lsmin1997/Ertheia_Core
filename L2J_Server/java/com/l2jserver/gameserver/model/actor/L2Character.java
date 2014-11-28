@@ -56,6 +56,7 @@ import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.enums.Team;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
@@ -135,6 +136,7 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.Attack;
 import com.l2jserver.gameserver.network.serverpackets.ChangeMoveType;
 import com.l2jserver.gameserver.network.serverpackets.ChangeWaitType;
+import com.l2jserver.gameserver.network.serverpackets.CharInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExRotation;
 import com.l2jserver.gameserver.network.serverpackets.ExTeleportToLocationActivate;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
@@ -151,6 +153,7 @@ import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.StopMove;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.TeleportToLocation;
+import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.pathfinding.AbstractNodeLoc;
 import com.l2jserver.gameserver.pathfinding.PathFinding;
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
@@ -3862,6 +3865,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			return;
 		}
 		
+		// Don't broadcast modified stats on login.
+		if (isPlayer() && !getActingPlayer().isOnline())
+		{
+			return;
+		}
+		
 		if (isSummon())
 		{
 			L2Summon summon = (L2Summon) this;
@@ -3872,34 +3881,105 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		}
 		else
 		{
-			boolean broadcastFull = false;
+			boolean broadcastFull = true;
 			StatusUpdate su = new StatusUpdate(this);
-			
+			UserInfo info = null;
+			if (isPlayer())
+			{
+				info = new UserInfo(getActingPlayer(), false);
+				info.addComponentType(UserInfoType.SLOTS, UserInfoType.ENCHANTLEVEL);
+			}
 			for (Stats stat : stats)
 			{
-				if (stat == Stats.POWER_ATTACK_SPEED)
+				if (info != null)
 				{
-					su.addAttribute(StatusUpdate.ATK_SPD, getPAtkSpd());
-				}
-				else if (stat == Stats.MAGIC_ATTACK_SPEED)
-				{
-					su.addAttribute(StatusUpdate.CAST_SPD, getMAtkSpd());
-				}
-				else if (stat == Stats.MOVE_SPEED)
-				{
-					broadcastFull = true;
+					switch (stat)
+					{
+						case MOVE_SPEED:
+						{
+							info.addComponentType(UserInfoType.MULTIPLIER);
+							break;
+						}
+						case POWER_ATTACK_SPEED:
+						{
+							info.addComponentType(UserInfoType.MULTIPLIER, UserInfoType.STATS);
+							break;
+						}
+						case POWER_ATTACK:
+						case POWER_DEFENCE:
+						case EVASION_RATE:
+						case ACCURACY_COMBAT:
+						case CRITICAL_RATE:
+						case MCRITICAL_RATE:
+						case MAGIC_ATTACK:
+						case MAGIC_ATTACK_SPEED:
+						case MAGIC_DEFENCE:
+						{
+							info.addComponentType(UserInfoType.STATS);
+							break;
+						}
+						case MAX_CP:
+						{
+							su.addAttribute(StatusUpdate.MAX_CP, getMaxCp());
+							break;
+						}
+						case MAX_HP:
+						{
+							su.addAttribute(StatusUpdate.MAX_HP, getMaxHp());
+							break;
+						}
+						case MAX_MP:
+						{
+							su.addAttribute(StatusUpdate.MAX_CP, getMaxMp());
+							break;
+						}
+						case STAT_STR:
+						case STAT_CON:
+						case STAT_DEX:
+						case STAT_INT:
+						case STAT_WIT:
+						case STAT_MEN:
+						{
+							info.addComponentType(UserInfoType.BASE_STATS);
+							break;
+						}
+						case FIRE_RES:
+						case WATER_RES:
+						case WIND_RES:
+						case EARTH_RES:
+						case HOLY_RES:
+						case DARK_RES:
+						{
+							info.addComponentType(UserInfoType.ELEMENTALS);
+							break;
+						}
+						case FIRE_POWER:
+						case WATER_POWER:
+						case WIND_POWER:
+						case EARTH_POWER:
+						case HOLY_POWER:
+						case DARK_POWER:
+						{
+							info.addComponentType(UserInfoType.ATK_ELEMENTAL);
+							break;
+						}
+					}
 				}
 			}
 			
 			if (isPlayer())
 			{
+				final L2PcInstance player = getActingPlayer();
+				player.refreshOverloaded();
+				player.refreshExpertisePenalty();
+				sendPacket(info);
+				
 				if (broadcastFull)
 				{
-					getActingPlayer().updateAndBroadcastStatus(2);
+					player.broadcastPacket(new CharInfo(player));
 				}
 				else
 				{
-					getActingPlayer().updateAndBroadcastStatus(1);
 					if (su.hasAttributes())
 					{
 						broadcastPacket(su);
