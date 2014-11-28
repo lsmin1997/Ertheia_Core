@@ -40,8 +40,8 @@ import com.l2jserver.gameserver.model.items.type.ArmorType;
 import com.l2jserver.gameserver.model.items.type.WeaponType;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.ShopPreviewInfo;
-import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.util.Util;
 
 /**
@@ -74,7 +74,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 			try
 			{
 				activeChar.sendPacket(SystemMessageId.NO_LONGER_TRYING_ON);
-				activeChar.sendPacket(new UserInfo(activeChar));
+				activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
 			}
 			catch (Exception e)
 			{
