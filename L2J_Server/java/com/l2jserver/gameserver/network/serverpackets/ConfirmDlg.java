@@ -61,6 +61,7 @@ public class ConfirmDlg extends AbstractMessagePacket<ConfirmDlg>
 	protected final void writeImpl()
 	{
 		writeC(0xF3);
+		writeD(getId());
 		writeMe();
 		writeD(_time);
 		writeD(_requesterId);
