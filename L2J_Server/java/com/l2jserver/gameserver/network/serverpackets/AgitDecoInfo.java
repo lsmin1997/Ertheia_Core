@@ -194,7 +194,10 @@ public class AgitDecoInfo extends L2GameServerPacket
 		{
 			writeC(2);
 		}
-		writeD(0);
-		writeD(0);
+		writeD(0); // Find me
+		writeD(0); // Find me
+		writeD(0); // Find me
+		writeD(0); // Find me
+		writeD(0); // Find me
 	}
 }
