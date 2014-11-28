@@ -657,7 +657,7 @@ public class TradeList
 			
 			// Update current load as well
 			_owner.sendPacket(new ExUserInfoInvenWeight(_owner));
-			_owner.sendPacket(new ExUserInfoInvenWeight(_partner));
+			_partner.sendPacket(new ExUserInfoInvenWeight(_partner));
 			
 			success = true;
 		}
