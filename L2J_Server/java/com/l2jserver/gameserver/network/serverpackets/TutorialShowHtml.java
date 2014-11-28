@@ -26,9 +26,15 @@ import com.l2jserver.gameserver.enums.HtmlActionScope;
  */
 public final class TutorialShowHtml extends AbstractHtmlPacket
 {
+	public static final int NORMAL_WINDOW = 1;
+	public static final int LARGE_WINDOW = 2;
+	
+	private final int _type;
+	
 	public TutorialShowHtml(String html)
 	{
 		super(html);
+		_type = NORMAL_WINDOW;
 	}
 	
 	/**
@@ -40,12 +46,20 @@ public final class TutorialShowHtml extends AbstractHtmlPacket
 	public TutorialShowHtml(int npcObjId, String html)
 	{
 		super(npcObjId, html);
+		_type = NORMAL_WINDOW;
+	}
+	
+	public TutorialShowHtml(int npcObjId, String html, int type)
+	{
+		super(npcObjId, html);
+		_type = type;
 	}
 	
 	@Override
 	protected void writeImpl()
 	{
 		writeC(0xA6);
+		writeD(_type);
 		writeS(getHtml());
 	}
 	
