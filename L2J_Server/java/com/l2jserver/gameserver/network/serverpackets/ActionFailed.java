@@ -29,6 +29,7 @@ public final class ActionFailed extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0x1f);
+		writeC(0x1F);
+		writeD(0x00); // Find me
 	}
 }
