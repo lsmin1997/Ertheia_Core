@@ -35,8 +35,8 @@ public class ExCubeGameRequestReady extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x97);
+		writeC(0xFE);
+		writeH(0x98);
 		writeD(0x04);
 	}
 }

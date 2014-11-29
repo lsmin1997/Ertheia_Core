@@ -38,10 +38,11 @@ public class ExCubeGameEnd extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x98);
+		writeC(0xFE);
+		writeH(0x99);
 		writeD(0x01);
 		
 		writeD(_isRedTeamWin ? 0x01 : 0x00);
+		writeD(0x00); // Find me
 	}
 }
