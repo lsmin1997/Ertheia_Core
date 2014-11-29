@@ -38,6 +38,7 @@ public class PledgeShowInfoUpdate extends L2GameServerPacket
 		writeD(_clan.getCrestId());
 		writeD(_clan.getLevel()); // clan level
 		writeD(_clan.getCastleId());
+		writeD(0x00); // castle state ?
 		writeD(_clan.getHideoutId());
 		writeD(_clan.getFortId());
 		writeD(_clan.getRank());
@@ -48,5 +49,7 @@ public class PledgeShowInfoUpdate extends L2GameServerPacket
 		writeS(_clan.getAllyName()); // c5
 		writeD(_clan.getAllyCrestId()); // c5
 		writeD(_clan.isAtWar() ? 1 : 0); // c5
+		writeD(0x00); // Find me
+		writeD(0x00); // Find me
 	}
 }
