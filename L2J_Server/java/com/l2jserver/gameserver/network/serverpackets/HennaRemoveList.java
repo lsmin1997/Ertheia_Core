@@ -38,7 +38,7 @@ public class HennaRemoveList extends L2GameServerPacket
 	{
 		writeC(0xE6);
 		writeQ(_player.getAdena());
-		writeD(0x00);
+		writeD(0x03); // seems to be max size
 		writeD(3 - _player.getHennaEmptySlots());
 		
 		for (L2Henna henna : _player.getHennaList())
@@ -47,11 +47,10 @@ public class HennaRemoveList extends L2GameServerPacket
 			{
 				writeD(henna.getDyeId());
 				writeD(henna.getDyeItemId());
-				writeD(henna.getCancelCount());
+				writeQ(henna.getCancelCount());
+				writeQ(henna.getCancelFee());
 				writeD(0x00);
-				writeD(henna.getCancelFee());
 				writeD(0x00);
-				writeD(0x01);
 			}
 		}
 	}
