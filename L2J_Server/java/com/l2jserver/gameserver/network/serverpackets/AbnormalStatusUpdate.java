@@ -46,7 +46,8 @@ public class AbnormalStatusUpdate extends L2GameServerPacket
 			{
 				writeD(info.getSkill().getDisplayId());
 				writeH(info.getSkill().getDisplayLevel());
-				writeD(info.getTime());
+				writeD(0x00);
+				writeH(info.getTime());
 			}
 		}
 	}
