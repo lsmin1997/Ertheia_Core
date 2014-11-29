@@ -51,6 +51,7 @@ public class DropItem extends L2GameServerPacket
 		writeC(_item.isStackable() ? 0x01 : 0x00);
 		writeQ(_item.getCount());
 		
-		writeD(0x01); // unknown
+		writeC(0x00);
+		// writeD(0x01); if above C == true (1) then readD()
 	}
 }
