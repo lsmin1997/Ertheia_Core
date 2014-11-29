@@ -30,6 +30,6 @@ public final class ActionFailed extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		writeC(0x1F);
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
 	}
 }

@@ -63,6 +63,6 @@ public final class SkillList extends L2GameServerPacket
 			writeC(temp.disabled ? 1 : 0); // iSkillDisabled
 			writeC(temp.enchanted ? 1 : 0); // CanEnchant
 		}
-		writeD(0x00); // GOD Unknown
+		writeD(0x00); // TODO: Find me!
 	}
 }

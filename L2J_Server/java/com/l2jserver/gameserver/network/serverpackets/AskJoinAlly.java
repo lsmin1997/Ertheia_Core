@@ -39,7 +39,7 @@ public class AskJoinAlly extends L2GameServerPacket
 		writeC(0xbb);
 		writeD(_requestorObjId);
 		writeS(null); // Ally Name ?
-		writeS(null); // Find me
+		writeS(null); // TODO: Find me!
 		writeS(_requestorName);
 	}
 }

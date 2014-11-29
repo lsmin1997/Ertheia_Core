@@ -71,13 +71,13 @@ public final class MagicSkillUse extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x48);
-		writeD(0x00); // GOD Unknown
+		writeD(0x00); // TODO: Find me!
 		writeD(_activeChar.getObjectId());
 		writeD(_target.getObjectId());
 		writeD(_skillId);
 		writeD(_skillLevel);
 		writeD(_hitTime);
-		writeD(-1); // GOD Unknown
+		writeD(-1); // TODO: Find me!
 		writeD(_reuseDelay);
 		writeLoc(_activeChar);
 		writeH(_unknown.size()); // TODO: Implement me!
@@ -91,7 +91,7 @@ public final class MagicSkillUse extends L2GameServerPacket
 			writeLoc(target);
 		}
 		writeLoc(_target);
-		writeD(0x00); // GOD Unknown
-		writeD(0x00); // GOD Unknown
+		writeD(0x00); // TODO: Find me!
+		writeD(0x00); // TODO: Find me!
 	}
 }

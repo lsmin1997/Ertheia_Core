@@ -198,7 +198,7 @@ public class CharInfo extends L2GameServerPacket
 		
 		writeC(!_activeChar.isInOlympiadMode() && _activeChar.isAlikeDead() ? 0x01 : 0x00); // Confirmed
 		
-		writeC(!gmSeeInvis && isInvisible() ? 0x01 : 0x00); // Find me
+		writeC(!gmSeeInvis && isInvisible() ? 0x01 : 0x00); // TODO: Find me!
 		
 		writeC(_activeChar.getMountType().ordinal()); // 1-on Strider, 2-on Wyvern, 3-on Great Wolf, 0-no mount
 		writeC(_activeChar.getPrivateStoreType().getId()); // Confirmed
@@ -216,7 +216,7 @@ public class CharInfo extends L2GameServerPacket
 		writeD(_activeChar.getMountNpcId() == 0 ? 0 : _activeChar.getMountNpcId() + 1000000);
 		
 		writeD(_activeChar.getClassId().getId()); // Confirmed
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
 		writeC(_activeChar.isMounted() ? 0 : _enchantLevel); // Confirmed
 		
 		writeC(_activeChar.getTeam().getId()); // Confirmed
@@ -239,13 +239,13 @@ public class CharInfo extends L2GameServerPacket
 		
 		writeD(_activeChar.getAppearance().getTitleColor()); // Confirmed
 		
-		writeC(_activeChar.isCursedWeaponEquipped() ? CursedWeaponsManager.getInstance().getLevel(_activeChar.getCursedWeaponEquippedId()) : 0); // Find me
+		writeC(_activeChar.isCursedWeaponEquipped() ? CursedWeaponsManager.getInstance().getLevel(_activeChar.getCursedWeaponEquippedId()) : 0); // TODO: Find me!
 		
 		writeD(_activeChar.getClanId() > 0 ? _activeChar.getClan().getReputationScore() : 0);
 		writeD(_activeChar.getTransformationDisplayId()); // Confirmed
 		writeD(_activeChar.getAgathionId()); // Confirmed
 		
-		writeC(0x00); // Find me
+		writeC(0x00); // TODO: Find me!
 		
 		writeD((int) Math.round(_activeChar.getCurrentCp())); // Confirmed
 		writeD(_activeChar.getMaxHp()); // Confirmed
@@ -253,13 +253,13 @@ public class CharInfo extends L2GameServerPacket
 		writeD(_activeChar.getMaxMp()); // Confirmed
 		writeD((int) Math.round(_activeChar.getCurrentMp())); // Confirmed
 		
-		writeC(0x00); // Find me
+		writeC(0x00); // TODO: Find me!
 		writeD(_activeChar.getAbnormalVisualEffectsList().size()); // Confirmed
 		for (int abnormalId : _activeChar.getAbnormalVisualEffectsList())
 		{
 			writeH(abnormalId); // Confirmed
 		}
-		writeC(0x00); // Find me
+		writeC(0x00); // TODO: Find me!
 		writeC(0x01); // Hair accessory
 		writeC(0x00); // Used Ability Points
 	}

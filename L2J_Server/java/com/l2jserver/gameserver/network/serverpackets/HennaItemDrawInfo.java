@@ -61,6 +61,6 @@ public class HennaItemDrawInfo extends L2GameServerPacket
 		writeC(0x00); // equip LUC
 		writeD(0x00); // current CHA
 		writeC(0x00); // equip CHA
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
 	}
 }

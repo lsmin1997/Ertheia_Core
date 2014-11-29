@@ -53,7 +53,7 @@ public final class BuyListSeed extends L2GameServerPacket
 		writeC(0xe9);
 		
 		writeQ(_money); // current money
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
 		writeD(_manorId); // manor id
 		
 		if (!_list.isEmpty())

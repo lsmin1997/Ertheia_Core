@@ -49,7 +49,7 @@ public class PledgeShowInfoUpdate extends L2GameServerPacket
 		writeS(_clan.getAllyName()); // c5
 		writeD(_clan.getAllyCrestId()); // c5
 		writeD(_clan.isAtWar() ? 1 : 0); // c5
-		writeD(0x00); // Find me
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
+		writeD(0x00); // TODO: Find me!
 	}
 }

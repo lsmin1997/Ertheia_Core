@@ -83,7 +83,7 @@ public final class NpcHtmlMessage extends AbstractHtmlPacket
 		writeD(getNpcObjId());
 		writeS(getHtml());
 		writeD(_itemId);
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
 	}
 	
 	@Override

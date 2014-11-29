@@ -68,6 +68,6 @@ public class PetStatusUpdate extends L2GameServerPacket
 		writeQ(_summon.getStat().getExp());
 		writeQ(_summon.getExpForThisLevel()); // 0% absolute value
 		writeQ(_summon.getExpForNextLevel()); // 100% absolute value
-		writeD(0x01); // GOD Unknown
+		writeD(0x01); // TODO: Find me!
 	}
 }

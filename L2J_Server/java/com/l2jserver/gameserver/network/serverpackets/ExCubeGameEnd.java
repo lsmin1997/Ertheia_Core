@@ -43,6 +43,6 @@ public class ExCubeGameEnd extends L2GameServerPacket
 		writeD(0x01);
 		
 		writeD(_isRedTeamWin ? 0x01 : 0x00);
-		writeD(0x00); // Find me
+		writeD(0x00); // TODO: Find me!
 	}
 }

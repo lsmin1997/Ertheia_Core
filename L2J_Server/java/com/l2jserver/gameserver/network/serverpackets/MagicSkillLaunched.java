@@ -59,7 +59,7 @@ public class MagicSkillLaunched extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x54);
-		writeD(0x00); // GOD Unknown
+		writeD(0x00); // TODO: Find me!
 		writeD(_charObjId);
 		writeD(_skillId);
 		writeD(_skillLevel);
