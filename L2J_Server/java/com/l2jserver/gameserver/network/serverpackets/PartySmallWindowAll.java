@@ -54,7 +54,7 @@ public final class PartySmallWindowAll extends L2GameServerPacket
 				writeD(member.getMaxHp());
 				writeD((int) member.getCurrentMp());
 				writeD(member.getMaxMp());
-				writeD(0x00); // GoD
+				writeD(member.getVitalityPoints());
 				writeC(member.getLevel());
 				writeH(member.getClassId().getId());
 				writeC(0x01); // Unk
