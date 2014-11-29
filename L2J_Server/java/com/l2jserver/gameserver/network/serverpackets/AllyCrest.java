@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.CrestTable;
 import com.l2jserver.gameserver.model.L2Crest;
 
@@ -43,6 +44,7 @@ public class AllyCrest extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xAF);
+		writeD(Config.SERVER_ID);
 		writeD(_crestId);
 		if (_data != null)
 		{
