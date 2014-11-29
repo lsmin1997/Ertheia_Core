@@ -33,6 +33,7 @@ public final class PledgeStatusChanged extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xCD);
+		writeD(0x00);
 		writeD(_clan.getLeaderId());
 		writeD(_clan.getId());
 		writeD(_clan.getCrestId());
@@ -40,5 +41,6 @@ public final class PledgeStatusChanged extends L2GameServerPacket
 		writeD(_clan.getAllyCrestId());
 		writeD(_clan.getCrestLargeId());
 		writeD(0x00);
+		writeD(0x00); // pledge type ?
 	}
 }
