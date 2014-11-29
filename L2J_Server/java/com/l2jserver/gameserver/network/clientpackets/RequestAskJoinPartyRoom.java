@@ -54,7 +54,7 @@ public class RequestAskJoinPartyRoom extends L2GameClientPacket
 			if (!target.isProcessingRequest())
 			{
 				player.onTransactionRequest(target);
-				target.sendPacket(new ExAskJoinPartyRoom(player.getName()));
+				target.sendPacket(new ExAskJoinPartyRoom(player));
 			}
 			else
 			{
