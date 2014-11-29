@@ -53,6 +53,7 @@ public final class BuyListSeed extends L2GameServerPacket
 		writeC(0xe9);
 		
 		writeQ(_money); // current money
+		writeD(0x00); // Find me
 		writeD(_manorId); // manor id
 		
 		if (!_list.isEmpty())
@@ -60,29 +61,19 @@ public final class BuyListSeed extends L2GameServerPacket
 			writeH(_list.size()); // list length
 			for (SeedProduction s : _list)
 			{
-				writeD(s.getId());
-				writeD(s.getId());
-				writeD(0x00);
-				writeQ(s.getAmount()); // item count
-				writeH(0x05); // Custom Type 2
-				writeH(0x00); // Custom Type 1
-				writeH(0x00); // Equipped
-				writeD(0x00); // Body Part
-				writeH(0x00); // Enchant
-				writeH(0x00); // Custom Type
-				writeD(0x00); // Augment
-				writeD(-1); // Mana
-				writeD(-9999); // Time
-				writeH(0x00); // Element Type
-				writeH(0x00); // Element Power
-				for (byte i = 0; i < 6; i++)
-				{
-					writeH(0x00);
-				}
-				// Enchant Effects
-				writeH(0x00);
-				writeH(0x00);
-				writeH(0x00);
+				writeC(0x00); // mask item 0 to print minimal item information
+				writeD(s.getId()); // ObjectId
+				writeD(s.getId()); // ItemId
+				writeC(0xFF); // T1
+				writeQ(s.getAmount()); // Quantity
+				writeC(0x05); // Item Type 2 : 00-weapon, 01-shield/armor, 02-ring/earring/necklace, 03-questitem, 04-adena, 05-item
+				writeC(0x00); // Filler (always 0)
+				writeH(0x00); // Equipped : 00-No, 01-yes
+				writeQ(0x00); // Slot : 0006-lr.ear, 0008-neck, 0030-lr.finger, 0040-head, 0100-l.hand, 0200-gloves, 0400-chest, 0800-pants, 1000-feet, 4000-r.hand, 8000-r.hand
+				writeH(0x00); // Enchant level (pet level shown in control item)
+				writeD(-1);
+				writeD(-9999);
+				writeC(0x01); // GOD Item enabled = 1 disabled (red) = 0
 				writeQ(s.getPrice()); // price
 			}
 			_list.clear();
