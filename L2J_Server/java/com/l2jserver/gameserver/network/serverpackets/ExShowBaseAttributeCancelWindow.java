@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.items.L2Weapon;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
 public class ExShowBaseAttributeCancelWindow extends L2GameServerPacket
@@ -36,7 +35,7 @@ public class ExShowBaseAttributeCancelWindow extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0x74);
+		writeH(0x75);
 		writeD(_items.length);
 		for (L2ItemInstance item : _items)
 		{
@@ -55,7 +54,8 @@ public class ExShowBaseAttributeCancelWindow extends L2GameServerPacket
 		switch (item.getItem().getCrystalType())
 		{
 			case S:
-				if (item.getItem() instanceof L2Weapon)
+			{
+				if (item.isWeapon())
 				{
 					_price = 50000;
 				}
@@ -64,8 +64,10 @@ public class ExShowBaseAttributeCancelWindow extends L2GameServerPacket
 					_price = 40000;
 				}
 				break;
+			}
 			case S80:
-				if (item.getItem() instanceof L2Weapon)
+			{
+				if (item.isWeapon())
 				{
 					_price = 100000;
 				}
@@ -74,8 +76,10 @@ public class ExShowBaseAttributeCancelWindow extends L2GameServerPacket
 					_price = 80000;
 				}
 				break;
+			}
 			case S84:
-				if (item.getItem() instanceof L2Weapon)
+			{
+				if (item.isWeapon())
 				{
 					_price = 200000;
 				}
@@ -84,6 +88,7 @@ public class ExShowBaseAttributeCancelWindow extends L2GameServerPacket
 					_price = 160000;
 				}
 				break;
+			}
 		}
 		
 		return _price;
