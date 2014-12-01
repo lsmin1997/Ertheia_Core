@@ -33,7 +33,38 @@ public final class CreatureSay extends L2GameServerPacket
 	private int _charId = 0;
 	private String _text = null;
 	private int _npcString = -1;
+	private int _mask;
+	private int _charLevel = -1;
 	private List<String> _parameters;
+	
+	/**
+	 * @param sender
+	 * @param receiver
+	 * @param name
+	 * @param messageType
+	 * @param text
+	 */
+	public CreatureSay(L2PcInstance sender, L2PcInstance receiver, String name, int messageType, String text)
+	{
+		_objectId = sender.getObjectId();
+		_charName = name;
+		_charLevel = sender.getLevel();
+		_textType = messageType;
+		_text = text;
+		if (receiver.getFriendList().contains(sender.getObjectId()))
+		{
+			_mask |= 0x01;
+		}
+		if ((receiver.getClanId() > 0) && (receiver.getClanId() == sender.getClanId()))
+		{
+			_mask |= 0x02;
+		}
+		// TODO : if mentor, _mask |= 0x04;
+		if ((receiver.getAllyId() > 0) && (receiver.getAllyId() == sender.getAllyId()))
+		{
+			_mask |= 0x08;
+		}
+	}
 	
 	/**
 	 * @param objectId
@@ -104,6 +135,11 @@ public final class CreatureSay extends L2GameServerPacket
 		if (_text != null)
 		{
 			writeS(_text);
+			if ((_charLevel > 0) && (_textType == 2))
+			{
+				writeC(_mask);
+				writeC(_charLevel);
+			}
 		}
 		else if (_parameters != null)
 		{
