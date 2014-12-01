@@ -18,116 +18,124 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import com.l2jserver.gameserver.datatables.AdminTable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
-import com.l2jserver.gameserver.model.L2AccessLevel;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2SiegeClan;
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.Fort;
 import com.l2jserver.gameserver.model.entity.clanhall.SiegableHall;
-import com.l2jserver.gameserver.model.olympiad.OlympiadManager;
 
+/**
+ * @author UnAfraid, Nos
+ */
 public class Die extends L2GameServerPacket
 {
-	private final int _charObjId;
-	private final boolean _canTeleport;
-	private final boolean _sweepable;
-	private L2AccessLevel _access = AdminTable.getInstance().getAccessLevel(0);
-	private L2Clan _clan;
-	private final L2Character _activeChar;
-	private boolean _isJailed;
-	private boolean _staticRes = false;
+	private final int _objectId;
+	private boolean _toVillage;
+	private boolean _toClanHall;
+	private boolean _toCastle;
+	private boolean _toOutpost;
+	private final boolean _isSweepable;
+	private boolean _useFeather;
+	private boolean _toFortress;
+	private boolean _hideAnimation;
+	private List<Integer> _items = null;
+	private boolean _itemsEnabled;
 	
-	public Die(L2Character cha)
+	public Die(L2Character activeChar)
 	{
-		_charObjId = cha.getObjectId();
-		_activeChar = cha;
-		if (cha.isPlayer())
+		_objectId = activeChar.getObjectId();
+		if (activeChar.isPlayer())
 		{
-			final L2PcInstance player = cha.getActingPlayer();
-			_access = player.getAccessLevel();
-			_clan = player.getClan();
-			_isJailed = player.isJailed();
+			final L2Clan clan = activeChar.getActingPlayer().getClan();
+			boolean isInCastleDefense = false;
+			boolean isInFortDefense = false;
+			
+			L2SiegeClan siegeClan = null;
+			final Castle castle = CastleManager.getInstance().getCastle(activeChar);
+			final Fort fort = FortManager.getInstance().getFort(activeChar);
+			final SiegableHall hall = CHSiegeManager.getInstance().getNearbyClanHall(activeChar);
+			if ((castle != null) && castle.getSiege().isInProgress())
+			{
+				siegeClan = castle.getSiege().getAttackerClan(clan);
+				isInCastleDefense = (siegeClan == null) && castle.getSiege().checkIsDefender(clan);
+			}
+			else if ((fort != null) && fort.getSiege().isInProgress())
+			{
+				siegeClan = fort.getSiege().getAttackerClan(clan);
+				isInFortDefense = (siegeClan == null) && fort.getSiege().checkIsDefender(clan);
+			}
+			
+			_toVillage = activeChar.canRevive() && !activeChar.isPendingRevive();
+			_toClanHall = (clan != null) && (clan.getHideoutId() > 0);
+			_toCastle = ((clan != null) && (clan.getCastleId() > 0)) || isInCastleDefense;
+			_toOutpost = ((siegeClan != null) && !isInCastleDefense && !isInFortDefense && !siegeClan.getFlag().isEmpty()) || ((hall != null) && hall.getSiege().checkIsAttacker(clan));
+			_useFeather = activeChar.getAccessLevel().allowFixedRes();
+			_toFortress = ((clan != null) && (clan.getFortId() > 0)) || isInFortDefense;
 		}
-		_canTeleport = cha.canRevive() && !cha.isPendingRevive();
-		_sweepable = cha.isAttackable() && cha.isSweepActive();
+		
+		_isSweepable = activeChar.isAttackable() && activeChar.isSweepActive();
+	}
+	
+	public void setHideAnimation(boolean val)
+	{
+		_hideAnimation = val;
+	}
+	
+	public void addItem(int itemId)
+	{
+		if (_items == null)
+		{
+			_items = new ArrayList<>(8);
+		}
+		
+		if (_items.size() < 8)
+		{
+			_items.add(itemId);
+		}
+		else
+		{
+			throw new IndexOutOfBoundsException("Die packet doesn't support more then 8 items!");
+		}
+	}
+	
+	public List<Integer> getItems()
+	{
+		return _items != null ? _items : Collections.emptyList();
+	}
+	
+	public void setItemsEnabled(boolean val)
+	{
+		_itemsEnabled = val;
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
 		writeC(0x00);
-		writeD(_charObjId);
-		writeD(_canTeleport ? 0x01 : 0);
+		writeD(_objectId);
+		writeD(_toVillage ? 0x01 : 0x00);
+		writeD(_toClanHall ? 0x01 : 0x00);
+		writeD(_toCastle ? 0x01 : 0x00);
+		writeD(_toOutpost ? 0x01 : 0x00);
+		writeD(_isSweepable ? 0x01 : 0x00);
+		writeD(_useFeather ? 0x01 : 0x00);
+		writeD(_toFortress ? 0x01 : 0x00);
+		writeC(_hideAnimation ? 0x01 : 0x00);
 		
-		if (_activeChar.isPlayer() && !OlympiadManager.getInstance().isRegistered(_activeChar.getActingPlayer()) && !_activeChar.isOnEvent())
+		writeD(getItems().size());
+		for (int itemId : getItems())
 		{
-			
-			_staticRes = _activeChar.getInventory().haveItemForSelfResurrection();
+			writeD(itemId);
 		}
 		
-		if (_canTeleport && (_clan != null) && !_isJailed)
-		{
-			boolean isInCastleDefense = false;
-			boolean isInFortDefense = false;
-			
-			L2SiegeClan siegeClan = null;
-			Castle castle = CastleManager.getInstance().getCastle(_activeChar);
-			Fort fort = FortManager.getInstance().getFort(_activeChar);
-			SiegableHall hall = CHSiegeManager.getInstance().getNearbyClanHall(_activeChar);
-			if ((castle != null) && castle.getSiege().isInProgress())
-			{
-				// siege in progress
-				siegeClan = castle.getSiege().getAttackerClan(_clan);
-				if ((siegeClan == null) && castle.getSiege().checkIsDefender(_clan))
-				{
-					isInCastleDefense = true;
-				}
-			}
-			else if ((fort != null) && fort.getSiege().isInProgress())
-			{
-				// siege in progress
-				siegeClan = fort.getSiege().getAttackerClan(_clan);
-				if ((siegeClan == null) && fort.getSiege().checkIsDefender(_clan))
-				{
-					isInFortDefense = true;
-				}
-			}
-			
-			if (_access.allowFixedRes())
-			{
-				_staticRes = true;
-			}
-			
-			writeD(_clan.getHideoutId() > 0 ? 0x01 : 0x00); // 6d 01 00 00 00 - to hide away
-			writeD((_clan.getCastleId() > 0) || isInCastleDefense ? 0x01 : 0x00); // 6d 02 00 00 00 - to castle
-			writeD((TerritoryWarManager.getInstance().getHQForClan(_clan) != null) || ((siegeClan != null) && !isInCastleDefense && !isInFortDefense && !siegeClan.getFlag().isEmpty()) || ((hall != null) && hall.getSiege().checkIsAttacker(_clan)) ? 0x01 : 0x00); // 6d 03 00 00 00 - to siege HQ
-			writeD(_sweepable ? 0x01 : 0x00); // sweepable (blue glow)
-			writeD(_staticRes ? 0x01 : 0x00); // 6d 04 00 00 00 - to FIXED
-			writeD((_clan.getFortId() > 0) || isInFortDefense ? 0x01 : 0x00); // 6d 05 00 00 00 - to fortress
-		}
-		else
-		{
-			writeD(0x00); // 6d 01 00 00 00 - to hide away
-			writeD(0x00); // 6d 02 00 00 00 - to castle
-			writeD(0x00); // 6d 03 00 00 00 - to siege HQ
-			writeD(_sweepable ? 0x01 : 0x00); // sweepable (blue glow)
-			writeD(_staticRes ? 0x01 : 0x00); // 6d 04 00 00 00 - to FIXED
-			writeD(0x00); // 6d 05 00 00 00 - to fortress
-		}
-		// TODO: protocol 152
-		//@formatter:off
-		/*
-		 * writeC(0); //show die animation 
-		 * writeD(0); //agathion ress button 
-		 * writeD(0); //additional free space
-		 */
-		//@formatter:on
+		writeD(_itemsEnabled ? 0x01 : 0x00);
 	}
 }
