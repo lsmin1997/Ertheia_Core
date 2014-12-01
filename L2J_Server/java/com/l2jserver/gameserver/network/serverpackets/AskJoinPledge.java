@@ -42,10 +42,10 @@ public final class AskJoinPledge extends L2GameServerPacket
 		{
 			writeS(_pledgeType > 0 ? _subPledgeName : _pledgeName);
 		}
+		writeS(_pledgeName);
 		if (_pledgeType != 0)
 		{
 			writeD(_pledgeType);
 		}
-		writeS(_pledgeName);
 	}
 }
