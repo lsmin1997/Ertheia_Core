@@ -61,7 +61,8 @@ public class ExAcquireSkillInfo extends L2GameServerPacket
 		writeD(_id);
 		writeD(_level);
 		writeQ(_spCost);
-		writeD(_minLevel);
+		writeH(_minLevel);
+		writeH(0x00); // TODO: Find me !
 		writeD(_itemReq.size());
 		for (ItemHolder holder : _itemReq)
 		{
