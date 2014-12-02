@@ -48,8 +48,7 @@ public class ExGetPremiumItemList extends L2GameServerPacket
 		for (Entry<Integer, L2PremiumItem> entry : _map.entrySet())
 		{
 			L2PremiumItem item = entry.getValue();
-			writeD(entry.getKey());
-			writeD(_activeChar.getObjectId());
+			writeQ(entry.getKey());
 			writeD(item.getItemId());
 			writeQ(item.getCount());
 			writeD(0x00); // ?
