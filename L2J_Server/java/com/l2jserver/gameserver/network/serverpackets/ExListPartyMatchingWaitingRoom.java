@@ -21,8 +21,10 @@ package com.l2jserver.gameserver.network.serverpackets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.model.PartyMatchWaitingList;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.instancezone.InstanceWorld;
 
 /**
  * @author Gnacik
@@ -34,6 +36,7 @@ public class ExListPartyMatchingWaitingRoom extends L2GameServerPacket
 	private final int _minlvl;
 	private final int _maxlvl;
 	private final int _mode;
+	private final int _currentTemplateId;
 	private final List<L2PcInstance> _members;
 	
 	public ExListPartyMatchingWaitingRoom(L2PcInstance player, int page, int minlvl, int maxlvl, int mode)
@@ -44,6 +47,8 @@ public class ExListPartyMatchingWaitingRoom extends L2GameServerPacket
 		_maxlvl = maxlvl;
 		_mode = mode;
 		_members = new ArrayList<>();
+		final InstanceWorld world = InstanceManager.getInstance().getPlayerWorld(player);
+		_currentTemplateId = (world != null) && (world.getTemplateId() >= 0) ? world.getTemplateId() : -1;
 	}
 	
 	@Override
@@ -86,6 +91,9 @@ public class ExListPartyMatchingWaitingRoom extends L2GameServerPacket
 			writeS(member.getName());
 			writeD(member.getActiveClass());
 			writeD(member.getLevel());
+			writeD(_currentTemplateId);
+			writeD(0x00); // TODO: Instance ID reuse size
+			// TODO: Loop for instanceId
 		}
 	}
 }
