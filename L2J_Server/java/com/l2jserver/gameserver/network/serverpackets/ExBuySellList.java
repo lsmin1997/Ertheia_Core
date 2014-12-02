@@ -46,6 +46,7 @@ public class ExBuySellList extends AbstractItemPacket
 		writeC(0xFE);
 		writeH(0xB8);
 		writeD(0x01);
+		writeD(0x00); // TODO: Find me
 		
 		if ((_sellList != null))
 		{
