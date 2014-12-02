@@ -33,11 +33,8 @@ public class ObservationMode extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xEB);
-		writeD(_loc.getX());
-		writeD(_loc.getY());
-		writeD(_loc.getZ());
-		writeC(0x00); // ?
-		writeC(0xc0); // ?
-		writeC(0x00); // ?
+		writeLoc(_loc);
+		writeD(0x00); // TODO: Find me
+		writeD(0xc0); // TODO: Find me
 	}
 }
