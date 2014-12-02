@@ -54,6 +54,7 @@ public class ExShowSentPostList extends L2GameServerPacket
 				writeD(msg.isUnread() ? 0x01 : 0x00);
 				writeD(0x01);
 				writeD(msg.hasAttachments() ? 0x01 : 0x00);
+				writeD(0x00);
 			}
 		}
 		else
