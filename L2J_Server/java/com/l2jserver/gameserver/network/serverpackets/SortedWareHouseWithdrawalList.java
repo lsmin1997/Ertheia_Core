@@ -34,7 +34,7 @@ import com.l2jserver.gameserver.model.items.type.CrystalType;
 import com.l2jserver.gameserver.model.items.type.EtcItemType;
 import com.l2jserver.gameserver.model.items.type.MaterialType;
 
-public class SortedWareHouseWithdrawalList extends L2GameServerPacket
+public class SortedWareHouseWithdrawalList extends AbstractItemPacket
 {
 	public static final int PRIVATE = 1;
 	public static final int CLAN = 2;
@@ -747,38 +747,10 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		
 		for (L2WarehouseItem item : _objects)
 		{
+			writeItem(item);
 			writeD(item.getObjectId());
-			writeD(item.getItem().getDisplayId());
-			writeD(item.getLocationSlot());
-			writeQ(item.getCount());
-			writeH(item.getItem().getType2());
-			writeH(item.getCustomType1());
-			writeH(0x00); // Can't be equipped in WH
-			writeD(item.getItem().getBodyPart());
-			writeH(item.getEnchantLevel());
-			writeH(item.getCustomType2());
-			if (item.isAugmented())
-			{
-				writeD(item.getAugmentationId());
-			}
-			else
-			{
-				writeD(0x00);
-			}
-			writeD(item.getMana());
-			writeD(item.getTime());
-			writeH(item.getAttackElementType());
-			writeH(item.getAttackElementPower());
-			for (byte i = 0; i < 6; i++)
-			{
-				writeH(item.getElementDefAttr(i));
-			}
-			// Enchant Effects
-			for (int op : item.getEnchantOptions())
-			{
-				writeH(op);
-			}
-			writeD(item.getObjectId());
+			writeD(0x00);
+			writeD(0x00);
 		}
 	}
 }
