@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.enums.ItemListType;
 import com.l2jserver.gameserver.model.ItemInfo;
 import com.l2jserver.gameserver.model.TradeItem;
+import com.l2jserver.gameserver.model.buylist.Product;
 import com.l2jserver.gameserver.model.itemcontainer.PcInventory;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
@@ -51,6 +52,11 @@ public abstract class AbstractItemPacket extends AbstractMaskPacket<ItemListType
 	}
 	
 	protected void writeItem(L2ItemInstance item)
+	{
+		writeItem(new ItemInfo(item));
+	}
+	
+	protected void writeItem(Product item)
 	{
 		writeItem(new ItemInfo(item));
 	}

@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.model;
 
+import com.l2jserver.gameserver.model.buylist.Product;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
@@ -200,6 +201,45 @@ public class ItemInfo
 		}
 		
 		_option = item.getEnchantOptions();
+	}
+	
+	public ItemInfo(Product item)
+	{
+		if (item == null)
+		{
+			return;
+		}
+		
+		// Get the Identifier of the L2ItemInstance
+		_objectId = 0;
+		
+		// Get the L2Item of the L2ItemInstance
+		_item = item.getItem();
+		
+		// Get the enchant level of the L2ItemInstance
+		_enchant = 0;
+		
+		// Get the augmentation boni
+		_augmentation = 0;
+		
+		// Get the quantity of the L2ItemInstance
+		_count = item.getCount();
+		
+		// Get custom item types (used loto, race tickets)
+		_type1 = 0;
+		_type2 = 0;
+		
+		// Verify if the L2ItemInstance is equipped
+		_equipped = 0;
+		
+		// Get the action to do clientside
+		_change = 0;
+		
+		// Get shadow item mana
+		_mana = -1;
+		_time = -9999;
+		
+		_location = 0;
 	}
 	
 	public int getObjectId()

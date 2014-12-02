@@ -24,7 +24,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.buylist.L2BuyList;
 import com.l2jserver.gameserver.model.buylist.Product;
 
-public final class BuyList extends L2GameServerPacket
+public final class BuyList extends AbstractItemPacket
 {
 	private final int _listId;
 	private final Collection<Product> _list;
@@ -47,36 +47,14 @@ public final class BuyList extends L2GameServerPacket
 		writeD(0x00);
 		writeQ(_money); // current money
 		writeD(_listId);
-		
+		writeD(0x00); // TODO: Find me
 		writeH(_list.size());
 		
 		for (Product product : _list)
 		{
 			if ((product.getCount() > 0) || !product.hasLimitedStock())
 			{
-				writeD(product.getItemId());
-				writeD(product.getItemId());
-				writeD(0);
-				writeQ(product.getCount() < 0 ? 0 : product.getCount());
-				writeH(product.getItem().getType2());
-				writeH(product.getItem().getType1()); // Custom Type 1
-				writeH(0x00); // isEquipped
-				writeD(product.getItem().getBodyPart()); // Body Part
-				writeH(0x00); // Enchant
-				writeH(0x00); // Custom Type
-				writeD(0x00); // Augment
-				writeD(-1); // Mana
-				writeD(-9999); // Time
-				writeH(0x00); // Element Type
-				writeH(0x00); // Element Power
-				for (byte i = 0; i < 6; i++)
-				{
-					writeH(0x00);
-				}
-				// Enchant Effects
-				writeH(0x00);
-				writeH(0x00);
-				writeH(0x00);
+				writeItem(product);
 				
 				if ((product.getItemId() >= 3960) && (product.getItemId() <= 4026))
 				{
