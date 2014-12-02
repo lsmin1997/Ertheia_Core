@@ -69,5 +69,7 @@ public class ExManagePartyRoomMember extends L2GameServerPacket
 				writeD(0x00);
 			}
 		}
+		writeD(0x00); // TODO: instance reuse time size
+		// TODO: for size writeD(instanceId)
 	}
 }
