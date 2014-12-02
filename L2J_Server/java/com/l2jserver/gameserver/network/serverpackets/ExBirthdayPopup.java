@@ -31,7 +31,7 @@ public class ExBirthdayPopup extends L2GameServerPacket
 	@Override
 	protected void writeImpl()
 	{
-		writeC(0xfe);
-		writeH(0x8f);
+		writeC(0xFE);
+		writeH(0x90);
 	}
 }
