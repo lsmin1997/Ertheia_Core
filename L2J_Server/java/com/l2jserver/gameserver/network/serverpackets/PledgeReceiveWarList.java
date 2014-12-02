@@ -41,8 +41,7 @@ public class PledgeReceiveWarList extends L2GameServerPacket
 		writeC(0xFE);
 		writeH(0x40);
 		
-		writeD(_tab); // type : 0 = Declared, 1 = Under Attack
-		writeD(0x00); // page
+		writeD(0x00); // page ?
 		writeD(_tab == 0 ? _clan.getWarList().size() : _clan.getAttackerList().size());
 		for (Integer i : _tab == 0 ? _clan.getWarList() : _clan.getAttackerList())
 		{
@@ -54,7 +53,10 @@ public class PledgeReceiveWarList extends L2GameServerPacket
 			
 			writeS(clan.getName());
 			writeD(_tab); // ??
-			writeD(_tab); // ??
+			writeD(0x00); // TODO: Find me
+			writeD(0x00); // TODO: Find me
+			writeD(0x00); // TODO: Find me
+			writeD(0x00); // TODO: Find me
 		}
 	}
 }
