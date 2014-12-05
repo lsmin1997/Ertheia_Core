@@ -25,7 +25,7 @@ import com.l2jserver.gameserver.model.interfaces.IUpdateTypeComponent;
  */
 public enum UserInfoType implements IUpdateTypeComponent
 {
-	UNK_1(0x00, 4),
+	RELATION(0x00, 4),
 	BASIC_INFO(0x01, 16),
 	BASE_STATS(0x02, 18),
 	MAX_HPCPMP(0x03, 14),

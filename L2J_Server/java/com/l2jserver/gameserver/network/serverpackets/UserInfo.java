@@ -125,7 +125,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 		writeH(23);
 		writeB(_masks);
 		
-		if (containsMask(UserInfoType.UNK_1))
+		if (containsMask(UserInfoType.RELATION))
 		{
 			writeD(_relation);
 		}
