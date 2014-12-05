@@ -22,6 +22,8 @@ import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.instancemanager.RaidBossPointsManager;
 import com.l2jserver.gameserver.model.Elementals;
+import com.l2jserver.gameserver.model.L2Clan;
+import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 
@@ -32,6 +34,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 {
 	private final L2PcInstance _activeChar;
 	
+	private final int _relation;
 	private final int _runSpd;
 	private final int _walkSpd;
 	private final int _swimRunSpd;
@@ -62,6 +65,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 	{
 		_activeChar = cha;
 		
+		_relation = calculateRelation(cha);
 		_moveMultiplier = cha.getMovementSpeedMultiplier();
 		_runSpd = (int) Math.round(cha.getRunSpeed() / _moveMultiplier);
 		_walkSpd = (int) Math.round(cha.getWalkSpeed() / _moveMultiplier);
@@ -123,8 +127,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 		
 		if (containsMask(UserInfoType.UNK_1))
 		{
-			writeH(0x00);
-			writeH(0x00);
+			writeD(_relation);
 		}
 		
 		if (containsMask(UserInfoType.BASIC_INFO))
@@ -278,8 +281,8 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 			writeD(_activeChar.getClanId());
 			writeD(_activeChar.getClanCrestLargeId());
 			writeD(_activeChar.getClanCrestId());
+			writeC(-1);
 			writeD(_activeChar.getClanPrivileges().getBitmask());
-			writeC(_activeChar.isClanLeader() ? 0x01 : 0x00);
 			writeD(_activeChar.getAllyId());
 			writeD(_activeChar.getAllyCrestId());
 			writeC(_activeChar.isInPartyMatchRoom() ? 0x01 : 0x00);
@@ -349,5 +352,37 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 			writeH(0x00);
 			writeD(0x00);
 		}
+	}
+	
+	private int calculateRelation(L2PcInstance activeChar)
+	{
+		int relation = 0;
+		final L2Party party = activeChar.getParty();
+		final L2Clan clan = activeChar.getClan();
+		
+		if (party != null)
+		{
+			relation |= 0x08; // Party member
+			if (party.getLeader() == _activeChar)
+			{
+				relation |= 0x10; // Party leader
+			}
+		}
+		
+		if (clan != null)
+		{
+			relation |= 0x20; // Clan member
+			if (clan.getLeaderId() == activeChar.getObjectId())
+			{
+				relation |= 0x40; // Clan leader
+			}
+		}
+		
+		if (activeChar.isInSiege())
+		{
+			relation |= 0x80; // In siege
+		}
+		
+		return relation;
 	}
 }

@@ -6649,6 +6649,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * Set the _accessLevel of the L2PcInstance.
 	 * @param level
+	 * @param broadcast
 	 */
 	public void setAccessLevel(int level, boolean broadcast)
 	{
