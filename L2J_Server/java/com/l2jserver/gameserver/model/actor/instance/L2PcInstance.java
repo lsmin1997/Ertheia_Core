@@ -4248,6 +4248,17 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
+	public final void broadcastUserInfo(UserInfoType... types)
+	{
+		// Send a Server->Client packet UserInfo to this L2PcInstance
+		UserInfo ui = new UserInfo(this, false);
+		ui.addComponentType(types);
+		sendPacket(ui);
+		
+		// Send a Server->Client packet CharInfo to all L2PcInstance in _KnownPlayers of the L2PcInstance
+		broadcastPacket(new CharInfo(this));
+	}
+	
 	public final void broadcastTitleInfo()
 	{
 		// Send a Server->Client packet UserInfo to this L2PcInstance
