@@ -269,7 +269,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 					final StringBuilder menu = new StringBuilder(100);
 					for (ClassId cid : ClassId.values())
 					{
-						if ((cid == ClassId.inspector) && (player.getTotalSubClasses() < 2))
+						if ((cid == ClassId.INSPECTOR) && (player.getTotalSubClasses() < 2))
 						{
 							continue;
 						}
@@ -325,7 +325,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		final StringBuilder menu = new StringBuilder(100);
 		for (ClassId cid : ClassId.values())
 		{
-			if ((cid == ClassId.inspector) && (player.getTotalSubClasses() < 2))
+			if ((cid == ClassId.INSPECTOR) && (player.getTotalSubClasses() < 2))
 			{
 				continue;
 			}
