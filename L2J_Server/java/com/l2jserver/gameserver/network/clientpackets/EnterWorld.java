@@ -27,6 +27,7 @@ import com.l2jserver.gameserver.SevenSigns;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
@@ -69,6 +70,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
+import com.l2jserver.gameserver.network.serverpackets.ExShowUsm;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUnReadMailCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
@@ -447,6 +449,19 @@ public class EnterWorld extends L2GameClientPacket
 			if (obj != null)
 			{
 				obj.sendPacket(sm);
+			}
+		}
+		
+		if (Config.SHOW_GOD_VIDEO_INTRO && !activeChar.getVariables().getBoolean("intro_god_video", false))
+		{
+			activeChar.getVariables().set("intro_god_video", true);
+			if (activeChar.getRace() == Race.ERTHEIA)
+			{
+				activeChar.sendPacket(ExShowUsm.ERTHEIA_INTRO_FOR_ERTHEIA);
+			}
+			else
+			{
+				activeChar.sendPacket(ExShowUsm.ERTHEIA_INTRO_FOR_OTHERS);
 			}
 		}
 		
