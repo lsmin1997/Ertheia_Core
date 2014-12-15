@@ -64,11 +64,13 @@ public class GMViewCharacterInfo extends L2GameServerPacket
 		writeD(_activeChar.getINT());
 		writeD(_activeChar.getWIT());
 		writeD(_activeChar.getMEN());
+		writeD(_activeChar.getLUC());
+		writeD(_activeChar.getCHA());
 		writeD(_activeChar.getMaxHp());
 		writeD((int) _activeChar.getCurrentHp());
 		writeD(_activeChar.getMaxMp());
 		writeD((int) _activeChar.getCurrentMp());
-		writeD(_activeChar.getSp());
+		writeQ(_activeChar.getSp());
 		writeD(_activeChar.getCurrentLoad());
 		writeD(_activeChar.getMaxLoad());
 		writeD(_activeChar.getPkKills());
@@ -87,9 +89,14 @@ public class GMViewCharacterInfo extends L2GameServerPacket
 		{
 			writeD(_activeChar.getInventory().getPaperdollAugmentationId(slot));
 		}
+		writeD(0x00);
+		writeD(0x00);
+		writeD(0x00);
 		
-		writeD(_activeChar.getInventory().getTalismanSlots()); // CT2.3
-		writeD(_activeChar.getInventory().canEquipCloak() ? 1 : 0); // CT2.3
+		writeC(_activeChar.getInventory().getTalismanSlots()); // CT2.3
+		writeC(_activeChar.getInventory().canEquipCloak() ? 1 : 0); // CT2.3
+		writeD(0x00);
+		writeH(0x00);
 		writeD(_activeChar.getPAtk(null));
 		writeD(_activeChar.getPAtkSpd());
 		writeD(_activeChar.getPDef(null));
@@ -102,6 +109,9 @@ public class GMViewCharacterInfo extends L2GameServerPacket
 		writeD(_activeChar.getPAtkSpd());
 		
 		writeD(_activeChar.getMDef(null, null));
+		writeD(0x00); // magic evasion
+		writeD(0x00); // magic accuracy
+		writeD(_activeChar.getMCriticalHit(null, null));
 		
 		writeD(_activeChar.getPvpFlag()); // 0-non-pvp 1-pvp = violett name
 		writeD(_activeChar.getKarma());
@@ -161,5 +171,7 @@ public class GMViewCharacterInfo extends L2GameServerPacket
 		}
 		writeD(_activeChar.getFame());
 		writeD(_activeChar.getVitalityPoints());
+		writeD(0x00);
+		writeD(0x00);
 	}
 }
