@@ -152,7 +152,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 			writeH(_activeChar.getWIT());
 			writeH(_activeChar.getMEN());
 			writeH(_activeChar.getLUC());
-			writeH(_activeChar.getCHA()); // CHA
+			writeH(_activeChar.getCHA());
 		}
 		
 		if (containsMask(UserInfoType.MAX_HPCPMP))

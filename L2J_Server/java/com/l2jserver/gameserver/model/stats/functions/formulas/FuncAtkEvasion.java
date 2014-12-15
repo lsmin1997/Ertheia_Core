@@ -47,21 +47,37 @@ public class FuncAtkEvasion extends AbstractFunction
 		double value = initVal;
 		if (effector.isPlayer())
 		{
-			// [Square(DEX)] * 6 + lvl;
-			value += (Math.sqrt(effector.getDEX()) * 6) + level;
-			if (level > 77)
-			{
-				value += level - 77;
-			}
+			// [Square(DEX)] * 5 + lvl;
+			value += (Math.sqrt(effector.getDEX()) * 5) + level;
 			if (level > 69)
 			{
 				value += level - 69;
 			}
+			if (level > 77)
+			{
+				value += 1;
+			}
+			if (level > 80)
+			{
+				value += 2;
+			}
+			if (level > 87)
+			{
+				value += 2;
+			}
+			if (level > 92)
+			{
+				value += 1;
+			}
+			if (level > 97)
+			{
+				value += 1;
+			}
 		}
 		else
 		{
-			// [Square(DEX)] * 6 + lvl;
-			value += (Math.sqrt(effector.getDEX()) * 6) + level;
+			// [Square(DEX)] * 5 + lvl;
+			value += (Math.sqrt(effector.getDEX()) * 5) + level;
 			if (level > 69)
 			{
 				value += (level - 69) + 2;

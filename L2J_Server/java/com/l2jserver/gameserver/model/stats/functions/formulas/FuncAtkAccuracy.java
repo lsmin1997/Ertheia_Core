@@ -44,15 +44,27 @@ public class FuncAtkAccuracy extends AbstractFunction
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
 		final int level = effector.getLevel();
-		// [Square(DEX)] * 6 + lvl + weapon hitbonus;
-		double value = initVal + (Math.sqrt(effector.getDEX()) * 6) + level;
+		// [Square(DEX)] * 5 + lvl + weapon hitbonus;
+		double value = initVal + (Math.sqrt(effector.getDEX()) * 5) + level;
 		if (level > 77)
 		{
-			value += level - 76;
+			value += 1;
 		}
-		if (level > 69)
+		if (level > 80)
 		{
-			value += level - 69;
+			value += 2;
+		}
+		if (level > 87)
+		{
+			value += 2;
+		}
+		if (level > 92)
+		{
+			value += 1;
+		}
+		if (level > 97)
+		{
+			value += 1;
 		}
 		return value;
 	}
