@@ -314,6 +314,10 @@ public final class CharacterCreate extends L2GameClientPacket
 		EventDispatcher.getInstance().notifyEvent(new OnPlayerCreate(newChar, newChar.getObjectId(), newChar.getName(), client));
 		
 		newChar.setOnlineStatus(true, false);
+		if (Config.SHOW_GOD_VIDEO_INTRO)
+		{
+			newChar.getVariables().set("intro_god_video", true);
+		}
 		newChar.deleteMe();
 		
 		final CharSelectionInfo cl = new CharSelectionInfo(client.getAccountName(), client.getSessionId().playOkID1);

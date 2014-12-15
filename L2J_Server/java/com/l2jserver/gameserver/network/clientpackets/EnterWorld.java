@@ -452,9 +452,9 @@ public class EnterWorld extends L2GameClientPacket
 			}
 		}
 		
-		if (Config.SHOW_GOD_VIDEO_INTRO && !activeChar.getVariables().getBoolean("intro_god_video", false))
+		if (Config.SHOW_GOD_VIDEO_INTRO && activeChar.getVariables().getBoolean("intro_god_video", false))
 		{
-			activeChar.getVariables().set("intro_god_video", true);
+			activeChar.getVariables().remove("intro_god_video");
 			if (activeChar.getRace() == Race.ERTHEIA)
 			{
 				activeChar.sendPacket(ExShowUsm.ERTHEIA_INTRO_FOR_ERTHEIA);
