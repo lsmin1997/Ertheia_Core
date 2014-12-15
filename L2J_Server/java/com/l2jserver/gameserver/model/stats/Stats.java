@@ -104,6 +104,8 @@ public enum Stats
 	STAT_INT("INT"),
 	STAT_WIT("WIT"),
 	STAT_MEN("MEN"),
+	STAT_LUC("LUC"),
+	STAT_CHA("CHA"),
 	
 	// Special stats, share one slot in Calculator
 	

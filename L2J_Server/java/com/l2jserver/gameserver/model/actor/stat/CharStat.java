@@ -124,6 +124,8 @@ public class CharStat
 				case STAT_MEN:
 				case STAT_STR:
 				case STAT_WIT:
+				case STAT_LUC:
+				case STAT_CHA:
 				{
 					value = 1.0;
 					break;
@@ -373,6 +375,16 @@ public class CharStat
 	public final int getMEN()
 	{
 		return (int) calcStat(Stats.STAT_MEN, _activeChar.getTemplate().getBaseMEN());
+	}
+	
+	public final int getLUC()
+	{
+		return (int) calcStat(Stats.STAT_LUC, _activeChar.getTemplate().getBaseLUC());
+	}
+	
+	public final int getCHA()
+	{
+		return (int) calcStat(Stats.STAT_CHA, _activeChar.getTemplate().getBaseCHA());
 	}
 	
 	public double getMovementSpeedMultiplier()

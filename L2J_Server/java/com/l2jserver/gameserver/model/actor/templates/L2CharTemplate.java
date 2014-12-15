@@ -42,6 +42,8 @@ public class L2CharTemplate extends ListenersContainer
 	private int _baseINT;
 	private int _baseWIT;
 	private int _baseMEN;
+	private int _baseLUC;
+	private int _baseCHA;
 	private float _baseHpMax;
 	private float _baseCpMax;
 	private float _baseMpMax;
@@ -101,6 +103,8 @@ public class L2CharTemplate extends ListenersContainer
 		_baseINT = set.getInt("baseINT", 0);
 		_baseWIT = set.getInt("baseWIT", 0);
 		_baseMEN = set.getInt("baseMEN", 0);
+		_baseLUC = set.getInt("baseLUC", 0);
+		_baseCHA = set.getInt("baseCHA", 0);
 		_baseHpMax = set.getFloat("baseHpMax", 0);
 		_baseCpMax = set.getFloat("baseCpMax", 0);
 		_baseMpMax = set.getFloat("baseMpMax", 0);
@@ -310,6 +314,22 @@ public class L2CharTemplate extends ListenersContainer
 	public int getBaseMEN()
 	{
 		return _baseMEN;
+	}
+	
+	/**
+	 * @return the baseLUC
+	 */
+	public int getBaseLUC()
+	{
+		return _baseLUC;
+	}
+	
+	/**
+	 * @return the baseCHA
+	 */
+	public int getBaseCHA()
+	{
+		return _baseCHA;
 	}
 	
 	/**

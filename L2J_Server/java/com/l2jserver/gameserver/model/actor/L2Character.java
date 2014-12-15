@@ -6471,6 +6471,16 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return getStat().getMEN();
 	}
 	
+	public int getLUC()
+	{
+		return getStat().getLUC();
+	}
+	
+	public int getCHA()
+	{
+		return getStat().getCHA();
+	}
+	
 	// Status - NEED TO REMOVE ONCE L2CHARTATUS IS COMPLETE
 	public void addStatusListener(L2Character object)
 	{
