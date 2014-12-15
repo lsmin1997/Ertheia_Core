@@ -60,7 +60,6 @@ public final class ClassListData extends DocumentParser
 		Node attr;
 		ClassId classId;
 		String className;
-		String classServName;
 		ClassId parentClassId;
 		for (Node n = getCurrentDocument().getFirstChild(); n != null; n = n.getNextSibling())
 		{
@@ -75,11 +74,9 @@ public final class ClassListData extends DocumentParser
 						classId = ClassId.getClassId(parseInteger(attr));
 						attr = attrs.getNamedItem("name");
 						className = attr.getNodeValue();
-						attr = attrs.getNamedItem("serverName");
-						classServName = attr.getNodeValue();
 						attr = attrs.getNamedItem("parentClassId");
 						parentClassId = (attr != null) ? ClassId.getClassId(parseInteger(attr)) : null;
-						_classData.put(classId, new ClassInfo(classId, className, classServName, parentClassId));
+						_classData.put(classId, new ClassInfo(classId, className, parentClassId));
 					}
 				}
 			}
@@ -114,23 +111,6 @@ public final class ClassListData extends DocumentParser
 	{
 		final ClassId id = ClassId.getClassId(classId);
 		return (id != null) ? _classData.get(id) : null;
-	}
-	
-	/**
-	 * Gets the class info.
-	 * @param classServName the server side class name.
-	 * @return the class info related to the given {@code classServName}.
-	 */
-	public ClassInfo getClass(final String classServName)
-	{
-		for (final ClassInfo classInfo : _classData.values())
-		{
-			if (classInfo.getClassServName().equals(classServName))
-			{
-				return classInfo;
-			}
-		}
-		return null;
 	}
 	
 	/**

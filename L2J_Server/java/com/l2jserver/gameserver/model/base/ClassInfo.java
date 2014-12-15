@@ -28,21 +28,18 @@ public final class ClassInfo
 {
 	private final ClassId _classId;
 	private final String _className;
-	private final String _classServName;
 	private final ClassId _parentClassId;
 	
 	/**
 	 * Constructor for ClassInfo.
 	 * @param classId the class Id.
 	 * @param className the in game class name.
-	 * @param classServName the server side class name.
 	 * @param parentClassId the parent class for the given {@code classId}.
 	 */
-	public ClassInfo(ClassId classId, String className, String classServName, ClassId parentClassId)
+	public ClassInfo(ClassId classId, String className, ClassId parentClassId)
 	{
 		_classId = classId;
 		_className = className;
-		_classServName = classServName;
 		_parentClassId = parentClassId;
 	}
 	
@@ -97,14 +94,6 @@ public final class ClassInfo
 	public String getEscapedClientCode()
 	{
 		return Matcher.quoteReplacement(getClientCode());
-	}
-	
-	/**
-	 * @return the server side class name.
-	 */
-	public String getClassServName()
-	{
-		return _classServName;
 	}
 	
 	/**
