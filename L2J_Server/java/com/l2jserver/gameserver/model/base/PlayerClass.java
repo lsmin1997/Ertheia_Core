@@ -295,7 +295,7 @@ public enum PlayerClass
 		subclassSetMap.put(Spellhowler, subclasseSet5);
 	}
 	
-	PlayerClass(Race race, ClassType pType, ClassLevel pLevel)
+	private PlayerClass(Race race, ClassType pType, ClassLevel pLevel)
 	{
 		_race = race;
 		_level = pLevel;
