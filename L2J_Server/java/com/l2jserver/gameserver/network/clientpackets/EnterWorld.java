@@ -597,6 +597,8 @@ public class EnterWorld extends L2GameClientPacket
 		{
 			activeChar.sendPacket(ExNotifyPremiumItem.STATIC_PACKET);
 		}
+		
+		activeChar.broadcastUserInfo();
 	}
 	
 	/**
