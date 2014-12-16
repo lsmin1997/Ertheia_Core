@@ -69,6 +69,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
+import com.l2jserver.gameserver.network.serverpackets.ExPledgeCount;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
 import com.l2jserver.gameserver.network.serverpackets.ExShowUsm;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
@@ -308,6 +309,8 @@ public class EnterWorld extends L2GameClientPacket
 			}
 			
 			showClanNotice = activeChar.getClan().isNoticeEnabled();
+			
+			activeChar.sendPacket(new ExPledgeCount(activeChar.getClan()));
 		}
 		
 		if (TerritoryWarManager.getInstance().getRegisteredTerritoryId(activeChar) > 0)
