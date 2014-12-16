@@ -3869,6 +3869,7 @@ public final class L2PcInstance extends L2Playable
 		
 		// Update current load as well
 		sendPacket(new ExUserInfoInvenWeight(this));
+		sendPacket(new ExAdenaInvenCount(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
