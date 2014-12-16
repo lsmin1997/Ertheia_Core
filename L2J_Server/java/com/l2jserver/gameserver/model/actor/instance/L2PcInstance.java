@@ -4183,7 +4183,7 @@ public final class L2PcInstance extends L2Playable
 		su.addAttribute(StatusUpdate.CUR_MP, (int) getCurrentMp());
 		su.addAttribute(StatusUpdate.MAX_CP, getMaxCp());
 		su.addAttribute(StatusUpdate.CUR_CP, (int) getCurrentCp());
-		sendPacket(su);
+		broadcastPacket(su);
 		
 		final boolean needCpUpdate = needCpUpdate();
 		final boolean needHpUpdate = needHpUpdate();
