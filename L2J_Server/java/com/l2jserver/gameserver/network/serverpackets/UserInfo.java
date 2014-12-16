@@ -187,7 +187,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 			writeD(_activeChar.getAppearance().getHairStyle());
 			writeD(_activeChar.getAppearance().getHairColor());
 			writeD(_activeChar.getAppearance().getFace());
-			writeC(0x01); // Hair accessory enable
+			writeC(_activeChar.isHairAccessoryEnabled() ? 0x01 : 0x00);
 		}
 		
 		if (containsMask(UserInfoType.STATUS))

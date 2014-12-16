@@ -1175,6 +1175,16 @@ public final class L2PcInstance extends L2Playable
 		return _appearance;
 	}
 	
+	public final boolean isHairAccessoryEnabled()
+	{
+		return getVariables().getBoolean("hairAccessoryEnabled", true);
+	}
+	
+	public final void setHairAccessoryEnabled(boolean enabled)
+	{
+		getVariables().set("hairAccessoryEnabled", enabled);
+	}
+	
 	/**
 	 * @return the base L2PcTemplate link to the L2PcInstance.
 	 */
