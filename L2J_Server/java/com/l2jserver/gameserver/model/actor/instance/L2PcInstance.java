@@ -51,7 +51,6 @@ import javolution.util.FastSet;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
-import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ItemsAutoDestroy;
@@ -5202,11 +5201,11 @@ public final class L2PcInstance extends L2Playable
 						{
 							SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1);
 							sm.addString(msg);
-							Announcements.getInstance().announceToAll(sm);
+							Broadcast.toAllOnlinePlayers(sm);
 						}
 						else
 						{
-							Announcements.getInstance().announceToAll(msg);
+							Broadcast.toAllOnlinePlayers(msg, false);
 						}
 					}
 					else if (getPvpFlag() != 0)
@@ -5216,11 +5215,11 @@ public final class L2PcInstance extends L2Playable
 						{
 							SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1);
 							sm.addString(msg);
-							Announcements.getInstance().announceToAll(sm);
+							Broadcast.toAllOnlinePlayers(sm);
 						}
 						else
 						{
-							Announcements.getInstance().announceToAll(msg);
+							Broadcast.toAllOnlinePlayers(msg, false);
 						}
 					}
 				}
