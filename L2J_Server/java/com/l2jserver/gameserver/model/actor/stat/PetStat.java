@@ -50,7 +50,7 @@ public class PetStat extends SummonStat
 		return true;
 	}
 	
-	public boolean addExpAndSp(long addToExp, int addToSp)
+	public boolean addExpAndSp(long addToExp, long addToSp)
 	{
 		if (getActiveChar().isUncontrollable() || !addExp(addToExp))
 		{

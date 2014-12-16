@@ -121,7 +121,7 @@ public class PlayableStat extends CharStat
 		return true;
 	}
 	
-	public boolean removeExpAndSp(long removeExp, int removeSp)
+	public boolean removeExpAndSp(long removeExp, long removeSp)
 	{
 		boolean expRemoved = false;
 		boolean spRemoved = false;
@@ -177,31 +177,31 @@ public class PlayableStat extends CharStat
 		return true;
 	}
 	
-	public boolean addSp(int value)
+	public boolean addSp(long value)
 	{
 		if (value < 0)
 		{
 			_log.warning("wrong usage");
 			return false;
 		}
-		int currentSp = getSp();
-		if (currentSp == Integer.MAX_VALUE)
+		long currentSp = getSp();
+		if (currentSp == Long.MAX_VALUE)
 		{
 			return false;
 		}
 		
-		if (currentSp > (Integer.MAX_VALUE - value))
+		if (currentSp > (Long.MAX_VALUE - value))
 		{
-			value = Integer.MAX_VALUE - currentSp;
+			value = Long.MAX_VALUE - currentSp;
 		}
 		
 		setSp(currentSp + value);
 		return true;
 	}
 	
-	public boolean removeSp(int value)
+	public boolean removeSp(long value)
 	{
-		int currentSp = getSp();
+		long currentSp = getSp();
 		if (currentSp < value)
 		{
 			value = currentSp;

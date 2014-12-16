@@ -975,7 +975,7 @@ public class L2PetInstance extends L2Summon
 			statement.setDouble(3, getStatus().getCurrentHp());
 			statement.setDouble(4, getStatus().getCurrentMp());
 			statement.setLong(5, getStat().getExp());
-			statement.setInt(6, getStat().getSp());
+			statement.setLong(6, getStat().getSp());
 			statement.setInt(7, getCurrentFed());
 			statement.setInt(8, getOwner().getObjectId());
 			statement.setString(9, String.valueOf(_restoreSummon)); // True restores pet on login
@@ -1218,7 +1218,7 @@ public class L2PetInstance extends L2Summon
 	}
 	
 	@Override
-	public void addExpAndSp(long addToExp, int addToSp)
+	public void addExpAndSp(long addToExp, long addToSp)
 	{
 		if (getId() == 12564)
 		{

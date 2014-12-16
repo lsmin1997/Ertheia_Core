@@ -117,7 +117,7 @@ public class PcStat extends PlayableStat
 		return true;
 	}
 	
-	public boolean addExpAndSp(long addToExp, int addToSp, boolean useBonuses)
+	public boolean addExpAndSp(long addToExp, long addToSp, boolean useBonuses)
 	{
 		L2PcInstance activeChar = getActiveChar();
 		
@@ -128,7 +128,7 @@ public class PcStat extends PlayableStat
 		}
 		
 		long baseExp = addToExp;
-		int baseSp = addToSp;
+		long baseSp = addToSp;
 		
 		double bonusExp = 1.;
 		double bonusSp = 1.;
@@ -186,7 +186,7 @@ public class PcStat extends PlayableStat
 		if ((addToExp == 0) && (addToSp != 0))
 		{
 			sm = SystemMessage.getSystemMessage(SystemMessageId.ACQUIRED_S1_SP);
-			sm.addInt(addToSp);
+			sm.addLong(addToSp);
 		}
 		else if ((addToSp == 0) && (addToExp != 0))
 		{
@@ -200,14 +200,14 @@ public class PcStat extends PlayableStat
 				sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_EARNED_S1_EXP_BONUS_S2_AND_S3_SP_BONUS_S4);
 				sm.addLong(addToExp);
 				sm.addLong(addToExp - baseExp);
-				sm.addInt(addToSp);
-				sm.addInt(addToSp - baseSp);
+				sm.addLong(addToSp);
+				sm.addLong(addToSp - baseSp);
 			}
 			else
 			{
 				sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_EARNED_S1_EXP_AND_S2_SP);
 				sm.addLong(addToExp);
-				sm.addInt(addToSp);
+				sm.addLong(addToSp);
 			}
 		}
 		activeChar.sendPacket(sm);
@@ -215,12 +215,12 @@ public class PcStat extends PlayableStat
 	}
 	
 	@Override
-	public boolean removeExpAndSp(long addToExp, int addToSp)
+	public boolean removeExpAndSp(long addToExp, long addToSp)
 	{
 		return removeExpAndSp(addToExp, addToSp, true);
 	}
 	
-	public boolean removeExpAndSp(long addToExp, int addToSp, boolean sendMessage)
+	public boolean removeExpAndSp(long addToExp, long addToSp, boolean sendMessage)
 	{
 		int level = getLevel();
 		if (!super.removeExpAndSp(addToExp, addToSp))
@@ -235,7 +235,7 @@ public class PcStat extends PlayableStat
 			sm.addLong(addToExp);
 			getActiveChar().sendPacket(sm);
 			sm = SystemMessage.getSystemMessage(SystemMessageId.SP_DECREASED_S1);
-			sm.addInt(addToSp);
+			sm.addLong(addToSp);
 			getActiveChar().sendPacket(sm);
 			if (getLevel() < level)
 			{
@@ -334,7 +334,7 @@ public class PcStat extends PlayableStat
 	}
 	
 	@Override
-	public boolean addSp(int value)
+	public boolean addSp(long value)
 	{
 		if (!super.addSp(value))
 		{
@@ -535,7 +535,7 @@ public class PcStat extends PlayableStat
 	}
 	
 	@Override
-	public final int getSp()
+	public final long getSp()
 	{
 		if (getActiveChar().isSubClassActive())
 		{
@@ -545,13 +545,13 @@ public class PcStat extends PlayableStat
 		return super.getSp();
 	}
 	
-	public final int getBaseSp()
+	public final long getBaseSp()
 	{
 		return super.getSp();
 	}
 	
 	@Override
-	public final void setSp(int value)
+	public final void setSp(long value)
 	{
 		if (getActiveChar().isSubClassActive())
 		{
