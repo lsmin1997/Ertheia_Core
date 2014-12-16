@@ -2085,9 +2085,6 @@ public final class L2PcInstance extends L2Playable
 					removeSkill(getKnownSkill(4270), false, true);
 					setIsOverloaded(false);
 				}
-				UserInfo ui = new UserInfo(this, false);
-				ui.addComponentType(UserInfoType.ENCHANTLEVEL);
-				sendPacket(ui);
 				sendPacket(new EtcStatusUpdate(this));
 				broadcastPacket(new CharInfo(this));
 				broadcastPacket(new ExBrExtraUserInfo(this));
