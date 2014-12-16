@@ -65,7 +65,8 @@ public enum TraitType
 	UNK_39(39, 3),
 	UNK_40(40, 3),
 	DUALDAGGER(41, 1),
-	NONE(42, 0);
+	DUALBLUNT(42, 1),
+	NONE(43, 0);
 	
 	private final int _id;
 	private final int _type; // 1 = weapon, 2 = weakness, 3 = resistance

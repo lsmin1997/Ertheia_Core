@@ -75,6 +75,7 @@ public enum Stats
 	
 	// ATTACK & DEFENCE RATES
 	EVASION_RATE("rEvas"),
+	MAGIC_EVASION_RATE("rMagicEvas"),
 	P_SKILL_EVASION("pSkillEvas"),
 	DEFENCE_CRITICAL_RATE("defCritRate"),
 	DEFENCE_CRITICAL_RATE_ADD("defCritRateAdd"),
@@ -91,6 +92,7 @@ public enum Stats
 	
 	// ACCURACY & RANGE
 	ACCURACY_COMBAT("accCombat"),
+	ACCURACY_MAGIC("accMagic"),
 	POWER_ATTACK_RANGE("pAtkRange"),
 	MAGIC_ATTACK_RANGE("mAtkRange"),
 	ATTACK_COUNT_MAX("atkCountMax"),
@@ -220,6 +222,6 @@ public enum Stats
 			}
 		}
 		
-		throw new NoSuchElementException("Unknown name '" + name + "' for enum BaseStats");
+		throw new NoSuchElementException("Unknown name '" + name + "' for enum " + Stats.class.getSimpleName());
 	}
 }
