@@ -144,6 +144,7 @@ public class CharInfo extends L2GameServerPacket
 		
 		writeD(0x00); // rhand item visual id
 		writeD(0x00); // lhand item visual id
+		writeD(0x00); // lrhand item visual id
 		writeD(0x00); // gloves item visual id
 		writeD(0x00); // chest item visual id
 		writeD(0x00); // legs item visual id
