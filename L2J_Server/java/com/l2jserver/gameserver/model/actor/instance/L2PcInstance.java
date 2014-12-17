@@ -56,8 +56,6 @@ import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ItemsAutoDestroy;
 import com.l2jserver.gameserver.LoginServerThread;
 import com.l2jserver.gameserver.RecipeController;
-import com.l2jserver.gameserver.SevenSigns;
-import com.l2jserver.gameserver.SevenSignsFestival;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.ai.CtrlIntention;
 import com.l2jserver.gameserver.ai.L2CharacterAI;
@@ -104,7 +102,6 @@ import com.l2jserver.gameserver.instancemanager.AntiFeedManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.CoupleManager;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
-import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.DuelManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
@@ -115,7 +112,6 @@ import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.instancemanager.PunishmentManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.ArenaParticipantsHolder;
 import com.l2jserver.gameserver.model.BlockList;
@@ -149,7 +145,6 @@ import com.l2jserver.gameserver.model.ShortCuts;
 import com.l2jserver.gameserver.model.Shortcut;
 import com.l2jserver.gameserver.model.TeleportBookmark;
 import com.l2jserver.gameserver.model.TeleportWhereType;
-import com.l2jserver.gameserver.model.TerritoryWard;
 import com.l2jserver.gameserver.model.TimeStamp;
 import com.l2jserver.gameserver.model.TradeList;
 import com.l2jserver.gameserver.model.UIKeysSettings;
@@ -266,7 +261,6 @@ import com.l2jserver.gameserver.network.serverpackets.ExAbnormalStatusUpdateFrom
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExAutoSoulShot;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
-import com.l2jserver.gameserver.network.serverpackets.ExDominionWarStart;
 import com.l2jserver.gameserver.network.serverpackets.ExDuelUpdateUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingEnd;
 import com.l2jserver.gameserver.network.serverpackets.ExFishingStart;
@@ -502,8 +496,6 @@ public final class L2PcInstance extends L2Playable
 	private int _curWeightPenalty = 0;
 	
 	private int _lastCompassZone; // the last compass zone update send to the client
-	
-	private boolean _isIn7sDungeon = false;
 	
 	private final L2ContactList _contactList = new L2ContactList(this);
 	
@@ -1019,25 +1011,18 @@ public final class L2PcInstance extends L2Playable
 		}
 		if (getSiegeState() != 0)
 		{
-			if (TerritoryWarManager.getInstance().getRegisteredTerritoryId(this) != 0)
+			result |= RelationChanged.RELATION_INSIEGE;
+			if (getSiegeState() != target.getSiegeState())
 			{
-				result |= RelationChanged.RELATION_TERRITORY_WAR;
+				result |= RelationChanged.RELATION_ENEMY;
 			}
 			else
 			{
-				result |= RelationChanged.RELATION_INSIEGE;
-				if (getSiegeState() != target.getSiegeState())
-				{
-					result |= RelationChanged.RELATION_ENEMY;
-				}
-				else
-				{
-					result |= RelationChanged.RELATION_ALLY;
-				}
-				if (getSiegeState() == 1)
-				{
-					result |= RelationChanged.RELATION_ATTACKER;
-				}
+				result |= RelationChanged.RELATION_ALLY;
+			}
+			if (getSiegeState() == 1)
+			{
+				result |= RelationChanged.RELATION_ATTACKER;
 			}
 		}
 		if ((getClan() != null) && (target.getClan() != null))
@@ -1797,16 +1782,6 @@ public final class L2PcInstance extends L2Playable
 			}
 			_lastCompassZone = ExSetCompassZoneCode.PVPZONE;
 			ExSetCompassZoneCode cz = new ExSetCompassZoneCode(ExSetCompassZoneCode.PVPZONE);
-			sendPacket(cz);
-		}
-		else if (isIn7sDungeon())
-		{
-			if (_lastCompassZone == ExSetCompassZoneCode.SEVENSIGNSZONE)
-			{
-				return;
-			}
-			_lastCompassZone = ExSetCompassZoneCode.SEVENSIGNSZONE;
-			ExSetCompassZoneCode cz = new ExSetCompassZoneCode(ExSetCompassZoneCode.SEVENSIGNSZONE);
 			sendPacket(cz);
 		}
 		else if (isInsideZone(ZoneId.PEACE))
@@ -3259,15 +3234,6 @@ public final class L2PcInstance extends L2Playable
 					fort.getSiege().announceToPlayer(SystemMessage.getSystemMessage(SystemMessageId.C1_ACQUIRED_THE_FLAG), getName());
 				}
 			}
-			// Territory Ward
-			else if ((item.getId() >= 13560) && (item.getId() <= 13568))
-			{
-				TerritoryWard ward = TerritoryWarManager.getInstance().getTerritoryWard(item.getId() - 13479);
-				if (ward != null)
-				{
-					ward.activate(this, item);
-				}
-			}
 		}
 	}
 	
@@ -3364,15 +3330,6 @@ public final class L2PcInstance extends L2Playable
 					{
 						Fort fort = FortManager.getInstance().getFort(this);
 						fort.getSiege().announceToPlayer(SystemMessage.getSystemMessage(SystemMessageId.C1_ACQUIRED_THE_FLAG), getName());
-					}
-				}
-				// Territory Ward
-				else if ((createdItem.getId() >= 13560) && (createdItem.getId() <= 13568))
-				{
-					TerritoryWard ward = TerritoryWarManager.getInstance().getTerritoryWard(createdItem.getId() - 13479);
-					if (ward != null)
-					{
-						ward.activate(this, createdItem);
 					}
 				}
 				return createdItem;
@@ -4249,10 +4206,6 @@ public final class L2PcInstance extends L2Playable
 		// Send a Server->Client packet CharInfo to all L2PcInstance in _KnownPlayers of the L2PcInstance
 		broadcastPacket(new CharInfo(this));
 		broadcastPacket(new ExBrExtraUserInfo(this));
-		if (TerritoryWarManager.getInstance().isTWInProgress() && (TerritoryWarManager.getInstance().checkIsRegistered(-1, getObjectId()) || TerritoryWarManager.getInstance().checkIsRegistered(-1, getClan())))
-		{
-			broadcastPacket(new ExDominionWarStart(this));
-		}
 	}
 	
 	public final void broadcastUserInfo(UserInfoType... types)
@@ -5237,24 +5190,16 @@ public final class L2PcInstance extends L2Playable
 			}
 			else if (isCombatFlagEquipped())
 			{
-				// TODO: Fort siege during TW??
-				if (TerritoryWarManager.getInstance().isTWInProgress())
+				final Fort fort = FortManager.getInstance().getFort(this);
+				if (fort != null)
 				{
-					TerritoryWarManager.getInstance().dropCombatFlag(this, true, false);
+					FortSiegeManager.getInstance().dropCombatFlag(this, fort.getResidenceId());
 				}
 				else
 				{
-					Fort fort = FortManager.getInstance().getFort(this);
-					if (fort != null)
-					{
-						FortSiegeManager.getInstance().dropCombatFlag(this, fort.getResidenceId());
-					}
-					else
-					{
-						int slot = getInventory().getSlotFromItem(getInventory().getItemByItemId(9819));
-						getInventory().unEquipItemInBodySlot(slot);
-						destroyItem("CombatFlag", getInventory().getItemByItemId(9819), null, true);
-					}
+					final int slot = getInventory().getSlotFromItem(getInventory().getItemByItemId(9819));
+					getInventory().unEquipItemInBodySlot(slot);
+					destroyItem("CombatFlag", getInventory().getItemByItemId(9819), null, true);
 				}
 			}
 			else
@@ -5329,11 +5274,6 @@ public final class L2PcInstance extends L2Playable
 			getSkillChannelized().abortChannelization();
 		}
 		
-		if (isInParty() && getParty().isInDimensionalRift())
-		{
-			getParty().getDimensionalRift().getDeadMemberList().add(this);
-		}
-		
 		if (getAgathionId() != 0)
 		{
 			setAgathionId(0);
@@ -5386,7 +5326,7 @@ public final class L2PcInstance extends L2Playable
 				dropItem = Config.KARMA_RATE_DROP_ITEM;
 				dropLimit = Config.KARMA_DROP_LIMIT;
 			}
-			else if (isKillerNpc && (getLevel() > 4) && !isFestivalParticipant())
+			else if (isKillerNpc && (getLevel() > 4))
 			{
 				dropPercent = Config.PLAYER_RATE_DROP;
 				dropEquip = Config.PLAYER_RATE_DROP_EQUIP;
@@ -5682,7 +5622,7 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		
-		if (isFestivalParticipant() || atWar)
+		if (atWar)
 		{
 			lostExp /= 4.0;
 		}
@@ -6738,11 +6678,6 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public void setIsIn7sDungeon(boolean isIn7sDungeon)
-	{
-		_isIn7sDungeon = isIn7sDungeon;
-	}
-	
 	/**
 	 * Update the characters table of the database with online status and lastAccess of this L2PcInstance (called when login and logout).
 	 */
@@ -6800,7 +6735,7 @@ public final class L2PcInstance extends L2Playable
 			statement.setInt(27, getAppearance().getTitleColor());
 			statement.setInt(28, getAccessLevel().getLevel());
 			statement.setInt(29, isOnlineInt());
-			statement.setInt(30, isIn7sDungeon() ? 1 : 0);
+			statement.setInt(30, 0); // Unused
 			statement.setInt(31, getClanPrivileges().getBitmask());
 			statement.setInt(32, getWantsPeace());
 			statement.setInt(33, getBaseClass());
@@ -6974,7 +6909,6 @@ public final class L2PcInstance extends L2Playable
 					player.setApprentice(rset.getInt("apprentice"));
 					player.setSponsor(rset.getInt("sponsor"));
 					player.setLvlJoinedAcademy(rset.getInt("lvl_joined_academy"));
-					player.setIsIn7sDungeon(rset.getInt("isin7sdungeon") == 1);
 					
 					CursedWeaponsManager.getInstance().checkPlayer(player);
 					
@@ -7350,7 +7284,6 @@ public final class L2PcInstance extends L2Playable
 		{
 			storeUISettings();
 		}
-		SevenSigns.getInstance().saveSevenSignsData(getObjectId());
 		
 		final PlayerVariables vars = getScript(PlayerVariables.class);
 		if (vars != null)
@@ -7410,7 +7343,7 @@ public final class L2PcInstance extends L2Playable
 			statement.setInt(28, getAppearance().getTitleColor());
 			statement.setInt(29, getAccessLevel().getLevel());
 			statement.setInt(30, isOnlineInt());
-			statement.setInt(31, isIn7sDungeon() ? 1 : 0);
+			statement.setInt(31, 0); // Unused
 			statement.setInt(32, getClanPrivileges().getBitmask());
 			statement.setInt(33, getWantsPeace());
 			statement.setInt(34, getBaseClass());
@@ -7631,11 +7564,6 @@ public final class L2PcInstance extends L2Playable
 			return getClient().isDetached() ? 2 : 1;
 		}
 		return 0;
-	}
-	
-	public boolean isIn7sDungeon()
-	{
-		return _isIn7sDungeon;
 	}
 	
 	@Override
@@ -8736,14 +8664,7 @@ public final class L2PcInstance extends L2Playable
 			
 			if ((target.getActingPlayer() != null) && (getSiegeState() > 0) && isInsideZone(ZoneId.SIEGE) && (target.getActingPlayer().getSiegeState() == getSiegeState()) && (target.getActingPlayer() != this) && (target.getActingPlayer().getSiegeSide() == getSiegeSide()))
 			{
-				if (TerritoryWarManager.getInstance().isTWInProgress())
-				{
-					sendPacket(SystemMessageId.YOU_CANNOT_ATTACK_A_MEMBER_OF_THE_SAME_TERRITORY);
-				}
-				else
-				{
-					sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
-				}
+				sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
 				sendPacket(ActionFailed.STATIC_PACKET);
 				return false;
 			}
@@ -9303,14 +9224,6 @@ public final class L2PcInstance extends L2Playable
 	public L2Npc getLastFolkNPC()
 	{
 		return _lastFolkNpc;
-	}
-	
-	/**
-	 * @return True if L2PcInstance is a participant in the Festival of Darkness.
-	 */
-	public boolean isFestivalParticipant()
-	{
-		return SevenSignsFestival.getInstance().isParticipant(this);
 	}
 	
 	public void addAutoSoulShot(int itemId)
@@ -10502,25 +10415,6 @@ public final class L2PcInstance extends L2Playable
 	{
 		startWarnUserTakeBreak();
 		
-		if (SevenSigns.getInstance().isSealValidationPeriod() || SevenSigns.getInstance().isCompResultsPeriod())
-		{
-			if (!isGM() && isIn7sDungeon() && (SevenSigns.getInstance().getPlayerCabal(getObjectId()) != SevenSigns.getInstance().getCabalHighestScore()))
-			{
-				teleToLocation(TeleportWhereType.TOWN);
-				setIsIn7sDungeon(false);
-				sendMessage("You have been teleported to the nearest town due to the beginning of the Seal Validation period.");
-			}
-		}
-		else
-		{
-			if (!isGM() && isIn7sDungeon() && (SevenSigns.getInstance().getPlayerCabal(getObjectId()) == SevenSigns.CABAL_NULL))
-			{
-				teleToLocation(TeleportWhereType.TOWN);
-				setIsIn7sDungeon(false);
-				sendMessage("You have been teleported to the nearest town because you have not signed for any cabal.");
-			}
-		}
-		
 		if (isGM())
 		{
 			if (isInvul())
@@ -10591,13 +10485,6 @@ public final class L2PcInstance extends L2Playable
 		if (isMounted())
 		{
 			startFeed(_mountNpcId);
-		}
-		if (isInParty() && getParty().isInDimensionalRift())
-		{
-			if (!DimensionalRiftManager.getInstance().checkIfInPeaceZone(getX(), getY(), getZ()))
-			{
-				getParty().getDimensionalRift().memberRessurected(this);
-			}
 		}
 		if (getInstanceId() > 0)
 		{
@@ -11252,10 +11139,6 @@ public final class L2PcInstance extends L2Playable
 					getInventory().unEquipItemInBodySlot(slot);
 					destroyItem("CombatFlag", getInventory().getItemByItemId(9819), null, true);
 				}
-			}
-			else if (isCombatFlagEquipped())
-			{
-				TerritoryWarManager.getInstance().dropCombatFlag(this, false, false);
 			}
 		}
 		catch (Exception e)
@@ -13009,11 +12892,6 @@ public final class L2PcInstance extends L2Playable
 		else if (isDead())
 		{
 			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_WHILE_YOU_ARE_DEAD);
-			return false;
-		}
-		else if ((type == 1) && (isIn7sDungeon() || (isInParty() && getParty().isInDimensionalRift())))
-		{
-			sendPacket(SystemMessageId.YOU_CANNOT_USE_MY_TELEPORTS_TO_REACH_THIS_AREA);
 			return false;
 		}
 		else if (isInWater())

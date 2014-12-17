@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import com.l2jserver.gameserver.SevenSigns;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -77,10 +76,6 @@ public class ConditionPlayerCanSummonSiegeGolem extends Condition
 		else if ((player.getClanId() != 0) && (((castle != null) && (castle.getSiege().getAttackerClan(player.getClanId()) == null)) || ((fort != null) && (fort.getSiege().getAttackerClan(player.getClanId()) == null))))
 		{
 			player.sendPacket(SystemMessageId.INCORRECT_TARGET);
-			canSummonSiegeGolem = false;
-		}
-		else if ((SevenSigns.getInstance().checkSummonConditions(player)))
-		{
 			canSummonSiegeGolem = false;
 		}
 		return (_val == canSummonSiegeGolem);

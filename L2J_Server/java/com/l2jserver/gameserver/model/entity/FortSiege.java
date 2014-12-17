@@ -38,7 +38,6 @@ import com.l2jserver.gameserver.enums.FortTeleportWhoType;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeGuardManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.CombatFlag;
 import com.l2jserver.gameserver.model.FortSiegeSpawn;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -736,29 +735,19 @@ public class FortSiege implements Siegable
 		{
 			if (getFort().getSiege().getAttackerClans().isEmpty() && (player.getInventory().getAdena() < 250000))
 			{
-				return 1; // Player dont havee enough adena to register
-			}
-			
-			else if ((System.currentTimeMillis() < TerritoryWarManager.getInstance().getTWStartTimeInMillis()) && TerritoryWarManager.getInstance().getIsRegistrationOver())
-			{
-				return 2; // Is not right time to register Fortress now
-			}
-			
-			if ((System.currentTimeMillis() > TerritoryWarManager.getInstance().getTWStartTimeInMillis()) && TerritoryWarManager.getInstance().isTWChannelOpen())
-			{
-				return 2; // Is not right time to register Fortress now
+				return 1; // Player don't have enough adena to register
 			}
 			
 			for (Fort fort : FortManager.getInstance().getForts())
 			{
 				if (fort.getSiege().getAttackerClan(player.getClanId()) != null)
 				{
-					return 3; // Players clan is already registred to siege
+					return 3; // Players clan is already registered to siege
 				}
 				
 				if ((fort.getOwnerClan() == player.getClan()) && (fort.getSiege().isInProgress() || (fort.getSiege()._siegeStartTask != null)))
 				{
-					return 3; // Players clan is already registred to siege
+					return 3; // Players clan is already registered to siege
 				}
 			}
 		}
@@ -772,7 +761,7 @@ public class FortSiege implements Siegable
 			}
 			startAutoTask(true);
 		}
-		return 4; // Players clan is successfully registred to siege
+		return 4; // Players clan is successfully registered to siege
 	}
 	
 	/**

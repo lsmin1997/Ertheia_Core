@@ -145,14 +145,7 @@ public final class RequestJoinParty extends L2GameClientPacket
 		}
 		else
 		{
-			if (requestor.getParty().isInDimensionalRift())
-			{
-				requestor.sendMessage("You cannot invite a player when you are in the Dimensional Rift.");
-			}
-			else
-			{
-				addTargetToParty(target, requestor);
-			}
+			addTargetToParty(target, requestor);
 		}
 	}
 	

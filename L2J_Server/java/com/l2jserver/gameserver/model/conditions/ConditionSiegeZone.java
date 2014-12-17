@@ -20,7 +20,6 @@ package com.l2jserver.gameserver.model.conditions;
 
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Castle;
@@ -42,8 +41,6 @@ public final class ConditionSiegeZone extends Condition
 	public static final int COND_FORT_ATTACK = 0x0010;
 	public static final int COND_FORT_DEFEND = 0x0020;
 	public static final int COND_FORT_NEUTRAL = 0x0040;
-	public static final int COND_TW_CHANNEL = 0x0080;
-	public static final int COND_TW_PROGRESS = 0x0100;
 	
 	private final int _value;
 	private final boolean _self;
@@ -66,15 +63,7 @@ public final class ConditionSiegeZone extends Condition
 		Castle castle = CastleManager.getInstance().getCastle(target);
 		Fort fort = FortManager.getInstance().getFort(target);
 		
-		if (((_value & COND_TW_PROGRESS) != 0) && !TerritoryWarManager.getInstance().isTWInProgress())
-		{
-			return false;
-		}
-		else if (((_value & COND_TW_CHANNEL) != 0) && !TerritoryWarManager.getInstance().isTWChannelOpen())
-		{
-			return false;
-		}
-		else if ((castle == null) && (fort == null))
+		if ((castle == null) && (fort == null))
 		{
 			return (_value & COND_NOT_ZONE) != 0;
 		}

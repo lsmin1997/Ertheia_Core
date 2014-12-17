@@ -51,7 +51,6 @@ import com.l2jserver.gameserver.taskmanager.tasks.TaskRaidPointsReset;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskRecom;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskRestart;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskScript;
-import com.l2jserver.gameserver.taskmanager.tasks.TaskSevenSignsUpdate;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskShutdown;
 
 /**
@@ -197,7 +196,6 @@ public final class TaskManager
 		registerTask(new TaskRecom());
 		registerTask(new TaskRestart());
 		registerTask(new TaskScript());
-		registerTask(new TaskSevenSignsUpdate());
 		registerTask(new TaskShutdown());
 	}
 	

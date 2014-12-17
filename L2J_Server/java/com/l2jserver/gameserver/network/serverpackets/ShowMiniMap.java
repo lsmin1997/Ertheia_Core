@@ -18,8 +18,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import com.l2jserver.gameserver.SevenSigns;
-
 public class ShowMiniMap extends L2GameServerPacket
 {
 	private final int _mapId;
@@ -37,6 +35,6 @@ public class ShowMiniMap extends L2GameServerPacket
 	{
 		writeC(0xa3);
 		writeD(_mapId);
-		writeC(SevenSigns.getInstance().getCurrentPeriod());
+		writeC(0x00); // Seven Signs state
 	}
 }

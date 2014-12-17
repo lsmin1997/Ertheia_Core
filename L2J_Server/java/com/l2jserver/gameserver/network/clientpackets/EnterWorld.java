@@ -22,7 +22,6 @@ import java.util.Base64;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.LoginServerThread;
-import com.l2jserver.gameserver.SevenSigns;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.AnnouncementsTable;
@@ -33,14 +32,12 @@ import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
 import com.l2jserver.gameserver.instancemanager.CoupleManager;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
-import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MailManager;
 import com.l2jserver.gameserver.instancemanager.PetitionManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2World;
@@ -58,7 +55,6 @@ import com.l2jserver.gameserver.model.entity.clanhall.AuctionableHall;
 import com.l2jserver.gameserver.model.entity.clanhall.SiegableHall;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
-import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.Die;
@@ -312,37 +308,6 @@ public class EnterWorld extends L2GameClientPacket
 			activeChar.sendPacket(new ExPledgeCount(activeChar.getClan()));
 		}
 		
-		if (TerritoryWarManager.getInstance().getRegisteredTerritoryId(activeChar) > 0)
-		{
-			if (TerritoryWarManager.getInstance().isTWInProgress())
-			{
-				activeChar.setSiegeState((byte) 1);
-			}
-			activeChar.setSiegeSide(TerritoryWarManager.getInstance().getRegisteredTerritoryId(activeChar));
-		}
-		
-		// Updating Seal of Strife Buff/Debuff
-		if (SevenSigns.getInstance().isSealValidationPeriod() && (SevenSigns.getInstance().getSealOwner(SevenSigns.SEAL_STRIFE) != SevenSigns.CABAL_NULL))
-		{
-			int cabal = SevenSigns.getInstance().getPlayerCabal(activeChar.getObjectId());
-			if (cabal != SevenSigns.CABAL_NULL)
-			{
-				if (cabal == SevenSigns.getInstance().getSealOwner(SevenSigns.SEAL_STRIFE))
-				{
-					activeChar.addSkill(CommonSkill.THE_VICTOR_OF_WAR.getSkill());
-				}
-				else
-				{
-					activeChar.addSkill(CommonSkill.THE_VANQUISHED_OF_WAR.getSkill());
-				}
-			}
-		}
-		else
-		{
-			activeChar.removeSkill(CommonSkill.THE_VICTOR_OF_WAR.getSkill());
-			activeChar.removeSkill(CommonSkill.THE_VANQUISHED_OF_WAR.getSkill());
-		}
-		
 		if (Config.ENABLE_VITALITY)
 		{
 			if (Config.RECOVER_VITALITY_ON_RECONNECT)
@@ -469,7 +434,6 @@ public class EnterWorld extends L2GameClientPacket
 		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxNA=="));
 		activeChar.sendMessage(getText("VGhhbmsgeW91IGZvciAxMCB5ZWFycyE="));
 		
-		SevenSigns.getInstance().sendCurrentPeriodMsg(activeChar);
 		AnnouncementsTable.getInstance().showAnnouncements(activeChar);
 		
 		if (showClanNotice)
@@ -524,11 +488,6 @@ public class EnterWorld extends L2GameClientPacket
 			{
 				i.scheduleLifeTimeTask();
 			}
-		}
-		
-		if (DimensionalRiftManager.getInstance().checkIfInRiftZone(activeChar.getX(), activeChar.getY(), activeChar.getZ(), false))
-		{
-			DimensionalRiftManager.getInstance().teleportToWaitingRoom(activeChar);
 		}
 		
 		if (activeChar.getClanJoinExpiryTime() > System.currentTimeMillis())

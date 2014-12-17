@@ -504,18 +504,6 @@ public class Shutdown extends Thread
 		 * if (Config.ACTIVATE_POSITION_RECORDER) Universe.getInstance().implode(true);
 		 */
 		TimeCounter tc = new TimeCounter();
-		// Seven Signs data is now saved along with Festival data.
-		if (!SevenSigns.getInstance().isSealValidationPeriod())
-		{
-			SevenSignsFestival.getInstance().saveFestivalData(false);
-			_log.info("SevenSignsFestival: Festival data saved(" + tc.getEstimatedTimeAndRestartCounter() + "ms).");
-		}
-		
-		// Save Seven Signs data before closing. :)
-		SevenSigns.getInstance().saveSevenSignsData();
-		_log.info("SevenSigns: Seven Signs data saved(" + tc.getEstimatedTimeAndRestartCounter() + "ms).");
-		SevenSigns.getInstance().saveSevenSignsStatus();
-		_log.info("SevenSigns: Seven Signs status saved(" + tc.getEstimatedTimeAndRestartCounter() + "ms).");
 		
 		// Save all raidboss and GrandBoss status ^_^
 		RaidBossSpawnManager.getInstance().cleanUp();

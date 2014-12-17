@@ -30,8 +30,6 @@ import java.util.logging.Level;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ItemsAutoDestroy;
-import com.l2jserver.gameserver.SevenSigns;
-import com.l2jserver.gameserver.SevenSignsFestival;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.ItemTable;
@@ -1081,100 +1079,9 @@ public class L2Npc extends L2Character
 		
 		int npcId = getTemplate().getId();
 		
-		/* For use with Seven Signs implementation */
-		String filename = SevenSigns.SEVEN_SIGNS_HTML_PATH;
-		int sealAvariceOwner = SevenSigns.getInstance().getSealOwner(SevenSigns.SEAL_AVARICE);
-		int sealGnosisOwner = SevenSigns.getInstance().getSealOwner(SevenSigns.SEAL_GNOSIS);
-		int playerCabal = SevenSigns.getInstance().getPlayerCabal(player.getObjectId());
-		int compWinner = SevenSigns.getInstance().getCabalHighestScore();
-		
+		String filename;
 		switch (npcId)
 		{
-			case 31127: //
-			case 31128: //
-			case 31129: // Dawn Festival Guides
-			case 31130: //
-			case 31131: //
-				filename += "festival/dawn_guide.htm";
-				break;
-			case 31137: //
-			case 31138: //
-			case 31139: // Dusk Festival Guides
-			case 31140: //
-			case 31141: //
-				filename += "festival/dusk_guide.htm";
-				break;
-			case 31092: // Black Marketeer of Mammon
-				filename += "blkmrkt_1.htm";
-				break;
-			case 31113: // Merchant of Mammon
-				if (Config.ALT_STRICT_SEVENSIGNS)
-				{
-					switch (compWinner)
-					{
-						case SevenSigns.CABAL_DAWN:
-							if ((playerCabal != compWinner) || (playerCabal != sealAvariceOwner))
-							{
-								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DAWN);
-								player.sendPacket(ActionFailed.STATIC_PACKET);
-								return;
-							}
-							break;
-						case SevenSigns.CABAL_DUSK:
-							if ((playerCabal != compWinner) || (playerCabal != sealAvariceOwner))
-							{
-								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DUSK);
-								player.sendPacket(ActionFailed.STATIC_PACKET);
-								return;
-							}
-							break;
-						default:
-							player.sendPacket(SystemMessageId.SSQ_COMPETITION_UNDERWAY);
-							return;
-					}
-				}
-				filename += "mammmerch_1.htm";
-				break;
-			case 31126: // Blacksmith of Mammon
-				if (Config.ALT_STRICT_SEVENSIGNS)
-				{
-					switch (compWinner)
-					{
-						case SevenSigns.CABAL_DAWN:
-							if ((playerCabal != compWinner) || (playerCabal != sealGnosisOwner))
-							{
-								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DAWN);
-								player.sendPacket(ActionFailed.STATIC_PACKET);
-								return;
-							}
-							break;
-						case SevenSigns.CABAL_DUSK:
-							if ((playerCabal != compWinner) || (playerCabal != sealGnosisOwner))
-							{
-								player.sendPacket(SystemMessageId.CAN_BE_USED_BY_DUSK);
-								player.sendPacket(ActionFailed.STATIC_PACKET);
-								return;
-							}
-							break;
-						default:
-							player.sendPacket(SystemMessageId.SSQ_COMPETITION_UNDERWAY);
-							return;
-					}
-				}
-				filename += "mammblack_1.htm";
-				break;
-			case 31132:
-			case 31133:
-			case 31134:
-			case 31135:
-			case 31136: // Festival Witches
-			case 31142:
-			case 31143:
-			case 31144:
-			case 31145:
-			case 31146:
-				filename += "festival/festival_witch.htm";
-				break;
 			case 31688:
 				if (player.isNoble())
 				{
@@ -1220,18 +1127,6 @@ public class L2Npc extends L2Character
 				}
 				break;
 			default:
-				if ((npcId >= 31865) && (npcId <= 31918))
-				{
-					if (val == 0)
-					{
-						filename += "rift/GuardianOfBorder.htm";
-					}
-					else
-					{
-						filename += "rift/GuardianOfBorder-" + val + ".htm";
-					}
-					break;
-				}
 				if (((npcId >= 31093) && (npcId <= 31094)) || ((npcId >= 31172) && (npcId <= 31201)) || ((npcId >= 31239) && (npcId <= 31254)))
 				{
 					return;
@@ -1254,7 +1149,6 @@ public class L2Npc extends L2Character
 		}
 		
 		html.replace("%objectId%", String.valueOf(getObjectId()));
-		html.replace("%festivalMins%", SevenSignsFestival.getInstance().getTimeToNextFestivalStr());
 		player.sendPacket(html);
 		
 		// Send a Server->Client ActionFailed to the L2PcInstance in order to avoid that the client wait another packet

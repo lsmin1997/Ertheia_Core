@@ -20,11 +20,8 @@ package com.l2jserver.gameserver.model.stats;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.SevenSigns;
-import com.l2jserver.gameserver.SevenSignsFestival;
 import com.l2jserver.gameserver.datatables.HitConditionBonus;
 import com.l2jserver.gameserver.datatables.KarmaData;
 import com.l2jserver.gameserver.enums.ShotType;
@@ -58,8 +55,6 @@ import com.l2jserver.gameserver.model.stats.functions.formulas.FuncArmorSet;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncAtkAccuracy;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncAtkCritical;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncAtkEvasion;
-import com.l2jserver.gameserver.model.stats.functions.formulas.FuncGatesMDefMod;
-import com.l2jserver.gameserver.model.stats.functions.formulas.FuncGatesPDefMod;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncHenna;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMAtkCritical;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMAtkMod;
@@ -88,8 +83,6 @@ import com.l2jserver.util.Rnd;
  */
 public final class Formulas
 {
-	private static final Logger _log = Logger.getLogger(Formulas.class.getName());
-	
 	/** Regeneration Task period. */
 	private static final int HP_REGENERATE_PERIOD = 3000; // 3 secs
 	
@@ -159,29 +152,6 @@ public final class Formulas
 		
 		std[Stats.MOVE_SPEED.ordinal()] = new Calculator();
 		std[Stats.MOVE_SPEED.ordinal()].addFunc(FuncMoveSpeed.getInstance());
-		
-		return std;
-	}
-	
-	public static Calculator[] getStdDoorCalculators()
-	{
-		Calculator[] std = new Calculator[Stats.NUM_STATS];
-		
-		// Add the FuncAtkAccuracy to the Standard Calculator of ACCURACY_COMBAT
-		std[Stats.ACCURACY_COMBAT.ordinal()] = new Calculator();
-		std[Stats.ACCURACY_COMBAT.ordinal()].addFunc(FuncAtkAccuracy.getInstance());
-		
-		// Add the FuncAtkEvasion to the Standard Calculator of EVASION_RATE
-		std[Stats.EVASION_RATE.ordinal()] = new Calculator();
-		std[Stats.EVASION_RATE.ordinal()].addFunc(FuncAtkEvasion.getInstance());
-		
-		// SevenSigns PDEF Modifier
-		std[Stats.POWER_DEFENCE.ordinal()] = new Calculator();
-		std[Stats.POWER_DEFENCE.ordinal()].addFunc(FuncGatesPDefMod.getInstance());
-		
-		// SevenSigns MDEF Modifier
-		std[Stats.MAGIC_DEFENCE.ordinal()] = new Calculator();
-		std[Stats.MAGIC_DEFENCE.ordinal()].addFunc(FuncGatesMDefMod.getInstance());
 		
 		return std;
 	}
@@ -264,18 +234,10 @@ public final class Formulas
 		{
 			L2PcInstance player = cha.getActingPlayer();
 			
-			// SevenSigns Festival modifier
-			if (SevenSignsFestival.getInstance().isFestivalInProgress() && player.isFestivalParticipant())
+			double siegeModifier = calcSiegeRegenModifier(player);
+			if (siegeModifier > 0)
 			{
-				hpRegenMultiplier *= calcFestivalRegenModifier(player);
-			}
-			else
-			{
-				double siegeModifier = calcSiegeRegenModifier(player);
-				if (siegeModifier > 0)
-				{
-					hpRegenMultiplier *= siegeModifier;
-				}
+				hpRegenMultiplier *= siegeModifier;
 			}
 			
 			if (player.isInsideZone(ZoneId.CLAN_HALL) && (player.getClan() != null) && (player.getClan().getHideoutId() > 0))
@@ -379,12 +341,6 @@ public final class Formulas
 		if (cha.isPlayer())
 		{
 			L2PcInstance player = cha.getActingPlayer();
-			
-			// SevenSigns Festival modifier
-			if (SevenSignsFestival.getInstance().isFestivalInProgress() && player.isFestivalParticipant())
-			{
-				mpRegenMultiplier *= calcFestivalRegenModifier(player);
-			}
 			
 			// Mother Tree effect is calculated at last'
 			if (player.isInsideZone(ZoneId.MOTHER_TREE))
@@ -518,40 +474,6 @@ public final class Formulas
 		// Apply CON bonus
 		init *= cha.getLevelMod() * BaseStats.CON.calcBonus(cha);
 		return (cha.calcStat(Stats.REGENERATE_CP_RATE, Math.max(1, init), null, null) * cpRegenMultiplier) + cpRegenBonus;
-	}
-	
-	public static final double calcFestivalRegenModifier(L2PcInstance activeChar)
-	{
-		final int[] festivalInfo = SevenSignsFestival.getInstance().getFestivalForPlayer(activeChar);
-		final int oracle = festivalInfo[0];
-		final int festivalId = festivalInfo[1];
-		int[] festivalCenter;
-		
-		// If the player isn't found in the festival, leave the regen rate as it is.
-		if (festivalId < 0)
-		{
-			return 0;
-		}
-		
-		// Retrieve the X and Y coords for the center of the festival arena the player is in.
-		if (oracle == SevenSigns.CABAL_DAWN)
-		{
-			festivalCenter = SevenSignsFestival.FESTIVAL_DAWN_PLAYER_SPAWNS[festivalId];
-		}
-		else
-		{
-			festivalCenter = SevenSignsFestival.FESTIVAL_DUSK_PLAYER_SPAWNS[festivalId];
-		}
-		
-		// Check the distance between the player and the player spawn point, in the center of the arena.
-		double distToCenter = activeChar.calculateDistance(festivalCenter[0], festivalCenter[1], 0, false, false);
-		
-		if (Config.DEBUG)
-		{
-			_log.info("Distance: " + distToCenter + ", RegenMulti: " + ((distToCenter * 2.5) / 50));
-		}
-		
-		return 1.0 - (distToCenter * 0.0005); // Maximum Decreased Regen of ~ -65%;
 	}
 	
 	public static final double calcSiegeRegenModifier(L2PcInstance activeChar)

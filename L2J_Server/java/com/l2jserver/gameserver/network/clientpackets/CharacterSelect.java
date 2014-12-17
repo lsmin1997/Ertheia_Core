@@ -39,7 +39,6 @@ import com.l2jserver.gameserver.network.L2GameClient;
 import com.l2jserver.gameserver.network.L2GameClient.GameClientState;
 import com.l2jserver.gameserver.network.serverpackets.CharSelected;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
-import com.l2jserver.gameserver.network.serverpackets.SSQInfo;
 import com.l2jserver.gameserver.network.serverpackets.ServerClose;
 
 /**
@@ -153,11 +152,8 @@ public class CharacterSelect extends L2GameClientPacket
 						return;
 					}
 					
-					sendPacket(new SSQInfo());
-					
 					client.setState(GameClientState.IN_GAME);
-					CharSelected cs = new CharSelected(cha, client.getSessionId().playOkID1);
-					sendPacket(cs);
+					sendPacket(new CharSelected(cha, client.getSessionId().playOkID1));
 				}
 			}
 			finally

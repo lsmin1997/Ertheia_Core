@@ -19,7 +19,6 @@
 package com.l2jserver.gameserver.model.zone.type;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
@@ -42,11 +41,6 @@ public class L2PeaceZone extends L2ZoneType
 		if (character.isPlayer())
 		{
 			L2PcInstance player = character.getActingPlayer();
-			if (player.isCombatFlagEquipped() && TerritoryWarManager.getInstance().isTWInProgress())
-			{
-				TerritoryWarManager.getInstance().dropCombatFlag(player, false, true);
-			}
-			
 			// PVP possible during siege, now for siege participants only
 			// Could also check if this town is in siege, or if any siege is going on
 			if ((player.getSiegeState() != 0) && (Config.PEACE_ZONE_MODE == 1))

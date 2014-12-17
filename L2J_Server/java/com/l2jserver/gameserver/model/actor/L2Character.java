@@ -59,7 +59,6 @@ import com.l2jserver.gameserver.enums.Team;
 import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.CharEffectList;
 import com.l2jserver.gameserver.model.L2AccessLevel;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -73,7 +72,6 @@ import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.TimeStamp;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2RiftInvaderInstance;
 import com.l2jserver.gameserver.model.actor.knownlist.CharKnownList;
 import com.l2jserver.gameserver.model.actor.stat.CharStat;
 import com.l2jserver.gameserver.model.actor.status.CharStatus;
@@ -473,11 +471,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// Set its template to the new L2Character
 		_template = template;
 		
-		if (isDoor())
-		{
-			_calculators = Formulas.getStdDoorCalculators();
-		}
-		else if (isNpc())
+		if (isNpc())
 		{
 			// Copy the Standard Calculators of the L2NPCInstance in _calculators
 			_calculators = NPC_STD_CALCULATOR;
@@ -907,14 +901,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				
 				else if ((target.getActingPlayer() != null) && (getActingPlayer().getSiegeState() > 0) && isInsideZone(ZoneId.SIEGE) && (target.getActingPlayer().getSiegeState() == getActingPlayer().getSiegeState()) && (target.getActingPlayer() != this) && (target.getActingPlayer().getSiegeSide() == getActingPlayer().getSiegeSide()))
 				{
-					if (TerritoryWarManager.getInstance().isTWInProgress())
-					{
-						sendPacket(SystemMessageId.YOU_CANNOT_ATTACK_A_MEMBER_OF_THE_SAME_TERRITORY);
-					}
-					else
-					{
-						sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
-					}
+					sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
 					sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}
@@ -4596,7 +4583,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			// when geodata == 2, for all characters except mobs returning home (could be changed later to teleport if pathfinding fails)
 			// when geodata == 1, for L2Playable and L2RiftInvaderInstance only
 			if (((Config.GEODATA == 2) && !(isAttackable() && ((L2Attackable) this).isReturningToSpawnPoint())) || (isPlayer() && !(isInVehicle && (distance > 1500))) || (isSummon() && !(getAI().getIntention() == AI_INTENTION_FOLLOW)) // assuming intention_follow only when following owner
-				|| isAfraid() || (this instanceof L2RiftInvaderInstance))
+				|| isAfraid())
 			{
 				if (isOnGeodataPath())
 				{
@@ -4714,7 +4701,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				}
 			}
 			// If no distance to go through, the movement is canceled
-			if ((distance < 1) && ((Config.GEODATA == 2) || isPlayable() || (this instanceof L2RiftInvaderInstance) || isAfraid()))
+			if ((distance < 1) && ((Config.GEODATA == 2) || isPlayable()))
 			{
 				if (isSummon())
 				{
@@ -5297,14 +5284,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		if (InstanceManager.getInstance().getInstance(getInstanceId()).isPvPInstance())
 		{
 			return false;
-		}
-		
-		if (TerritoryWarManager.PLAYER_WITH_WARD_CAN_BE_KILLED_IN_PEACEZONE && TerritoryWarManager.getInstance().isTWInProgress())
-		{
-			if (target.isPlayer() && target.getActingPlayer().isCombatFlagEquipped())
-			{
-				return false;
-			}
 		}
 		
 		if (Config.ALT_GAME_KARMA_PLAYER_CAN_BE_KILLED_IN_PEACEZONE)

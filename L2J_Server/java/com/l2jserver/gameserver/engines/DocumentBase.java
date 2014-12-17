@@ -57,7 +57,6 @@ import com.l2jserver.gameserver.model.conditions.ConditionPlayerActiveSkillId;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerAgathionId;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCallPc;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanCreateBase;
-import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanCreateOutpost;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanEscape;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanRefuelAirship;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanResurrect;
@@ -821,11 +820,6 @@ public abstract class DocumentBase
 				case "cancreatebase":
 				{
 					cond = joinAnd(cond, new ConditionPlayerCanCreateBase(Boolean.parseBoolean(a.getNodeValue())));
-					break;
-				}
-				case "cancreateoutpost":
-				{
-					cond = joinAnd(cond, new ConditionPlayerCanCreateOutpost(Boolean.parseBoolean(a.getNodeValue())));
 					break;
 				}
 				case "canescape":

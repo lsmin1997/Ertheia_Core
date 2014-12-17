@@ -32,7 +32,6 @@ import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
-import com.l2jserver.gameserver.SevenSignsFestival;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.enums.PartyDistributionType;
@@ -42,7 +41,6 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ServitorInstance;
-import com.l2jserver.gameserver.model.entity.DimensionalRift;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
@@ -92,7 +90,6 @@ public class L2Party extends AbstractPlayerGroup
 	private volatile Set<Integer> _changeDistributionTypeAnswers = null;
 	private int _itemLastLoot = 0;
 	private L2CommandChannel _commandChannel = null;
-	private DimensionalRift _dr;
 	private Future<?> _positionBroadcastTask = null;
 	protected PartyMemberPosition _positionPacket;
 	private boolean _disbanding = false;
@@ -346,11 +343,6 @@ public class L2Party extends AbstractPlayerGroup
 			}
 		}
 		
-		if (isInDimensionalRift())
-		{
-			_dr.partyMemberInvited();
-		}
-		
 		// open the CCInformationwindow
 		if (isInCommandChannel())
 		{
@@ -406,11 +398,6 @@ public class L2Party extends AbstractPlayerGroup
 			getMembers().remove(player);
 			recalculatePartyLevel();
 			
-			if (player.isFestivalParticipant())
-			{
-				SevenSignsFestival.getInstance().updateParticipants(player, this);
-			}
-			
 			if (player.isInDuel())
 			{
 				DuelManager.getInstance().onRemoveFromParty(player);
@@ -456,11 +443,6 @@ public class L2Party extends AbstractPlayerGroup
 			if (player.hasSummon())
 			{
 				broadcastPacket(new ExPartyPetWindowDelete(player.getSummon()));
-			}
-			
-			if (isInDimensionalRift())
-			{
-				_dr.partyMemberExited(player);
 			}
 			
 			// Close the CCInfoWindow
@@ -958,21 +940,6 @@ public class L2Party extends AbstractPlayerGroup
 	public void setCommandChannel(L2CommandChannel channel)
 	{
 		_commandChannel = channel;
-	}
-	
-	public boolean isInDimensionalRift()
-	{
-		return _dr != null;
-	}
-	
-	public void setDimensionalRift(DimensionalRift dr)
-	{
-		_dr = dr;
-	}
-	
-	public DimensionalRift getDimensionalRift()
-	{
-		return _dr;
 	}
 	
 	/**

@@ -24,7 +24,6 @@ import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2SiegeClan;
 import com.l2jserver.gameserver.model.actor.L2Character;
@@ -39,7 +38,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 public class L2SiegeFlagInstance extends L2Npc
 {
-	private L2Clan _clan;
+	private final L2Clan _clan;
 	private Siegable _siege;
 	private final boolean _isAdvanced;
 	private boolean _canTalk;
@@ -49,27 +48,6 @@ public class L2SiegeFlagInstance extends L2Npc
 		super(objectId, template);
 		setInstanceType(InstanceType.L2SiegeFlagInstance);
 		
-		if (TerritoryWarManager.getInstance().isTWInProgress())
-		{
-			_clan = player.getClan();
-			_canTalk = false;
-			if (_clan == null)
-			{
-				deleteMe();
-			}
-			if (outPost)
-			{
-				_isAdvanced = false;
-				setIsInvul(true);
-			}
-			else
-			{
-				_isAdvanced = advanced;
-				setIsInvul(false);
-			}
-			getStatus();
-			return;
-		}
 		_clan = player.getClan();
 		_canTalk = true;
 		_siege = SiegeManager.getInstance().getSiege(player.getX(), player.getY(), player.getZ());
@@ -124,10 +102,6 @@ public class L2SiegeFlagInstance extends L2Npc
 			{
 				sc.removeFlag(this);
 			}
-		}
-		else if (_clan != null)
-		{
-			TerritoryWarManager.getInstance().removeClanFlag(_clan);
 		}
 		return true;
 	}

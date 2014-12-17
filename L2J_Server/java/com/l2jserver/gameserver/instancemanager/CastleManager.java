@@ -32,7 +32,6 @@ import javolution.util.FastList;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.InstanceListManager;
-import com.l2jserver.gameserver.SevenSigns;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2ClanMember;
 import com.l2jserver.gameserver.model.L2Object;
@@ -203,19 +202,7 @@ public final class CastleManager implements InstanceListManager
 	
 	public final void validateTaxes(int sealStrifeOwner)
 	{
-		int maxTax;
-		switch (sealStrifeOwner)
-		{
-			case SevenSigns.CABAL_DUSK:
-				maxTax = 5;
-				break;
-			case SevenSigns.CABAL_DAWN:
-				maxTax = 25;
-				break;
-			default: // no owner
-				maxTax = 15;
-				break;
-		}
+		final int maxTax = 15;
 		for (Castle castle : _castles)
 		{
 			if (castle.getTaxPercent() > maxTax)

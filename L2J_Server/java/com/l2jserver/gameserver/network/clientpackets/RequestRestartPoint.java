@@ -24,12 +24,10 @@ import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.L2SiegeClan;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2SiegeFlagInstance;
 import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.ClanHall;
 import com.l2jserver.gameserver.model.entity.Fort;
@@ -126,10 +124,6 @@ public final class RequestRestartPoint extends L2GameClientPacket
 		{
 			_requestedPointType = 27;
 		}
-		else if (activeChar.isFestivalParticipant())
-		{
-			_requestedPointType = 5;
-		}
 		switch (_requestedPointType)
 		{
 			case 1: // to clanhall
@@ -202,7 +196,6 @@ public final class RequestRestartPoint extends L2GameClientPacket
 				castle = CastleManager.getInstance().getCastle(activeChar);
 				fort = FortManager.getInstance().getFort(activeChar);
 				hall = CHSiegeManager.getInstance().getNearbyClanHall(activeChar);
-				L2SiegeFlagInstance flag = TerritoryWarManager.getInstance().getHQForClan(activeChar.getClan());
 				
 				if ((castle != null) && castle.getSiege().isInProgress())
 				{
@@ -216,7 +209,7 @@ public final class RequestRestartPoint extends L2GameClientPacket
 				{
 					siegeClan = hall.getSiege().getAttackerClan(activeChar.getClan());
 				}
-				if (((siegeClan == null) || siegeClan.getFlag().isEmpty()) && (flag == null))
+				if (((siegeClan == null) || siegeClan.getFlag().isEmpty()))
 				{
 					// Check if clan hall has inner spawns loc
 					if (hall != null)
@@ -237,7 +230,7 @@ public final class RequestRestartPoint extends L2GameClientPacket
 			}
 			case 5: // Fixed or Player is a festival participant
 			{
-				if (!activeChar.isGM() && !activeChar.isFestivalParticipant() && !activeChar.getInventory().haveItemForSelfResurrection())
+				if (!activeChar.isGM() && !activeChar.getInventory().haveItemForSelfResurrection())
 				{
 					_log.warning("Player [" + activeChar.getName() + "] called RestartPointPacket - Fixed and he isn't festival participant!");
 					return;
@@ -278,7 +271,6 @@ public final class RequestRestartPoint extends L2GameClientPacket
 		if (loc != null)
 		{
 			activeChar.setInstanceId(instanceId);
-			activeChar.setIsIn7sDungeon(false);
 			activeChar.setIsPendingRevive(true);
 			activeChar.teleToLocation(loc, true);
 		}

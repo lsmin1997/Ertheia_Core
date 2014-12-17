@@ -51,7 +51,6 @@ public enum InstanceType
 	L2FeedableBeastInstance(L2MonsterInstance),
 	L2TamedBeastInstance(L2FeedableBeastInstance),
 	L2FriendlyMobInstance(L2Attackable),
-	L2RiftInvaderInstance(L2MonsterInstance),
 	L2RaidBossInstance(L2MonsterInstance),
 	L2GrandBossInstance(L2RaidBossInstance),
 	// FlyMobs
@@ -62,9 +61,6 @@ public enum InstanceType
 	// Sepulchers
 	L2SepulcherNpcInstance(L2NpcInstance),
 	L2SepulcherMonsterInstance(L2MonsterInstance),
-	// Festival
-	L2FestivalGiudeInstance(L2Npc),
-	L2FestivalMonsterInstance(L2MonsterInstance),
 	// Vehicles
 	L2Vehicle(L2Character),
 	L2BoatInstance(L2Vehicle),
@@ -81,11 +77,6 @@ public enum InstanceType
 	// Fort NPCs
 	L2FortLogisticsInstance(L2MerchantInstance),
 	L2FortManagerInstance(L2MerchantInstance),
-	// Seven Signs
-	L2SignsPriestInstance(L2Npc),
-	L2DawnPriestInstance(L2SignsPriestInstance),
-	L2DuskPriestInstance(L2SignsPriestInstance),
-	L2DungeonGatekeeperInstance(L2Npc),
 	// City NPCs
 	L2AdventurerInstance(L2NpcInstance),
 	L2AuctioneerInstance(L2Npc),
@@ -105,7 +96,6 @@ public enum InstanceType
 	L2ClanHallDoormenInstance(L2DoormenInstance),
 	// Custom
 	L2ClassMasterInstance(L2NpcInstance),
-	L2NpcBufferInstance(L2Npc),
 	L2EventMobInstance(L2Npc);
 	
 	private final InstanceType _parent;

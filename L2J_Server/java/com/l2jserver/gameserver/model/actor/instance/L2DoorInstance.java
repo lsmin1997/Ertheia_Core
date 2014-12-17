@@ -35,7 +35,6 @@ import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.Location;
@@ -410,13 +409,8 @@ public class L2DoorInstance extends L2Character
 		// Attackable only during siege by everyone (not owner)
 		boolean isCastle = ((getCastle() != null) && (getCastle().getResidenceId() > 0) && getCastle().getZone().isActive());
 		boolean isFort = ((getFort() != null) && (getFort().getResidenceId() > 0) && getFort().getZone().isActive());
-		int activeSiegeId = (getFort() != null ? getFort().getResidenceId() : (getCastle() != null ? getCastle().getResidenceId() : 0));
 		
-		if (TerritoryWarManager.getInstance().isTWInProgress())
-		{
-			return !TerritoryWarManager.getInstance().isAllyField(actingPlayer, activeSiegeId);
-		}
-		else if (isFort)
+		if (isFort)
 		{
 			L2Clan clan = actingPlayer.getClan();
 			if ((clan != null) && (clan == getFort().getOwnerClan()))

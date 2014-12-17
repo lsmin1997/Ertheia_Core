@@ -102,7 +102,6 @@ import com.l2jserver.gameserver.instancemanager.ClanHallManager;
 import com.l2jserver.gameserver.instancemanager.CoupleManager;
 import com.l2jserver.gameserver.instancemanager.CursedWeaponsManager;
 import com.l2jserver.gameserver.instancemanager.DayNightSpawnManager;
-import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.FortSiegeManager;
 import com.l2jserver.gameserver.instancemanager.FourSepulchersManager;
@@ -121,7 +120,6 @@ import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.RaidBossPointsManager;
 import com.l2jserver.gameserver.instancemanager.RaidBossSpawnManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.instancemanager.WalkingManager;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.AutoSpawnHandler;
@@ -277,9 +275,6 @@ public class GameServer
 		Olympiad.getInstance();
 		Hero.getInstance();
 		
-		printSection("Seven Signs");
-		SevenSigns.getInstance();
-		
 		// Call to load caches
 		printSection("Cache");
 		HtmCache.getInstance();
@@ -315,7 +310,6 @@ public class GameServer
 		
 		SpawnTable.getInstance().load();
 		FourSepulchersManager.getInstance().init();
-		DimensionalRiftManager.getInstance();
 		RaidBossSpawnManager.getInstance();
 		
 		printSection("Siege");
@@ -327,10 +321,8 @@ public class GameServer
 		SiegeScheduleData.getInstance();
 		
 		MerchantPriceConfigTable.getInstance().updateReferences();
-		TerritoryWarManager.getInstance();
 		CastleManorManager.getInstance();
 		MercTicketManager.getInstance();
-		
 		QuestManager.getInstance().report();
 		
 		if (Config.SAVE_DROPPED_ITEM)
@@ -344,9 +336,6 @@ public class GameServer
 		}
 		
 		MonsterRace.getInstance();
-		
-		SevenSigns.getInstance().spawnSevenSignsNPC();
-		SevenSignsFestival.getInstance();
 		AutoSpawnHandler.getInstance();
 		
 		FaenorScriptEngine.getInstance();

@@ -20,7 +20,6 @@ package com.l2jserver.gameserver.model.conditions;
 
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Castle;
@@ -78,16 +77,6 @@ public class ConditionPlayerCanCreateOutpost extends Condition
 		else if (!player.isClanLeader())
 		{
 			player.sendMessage("You must be a clan leader to construct an outpost or flag.");
-			canCreateOutpost = false;
-		}
-		else if (TerritoryWarManager.getInstance().getHQForClan(player.getClan()) != null)
-		{
-			player.sendPacket(SystemMessageId.NOT_ANOTHER_HEADQUARTERS);
-			canCreateOutpost = false;
-		}
-		else if (TerritoryWarManager.getInstance().getFlagForClan(player.getClan()) != null)
-		{
-			player.sendPacket(SystemMessageId.A_FLAG_IS_ALREADY_BEING_DISPLAYED_ANOTHER_FLAG_CANNOT_BE_DISPLAYED);
 			canCreateOutpost = false;
 		}
 		else if (!player.isInsideZone(ZoneId.HQ))

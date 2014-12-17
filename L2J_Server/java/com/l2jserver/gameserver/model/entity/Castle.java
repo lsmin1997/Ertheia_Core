@@ -35,25 +35,19 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.datatables.DoorTable;
-import com.l2jserver.gameserver.datatables.SkillData;
-import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.MountType;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.CastleManorManager;
 import com.l2jserver.gameserver.instancemanager.FortManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
-import com.l2jserver.gameserver.instancemanager.TerritoryWarManager.Territory;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2Object;
-import com.l2jserver.gameserver.model.L2SkillLearn;
 import com.l2jserver.gameserver.model.TowerSpawn;
 import com.l2jserver.gameserver.model.actor.instance.L2ArtefactInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
-import com.l2jserver.gameserver.model.skills.Skill;
 import com.l2jserver.gameserver.model.zone.type.L2CastleZone;
 import com.l2jserver.gameserver.model.zone.type.L2ResidenceTeleportZone;
 import com.l2jserver.gameserver.model.zone.type.L2SiegeZone;
@@ -536,8 +530,6 @@ public final class Castle extends AbstractResidence
 		{
 			getSiege().midVictory(); // Mid victory phase of siege
 		}
-		
-		TerritoryWarManager.getInstance().getTerritory(getResidenceId()).setOwnerClan(clan);
 		
 		if (clan != null)
 		{
@@ -1022,57 +1014,6 @@ public final class Castle extends AbstractResidence
 		{
 			_log.info("Error saving showNpcCrest for castle " + getName() + ": " + e.getMessage());
 		}
-	}
-	
-	@Override
-	public void giveResidentialSkills(L2PcInstance player)
-	{
-		Territory territory = TerritoryWarManager.getInstance().getTerritory(getResidenceId());
-		if ((territory != null) && territory.getOwnedWardIds().contains(getResidenceId() + 80))
-		{
-			for (int wardId : territory.getOwnedWardIds())
-			{
-				final List<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
-				for (L2SkillLearn s : territorySkills)
-				{
-					final Skill sk = SkillData.getInstance().getSkill(s.getSkillId(), s.getSkillLevel());
-					if (sk != null)
-					{
-						player.addSkill(sk, false);
-					}
-					else
-					{
-						_log.warning("Trying to add a null skill for Territory Ward Id: " + wardId + ", skill Id: " + s.getSkillId() + " level: " + s.getSkillLevel() + "!");
-					}
-				}
-			}
-		}
-		super.giveResidentialSkills(player);
-	}
-	
-	@Override
-	public void removeResidentialSkills(L2PcInstance player)
-	{
-		if (TerritoryWarManager.getInstance().getTerritory(getResidenceId()) != null)
-		{
-			for (int wardId : TerritoryWarManager.getInstance().getTerritory(getResidenceId()).getOwnedWardIds())
-			{
-				final List<L2SkillLearn> territorySkills = SkillTreesData.getInstance().getAvailableResidentialSkills(wardId);
-				for (L2SkillLearn s : territorySkills)
-				{
-					final Skill sk = SkillData.getInstance().getSkill(s.getSkillId(), s.getSkillLevel());
-					if (sk != null)
-					{
-						player.removeSkill(sk, false, true);
-					}
-					else
-					{
-						_log.warning("Trying to remove a null skill for Territory Ward Id: " + wardId + ", skill Id: " + s.getSkillId() + " level: " + s.getSkillLevel() + "!");
-					}
-				}
-			}
-		}
-		super.removeResidentialSkills(player);
 	}
 	
 	/**

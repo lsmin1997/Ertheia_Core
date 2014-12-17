@@ -35,7 +35,6 @@ import com.l2jserver.gameserver.datatables.NpcData;
 import com.l2jserver.gameserver.datatables.TerritoryTable;
 import com.l2jserver.gameserver.enums.AISkillScope;
 import com.l2jserver.gameserver.enums.AIType;
-import com.l2jserver.gameserver.instancemanager.DimensionalRiftManager;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
@@ -44,14 +43,12 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2FestivalMonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2FriendlyMobInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2GrandBossInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2GuardInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2MonsterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2RaidBossInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2RiftInvaderInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2StaticObjectInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
@@ -206,17 +203,6 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 			if (player.isRecentFakeDeath())
 			{
 				return false;
-			}
-			
-			if (player.isInParty() && player.getParty().isInDimensionalRift())
-			{
-				byte riftType = player.getParty().getDimensionalRift().getType();
-				byte riftRoom = player.getParty().getDimensionalRift().getCurrentRoom();
-				
-				if ((me instanceof L2RiftInvaderInstance) && !DimensionalRiftManager.getInstance().getRoom(riftType, riftRoom).checkIfInZone(me.getX(), me.getY(), me.getZ()))
-				{
-					return false;
-				}
 			}
 		}
 		
@@ -459,19 +445,6 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 				}
 				L2Character target = (L2Character) obj;
 				
-				/*
-				 * Check to see if this is a festival mob spawn. If it is, then check to see if the aggro trigger is a festival participant...if so, move to attack it.
-				 */
-				if ((npc instanceof L2FestivalMonsterInstance) && (obj instanceof L2PcInstance))
-				{
-					L2PcInstance targetPlayer = (L2PcInstance) obj;
-					
-					if (!(targetPlayer.isFestivalParticipant()))
-					{
-						continue;
-					}
-				}
-				
 				// For each L2Character check if the target is autoattackable
 				if (autoAttackCondition(target)) // check aggression
 				{
@@ -553,12 +526,6 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		{
 			// Order to the L2GuardInstance to return to its home location because there's no target to attack
 			npc.returnHome();
-		}
-		
-		// If this is a festival monster, then it remains in the same location.
-		if (npc instanceof L2FestivalMonsterInstance)
-		{
-			return;
 		}
 		
 		// Minions following leader
@@ -765,17 +732,6 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 							{
 								if (originalAttackTarget.isPlayable())
 								{
-									if (originalAttackTarget.isInParty() && originalAttackTarget.getParty().isInDimensionalRift())
-									{
-										byte riftType = originalAttackTarget.getParty().getDimensionalRift().getType();
-										byte riftRoom = originalAttackTarget.getParty().getDimensionalRift().getCurrentRoom();
-										
-										if ((npc instanceof L2RiftInvaderInstance) && !DimensionalRiftManager.getInstance().getRoom(riftType, riftRoom).checkIfInZone(npc.getX(), npc.getY(), npc.getZ()))
-										{
-											continue;
-										}
-									}
-									
 									// By default, when a faction member calls for help, attack the caller's attacker.
 									// Notify the AI with EVT_AGGRESSION
 									called.getAI().notifyEvent(CtrlEvent.EVT_AGGRESSION, originalAttackTarget, 1);
