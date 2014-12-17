@@ -33,7 +33,6 @@ import com.l2jserver.gameserver.datatables.InitialEquipmentData;
 import com.l2jserver.gameserver.datatables.InitialShortcutData;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
-import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.L2SkillLearn;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.Location;
@@ -46,9 +45,6 @@ import com.l2jserver.gameserver.model.events.EventDispatcher;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerCreate;
 import com.l2jserver.gameserver.model.items.PcItemTemplate;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
-import com.l2jserver.gameserver.model.quest.Quest;
-import com.l2jserver.gameserver.model.quest.QuestState;
-import com.l2jserver.gameserver.model.quest.State;
 import com.l2jserver.gameserver.network.L2GameClient;
 import com.l2jserver.gameserver.network.serverpackets.CharCreateFail;
 import com.l2jserver.gameserver.network.serverpackets.CharCreateOk;
@@ -306,11 +302,6 @@ public final class CharacterCreate extends L2GameClientPacket
 		// Register all shortcuts for actions, skills and items for this new character.
 		InitialShortcutData.getInstance().registerAllShortcuts(newChar);
 		
-		if (!Config.DISABLE_TUTORIAL)
-		{
-			startTutorialQuest(newChar);
-		}
-		
 		EventDispatcher.getInstance().notifyEvent(new OnPlayerCreate(newChar, newChar.getObjectId(), newChar.getName(), client));
 		
 		newChar.setOnlineStatus(true, false);
@@ -326,24 +317,6 @@ public final class CharacterCreate extends L2GameClientPacket
 		if (Config.DEBUG)
 		{
 			_log.fine("Character init end");
-		}
-	}
-	
-	/**
-	 * TODO: Unhardcode it using the new listeners.
-	 * @param player
-	 */
-	public void startTutorialQuest(L2PcInstance player)
-	{
-		final QuestState qs = player.getQuestState("255_Tutorial");
-		Quest q = null;
-		if (qs == null)
-		{
-			q = QuestManager.getInstance().getQuest("255_Tutorial");
-		}
-		if (q != null)
-		{
-			q.newQuestState(player).setState(State.STARTED);
 		}
 	}
 	

@@ -72,7 +72,6 @@ import com.l2jserver.gameserver.model.items.type.EtcItemType;
 import com.l2jserver.gameserver.model.items.type.ItemType;
 import com.l2jserver.gameserver.model.options.EnchantOptions;
 import com.l2jserver.gameserver.model.options.Options;
-import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.DropItem;
@@ -277,20 +276,6 @@ public final class L2ItemInstance extends L2Object
 			ItemsOnGroundManager.getInstance().removeObject(this);
 		}
 		
-		if (!Config.DISABLE_TUTORIAL && ((itemId == Inventory.ADENA_ID) || (itemId == 6353)))
-		{
-			// Note from UnAfraid:
-			// Unhardcode this?
-			L2PcInstance actor = player.getActingPlayer();
-			if (actor != null)
-			{
-				QuestState qs = actor.getQuestState("255_Tutorial");
-				if ((qs != null) && (qs.getQuest() != null))
-				{
-					qs.getQuest().notifyEvent("CE" + itemId, null, actor);
-				}
-			}
-		}
 		// outside of synchronized to avoid deadlocks
 		// Remove the L2ItemInstance from the world
 		L2World.getInstance().removeVisibleObject(this, oldregion);

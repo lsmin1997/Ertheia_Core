@@ -28,7 +28,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
-import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.enums.QuestSound;
 import com.l2jserver.gameserver.enums.QuestType;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
@@ -41,9 +40,6 @@ import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.network.serverpackets.ExShowQuestMark;
 import com.l2jserver.gameserver.network.serverpackets.PlaySound;
 import com.l2jserver.gameserver.network.serverpackets.QuestList;
-import com.l2jserver.gameserver.network.serverpackets.TutorialCloseHtml;
-import com.l2jserver.gameserver.network.serverpackets.TutorialEnableClientEvent;
-import com.l2jserver.gameserver.network.serverpackets.TutorialShowHtml;
 import com.l2jserver.gameserver.network.serverpackets.TutorialShowQuestionMark;
 import com.l2jserver.gameserver.util.Util;
 
@@ -1205,38 +1201,6 @@ public final class QuestState
 	public void playTutorialVoice(String voice)
 	{
 		_player.sendPacket(new PlaySound(2, voice, 0, 0, _player.getX(), _player.getY(), _player.getZ()));
-	}
-	
-	/**
-	 * Used only in 255_Tutorial
-	 * @param html
-	 */
-	public void showTutorialHTML(String html)
-	{
-		String text = HtmCache.getInstance().getHtm(_player.getHtmlPrefix(), "data/scripts/quests/255_Tutorial/" + html);
-		if (text == null)
-		{
-			_log.warning("missing html page data/scripts/quests/255_Tutorial/" + html);
-			text = "<html><body>File data/scripts/quests/255_Tutorial/" + html + " not found or file is empty.</body></html>";
-		}
-		_player.sendPacket(new TutorialShowHtml(text));
-	}
-	
-	/**
-	 * Used only in 255_Tutorial
-	 */
-	public void closeTutorialHtml()
-	{
-		_player.sendPacket(TutorialCloseHtml.STATIC_PACKET);
-	}
-	
-	/**
-	 * Used only in 255_Tutorial
-	 * @param number
-	 */
-	public void onTutorialClientEvent(int number)
-	{
-		_player.sendPacket(new TutorialEnableClientEvent(number));
 	}
 	
 	/**

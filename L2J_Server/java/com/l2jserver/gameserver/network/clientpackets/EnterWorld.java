@@ -58,7 +58,6 @@ import com.l2jserver.gameserver.model.entity.clanhall.AuctionableHall;
 import com.l2jserver.gameserver.model.entity.clanhall.SiegableHall;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
-import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.skills.CommonSkill;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -402,11 +401,6 @@ public class EnterWorld extends L2GameClientPacket
 		
 		Quest.playerEnter(activeChar);
 		
-		if (!Config.DISABLE_TUTORIAL)
-		{
-			loadTutorial(activeChar);
-		}
-		
 		activeChar.sendPacket(new QuestList());
 		
 		if (Config.PLAYER_SPAWN_PROTECTION > 0)
@@ -702,15 +696,6 @@ public class EnterWorld extends L2GameClientPacket
 	private String getText(String string)
 	{
 		return new String(Base64.getDecoder().decode(string));
-	}
-	
-	private void loadTutorial(L2PcInstance player)
-	{
-		final QuestState qs = player.getQuestState("255_Tutorial");
-		if (qs != null)
-		{
-			qs.getQuest().notifyEvent("UC", null, player);
-		}
 	}
 	
 	@Override
