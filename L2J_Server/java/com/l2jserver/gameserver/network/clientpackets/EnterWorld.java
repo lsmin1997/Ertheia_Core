@@ -57,6 +57,7 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.quest.Quest;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.Die;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
@@ -360,6 +361,9 @@ public class EnterWorld extends L2GameClientPacket
 		
 		// Send Skill list
 		activeChar.sendSkillList();
+		
+		// Send acquirable skill list
+		activeChar.sendPacket(new AcquireSkillList(activeChar));
 		
 		// Send Dye Information
 		activeChar.sendPacket(new HennaInfo(activeChar));
