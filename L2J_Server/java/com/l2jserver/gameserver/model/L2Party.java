@@ -22,8 +22,10 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +54,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExOpenMPCC;
 import com.l2jserver.gameserver.network.serverpackets.ExPartyPetWindowAdd;
 import com.l2jserver.gameserver.network.serverpackets.ExPartyPetWindowDelete;
 import com.l2jserver.gameserver.network.serverpackets.ExSetPartyLooting;
+import com.l2jserver.gameserver.network.serverpackets.ExTacticalSign;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 import com.l2jserver.gameserver.network.serverpackets.PartyMemberPosition;
 import com.l2jserver.gameserver.network.serverpackets.PartySmallWindowAdd;
@@ -93,6 +96,7 @@ public class L2Party extends AbstractPlayerGroup
 	private Future<?> _positionBroadcastTask = null;
 	protected PartyMemberPosition _positionPacket;
 	private boolean _disbanding = false;
+	private static Map<Integer, L2Character> _tacticalSigns = null;
 	
 	/**
 	 * The message type send to the party members.
@@ -364,6 +368,81 @@ public class L2Party extends AbstractPlayerGroup
 				broadcastPacket(_positionPacket);
 			}, PARTY_POSITION_BROADCAST_INTERVAL.toMillis() / 2, PARTY_POSITION_BROADCAST_INTERVAL.toMillis());
 		}
+		applyTacticalSigns(player, false);
+	}
+	
+	private Map<Integer, L2Character> getTacticalSigns()
+	{
+		if (_tacticalSigns == null)
+		{
+			synchronized (this)
+			{
+				if (_tacticalSigns == null)
+				{
+					_tacticalSigns = new ConcurrentHashMap<>(1);
+				}
+			}
+		}
+		return _tacticalSigns;
+	}
+	
+	public void applyTacticalSigns(L2PcInstance player, boolean remove)
+	{
+		if (_tacticalSigns == null)
+		{
+			return;
+		}
+		
+		_tacticalSigns.entrySet().forEach(entry -> player.sendPacket(new ExTacticalSign(entry.getValue(), remove ? 0 : entry.getKey())));
+	}
+	
+	public void addTacticalSign(int tacticalSignId, L2Character target)
+	{
+		final L2Character tacticalTarget = getTacticalSigns().get(tacticalSignId);
+		
+		if (tacticalTarget == null)
+		{
+			// if the new sign is applied to an existing target, remove the old sign from map
+			_tacticalSigns.values().remove(target);
+			
+			// Add the new sign
+			_tacticalSigns.put(tacticalSignId, target);
+			getMembers().forEach(m -> m.sendPacket(new ExTacticalSign(target, tacticalSignId)));
+		}
+		else
+		{
+			// Sign already assigned
+			// If the sign is applied on the same target, remove it
+			if (tacticalTarget == target)
+			{
+				_tacticalSigns.remove(tacticalSignId);
+				getMembers().forEach(m -> m.sendPacket(new ExTacticalSign(tacticalTarget, 0)));
+			}
+			else
+			{
+				// Otherwise, delete the old sign, and apply it to the new target
+				_tacticalSigns.replace(tacticalSignId, target);
+				getMembers().forEach(m ->
+				{
+					m.sendPacket(new ExTacticalSign(tacticalTarget, 0));
+					m.sendPacket(new ExTacticalSign(target, tacticalSignId));
+				});
+			}
+		}
+	}
+	
+	public void setTargetBasedOnTacticalSignId(L2PcInstance player, int tacticalSignId)
+	{
+		if (_tacticalSigns == null)
+		{
+			return;
+		}
+		
+		final L2Character tacticalTarget = _tacticalSigns.get(tacticalSignId);
+		if ((tacticalTarget != null) && !tacticalTarget.isInvisible() && tacticalTarget.isTargetable())
+		{
+			player.setTarget(tacticalTarget);
+		}
 	}
 	
 	/**
@@ -492,6 +571,7 @@ public class L2Party extends AbstractPlayerGroup
 				}
 				_members.clear();
 			}
+			applyTacticalSigns(player, true);
 		}
 	}
 	

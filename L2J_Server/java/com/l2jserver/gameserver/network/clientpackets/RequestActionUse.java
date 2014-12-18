@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.enums.MountType;
 import com.l2jserver.gameserver.enums.PrivateStoreType;
 import com.l2jserver.gameserver.instancemanager.AirShipManager;
 import com.l2jserver.gameserver.model.L2Object;
+import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2BabyPetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -412,6 +413,32 @@ public final class RequestActionUse extends L2GameClientPacket
 			case 72:
 			case 73:
 				useCoupleSocial(_actionId - 55);
+				break;
+			case 78:
+			case 79:
+			case 80:
+			case 81:
+				if ((activeChar.getParty() != null) && (activeChar.getTarget() != null) && (activeChar.getTarget().isCharacter()))
+				{
+					activeChar.getParty().addTacticalSign(_actionId - 77, (L2Character) activeChar.getTarget());
+				}
+				else
+				{
+					sendPacket(ActionFailed.STATIC_PACKET);
+				}
+				break;
+			case 82:
+			case 83:
+			case 84:
+			case 85:
+				if (activeChar.getParty() != null)
+				{
+					activeChar.getParty().setTargetBasedOnTacticalSignId(activeChar, _actionId - 81);
+				}
+				else
+				{
+					sendPacket(ActionFailed.STATIC_PACKET);
+				}
 				break;
 			case 1000: // Siege Golem - Siege Hammer
 				if ((target != null) && target.isDoor())
