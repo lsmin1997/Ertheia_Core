@@ -116,11 +116,8 @@ public final class RequestAcquireSkillInfo extends L2GameClientPacket
 			}
 			case CLASS:
 			{
-				if ((trainer == null) || trainer.getTemplate().canTeach(activeChar.getLearningClass()))
-				{
-					final int customSp = s.getCalculatedLevelUpSp(activeChar.getClassId(), activeChar.getLearningClass());
-					sendPacket(new ExAcquireSkillInfo(activeChar, s, customSp));
-				}
+				final int customSp = s.getCalculatedLevelUpSp(activeChar.getClassId(), activeChar.getLearningClass());
+				sendPacket(new ExAcquireSkillInfo(activeChar, s, customSp));
 				break;
 			}
 			case PLEDGE:
