@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExAttributeEnchantResult;
-import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
@@ -37,11 +36,13 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 	private static final String _C__D0_35_REQUESTEXENCHANTITEMATTRIBUTE = "[C] D0:35 RequestExEnchantItemAttribute";
 	
 	private int _objectId;
+	private long _count;
 	
 	@Override
 	protected void readImpl()
 	{
 		_objectId = readD();
+		_count = readQ();
 	}
 	
 	@Override
@@ -80,7 +81,7 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 			// Cancel trade
 			player.cancelActiveTrade();
 			player.setActiveEnchantAttrItemId(L2PcInstance.ID_NONE);
-			player.sendMessage("You cannot add elemental power while trading.");
+			player.sendPacket(SystemMessageId.YOU_CANNOT_DO_THAT_WHILE_TRADING);
 			return;
 		}
 		
@@ -120,7 +121,8 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 			}
 		}
 		
-		int stoneId = stone.getId();
+		final int stoneId = stone.getId();
+		final long count = Math.min(stone.getCount(), _count);
 		byte elementToAdd = Elementals.getItemElement(stoneId);
 		// Armors have the opposite element
 		if (item.isArmor())
@@ -129,9 +131,9 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 		}
 		byte opositeElement = Elementals.getOppositeElement(elementToAdd);
 		
-		Elementals oldElement = item.getElemental(elementToAdd);
-		int elementValue = oldElement == null ? 0 : oldElement.getValue();
-		int limit = getLimit(item, stoneId);
+		final Elementals oldElement = item.getElemental(elementToAdd);
+		final int elementValue = oldElement == null ? 0 : oldElement.getValue();
+		final int limit = getLimit(item, stoneId);
 		int powerToAdd = getPowerToAdd(stoneId, elementValue, item);
 		
 		if ((item.isWeapon() && (oldElement != null) && (oldElement.getElement() != elementToAdd) && (oldElement.getElement() != -2)) || (item.isArmor() && (item.getElemental(elementToAdd) == null) && (item.getElementals() != null) && (item.getElementals().length >= 3)))
@@ -143,7 +145,7 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 		
 		if (item.isArmor() && (item.getElementals() != null))
 		{
-			// cant add opposite element
+			// can't add opposite element
 			for (Elementals elm : item.getElementals())
 			{
 				if (elm.getElement() == opositeElement)
@@ -169,34 +171,35 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 			return;
 		}
 		
-		if (!player.destroyItem("AttrEnchant", stone, 1, player, true))
+		int usedStones = 0;
+		int successfulAttempts = 0;
+		int failedAttempts = 0;
+		for (int i = 0; i < count; i++)
 		{
-			player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
-			Util.handleIllegalPlayerAction(player, "Player " + player.getName() + " tried to attribute enchant with a stone he doesn't have", Config.DEFAULT_PUNISH);
-			player.setActiveEnchantAttrItemId(L2PcInstance.ID_NONE);
-			return;
+			usedStones++;
+			final int result = addElement(player, stone, item, elementToAdd);
+			if (result == 1)
+			{
+				successfulAttempts++;
+			}
+			else if (result == 0)
+			{
+				failedAttempts++;
+			}
+			else
+			{
+				break;
+			}
 		}
-		boolean success = false;
-		switch (Elementals.getItemElemental(stoneId)._type)
+		
+		player.destroyItem("AttrEnchant", stone, usedStones, player, true);
+		final Elementals newElement = item.getElemental(elementToAdd);
+		final int newValue = newElement != null ? newElement.getValue() : 0;
+		final byte realElement = item.isArmor() ? opositeElement : elementToAdd;
+		final InventoryUpdate iu = new InventoryUpdate();
+		
+		if (successfulAttempts > 0)
 		{
-			case Stone:
-			case Roughore:
-				success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_STONE;
-				break;
-			case Crystal:
-				success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_CRYSTAL;
-				break;
-			case Jewel:
-				success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_JEWEL;
-				break;
-			case Energy:
-				success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_ENERGY;
-				break;
-		}
-		if (success)
-		{
-			byte realElement = item.isArmor() ? opositeElement : elementToAdd;
-			
 			SystemMessage sm;
 			if (item.getEnchantLevel() == 0)
 			{
@@ -234,31 +237,109 @@ public class RequestExEnchantItemAttribute extends L2GameClientPacket
 				}
 			}
 			player.sendPacket(sm);
-			item.setElementAttr(elementToAdd, newPower);
 			if (item.isEquipped())
 			{
 				item.updateElementAttrBonus(player);
 			}
 			
 			// send packets
-			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(item);
-			player.sendPacket(iu);
 		}
 		else
 		{
 			player.sendPacket(SystemMessageId.FAILED_ADDING_ELEMENTAL_POWER);
 		}
 		
-		player.sendPacket(new ExAttributeEnchantResult(powerToAdd));
-		player.sendPacket(new UserInfo(player));
-		player.sendPacket(new ExBrExtraUserInfo(player));
+		int result = 0;
+		if (successfulAttempts == 0)
+		{
+			// Failed
+			result = 2;
+		}
+		
+		// Stone must be removed
+		if (stone.getCount() == 0)
+		{
+			iu.addRemovedItem(stone);
+		}
+		else
+		{
+			iu.addModifiedItem(stone);
+		}
+		
 		player.setActiveEnchantAttrItemId(L2PcInstance.ID_NONE);
+		player.sendPacket(new ExAttributeEnchantResult(result, item.isWeapon(), elementToAdd, elementValue, newValue, successfulAttempts, failedAttempts));
+		player.sendPacket(new UserInfo(player));
+		player.sendPacket(iu);
+	}
+	
+	private int addElement(final L2PcInstance player, final L2ItemInstance stone, final L2ItemInstance item, byte elementToAdd)
+	{
+		final Elementals oldElement = item.getElemental(elementToAdd);
+		final int elementValue = oldElement == null ? 0 : oldElement.getValue();
+		final int limit = getLimit(item, stone.getId());
+		int powerToAdd = getPowerToAdd(stone.getId(), elementValue, item);
+		
+		int newPower = elementValue + powerToAdd;
+		if (newPower > limit)
+		{
+			newPower = limit;
+			powerToAdd = limit - elementValue;
+		}
+		
+		if (powerToAdd <= 0)
+		{
+			player.sendPacket(SystemMessageId.ELEMENTAL_ENHANCE_CANCELED);
+			player.setActiveEnchantAttrItemId(L2PcInstance.ID_NONE);
+			return -1;
+		}
+		
+		boolean success = false;
+		switch (stone.getItem().getCrystalType())
+		{
+			case R:
+			{
+				success = Rnd.get(100) < 80;
+				break;
+			}
+			case R95:
+			case R99:
+			{
+				success = true;
+				break;
+			}
+			default:
+			{
+				switch (Elementals.getItemElemental(stone.getId())._type)
+				{
+					case Stone:
+					case Roughore:
+						success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_STONE;
+						break;
+					case Crystal:
+						success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_CRYSTAL;
+						break;
+					case Jewel:
+						success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_JEWEL;
+						break;
+					case Energy:
+						success = Rnd.get(100) < Config.ENCHANT_CHANCE_ELEMENT_ENERGY;
+						break;
+				}
+			}
+		}
+		
+		if (success)
+		{
+			item.setElementAttr(elementToAdd, newPower);
+		}
+		
+		return success ? 1 : 0;
 	}
 	
 	public int getLimit(L2ItemInstance item, int sotneId)
 	{
-		Elementals.ElementalItems elementItem = Elementals.getItemElemental(sotneId);
+		final Elementals.ElementalItems elementItem = Elementals.getItemElemental(sotneId);
 		if (elementItem == null)
 		{
 			return 0;

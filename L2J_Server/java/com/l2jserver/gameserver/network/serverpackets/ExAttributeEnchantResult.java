@@ -21,10 +21,22 @@ package com.l2jserver.gameserver.network.serverpackets;
 public class ExAttributeEnchantResult extends L2GameServerPacket
 {
 	private final int _result;
+	private final int _isWeapon;
+	private final int _type;
+	private final int _before;
+	private final int _after;
+	private final int _successCount;
+	private final int _failedCount;
 	
-	public ExAttributeEnchantResult(int result)
+	public ExAttributeEnchantResult(int result, boolean isWeapon, int type, int before, int after, int successCount, int failedCount)
 	{
 		_result = result;
+		_isWeapon = isWeapon ? 1 : 0;
+		_type = type;
+		_before = before;
+		_after = after;
+		_successCount = successCount;
+		_failedCount = failedCount;
 	}
 	
 	@Override
@@ -34,5 +46,11 @@ public class ExAttributeEnchantResult extends L2GameServerPacket
 		writeH(0x62);
 		
 		writeD(_result);
+		writeC(_isWeapon);
+		writeH(_type);
+		writeH(_before);
+		writeH(_after);
+		writeH(_successCount);
+		writeH(_failedCount);
 	}
 }
