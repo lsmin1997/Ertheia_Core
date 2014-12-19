@@ -37,6 +37,7 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.util.Rnd;
 
 /**
  * The Class MultiSellChoose.
@@ -48,28 +49,6 @@ public class MultiSellChoose extends L2GameClientPacket
 	private int _listId;
 	private int _entryId;
 	private long _amount;
-	@SuppressWarnings("unused")
-	private int _unk1;
-	@SuppressWarnings("unused")
-	private int _unk2;
-	@SuppressWarnings("unused")
-	private int _unk3;
-	@SuppressWarnings("unused")
-	private int _unk4;
-	@SuppressWarnings("unused")
-	private int _unk5;
-	@SuppressWarnings("unused")
-	private int _unk6;
-	@SuppressWarnings("unused")
-	private int _unk7;
-	@SuppressWarnings("unused")
-	private int _unk8;
-	@SuppressWarnings("unused")
-	private int _unk9;
-	@SuppressWarnings("unused")
-	private int _unk10;
-	@SuppressWarnings("unused")
-	private int _unk11;
 	
 	@Override
 	protected void readImpl()
@@ -77,17 +56,17 @@ public class MultiSellChoose extends L2GameClientPacket
 		_listId = readD();
 		_entryId = readD();
 		_amount = readQ();
-		_unk1 = readH();
-		_unk2 = readD();
-		_unk3 = readD();
-		_unk4 = readH(); // elemental attributes
-		_unk5 = readH(); // elemental attributes
-		_unk6 = readH(); // elemental attributes
-		_unk7 = readH(); // elemental attributes
-		_unk8 = readH(); // elemental attributes
-		_unk9 = readH(); // elemental attributes
-		_unk10 = readH(); // elemental attributes
-		_unk11 = readH(); // elemental attributes
+		// _unk1 = readH();
+		// _unk2 = readD();
+		// _unk3 = readD();
+		// _unk4 = readH(); // elemental attributes
+		// _unk5 = readH(); // elemental attributes
+		// _unk6 = readH(); // elemental attributes
+		// _unk7 = readH(); // elemental attributes
+		// _unk8 = readH(); // elemental attributes
+		// _unk9 = readH(); // elemental attributes
+		// _unk10 = readH(); // elemental attributes
+		// _unk11 = readH(); // elemental attributes
 	}
 	
 	@Override
@@ -382,9 +361,29 @@ public class MultiSellChoose extends L2GameClientPacket
 						}
 					}
 					
+					final double itemRandom = 100 * Rnd.nextDouble();
+					float cumulativeChance = 0;
+					
+					boolean matched = false;
 					// Generate the appropriate items
 					for (Ingredient e : entry.getProducts())
 					{
+						if (list.isNewMultisell())
+						{
+							// Skip first entry.
+							if (e.getChance() < 1)
+							{
+								continue;
+							}
+							
+							// Calculate chance
+							matched = (itemRandom < (cumulativeChance += e.getChance()));
+							if (!matched)
+							{
+								continue;
+							}
+						}
+						
 						if (e.getItemId() < 0)
 						{
 							MultisellData.giveSpecialProduct(e.getItemId(), e.getItemCount() * _amount, player);
@@ -445,6 +444,11 @@ public class MultiSellChoose extends L2GameClientPacket
 								player.sendPacket(sm);
 							}
 						}
+						
+						if (matched)
+						{
+							break;
+						}
 					}
 					player.sendPacket(new ItemList(player, false));
 					player.sendPacket(new ExUserInfoInvenWeight(player));
@@ -459,6 +463,7 @@ public class MultiSellChoose extends L2GameClientPacket
 				{
 					npc.getCastle().addToTreasury(entry.getTaxAmount() * _amount);
 				}
+				
 				break;
 			}
 		}

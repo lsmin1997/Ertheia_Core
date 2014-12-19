@@ -29,6 +29,7 @@ import java.util.Set;
 public class ListContainer
 {
 	private final int _listId;
+	private boolean _isNewMultisell;
 	private boolean _applyTaxes = false;
 	private boolean _maintainEnchantment = false;
 	private double _useRate = 1.0;
@@ -41,6 +42,13 @@ public class ListContainer
 		_listId = listId;
 	}
 	
+	public ListContainer(ListContainer container)
+	{
+		_listId = container.getListId();
+		_isNewMultisell = container.isNewMultisell();
+		_maintainEnchantment = container.getMaintainEnchantment();
+	}
+	
 	public final List<Entry> getEntries()
 	{
 		return _entries;
@@ -49,6 +57,16 @@ public class ListContainer
 	public final int getListId()
 	{
 		return _listId;
+	}
+	
+	public boolean isNewMultisell()
+	{
+		return _isNewMultisell;
+	}
+	
+	public void setNewMultisell(boolean val)
+	{
+		_isNewMultisell = val;
 	}
 	
 	public final void setApplyTaxes(boolean applyTaxes)

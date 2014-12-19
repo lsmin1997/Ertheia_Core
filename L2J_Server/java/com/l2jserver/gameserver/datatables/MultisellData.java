@@ -37,7 +37,6 @@ import com.l2jserver.gameserver.model.multisell.Ingredient;
 import com.l2jserver.gameserver.model.multisell.ListContainer;
 import com.l2jserver.gameserver.model.multisell.PreparedListContainer;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.MultiSellList;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
@@ -88,8 +87,9 @@ public class MultisellData extends DocumentParser
 			{
 				if ("list".equalsIgnoreCase(n.getNodeName()))
 				{
-					att = n.getAttributes().getNamedItem("applyTaxes");
-					list.setApplyTaxes((att != null) && Boolean.parseBoolean(att.getNodeValue()));
+					list.setApplyTaxes(parseBoolean(n.getAttributes(), "applyTaxes", false));
+					list.setNewMultisell(parseBoolean(n.getAttributes(), "isNewMultisell", false));
+					list.setMaintainEnchantment(parseBoolean(n.getAttributes(), "maintainEnchantment", false));
 					
 					att = n.getAttributes().getNamedItem("useRate");
 					if (att != null)
@@ -122,9 +122,6 @@ public class MultisellData extends DocumentParser
 							_log.warning(e.getMessage() + getCurrentDocument().getLocalName());
 						}
 					}
-					
-					att = n.getAttributes().getNamedItem("maintainEnchantment");
-					list.setMaintainEnchantment((att != null) && Boolean.parseBoolean(att.getNodeValue()));
 					
 					for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 					{
@@ -315,7 +312,7 @@ public class MultisellData extends DocumentParser
 			case FAME:
 				player.setFame(player.getFame() - (int) amount);
 				player.sendPacket(new UserInfo(player));
-				player.sendPacket(new ExBrExtraUserInfo(player));
+				// player.sendPacket(new ExBrExtraUserInfo(player));
 				return true;
 		}
 		return false;
@@ -331,7 +328,7 @@ public class MultisellData extends DocumentParser
 			case FAME:
 				player.setFame((int) (player.getFame() + amount));
 				player.sendPacket(new UserInfo(player));
-				player.sendPacket(new ExBrExtraUserInfo(player));
+				// player.sendPacket(new ExBrExtraUserInfo(player));
 				break;
 		}
 	}

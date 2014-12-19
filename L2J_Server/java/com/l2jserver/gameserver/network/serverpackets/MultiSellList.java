@@ -51,12 +51,12 @@ public final class MultiSellList extends L2GameServerPacket
 	{
 		writeC(0xD0);
 		writeD(_list.getListId()); // list id
-		writeC(0x00); // TODO: Find me!
+		writeC(0x00); // GOD Unknown
 		writeD(1 + (_index / PAGE_SIZE)); // page started from 1
 		writeD(_finished ? 0x01 : 0x00); // finished
 		writeD(PAGE_SIZE); // size of pages
 		writeD(_size); // list length
-		writeC(0x00); // new multisell window if 1
+		writeC(_list.isNewMultisell() ? 0x01 : 0x00); // new multisell window
 		
 		Entry ent;
 		while (_size-- > 0)
@@ -96,7 +96,7 @@ public final class MultiSellList extends L2GameServerPacket
 				if (ing.getItemInfo() != null)
 				{
 					writeH(ing.getItemInfo().getEnchantLevel()); // enchant level
-					writeD(ing.getItemInfo().getAugmentId()); // augment id / chance if new multisell
+					writeD(_list.isNewMultisell() ? ing.getChance() : ing.getItemInfo().getAugmentId()); // augment id
 					writeD(0x00); // mana
 					writeD(0x00); // time ?
 					writeH(ing.getItemInfo().getElementId()); // attack element
@@ -111,7 +111,7 @@ public final class MultiSellList extends L2GameServerPacket
 				else
 				{
 					writeH(0x00); // enchant level
-					writeD(0x00); // augment id
+					writeD(ing.getChance()); // augment id
 					writeD(0x00); // mana
 					writeD(0x00); // time ?
 					writeH(0x00); // attack element
@@ -133,7 +133,7 @@ public final class MultiSellList extends L2GameServerPacket
 				if (ing.getItemInfo() != null)
 				{
 					writeH(ing.getItemInfo().getEnchantLevel()); // enchant level
-					writeD(ing.getItemInfo().getAugmentId()); // augment id / chance if new window
+					writeD(_list.isNewMultisell() ? ing.getChance() : ing.getItemInfo().getAugmentId()); // augment id
 					writeD(0x00); // mana
 					writeH(ing.getItemInfo().getElementId()); // attack element
 					writeH(ing.getItemInfo().getElementPower()); // element power
@@ -147,7 +147,7 @@ public final class MultiSellList extends L2GameServerPacket
 				else
 				{
 					writeH(0x00); // enchant level
-					writeD(0x00); // augment id
+					writeD(ing.getChance()); // augment id
 					writeD(0x00); // mana
 					writeH(0x00); // attack element
 					writeH(0x00); // element power

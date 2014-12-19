@@ -34,7 +34,8 @@ public class PreparedListContainer extends ListContainer
 	
 	public PreparedListContainer(ListContainer template, boolean inventoryOnly, L2PcInstance player, L2Npc npc)
 	{
-		super(template.getListId());
+		super(template);
+		
 		setMaintainEnchantment(template.getMaintainEnchantment());
 		setApplyTaxes(false);
 		double taxRate = 0;

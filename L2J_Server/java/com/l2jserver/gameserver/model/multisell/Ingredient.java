@@ -36,16 +36,18 @@ public class Ingredient
 	private boolean _maintainIngredient;
 	private L2Item _template = null;
 	private ItemInfo _itemInfo = null;
+	private final int _chance;
 	
 	public Ingredient(StatsSet set)
 	{
-		this(set.getInt("id"), set.getLong("count"), set.getBoolean("isTaxIngredient", false), set.getBoolean("maintainIngredient", false));
+		this(set.getInt("id"), set.getLong("count"), set.getInt("chance", 0), set.getBoolean("isTaxIngredient", false), set.getBoolean("maintainIngredient", false));
 	}
 	
-	public Ingredient(int itemId, long itemCount, boolean isTaxIngredient, boolean maintainIngredient)
+	public Ingredient(int itemId, long itemCount, int chance, boolean isTaxIngredient, boolean maintainIngredient)
 	{
 		_itemId = itemId;
 		_itemCount = itemCount;
+		_chance = chance;
 		_isTaxIngredient = isTaxIngredient;
 		_maintainIngredient = maintainIngredient;
 		if (_itemId > 0)
@@ -59,7 +61,7 @@ public class Ingredient
 	 */
 	public Ingredient getCopy()
 	{
-		return new Ingredient(_itemId, _itemCount, _isTaxIngredient, _maintainIngredient);
+		return new Ingredient(_itemId, _itemCount, _chance, _isTaxIngredient, _maintainIngredient);
 	}
 	
 	public final L2Item getTemplate()
@@ -105,6 +107,11 @@ public class Ingredient
 	public final long getItemCount()
 	{
 		return _itemCount;
+	}
+	
+	public int getChance()
+	{
+		return _chance;
 	}
 	
 	public final void setIsTaxIngredient(boolean isTaxIngredient)
