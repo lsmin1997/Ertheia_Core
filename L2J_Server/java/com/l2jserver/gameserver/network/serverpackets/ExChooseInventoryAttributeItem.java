@@ -18,7 +18,11 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.l2jserver.gameserver.model.Elementals;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 
 /**
@@ -27,18 +31,30 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 public class ExChooseInventoryAttributeItem extends L2GameServerPacket
 {
 	private final int _itemId;
+	private final long _count;
 	private final byte _atribute;
 	private final int _level;
+	private final Set<Integer> _items = new HashSet<>();
 	
-	public ExChooseInventoryAttributeItem(L2ItemInstance item)
+	public ExChooseInventoryAttributeItem(L2PcInstance activeChar, L2ItemInstance stone)
 	{
-		_itemId = item.getDisplayId();
+		_itemId = stone.getDisplayId();
+		_count = stone.getCount();
 		_atribute = Elementals.getItemElement(_itemId);
 		if (_atribute == Elementals.NONE)
 		{
-			throw new IllegalArgumentException("Undefined Atribute item: " + item);
+			throw new IllegalArgumentException("Undefined Atribute item: " + stone);
 		}
 		_level = Elementals.getMaxElementLevel(_itemId);
+		
+		// Register only items that can be put an attribute stone/crystal
+		for (L2ItemInstance item : activeChar.getInventory().getItems())
+		{
+			if (item.isElementable())
+			{
+				_items.add(item.getObjectId());
+			}
+		}
 	}
 	
 	@Override
@@ -47,8 +63,7 @@ public class ExChooseInventoryAttributeItem extends L2GameServerPacket
 		writeC(0xFE);
 		writeH(0x63);
 		writeD(_itemId);
-		// Structure for now
-		// Must be 0x01 for stone/crystal attribute type
+		writeQ(_count);
 		writeD(_atribute == Elementals.FIRE ? 1 : 0); // Fire
 		writeD(_atribute == Elementals.WATER ? 1 : 0); // Water
 		writeD(_atribute == Elementals.WIND ? 1 : 0); // Wind
@@ -56,5 +71,7 @@ public class ExChooseInventoryAttributeItem extends L2GameServerPacket
 		writeD(_atribute == Elementals.HOLY ? 1 : 0); // Holy
 		writeD(_atribute == Elementals.DARK ? 1 : 0); // Unholy
 		writeD(_level); // Item max attribute level
+		writeD(_items.size());
+		_items.forEach(this::writeD);
 	}
 }
