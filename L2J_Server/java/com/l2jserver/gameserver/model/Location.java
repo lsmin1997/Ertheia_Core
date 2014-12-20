@@ -58,6 +58,14 @@ public class Location implements IPositionable
 		_instanceId = instanceId;
 	}
 	
+	public Location(StatsSet set)
+	{
+		_x = set.getInt("x");
+		_y = set.getInt("y");
+		_z = set.getInt("z");
+		_heading = set.getInt("heading", 0);
+	}
+	
 	/**
 	 * Get the x coordinate.
 	 * @return the x coordinate

@@ -10995,6 +10995,16 @@ public final class L2PcInstance extends L2Playable
 		return (L2AirShipInstance) _vehicle;
 	}
 	
+	public boolean isInShuttle()
+	{
+		return _vehicle instanceof L2ShuttleInstance;
+	}
+	
+	public L2ShuttleInstance getShuttle()
+	{
+		return (L2ShuttleInstance) _vehicle;
+	}
+	
 	public L2Vehicle getVehicle()
 	{
 		return _vehicle;

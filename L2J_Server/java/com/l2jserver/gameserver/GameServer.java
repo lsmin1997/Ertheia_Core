@@ -78,6 +78,7 @@ import com.l2jserver.gameserver.datatables.PetDataTable;
 import com.l2jserver.gameserver.datatables.PlayerXpPercentLostData;
 import com.l2jserver.gameserver.datatables.RecipeData;
 import com.l2jserver.gameserver.datatables.SecondaryAuthData;
+import com.l2jserver.gameserver.datatables.ShuttleData;
 import com.l2jserver.gameserver.datatables.SiegeScheduleData;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillLearnData;
@@ -293,6 +294,7 @@ public class GameServer
 		QuestManager.getInstance();
 		BoatManager.getInstance();
 		AirShipManager.getInstance();
+		ShuttleData.getInstance();
 		GraciaSeedsManager.getInstance();
 		
 		try

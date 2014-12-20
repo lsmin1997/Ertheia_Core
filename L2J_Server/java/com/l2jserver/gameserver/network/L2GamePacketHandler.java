@@ -30,6 +30,10 @@ import org.mmocore.network.ReceivablePacket;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.network.L2GameClient.GameClientState;
 import com.l2jserver.gameserver.network.clientpackets.*;
+import com.l2jserver.gameserver.network.clientpackets.shuttle.CannotMoveAnymoreInShuttle;
+import com.l2jserver.gameserver.network.clientpackets.shuttle.MoveToLocationInShuttle;
+import com.l2jserver.gameserver.network.clientpackets.shuttle.RequestShuttleGetOff;
+import com.l2jserver.gameserver.network.clientpackets.shuttle.RequestShuttleGetOn;
 import com.l2jserver.util.Util;
 
 /**
@@ -1127,16 +1131,16 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								msg = new RequestVoteNew();
 								break;
 							case 0x7c:
-								// msg = new RequestShuttleGetOn();
+								msg = new RequestShuttleGetOn();
 								break;
 							case 0x7d:
-								// msg = new RequestShuttleGetOff();
+								msg = new RequestShuttleGetOff();
 								break;
 							case 0x7e:
-								// msg = new MoveToLocationInShuttle();
+								msg = new MoveToLocationInShuttle();
 								break;
 							case 0x7F:
-								// msg = new CannotMoveAnymoreInShuttle();
+								msg = new CannotMoveAnymoreInShuttle();
 								break;
 							case 0x80:
 								int id5 = buf.getInt();
