@@ -1419,7 +1419,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestClanAskJoinByName();
 								break;
 							case 0xBA:
-								// msg = new RequestInzoneWaitingTime();
+								msg = new RequestInzoneWaitingTime();
 								break;
 							case 0xBB:
 								// msg = new RequestJoinCuriousHouse();// (ch)

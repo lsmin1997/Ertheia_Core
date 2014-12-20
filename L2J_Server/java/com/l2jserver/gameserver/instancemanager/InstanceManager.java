@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javolution.util.FastMap;
 
@@ -98,7 +99,15 @@ public final class InstanceManager extends DocumentParser
 		{
 			restoreInstanceTimes(playerObjId);
 		}
-		return _playerInstanceTimes.get(playerObjId);
+		final Map<Integer, Long> instanceTimes = _playerInstanceTimes.get(playerObjId);
+		for (Entry<Integer, Long> entry : instanceTimes.entrySet())
+		{
+			if (entry.getValue() <= System.currentTimeMillis())
+			{
+				deleteInstanceTime(playerObjId, entry.getKey());
+			}
+		}
+		return instanceTimes;
 	}
 	
 	/**
