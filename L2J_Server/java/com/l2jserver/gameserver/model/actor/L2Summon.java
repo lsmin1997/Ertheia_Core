@@ -795,7 +795,7 @@ public abstract class L2Summon extends L2Playable
 			}
 			else
 			{
-				sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DONE_S3_DAMAGE_TO_C2);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DONE_S3_DAMAGE_TO_C2_S4);
 				sm.addNpcName(this);
 				sm.addCharName(target);
 				sm.addInt(damage);

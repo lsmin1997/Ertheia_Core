@@ -13308,7 +13308,7 @@ public final class SystemMessageId
 	 * ID: 2261<br>
 	 * Message: $c1 has done $s3 points of damage to $c2.
 	 */
-	public static final SystemMessageId C1_DONE_S3_DAMAGE_TO_C2;
+	public static final SystemMessageId C1_DONE_S3_DAMAGE_TO_C2_S4;
 	
 	/**
 	 * ID: 2262<br>
@@ -17435,7 +17435,7 @@ public final class SystemMessageId
 		YOU_HAVE_ALREADY_BOARDED_ANOTHER_AIRSHIP = new SystemMessageId(2258);
 		LOC_FANTASY_ISLAND_S1_S2_S3 = new SystemMessageId(2259);
 		PET_CAN_RUN_AWAY_WHEN_HUNGER_BELOW_10_PERCENT = new SystemMessageId(2260);
-		C1_DONE_S3_DAMAGE_TO_C2 = new SystemMessageId(2261);
+		C1_DONE_S3_DAMAGE_TO_C2_S4 = new SystemMessageId(2261);
 		C1_RECEIVED_DAMAGE_OF_S3_FROM_C2 = new SystemMessageId(2262);
 		C1_RECEIVED_DAMAGE_OF_S3_THROUGH_C2 = new SystemMessageId(2263);
 		C1_EVADED_C2_ATTACK = new SystemMessageId(2264);
