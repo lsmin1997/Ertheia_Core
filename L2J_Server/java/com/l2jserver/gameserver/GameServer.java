@@ -66,6 +66,7 @@ import com.l2jserver.gameserver.datatables.HennaData;
 import com.l2jserver.gameserver.datatables.HitConditionBonus;
 import com.l2jserver.gameserver.datatables.InitialEquipmentData;
 import com.l2jserver.gameserver.datatables.InitialShortcutData;
+import com.l2jserver.gameserver.datatables.ItemCrystalizationData;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.KarmaData;
 import com.l2jserver.gameserver.datatables.MerchantPriceConfigTable;
@@ -218,6 +219,7 @@ public class GameServer
 		EnchantItemGroupsData.getInstance();
 		EnchantItemData.getInstance();
 		EnchantItemOptionsData.getInstance();
+		ItemCrystalizationData.getInstance();
 		OptionsData.getInstance();
 		EnchantItemHPBonusData.getInstance();
 		MerchantPriceConfigTable.getInstance().loadInstances();

@@ -30,6 +30,8 @@ import org.mmocore.network.ReceivablePacket;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.network.L2GameClient.GameClientState;
 import com.l2jserver.gameserver.network.clientpackets.*;
+import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeEstimate;
+import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeItemCancel;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.CannotMoveAnymoreInShuttle;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.MoveToLocationInShuttle;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.RequestShuttleGetOff;
@@ -1281,10 +1283,10 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// @ msg = new RequestExBR_LectureMark();
 								break;
 							case 0x8E:
-								// @ msg = new RequestCrystallizeEstimate();
+								msg = new RequestCrystallizeEstimate();
 								break;
 							case 0x8F:
-								// @ msg = new RequestCrystallizeItemCancel();
+								msg = new RequestCrystallizeItemCancel();
 								break;
 							case 0x90:
 								// @ msg = new RequestExEscapeScene();
