@@ -45,7 +45,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 	private final int _flyWalkSpd;
 	private final double _moveMultiplier;
 	private int _enchantLevel = 0;
-	private final int _armorEnchant = 0;
+	private int _armorEnchant = 0;
 	
 	private final byte[] _masks = new byte[]
 	{
@@ -74,6 +74,7 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 		_flyRunSpd = cha.isFlying() ? _runSpd : 0;
 		_flyWalkSpd = cha.isFlying() ? _walkSpd : 0;
 		_enchantLevel = cha.getInventory().getWeaponEnchant();
+		_armorEnchant = cha.getInventory().getArmorMinEnchant();
 		
 		if (addAll)
 		{

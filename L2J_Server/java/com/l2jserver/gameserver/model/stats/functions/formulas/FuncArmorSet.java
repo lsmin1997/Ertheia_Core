@@ -55,14 +55,14 @@ public class FuncArmorSet extends AbstractFunction
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
 		double value = initVal;
-		L2PcInstance player = effector.getActingPlayer();
+		final L2PcInstance player = effector.getActingPlayer();
 		if (player != null)
 		{
-			L2ItemInstance chest = player.getChestArmorInstance();
+			final L2ItemInstance chest = player.getChestArmorInstance();
 			if (chest != null)
 			{
-				L2ArmorSet set = ArmorSetsData.getInstance().getSet(chest.getId());
-				if ((set != null) && set.containAll(player))
+				final L2ArmorSet set = ArmorSetsData.getInstance().getSet(chest.getId());
+				if ((set != null) && (set.getPiecesCount(player) >= set.getMinimumPieces()))
 				{
 					switch (getStat())
 					{

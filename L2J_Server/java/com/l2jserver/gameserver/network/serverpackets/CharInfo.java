@@ -92,7 +92,7 @@ public class CharInfo extends L2GameServerPacket
 		_flyRunSpd = cha.isFlying() ? _runSpd : 0;
 		_flyWalkSpd = cha.isFlying() ? _walkSpd : 0;
 		_enchantLevel = cha.getInventory().getWeaponEnchant();
-		_armorEnchant = 0;
+		_armorEnchant = cha.getInventory().getArmorMinEnchant();
 	}
 	
 	public CharInfo(L2Decoy decoy)

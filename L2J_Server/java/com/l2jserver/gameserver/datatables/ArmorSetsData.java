@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 
 import com.l2jserver.gameserver.engines.DocumentParser;
 import com.l2jserver.gameserver.model.L2ArmorSet;
+import com.l2jserver.gameserver.model.holders.ArmorsetSkillHolder;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
 
 /**
@@ -65,6 +66,8 @@ public final class ArmorSetsData extends DocumentParser
 					if ("set".equalsIgnoreCase(d.getNodeName()))
 					{
 						set = new L2ArmorSet();
+						set.setMinimumPieces(parseInteger(d.getAttributes(), "minimumPieces"));
+						
 						for (Node a = d.getFirstChild(); a != null; a = a.getNextSibling())
 						{
 							attrs = a.getAttributes();
@@ -102,9 +105,10 @@ public final class ArmorSetsData extends DocumentParser
 								}
 								case "skill":
 								{
-									int skillId = parseInteger(attrs, "id");
-									int skillLevel = parseInteger(attrs, "level");
-									set.addSkill(new SkillHolder(skillId, skillLevel));
+									final int skillId = parseInteger(attrs, "id");
+									final int skillLevel = parseInteger(attrs, "level");
+									final int minimumPieces = parseInteger(attrs, "minimumPieces", set.getMinimumPieces());
+									set.addSkill(new ArmorsetSkillHolder(skillId, skillLevel, minimumPieces));
 									break;
 								}
 								case "shield_skill":
@@ -116,9 +120,10 @@ public final class ArmorSetsData extends DocumentParser
 								}
 								case "enchant6skill":
 								{
-									int skillId = parseInteger(attrs, "id");
-									int skillLevel = parseInteger(attrs, "level");
-									set.addEnchant6Skill(new SkillHolder(skillId, skillLevel));
+									final int skillId = parseInteger(attrs, "id");
+									final int skillLevel = parseInteger(attrs, "level");
+									final int minimumEnchant = parseInteger(attrs, "minimumEnchant", 6);
+									set.addEnchantSkill(new ArmorsetSkillHolder(skillId, skillLevel, minimumEnchant));
 									break;
 								}
 								case "con":
@@ -153,7 +158,11 @@ public final class ArmorSetsData extends DocumentParser
 								}
 							}
 						}
-						_armorSets.put(set.getChestId(), set);
+						
+						for (int chestId : set.getChests())
+						{
+							_armorSets.put(chestId, set);
+						}
 					}
 				}
 			}

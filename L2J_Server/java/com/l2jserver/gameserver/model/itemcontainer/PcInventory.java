@@ -1051,10 +1051,4 @@ public class PcInventory extends Inventory
 			item.applyEnchantStats();
 		}
 	}
-	
-	public int getWeaponEnchant()
-	{
-		final L2ItemInstance item = getPaperdollItem(Inventory.PAPERDOLL_RHAND);
-		return item != null ? item.getEnchantLevel() : 0;
-	}
 }
