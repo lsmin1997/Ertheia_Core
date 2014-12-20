@@ -43,7 +43,7 @@ public final class BuyList extends AbstractItemPacket
 	protected final void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0xB7);
+		writeH(0xB8);
 		writeD(0x00);
 		writeQ(_money); // current money
 		writeD(_listId);
