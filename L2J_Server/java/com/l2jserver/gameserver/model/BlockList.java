@@ -33,6 +33,7 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.BlockListPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
@@ -250,13 +251,7 @@ public class BlockList
 	
 	public static void sendListToOwner(L2PcInstance listOwner)
 	{
-		int i = 1;
-		listOwner.sendPacket(SystemMessageId.BLOCK_LIST_HEADER);
-		for (int playerId : listOwner.getBlockList().getBlockList())
-		{
-			listOwner.sendMessage((i++) + ". " + CharNameTable.getInstance().getNameById(playerId));
-		}
-		listOwner.sendPacket(SystemMessageId.FRIEND_LIST_FOOTER);
+		listOwner.sendPacket(new BlockListPacket(listOwner.getBlockList().getBlockList()));
 	}
 	
 	/**

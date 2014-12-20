@@ -16,45 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.clientpackets;
+package com.l2jserver.gameserver.network.clientpackets.friend;
 
-import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.network.serverpackets.friend.FriendList;
+import com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket;
+import com.l2jserver.gameserver.network.serverpackets.friend.ExFriendDetailInfo;
 
 /**
- * @author mrTJO & UnAfraid
+ * @author Sdw
  */
-public final class RequestExFriendListExtended extends L2GameClientPacket
+public class RequestFriendDetailInfo extends L2GameClientPacket
 {
-	private static final String _C__D0_87_REQUESTEXFRIENDLISTEXTENDED = "[C] D0:87 RequestExFriendListExtended";
+	private static final String _C__D0_97_REQUESTFRIENDDETAILINFO = "[C] D0:97 RequestFriendDetailInfo";
+	private String _name;
 	
 	@Override
 	protected void readImpl()
 	{
-		// trigger packet
+		_name = readS();
 	}
 	
 	@Override
-	public void runImpl()
+	protected void runImpl()
 	{
-		if (!Config.ALLOW_MAIL)
+		final L2PcInstance player = getClient().getActiveChar();
+		if (player != null)
 		{
-			return;
+			player.sendPacket(new ExFriendDetailInfo(player, _name));
 		}
-		
-		final L2PcInstance activeChar = getClient().getActiveChar();
-		if (activeChar == null)
-		{
-			return;
-		}
-		
-		activeChar.sendPacket(new FriendList(activeChar));
 	}
 	
 	@Override
 	public String getType()
 	{
-		return _C__D0_87_REQUESTEXFRIENDLISTEXTENDED;
+		return _C__D0_97_REQUESTFRIENDDETAILINFO;
 	}
 }

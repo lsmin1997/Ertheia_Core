@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.clientpackets;
+package com.l2jserver.gameserver.network.clientpackets.friend;
 
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -26,6 +26,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket;
 import com.l2jserver.gameserver.network.serverpackets.L2FriendSay;
 
 /**

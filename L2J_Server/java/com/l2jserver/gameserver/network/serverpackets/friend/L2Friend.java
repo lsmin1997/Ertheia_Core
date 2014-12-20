@@ -16,24 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets;
+package com.l2jserver.gameserver.network.serverpackets.friend;
 
 import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.model.L2World;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
 /**
  * Support for "Chat with Friends" dialog. <br />
- * Inform player about friend online status change
+ * Add new friend or delete.
  * @author JIV
  */
-public class FriendStatusPacket extends L2GameServerPacket
+public class L2Friend extends L2GameServerPacket
 {
-	private final boolean _online;
+	private final boolean _action, _online;
 	private final int _objid;
 	private final String _name;
 	
-	public FriendStatusPacket(int objId)
+	/**
+	 * @param action - true for adding, false for remove
+	 * @param objId
+	 */
+	public L2Friend(boolean action, int objId)
 	{
+		_action = action;
 		_objid = objId;
 		_name = CharNameTable.getInstance().getNameById(objId);
 		_online = L2World.getInstance().getPlayer(objId) != null;
@@ -42,9 +48,12 @@ public class FriendStatusPacket extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0x77);
-		writeD(_online ? 1 : 0);
-		writeS(_name);
+		writeC(0x76);
+		writeD(_action ? 1 : 3); // 1-add 3-remove
 		writeD(_objid);
+		writeS(_name);
+		writeD(_online ? 1 : 0);
+		writeD(_online ? _objid : 0);
+		
 	}
 }

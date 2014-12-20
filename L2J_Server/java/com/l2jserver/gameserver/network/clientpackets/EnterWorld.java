@@ -74,7 +74,6 @@ import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ExVitalityEffectInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
-import com.l2jserver.gameserver.network.serverpackets.FriendList;
 import com.l2jserver.gameserver.network.serverpackets.HennaInfo;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -86,6 +85,7 @@ import com.l2jserver.gameserver.network.serverpackets.QuestList;
 import com.l2jserver.gameserver.network.serverpackets.ShortCutInit;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.network.serverpackets.friend.L2FriendList;
 
 /**
  * Enter World Packet Handler
@@ -405,7 +405,7 @@ public class EnterWorld extends L2GameClientPacket
 		// Expand Skill
 		activeChar.sendPacket(new ExStorageMaxCount(activeChar));
 		
-		sendPacket(new FriendList(activeChar));
+		sendPacket(new L2FriendList(activeChar));
 		
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.FRIEND_S1_HAS_LOGGED_IN);
 		sm.addString(activeChar.getName());

@@ -220,6 +220,48 @@ public class CharNameTable
 		return 0;
 	}
 	
+	public int getLevelById(int objectId)
+	{
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT level FROM characters WHERE charId = ?"))
+		{
+			ps.setInt(1, objectId);
+			try (ResultSet rset = ps.executeQuery())
+			{
+				while (rset.next())
+				{
+					return rset.getInt(1);
+				}
+			}
+		}
+		catch (SQLException e)
+		{
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not check existing char count: " + e.getMessage(), e);
+		}
+		return 0;
+	}
+	
+	public int getClassIdById(int objectId)
+	{
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT classid FROM characters WHERE charId = ?"))
+		{
+			ps.setInt(1, objectId);
+			try (ResultSet rset = ps.executeQuery())
+			{
+				while (rset.next())
+				{
+					return rset.getInt(1);
+				}
+			}
+		}
+		catch (SQLException e)
+		{
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not check existing char count: " + e.getMessage(), e);
+		}
+		return 0;
+	}
+	
 	private void loadAll()
 	{
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
