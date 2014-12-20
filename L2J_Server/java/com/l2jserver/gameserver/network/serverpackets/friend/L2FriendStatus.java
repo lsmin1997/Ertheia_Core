@@ -18,7 +18,7 @@
  */
 package com.l2jserver.gameserver.network.serverpackets.friend;
 
-import com.l2jserver.gameserver.datatables.CharNameTable;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
 /**
@@ -28,23 +28,49 @@ import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
  */
 public class L2FriendStatus extends L2GameServerPacket
 {
-	private final boolean _online;
+	public static final int MODE_OFFLINE = 0;
+	public static final int MODE_ONLINE = 1;
+	public static final int MODE_LEVEL = 2;
+	public static final int MODE_CLASS = 3;
+	
+	private final int _type;
+	private final int _objectId;
 	private final int _classId;
+	private final int _level;
 	private final String _name;
 	
-	public L2FriendStatus(int objectId, boolean isOnline)
+	public L2FriendStatus(L2PcInstance player, int type)
 	{
-		_classId = CharNameTable.getInstance().getClassIdById(objectId);
-		_name = CharNameTable.getInstance().getNameById(objectId);
-		_online = isOnline;
+		_objectId = player.getObjectId();
+		_classId = player.getActiveClass();
+		_level = player.getLevel();
+		_name = player.getName();
+		_type = type;
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
 		writeC(0x59);
-		writeD(_online ? 1 : 0);
+		writeD(_type);
 		writeS(_name);
-		writeD(_classId);
+		switch (_type)
+		{
+			case MODE_OFFLINE:
+			{
+				writeD(_objectId);
+				break;
+			}
+			case MODE_LEVEL:
+			{
+				writeD(_level);
+				break;
+			}
+			case MODE_CLASS:
+			{
+				writeD(_classId);
+				break;
+			}
+		}
 	}
 }

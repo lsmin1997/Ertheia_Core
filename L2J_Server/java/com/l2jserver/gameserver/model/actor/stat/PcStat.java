@@ -49,6 +49,7 @@ import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
+import com.l2jserver.gameserver.network.serverpackets.friend.L2FriendStatus;
 import com.l2jserver.gameserver.util.Util;
 
 public class PcStat extends PlayableStat
@@ -262,6 +263,7 @@ public class PcStat extends PlayableStat
 			getActiveChar().setCurrentCp(getMaxCp());
 			getActiveChar().broadcastPacket(new SocialAction(getActiveChar().getObjectId(), SocialAction.LEVEL_UP));
 			getActiveChar().sendPacket(SystemMessageId.YOU_INCREASED_YOUR_LEVEL);
+			getActiveChar().notifyFriends(L2FriendStatus.MODE_LEVEL);
 			
 			L2ClassMasterInstance.showQuestionMark(getActiveChar());
 		}

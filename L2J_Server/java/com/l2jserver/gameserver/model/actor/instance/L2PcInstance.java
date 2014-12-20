@@ -2358,6 +2358,8 @@ public final class L2PcInstance extends L2Playable
 			{
 				checkPlayerSkills();
 			}
+			
+			notifyFriends(L2FriendStatus.MODE_CLASS);
 		}
 		finally
 		{
@@ -10440,7 +10442,7 @@ public final class L2PcInstance extends L2Playable
 		
 		revalidateZone(true);
 		
-		notifyFriends(true);
+		notifyFriends(L2FriendStatus.MODE_ONLINE);
 		if (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) && Config.DECREASE_SKILL_LEVEL)
 		{
 			checkPlayerSkills();
@@ -11472,7 +11474,7 @@ public final class L2PcInstance extends L2Playable
 		
 		try
 		{
-			notifyFriends(false);
+			notifyFriends(L2FriendStatus.MODE_OFFLINE);
 			getBlockList().playerLogout();
 		}
 		catch (Exception e)
@@ -13227,9 +13229,9 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private void notifyFriends(boolean isOnline)
+	public void notifyFriends(int type)
 	{
-		L2FriendStatus pkt = new L2FriendStatus(getObjectId(), isOnline);
+		L2FriendStatus pkt = new L2FriendStatus(this, type);
 		for (int id : _friendList)
 		{
 			L2PcInstance friend = L2World.getInstance().getPlayer(id);
