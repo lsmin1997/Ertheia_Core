@@ -21,7 +21,6 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ServitorInstance;
-import com.l2jserver.gameserver.model.zone.ZoneId;
 
 public class PetInfo extends L2GameServerPacket
 {
@@ -110,10 +109,10 @@ public class PetInfo extends L2GameServerPacket
 		writeS(_summon.getTitle()); // owner name
 		
 		writeC(_summon.getPvpFlag()); // ?
+		writeD(_summon.getKarma());
 		
 		writeD(_curFed); // how fed it is
 		writeD(_maxFed); // max fed it can be
-		writeD((int) _summon.getCurrentCp());
 		writeD((int) _summon.getCurrentHp());// current hp
 		writeD(_summon.getMaxHp());// max hp
 		writeD((int) _summon.getCurrentMp());// current mp
@@ -150,7 +149,7 @@ public class PetInfo extends L2GameServerPacket
 		writeD(_summon.getPAtkSpd());// atkspeed
 		writeD(_summon.getMAtkSpd());// casting speed
 		
-		writeC(_summon.isInsideZone(ZoneId.WATER) ? 1 : _summon.isFlying() ? 2 : 0); // TODO: Check me, might be ride status
+		writeC(0); // TODO: Check me, might be ride status
 		writeC(_summon.getTeam().getId()); // Confirmed
 		writeC(_summon.getSoulShotsPerHit()); // How many soulshots this servitor uses per hit - Confirmed
 		writeC(_summon.getSpiritShotsPerHit()); // How many spiritshots this servitor uses per hit - - Confirmed
