@@ -16,37 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets.shuttle;
+package com.l2jserver.gameserver.network.clientpackets.friend;
 
-import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2ShuttleInstance;
-import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
+import com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket;
+import com.l2jserver.gameserver.network.serverpackets.friend.ExFriendDetailInfo;
 
 /**
- * @author UnAfraid
+ * @author Sdw
  */
-public class ExShuttleGetOn extends L2GameServerPacket
+public class RequestFriendDetailInfo extends L2GameClientPacket
 {
-	private final int _playerObjectId, _shuttleObjectId;
-	private final Location _pos;
+	private static final String _C__D0_97_REQUESTFRIENDDETAILINFO = "[C] D0:97 RequestFriendDetailInfo";
+	private String _name;
 	
-	public ExShuttleGetOn(L2PcInstance player, L2ShuttleInstance shuttle)
+	@Override
+	protected void readImpl()
 	{
-		_playerObjectId = player.getObjectId();
-		_shuttleObjectId = shuttle.getObjectId();
-		_pos = player.getInVehiclePosition();
+		_name = readS();
 	}
 	
 	@Override
-	protected void writeImpl()
+	protected void runImpl()
 	{
-		writeC(0xFE);
-		writeH(0xCC);
-		writeD(_playerObjectId);
-		writeD(_shuttleObjectId);
-		writeD(_pos.getX());
-		writeD(_pos.getY());
-		writeD(_pos.getZ());
+		final L2PcInstance player = getClient().getActiveChar();
+		if (player != null)
+		{
+			player.sendPacket(new ExFriendDetailInfo(player, _name));
+		}
+	}
+	
+	@Override
+	public String getType()
+	{
+		return _C__D0_97_REQUESTFRIENDDETAILINFO;
 	}
 }

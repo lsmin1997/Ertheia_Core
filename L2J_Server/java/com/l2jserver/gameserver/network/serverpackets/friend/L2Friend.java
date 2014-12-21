@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets;
+package com.l2jserver.gameserver.network.serverpackets.friend;
 
 import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.model.L2World;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
 /**
  * Support for "Chat with Friends" dialog. <br />
  * Add new friend or delete.
  * @author JIV
  */
-public class FriendPacket extends L2GameServerPacket
+public class L2Friend extends L2GameServerPacket
 {
 	private final boolean _action, _online;
 	private final int _objid;
@@ -36,7 +37,7 @@ public class FriendPacket extends L2GameServerPacket
 	 * @param action - true for adding, false for remove
 	 * @param objId
 	 */
-	public FriendPacket(boolean action, int objId)
+	public L2Friend(boolean action, int objId)
 	{
 		_action = action;
 		_objid = objId;

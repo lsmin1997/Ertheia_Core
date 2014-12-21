@@ -32,6 +32,11 @@ import com.l2jserver.gameserver.network.L2GameClient.GameClientState;
 import com.l2jserver.gameserver.network.clientpackets.*;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeEstimate;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeItemCancel;
+import com.l2jserver.gameserver.network.clientpackets.friend.RequestAnswerFriendInvite;
+import com.l2jserver.gameserver.network.clientpackets.friend.RequestFriendDel;
+import com.l2jserver.gameserver.network.clientpackets.friend.RequestFriendDetailInfo;
+import com.l2jserver.gameserver.network.clientpackets.friend.RequestFriendList;
+import com.l2jserver.gameserver.network.clientpackets.friend.RequestSendFriendMsg;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.CannotMoveAnymoreInShuttle;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.MoveToLocationInShuttle;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.RequestShuttleGetOff;
@@ -468,7 +473,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 					case 0x77:
 						msg = new RequestFriendInvite();
 						break;
-					case 0x78: // RequestFriendAddReply
+					case 0x78:
 						msg = new RequestAnswerFriendInvite();
 						break;
 					case 0x79:
@@ -1319,7 +1324,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								break;
 							}
 							case 0x94:
-								// msg = new RequestFriendDetailInfo();
+								msg = new RequestFriendDetailInfo();
 								break;
 							case 0x95:
 								// msg = new RequestUpdateFriendMemo();

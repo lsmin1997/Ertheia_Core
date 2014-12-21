@@ -18,33 +18,31 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.util.List;
+
 import com.l2jserver.gameserver.datatables.CharNameTable;
-import com.l2jserver.gameserver.model.L2World;
 
 /**
- * Support for "Chat with Friends" dialog. <br />
- * Inform player about friend online status change
- * @author JIV
+ * @author Sdw
  */
-public class FriendStatusPacket extends L2GameServerPacket
+public class BlockListPacket extends L2GameServerPacket
 {
-	private final boolean _online;
-	private final int _objid;
-	private final String _name;
+	private final List<Integer> _playersId;
 	
-	public FriendStatusPacket(int objId)
+	public BlockListPacket(List<Integer> playersId)
 	{
-		_objid = objId;
-		_name = CharNameTable.getInstance().getNameById(objId);
-		_online = L2World.getInstance().getPlayer(objId) != null;
+		_playersId = playersId;
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0x77);
-		writeD(_online ? 1 : 0);
-		writeS(_name);
-		writeD(_objid);
+		writeC(0xD5);
+		writeD(_playersId.size());
+		for (int playerId : _playersId)
+		{
+			writeS(CharNameTable.getInstance().getNameById(playerId));
+			writeS(""); // memo ?
+		}
 	}
 }

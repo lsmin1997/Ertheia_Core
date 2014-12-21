@@ -20,7 +20,7 @@ package com.l2jserver.gameserver.network.clientpackets;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.network.serverpackets.FriendListExtended;
+import com.l2jserver.gameserver.network.serverpackets.friend.FriendList;
 
 /**
  * @author mrTJO & UnAfraid
@@ -49,7 +49,7 @@ public final class RequestExFriendListExtended extends L2GameClientPacket
 			return;
 		}
 		
-		activeChar.sendPacket(new FriendListExtended(activeChar));
+		activeChar.sendPacket(new FriendList(activeChar));
 	}
 	
 	@Override

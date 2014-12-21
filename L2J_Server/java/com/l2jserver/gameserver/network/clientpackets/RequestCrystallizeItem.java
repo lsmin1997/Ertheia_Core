@@ -244,13 +244,7 @@ public final class RequestCrystallizeItem extends L2GameClientPacket
 		final CrystalizationData data = ItemCrystalizationData.getInstance().getCrystalization(itemToRemove.getId());
 		if (data != null)
 		{
-			for (ItemChanceHolder holder : data.getItems())
-			{
-				if (holder.getId() != crystalId)
-				{
-					items.add(holder);
-				}
-			}
+			data.getItems().stream().filter(holder -> (holder.getId() != crystalId)).forEach(items::add);
 		}
 		
 		for (ItemChanceHolder holder : items)

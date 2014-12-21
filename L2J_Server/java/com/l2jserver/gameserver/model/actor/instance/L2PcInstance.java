@@ -276,7 +276,6 @@ import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoAbnormalVisualEffect;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.FlyToLocation.FlyType;
-import com.l2jserver.gameserver.network.serverpackets.FriendStatusPacket;
 import com.l2jserver.gameserver.network.serverpackets.GameGuardQuery;
 import com.l2jserver.gameserver.network.serverpackets.GetOnVehicle;
 import com.l2jserver.gameserver.network.serverpackets.HennaInfo;
@@ -321,6 +320,7 @@ import com.l2jserver.gameserver.network.serverpackets.TradeOtherDone;
 import com.l2jserver.gameserver.network.serverpackets.TradeStart;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
+import com.l2jserver.gameserver.network.serverpackets.friend.L2FriendStatus;
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
 import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.gameserver.util.FloodProtectors;
@@ -2358,6 +2358,8 @@ public final class L2PcInstance extends L2Playable
 			{
 				checkPlayerSkills();
 			}
+			
+			notifyFriends(L2FriendStatus.MODE_CLASS);
 		}
 		finally
 		{
@@ -10440,7 +10442,7 @@ public final class L2PcInstance extends L2Playable
 		
 		revalidateZone(true);
 		
-		notifyFriends();
+		notifyFriends(L2FriendStatus.MODE_ONLINE);
 		if (!canOverrideCond(PcCondOverride.SKILL_CONDITIONS) && Config.DECREASE_SKILL_LEVEL)
 		{
 			checkPlayerSkills();
@@ -11472,7 +11474,7 @@ public final class L2PcInstance extends L2Playable
 		
 		try
 		{
-			notifyFriends();
+			notifyFriends(L2FriendStatus.MODE_OFFLINE);
 			getBlockList().playerLogout();
 		}
 		catch (Exception e)
@@ -13227,9 +13229,9 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private void notifyFriends()
+	public void notifyFriends(int type)
 	{
-		FriendStatusPacket pkt = new FriendStatusPacket(getObjectId());
+		L2FriendStatus pkt = new L2FriendStatus(this, type);
 		for (int id : _friendList)
 		{
 			L2PcInstance friend = L2World.getInstance().getPlayer(id);

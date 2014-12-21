@@ -16,37 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets.shuttle;
+package com.l2jserver.gameserver.network.serverpackets.friend;
 
-import com.l2jserver.gameserver.model.Location;
-import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
-import com.l2jserver.gameserver.model.actor.instance.L2ShuttleInstance;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
-/**
- * @author UnAfraid
- */
-public class ExShuttleGetOn extends L2GameServerPacket
+public class FriendAddRequest extends L2GameServerPacket
 {
-	private final int _playerObjectId, _shuttleObjectId;
-	private final Location _pos;
+	private final String _requestorName;
 	
-	public ExShuttleGetOn(L2PcInstance player, L2ShuttleInstance shuttle)
+	/**
+	 * @param requestorName
+	 */
+	public FriendAddRequest(String requestorName)
 	{
-		_playerObjectId = player.getObjectId();
-		_shuttleObjectId = shuttle.getObjectId();
-		_pos = player.getInVehiclePosition();
+		_requestorName = requestorName;
 	}
 	
 	@Override
-	protected void writeImpl()
+	protected final void writeImpl()
 	{
-		writeC(0xFE);
-		writeH(0xCC);
-		writeD(_playerObjectId);
-		writeD(_shuttleObjectId);
-		writeD(_pos.getX());
-		writeD(_pos.getY());
-		writeD(_pos.getZ());
+		writeC(0x83);
+		writeS(_requestorName);
 	}
 }

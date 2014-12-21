@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.clientpackets;
+package com.l2jserver.gameserver.network.clientpackets.friend;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,8 +25,9 @@ import java.util.logging.Level;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
-import com.l2jserver.gameserver.network.serverpackets.FriendPacket;
+import com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.network.serverpackets.friend.FriendAddRequestResult;
 
 public final class RequestAnswerFriendInvite extends L2GameClientPacket
 {
@@ -37,7 +38,7 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket
 	@Override
 	protected void readImpl()
 	{
-		_response = readD();
+		_response = readC();
 	}
 	
 	@Override
@@ -78,8 +79,8 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket
 					player.getFriendList().add(requestor.getObjectId());
 					
 					// Send notifications for both player in order to show them online
-					player.sendPacket(new FriendPacket(true, requestor.getObjectId()));
-					requestor.sendPacket(new FriendPacket(true, player.getObjectId()));
+					player.sendPacket(new FriendAddRequestResult(requestor, 1));
+					requestor.sendPacket(new FriendAddRequestResult(player, 1));
 				}
 				catch (Exception e)
 				{
@@ -90,6 +91,8 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket
 			{
 				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_INVITE_A_FRIEND);
 				requestor.sendPacket(msg);
+				player.sendPacket(new FriendAddRequestResult(requestor, 0));
+				requestor.sendPacket(new FriendAddRequestResult(player, 0));
 			}
 			
 			player.setActiveRequester(null);
