@@ -20,30 +20,45 @@ package com.l2jserver.gameserver.model.stats.functions.formulas;
 
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.skills.Skill;
-import com.l2jserver.gameserver.model.stats.BaseStats;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 
 /**
  * @author UnAfraid
  */
-public class FuncMAtkCritical extends AbstractFunction
+public class FuncMatkEvasion extends AbstractFunction
 {
-	private static final FuncMAtkCritical _fac_instance = new FuncMAtkCritical();
+	private static final FuncMatkEvasion _fae_instance = new FuncMatkEvasion();
 	
 	public static AbstractFunction getInstance()
 	{
-		return _fac_instance;
+		return _fae_instance;
 	}
 	
-	private FuncMAtkCritical()
+	private FuncMatkEvasion()
 	{
-		super(Stats.MCRITICAL_RATE, 1, null, 0, null);
+		super(Stats.MAGIC_EVASION_RATE, 1, null, 0, null);
 	}
 	
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.WIT.calcBonus(effector) * 10;
+		final int level = effector.getLevel();
+		double value = initVal;
+		if (effector.isPlayer())
+		{
+			// [Square(WIT)] * 3 + lvl;
+			value += (Math.sqrt(effector.getWIT()) * 3) + (level * 2);
+		}
+		else
+		{
+			// [Square(DEX)] * 6 + lvl;
+			value += (Math.sqrt(effector.getWIT()) * 3) + (level * 2);
+			if (level > 69)
+			{
+				value += (level - 69) + 2;
+			}
+		}
+		return value;
 	}
 }

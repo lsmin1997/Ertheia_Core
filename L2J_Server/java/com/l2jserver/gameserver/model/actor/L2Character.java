@@ -3884,6 +3884,8 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 						case ACCURACY_COMBAT:
 						case CRITICAL_RATE:
 						case MCRITICAL_RATE:
+						case MAGIC_EVASION_RATE:
+						case ACCURACY_MAGIC:
 						case MAGIC_ATTACK:
 						case MAGIC_ATTACK_SPEED:
 						case MAGIC_DEFENCE:
@@ -6283,6 +6285,16 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public int getAccuracy()
 	{
 		return getStat().getAccuracy();
+	}
+	
+	public int getMagicAccuracy()
+	{
+		return getStat().getMagicAccuracy();
+	}
+	
+	public int getMagicEvasionRate(L2Character target)
+	{
+		return getStat().getMagicEvasionRate(target);
 	}
 	
 	public final float getAttackSpeedMultiplier()

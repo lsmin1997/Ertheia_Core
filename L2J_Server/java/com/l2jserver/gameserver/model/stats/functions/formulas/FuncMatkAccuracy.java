@@ -20,30 +20,29 @@ package com.l2jserver.gameserver.model.stats.functions.formulas;
 
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.skills.Skill;
-import com.l2jserver.gameserver.model.stats.BaseStats;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 
 /**
- * @author UnAfraid
+ * @author Sdw
  */
-public class FuncMAtkCritical extends AbstractFunction
+public class FuncMatkAccuracy extends AbstractFunction
 {
-	private static final FuncMAtkCritical _fac_instance = new FuncMAtkCritical();
+	private static final FuncMatkAccuracy _faa_instance = new FuncMatkAccuracy();
 	
 	public static AbstractFunction getInstance()
 	{
-		return _fac_instance;
+		return _faa_instance;
 	}
 	
-	private FuncMAtkCritical()
+	private FuncMatkAccuracy()
 	{
-		super(Stats.MCRITICAL_RATE, 1, null, 0, null);
+		super(Stats.ACCURACY_MAGIC, 1, null, 0, null);
 	}
 	
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.WIT.calcBonus(effector) * 10;
+		return initVal + (Math.sqrt(effector.getWIT()) * 3) + (effector.getLevel() * 2);
 	}
 }

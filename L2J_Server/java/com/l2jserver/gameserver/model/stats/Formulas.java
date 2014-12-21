@@ -60,6 +60,8 @@ import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMAtkCritical;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMAtkMod;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMAtkSpeed;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMDefMod;
+import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMatkAccuracy;
+import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMatkEvasion;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMaxCpMul;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMaxHpMul;
 import com.l2jserver.gameserver.model.stats.functions.formulas.FuncMaxMpMul;
@@ -153,6 +155,12 @@ public final class Formulas
 		std[Stats.MOVE_SPEED.ordinal()] = new Calculator();
 		std[Stats.MOVE_SPEED.ordinal()].addFunc(FuncMoveSpeed.getInstance());
 		
+		std[Stats.ACCURACY_MAGIC.ordinal()] = new Calculator();
+		std[Stats.ACCURACY_MAGIC.ordinal()].addFunc(FuncMatkAccuracy.getInstance());
+		
+		std[Stats.MAGIC_EVASION_RATE.ordinal()] = new Calculator();
+		std[Stats.MAGIC_EVASION_RATE.ordinal()].addFunc(FuncMatkAccuracy.getInstance());
+		
 		return std;
 	}
 	
@@ -181,6 +189,8 @@ public final class Formulas
 			cha.addStatFunc(FuncPAtkSpeed.getInstance());
 			cha.addStatFunc(FuncMAtkSpeed.getInstance());
 			cha.addStatFunc(FuncMoveSpeed.getInstance());
+			cha.addStatFunc(FuncMatkAccuracy.getInstance());
+			cha.addStatFunc(FuncMatkEvasion.getInstance());
 			
 			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_STR));
 			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_DEX));
@@ -188,6 +198,8 @@ public final class Formulas
 			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_MEN));
 			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_CON));
 			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_WIT));
+			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_CHA));
+			cha.addStatFunc(FuncHenna.getInstance(Stats.STAT_LUC));
 			
 			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_STR));
 			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_DEX));
@@ -195,6 +207,8 @@ public final class Formulas
 			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_MEN));
 			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_CON));
 			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_WIT));
+			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_CHA));
+			cha.addStatFunc(FuncArmorSet.getInstance(Stats.STAT_LUC));
 		}
 		else if (cha.isSummon())
 		{
@@ -211,6 +225,8 @@ public final class Formulas
 			cha.addStatFunc(FuncMoveSpeed.getInstance());
 			cha.addStatFunc(FuncPAtkSpeed.getInstance());
 			cha.addStatFunc(FuncMAtkSpeed.getInstance());
+			cha.addStatFunc(FuncMatkAccuracy.getInstance());
+			cha.addStatFunc(FuncMatkEvasion.getInstance());
 		}
 	}
 	
@@ -908,7 +924,7 @@ public final class Formulas
 		}
 		else if (mcrit)
 		{
-			damage *= attacker.isPlayer() && target.isPlayer() ? 2.5 : 3;
+			damage *= attacker.isPlayer() && target.isPlayer() ? 2 : 3;
 			damage *= attacker.calcStat(Stats.MAGIC_CRIT_DMG, 1, null, null);
 		}
 		

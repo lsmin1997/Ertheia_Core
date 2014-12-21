@@ -213,9 +213,9 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 			writeD(_activeChar.getMAtk(null, null));
 			writeD(_activeChar.getMAtkSpd());
 			writeD(_activeChar.getPAtkSpd()); // Seems like atk speed - 1
-			writeD(0x00); // Magical Evasion
+			writeD(_activeChar.getMagicEvasionRate(null));
 			writeD(_activeChar.getMDef(null, null));
-			writeD(0x00); // Magical Accuracy
+			writeD(_activeChar.getMagicAccuracy());
 			writeD(_activeChar.getMCriticalHit(null, null));
 		}
 		

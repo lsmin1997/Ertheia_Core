@@ -75,7 +75,7 @@ public enum Stats
 	
 	// ATTACK & DEFENCE RATES
 	EVASION_RATE("rEvas"),
-	MAGIC_EVASION_RATE("rMagicEvas"),
+	MAGIC_EVASION_RATE("mEvas"),
 	P_SKILL_EVASION("pSkillEvas"),
 	DEFENCE_CRITICAL_RATE("defCritRate"),
 	DEFENCE_CRITICAL_RATE_ADD("defCritRateAdd"),

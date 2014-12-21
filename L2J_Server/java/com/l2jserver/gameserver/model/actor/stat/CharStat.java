@@ -143,6 +143,14 @@ public class CharStat
 		return (int) Math.round(calcStat(Stats.ACCURACY_COMBAT, 0, null, null));
 	}
 	
+	/**
+	 * @return the Magic Accuracy (base+modifier) of the L2Character
+	 */
+	public int getMagicAccuracy()
+	{
+		return (int) Math.round(calcStat(Stats.ACCURACY_MAGIC, 0, null, null));
+	}
+	
 	public L2Character getActiveChar()
 	{
 		return _activeChar;
@@ -206,6 +214,22 @@ public class CharStat
 	public int getEvasionRate(L2Character target)
 	{
 		int val = (int) Math.round(calcStat(Stats.EVASION_RATE, 0, target, null));
+		
+		if (!_activeChar.canOverrideCond(PcCondOverride.MAX_STATS_VALUE))
+		{
+			val = Math.min(val, Config.MAX_EVASION);
+		}
+		
+		return val;
+	}
+	
+	/**
+	 * @param target
+	 * @return the Attack Evasion rate (base+modifier) of the L2Character.
+	 */
+	public int getMagicEvasionRate(L2Character target)
+	{
+		int val = (int) Math.round(calcStat(Stats.MAGIC_EVASION_RATE, 0, target, null));
 		
 		if (!_activeChar.canOverrideCond(PcCondOverride.MAX_STATS_VALUE))
 		{
@@ -338,7 +362,7 @@ public class CharStat
 	 */
 	public final int getMCriticalHit(L2Character target, Skill skill)
 	{
-		int val = (int) calcStat(Stats.MCRITICAL_RATE, 1, target, skill) * 10;
+		int val = (int) calcStat(Stats.MCRITICAL_RATE, 1, target, skill);
 		
 		if (!_activeChar.canOverrideCond(PcCondOverride.MAX_STATS_VALUE))
 		{
