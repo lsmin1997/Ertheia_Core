@@ -272,6 +272,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExPrivateStoreSetWholeMsg;
 import com.l2jserver.gameserver.network.serverpackets.ExSetCompassZoneCode;
 import com.l2jserver.gameserver.network.serverpackets.ExStartScenePlayer;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
+import com.l2jserver.gameserver.network.serverpackets.ExSubjobInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoAbnormalVisualEffect;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
@@ -10019,6 +10020,8 @@ public final class L2PcInstance extends L2Playable
 					storeSkill(newSkill, prevSkill, classIndex);
 				}
 			}
+			
+			sendPacket(new ExSubjobInfo(this));
 			return true;
 		}
 		finally
@@ -10085,6 +10088,7 @@ public final class L2PcInstance extends L2Playable
 				return false;
 			}
 			getSubClasses().remove(classIndex);
+			sendPacket(new ExSubjobInfo(this));
 		}
 		finally
 		{

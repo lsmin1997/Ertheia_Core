@@ -20,6 +20,8 @@ package com.l2jserver.gameserver.network.clientpackets;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.ai.CtrlIntention;
+import com.l2jserver.gameserver.datatables.SkillData;
+import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.effects.L2EffectType;
 import com.l2jserver.gameserver.model.skills.Skill;
@@ -61,9 +63,16 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 			skill = activeChar.getCustomSkill(_magicId);
 			if (skill == null)
 			{
-				activeChar.sendPacket(ActionFailed.STATIC_PACKET);
-				_log.warning("Skill Id " + _magicId + " not found in player!");
-				return;
+				if (SkillTreesData.getInstance().isSubClassChangeSkill(_magicId, 1))
+				{
+					skill = SkillData.getInstance().getSkill(_magicId, 1);
+				}
+				else
+				{
+					activeChar.sendPacket(ActionFailed.STATIC_PACKET);
+					_log.warning("Skill Id " + _magicId + " not found in player!");
+					return;
+				}
 			}
 		}
 		

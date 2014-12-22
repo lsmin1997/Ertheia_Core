@@ -421,7 +421,6 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 				case TYPE_SYSTEM_STRING:
 				case TYPE_INSTANCE_NAME:
 				case TYPE_DOOR_NAME:
-				case TYPE_CLASS_ID:
 				{
 					writeD(param.getIntValue());
 					break;
@@ -442,6 +441,11 @@ public abstract class AbstractMessagePacket<T extends AbstractMessagePacket<?>> 
 					writeD(array[0]); // x
 					writeD(array[1]); // y
 					writeD(array[2]); // z
+					break;
+				}
+				case TYPE_CLASS_ID:
+				{
+					writeH(param.getIntValue());
 					break;
 				}
 			}

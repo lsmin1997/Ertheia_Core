@@ -7408,7 +7408,7 @@ public final class SystemMessageId
 	 * ID: 1270<br>
 	 * Message: The transfer of sub class has been completed.
 	 */
-	public static final SystemMessageId SUBCLASS_TRANSFER_COMPLETED;
+	public static final SystemMessageId YOU_HAVE_SUCCESSFULLY_SWITCHED_S1_TO_S2;
 	
 	/**
 	 * ID: 1271<br>
@@ -15189,16 +15189,334 @@ public final class SystemMessageId
 	public static final SystemMessageId YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM;
 	
 	/**
+	 * ID: 3279<br>
+	 * Message: Subclass $s1 has been upgraded to Duel Class $s2. Congratulations!
+	 */
+	public static final SystemMessageId SUBCLASS_S1_HAS_BEEN_UPGRADED_TO_DUEL_CLASS_S2_CONGRATULATIONS;
+	
+	/**
+	 * ID: 3363<br>
+	 * Message: The item cannot be registered because requirements are not met.
+	 */
+	public static final SystemMessageId THE_ITEM_CANNOT_BE_REGISTERED_BECAUSE_REQUIREMENTS_ARE_NOT_MET;
+	
+	/**
+	 * ID: 3364<br>
+	 * Message: You do not have enough Adena to register the item.
+	 */
+	public static final SystemMessageId YOU_DO_NOT_HAVE_ENOUGH_ADENA_TO_REGISTER_THE_ITEM;
+	
+	/**
+	 * ID: 3365<br>
+	 * Message: The item has failed to be registered.
+	 */
+	public static final SystemMessageId THE_ITEM_HAS_FAILED_TO_REGISTER;
+	
+	/**
+	 * ID: 3366<br>
+	 * Message: Cancellation of Sale has failed because requirements are not met.
+	 */
+	public static final SystemMessageId CANCELLATION_OF_SALE_HAS_FAILED_BECAUSE_REQUIREMENTS_ARE_NOT_MET;
+	
+	/**
+	 * ID: 3370<br>
+	 * Message: Item Purchase is not available because the corresponding item does not exist.
+	 */
+	public static final SystemMessageId ITEM_PURCHASE_IS_NOT_AVAILABLE_BECAUSE_THE_CORRESPONDING_ITEM_DOES_NOT_EXIST;
+	
+	/**
+	 * ID: 3371<br>
+	 * Message: Item Purchase has failed.
+	 */
+	public static final SystemMessageId ITEM_PURCHASE_HAS_FAILED;
+	
+	/**
+	 * ID: 3481<br>
+	 * Message: If the weight is 80% or more and the inventory number is 90% or more, purchase/cancellation is not possible.
+	 */
+	public static final SystemMessageId IF_THE_WEIGHT_IS_80_PERCENT_OR_MORE_AND_THE_INVENTORY_NUMBER_IS_90_PERCENT_OR_MORE_CANCELATION_PURCHASE_IS_NOT_POSSIBLE;
+	
+	/**
+	 * ID: 3484<br>
+	 * Message: The item has been successfully registered.
+	 */
+	public static final SystemMessageId THE_ITEM_HAS_BEEN_SUCCESSFULLY_REGISTERED;
+	
+	/**
+	 * ID: 3485<br>
+	 * Message: Cancellation of Sale for the item is successful.
+	 */
+	public static final SystemMessageId CANCELLATION_OF_SALE_FOR_THE_ITEM_IS_SUCCESSFUL;
+	
+	/**
+	 * 3574 1 You cannot change the class because of identity crisis.
+	 */
+	public static final SystemMessageId YOU_CANNOT_CHANGE_CLASS_BECAUSE_OF_IDENTITY_CRISIS;
+	
+	/**
+	 * 3652 1 You cannot Awaken due to your current inventory weight. Please organize your inventory and try again. (Dwarven characters must be at 20% or below the inventory max to Awaken.)
+	 */
+	public static final SystemMessageId YOU_CANNOT_AWAKEN_DUE_TO_WEIGHT_LIMITS_PLEASE_TRY_AWAKEN_AGAIN_AFTER_INCREASING_THE_ALLOWED_WEIGHT_BY_ORGANIZING_THE_INVENTORY;
+	
+	/**
+	 * 3655 1 You cannot Awaken while you're transformed or riding.
+	 */
+	public static final SystemMessageId YOU_CANNOT_AWAKEN_WHILE_YOURE_TRANSFORMED_OR_RIDING;
+	
+	/**
+	 * 3668 1 <$s1>'s <$s2> attribute has successfully changed to <$s3> attribute.
+	 */
+	public static final SystemMessageId S1_S2_ATTRIBUTE_HAS_SUCCESSFULLY_CHANGED_TO_S3_ATTRIBUTE;
+	/**
+	 * 3689 1 The mentoring relationship with $s1 has been canceled. The mentor cannot obtain another mentee for one week.
+	 */
+	public static final SystemMessageId THE_MENTORING_RELATIONSHIP_WITH_S1_HAS_BEEN_CANCELED;
+	
+	/**
+	 * 3690 1 Do you wish to make $s1 your mentor? (Class: $s2 / Level: $s3)
+	 */
+	public static final SystemMessageId DO_YOU_WISH_TO_MAKE_S1_YOUR_MENTOR_CLASS_S2_LEVEL_S3;
+	
+	/**
+	 * 3691 1 From now on, $s1 will be your mentor.
+	 */
+	public static final SystemMessageId FROM_NOW_ON_S1_WILL_BE_YOUR_MENTOR;
+	
+	/**
+	 * 3692 1 From now on, $s1 will be your mentee.
+	 */
+	public static final SystemMessageId FROM_NOW_ON_S1_WILL_BE_YOUR_MENTEE;
+	
+	/**
+	 * 3693 1 A mentor can have up to 3 mentees at the same time.
+	 */
+	public static final SystemMessageId A_MENTOR_CAN_HAVE_UP_TO_3_MENTEES_AT_THE_SAME_TIME;
+	
+	/**
+	 * 3694 1 You must awaken in order to become a mentor.
+	 */
+	public static final SystemMessageId YOU_MUST_AWAKEN_IN_ORDER_TO_BECOME_A_MENTOR;
+	
+	/**
+	 * 3695 1 Your mentee $s1 has connected.
+	 */
+	public static final SystemMessageId YOUR_MENTEE_S1_HAS_CONNECTED;
+	
+	/**
+	 * 3696 1 Your mentor $s1 has connected.
+	 */
+	public static final SystemMessageId YOUR_MENTOR_S1_HAS_CONNECTED;
+	
+	/**
+	 * 3697 1 Your mentee $s1 has disconnected.
+	 */
+	public static final SystemMessageId YOUR_MENTEE_S1_HAS_DISCONNECTED;
+	
+	/**
+	 * 3698 1 Your mentor $s1 has disconnected.
+	 */
+	public static final SystemMessageId YOUR_MENTOR_S1_HAS_DISCONNECTED;
+	
+	/**
+	 * 3699 1 $s1 has declined becoming your mentee.
+	 */
+	public static final SystemMessageId S1_HAS_DECLINED_BECOMING_YOUR_MENTEE;
+	
+	/**
+	 * 3700 1 You have declined $s1's mentoring offer.
+	 */
+	public static final SystemMessageId YOU_HAVE_DECLINED_S1_MENTORING_OFFER;
+	
+	/**
+	 * 3701 1 You cannot become your own mentee.
+	 */
+	public static final SystemMessageId YOU_CANNOT_BECOME_YOUR_OWN_MENTEE;
+	
+	/**
+	 * 3702 1 $s1 already has a mentor.
+	 */
+	public static final SystemMessageId S1_ALREADY_HAS_A_MENTOR;
+	
+	/**
+	 * 3703 1 $s1 is above level 86 and cannot become a mentee.
+	 */
+	public static final SystemMessageId S1_IS_ABOVE_LEVEL_86_AND_CANNOT_BECOME_A_MENTEE;
+	
+	/**
+	 * 3704 1 $s1 does not have the item needed to become a mentee.
+	 */
+	public static final SystemMessageId S1_DOES_NOT_HAVE_THE_ITEM_NEEDED_TO_BECOME_A_MENTEE;
+	
+	/**
+	 * 3705 1 The mentee $s1 reached level 86, so the mentoring relationship was ended.
+	 */
+	public static final SystemMessageId THE_MENTEE_S1_REACHED_LEVEL_86_SO_THE_MENTORING_RELATIONSHIP_WAS_ENDED;
+	
+	/**
+	 * 3706 1 You reached level 86, so the mentoring relationship with your mentor $s1 came to an end.
+	 */
+	public static final SystemMessageId YOU_REACHED_LEVEL_86_SO_THE_MENTORING_RELATIONSHIP_WITH_YOUR_MENTOR_S1_CAME_TO_AN_END;
+	
+	/**
+	 * 3707 1 You have offered to become $s1's mentor.
+	 */
+	public static final SystemMessageId YOU_HAVE_OFFERED_TO_BECOME_S1_MENTOR;
+	
+	/**
+	 * ID: 3713 <br>
+	 * Message: You can bond with a new mentee in $s1 day(s) $s2 hour(s) $s3 minute(s).
+	 */
+	public static final SystemMessageId YOU_CAN_BOND_WITH_A_NEW_MENTEE_IN_S1_DAYS_S2_HOURS_S3_MINUTES;
+	
+	/**
+	 * ID: 3490 <br>
+	 * Message: The item you registered has been sold.
+	 */
+	public static final SystemMessageId THE_ITEM_YOU_REGISTERED_HAS_BEEN_SOLD;
+	
+	/**
+	 * ID: 3491 <br>
+	 * Message: $1 has been sold.
+	 */
+	public static final SystemMessageId S1_HAS_BEEN_SOLD;
+	
+	/**
+	 * ID: 3492 <br>
+	 * Message: The registration period for the item you registered has expired.
+	 */
+	public static final SystemMessageId THE_REGISTRATION_PERIOD_FOR_THE_ITEM_YOU_REGISTERED_HAS_EXPIRED;
+	
+	/**
+	 * ID: 3493 <br>
+	 * Message: The auction house registration period has expired and the corresponding item is being forwarded.
+	 */
+	public static final SystemMessageId THE_AUCTION_HOUSE_REGISTRATION_PERIOD_HAS_EXPIRED_AND_THE_CORRESPONDING_ITEM_IS_BEING_FORWARDED;
+	
+	/**
+	 * ID: 4113<br>
+	 * Message: $s1 has been restored to its previous appearance, as its temporary modification has expired.
+	 */
+	public static final SystemMessageId S1_HAVE_BEEN_RESTORED_AS_ITS_TEMPORARY_MODIFICATION_EXPIRED;
+	
+	/**
+	 * ID: 4148<br>
+	 * Message: You cannot delete items while enchanting attributes.
+	 */
+	public static final SystemMessageId YOU_CANNOT_DELETE_ITEMS_WHILE_ENCHANTING_ATTRIBUTES;
+	
+	/**
+	 * ID: 4148<br>
+	 * Message: You cannot destroy or crystallize items while enchanting attributes.
+	 */
+	public static final SystemMessageId YOU_CANNOT_DESTROY_OR_CRYSTALLIZE_ITEMS_WHILE_ENCHANTING_ATTRIBUTES;
+	
+	/**
+	 * ID: 4167<br>
+	 * Message: Hair accessories will no longer be displayed
+	 */
+	public static final SystemMessageId HAIR_ACCESSORY_DISABLED;
+	
+	/**
+	 * ID: 4168<br>
+	 * Message: Hair accessories will be displayed from now on.
+	 */
+	public static final SystemMessageId HAIR_ACCESSORY_DISPLAYED;
+	
+	/**
+	 * ID: 4182<br>
+	 * Message: You cannot acquire any more Ability Points.
+	 */
+	public static final SystemMessageId YOU_CANNOT_ACQUIRE_ANY_MORE_ABILITY_POINTS;
+	
+	/**
+	 * ID: 4186<br>
+	 * Message: You need $s1 SP to convert to 1 Ability Point.
+	 */
+	public static final SystemMessageId YOU_NEED_S1_SP_TO_CONVERT_TO_1_ABILITY_POINT;
+	
+	/**
+	 * ID: 4195<br>
+	 * Message: Abilities can be used by Noblesse Lv. 99 or above.
+	 */
+	public static final SystemMessageId ABILITIES_CAN_BE_USED_BY_NOBLESS_LV_99_OR_ABOVE;
+	
+	/**
 	 * ID: 4223<br>
 	 * Message: You cannot do that while trading.
 	 */
 	public static final SystemMessageId YOU_CANNOT_DO_THAT_WHILE_TRADING;
 	
 	/**
+	 * ID: 4277<br>
+	 * Message: You cannot Awaken when you are a Hero or on the wait list for Hero status.
+	 */
+	public static final SystemMessageId YOU_CANNOT_AWAKEN_WHEN_YOU_ARE_A_HERO_OR_ON_THE_WAIT_LIST_FOR_HERO_STATUS;
+	
+	/**
 	 * ID: 6004<br>
 	 * Message: Enchant failed. The enchant level for the corresponding item will be exactly retained.
 	 */
 	public static final SystemMessageId SAFE_ENCHANT_FAILED;
+	
+	/**
+	 * ID: 6079<br>
+	 * Message: $s1's Appearance Modification has finished.
+	 */
+	public static final SystemMessageId S1_APPEARANCE_MODIFICATION_FINISHED;
+	
+	/**
+	 * ID: 6093<br>
+	 * Message: This item cannot be used as an Appearance Weapon
+	 */
+	public static final SystemMessageId YOU_CANNOT_EXTRACT_FROM_A_MODIFIED_ITEM;
+	
+	/**
+	 * ID: 6094<br>
+	 * Message: This item does not meet requirements.
+	 */
+	public static final SystemMessageId THIS_ITEM_DOES_NOT_MEET_REQUIREMENTS;
+	
+	/**
+	 * ID: 6099<br>
+	 * Message: You cannot modify as you do not have enough Adena.
+	 */
+	public static final SystemMessageId YOU_CANNOT_MODIFY_AS_YOU_DO_NOT_HAVE_ENOUGH_ADENA;
+	
+	/**
+	 * ID: 6100<br>
+	 * Message: You have spent $s1 on a successful appearance modification
+	 */
+	public static final SystemMessageId YOU_HAVE_SPENT_S1_ON_A_SUCCESSFUL_APPEARANCE_MODIFICATION;
+	
+	/**
+	 * ID: 6101<br>
+	 * Message: Item grades do not match
+	 */
+	public static final SystemMessageId ITEM_GRADES_DO_NOT_MATCH;
+	
+	/**
+	 * ID: 6102<br>
+	 * Message: You cannot extract from items that are higher-grade than items to be modified
+	 */
+	public static final SystemMessageId YOU_CANNOT_EXTRACT_FROM_ITEMS_THAT_ARE_HIGHERGRADE_THAN_ITEMS_TO_BE_MODIFIED;
+	
+	/**
+	 * ID: 6103<br>
+	 * Message: You cannot modify or restore No-grade items
+	 */
+	public static final SystemMessageId YOU_CANNOT_MODIFY_OR_RESTORE_NOGRADE_ITEMS;
+	
+	/**
+	 * ID: 6104<br>
+	 * Message: Weapons only
+	 */
+	public static final SystemMessageId WEAPONS_ONLY;
+	
+	/**
+	 * ID: 6105<br>
+	 * Message: Armor only
+	 */
+	public static final SystemMessageId ARMOR_ONLY;
 	
 	/**
 	 * ID: 6501<br>
@@ -16452,7 +16770,7 @@ public final class SystemMessageId
 		CONTRIB_SCORE_INCREASED_S1 = new SystemMessageId(1267);
 		ADD_SUBCLASS_CONFIRM = new SystemMessageId(1268);
 		ADD_NEW_SUBCLASS = new SystemMessageId(1269);
-		SUBCLASS_TRANSFER_COMPLETED = new SystemMessageId(1270);
+		YOU_HAVE_SUCCESSFULLY_SWITCHED_S1_TO_S2 = new SystemMessageId(1270);
 		DAWN_CONFIRM = new SystemMessageId(1271);
 		DUSK_CONFIRM = new SystemMessageId(1272);
 		SEVENSIGNS_PARTECIPATION_DAWN = new SystemMessageId(1273);
@@ -17744,8 +18062,65 @@ public final class SystemMessageId
 		MP_BECAME_0_ARCANE_SHIELD_DISAPPEARING = new SystemMessageId(3256);
 		CANNOT_USE_SKILL_WITHOUT_SERVITOR = new SystemMessageId(3260);
 		YOU_HAVE_S1_MATCHES_REMAINING_THAT_YOU_CAN_PARTECIPATE_IN_THIS_WEEK_S2_CLASSED_S3_NON_CLASSED_S4_TEAM = new SystemMessageId(3261);
+		SUBCLASS_S1_HAS_BEEN_UPGRADED_TO_DUEL_CLASS_S2_CONGRATULATIONS = new SystemMessageId(3279);
+		THE_ITEM_CANNOT_BE_REGISTERED_BECAUSE_REQUIREMENTS_ARE_NOT_MET = new SystemMessageId(3363);
+		YOU_DO_NOT_HAVE_ENOUGH_ADENA_TO_REGISTER_THE_ITEM = new SystemMessageId(3364);
+		THE_ITEM_HAS_FAILED_TO_REGISTER = new SystemMessageId(3365);
+		CANCELLATION_OF_SALE_HAS_FAILED_BECAUSE_REQUIREMENTS_ARE_NOT_MET = new SystemMessageId(3366);
+		ITEM_PURCHASE_IS_NOT_AVAILABLE_BECAUSE_THE_CORRESPONDING_ITEM_DOES_NOT_EXIST = new SystemMessageId(3370);
+		ITEM_PURCHASE_HAS_FAILED = new SystemMessageId(3371);
+		IF_THE_WEIGHT_IS_80_PERCENT_OR_MORE_AND_THE_INVENTORY_NUMBER_IS_90_PERCENT_OR_MORE_CANCELATION_PURCHASE_IS_NOT_POSSIBLE = new SystemMessageId(3481);
+		THE_ITEM_HAS_BEEN_SUCCESSFULLY_REGISTERED = new SystemMessageId(3484);
+		CANCELLATION_OF_SALE_FOR_THE_ITEM_IS_SUCCESSFUL = new SystemMessageId(3485);
+		YOU_CANNOT_CHANGE_CLASS_BECAUSE_OF_IDENTITY_CRISIS = new SystemMessageId(3574);
+		YOU_CANNOT_AWAKEN_DUE_TO_WEIGHT_LIMITS_PLEASE_TRY_AWAKEN_AGAIN_AFTER_INCREASING_THE_ALLOWED_WEIGHT_BY_ORGANIZING_THE_INVENTORY = new SystemMessageId(3652);
+		YOU_CANNOT_AWAKEN_WHILE_YOURE_TRANSFORMED_OR_RIDING = new SystemMessageId(3655);
+		S1_S2_ATTRIBUTE_HAS_SUCCESSFULLY_CHANGED_TO_S3_ATTRIBUTE = new SystemMessageId(3668);
+		THE_MENTORING_RELATIONSHIP_WITH_S1_HAS_BEEN_CANCELED = new SystemMessageId(3689);
+		DO_YOU_WISH_TO_MAKE_S1_YOUR_MENTOR_CLASS_S2_LEVEL_S3 = new SystemMessageId(3690);
+		FROM_NOW_ON_S1_WILL_BE_YOUR_MENTOR = new SystemMessageId(3691);
+		FROM_NOW_ON_S1_WILL_BE_YOUR_MENTEE = new SystemMessageId(3692);
+		A_MENTOR_CAN_HAVE_UP_TO_3_MENTEES_AT_THE_SAME_TIME = new SystemMessageId(3693);
+		YOU_MUST_AWAKEN_IN_ORDER_TO_BECOME_A_MENTOR = new SystemMessageId(3694);
+		YOUR_MENTEE_S1_HAS_CONNECTED = new SystemMessageId(3695);
+		YOUR_MENTOR_S1_HAS_CONNECTED = new SystemMessageId(3696);
+		YOUR_MENTEE_S1_HAS_DISCONNECTED = new SystemMessageId(3697);
+		YOUR_MENTOR_S1_HAS_DISCONNECTED = new SystemMessageId(3698);
+		S1_HAS_DECLINED_BECOMING_YOUR_MENTEE = new SystemMessageId(3699);
+		YOU_HAVE_DECLINED_S1_MENTORING_OFFER = new SystemMessageId(3700);
+		YOU_CANNOT_BECOME_YOUR_OWN_MENTEE = new SystemMessageId(3701);
+		S1_ALREADY_HAS_A_MENTOR = new SystemMessageId(3702);
+		S1_IS_ABOVE_LEVEL_86_AND_CANNOT_BECOME_A_MENTEE = new SystemMessageId(3703);
+		S1_DOES_NOT_HAVE_THE_ITEM_NEEDED_TO_BECOME_A_MENTEE = new SystemMessageId(3704);
+		THE_MENTEE_S1_REACHED_LEVEL_86_SO_THE_MENTORING_RELATIONSHIP_WAS_ENDED = new SystemMessageId(3705);
+		YOU_REACHED_LEVEL_86_SO_THE_MENTORING_RELATIONSHIP_WITH_YOUR_MENTOR_S1_CAME_TO_AN_END = new SystemMessageId(3706);
+		YOU_HAVE_OFFERED_TO_BECOME_S1_MENTOR = new SystemMessageId(3707);
+		YOU_CAN_BOND_WITH_A_NEW_MENTEE_IN_S1_DAYS_S2_HOURS_S3_MINUTES = new SystemMessageId(3713);
+		THE_ITEM_YOU_REGISTERED_HAS_BEEN_SOLD = new SystemMessageId(3490);
+		S1_HAS_BEEN_SOLD = new SystemMessageId(3491);
+		THE_REGISTRATION_PERIOD_FOR_THE_ITEM_YOU_REGISTERED_HAS_EXPIRED = new SystemMessageId(3492);
+		THE_AUCTION_HOUSE_REGISTRATION_PERIOD_HAS_EXPIRED_AND_THE_CORRESPONDING_ITEM_IS_BEING_FORWARDED = new SystemMessageId(3493);
+		HAIR_ACCESSORY_DISABLED = new SystemMessageId(4167);
+		S1_HAVE_BEEN_RESTORED_AS_ITS_TEMPORARY_MODIFICATION_EXPIRED = new SystemMessageId(4113);
+		YOU_CANNOT_DELETE_ITEMS_WHILE_ENCHANTING_ATTRIBUTES = new SystemMessageId(4146);
+		YOU_CANNOT_DESTROY_OR_CRYSTALLIZE_ITEMS_WHILE_ENCHANTING_ATTRIBUTES = new SystemMessageId(4147);
+		HAIR_ACCESSORY_DISPLAYED = new SystemMessageId(4168);
+		YOU_CANNOT_ACQUIRE_ANY_MORE_ABILITY_POINTS = new SystemMessageId(4185);
+		YOU_NEED_S1_SP_TO_CONVERT_TO_1_ABILITY_POINT = new SystemMessageId(4186);
+		ABILITIES_CAN_BE_USED_BY_NOBLESS_LV_99_OR_ABOVE = new SystemMessageId(4195);
 		YOU_CANNOT_DO_THAT_WHILE_TRADING = new SystemMessageId(4223);
+		YOU_CANNOT_AWAKEN_WHEN_YOU_ARE_A_HERO_OR_ON_THE_WAIT_LIST_FOR_HERO_STATUS = new SystemMessageId(4277);
 		SAFE_ENCHANT_FAILED = new SystemMessageId(6004);
+		S1_APPEARANCE_MODIFICATION_FINISHED = new SystemMessageId(6079);
+		YOU_CANNOT_EXTRACT_FROM_A_MODIFIED_ITEM = new SystemMessageId(6093);
+		THIS_ITEM_DOES_NOT_MEET_REQUIREMENTS = new SystemMessageId(6094);
+		YOU_CANNOT_MODIFY_AS_YOU_DO_NOT_HAVE_ENOUGH_ADENA = new SystemMessageId(6099);
+		YOU_HAVE_SPENT_S1_ON_A_SUCCESSFUL_APPEARANCE_MODIFICATION = new SystemMessageId(6100);
+		ITEM_GRADES_DO_NOT_MATCH = new SystemMessageId(6101);
+		YOU_CANNOT_EXTRACT_FROM_ITEMS_THAT_ARE_HIGHERGRADE_THAN_ITEMS_TO_BE_MODIFIED = new SystemMessageId(6102);
+		YOU_CANNOT_MODIFY_OR_RESTORE_NOGRADE_ITEMS = new SystemMessageId(6103);
+		WEAPONS_ONLY = new SystemMessageId(6104);
+		ARMOR_ONLY = new SystemMessageId(6105);
 		YOU_CANNOT_BOOKMARK_THIS_LOCATION_BECAUSE_YOU_DO_NOT_HAVE_A_MY_TELEPORT_FLAG = new SystemMessageId(6501);
 		THOMAS_D_TURKEY_APPEARED = new SystemMessageId(6503);
 		THOMAS_D_TURKEY_DEFETED = new SystemMessageId(6504);

@@ -69,6 +69,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExPledgeCount;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
 import com.l2jserver.gameserver.network.serverpackets.ExShowUsm;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
+import com.l2jserver.gameserver.network.serverpackets.ExSubjobInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExUnReadMailCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
@@ -334,6 +335,9 @@ public class EnterWorld extends L2GameClientPacket
 		
 		// Send Equipped Items
 		activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
+		
+		// Send SubClass Info
+		activeChar.sendPacket(new ExSubjobInfo(activeChar));
 		
 		// Send Unread Mail Count
 		if (MailManager.getInstance().hasUnreadPost(activeChar))

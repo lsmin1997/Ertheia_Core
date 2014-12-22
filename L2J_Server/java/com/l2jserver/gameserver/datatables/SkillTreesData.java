@@ -83,6 +83,7 @@ public final class SkillTreesData extends DocumentParser
 	private static final Map<Integer, L2SkillLearn> _subPledgeSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _transformSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _commonSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _subClassChangeSkillTree = new HashMap<>();
 	// Other skill trees
 	private static final Map<Integer, L2SkillLearn> _nobleSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _heroSkillTree = new HashMap<>();
@@ -290,6 +291,11 @@ public final class SkillTreesData extends DocumentParser
 										_gameMasterAuraSkillTree.put(skillHashCode, skillLearn);
 										break;
 									}
+									case "subClassChangeSkillTree":
+									{
+										_subClassChangeSkillTree.put(skillHashCode, skillLearn);
+										break;
+									}
 									default:
 									{
 										_log.warning(getClass().getSimpleName() + ": Unknown Skill Tree type: " + type + "!");
@@ -397,6 +403,15 @@ public final class SkillTreesData extends DocumentParser
 	public Map<Integer, L2SkillLearn> getSubClassSkillTree()
 	{
 		return _subClassSkillTree;
+	}
+	
+	/**
+	 * Gets the sub class change skill tree.
+	 * @return the complete Common Skill Tree
+	 */
+	public Map<Integer, L2SkillLearn> getSubClassChangeSkillTree()
+	{
+		return _subClassChangeSkillTree;
 	}
 	
 	/**
@@ -1104,6 +1119,17 @@ public final class SkillTreesData extends DocumentParser
 	}
 	
 	/**
+	 * Checks if a skill is a Subclass change skill.
+	 * @param skillId the Id of the skill to check
+	 * @param skillLevel the level of the skill to check
+	 * @return {@code true} if the skill is present in the Subclass change Skill Trees, {@code false} otherwise
+	 */
+	public boolean isSubClassChangeSkill(int skillId, int skillLevel)
+	{
+		return _subClassChangeSkillTree.containsKey(SkillData.getSkillHashCode(skillId, skillLevel));
+	}
+	
+	/**
 	 * Adds the skills.
 	 * @param gmchar the player to add the Game Master skills
 	 * @param auraSkills if {@code true} it will add "GM Aura" skills, else will add the "GM regular" skills
@@ -1319,6 +1345,7 @@ public final class SkillTreesData extends DocumentParser
 		{
 			_log.info(className + ": Loaded " + commonSkills + " Common Skills to all classes.");
 		}
+		_log.info(className + ": Loaded " + _subClassChangeSkillTree.size() + " Subclass change Skills.");
 	}
 	
 	/**

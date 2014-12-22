@@ -594,8 +594,12 @@ public class L2VillageMasterInstance extends L2NpcInstance
 						}
 					}
 					
+					final int fromClassId = player.getClassId().getId();
 					player.setActiveClass(paramOne);
-					player.sendPacket(SystemMessageId.SUBCLASS_TRANSFER_COMPLETED); // Transfer completed.
+					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_SUCCESSFULLY_SWITCHED_S1_TO_S2);
+					msg.addClassId(fromClassId);
+					msg.addClassId(player.getClassId().getId());
+					player.sendPacket(msg);
 					return;
 				case 6: // Change/Cancel Subclass - Choice
 					// validity check

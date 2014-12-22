@@ -63,6 +63,7 @@ import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanResurrect;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanSummon;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanSummonSiegeGolem;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanSweep;
+import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanSwitchSubclass;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanTakeCastle;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanTakeFort;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerCanTransform;
@@ -745,6 +746,11 @@ public abstract class DocumentBase
 				{
 					boolean val = Boolean.parseBoolean(a.getNodeValue());
 					cond = joinAnd(cond, new ConditionPlayerSubclass(val));
+					break;
+				}
+				case "canswitchsubclass":
+				{
+					cond = joinAnd(cond, new ConditionPlayerCanSwitchSubclass(Integer.decode(a.getNodeValue())));
 					break;
 				}
 				case "instanceid":
