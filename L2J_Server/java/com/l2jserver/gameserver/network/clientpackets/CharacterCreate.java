@@ -41,6 +41,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.stat.PcStat;
 import com.l2jserver.gameserver.model.actor.templates.L2PcTemplate;
 import com.l2jserver.gameserver.model.base.ClassId;
+import com.l2jserver.gameserver.model.events.Containers;
 import com.l2jserver.gameserver.model.events.EventDispatcher;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerCreate;
 import com.l2jserver.gameserver.model.items.PcItemTemplate;
@@ -302,7 +303,7 @@ public final class CharacterCreate extends L2GameClientPacket
 		// Register all shortcuts for actions, skills and items for this new character.
 		InitialShortcutData.getInstance().registerAllShortcuts(newChar);
 		
-		EventDispatcher.getInstance().notifyEvent(new OnPlayerCreate(newChar, newChar.getObjectId(), newChar.getName(), client));
+		EventDispatcher.getInstance().notifyEvent(new OnPlayerCreate(newChar, newChar.getObjectId(), newChar.getName(), client), Containers.Players());
 		
 		newChar.setOnlineStatus(true, false);
 		if (Config.SHOW_GOD_VIDEO_INTRO)
