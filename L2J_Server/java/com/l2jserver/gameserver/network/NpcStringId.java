@@ -6289,6 +6289,30 @@ public final class NpcStringId
 	public static final NpcStringId TRUST_ME_GIVE_ME_NECTAR_AND_ILL_BECOME_A_GIANT_SQUASH;
 	
 	/**
+	 * ID: 574205<br>
+	 * Message: You are far from Ricky.
+	 */
+	public static final NpcStringId YOU_ARE_FAR_FROM_RICKY;
+	
+	/**
+	 * ID: 574206<br>
+	 * Message: Ricky is entering Kiku's cave!
+	 */
+	public static final NpcStringId RICKY_IS_ENTERING_KIKU_S_CAVE;
+	
+	/**
+	 * ID: 574207<br>
+	 * Message: Take Ricky to Leira in under 2 minutes.
+	 */
+	public static final NpcStringId TAKE_RICKY_TO_LEIRA_IN_UNDER_2_MINUTES;
+	
+	/**
+	 * ID: 574209<br>
+	 * Message: Bring Back Ricky
+	 */
+	public static final NpcStringId BRING_BACK_RICKY;
+	
+	/**
 	 * ID: 528551<br>
 	 * Message: There's nothing you can't say. I can't listen to you anymore!
 	 */
@@ -12253,6 +12277,36 @@ public final class NpcStringId
 	public static final NpcStringId ALL_THE_GUARDIANS_WERE_DEFEATED_AND_THE_SEAL_WAS_REMOVED_TELEPORT_TO_THE_CENTER;
 	
 	/**
+	 * ID: 1032201<br>
+	 * Message: Weapons have been added to your Inventory.
+	 */
+	public static final NpcStringId WEAPONS_HAVE_BEEN_ADDED_TO_YOUR_INVENTORY;
+	
+	/**
+	 * ID: 1032349<br>
+	 * Message: Soulshot have been added to your Inventory.
+	 */
+	public static final NpcStringId SOULSHOT_HAVE_BEEN_ADDED_TO_YOUR_INVENTORY;
+	
+	/**
+	 * ID: 1032350<br>
+	 * Message: Automate Soulshot as shown in the Tutorial.
+	 */
+	public static final NpcStringId AUTOMATE_SOULSHOT_AS_SHOWN_IN_THE_TUTORIAL;
+	
+	/**
+	 * ID: 1032351<br>
+	 * Message: Spiritshot have been added to your Inventory.
+	 */
+	public static final NpcStringId SPIRITSHOT_HAVE_BEEN_ADDED_TO_YOUR_INVENTORY;
+	
+	/**
+	 * ID: 1032352<br>
+	 * Message: Automate Spiritshot as shown in the Tutorial.
+	 */
+	public static final NpcStringId AUTOMATE_SPIRITSHOT_AS_SHOWN_IN_THE_TUTORIAL;
+	
+	/**
 	 * ID: 1110071<br>
 	 * Message: ... is the process of standing up.
 	 */
@@ -13289,6 +13343,132 @@ public final class NpcStringId
 	 * Message: *Bump*
 	 */
 	public static final NpcStringId BUMP;
+	
+	/**
+	 * ID: 1620051<br>
+	 * Message: Mm... I see.
+	 */
+	public static final NpcStringId MM_I_SEE;
+	
+	/**
+	 * ID: 1620052<br>
+	 * Message: Thank you for the report Rogin.
+	 */
+	public static final NpcStringId THANK_YOU_FOR_THE_REPORT_ROGIN;
+	
+	/**
+	 * ID: 1620053<br>
+	 * Message: Soldiers, we're fighting a battle that can't be won.
+	 */
+	public static final NpcStringId SOLDIERS_WERE_FIGHTING_A_BATTLE_THAT_CANT_BE_WON;
+	
+	/**
+	 * ID: 1620054<br>
+	 * Message: But we have to defend our village, so we're fighting.
+	 */
+	public static final NpcStringId BUT_WE_HAVE_TO_DEFEND_OUR_VILLAGE_SO_WERE_FIGHTING;
+	
+	/**
+	 * ID: 1620055<br>
+	 * Message: For the fine wines and treasures of Aden!
+	 */
+	public static final NpcStringId FOR_THE_FINE_WINES_AND_TREASURES_OF_ADEN;
+	
+	/**
+	 * ID: 1620056<br>
+	 * Message: I'm proud of every one of---
+	 */
+	public static final NpcStringId IM_PROUD_OF_EVERY_ONE_OF;
+	
+	/**
+	 * ID: 1620057<br>
+	 * Message: Ugh!! If I see you in the spirit world… first round is on me.
+	 */
+	public static final NpcStringId UGH_IF_I_SEE_YOU_IN_THE_SPIRIT_WORLD_FIRST_ROUND_IS_ON_ME;
+	
+	/**
+	 * ID: 1620058<br>
+	 * Message: Rogin! I'm here!
+	 */
+	public static final NpcStringId ROGIN_IM_HERE;
+	
+	/**
+	 * ID: 1620059<br>
+	 * Message: Bronk!!!
+	 */
+	public static final NpcStringId BRONK;
+	
+	/**
+	 * ID: 1620060<br>
+	 * Message: Chief!!!!
+	 */
+	public static final NpcStringId CHIEF;
+	
+	/**
+	 * ID: 1620061<br>
+	 * Message: Bronk!!!
+	 */
+	public static final NpcStringId BRONK_;
+	
+	/**
+	 * ID: 1620068<br>
+	 * Message: For Bronk!!!
+	 */
+	public static final NpcStringId FOR_BRONK;
+	
+	/**
+	 * ID: 1620069<br>
+	 * Message: Dwarves forever!!!
+	 */
+	public static final NpcStringId DWARVES_FOREVER;
+	
+	/**
+	 * ID: 1620070<br>
+	 * Message: Save the Dwarven Village!!
+	 */
+	public static final NpcStringId SAVE_THE_DWARVEN_VILLAGE;
+	
+	/**
+	 * ID: 1620071<br>
+	 * Message: Whoaaaaaa!!!!
+	 */
+	public static final NpcStringId WHOAAAAAA_;
+	
+	/**
+	 * ID: 1620072<br>
+	 * Message: Fight!!
+	 */
+	public static final NpcStringId FIGHT;
+	
+	/**
+	 * ID: 1620073<br>
+	 * Message: Chief reporting in.
+	 */
+	public static final NpcStringId CHIEF_REPORTING_IN;
+	
+	/**
+	 * ID: 1620074<br>
+	 * Message: Enemies are approaching form the South!
+	 */
+	public static final NpcStringId THE_ELDERS_HAVENT_BEEN_MOVED_TO_SAFETY;
+	
+	/**
+	 * ID: 1620075<br>
+	 * Message: Many residents still haven't left their homes.
+	 */
+	public static final NpcStringId MANY_RESIDENTS_STILL_HAVENT_LEFT_THEIR_HOMES;
+	
+	/**
+	 * ID: 1620076<br>
+	 * Message: Enemies are approaching from the south !
+	 */
+	public static final NpcStringId ENEMIES_ARE_APPROACHING_FROM_THE_SOUTH;
+	
+	/**
+	 * ID: 1620096<br>
+	 * Message: Watch the Dwarven Village Last Stand
+	 */
+	public static final NpcStringId WATCH_THE_DWARVEN_VILLAGE_LAST_STAND;
 	
 	/**
 	 * ID: 1600022<br>
@@ -20227,6 +20407,84 @@ public final class NpcStringId
 	public static final NpcStringId THE_KINDNESS_OF_SOMEBODY_IS_NOT_A_BAD_FEELING_DEAR_S1_I_WILL_TAKE_THIS_GIFT_OUT_OF_RESPECT_YOUR_KINDNESS;
 	
 	/**
+	 * ID: 1802511<br>
+	 * Message: Attack the Training Dummy.
+	 */
+	public static final NpcStringId ATTACK_THE_TRAINING_DUMMY;
+	
+	/**
+	 * ID: 1802513<br>
+	 * Message: Talk to the Apprentice Adventurer's Guide.
+	 */
+	public static final NpcStringId TALK_TO_THE_APPRENTICE_ADVENTURER_S_GUIDE;
+	
+	/**
+	 * ID: 1802514<br>
+	 * Message: Attack the monster!
+	 */
+	public static final NpcStringId ATTACK_THE_MONSTER;
+	
+	/**
+	 * ID: 1802515<br>
+	 * Message: Talk to Magister Ayanthe.
+	 */
+	public static final NpcStringId TALK_TO_MAGISTER_AYANTHE;
+	
+	/**
+	 * ID: 1802516<br>
+	 * Message: Fight using Skills!
+	 */
+	public static final NpcStringId FIGHT_USING_SKILLS;
+	
+	/**
+	 * ID: 1802517<br>
+	 * Message: Talk to Master Katalin.
+	 */
+	public static final NpcStringId TALK_TO_MASTER_KATALINE;
+	
+	/**
+	 * ID: 1802617<br>
+	 * Message: Ricky is not here !
+	 */
+	public static final NpcStringId RICKY_IS_NOT_HERE;
+	
+	/**
+	 * ID: 1802618<br>
+	 * Message: Talk to Katalin to leave the training grounds.
+	 */
+	public static final NpcStringId TALK_TO_KATALINE_TO_LEAVE_THE_TRAINING_GROUNDS;
+	
+	/**
+	 * ID: 1802619<br>
+	 * Message: Talk to Ayanthe to leave the training grounds.
+	 */
+	public static final NpcStringId TALK_TO_AYANTHE_TO_LEAVE_THE_TRAINING_GROUNDS;
+	
+	/**
+	 * ID: 1802620<br>
+	 * Message: Check your equipment in your inventory.
+	 */
+	public static final NpcStringId CHECK_YOUR_EQUIPMENT_IN_YOUR_INVENTORY;
+	
+	/**
+	 * ID: 1802643<br>
+	 * Message: Follow Ricky!
+	 */
+	public static final NpcStringId FOLLOW_RICKY;
+	
+	/**
+	 * ID: 1802644<br>
+	 * Message: Ricky has found Leira.
+	 */
+	public static final NpcStringId RICKY_HAS_FOUND_LEIRA;
+	
+	/**
+	 * ID: 1802645<br>
+	 * Message: Talk to Dolkin and leave the Karaphon Habitat.
+	 */
+	public static final NpcStringId TALK_TO_DOLKIN_AND_LEAVE_THE_KARAPON_HABITAT;
+	
+	/**
 	 * ID: 1811000<br>
 	 * Message: Fighter
 	 */
@@ -20831,6 +21089,102 @@ public final class NpcStringId
 	 * Message: Who's there? If you disturb the temper of the great Land Dragon Antharas, I will never forgive you!
 	 */
 	public static final NpcStringId WHOS_THERE_IF_YOU_DISTURB_THE_TEMPER_OF_THE_GREAT_LAND_DRAGON_ANTHARAS_I_WILL_NEVER_FORGIVE_YOU;
+	
+	/**
+	 * ID: 1811213<br>
+	 * Message: I, Hermuncus, give my power to those who fight for me.
+	 */
+	public static final NpcStringId I_HERMUNCUS_GIVE_MY_POWER_TO_THOSE_WHO_FIGHT_FOR_ME;
+	
+	/**
+	 * ID: 1811214<br>
+	 * Message: Though small, this power will help you greatly.
+	 */
+	public static final NpcStringId THOUGH_SMALL_THIS_POWER_WILL_HELP_YOU_GREATLY;
+	
+	/**
+	 * ID: 1811222<br>
+	 * Message: I must go help some more.
+	 */
+	public static final NpcStringId I_MUST_GO_HELP_SOME_MORE;
+	
+	/**
+	 * ID: 1811223<br>
+	 * Message: No! The Seal Controls have been exposed. Guards protect the Seal Controls!
+	 */
+	public static final NpcStringId NO_THE_SEAL_CONTROLS_HAVE_BEEN_EXPOSED_GUARDS_PROTECT_THE_SEAL_CONTROLS;
+	
+	/**
+	 * ID: 1811226<br>
+	 * Message: Disable device will go out of control in 1 minute
+	 */
+	public static final NpcStringId DISABLE_DEVICE_WILL_GO_OUT_OF_CONTROL_IN_1_MINUTE;
+	
+	/**
+	 * ID: 1811227<br>
+	 * Message: 50 seconds are remaining.
+	 */
+	public static final NpcStringId _50_SECONDS_ARE_REMAINING;
+	
+	/**
+	 * ID: 1811228<br>
+	 * Message: 40 seconds are remaining.
+	 */
+	public static final NpcStringId _40_SECONDS_ARE_REMAINING;
+	
+	/**
+	 * ID: 1811229<br>
+	 * Message: 30 seconds are remaining.
+	 */
+	public static final NpcStringId _30_SECONDS_ARE_REMAINING;
+	
+	/**
+	 * ID: 1811230<br>
+	 * Message: 20 seconds are remaining.
+	 */
+	public static final NpcStringId _20_SECONDS_ARE_REMAINING;
+	
+	/**
+	 * ID: 1811231<br>
+	 * Message: 10 seconds are remaining.
+	 */
+	public static final NpcStringId _10_SECONDS_ARE_REMAINING;
+	
+	/**
+	 * ID: 1811232<br>
+	 * Message: 5 Seconds
+	 */
+	public static final NpcStringId _5_SECONDS;
+	
+	/**
+	 * ID: 1811233<br>
+	 * Message: 4 Seconds
+	 */
+	public static final NpcStringId _4_SECONDS;
+	
+	/**
+	 * ID: 1811234<br>
+	 * Message: 3 Seconds
+	 */
+	public static final NpcStringId _3_SECONDS;
+	
+	/**
+	 * ID: 1811236<br>
+	 * Message: 2 Seconds
+	 */
+	public static final NpcStringId _2_SECONDS;
+	
+	/**
+	 * ID: 1811236<br>
+	 * Message: 1 Second
+	 */
+	public static final NpcStringId _1_SECOND;
+	
+	/**
+	 * ID: 1811302<br>
+	 * Message: Remaining Time
+	 */
+	public static final NpcStringId REMAINING_TIME;
 	
 	/**
 	 * ID: 1900000<br>
@@ -21611,6 +21965,155 @@ public final class NpcStringId
 	 * Message: It teleports the guard members of the Elmore Imperial Castle to the inside of the castle.
 	 */
 	public static final NpcStringId IT_TELEPORTS_THE_GUARD_MEMBERS_OF_THE_ELMORE_IMPERIAL_CASTLE_TO_THE_INSIDE_OF_THE_CASTLE;
+	
+	/**
+	 * ID: 10338006<br>
+	 * Message: Free me from this binding of light!
+	 */
+	public static final NpcStringId FREE_ME_FROM_THIS_BINDING_OF_LIGHT;
+	
+	/**
+	 * ID: 10338007<br>
+	 * Message: Destroy the Ghost of Harnak… this corrupted creature.
+	 */
+	public static final NpcStringId DESTROY_THE_GHOST_OF_HARNAK_THIS_CORRUPTED_CREATURE;
+	
+	/**
+	 * ID: 10338008<br>
+	 * Message: Free me... And I promise you the power of Giants!
+	 */
+	public static final NpcStringId FREE_ME_AND_I_PROMISE_YOU_THE_POWER_OF_GIANTS;
+	
+	/**
+	 * ID: 10338010<br>
+	 * Message: You may use Scroll of Afterlife from Hermuncus to Awaken.
+	 */
+	public static final NpcStringId YOU_MAY_USE_SCROLL_OF_AFTERLIFE_FROM_HERMUNCUS_TO_AWAKEN;
+	
+	/**
+	 * ID: 10338011<br>
+	 * Message: An intruder… interesting.
+	 */
+	public static final NpcStringId AN_INTRUDER_INTERESTING;
+	
+	/**
+	 * ID: 10338012<br>
+	 * Message: Prove your worth…
+	 */
+	public static final NpcStringId PROVE_YOUR_WORTH;
+	
+	/**
+	 * ID: 10338013<br>
+	 * Message: Only those strong enough shall proceed.
+	 */
+	public static final NpcStringId ONLY_THOSE_STRONG_ENOUGH_SHALL_PROCEED;
+	
+	/**
+	 * ID: 10338014<br>
+	 * Message: Are you against the will of light?
+	 */
+	public static final NpcStringId ARE_YOU_AGAINST_THE_WILL_OF_LIGHT_;
+	
+	/**
+	 * ID: 10338015<br>
+	 * Message: Come! Attack me if you dare!
+	 */
+	public static final NpcStringId COME_ATTACK_ME_IF_YOU_DARE;
+	
+	/**
+	 * ID: 10338016<br>
+	 * Message: Are you planning to betray the gods and follow a Giant?
+	 */
+	public static final NpcStringId ARE_YOU_PLANNING_TO_BETRAY_THE_GODS_AND_FOLLOW_A_GIANT;
+	/**
+	 * ID: 10338017<br>
+	 * Message: It's the end for you traitor!
+	 */
+	public static final NpcStringId ITS_THE_END_FOR_YOU_TRAITOR;
+	
+	/**
+	 * ID: 10338018<br>
+	 * Message: Haha…
+	 */
+	public static final NpcStringId HAHA;
+	
+	/**
+	 * ID: 10338019<br>
+	 * Message: I want to hear you cry.
+	 */
+	public static final NpcStringId I_WANT_TO_HEAR_YOU_CRY;
+	
+	/**
+	 * ID: 10338020<br>
+	 * Message: Mortal!
+	 */
+	public static final NpcStringId MORTAL;
+	
+	/**
+	 * ID: 10338021<br>
+	 * Message: Lets see what you are made of!
+	 */
+	public static final NpcStringId LETS_SEE_WHAT_YOU_ARE_MADE_OF;
+	
+	/**
+	 * ID: 10338022<br>
+	 * Message: You will not free Hermuncus.ﾠ
+	 */
+	public static final NpcStringId YOU_WILL_NOT_FREE_HERMUNCUS;
+	
+	/**
+	 * ID: 10338023<br>
+	 * Message: You'll have to kill us first!
+	 */
+	public static final NpcStringId YOULL_HAVE_TO_KILL_US_FIRST;
+	
+	/**
+	 * ID: 10338024<br>
+	 * Message: Trying to free Hermuncus…
+	 */
+	public static final NpcStringId TRYING_TO_FREE_HERMUNCUS;
+	
+	/**
+	 * ID: 10338025<br>
+	 * Message: Repent and your death will be quick!
+	 */
+	public static final NpcStringId REPENT_AND_YOUR_DEATH_WILL_BE_QUICK;
+	
+	/**
+	 * ID: 10338026<br>
+	 * Message: You will never break the seal!ﾠ
+	 */
+	public static final NpcStringId YOU_WILL_NEVER_BREAK_THE_SEAL;
+	
+	/**
+	 * ID: 10338027<br>
+	 * Message: Die traitor!
+	 */
+	public static final NpcStringId DIE_TRAITOR;
+	
+	/**
+	 * ID: 10338031<br>
+	 * Message: Are you strong or weak... Of the Light or darkness…
+	 */
+	public static final NpcStringId ARE_YOU_STRONG_OR_WEAK_OF_THE_LIGHT_OR_DARKNESS;
+	
+	/**
+	 * ID: 10338032<br>
+	 * Message: Only those of light may pass. Others must prove their strength.
+	 */
+	public static final NpcStringId ONLY_THOSE_OF_LIGHT_MAY_PASS_OTHERS_MUST_PROVE_THEIR_STRENGTH;
+	
+	/**
+	 * ID: 10338036<br>
+	 * Message: Receive this power form the ancient Giant.ﾠ
+	 */
+	public static final NpcStringId RECEIVE_THIS_POWER_FORM_THE_ANCIENT_GIANT;
+	
+	/**
+	 * ID: 10338037<br>
+	 * Message: Use this new power when the time is right.
+	 */
+	public static final NpcStringId USE_THIS_NEW_POWER_WHEN_THE_TIME_IS_RIGHT;
 	
 	/**
 	 * Map containing all NpcStringId<br>
@@ -22659,6 +23162,10 @@ public final class NpcStringId
 		IF_YOU_RAISE_ME_WELL_YOULL_GET_PRIZES_OR_NOT = new NpcStringId(99797);
 		YOU_ARE_HERE_FOR_THE_STUFF_EH_WELL_ITS_MINE_ALL_MINE = new NpcStringId(99798);
 		TRUST_ME_GIVE_ME_NECTAR_AND_ILL_BECOME_A_GIANT_SQUASH = new NpcStringId(99799);
+		YOU_ARE_FAR_FROM_RICKY = new NpcStringId(574205);
+		RICKY_IS_ENTERING_KIKU_S_CAVE = new NpcStringId(574206);
+		TAKE_RICKY_TO_LEIRA_IN_UNDER_2_MINUTES = new NpcStringId(574207);
+		BRING_BACK_RICKY = new NpcStringId(574209);
 		THERES_NOTHING_YOU_CANT_SAY_I_CANT_LISTEN_TO_YOU_ANYMORE = new NpcStringId(528551);
 		YOU_ADVANCED_BRAVELY_BUT_GOT_SUCH_A_TINY_RESULT_HOHOHO = new NpcStringId(528651);
 		A_NON_PERMITTED_TARGET_HAS_BEEN_DISCOVERED = new NpcStringId(1000001);
@@ -23653,6 +24160,11 @@ public final class NpcStringId
 		THE_DEVICE_LOCATED_IN_THE_ROOM_IN_FRONT_OF_THE_GUARDIAN_OF_THE_SEAL_IS_DEFINITELY_THE_BARRIER_THAT_CONTROLS_THE_GUARDIANS_POWER = new NpcStringId(1029551);
 		TO_REMOVE_THE_BARRIER_YOU_MUST_FIND_THE_RELICS_THAT_FIT_THE_BARRIER_AND_ACTIVATE_THE_DEVICE = new NpcStringId(1029552);
 		ALL_THE_GUARDIANS_WERE_DEFEATED_AND_THE_SEAL_WAS_REMOVED_TELEPORT_TO_THE_CENTER = new NpcStringId(1029553);
+		WEAPONS_HAVE_BEEN_ADDED_TO_YOUR_INVENTORY = new NpcStringId(1032201);
+		SOULSHOT_HAVE_BEEN_ADDED_TO_YOUR_INVENTORY = new NpcStringId(1032349);
+		AUTOMATE_SOULSHOT_AS_SHOWN_IN_THE_TUTORIAL = new NpcStringId(1032350);
+		SPIRITSHOT_HAVE_BEEN_ADDED_TO_YOUR_INVENTORY = new NpcStringId(1032351);
+		AUTOMATE_SPIRITSHOT_AS_SHOWN_IN_THE_TUTORIAL = new NpcStringId(1032352);
 		_IS_THE_PROCESS_OF_STANDING_UP = new NpcStringId(1110071);
 		_IS_THE_PROCESS_OF_SITTING_DOWN = new NpcStringId(1110072);
 		IT_IS_POSSIBLE_TO_USE_A_SKILL_WHILE_SITTING_DOWN = new NpcStringId(1110073);
@@ -23829,6 +24341,27 @@ public final class NpcStringId
 		YOU_WILL_REGRET_THIS = new NpcStringId(1600022);
 		CARE_TO_CHALLENGE_FATE_AND_TEST_YOUR_LUCK = new NpcStringId(1600023);
 		DONT_PASS_UP_THE_CHANCE_TO_WIN_AN_S80_WEAPON = new NpcStringId(1600024);
+		MM_I_SEE = new NpcStringId(1620051);
+		THANK_YOU_FOR_THE_REPORT_ROGIN = new NpcStringId(1620052);
+		SOLDIERS_WERE_FIGHTING_A_BATTLE_THAT_CANT_BE_WON = new NpcStringId(1620053);
+		BUT_WE_HAVE_TO_DEFEND_OUR_VILLAGE_SO_WERE_FIGHTING = new NpcStringId(1620054);
+		FOR_THE_FINE_WINES_AND_TREASURES_OF_ADEN = new NpcStringId(1620055);
+		IM_PROUD_OF_EVERY_ONE_OF = new NpcStringId(1620056);
+		UGH_IF_I_SEE_YOU_IN_THE_SPIRIT_WORLD_FIRST_ROUND_IS_ON_ME = new NpcStringId(1620057);
+		ROGIN_IM_HERE = new NpcStringId(1620058);
+		BRONK = new NpcStringId(1620059);
+		CHIEF = new NpcStringId(1620060);
+		BRONK_ = new NpcStringId(1620061);
+		FOR_BRONK = new NpcStringId(1620068);
+		DWARVES_FOREVER = new NpcStringId(1620069);
+		SAVE_THE_DWARVEN_VILLAGE = new NpcStringId(1620070);
+		WHOAAAAAA_ = new NpcStringId(1620071);
+		FIGHT = new NpcStringId(1620072);
+		CHIEF_REPORTING_IN = new NpcStringId(1620073);
+		ENEMIES_ARE_APPROACHING_FROM_THE_SOUTH = new NpcStringId(1620074);
+		THE_ELDERS_HAVENT_BEEN_MOVED_TO_SAFETY = new NpcStringId(1620075);
+		MANY_RESIDENTS_STILL_HAVENT_LEFT_THEIR_HOMES = new NpcStringId(1620076);
+		WATCH_THE_DWARVEN_VILLAGE_LAST_STAND = new NpcStringId(1620096);
 		_S1S_COMMAND_CHANNEL_HAS_LOOTING_RIGHTS = new NpcStringId(1800009);
 		LOOTING_RULES_ARE_NO_LONGER_ACTIVE = new NpcStringId(1800010);
 		OUR_MASTER_NOW_COMES_TO_CLAIM_OUR_VENGEANCE_SOON_YOU_WILL_ALL_BE_NOTHING_MORE_THAN_DIRT = new NpcStringId(1800011);
@@ -24982,6 +25515,19 @@ public final class NpcStringId
 		I_AM_ICE_QUEEN_FREYA_THIS_FEELING_AND_EMOTION_ARE_NOTHING_BUT_A_PART_OF_MELISSAA_MEMORIES = new NpcStringId(1801194);
 		DEAR_S1_THINK_OF_THIS_AS_MY_APPRECIATION_FOR_THE_GIFT_TAKE_THIS_WITH_YOU_THERES_NOTHING_STRANGE_ABOUT_IT_ITS_JUST_A_BIT_OF_MY_CAPRICIOUSNESS = new NpcStringId(1801195);
 		THE_KINDNESS_OF_SOMEBODY_IS_NOT_A_BAD_FEELING_DEAR_S1_I_WILL_TAKE_THIS_GIFT_OUT_OF_RESPECT_YOUR_KINDNESS = new NpcStringId(1801196);
+		ATTACK_THE_TRAINING_DUMMY = new NpcStringId(1802511);
+		TALK_TO_THE_APPRENTICE_ADVENTURER_S_GUIDE = new NpcStringId(1802513);
+		ATTACK_THE_MONSTER = new NpcStringId(1802514);
+		TALK_TO_MAGISTER_AYANTHE = new NpcStringId(1802515);
+		FIGHT_USING_SKILLS = new NpcStringId(1802516);
+		TALK_TO_MASTER_KATALINE = new NpcStringId(1802517);
+		RICKY_IS_NOT_HERE = new NpcStringId(1802617);
+		TALK_TO_KATALINE_TO_LEAVE_THE_TRAINING_GROUNDS = new NpcStringId(1802618);
+		TALK_TO_AYANTHE_TO_LEAVE_THE_TRAINING_GROUNDS = new NpcStringId(1802619);
+		CHECK_YOUR_EQUIPMENT_IN_YOUR_INVENTORY = new NpcStringId(1802620);
+		FOLLOW_RICKY = new NpcStringId(1802643);
+		RICKY_HAS_FOUND_LEIRA = new NpcStringId(1802644);
+		TALK_TO_DOLKIN_AND_LEAVE_THE_KARAPON_HABITAT = new NpcStringId(1802645);
 		FIGHTER = new NpcStringId(1811000);
 		WARRIOR = new NpcStringId(1811001);
 		GLADIATOR = new NpcStringId(1811002);
@@ -25083,6 +25629,22 @@ public final class NpcStringId
 		INSPECTOR = new NpcStringId(1811135);
 		JUDICATOR = new NpcStringId(1811136);
 		WHOS_THERE_IF_YOU_DISTURB_THE_TEMPER_OF_THE_GREAT_LAND_DRAGON_ANTHARAS_I_WILL_NEVER_FORGIVE_YOU = new NpcStringId(1811137);
+		I_HERMUNCUS_GIVE_MY_POWER_TO_THOSE_WHO_FIGHT_FOR_ME = new NpcStringId(1811213);
+		THOUGH_SMALL_THIS_POWER_WILL_HELP_YOU_GREATLY = new NpcStringId(1811214);
+		I_MUST_GO_HELP_SOME_MORE = new NpcStringId(1811222);
+		NO_THE_SEAL_CONTROLS_HAVE_BEEN_EXPOSED_GUARDS_PROTECT_THE_SEAL_CONTROLS = new NpcStringId(1811223);
+		DISABLE_DEVICE_WILL_GO_OUT_OF_CONTROL_IN_1_MINUTE = new NpcStringId(1811226);
+		_50_SECONDS_ARE_REMAINING = new NpcStringId(1811227);
+		_40_SECONDS_ARE_REMAINING = new NpcStringId(1811228);
+		_30_SECONDS_ARE_REMAINING = new NpcStringId(1811229);
+		_20_SECONDS_ARE_REMAINING = new NpcStringId(1811230);
+		_10_SECONDS_ARE_REMAINING = new NpcStringId(1811231);
+		_5_SECONDS = new NpcStringId(1811232);
+		_4_SECONDS = new NpcStringId(1811233);
+		_3_SECONDS = new NpcStringId(1811234);
+		_2_SECONDS = new NpcStringId(1811235);
+		_1_SECOND = new NpcStringId(1811236);
+		REMAINING_TIME = new NpcStringId(1811302);
 		KEHAHAHA_I_CAPTURED_SANTA_CLAUS_THERE_WILL_BE_NO_GIFTS_THIS_YEAR = new NpcStringId(1900000);
 		WELL_I_WIN_RIGHT = new NpcStringId(1900003);
 		NOW_ALL_OF_YOU_LOSERS_GET_OUT_OF_HERE = new NpcStringId(1900004);
@@ -25213,6 +25775,31 @@ public final class NpcStringId
 		IT_TELEPORTS_THE_GUARD_MEMBERS_OF_THE_RUNE_CASTLE_TO_THE_INSIDE_OF_THE_CASTLE = new NpcStringId(10004439);
 		IT_TELEPORTS_THE_GUARD_MEMBERS_OF_THE_SCHUTTGART_CASTLE_TO_THE_INSIDE_OF_THE_CASTLE = new NpcStringId(10004440);
 		IT_TELEPORTS_THE_GUARD_MEMBERS_OF_THE_ELMORE_IMPERIAL_CASTLE_TO_THE_INSIDE_OF_THE_CASTLE = new NpcStringId(10004441);
+		FREE_ME_FROM_THIS_BINDING_OF_LIGHT = new NpcStringId(10338006);
+		DESTROY_THE_GHOST_OF_HARNAK_THIS_CORRUPTED_CREATURE = new NpcStringId(10338007);
+		FREE_ME_AND_I_PROMISE_YOU_THE_POWER_OF_GIANTS = new NpcStringId(10338008);
+		YOU_MAY_USE_SCROLL_OF_AFTERLIFE_FROM_HERMUNCUS_TO_AWAKEN = new NpcStringId(10338010);
+		AN_INTRUDER_INTERESTING = new NpcStringId(10338011);
+		PROVE_YOUR_WORTH = new NpcStringId(10338012);
+		ONLY_THOSE_STRONG_ENOUGH_SHALL_PROCEED = new NpcStringId(10338013);
+		ARE_YOU_AGAINST_THE_WILL_OF_LIGHT_ = new NpcStringId(10338014);
+		COME_ATTACK_ME_IF_YOU_DARE = new NpcStringId(10338015);
+		ARE_YOU_PLANNING_TO_BETRAY_THE_GODS_AND_FOLLOW_A_GIANT = new NpcStringId(10338016);
+		ITS_THE_END_FOR_YOU_TRAITOR = new NpcStringId(10338017);
+		HAHA = new NpcStringId(10338018);
+		I_WANT_TO_HEAR_YOU_CRY = new NpcStringId(10338019);
+		MORTAL = new NpcStringId(10338020);
+		LETS_SEE_WHAT_YOU_ARE_MADE_OF = new NpcStringId(10338021);
+		YOU_WILL_NOT_FREE_HERMUNCUS = new NpcStringId(10338022);
+		YOULL_HAVE_TO_KILL_US_FIRST = new NpcStringId(10338023);
+		TRYING_TO_FREE_HERMUNCUS = new NpcStringId(10338024);
+		REPENT_AND_YOUR_DEATH_WILL_BE_QUICK = new NpcStringId(10338025);
+		YOU_WILL_NEVER_BREAK_THE_SEAL = new NpcStringId(10338026);
+		DIE_TRAITOR = new NpcStringId(10338027);
+		ARE_YOU_STRONG_OR_WEAK_OF_THE_LIGHT_OR_DARKNESS = new NpcStringId(10338027);
+		ONLY_THOSE_OF_LIGHT_MAY_PASS_OTHERS_MUST_PROVE_THEIR_STRENGTH = new NpcStringId(10338027);
+		RECEIVE_THIS_POWER_FORM_THE_ANCIENT_GIANT = new NpcStringId(10338036);
+		USE_THIS_NEW_POWER_WHEN_THE_TIME_IS_RIGHT = new NpcStringId(10338037);
 		
 		buildFastLookupTable();
 	}
