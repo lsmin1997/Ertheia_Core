@@ -21181,6 +21181,12 @@ public final class NpcStringId
 	public static final NpcStringId _1_SECOND;
 	
 	/**
+	 * ID: 1811245<br>
+	 * Message: 1 lchemy is a science and an art.
+	 */
+	public static final NpcStringId ALCHEMY_IS_A_SCIENCE_AND_AN_ART;
+	
+	/**
 	 * ID: 1811302<br>
 	 * Message: Remaining Time
 	 */
@@ -25644,6 +25650,7 @@ public final class NpcStringId
 		_3_SECONDS = new NpcStringId(1811234);
 		_2_SECONDS = new NpcStringId(1811235);
 		_1_SECOND = new NpcStringId(1811236);
+		ALCHEMY_IS_A_SCIENCE_AND_AN_ART = new NpcStringId(1811245);
 		REMAINING_TIME = new NpcStringId(1811302);
 		KEHAHAHA_I_CAPTURED_SANTA_CLAUS_THERE_WILL_BE_NO_GIFTS_THIS_YEAR = new NpcStringId(1900000);
 		WELL_I_WIN_RIGHT = new NpcStringId(1900003);
