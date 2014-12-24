@@ -139,7 +139,7 @@ public class KnownListUpdateTaskManager
 				{
 					if (regi.isActive())
 					{
-						Collection<L2Playable> inrPls = regi.getVisiblePlayable().values();
+						Collection<L2Object> inrPls = regi.getVisibleObjects().values();
 						
 						for (L2Object obj : inrPls)
 						{

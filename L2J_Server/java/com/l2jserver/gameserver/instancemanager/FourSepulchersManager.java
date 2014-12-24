@@ -1607,7 +1607,7 @@ public final class FourSepulchersManager
 			
 			min = minuteSelect(min);
 			
-			NpcStringId msg = NpcStringId.MINUTES_HAVE_PASSED;
+			NpcStringId msg = NpcStringId.MINUTE_S_HAVE_PASSED;
 			
 			if (min == 90)
 			{
