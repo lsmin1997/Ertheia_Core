@@ -21199,6 +21199,24 @@ public final class NpcStringId
 	public static final NpcStringId REMAINING_TIME;
 	
 	/**
+	 * ID: 1811313<br>
+	 * Message: The land of Aden is in need of materials to rebuild from Shilen's destruction.
+	 */
+	public static final NpcStringId THE_LAND_OF_ADEN_IS_IN_NEED_OF_MATERIALS_TO_REBUILD_FROM_SHILENS_DESTURCTION;
+	
+	/**
+	 * ID: 1811314<br>
+	 * Message: Please donate any unused materials you have to help rebuild Aden.
+	 */
+	public static final NpcStringId PLEASE_DONATE_ANY_UNUSED_MATERIALS_YOU_HAVE_TO_HELP_REBUILD_ADEN;
+	
+	/**
+	 * ID: 1811315<br>
+	 * Message: You'll receive a gift for any applicable donation.
+	 */
+	public static final NpcStringId YOULL_RECEIVE_A_GIFT_FOR_ANY_APPLICABLE_DONATION;
+	
+	/**
 	 * ID: 1900000<br>
 	 * Message: Kehahaha!!! I captured Santa Claus!! There will be no gifts this year!!!
 	 */
@@ -25228,6 +25246,9 @@ public final class NpcStringId
 		WHEN_INVENTORY_WEIGHT_NUMBER_ARE_MORE_THAN_80_THE_LIFE_STONE_FROM_THE_BEGINNING_CANNOT_BE_ACQUIRED = new NpcStringId(1800879);
 		YOU_ARE_UNDER_MY_THUMB = new NpcStringId(1800880);
 		N21_MINUTES_ARE_ADDED_TO_THE_REMAINING_TIME_IN_THE_INSTANT_ZONE = new NpcStringId(1800881);
+		THE_LAND_OF_ADEN_IS_IN_NEED_OF_MATERIALS_TO_REBUILD_FROM_SHILENS_DESTURCTION = new NpcStringId(1811313);
+		PLEASE_DONATE_ANY_UNUSED_MATERIALS_YOU_HAVE_TO_HELP_REBUILD_ADEN = new NpcStringId(1811314);
+		YOULL_RECEIVE_A_GIFT_FOR_ANY_APPLICABLE_DONATION = new NpcStringId(1811315);
 		HURRY_HURRY = new NpcStringId(1800882);
 		I_AM_NOT_THAT_TYPE_OF_PERSON_WHO_STAYS_IN_ONE_PLACE_FOR_A_LONG_TIME = new NpcStringId(1800883);
 		ITS_HARD_FOR_ME_TO_KEEP_STANDING_LIKE_THIS = new NpcStringId(1800884);
