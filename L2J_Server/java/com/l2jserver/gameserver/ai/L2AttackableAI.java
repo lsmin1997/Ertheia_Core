@@ -502,7 +502,7 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		}
 		
 		// Chance to forget attackers after some time
-		if ((npc.getCurrentHp() == npc.getMaxHp()) && (npc.getCurrentMp() == npc.getMaxMp()) && !npc.getAttackByList().isEmpty() && (Rnd.nextInt(500) == 0))
+		if ((npc.getCurrentHp() == npc.getMaxHp()) && (npc.getCurrentMp() == npc.getMaxMp()) && !npc.getAttackByList().isEmpty() && (Rnd.nextInt(500) == 0) && npc.canStopAttackByTime())
 		{
 			npc.clearAggroList();
 			npc.getAttackByList().clear();
@@ -686,7 +686,7 @@ public class L2AttackableAI extends L2CharacterAI implements Runnable
 		
 		L2Character originalAttackTarget = getAttackTarget();
 		// Check if target is dead or if timeout is expired to stop this attack
-		if ((originalAttackTarget == null) || originalAttackTarget.isAlikeDead() || (_attackTimeout < GameTimeController.getInstance().getGameTicks()))
+		if ((originalAttackTarget == null) || originalAttackTarget.isAlikeDead() || ((_attackTimeout < GameTimeController.getInstance().getGameTicks()) && npc.canStopAttackByTime()))
 		{
 			// Stop hating this target after the attack timeout or if target is dead
 			if (originalAttackTarget != null)

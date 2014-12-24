@@ -82,6 +82,7 @@ public class L2Attackable extends L2Npc
 	private boolean _isReturningToSpawnPoint = false;
 	private boolean _canReturnToSpawnPoint = true;
 	private boolean _seeThroughSilentMove = false;
+	private boolean _canStopAttackByTime = true;
 	// Manor
 	private boolean _seeded = false;
 	private L2Seed _seed = null;
@@ -186,6 +187,16 @@ public class L2Attackable extends L2Npc
 	public void setSeeThroughSilentMove(boolean val)
 	{
 		_seeThroughSilentMove = val;
+	}
+	
+	public boolean canStopAttackByTime()
+	{
+		return _canStopAttackByTime;
+	}
+	
+	public void setCanStopAttackByTime(boolean val)
+	{
+		_canStopAttackByTime = val;
 	}
 	
 	/**
