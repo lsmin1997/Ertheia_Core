@@ -65,6 +65,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	private boolean _unique;
 	private boolean _attackable;
 	private boolean _targetable;
+	private boolean _talkable;
 	private boolean _undying;
 	private boolean _showName;
 	private boolean _flying;
@@ -137,6 +138,7 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 		_unique = set.getBoolean("unique", false);
 		_attackable = set.getBoolean("attackable", true);
 		_targetable = set.getBoolean("targetable", true);
+		_talkable = set.getBoolean("talkable", true);
 		_undying = set.getBoolean("undying", true);
 		_showName = set.getBoolean("showName", true);
 		_flying = set.getBoolean("flying", false);
@@ -281,6 +283,11 @@ public final class L2NpcTemplate extends L2CharTemplate implements IIdentifiable
 	public boolean isTargetable()
 	{
 		return _targetable;
+	}
+	
+	public boolean isTalkable()
+	{
+		return _talkable;
 	}
 	
 	public boolean isUndying()
