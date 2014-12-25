@@ -6836,7 +6836,7 @@ public final class SystemMessageId
 	public static SystemMessageId YOUR_PET_S_HUNGER_GAUGE_IS_BELOW_10_IF_YOUR_PET_ISN_T_FED_SOON_IT_MAY_RUN_AWAY;
 	
 	@ClientString(id = 2261, message = "$c1 has inflicted $s3 damage on $c2.")
-	public static SystemMessageId C1_HAS_INFLICTED_S3_DAMAGE_ON_C2;
+	public static SystemMessageId C1_HAS_INFLICTED_S3_DAMAGE_ON_C2_S4;
 	
 	@ClientString(id = 2262, message = "$c1 has received $s3 damage from $c2.")
 	public static SystemMessageId C1_HAS_RECEIVED_S3_DAMAGE_FROM_C2;

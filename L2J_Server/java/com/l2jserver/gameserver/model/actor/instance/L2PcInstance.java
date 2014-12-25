@@ -12428,7 +12428,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		else
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_INFLICTED_S3_DAMAGE_ON_C2);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_INFLICTED_S3_DAMAGE_ON_C2_S4);
 			sm.addPcName(this);
 			sm.addCharName(target);
 			sm.addInt(damage);
