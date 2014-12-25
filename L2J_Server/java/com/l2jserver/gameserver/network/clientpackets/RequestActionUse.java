@@ -71,7 +71,7 @@ public final class RequestActionUse extends L2GameClientPacket
 	{
 		NpcStringId.USING_A_SPECIAL_SKILL_HERE_COULD_TRIGGER_A_BLOODBATH,
 		NpcStringId.HEY_WHAT_DO_YOU_EXPECT_OF_ME,
-		NpcStringId.UGGGGGH_PUSH_ITS_NOT_COMING_OUT,
+		NpcStringId.UGGGGGH_PUSH_IT_S_NOT_COMING_OUT,
 		NpcStringId.AH_I_MISSED_THE_MARK
 	};
 	
