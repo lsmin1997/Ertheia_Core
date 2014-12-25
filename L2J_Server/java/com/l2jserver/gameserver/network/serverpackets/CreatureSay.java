@@ -64,6 +64,12 @@ public final class CreatureSay extends L2GameServerPacket
 		{
 			_mask |= 0x08;
 		}
+		
+		// Does not shows level
+		if (sender.isGM())
+		{
+			_mask |= 0x10;
+		}
 	}
 	
 	/**
@@ -120,7 +126,7 @@ public final class CreatureSay extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0x4a);
+		writeC(0x4A);
 		writeD(_objectId);
 		writeD(_textType);
 		if (_charName != null)
@@ -138,7 +144,10 @@ public final class CreatureSay extends L2GameServerPacket
 			if ((_charLevel > 0) && (_textType == 2))
 			{
 				writeC(_mask);
-				writeC(_charLevel);
+				if ((_mask & 0x10) == 0)
+				{
+					writeC(_charLevel);
+				}
 			}
 		}
 		else if (_parameters != null)

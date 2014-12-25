@@ -51,6 +51,12 @@ public final class TradeStart extends AbstractItemPacket
 			{
 				_mask |= 0x08;
 			}
+			
+			// Does not shows level
+			if (_partner.isGM())
+			{
+				_mask |= 0x10;
+			}
 		}
 	}
 	
@@ -65,7 +71,10 @@ public final class TradeStart extends AbstractItemPacket
 		writeC(0x14);
 		writeD(_partner.getObjectId());
 		writeC(_mask); // some kind of mask
-		writeC(_partner.getLevel());
+		if ((_mask & 0x10) == 0)
+		{
+			writeC(_partner.getLevel());
+		}
 		writeH(_itemList.length);
 		for (L2ItemInstance item : _itemList)
 		{
