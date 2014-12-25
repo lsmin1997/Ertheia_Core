@@ -79,7 +79,7 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 		// Avoid Use of Skills in AirShip.
 		if (activeChar.isPlayable() && activeChar.isInAirShip())
 		{
-			activeChar.sendPacket(SystemMessageId.ACTION_PROHIBITED_WHILE_MOUNTED_OR_ON_AN_AIRSHIP);
+			activeChar.sendPacket(SystemMessageId.THIS_ACTION_IS_PROHIBITED_WHILE_MOUNTED_OR_ON_AN_AIRSHIP);
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}

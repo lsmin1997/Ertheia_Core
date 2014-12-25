@@ -618,13 +618,13 @@ public class TradeList
 		// check weight and slots
 		if ((!getOwner().getInventory().validateWeight(partnerList.calcItemsWeight())) || !(partnerList.getOwner().getInventory().validateWeight(calcItemsWeight())))
 		{
-			partnerList.getOwner().sendPacket(SystemMessageId.WEIGHT_LIMIT_EXCEEDED);
-			getOwner().sendPacket(SystemMessageId.WEIGHT_LIMIT_EXCEEDED);
+			partnerList.getOwner().sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_WEIGHT_LIMIT);
+			getOwner().sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_WEIGHT_LIMIT);
 		}
 		else if ((!getOwner().getInventory().validateCapacity(partnerList.countItemsSlots(getOwner()))) || (!partnerList.getOwner().getInventory().validateCapacity(countItemsSlots(partnerList.getOwner()))))
 		{
-			partnerList.getOwner().sendPacket(SystemMessageId.SLOTS_FULL);
-			getOwner().sendPacket(SystemMessageId.SLOTS_FULL);
+			partnerList.getOwner().sendPacket(SystemMessageId.YOUR_INVENTORY_IS_FULL);
+			getOwner().sendPacket(SystemMessageId.YOUR_INVENTORY_IS_FULL);
 		}
 		else
 		{
@@ -773,19 +773,19 @@ public class TradeList
 		
 		if (totalPrice > playerInventory.getAdena())
 		{
-			player.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+			player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 			return 1;
 		}
 		
 		if (!playerInventory.validateWeight(weight))
 		{
-			player.sendPacket(SystemMessageId.WEIGHT_LIMIT_EXCEEDED);
+			player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_WEIGHT_LIMIT);
 			return 1;
 		}
 		
 		if (!playerInventory.validateCapacity(slots))
 		{
-			player.sendPacket(SystemMessageId.SLOTS_FULL);
+			player.sendPacket(SystemMessageId.YOUR_INVENTORY_IS_FULL);
 			return 1;
 		}
 		
@@ -796,7 +796,7 @@ public class TradeList
 		final L2ItemInstance adenaItem = playerInventory.getAdenaInstance();
 		if (!playerInventory.reduceAdena("PrivateStore", totalPrice, player, _owner))
 		{
-			player.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+			player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 			return 1;
 		}
 		playerIU.addItem(adenaItem);
@@ -859,7 +859,7 @@ public class TradeList
 				msg.addLong(item.getCount());
 				_owner.sendPacket(msg);
 				
-				msg = SystemMessage.getSystemMessage(SystemMessageId.PURCHASED_S3_S2_S_FROM_C1);
+				msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_PURCHASED_S3_S2_S_FROM_C1);
 				msg.addString(_owner.getName());
 				msg.addItemName(newItem);
 				msg.addLong(item.getCount());
@@ -872,7 +872,7 @@ public class TradeList
 				msg.addItemName(newItem);
 				_owner.sendPacket(msg);
 				
-				msg = SystemMessage.getSystemMessage(SystemMessageId.PURCHASED_S2_FROM_C1);
+				msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_PURCHASED_S2_FROM_C1);
 				msg.addString(_owner.getName());
 				msg.addItemName(newItem);
 				player.sendPacket(msg);
@@ -1031,7 +1031,7 @@ public class TradeList
 			// Send messages about the transaction to both players
 			if (newItem.isStackable())
 			{
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.PURCHASED_S3_S2_S_FROM_C1);
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_PURCHASED_S3_S2_S_FROM_C1);
 				msg.addString(player.getName());
 				msg.addItemName(newItem);
 				msg.addLong(item.getCount());
@@ -1045,7 +1045,7 @@ public class TradeList
 			}
 			else
 			{
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.PURCHASED_S2_FROM_C1);
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_PURCHASED_S2_FROM_C1);
 				msg.addString(player.getName());
 				msg.addItemName(newItem);
 				_owner.sendPacket(msg);

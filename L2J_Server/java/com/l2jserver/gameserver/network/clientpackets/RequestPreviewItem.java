@@ -71,7 +71,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		{
 			try
 			{
-				activeChar.sendPacket(SystemMessageId.NO_LONGER_TRYING_ON);
+				activeChar.sendPacket(SystemMessageId.YOU_ARE_NO_LONGER_TRYING_ON_EQUIPMENT2);
 				activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
 			}
 			catch (Exception e)
@@ -235,7 +235,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		// Charge buyer and add tax to castle treasury if not owned by npc clan because a Try On is not Free
 		if ((totalPrice < 0) || !activeChar.reduceAdena("Wear", totalPrice, activeChar.getLastFolkNPC(), true))
 		{
-			activeChar.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+			activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 			return;
 		}
 		

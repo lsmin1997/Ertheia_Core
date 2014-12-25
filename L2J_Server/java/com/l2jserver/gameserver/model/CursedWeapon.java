@@ -306,13 +306,13 @@ public class CursedWeapon implements INamable
 		doTransform();
 		giveSkill();
 		
-		SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_OWNER_HAS_LOGGED_INTO_THE_S1_REGION);
+		SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S_OWNER_HAS_LOGGED_INTO_THE_S1_REGION);
 		msg.addZoneName(_player.getX(), _player.getY(), _player.getZ());
 		msg.addItemName(_player.getCursedWeaponEquippedId());
 		CursedWeaponsManager.announce(msg);
 		
 		CursedWeapon cw = CursedWeaponsManager.getInstance().getCursedWeapon(_player.getCursedWeaponEquippedId());
-		SystemMessage msg2 = SystemMessage.getSystemMessage(SystemMessageId.S2_MINUTE_OF_USAGE_TIME_ARE_LEFT_FOR_S1);
+		SystemMessage msg2 = SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_S2_MINUTE_S_OF_USAGE_TIME_REMAINING);
 		int timeLeft = (int) (cw.getTimeLeft() / 60000);
 		msg2.addItemName(_player.getCursedWeaponEquippedId());
 		msg2.addInt(timeLeft);
@@ -412,7 +412,7 @@ public class CursedWeapon implements INamable
 		if (player.isMounted() && !player.dismount())
 		{
 			// TODO: Verify the following system message, may still be custom.
-			player.sendPacket(SystemMessageId.FAILED_TO_PICKUP_S1);
+			player.sendPacket(SystemMessageId.YOU_HAVE_FAILED_TO_PICK_UP_S1);
 			player.dropItem("InvDrop", item, null, true);
 			return;
 		}
@@ -445,7 +445,7 @@ public class CursedWeapon implements INamable
 		_item = item;
 		// L2ItemInstance[] items =
 		_player.getInventory().equipItem(_item);
-		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_EQUIPPED);
+		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EQUIPPED_YOUR_S1);
 		sm.addItemName(_item);
 		_player.sendPacket(sm);
 		

@@ -81,7 +81,7 @@ public class ConditionPlayerCanCreateOutpost extends Condition
 		}
 		else if (!player.isInsideZone(ZoneId.HQ))
 		{
-			player.sendPacket(SystemMessageId.NOT_SET_UP_BASE_HERE);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_SET_UP_A_BASE_HERE);
 			canCreateOutpost = false;
 		}
 		return (_val == canCreateOutpost);

@@ -703,7 +703,7 @@ public final class Instance
 		{
 			timeLeft = remaining / 60000;
 			interval = 300000;
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DUNGEON_EXPIRES_IN_S1_MINUTES);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THIS_DUNGEON_WILL_EXPIRE_IN_S1_MINUTE_S_YOU_WILL_BE_FORCED_OUT_OF_THE_DUNGEON_WHEN_THE_TIME_EXPIRES);
 			sm.addString(Integer.toString(timeLeft));
 			Broadcast.toPlayersInInstance(sm, getId());
 			remaining = remaining - 300000;
@@ -712,7 +712,7 @@ public final class Instance
 		{
 			timeLeft = remaining / 60000;
 			interval = 60000;
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DUNGEON_EXPIRES_IN_S1_MINUTES);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THIS_DUNGEON_WILL_EXPIRE_IN_S1_MINUTE_S_YOU_WILL_BE_FORCED_OUT_OF_THE_DUNGEON_WHEN_THE_TIME_EXPIRES);
 			sm.addString(Integer.toString(timeLeft));
 			Broadcast.toPlayersInInstance(sm, getId());
 			remaining = remaining - 60000;

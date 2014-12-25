@@ -998,7 +998,7 @@ public final class FourSepulchersManager
 				
 				if (player.getWeightPenalty() >= 3)
 				{
-					mem.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
+					mem.sendPacket(SystemMessageId.UNABLE_TO_PROCESS_THIS_REQUEST_UNTIL_YOUR_INVENTORY_S_WEIGHT_AND_SLOT_COUNT_ARE_LESS_THAN_80_PERCENT_OF_CAPACITY);
 					return;
 				}
 			}
@@ -1026,7 +1026,7 @@ public final class FourSepulchersManager
 				
 				if (player.getWeightPenalty() >= 3)
 				{
-					mem.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
+					mem.sendPacket(SystemMessageId.UNABLE_TO_PROCESS_THIS_REQUEST_UNTIL_YOUR_INVENTORY_S_WEIGHT_AND_SLOT_COUNT_ARE_LESS_THAN_80_PERCENT_OF_CAPACITY);
 					return;
 				}
 			}
@@ -1047,7 +1047,7 @@ public final class FourSepulchersManager
 			
 			if (player.getWeightPenalty() >= 3)
 			{
-				player.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
+				player.sendPacket(SystemMessageId.UNABLE_TO_PROCESS_THIS_REQUEST_UNTIL_YOUR_INVENTORY_S_WEIGHT_AND_SLOT_COUNT_ARE_LESS_THAN_80_PERCENT_OF_CAPACITY);
 				return;
 			}
 		}

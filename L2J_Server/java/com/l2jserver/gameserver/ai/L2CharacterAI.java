@@ -1079,7 +1079,7 @@ public class L2CharacterAI extends AbstractAI
 			{
 				if (!_actor.getTransformation().isCombat())
 				{
-					_actor.sendPacket(SystemMessageId.DIST_TOO_FAR_CASTING_STOPPED);
+					_actor.sendPacket(SystemMessageId.THE_DISTANCE_IS_TOO_FAR_AND_SO_THE_CASTING_HAS_BEEN_STOPPED);
 					_actor.sendPacket(ActionFailed.STATIC_PACKET);
 					return true;
 				}

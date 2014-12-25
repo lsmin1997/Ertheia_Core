@@ -69,7 +69,7 @@ public final class TradeRequest extends L2GameClientPacket
 			{
 				if (!effect.checkCondition(BotReportTable.TRADE_ACTION_BLOCK_ID))
 				{
-					player.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_SO_ACTIONS_NOT_ALLOWED);
+					player.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_AS_AN_ILLEGAL_PROGRAM_USER_SO_YOUR_ACTIONS_HAVE_BEEN_RESTRICTED);
 					player.sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}
@@ -89,13 +89,13 @@ public final class TradeRequest extends L2GameClientPacket
 		// and the following system message is sent to acting player.
 		if (target.getObjectId() == player.getObjectId())
 		{
-			player.sendPacket(SystemMessageId.TARGET_IS_INCORRECT);
+			player.sendPacket(SystemMessageId.THAT_IS_AN_INCORRECT_TARGET);
 			return;
 		}
 		
 		if (!target.isPlayer())
 		{
-			player.sendPacket(SystemMessageId.INCORRECT_TARGET);
+			player.sendPacket(SystemMessageId.INVALID_TARGET);
 			return;
 		}
 		
@@ -113,7 +113,7 @@ public final class TradeRequest extends L2GameClientPacket
 			{
 				if (!effect.checkCondition(BotReportTable.TRADE_ACTION_BLOCK_ID))
 				{
-					final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_REPORTED_AND_IS_BEING_INVESTIGATED);
+					final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_BEEN_REPORTED_AS_AN_ILLEGAL_PROGRAM_USER_AND_IS_CURRENTLY_BEING_INVESTIGATED);
 					sm.addCharName(partner);
 					player.sendPacket(sm);
 					player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -143,7 +143,7 @@ public final class TradeRequest extends L2GameClientPacket
 		
 		if ((player.getPrivateStoreType() != PrivateStoreType.NONE) || (partner.getPrivateStoreType() != PrivateStoreType.NONE))
 		{
-			player.sendPacket(SystemMessageId.CANNOT_TRADE_DISCARD_DROP_ITEM_WHILE_IN_SHOPMODE);
+			player.sendPacket(SystemMessageId.WHILE_OPERATING_A_PRIVATE_STORE_OR_WORKSHOP_YOU_CANNOT_DISCARD_DESTROY_OR_TRADE_AN_ITEM);
 			return;
 		}
 		
@@ -153,7 +153,7 @@ public final class TradeRequest extends L2GameClientPacket
 			{
 				_log.fine("Already trading with someone else.");
 			}
-			player.sendPacket(SystemMessageId.ALREADY_TRADING);
+			player.sendPacket(SystemMessageId.YOU_ARE_ALREADY_TRADING_WITH_SOMEONE);
 			return;
 		}
 		
@@ -164,7 +164,7 @@ public final class TradeRequest extends L2GameClientPacket
 			{
 				_log.info("Transaction already in progress.");
 			}
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_ON_ANOTHER_TASK_PLEASE_TRY_AGAIN_LATER);
 			sm.addString(partner.getName());
 			player.sendPacket(sm);
 			return;
@@ -178,7 +178,7 @@ public final class TradeRequest extends L2GameClientPacket
 		
 		if (BlockList.isBlocked(partner, player))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_ADDED_YOU_TO_IGNORE_LIST);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_PLACED_YOU_ON_HIS_HER_IGNORE_LIST);
 			sm.addCharName(partner);
 			player.sendPacket(sm);
 			return;
@@ -186,13 +186,13 @@ public final class TradeRequest extends L2GameClientPacket
 		
 		if (player.calculateDistance(partner, true, false) > 150)
 		{
-			player.sendPacket(SystemMessageId.TARGET_TOO_FAR);
+			player.sendPacket(SystemMessageId.YOUR_TARGET_IS_OUT_OF_RANGE);
 			return;
 		}
 		
 		player.onTransactionRequest(partner);
 		partner.sendPacket(new SendTradeRequest(player.getObjectId()));
-		sm = SystemMessage.getSystemMessage(SystemMessageId.REQUEST_C1_FOR_TRADE);
+		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_REQUESTED_A_TRADE_WITH_C1);
 		sm.addString(partner.getName());
 		player.sendPacket(sm);
 	}

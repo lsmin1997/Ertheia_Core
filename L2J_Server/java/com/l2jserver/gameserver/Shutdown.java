@@ -77,7 +77,7 @@ public class Shutdown extends Thread
 	 */
 	private void SendServerQuit(int seconds)
 	{
-		SystemMessage sysm = SystemMessage.getSystemMessage(SystemMessageId.THE_SERVER_WILL_BE_COMING_DOWN_IN_S1_SECONDS);
+		SystemMessage sysm = SystemMessage.getSystemMessage(SystemMessageId.THE_SERVER_WILL_BE_COMING_DOWN_IN_S1_SECOND_S_PLEASE_FIND_A_SAFE_PLACE_TO_LOG_OUT);
 		sysm.addInt(seconds);
 		Broadcast.toAllOnlinePlayers(sysm);
 	}

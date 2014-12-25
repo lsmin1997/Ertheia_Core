@@ -476,7 +476,7 @@ public final class L2CubicInstance implements IIdentifiable
 				boolean acted = Formulas.calcCubicSkillSuccess(this, target, skill, shld);
 				if (!acted)
 				{
-					getOwner().sendPacket(SystemMessageId.ATTACK_FAILED);
+					getOwner().sendPacket(SystemMessageId.YOUR_ATTACK_HAS_FAILED);
 					continue;
 				}
 				

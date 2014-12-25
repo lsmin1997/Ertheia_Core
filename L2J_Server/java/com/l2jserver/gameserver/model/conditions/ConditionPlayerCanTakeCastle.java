@@ -60,19 +60,19 @@ public class ConditionPlayerCanTakeCastle extends Condition
 		SystemMessage sm;
 		if ((castle == null) || (castle.getResidenceId() <= 0) || !castle.getSiege().isInProgress() || (castle.getSiege().getAttackerClan(player.getClan()) == null))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS);
 			sm.addSkillName(skill);
 			player.sendPacket(sm);
 			canTakeCastle = false;
 		}
 		else if (!castle.getArtefacts().contains(effected))
 		{
-			player.sendPacket(SystemMessageId.INCORRECT_TARGET);
+			player.sendPacket(SystemMessageId.INVALID_TARGET);
 			canTakeCastle = false;
 		}
 		else if (!Util.checkIfInRange(skill.getCastRange(), player, effected, true))
 		{
-			player.sendPacket(SystemMessageId.DIST_TOO_FAR_CASTING_STOPPED);
+			player.sendPacket(SystemMessageId.THE_DISTANCE_IS_TOO_FAR_AND_SO_THE_CASTING_HAS_BEEN_STOPPED);
 			canTakeCastle = false;
 		}
 		return (_val == canTakeCastle);

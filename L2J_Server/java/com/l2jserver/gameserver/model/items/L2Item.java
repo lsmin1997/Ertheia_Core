@@ -782,11 +782,11 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 		{
 			if (isEquipable())
 			{
-				activeChar.sendPacket(SystemMessageId.THIS_ITEM_CANT_BE_EQUIPPED_FOR_THE_OLYMPIAD_EVENT);
+				activeChar.sendPacket(SystemMessageId.YOU_CANNOT_EQUIP_THAT_ITEM_IN_A_OLYMPIAD_MATCH);
 			}
 			else
 			{
-				activeChar.sendPacket(SystemMessageId.THIS_ITEM_IS_NOT_AVAILABLE_FOR_THE_OLYMPIAD_EVENT);
+				activeChar.sendPacket(SystemMessageId.YOU_CANNOT_USE_THAT_ITEM_IN_A_OLYMPIAD_MATCH);
 			}
 			return false;
 		}
@@ -808,7 +808,7 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 			{
 				if (activeChar instanceof L2Summon)
 				{
-					activeChar.sendPacket(SystemMessageId.PET_CANNOT_USE_ITEM);
+					activeChar.sendPacket(SystemMessageId.THIS_PET_CANNOT_USE_THIS_ITEM);
 					return false;
 				}
 				

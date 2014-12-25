@@ -154,17 +154,17 @@ public class RequestBuySeed extends L2GameClientPacket
 		
 		if (!player.getInventory().validateWeight(totalWeight))
 		{
-			player.sendPacket(SystemMessageId.WEIGHT_LIMIT_EXCEEDED);
+			player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_WEIGHT_LIMIT);
 			return;
 		}
 		else if (!player.getInventory().validateCapacity(slots))
 		{
-			player.sendPacket(SystemMessageId.SLOTS_FULL);
+			player.sendPacket(SystemMessageId.YOUR_INVENTORY_IS_FULL);
 			return;
 		}
 		else if ((totalPrice < 0) || (player.getAdena() < totalPrice))
 		{
-			player.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+			player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 			return;
 		}
 		
@@ -191,7 +191,7 @@ public class RequestBuySeed extends L2GameClientPacket
 		{
 			castle.addToTreasuryNoTax(totalPrice);
 			
-			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED_ADENA);
+			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ADENA_DISAPPEARED);
 			sm.addLong(totalPrice);
 			player.sendPacket(sm);
 			

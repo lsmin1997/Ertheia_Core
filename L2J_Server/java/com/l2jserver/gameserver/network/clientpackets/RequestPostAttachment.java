@@ -81,25 +81,25 @@ public final class RequestPostAttachment extends L2GameClientPacket
 		
 		if (!activeChar.isInsideZone(ZoneId.PEACE))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_NOT_IN_PEACE_ZONE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_RECEIVE_IN_A_NON_PEACE_ZONE_LOCATION);
 			return;
 		}
 		
 		if (activeChar.getActiveTradeList() != null)
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_DURING_EXCHANGE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_RECEIVE_DURING_AN_EXCHANGE);
 			return;
 		}
 		
 		if (activeChar.isEnchanting())
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_DURING_ENCHANT);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_RECEIVE_MAIL_WHILE_ENCHANTING_AN_ITEM_BESTOWING_AN_ATTRIBUTE_OR_COMBINING_JEWELS);
 			return;
 		}
 		
 		if (activeChar.getPrivateStoreType() != PrivateStoreType.NONE)
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_PRIVATE_STORE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_RECEIVE_BECAUSE_THE_PRIVATE_STORE_OR_WORKSHOP_IS_IN_PROGRESS);
 			return;
 		}
 		
@@ -169,21 +169,21 @@ public final class RequestPostAttachment extends L2GameClientPacket
 		// Item Max Limit Check
 		if (!activeChar.getInventory().validateCapacity(slots))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_INVENTORY_FULL);
+			activeChar.sendPacket(SystemMessageId.YOU_COULD_NOT_RECEIVE_BECAUSE_YOUR_INVENTORY_IS_FULL);
 			return;
 		}
 		
 		// Weight limit Check
 		if (!activeChar.getInventory().validateWeight(weight))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_INVENTORY_FULL);
+			activeChar.sendPacket(SystemMessageId.YOU_COULD_NOT_RECEIVE_BECAUSE_YOUR_INVENTORY_IS_FULL);
 			return;
 		}
 		
 		long adena = msg.getReqAdena();
 		if ((adena > 0) && !activeChar.reduceAdena("PayMail", adena, null, true))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_RECEIVE_NO_ADENA);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_RECEIVE_BECAUSE_YOU_DON_T_HAVE_ENOUGH_ADENA);
 			return;
 		}
 		
@@ -220,7 +220,7 @@ public final class RequestPostAttachment extends L2GameClientPacket
 					playerIU.addNewItem(newItem);
 				}
 			}
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_ACQUIRED_S2_S1);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_ACQUIRED_S2_S1);
 			sm.addItemName(item.getId());
 			sm.addLong(count);
 			activeChar.sendPacket(sm);
@@ -248,7 +248,7 @@ public final class RequestPostAttachment extends L2GameClientPacket
 			if (sender != null)
 			{
 				sender.addAdena("PayMail", adena, activeChar, false);
-				sm = SystemMessage.getSystemMessage(SystemMessageId.PAYMENT_OF_S1_ADENA_COMPLETED_BY_S2);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.S2_HAS_MADE_A_PAYMENT_OF_S1_ADENA_PER_YOUR_PAYMENT_REQUEST_MAIL);
 				sm.addLong(adena);
 				sm.addCharName(activeChar);
 				sender.sendPacket(sm);
@@ -264,7 +264,7 @@ public final class RequestPostAttachment extends L2GameClientPacket
 		}
 		else if (sender != null)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ACQUIRED_ATTACHED_ITEM);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ACQUIRED_THE_ATTACHED_ITEM_TO_YOUR_MAIL);
 			sm.addCharName(activeChar);
 			sender.sendPacket(sm);
 		}

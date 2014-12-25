@@ -77,7 +77,7 @@ public final class RequestDuelStart extends L2GameClientPacket
 		// Players may not be too far apart
 		else if (!activeChar.isInsideRadius(targetChar, 250, false, false))
 		{
-			SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_CANNOT_RECEIVE_A_DUEL_CHALLENGE_BECAUSE_C1_IS_TOO_FAR_AWAY);
+			SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_TOO_FAR_AWAY_TO_RECEIVE_A_DUEL_CHALLENGE);
 			msg.addString(targetChar.getName());
 			activeChar.sendPacket(msg);
 			return;
@@ -141,17 +141,17 @@ public final class RequestDuelStart extends L2GameClientPacket
 						_log.fine(activeChar.getName() + " requested a duel with " + partyLeader.getName());
 					}
 					
-					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_PARTY_HAS_BEEN_CHALLENGED_TO_A_DUEL);
+					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_S_PARTY_HAS_BEEN_CHALLENGED_TO_A_DUEL);
 					msg.addString(partyLeader.getName());
 					activeChar.sendPacket(msg);
 					
-					msg = SystemMessage.getSystemMessage(SystemMessageId.C1_PARTY_HAS_CHALLENGED_YOUR_PARTY_TO_A_DUEL);
+					msg = SystemMessage.getSystemMessage(SystemMessageId.C1_S_PARTY_HAS_CHALLENGED_YOUR_PARTY_TO_A_DUEL);
 					msg.addString(activeChar.getName());
 					targetChar.sendPacket(msg);
 				}
 				else
 				{
-					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER);
+					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_ON_ANOTHER_TASK_PLEASE_TRY_AGAIN_LATER);
 					msg.addString(partyLeader.getName());
 					activeChar.sendPacket(msg);
 				}
@@ -180,7 +180,7 @@ public final class RequestDuelStart extends L2GameClientPacket
 			}
 			else
 			{
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER);
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_ON_ANOTHER_TASK_PLEASE_TRY_AGAIN_LATER);
 				msg.addString(targetChar.getName());
 				activeChar.sendPacket(msg);
 			}

@@ -74,7 +74,7 @@ public class RecipeController
 			player.sendPacket(response);
 			return;
 		}
-		player.sendPacket(SystemMessageId.CANT_ALTER_RECIPEBOOK_WHILE_CRAFTING);
+		player.sendPacket(SystemMessageId.YOU_MAY_NOT_ALTER_YOUR_RECIPE_BOOK_WHILE_ENGAGED_IN_MANUFACTURING);
 	}
 	
 	public void requestMakeItemAbort(L2PcInstance player)
@@ -102,7 +102,7 @@ public class RecipeController
 		// Check if manufacturer is under manufacturing store or private store.
 		if (Config.ALT_GAME_CREATION && _activeMakers.containsKey(manufacturer.getObjectId()))
 		{
-			player.sendPacket(SystemMessageId.CLOSE_STORE_WINDOW_AND_TRY_AGAIN);
+			player.sendPacket(SystemMessageId.PLEASE_CLOSE_THE_SETUP_WINDOW_FOR_YOUR_PRIVATE_WORKSHOP_OR_PRIVATE_STORE_AND_TRY_AGAIN);
 			return;
 		}
 		
@@ -126,7 +126,7 @@ public class RecipeController
 		// Check if player is trying to operate a private store or private workshop while engaged in combat.
 		if (player.isInCombat() || player.isInDuel())
 		{
-			player.sendPacket(SystemMessageId.CANT_OPERATE_PRIVATE_STORE_DURING_COMBAT);
+			player.sendPacket(SystemMessageId.WHILE_YOU_ARE_ENGAGED_IN_COMBAT_YOU_CANNOT_OPERATE_A_PRIVATE_STORE_OR_PRIVATE_WORKSHOP);
 			return;
 		}
 		
@@ -255,7 +255,7 @@ public class RecipeController
 					_price = item.getCost();
 					if (_target.getAdena() < _price) // check price
 					{
-						_target.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+						_target.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 						abort();
 						return;
 					}
@@ -398,7 +398,7 @@ public class RecipeController
 				
 				if (adenatransfer == null)
 				{
-					_target.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+					_target.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 					abort();
 					return;
 				}
@@ -419,13 +419,13 @@ public class RecipeController
 			{
 				if (_target != _player)
 				{
-					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.CREATION_OF_S2_FOR_C1_AT_S3_ADENA_FAILED);
+					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_FAILED_TO_CREATE_S2_FOR_C1_AT_THE_PRICE_OF_S3_ADENA);
 					msg.addString(_target.getName());
 					msg.addItemName(_recipeList.getItemId());
 					msg.addLong(_price);
 					_player.sendPacket(msg);
 					
-					msg = SystemMessage.getSystemMessage(SystemMessageId.C1_FAILED_TO_CREATE_S2_FOR_S3_ADENA);
+					msg = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_FAILED_TO_CREATE_S2_AT_THE_PRICE_OF_S3_ADENA);
 					msg.addString(_player.getName());
 					msg.addItemName(_recipeList.getItemId());
 					msg.addLong(_price);
@@ -433,7 +433,7 @@ public class RecipeController
 				}
 				else
 				{
-					_target.sendPacket(SystemMessageId.ITEM_MIXING_FAILED);
+					_target.sendPacket(SystemMessageId.YOU_FAILED_AT_MIXING_THE_ITEM);
 				}
 				updateMakeInfo(false);
 			}
@@ -496,7 +496,7 @@ public class RecipeController
 				
 				if (_target == _player)
 				{
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S2_EQUIPPED); // you equipped ...
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EQUIPPED_S1_S2); // you equipped ...
 					sm.addLong(count);
 					sm.addItemName(item.getItemId());
 					_player.sendPacket(sm);
@@ -616,7 +616,7 @@ public class RecipeController
 					// check materials
 					if (itemQuantityAmount < recipe.getQuantity())
 					{
-						sm = SystemMessage.getSystemMessage(SystemMessageId.MISSING_S2_S1_TO_CREATE);
+						sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_NEED_S2_MORE_S1_S);
 						sm.addItemName(recipe.getItemId());
 						sm.addLong(recipe.getQuantity() - itemQuantityAmount);
 						_target.sendPacket(sm);
@@ -638,7 +638,7 @@ public class RecipeController
 					
 					if (tmp.getQuantity() > 1)
 					{
-						sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
+						sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_S_DISAPPEARED);
 						sm.addItemName(tmp.getItemId());
 						sm.addLong(tmp.getQuantity());
 						_target.sendPacket(sm);
@@ -687,13 +687,13 @@ public class RecipeController
 				// inform manufacturer of earned profit
 				if (itemCount == 1)
 				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S2_CREATED_FOR_C1_FOR_S3_ADENA);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.S2_HAS_BEEN_CREATED_FOR_C1_AFTER_THE_PAYMENT_OF_S3_ADENA_WAS_RECEIVED);
 					sm.addString(_target.getName());
 					sm.addItemName(itemId);
 					sm.addLong(_price);
 					_player.sendPacket(sm);
 					
-					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_CREATED_S2_FOR_S3_ADENA);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_CREATED_S2_AFTER_RECEIVING_S3_ADENA);
 					sm.addString(_player.getName());
 					sm.addItemName(itemId);
 					sm.addLong(_price);
@@ -701,14 +701,14 @@ public class RecipeController
 				}
 				else
 				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S3_S_CREATED_FOR_C1_FOR_S4_ADENA);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.S3_S2_S_HAVE_BEEN_CREATED_FOR_C1_AT_THE_PRICE_OF_S4_ADENA);
 					sm.addString(_target.getName());
 					sm.addInt(itemCount);
 					sm.addItemName(itemId);
 					sm.addLong(_price);
 					_player.sendPacket(sm);
 					
-					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_CREATED_S2_S3_S_FOR_S4_ADENA);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_CREATED_S3_S2_S_AT_THE_PRICE_OF_S4_ADENA);
 					sm.addString(_player.getName());
 					sm.addInt(itemCount);
 					sm.addItemName(itemId);
@@ -719,14 +719,14 @@ public class RecipeController
 			
 			if (itemCount > 1)
 			{
-				sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S2_S1_S);
 				sm.addItemName(itemId);
 				sm.addLong(itemCount);
 				_target.sendPacket(sm);
 			}
 			else
 			{
-				sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_ITEM_S1);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S1);
 				sm.addItemName(itemId);
 				_target.sendPacket(sm);
 			}

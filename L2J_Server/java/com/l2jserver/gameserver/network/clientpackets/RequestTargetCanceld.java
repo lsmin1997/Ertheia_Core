@@ -49,7 +49,7 @@ public final class RequestTargetCanceld extends L2GameClientPacket
 		
 		if (activeChar.isLockedTarget())
 		{
-			activeChar.sendPacket(SystemMessageId.FAILED_DISABLE_TARGET);
+			activeChar.sendPacket(SystemMessageId.FAILED_TO_REMOVE_ENMITY);
 			return;
 		}
 		

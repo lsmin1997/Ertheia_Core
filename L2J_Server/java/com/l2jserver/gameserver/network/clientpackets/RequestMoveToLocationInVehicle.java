@@ -64,7 +64,7 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 		
 		if ((Config.PLAYER_MOVEMENT_BLOCK_TIME > 0) && !activeChar.isGM() && (activeChar.getNotMoveUntil() > System.currentTimeMillis()))
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_MOVE_WHILE_SPEAKING_TO_AN_NPC);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_MOVE_WHILE_SPEAKING_TO_AN_NPC_ONE_MOMENT_PLEASE);
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
@@ -89,14 +89,14 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 		
 		if (activeChar.hasSummon())
 		{
-			activeChar.sendPacket(SystemMessageId.RELEASE_PET_ON_BOAT);
+			activeChar.sendPacket(SystemMessageId.YOU_SHOULD_RELEASE_YOUR_PET_OR_SERVITOR_SO_THAT_IT_DOES_NOT_FALL_OFF_OF_THE_BOAT_AND_DROWN);
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
 		
 		if (activeChar.isTransformed())
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_POLYMORPH_ON_BOAT);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_POLYMORPH_WHILE_RIDING_A_BOAT);
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}

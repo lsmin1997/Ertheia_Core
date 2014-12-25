@@ -128,7 +128,7 @@ public final class RequestRefineCancel extends L2GameClientPacket
 		if (!activeChar.reduceAdena("RequestRefineCancel", price, null, true))
 		{
 			activeChar.sendPacket(new ExVariationCancelResult(0));
-			activeChar.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+			activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 			return;
 		}
 		

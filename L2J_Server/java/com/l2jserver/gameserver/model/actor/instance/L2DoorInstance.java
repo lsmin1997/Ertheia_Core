@@ -696,7 +696,7 @@ public class L2DoorInstance extends L2Character
 		
 		if (isFort || isCastle || isHall)
 		{
-			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.CASTLE_GATE_BROKEN_DOWN));
+			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.THE_CASTLE_GATE_HAS_BEEN_DESTROYED));
 		}
 		return true;
 	}

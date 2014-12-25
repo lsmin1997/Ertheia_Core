@@ -115,7 +115,7 @@ public final class RequestActionUse extends L2GameClientPacket
 			{
 				if (!effect.checkCondition(_actionId))
 				{
-					activeChar.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_SO_ACTIONS_NOT_ALLOWED);
+					activeChar.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_AS_AN_ILLEGAL_PROGRAM_USER_SO_YOUR_ACTIONS_HAVE_BEEN_RESTRICTED);
 					activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}
@@ -196,13 +196,13 @@ public final class RequestActionUse extends L2GameClientPacket
 				
 				if (summon.isDead())
 				{
-					sendPacket(SystemMessageId.DEAD_PET_CANNOT_BE_RETURNED);
+					sendPacket(SystemMessageId.DEAD_PETS_CANNOT_BE_RETURNED_TO_THEIR_SUMMONING_ITEM);
 					break;
 				}
 				
 				if (summon.isAttackingNow() || summon.isInCombat() || summon.isMovementDisabled())
 				{
-					sendPacket(SystemMessageId.PET_CANNOT_SENT_BACK_DURING_BATTLE);
+					sendPacket(SystemMessageId.A_PET_CANNOT_BE_UNSUMMONED_DURING_BATTLE);
 					break;
 				}
 				
@@ -210,11 +210,11 @@ public final class RequestActionUse extends L2GameClientPacket
 				{
 					if (summon.isPet() && !((L2PetInstance) summon).getPetData().getFood().isEmpty())
 					{
-						sendPacket(SystemMessageId.YOU_CANNOT_RESTORE_HUNGRY_PETS);
+						sendPacket(SystemMessageId.YOU_MAY_NOT_RESTORE_A_HUNGRY_PET);
 					}
 					else
 					{
-						sendPacket(SystemMessageId.THE_HELPER_PET_CANNOT_BE_RETURNED);
+						sendPacket(SystemMessageId.THE_MINION_PET_CANNOT_BE_RETURNED_BECAUSE_THERE_IS_NOT_MUCH_TIME_REMAINING_UNTIL_IT_LEAVES);
 					}
 					break;
 				}
@@ -284,7 +284,7 @@ public final class RequestActionUse extends L2GameClientPacket
 					}
 					else
 					{
-						sendPacket(SystemMessageId.INCORRECT_TARGET);
+						sendPacket(SystemMessageId.INVALID_TARGET);
 					}
 				}
 				break;
@@ -333,7 +333,7 @@ public final class RequestActionUse extends L2GameClientPacket
 				{
 					if (summon.isAttackingNow() || summon.isInCombat())
 					{
-						sendPacket(SystemMessageId.SERVITOR_NOT_RETURN_IN_BATTLE);
+						sendPacket(SystemMessageId.A_SERVITOR_WHOM_IS_ENGAGED_IN_BATTLE_CANNOT_BE_DE_ACTIVATED);
 						break;
 					}
 					summon.unSummon(activeChar);
@@ -866,7 +866,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		{
 			if (!((L2BabyPetInstance) summon).isInSupportMode())
 			{
-				sendPacket(SystemMessageId.PET_AUXILIARY_MODE_CANNOT_USE_SKILLS);
+				sendPacket(SystemMessageId.A_PET_ON_AUXILIARY_MODE_CANNOT_USE_SKILLS);
 				return;
 			}
 		}
@@ -876,7 +876,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		{
 			if ((summon.getLevel() - activeChar.getLevel()) > 20)
 			{
-				sendPacket(SystemMessageId.PET_TOO_HIGH_TO_CONTROL);
+				sendPacket(SystemMessageId.YOUR_PET_IS_TOO_HIGH_LEVEL_TO_CONTROL);
 				return;
 			}
 			lvl = PetDataTable.getInstance().getPetData(summon.getId()).getAvailableLevel(skillId, summon.getLevel());
@@ -927,12 +927,12 @@ public final class RequestActionUse extends L2GameClientPacket
 		{
 			if (summon.isPet() && ((L2PetInstance) summon).isUncontrollable())
 			{
-				sendPacket(SystemMessageId.WHEN_YOUR_PETS_HUNGER_GAUGE_IS_AT_0_YOU_CANNOT_USE_YOUR_PET);
+				sendPacket(SystemMessageId.WHEN_YOUR_PET_S_HUNGER_GAUGE_IS_AT_0_YOU_CANNOT_USE_YOUR_PET);
 				return false;
 			}
 			if (summon.isBetrayed())
 			{
-				sendPacket(SystemMessageId.PET_REFUSING_ORDER);
+				sendPacket(SystemMessageId.YOUR_PET_SERVITOR_IS_UNRESPONSIVE_AND_WILL_NOT_OBEY_ANY_ORDERS);
 				return false;
 			}
 			return true;
@@ -940,11 +940,11 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		if (checkPet)
 		{
-			sendPacket(SystemMessageId.DONT_HAVE_PET);
+			sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_A_PET);
 		}
 		else
 		{
-			sendPacket(SystemMessageId.DONT_HAVE_SERVITOR);
+			sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_A_SERVITOR);
 		}
 		return false;
 	}
@@ -962,7 +962,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		}
 		if (activeChar.isFishing())
 		{
-			sendPacket(SystemMessageId.CANNOT_DO_WHILE_FISHING_3);
+			sendPacket(SystemMessageId.YOU_CANNOT_DO_THAT_WHILE_FISHING3);
 			return;
 		}
 		
@@ -987,21 +987,21 @@ public final class RequestActionUse extends L2GameClientPacket
 		final L2Object target = requester.getTarget();
 		if ((target == null) || !target.isPlayer())
 		{
-			sendPacket(SystemMessageId.INCORRECT_TARGET);
+			sendPacket(SystemMessageId.INVALID_TARGET);
 			return;
 		}
 		
 		final int distance = (int) requester.calculateDistance(target, false, false);
 		if ((distance > 125) || (distance < 15) || (requester.getObjectId() == target.getObjectId()))
 		{
-			sendPacket(SystemMessageId.TARGET_DO_NOT_MEET_LOC_REQUIREMENTS);
+			sendPacket(SystemMessageId.THE_REQUEST_CANNOT_BE_COMPLETED_BECAUSE_THE_TARGET_DOES_NOT_MEET_LOCATION_REQUIREMENTS);
 			return;
 		}
 		
 		SystemMessage sm;
 		if (requester.isInStoreMode() || requester.isInCraftMode())
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_IN_PRIVATE_SHOP_MODE_OR_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_IN_PRIVATE_STORE_MODE_OR_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
 			sm.addPcName(requester);
 			sendPacket(sm);
 			return;
@@ -1017,7 +1017,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		if (requester.isFishing())
 		{
-			sendPacket(SystemMessageId.CANNOT_DO_WHILE_FISHING_3);
+			sendPacket(SystemMessageId.YOU_CANNOT_DO_THAT_WHILE_FISHING3);
 			return;
 		}
 		
@@ -1047,7 +1047,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		if (requester.isInHideoutSiege())
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_PARTICIPATING_IN_A_HIDEOUT_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_PARTICIPATING_IN_A_CLAN_HALL_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
 			sm.addPcName(requester);
 			sendPacket(sm);
 		}
@@ -1080,7 +1080,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		final L2PcInstance partner = target.getActingPlayer();
 		if (partner.isInStoreMode() || partner.isInCraftMode())
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_IN_PRIVATE_SHOP_MODE_OR_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_IN_PRIVATE_STORE_MODE_OR_IN_A_BATTLE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
 			sm.addPcName(partner);
 			sendPacket(sm);
 			return;
@@ -1128,7 +1128,7 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		if (partner.isInHideoutSiege())
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_PARTICIPATING_IN_A_HIDEOUT_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_PARTICIPATING_IN_A_CLAN_HALL_SIEGE_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
 			sm.addPcName(partner);
 			sendPacket(sm);
 			return;
@@ -1176,12 +1176,12 @@ public final class RequestActionUse extends L2GameClientPacket
 		
 		if (requester.isAllSkillsDisabled() || partner.isAllSkillsDisabled())
 		{
-			sendPacket(SystemMessageId.COUPLE_ACTION_CANCELED);
+			sendPacket(SystemMessageId.THE_COUPLE_ACTION_WAS_CANCELLED);
 			return;
 		}
 		
 		requester.setMultiSocialAction(id, partner.getObjectId());
-		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_REQUESTED_COUPLE_ACTION_C1);
+		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_REQUESTED_A_COUPLE_ACTION_WITH_C1);
 		sm.addPcName(partner);
 		sendPacket(sm);
 		

@@ -81,7 +81,7 @@ public class RequestPartyMatchList extends L2GameClientPacket
 					}
 					
 					_member.sendPacket(new PartyMatchDetail(_activeChar, _room));
-					_member.sendPacket(SystemMessageId.PARTY_ROOM_REVISED);
+					_member.sendPacket(SystemMessageId.THE_PARTY_ROOM_S_INFORMATION_HAS_BEEN_REVISED);
 				}
 			}
 		}
@@ -119,7 +119,7 @@ public class RequestPartyMatchList extends L2GameClientPacket
 			_activeChar.sendPacket(new PartyMatchDetail(_activeChar, _room));
 			_activeChar.sendPacket(new ExPartyRoomMember(_activeChar, _room, 1));
 			
-			_activeChar.sendPacket(SystemMessageId.PARTY_ROOM_CREATED);
+			_activeChar.sendPacket(SystemMessageId.YOU_HAVE_CREATED_A_PARTY_ROOM);
 			
 			_activeChar.setPartyRoom(_maxid);
 			// _activeChar.setPartyMatching(1);

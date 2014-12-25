@@ -65,7 +65,7 @@ public final class DlgAnswer extends L2GameClientPacket
 			return;
 		}
 		
-		if (_messageId == SystemMessageId.S1.getId())
+		if (_messageId == SystemMessageId.S13.getId())
 		{
 			if (activeChar.removeAction(PlayerAction.USER_ENGAGE))
 			{
@@ -94,7 +94,7 @@ public final class DlgAnswer extends L2GameClientPacket
 				}
 			}
 		}
-		else if ((_messageId == SystemMessageId.RESURRECTION_REQUEST_BY_C1_FOR_S2_XP.getId()) || (_messageId == SystemMessageId.RESURRECT_USING_CHARM_OF_COURAGE.getId()))
+		else if ((_messageId == SystemMessageId.C1_IS_ATTEMPTING_TO_DO_A_RESURRECTION_THAT_RESTORES_S2_S3_XP_ACCEPT.getId()) || (_messageId == SystemMessageId.YOUR_CHARM_OF_COURAGE_IS_TRYING_TO_RESURRECT_YOU_WOULD_YOU_LIKE_TO_RESURRECT_NOW.getId()))
 		{
 			activeChar.reviveAnswer(_answer);
 		}

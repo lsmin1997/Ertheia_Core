@@ -327,7 +327,7 @@ public abstract class L2Vehicle extends L2Character
 						ticket = player.getInventory().getItemByItemId(itemId);
 						if ((ticket == null) || (player.getInventory().destroyItem("Boat", ticket, count, player, this) == null))
 						{
-							player.sendPacket(SystemMessageId.NOT_CORRECT_BOAT_TICKET);
+							player.sendPacket(SystemMessageId.YOU_DO_NOT_POSSESS_THE_CORRECT_TICKET_TO_BOARD_THE_BOAT);
 							player.teleToLocation(new Location(oustX, oustY, oustZ), true);
 							continue;
 						}

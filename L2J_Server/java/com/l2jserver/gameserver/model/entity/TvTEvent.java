@@ -392,13 +392,13 @@ public class TvTEvent
 					
 					if (reward[1] > 1)
 					{
-						systemMessage = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
+						systemMessage = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S2_S1_S);
 						systemMessage.addItemName(reward[0]);
 						systemMessage.addLong(reward[1]);
 					}
 					else
 					{
-						systemMessage = SystemMessage.getSystemMessage(SystemMessageId.EARNED_ITEM_S1);
+						systemMessage = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S1);
 						systemMessage.addItemName(reward[0]);
 					}
 					
@@ -409,7 +409,7 @@ public class TvTEvent
 					for (int i = 0; i < reward[1]; ++i)
 					{
 						inv.addItem("TvT Event", reward[0], 1, playerInstance, playerInstance);
-						systemMessage = SystemMessage.getSystemMessage(SystemMessageId.EARNED_ITEM_S1);
+						systemMessage = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S1);
 						systemMessage.addItemName(reward[0]);
 						playerInstance.sendPacket(systemMessage);
 					}

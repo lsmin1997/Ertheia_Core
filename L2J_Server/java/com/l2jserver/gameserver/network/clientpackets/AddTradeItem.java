@@ -70,14 +70,14 @@ public final class AddTradeItem extends L2GameClientPacket
 			{
 				_log.warning("Character:" + player.getName() + " requested invalid trade object: " + _objectId);
 			}
-			player.sendPacket(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME);
+			player.sendPacket(SystemMessageId.THAT_PLAYER_IS_NOT_ONLINE);
 			player.cancelActiveTrade();
 			return;
 		}
 		
 		if (trade.isConfirmed() || partner.getActiveTradeList().isConfirmed())
 		{
-			player.sendPacket(SystemMessageId.CANNOT_ADJUST_ITEMS_AFTER_TRADE_CONFIRMED);
+			player.sendPacket(SystemMessageId.YOU_MAY_NO_LONGER_ADJUST_ITEMS_IN_THE_TRADE_BECAUSE_THE_TRADE_HAS_BEEN_CONFIRMED);
 			return;
 		}
 		

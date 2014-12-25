@@ -135,33 +135,33 @@ public final class CHSiegeManager
 		}
 		else if (hall.isWaitingBattle())
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.DEADLINE_FOR_SIEGE_S1_PASSED);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_DEADLINE_TO_REGISTER_FOR_THE_SIEGE_OF_S1_HAS_PASSED);
 			sm.addString(hall.getName());
 			player.sendPacket(sm);
 		}
 		else if (hall.isInSiege())
 		{
-			player.sendPacket(SystemMessageId.NOT_SIEGE_REGISTRATION_TIME2);
+			player.sendPacket(SystemMessageId.THIS_IS_NOT_THE_TIME_FOR_SIEGE_REGISTRATION_AND_SO_REGISTRATION_AND_CANCELLATION_CANNOT_BE_DONE);
 		}
 		else if (hall.getOwnerId() == clan.getId())
 		{
-			player.sendPacket(SystemMessageId.CLAN_THAT_OWNS_CASTLE_IS_AUTOMATICALLY_REGISTERED_DEFENDING);
+			player.sendPacket(SystemMessageId.CASTLE_OWNING_CLANS_ARE_AUTOMATICALLY_REGISTERED_ON_THE_DEFENDING_SIDE);
 		}
 		else if ((clan.getCastleId() != 0) || (clan.getHideoutId() != 0))
 		{
-			player.sendPacket(SystemMessageId.CLAN_THAT_OWNS_CASTLE_CANNOT_PARTICIPATE_OTHER_SIEGE);
+			player.sendPacket(SystemMessageId.A_CLAN_THAT_OWNS_A_CASTLE_CANNOT_PARTICIPATE_IN_ANOTHER_SIEGE);
 		}
 		else if (hall.getSiege().checkIsAttacker(clan))
 		{
-			player.sendPacket(SystemMessageId.ALREADY_REQUESTED_SIEGE_BATTLE);
+			player.sendPacket(SystemMessageId.YOU_HAVE_ALREADY_REQUESTED_A_CASTLE_SIEGE);
 		}
 		else if (isClanParticipating(clan))
 		{
-			player.sendPacket(SystemMessageId.APPLICATION_DENIED_BECAUSE_ALREADY_SUBMITTED_A_REQUEST_FOR_ANOTHER_SIEGE_BATTLE);
+			player.sendPacket(SystemMessageId.YOUR_APPLICATION_HAS_BEEN_DENIED_BECAUSE_YOU_HAVE_ALREADY_SUBMITTED_A_REQUEST_FOR_ANOTHER_CASTLE_SIEGE);
 		}
 		else if (hall.getSiege().getAttackers().size() >= Config.CHS_MAX_ATTACKERS)
 		{
-			player.sendPacket(SystemMessageId.ATTACKER_SIDE_FULL);
+			player.sendPacket(SystemMessageId.NO_MORE_REGISTRATIONS_MAY_BE_ACCEPTED_FOR_THE_ATTACKER_SIDE);
 		}
 		else
 		{

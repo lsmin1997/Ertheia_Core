@@ -284,7 +284,7 @@ public class Auction
 		}
 		if ((bid < getStartingBid()) || (bid <= getHighestBidderMaxBid()))
 		{
-			bidder.sendPacket(SystemMessageId.BID_PRICE_MUST_BE_HIGHER);
+			bidder.sendPacket(SystemMessageId.YOUR_BID_PRICE_MUST_BE_HIGHER_THAN_THE_MINIMUM_PRICE_CURRENTLY_BEING_BID);
 		}
 	}
 	
@@ -321,7 +321,7 @@ public class Auction
 			bidder.getClan().getWarehouse().destroyItemByItemId("Buy", ADENA_ID, quantity, bidder, bidder);
 			return true;
 		}
-		bidder.sendPacket(SystemMessageId.NOT_ENOUGH_ADENA_IN_CWH);
+		bidder.sendPacket(SystemMessageId.THERE_IS_NOT_ENOUGH_ADENA_IN_THE_CLAN_HALL_WAREHOUSE);
 		return false;
 	}
 	
@@ -378,7 +378,7 @@ public class Auction
 				_bidders.get(_highestBidderId).setBid(bid);
 				_bidders.get(_highestBidderId).setTimeBid(Calendar.getInstance().getTimeInMillis());
 			}
-			bidder.sendPacket(SystemMessageId.BID_IN_CLANHALL_AUCTION);
+			bidder.sendPacket(SystemMessageId.YOUR_BID_HAS_BEEN_SUCCESSFULLY_PLACED);
 		}
 		catch (Exception e)
 		{

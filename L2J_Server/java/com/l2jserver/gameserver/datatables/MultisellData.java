@@ -274,7 +274,7 @@ public class MultisellData extends DocumentParser
 			case CLAN_REPUTATION:
 				if (player.getClan() == null)
 				{
-					player.sendPacket(SystemMessageId.YOU_ARE_NOT_A_CLAN_MEMBER);
+					player.sendPacket(SystemMessageId.YOU_ARE_NOT_A_CLAN_MEMBER_AND_CANNOT_PERFORM_THIS_ACTION);
 					break;
 				}
 				if (!player.isClanLeader())
@@ -284,14 +284,14 @@ public class MultisellData extends DocumentParser
 				}
 				if (player.getClan().getReputationScore() < amount)
 				{
-					player.sendPacket(SystemMessageId.THE_CLAN_REPUTATION_SCORE_IS_TOO_LOW);
+					player.sendPacket(SystemMessageId.THE_CLAN_REPUTATION_IS_TOO_LOW);
 					break;
 				}
 				return true;
 			case FAME:
 				if (player.getFame() < amount)
 				{
-					player.sendPacket(SystemMessageId.NOT_ENOUGH_FAME_POINTS);
+					player.sendPacket(SystemMessageId.YOU_DON_T_HAVE_ENOUGH_FAME_TO_DO_THAT);
 					break;
 				}
 				return true;
@@ -305,7 +305,7 @@ public class MultisellData extends DocumentParser
 		{
 			case CLAN_REPUTATION:
 				player.getClan().takeReputationScore((int) amount, true);
-				SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.S1_DEDUCTED_FROM_CLAN_REP);
+				SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.S1_POINT_S_HAVE_BEEN_DEDUCTED_FROM_THE_CLAN_S_REPUTATION);
 				smsg.addLong(amount);
 				player.sendPacket(smsg);
 				return true;

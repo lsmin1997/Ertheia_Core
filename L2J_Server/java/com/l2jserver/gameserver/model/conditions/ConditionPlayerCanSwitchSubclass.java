@@ -54,12 +54,12 @@ public class ConditionPlayerCanSwitchSubclass extends Condition
 		}
 		else if (!player.isInventoryUnder90(true))
 		{
-			player.sendPacket(SystemMessageId.NOT_SUBCLASS_WHILE_INVENTORY_FULL);
+			player.sendPacket(SystemMessageId.A_SUBCLASS_CANNOT_BE_CREATED_OR_CHANGED_BECAUSE_YOU_HAVE_EXCEEDED_YOUR_INVENTORY_LIMIT);
 			canSwitchSub = false;
 		}
 		else if (player.getWeightPenalty() >= 2)
 		{
-			player.sendPacket(SystemMessageId.NOT_SUBCLASS_WHILE_OVERWEIGHT);
+			player.sendPacket(SystemMessageId.A_SUBCLASS_CANNOT_BE_CREATED_OR_CHANGED_WHILE_YOU_ARE_OVER_YOUR_WEIGHT_LIMIT);
 			canSwitchSub = false;
 		}
 		else if (player.isAllSkillsDisabled())
@@ -69,7 +69,7 @@ public class ConditionPlayerCanSwitchSubclass extends Condition
 		else if (player.isAffected(EffectFlag.MUTED))
 		{
 			canSwitchSub = false;
-			player.sendPacket(SystemMessageId.YOU_CANNOT_CHANGE_CLASS_BECAUSE_OF_IDENTITY_CRISIS);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_CHANGE_THE_CLASS_BECAUSE_OF_IDENTITY_CRISIS);
 		}
 		else if (AttackStanceTaskManager.getInstance().hasAttackStanceTask(player) || (player.getPvpFlag() > 0) || (player.getInstanceId() > 0) || player.isTransformed() || player.isMounted())
 		{

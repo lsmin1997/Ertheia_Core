@@ -54,7 +54,7 @@ public class L2CommandChannel extends AbstractPlayerGroup
 		_parties.add(party);
 		_channelLvl = party.getLevel();
 		party.setCommandChannel(this);
-		party.broadcastMessage(SystemMessageId.COMMAND_CHANNEL_FORMED);
+		party.broadcastMessage(SystemMessageId.THE_COMMAND_CHANNEL_HAS_BEEN_FORMED);
 		party.broadcastPacket(ExOpenMPCC.STATIC_PACKET);
 	}
 	
@@ -77,7 +77,7 @@ public class L2CommandChannel extends AbstractPlayerGroup
 			_channelLvl = party.getLevel();
 		}
 		party.setCommandChannel(this);
-		party.broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.JOINED_COMMAND_CHANNEL));
+		party.broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_JOINED_THE_COMMAND_CHANNEL));
 		party.broadcastPacket(ExOpenMPCC.STATIC_PACKET);
 	}
 	
@@ -105,7 +105,7 @@ public class L2CommandChannel extends AbstractPlayerGroup
 		party.broadcastPacket(new ExCloseMPCC());
 		if (_parties.size() < 2)
 		{
-			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.COMMAND_CHANNEL_DISBANDED));
+			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.THE_COMMAND_CHANNEL_HAS_BEEN_DISBANDED));
 			disbandChannel();
 		}
 		else

@@ -95,22 +95,22 @@ public class L2ContactList
 		int contactId = CharNameTable.getInstance().getIdByName(name);
 		if (_contacts.contains(name))
 		{
-			activeChar.sendPacket(SystemMessageId.NAME_ALREADY_EXIST_ON_CONTACT_LIST);
+			activeChar.sendPacket(SystemMessageId.THE_NAME_ALREADY_EXISTS_ON_THE_ADDED_LIST);
 			return false;
 		}
 		else if (activeChar.getName().equals(name))
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_ADD_YOUR_NAME_ON_CONTACT_LIST);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_ADD_YOUR_OWN_NAME);
 			return false;
 		}
 		else if (_contacts.size() >= 100)
 		{
-			activeChar.sendPacket(SystemMessageId.CONTACT_LIST_LIMIT_REACHED);
+			activeChar.sendPacket(SystemMessageId.THE_MAXIMUM_NUMBER_OF_NAMES_100_HAS_BEEN_REACHED_YOU_CANNOT_REGISTER_ANY_MORE);
 			return false;
 		}
 		else if (contactId < 1)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.NAME_S1_NOT_EXIST_TRY_ANOTHER_NAME);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.THE_NAME_S1_DOESN_T_EXIST_PLEASE_TRY_ANOTHER_NAME);
 			sm.addString(name);
 			activeChar.sendPacket(sm);
 			return false;
@@ -121,7 +121,7 @@ public class L2ContactList
 			{
 				if (contactName.equalsIgnoreCase(name))
 				{
-					activeChar.sendPacket(SystemMessageId.NAME_ALREADY_EXIST_ON_CONTACT_LIST);
+					activeChar.sendPacket(SystemMessageId.THE_NAME_ALREADY_EXISTS_ON_THE_ADDED_LIST);
 					return false;
 				}
 			}
@@ -136,7 +136,7 @@ public class L2ContactList
 			
 			_contacts.add(name);
 			
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_SUCCESSFULLY_ADDED_TO_CONTACT_LIST);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_WAS_SUCCESSFULLY_ADDED_TO_YOUR_CONTACT_LIST);
 			sm.addString(name);
 			activeChar.sendPacket(sm);
 		}
@@ -153,7 +153,7 @@ public class L2ContactList
 		
 		if (!_contacts.contains(name))
 		{
-			activeChar.sendPacket(SystemMessageId.NAME_NOT_REGISTERED_ON_CONTACT_LIST);
+			activeChar.sendPacket(SystemMessageId.THE_NAME_IS_NOT_CURRENTLY_REGISTERED);
 			return;
 		}
 		else if (contactId < 1)
@@ -171,7 +171,7 @@ public class L2ContactList
 			statement.setInt(2, contactId);
 			statement.execute();
 			
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_SUCCESFULLY_DELETED_FROM_CONTACT_LIST);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_WAS_SUCCESSFULLY_DELETED_FROM_YOUR_CONTACT_LIST);
 			sm.addString(name);
 			activeChar.sendPacket(sm);
 		}

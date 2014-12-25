@@ -60,13 +60,13 @@ public final class RequestSetPledgeCrest extends L2GameClientPacket
 		
 		if ((_length < 0))
 		{
-			activeChar.sendPacket(SystemMessageId.WRONG_SIZE_UPLOADED_CREST);
+			activeChar.sendPacket(SystemMessageId.THE_SIZE_OF_THE_UPLOADED_SYMBOL_DOES_NOT_MEET_THE_STANDARD_REQUIREMENTS);
 			return;
 		}
 		
 		if (_length > 256)
 		{
-			activeChar.sendPacket(SystemMessageId.THE_SIZE_OF_THE_IMAGE_FILE_IS_INAPPROPRIATE);
+			activeChar.sendPacket(SystemMessageId.THE_SIZE_OF_THE_IMAGE_FILE_IS_INAPPROPRIATE_PLEASE_ADJUST_TO_16X12_PIXELS);
 			return;
 		}
 		
@@ -78,7 +78,7 @@ public final class RequestSetPledgeCrest extends L2GameClientPacket
 		
 		if (clan.getDissolvingExpiryTime() > System.currentTimeMillis())
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_SET_CREST_WHILE_DISSOLUTION_IN_PROGRESS);
+			activeChar.sendPacket(SystemMessageId.AS_YOU_ARE_CURRENTLY_SCHEDULE_FOR_CLAN_DISSOLUTION_YOU_CANNOT_REGISTER_OR_DELETE_A_CLAN_CREST);
 			return;
 		}
 		
@@ -93,14 +93,14 @@ public final class RequestSetPledgeCrest extends L2GameClientPacket
 			if (clan.getCrestId() != 0)
 			{
 				clan.changeClanCrest(0);
-				activeChar.sendPacket(SystemMessageId.CLAN_CREST_HAS_BEEN_DELETED);
+				activeChar.sendPacket(SystemMessageId.THE_CLAN_MARK_HAS_BEEN_DELETED);
 			}
 		}
 		else
 		{
 			if (clan.getLevel() < 3)
 			{
-				activeChar.sendPacket(SystemMessageId.CLAN_LVL_3_NEEDED_TO_SET_CREST);
+				activeChar.sendPacket(SystemMessageId.A_CLAN_CREST_CAN_ONLY_BE_REGISTERED_WHEN_THE_CLAN_S_SKILL_LEVEL_IS_3_OR_ABOVE);
 				return;
 			}
 			
@@ -108,7 +108,7 @@ public final class RequestSetPledgeCrest extends L2GameClientPacket
 			if (crest != null)
 			{
 				clan.changeClanCrest(crest.getId());
-				activeChar.sendPacket(SystemMessageId.CLAN_CREST_WAS_SUCCESSFULLY_REGISTRED);
+				activeChar.sendPacket(SystemMessageId.THE_CREST_WAS_SUCCESSFULLY_REGISTERED);
 			}
 		}
 	}

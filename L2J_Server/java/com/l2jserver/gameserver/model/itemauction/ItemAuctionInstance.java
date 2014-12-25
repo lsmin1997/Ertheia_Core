@@ -488,7 +488,7 @@ public final class ItemAuctionInstance
 	
 	final void onAuctionFinished(final ItemAuction auction)
 	{
-		auction.broadcastToAllBiddersInternal(SystemMessage.getSystemMessage(SystemMessageId.S1_AUCTION_ENDED).addInt(auction.getAuctionId()));
+		auction.broadcastToAllBiddersInternal(SystemMessage.getSystemMessage(SystemMessageId.S1_S_AUCTION_HAS_ENDED).addInt(auction.getAuctionId()));
 		
 		final ItemAuctionBid bid = auction.getHighestBid();
 		if (bid != null)
@@ -498,7 +498,7 @@ public final class ItemAuctionInstance
 			if (player != null)
 			{
 				player.getWarehouse().addItem("ItemAuction", item, null, null);
-				player.sendPacket(SystemMessageId.WON_BID_ITEM_CAN_BE_FOUND_IN_WAREHOUSE);
+				player.sendPacket(SystemMessageId.YOU_HAVE_BID_THE_HIGHEST_PRICE_AND_HAVE_WON_THE_ITEM_THE_ITEM_CAN_BE_FOUND_IN_YOUR_PERSONAL_WAREHOUSE);
 				
 				_log.log(Level.INFO, getClass().getSimpleName() + ": Auction " + auction.getAuctionId() + " has finished. Highest bid by " + player.getName() + " for instance " + _instanceId);
 			}

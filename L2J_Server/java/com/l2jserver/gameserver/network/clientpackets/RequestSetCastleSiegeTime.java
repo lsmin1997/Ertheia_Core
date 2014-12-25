@@ -74,7 +74,7 @@ public class RequestSetCastleSiegeTime extends L2GameClientPacket
 				castle.getSiegeDate().setTimeInMillis(_time);
 				castle.setIsTimeRegistrationOver(true);
 				castle.getSiege().saveSiegeDate();
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S1_ANNOUNCED_SIEGE_TIME);
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_ANNOUNCED_THE_NEXT_CASTLE_SIEGE_TIME);
 				msg.addCastleId(_castleId);
 				Broadcast.toAllOnlinePlayers(msg);
 				activeChar.sendPacket(new SiegeInfo(castle));

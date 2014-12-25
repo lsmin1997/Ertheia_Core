@@ -61,7 +61,7 @@ public class RequestExTryToPutEnchantSupportItem extends L2GameClientPacket
 			if ((item == null) || (scroll == null) || (support == null))
 			{
 				// message may be custom
-				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITIONS);
 				activeChar.setActiveEnchantSupportItemId(L2PcInstance.ID_NONE);
 				return;
 			}
@@ -72,7 +72,7 @@ public class RequestExTryToPutEnchantSupportItem extends L2GameClientPacket
 			if ((scrollTemplate == null) || (supportTemplate == null) || !scrollTemplate.isValid(item, supportTemplate))
 			{
 				// message may be custom
-				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITIONS);
 				activeChar.setActiveEnchantSupportItemId(L2PcInstance.ID_NONE);
 				activeChar.sendPacket(new ExPutEnchantSupportItemResult(0));
 				return;

@@ -64,7 +64,7 @@ public final class RequestHennaRemove extends L2GameClientPacket
 				}
 				else
 				{
-					activeChar.sendPacket(SystemMessageId.YOU_NOT_ENOUGH_ADENA);
+					activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA);
 					sendActionFailed();
 				}
 				found = true;

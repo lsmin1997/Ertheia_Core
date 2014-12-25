@@ -174,7 +174,7 @@ public class L2OlympiadStadiumZone extends L2ZoneRespawn
 				character.setInsideZone(ZoneId.PVP, true);
 				if (character.isPlayer())
 				{
-					character.sendPacket(SystemMessageId.ENTERED_COMBAT_ZONE);
+					character.sendPacket(SystemMessageId.YOU_HAVE_ENTERED_A_COMBAT_ZONE);
 					getSettings().getOlympiadTask().getGame().sendOlympiadInfo(character);
 				}
 			}
@@ -212,7 +212,7 @@ public class L2OlympiadStadiumZone extends L2ZoneRespawn
 				character.setInsideZone(ZoneId.PVP, false);
 				if (character.isPlayer())
 				{
-					character.sendPacket(SystemMessageId.LEFT_COMBAT_ZONE);
+					character.sendPacket(SystemMessageId.YOU_HAVE_LEFT_A_COMBAT_ZONE);
 					character.sendPacket(ExOlympiadMatchEnd.STATIC_PACKET);
 				}
 			}
@@ -230,11 +230,11 @@ public class L2OlympiadStadiumZone extends L2ZoneRespawn
 		final SystemMessage sm;
 		if (battleStarted)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.ENTERED_COMBAT_ZONE);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_ENTERED_A_COMBAT_ZONE);
 		}
 		else
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.LEFT_COMBAT_ZONE);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_LEFT_A_COMBAT_ZONE);
 		}
 		
 		for (L2Character character : getCharactersInside())

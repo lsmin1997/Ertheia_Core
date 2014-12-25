@@ -358,7 +358,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		// Weight/Inventory check
 		if (!Config.CLASS_MASTER_SETTINGS.getRewardItems(newJobLevel).isEmpty() && !player.isInventoryUnder90(false))
 		{
-			player.sendPacket(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT);
+			player.sendPacket(SystemMessageId.UNABLE_TO_PROCESS_THIS_REQUEST_UNTIL_YOUR_INVENTORY_S_WEIGHT_AND_SLOT_COUNT_ARE_LESS_THAN_80_PERCENT_OF_CAPACITY);
 			return false;
 		}
 		
@@ -367,7 +367,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		{
 			if (player.getInventory().getInventoryItemCount(holder.getId(), -1) < holder.getCount())
 			{
-				player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+				player.sendPacket(SystemMessageId.INCORRECT_ITEM_COUNT2);
 				return false;
 			}
 		}

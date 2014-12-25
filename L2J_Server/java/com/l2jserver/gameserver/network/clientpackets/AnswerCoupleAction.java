@@ -60,15 +60,15 @@ public class AnswerCoupleAction extends L2GameClientPacket
 		}
 		if (_answer == 0) // cancel
 		{
-			target.sendPacket(SystemMessageId.COUPLE_ACTION_DENIED);
+			target.sendPacket(SystemMessageId.THE_COUPLE_ACTION_WAS_DENIED);
 		}
 		else if (_answer == 1) // approve
 		{
 			final int distance = (int) activeChar.calculateDistance(target, false, false);
 			if ((distance > 125) || (distance < 15) || (activeChar.getObjectId() == target.getObjectId()))
 			{
-				sendPacket(SystemMessageId.TARGET_DO_NOT_MEET_LOC_REQUIREMENTS);
-				target.sendPacket(SystemMessageId.TARGET_DO_NOT_MEET_LOC_REQUIREMENTS);
+				sendPacket(SystemMessageId.THE_REQUEST_CANNOT_BE_COMPLETED_BECAUSE_THE_TARGET_DOES_NOT_MEET_LOCATION_REQUIREMENTS);
+				target.sendPacket(SystemMessageId.THE_REQUEST_CANNOT_BE_COMPLETED_BECAUSE_THE_TARGET_DOES_NOT_MEET_LOCATION_REQUIREMENTS);
 				return;
 			}
 			int heading = Util.calculateHeadingFrom(activeChar, target);
@@ -82,7 +82,7 @@ public class AnswerCoupleAction extends L2GameClientPacket
 		}
 		else if (_answer == -1) // refused
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_SET_TO_REFUSE_COUPLE_ACTIONS);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_SET_TO_REFUSE_COUPLE_ACTIONS_AND_CANNOT_BE_REQUESTED_FOR_A_COUPLE_ACTION);
 			sm.addPcName(activeChar);
 			target.sendPacket(sm);
 		}

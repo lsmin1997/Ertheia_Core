@@ -42,7 +42,7 @@ public class L2ArenaZone extends L2ZoneType
 		{
 			if (!character.isInsideZone(ZoneId.PVP))
 			{
-				character.sendPacket(SystemMessageId.ENTERED_COMBAT_ZONE);
+				character.sendPacket(SystemMessageId.YOU_HAVE_ENTERED_A_COMBAT_ZONE);
 			}
 		}
 		
@@ -56,7 +56,7 @@ public class L2ArenaZone extends L2ZoneType
 		{
 			if (!character.isInsideZone(ZoneId.PVP))
 			{
-				character.sendPacket(SystemMessageId.LEFT_COMBAT_ZONE);
+				character.sendPacket(SystemMessageId.YOU_HAVE_LEFT_A_COMBAT_ZONE);
 			}
 		}
 		

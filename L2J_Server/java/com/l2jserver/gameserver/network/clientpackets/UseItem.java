@@ -116,7 +116,7 @@ public final class UseItem extends L2GameClientPacket
 		
 		if (activeChar.getPrivateStoreType() != PrivateStoreType.NONE)
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_TRADE_DISCARD_DROP_ITEM_WHILE_IN_SHOPMODE);
+			activeChar.sendPacket(SystemMessageId.WHILE_OPERATING_A_PRIVATE_STORE_OR_WORKSHOP_YOU_CANNOT_DISCARD_DESTROY_OR_TRADE_AN_ITEM);
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
@@ -129,7 +129,7 @@ public final class UseItem extends L2GameClientPacket
 		
 		if (item.getItem().getType2() == L2Item.TYPE2_QUEST)
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_USE_QUEST_ITEMS);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_USE_QUEST_ITEMS);
 			return;
 		}
 		
@@ -142,7 +142,7 @@ public final class UseItem extends L2GameClientPacket
 		// Char cannot use item when dead
 		if (activeChar.isDead() || !activeChar.getInventory().canManipulateWithItemId(item.getId()))
 		{
-			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
+			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS);
 			sm.addItemName(item);
 			activeChar.sendPacket(sm);
 			return;
@@ -157,7 +157,7 @@ public final class UseItem extends L2GameClientPacket
 		if (activeChar.isFishing() && ((_itemId < 6535) || (_itemId > 6540)))
 		{
 			// You cannot do anything else while fishing
-			activeChar.sendPacket(SystemMessageId.CANNOT_DO_WHILE_FISHING_3);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_DO_THAT_WHILE_FISHING3);
 			return;
 		}
 		
@@ -228,18 +228,18 @@ public final class UseItem extends L2GameClientPacket
 					// Prevent players to equip weapon while wearing combat flag
 					if ((activeChar.getActiveWeaponItem() != null) && (activeChar.getActiveWeaponItem().getId() == 9819))
 					{
-						activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+						activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 						return;
 					}
 					
 					if (activeChar.isMounted())
 					{
-						activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+						activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 						return;
 					}
 					if (activeChar.isDisarmed())
 					{
-						activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+						activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 						return;
 					}
 					
@@ -261,7 +261,7 @@ public final class UseItem extends L2GameClientPacket
 								switch (wpn.getItemType())
 								{
 									case NONE:
-										activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+										activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 										return;
 								}
 								break;
@@ -277,7 +277,7 @@ public final class UseItem extends L2GameClientPacket
 									case RAPIER:
 									case CROSSBOW:
 									case ANCIENTSWORD:
-										activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+										activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 										return;
 								}
 								break;
@@ -296,7 +296,7 @@ public final class UseItem extends L2GameClientPacket
 				{
 					if ((activeChar.getRace() == Race.KAMAEL) && ((item.getItem().getItemType() == ArmorType.HEAVY) || (item.getItem().getItemType() == ArmorType.MAGIC)))
 					{
-						activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+						activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 						return;
 					}
 					break;
@@ -305,7 +305,7 @@ public final class UseItem extends L2GameClientPacket
 				{
 					if (!item.isEquipped() && (activeChar.getInventory().getTalismanSlots() == 0))
 					{
-						activeChar.sendPacket(SystemMessageId.CANNOT_EQUIP_ITEM_DUE_TO_BAD_CONDITION);
+						activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIRED_CONDITION_TO_EQUIP_THAT_ITEM);
 						return;
 					}
 				}
@@ -376,20 +376,20 @@ public final class UseItem extends L2GameClientPacket
 		final SystemMessage sm;
 		if (hours > 0)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S2_HOURS_S3_MINUTES_S4_SECONDS_REMAINING_FOR_REUSE_S1);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S2_HOUR_S_S3_MINUTE_S_AND_S4_SECOND_S_REMAINING_IN_S1_S_RE_USE_TIME);
 			sm.addItemName(item);
 			sm.addInt(hours);
 			sm.addInt(minutes);
 		}
 		else if (minutes > 0)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S2_MINUTES_S3_SECONDS_REMAINING_FOR_REUSE_S1);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S2_MINUTE_S_S3_SECOND_S_REMAINING_IN_S1_S_RE_USE_TIME);
 			sm.addItemName(item);
 			sm.addInt(minutes);
 		}
 		else
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S2_SECONDS_REMAINING_FOR_REUSE_S1);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_S2_SECOND_S_REMAINING_IN_S1_S_RE_USE_TIME);
 			sm.addItemName(item);
 		}
 		sm.addInt(seconds);

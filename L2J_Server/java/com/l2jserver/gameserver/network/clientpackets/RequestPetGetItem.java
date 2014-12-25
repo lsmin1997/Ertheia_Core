@@ -72,7 +72,7 @@ public final class RequestPetGetItem extends L2GameClientPacket
 		
 		if (pet.isUncontrollable())
 		{
-			sendPacket(SystemMessageId.WHEN_YOUR_PETS_HUNGER_GAUGE_IS_AT_0_YOU_CANNOT_USE_YOUR_PET);
+			sendPacket(SystemMessageId.WHEN_YOUR_PET_S_HUNGER_GAUGE_IS_AT_0_YOU_CANNOT_USE_YOUR_PET);
 			return;
 		}
 		

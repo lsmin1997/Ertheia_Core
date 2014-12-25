@@ -48,7 +48,7 @@ public class ConditionPlayerCanTransform extends Condition
 		}
 		else if (player.isSitting())
 		{
-			player.sendPacket(SystemMessageId.CANNOT_TRANSFORM_WHILE_SITTING);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_TRANSFORM_WHILE_SITTING);
 			canTransform = false;
 		}
 		else if (player.isTransformed() || player.isInStance())
@@ -63,7 +63,7 @@ public class ConditionPlayerCanTransform extends Condition
 		}
 		else if (player.isFlyingMounted() || player.isMounted())
 		{
-			player.sendPacket(SystemMessageId.YOU_CANNOT_POLYMORPH_WHILE_RIDING_A_PET);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_TRANSFORM_WHILE_RIDING_A_PET);
 			canTransform = false;
 		}
 		return (_val == canTransform);

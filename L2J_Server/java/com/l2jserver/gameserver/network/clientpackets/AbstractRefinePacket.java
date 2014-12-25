@@ -406,7 +406,7 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket
 		}
 		if (player.getActiveTradeList() != null)
 		{
-			player.sendPacket(SystemMessageId.YOU_CANNOT_AUGMENT_ITEMS_WHILE_TRADING);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_AUGMENT_ITEMS_WHILE_ENGAGED_IN_TRADE_ACTIVITIES);
 			return false;
 		}
 		if (player.isDead())

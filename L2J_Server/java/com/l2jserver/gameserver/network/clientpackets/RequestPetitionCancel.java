@@ -64,7 +64,7 @@ public final class RequestPetitionCancel extends L2GameClientPacket
 			}
 			else
 			{
-				activeChar.sendPacket(SystemMessageId.PETITION_UNDER_PROCESS);
+				activeChar.sendPacket(SystemMessageId.YOUR_PETITION_IS_BEING_PROCESSED);
 			}
 		}
 		else
@@ -75,7 +75,7 @@ public final class RequestPetitionCancel extends L2GameClientPacket
 				{
 					int numRemaining = Config.MAX_PETITIONS_PER_PLAYER - PetitionManager.getInstance().getPlayerTotalPetitionCount(activeChar);
 					
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PETITION_CANCELED_SUBMIT_S1_MORE_TODAY);
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_PETITION_WAS_CANCELED_YOU_MAY_SUBMIT_S1_MORE_PETITION_S_TODAY);
 					sm.addString(String.valueOf(numRemaining));
 					activeChar.sendPacket(sm);
 					
@@ -85,12 +85,12 @@ public final class RequestPetitionCancel extends L2GameClientPacket
 				}
 				else
 				{
-					activeChar.sendPacket(SystemMessageId.FAILED_CANCEL_PETITION_TRY_LATER);
+					activeChar.sendPacket(SystemMessageId.FAILED_TO_CANCEL_PETITION_PLEASE_TRY_AGAIN_LATER);
 				}
 			}
 			else
 			{
-				activeChar.sendPacket(SystemMessageId.PETITION_NOT_SUBMITTED);
+				activeChar.sendPacket(SystemMessageId.YOU_HAVE_NOT_SUBMITTED_A_PETITION);
 			}
 		}
 	}

@@ -254,13 +254,13 @@ public final class ItemAuction
 		
 		if (newBid < getAuctionInitBid())
 		{
-			player.sendPacket(SystemMessageId.BID_PRICE_MUST_BE_HIGHER);
+			player.sendPacket(SystemMessageId.YOUR_BID_PRICE_MUST_BE_HIGHER_THAN_THE_MINIMUM_PRICE_CURRENTLY_BEING_BID);
 			return;
 		}
 		
 		if (newBid > 100000000000L)
 		{
-			player.sendPacket(SystemMessageId.BID_CANT_EXCEED_100_BILLION);
+			player.sendPacket(SystemMessageId.BIDDING_IS_NOT_ALLOWED_BECAUSE_THE_MAXIMUM_BIDDING_PRICE_EXCEEDS_100_BILLION);
 			return;
 		}
 		
@@ -275,7 +275,7 @@ public final class ItemAuction
 		{
 			if ((_highestBid != null) && (newBid < _highestBid.getLastBid()))
 			{
-				player.sendPacket(SystemMessageId.BID_MUST_BE_HIGHER_THAN_CURRENT_BID);
+				player.sendPacket(SystemMessageId.YOUR_BID_MUST_BE_HIGHER_THAN_THE_CURRENT_HIGHEST_BID);
 				return;
 			}
 			
@@ -284,7 +284,7 @@ public final class ItemAuction
 			{
 				if (!reduceItemCount(player, newBid))
 				{
-					player.sendPacket(SystemMessageId.NOT_ENOUGH_ADENA_FOR_THIS_BID);
+					player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA_FOR_THIS_BID);
 					return;
 				}
 				
@@ -297,19 +297,19 @@ public final class ItemAuction
 				{
 					if (newBid < bid.getLastBid()) // just another check
 					{
-						player.sendPacket(SystemMessageId.BID_MUST_BE_HIGHER_THAN_CURRENT_BID);
+						player.sendPacket(SystemMessageId.YOUR_BID_MUST_BE_HIGHER_THAN_THE_CURRENT_HIGHEST_BID);
 						return;
 					}
 					
 					if (!reduceItemCount(player, newBid - bid.getLastBid()))
 					{
-						player.sendPacket(SystemMessageId.NOT_ENOUGH_ADENA_FOR_THIS_BID);
+						player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA_FOR_THIS_BID);
 						return;
 					}
 				}
 				else if (!reduceItemCount(player, newBid))
 				{
-					player.sendPacket(SystemMessageId.NOT_ENOUGH_ADENA_FOR_THIS_BID);
+					player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA_FOR_THIS_BID);
 					return;
 				}
 				
@@ -319,7 +319,7 @@ public final class ItemAuction
 			onPlayerBid(player, bid);
 			updatePlayerBid(bid, false);
 			
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SUBMITTED_A_BID_OF_S1);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_SUBMITTED_A_BID_FOR_THE_AUCTION_OF_S1);
 			sm.addLong(newBid);
 			player.sendPacket(sm);
 			return;
@@ -351,7 +351,7 @@ public final class ItemAuction
 				{
 					_auctionEndingExtendState = ItemAuctionExtendState.EXTEND_BY_5_MIN;
 					_endingTime += ENDING_TIME_EXTEND_5;
-					broadcastToAllBidders(SystemMessage.getSystemMessage(SystemMessageId.BIDDER_EXISTS_AUCTION_TIME_EXTENDED_BY_5_MINUTES));
+					broadcastToAllBidders(SystemMessage.getSystemMessage(SystemMessageId.BIDDER_EXISTS_THE_AUCTION_TIME_HAS_BEEN_EXTENDED_BY_5_MINUTES));
 					break;
 				}
 				case EXTEND_BY_5_MIN:
@@ -360,7 +360,7 @@ public final class ItemAuction
 					{
 						_auctionEndingExtendState = ItemAuctionExtendState.EXTEND_BY_3_MIN;
 						_endingTime += ENDING_TIME_EXTEND_3;
-						broadcastToAllBidders(SystemMessage.getSystemMessage(SystemMessageId.BIDDER_EXISTS_AUCTION_TIME_EXTENDED_BY_3_MINUTES));
+						broadcastToAllBidders(SystemMessage.getSystemMessage(SystemMessageId.BIDDER_EXISTS_AUCTION_TIME_HAS_BEEN_EXTENDED_BY_3_MINUTES));
 					}
 					break;
 				}
@@ -466,7 +466,7 @@ public final class ItemAuction
 					return false;
 				}
 				
-				player.sendPacket(SystemMessageId.HIGHEST_BID_BUT_RESERVE_NOT_MET);
+				player.sendPacket(SystemMessageId.YOU_CURRENTLY_HAVE_THE_HIGHEST_BID_BUT_THE_RESERVE_HAS_NOT_BEEN_MET);
 				return true;
 			}
 			
@@ -481,7 +481,7 @@ public final class ItemAuction
 			// delete bid from database if auction already finished
 			updatePlayerBid(bid, getAuctionState() == ItemAuctionState.FINISHED);
 			
-			player.sendPacket(SystemMessageId.CANCELED_BID);
+			player.sendPacket(SystemMessageId.YOU_HAVE_CANCELED_YOUR_BID);
 		}
 		return true;
 	}
@@ -510,7 +510,7 @@ public final class ItemAuction
 	{
 		if (!player.reduceAdena("ItemAuction", count, player, true))
 		{
-			player.sendPacket(SystemMessageId.NOT_ENOUGH_ADENA_FOR_THIS_BID);
+			player.sendPacket(SystemMessageId.YOU_DO_NOT_HAVE_ENOUGH_ADENA_FOR_THIS_BID);
 			return false;
 		}
 		return true;

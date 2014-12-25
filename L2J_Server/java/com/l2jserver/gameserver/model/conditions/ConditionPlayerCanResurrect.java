@@ -57,7 +57,7 @@ public class ConditionPlayerCanResurrect extends Condition
 				canResurrect = false;
 				if (effector.isPlayer())
 				{
-					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
+					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS);
 					msg.addSkillName(skill);
 					effector.sendPacket(msg);
 				}
@@ -75,7 +75,7 @@ public class ConditionPlayerCanResurrect extends Condition
 				canResurrect = false;
 				if (effector.isPlayer())
 				{
-					effector.sendPacket(SystemMessageId.RES_HAS_ALREADY_BEEN_PROPOSED);
+					effector.sendPacket(SystemMessageId.RESURRECTION_HAS_ALREADY_BEEN_PROPOSED);
 				}
 			}
 		}
@@ -88,7 +88,7 @@ public class ConditionPlayerCanResurrect extends Condition
 				canResurrect = false;
 				if (effector.isPlayer())
 				{
-					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
+					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS);
 					msg.addSkillName(skill);
 					effector.sendPacket(msg);
 				}
@@ -106,7 +106,7 @@ public class ConditionPlayerCanResurrect extends Condition
 				canResurrect = false;
 				if (effector.isPlayer())
 				{
-					effector.sendPacket(SystemMessageId.RES_HAS_ALREADY_BEEN_PROPOSED); // Resurrection is already been proposed.
+					effector.sendPacket(SystemMessageId.RESURRECTION_HAS_ALREADY_BEEN_PROPOSED); // Resurrection is already been proposed.
 				}
 			}
 		}

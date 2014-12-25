@@ -70,7 +70,7 @@ public final class AttackRequest extends L2GameClientPacket
 			{
 				if (!effect.checkCondition(-1))
 				{
-					activeChar.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_SO_ACTIONS_NOT_ALLOWED);
+					activeChar.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_AS_AN_ILLEGAL_PROGRAM_USER_SO_YOUR_ACTIONS_HAVE_BEEN_RESTRICTED);
 					activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}

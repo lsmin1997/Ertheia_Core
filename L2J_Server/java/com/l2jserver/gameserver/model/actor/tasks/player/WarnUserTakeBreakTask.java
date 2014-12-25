@@ -41,7 +41,7 @@ public class WarnUserTakeBreakTask implements Runnable
 		{
 			if (_player.isOnline())
 			{
-				_player.sendPacket(SystemMessageId.PLAYING_FOR_LONG_TIME);
+				_player.sendPacket(SystemMessageId.YOU_HAVE_PLAYED_FOR_S1_HOUR_S_PLEASE_TAKE_A_BREAK);
 			}
 			else
 			{

@@ -67,13 +67,13 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 		
 		if ((_length < 0) || (_length > 2176))
 		{
-			activeChar.sendPacket(SystemMessageId.WRONG_SIZE_UPLOADED_CREST);
+			activeChar.sendPacket(SystemMessageId.THE_SIZE_OF_THE_UPLOADED_SYMBOL_DOES_NOT_MEET_THE_STANDARD_REQUIREMENTS);
 			return;
 		}
 		
 		if (clan.getDissolvingExpiryTime() > System.currentTimeMillis())
 		{
-			activeChar.sendPacket(SystemMessageId.CANNOT_SET_CREST_WHILE_DISSOLUTION_IN_PROGRESS);
+			activeChar.sendPacket(SystemMessageId.AS_YOU_ARE_CURRENTLY_SCHEDULE_FOR_CLAN_DISSOLUTION_YOU_CANNOT_REGISTER_OR_DELETE_A_CLAN_CREST);
 			return;
 		}
 		
@@ -88,14 +88,14 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 			if (clan.getCrestLargeId() != 0)
 			{
 				clan.changeLargeCrest(0);
-				activeChar.sendPacket(SystemMessageId.CLAN_CREST_HAS_BEEN_DELETED);
+				activeChar.sendPacket(SystemMessageId.THE_CLAN_MARK_HAS_BEEN_DELETED);
 			}
 		}
 		else
 		{
 			if (clan.getLevel() < 3)
 			{
-				activeChar.sendPacket(SystemMessageId.CLAN_LVL_3_NEEDED_TO_SET_CREST);
+				activeChar.sendPacket(SystemMessageId.A_CLAN_CREST_CAN_ONLY_BE_REGISTERED_WHEN_THE_CLAN_S_SKILL_LEVEL_IS_3_OR_ABOVE);
 				return;
 			}
 			
@@ -103,7 +103,7 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 			if (crest != null)
 			{
 				clan.changeLargeCrest(crest.getId());
-				activeChar.sendPacket(SystemMessageId.CLAN_EMBLEM_WAS_SUCCESSFULLY_REGISTERED);
+				activeChar.sendPacket(SystemMessageId.THE_CLAN_MARK_WAS_SUCCESSFULLY_REGISTERED_THE_SYMBOL_WILL_APPEAR_ON_THE_CLAN_FLAG_AND_THE_INSIGNIA_IS_ONLY_DISPLAYED_ON_ITEMS_PERTAINING_TO_A_CLAN_THAT_OWNS_A_CLAN_HALL_OR_CASTLE);
 			}
 		}
 		

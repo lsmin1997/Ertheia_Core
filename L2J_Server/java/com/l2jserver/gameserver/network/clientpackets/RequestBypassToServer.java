@@ -153,7 +153,7 @@ public final class RequestBypassToServer extends L2GameClientPacket
 				if (AdminTable.getInstance().requireConfirm(command))
 				{
 					activeChar.setAdminConfirmCmd(_command);
-					ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.S1);
+					ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.S13);
 					dlg.addString("Are you sure you want execute command " + _command.substring(6) + " ?");
 					activeChar.addAction(PlayerAction.ADMIN_COMMAND);
 					activeChar.sendPacket(dlg);

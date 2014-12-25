@@ -258,7 +258,7 @@ public final class BuffInfo
 		// When effects are initialized, the successfully landed.
 		if (_effected.isPlayer() && !_skill.isPassive())
 		{
-			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_FEEL_S1_EFFECT);
+			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S_EFFECT_CAN_BE_FELT);
 			sm.addSkillName(_skill);
 			_effected.sendPacket(sm);
 		}
@@ -363,7 +363,7 @@ public final class BuffInfo
 			}
 			else if (isRemoved())
 			{
-				smId = SystemMessageId.EFFECT_S1_HAS_BEEN_REMOVED;
+				smId = SystemMessageId.THE_EFFECT_OF_S1_HAS_BEEN_REMOVED;
 			}
 			else if (!_skill.isPassive())
 			{

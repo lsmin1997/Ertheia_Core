@@ -133,50 +133,50 @@ public final class RequestSendPost extends L2GameClientPacket
 		
 		if (!activeChar.isInsideZone(ZoneId.PEACE) && (_items != null))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_NOT_IN_PEACE_ZONE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_FORWARD_IN_A_NON_PEACE_ZONE_LOCATION);
 			return;
 		}
 		
 		if (activeChar.getActiveTradeList() != null)
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_DURING_EXCHANGE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_FORWARD_DURING_AN_EXCHANGE);
 			return;
 		}
 		
 		if (activeChar.isEnchanting())
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_DURING_ENCHANT);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_SEND_MAIL_WHILE_ENCHANTING_AN_ITEM_BESTOWING_AN_ATTRIBUTE_OR_COMBINING_JEWELS);
 			return;
 		}
 		
 		if (activeChar.getPrivateStoreType() != PrivateStoreType.NONE)
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_PRIVATE_STORE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_FORWARD_BECAUSE_THE_PRIVATE_STORE_OR_WORKSHOP_IS_IN_PROGRESS);
 			return;
 		}
 		
 		if (_receiver.length() > MAX_RECV_LENGTH)
 		{
-			activeChar.sendPacket(SystemMessageId.ALLOWED_LENGTH_FOR_RECIPIENT_EXCEEDED);
+			activeChar.sendPacket(SystemMessageId.THE_ALLOWED_LENGTH_FOR_RECIPIENT_EXCEEDED);
 			return;
 		}
 		
 		if (_subject.length() > MAX_SUBJ_LENGTH)
 		{
-			activeChar.sendPacket(SystemMessageId.ALLOWED_LENGTH_FOR_TITLE_EXCEEDED);
+			activeChar.sendPacket(SystemMessageId.THE_ALLOWED_LENGTH_FOR_A_TITLE_EXCEEDED);
 			return;
 		}
 		
 		if (_text.length() > MAX_TEXT_LENGTH)
 		{
 			// not found message for this
-			activeChar.sendPacket(SystemMessageId.ALLOWED_LENGTH_FOR_TITLE_EXCEEDED);
+			activeChar.sendPacket(SystemMessageId.THE_ALLOWED_LENGTH_FOR_A_TITLE_EXCEEDED);
 			return;
 		}
 		
 		if ((_items != null) && (_items.length > MAX_ATTACHMENTS))
 		{
-			activeChar.sendPacket(SystemMessageId.ITEM_SELECTION_POSSIBLE_UP_TO_8);
+			activeChar.sendPacket(SystemMessageId.ITEM_SELECTION_IS_POSSIBLE_UP_TO_8);
 			return;
 		}
 		
@@ -189,12 +189,12 @@ public final class RequestSendPost extends L2GameClientPacket
 		{
 			if (_reqAdena == 0)
 			{
-				activeChar.sendPacket(SystemMessageId.PAYMENT_AMOUNT_NOT_ENTERED);
+				activeChar.sendPacket(SystemMessageId.WHEN_NOT_ENTERING_THE_AMOUNT_FOR_THE_PAYMENT_REQUEST_YOU_CANNOT_SEND_ANY_MAIL);
 				return;
 			}
 			if ((_items == null) || (_items.length == 0))
 			{
-				activeChar.sendPacket(SystemMessageId.PAYMENT_REQUEST_NO_ITEM);
+				activeChar.sendPacket(SystemMessageId.IT_S_A_PAYMENT_REQUEST_TRANSACTION_PLEASE_ATTACH_THE_ITEM);
 				return;
 			}
 		}
@@ -202,13 +202,13 @@ public final class RequestSendPost extends L2GameClientPacket
 		final int receiverId = CharNameTable.getInstance().getIdByName(_receiver);
 		if (receiverId <= 0)
 		{
-			activeChar.sendPacket(SystemMessageId.RECIPIENT_NOT_EXIST);
+			activeChar.sendPacket(SystemMessageId.WHEN_THE_RECIPIENT_DOESN_T_EXIST_OR_THE_CHARACTER_HAS_BEEN_DELETED_SENDING_MAIL_IS_NOT_POSSIBLE);
 			return;
 		}
 		
 		if (receiverId == activeChar.getObjectId())
 		{
-			activeChar.sendPacket(SystemMessageId.YOU_CANT_SEND_MAIL_TO_YOURSELF);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_SEND_A_MAIL_TO_YOURSELF);
 			return;
 		}
 		
@@ -217,7 +217,7 @@ public final class RequestSendPost extends L2GameClientPacket
 		
 		if (accessLevel.isGm() && !activeChar.getAccessLevel().isGm())
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CANNOT_MAIL_GM_C1);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOUR_MESSAGE_TO_C1_DID_NOT_REACH_ITS_RECIPIENT_YOU_CANNOT_SEND_MAIL_TO_THE_GM_STAFF);
 			sm.addString(_receiver);
 			activeChar.sendPacket(sm);
 			return;
@@ -225,13 +225,13 @@ public final class RequestSendPost extends L2GameClientPacket
 		
 		if (activeChar.isJailed() && ((Config.JAIL_DISABLE_TRANSACTION && (_items != null)) || Config.JAIL_DISABLE_CHAT))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_NOT_IN_PEACE_ZONE);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_FORWARD_IN_A_NON_PEACE_ZONE_LOCATION);
 			return;
 		}
 		
 		if (BlockList.isInBlockList(receiverId, activeChar.getObjectId()))
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_BLOCKED_YOU_CANNOT_MAIL);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_BLOCKED_YOU_YOU_CANNOT_SEND_MAIL_TO_C1);
 			sm.addString(_receiver);
 			activeChar.sendPacket(sm);
 			return;
@@ -239,19 +239,19 @@ public final class RequestSendPost extends L2GameClientPacket
 		
 		if (MailManager.getInstance().getOutboxSize(activeChar.getObjectId()) >= OUTBOX_SIZE)
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_MAIL_LIMIT_EXCEEDED);
+			activeChar.sendPacket(SystemMessageId.THE_MAIL_LIMIT_240_HAS_BEEN_EXCEEDED_AND_THIS_CANNOT_BE_FORWARDED);
 			return;
 		}
 		
 		if (MailManager.getInstance().getInboxSize(receiverId) >= INBOX_SIZE)
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_MAIL_LIMIT_EXCEEDED);
+			activeChar.sendPacket(SystemMessageId.THE_MAIL_LIMIT_240_HAS_BEEN_EXCEEDED_AND_THIS_CANNOT_BE_FORWARDED);
 			return;
 		}
 		
 		if (!getClient().getFloodProtectors().getSendMail().tryPerformAction("sendmail"))
 		{
-			activeChar.sendPacket(SystemMessageId.CANT_FORWARD_LESS_THAN_MINUTE);
+			activeChar.sendPacket(SystemMessageId.THE_PREVIOUS_MAIL_WAS_FORWARDED_LESS_THAN_1_MINUTE_AGO_AND_THIS_CANNOT_BE_FORWARDED);
 			return;
 		}
 		
@@ -277,7 +277,7 @@ public final class RequestSendPost extends L2GameClientPacket
 				L2ItemInstance item = player.checkItemManipulation(i.getObjectId(), i.getCount(), "attach");
 				if ((item == null) || !item.isTradeable() || item.isEquipped())
 				{
-					player.sendPacket(SystemMessageId.CANT_FORWARD_BAD_ITEM);
+					player.sendPacket(SystemMessageId.THE_ITEM_THAT_YOU_RE_TRYING_TO_SEND_CANNOT_BE_FORWARDED_BECAUSE_IT_ISN_T_PROPER);
 					return false;
 				}
 				
@@ -293,7 +293,7 @@ public final class RequestSendPost extends L2GameClientPacket
 		// Check if enough adena and charge the fee
 		if ((currentAdena < fee) || !player.reduceAdena("MailFee", fee, null, false))
 		{
-			player.sendPacket(SystemMessageId.CANT_FORWARD_NO_ADENA);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_FORWARD_BECAUSE_YOU_DON_T_HAVE_ENOUGH_ADENA);
 			return false;
 		}
 		

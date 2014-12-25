@@ -49,12 +49,12 @@ public class ConditionTargetMyPartyExceptMe extends Condition
 		}
 		else if (player == effected)
 		{
-			player.sendPacket(SystemMessageId.CANNOT_USE_ON_YOURSELF);
+			player.sendPacket(SystemMessageId.YOU_CANNOT_USE_THIS_ON_YOURSELF);
 			isPartyMember = false;
 		}
 		else if (!player.isInParty() || !player.getParty().equals(effected.getParty()))
 		{
-			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
+			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS);
 			sm.addSkillName(skill);
 			player.sendPacket(sm);
 			isPartyMember = false;

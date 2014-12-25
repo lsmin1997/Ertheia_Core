@@ -66,13 +66,13 @@ public final class RequestSetAllyCrest extends L2GameClientPacket
 		
 		if (_length > 192)
 		{
-			activeChar.sendPacket(SystemMessageId.ADJUST_IMAGE_8_12);
+			activeChar.sendPacket(SystemMessageId.PLEASE_ADJUST_THE_IMAGE_SIZE_TO_8X12);
 			return;
 		}
 		
 		if (activeChar.getAllyId() == 0)
 		{
-			activeChar.sendPacket(SystemMessageId.FEATURE_ONLY_FOR_ALLIANCE_LEADER);
+			activeChar.sendPacket(SystemMessageId.THIS_FEATURE_IS_ONLY_AVAILABLE_TO_ALLIANCE_LEADERS);
 			return;
 		}
 		
@@ -80,7 +80,7 @@ public final class RequestSetAllyCrest extends L2GameClientPacket
 		
 		if ((activeChar.getClanId() != leaderClan.getId()) || !activeChar.isClanLeader())
 		{
-			activeChar.sendPacket(SystemMessageId.FEATURE_ONLY_FOR_ALLIANCE_LEADER);
+			activeChar.sendPacket(SystemMessageId.THIS_FEATURE_IS_ONLY_AVAILABLE_TO_ALLIANCE_LEADERS);
 			return;
 		}
 		
@@ -97,7 +97,7 @@ public final class RequestSetAllyCrest extends L2GameClientPacket
 			if (crest != null)
 			{
 				leaderClan.changeAllyCrest(crest.getId(), false);
-				activeChar.sendPacket(SystemMessageId.CLAN_CREST_WAS_SUCCESSFULLY_REGISTRED);
+				activeChar.sendPacket(SystemMessageId.THE_CREST_WAS_SUCCESSFULLY_REGISTERED);
 			}
 		}
 		

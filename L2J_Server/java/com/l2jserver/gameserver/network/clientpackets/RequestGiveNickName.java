@@ -50,7 +50,7 @@ public class RequestGiveNickName extends L2GameClientPacket
 		if (activeChar.isNoble() && _target.equalsIgnoreCase(activeChar.getName()))
 		{
 			activeChar.setTitle(_title);
-			activeChar.sendPacket(SystemMessageId.TITLE_CHANGED);
+			activeChar.sendPacket(SystemMessageId.YOUR_TITLE_HAS_BEEN_CHANGED);
 			activeChar.broadcastTitleInfo();
 		}
 		else
@@ -64,7 +64,7 @@ public class RequestGiveNickName extends L2GameClientPacket
 			
 			if (activeChar.getClan().getLevel() < 3)
 			{
-				activeChar.sendPacket(SystemMessageId.CLAN_LVL_3_NEEDED_TO_ENDOWE_TITLE);
+				activeChar.sendPacket(SystemMessageId.A_PLAYER_CAN_ONLY_BE_GRANTED_A_TITLE_IF_THE_CLAN_IS_LEVEL_3_OR_ABOVE);
 				return;
 			}
 			
@@ -76,17 +76,17 @@ public class RequestGiveNickName extends L2GameClientPacket
 				{
 					// is target from the same clan?
 					member.setTitle(_title);
-					member.sendPacket(SystemMessageId.TITLE_CHANGED);
+					member.sendPacket(SystemMessageId.YOUR_TITLE_HAS_BEEN_CHANGED);
 					member.broadcastTitleInfo();
 				}
 				else
 				{
-					activeChar.sendPacket(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME);
+					activeChar.sendPacket(SystemMessageId.THAT_PLAYER_IS_NOT_ONLINE);
 				}
 			}
 			else
 			{
-				activeChar.sendPacket(SystemMessageId.TARGET_MUST_BE_IN_CLAN);
+				activeChar.sendPacket(SystemMessageId.THE_TARGET_MUST_BE_A_CLAN_MEMBER);
 			}
 		}
 	}

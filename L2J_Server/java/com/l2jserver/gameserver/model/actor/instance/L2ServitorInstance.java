@@ -535,7 +535,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		// check if the summon's lifetime has ran out
 		if (_lifeTimeRemaining < 0)
 		{
-			sendPacket(SystemMessageId.SERVITOR_PASSED_AWAY);
+			sendPacket(SystemMessageId.YOUR_SERVITOR_PASSED_AWAY);
 			unSummon(getOwner());
 			return;
 		}
@@ -549,7 +549,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 			{
 				if (destroyItemByItemId("Consume", getItemConsume().getId(), getItemConsume().getCount(), this, false))
 				{
-					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.SUMMONED_MOB_USES_S1);
+					final SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.A_SUMMONED_MONSTER_USES_S1);
 					msg.addItemName(getItemConsume().getId());
 					sendPacket(msg);
 					
@@ -558,7 +558,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 				}
 				else
 				{
-					sendPacket(SystemMessageId.SERVITOR_DISAPPEARED_NOT_ENOUGH_ITEMS);
+					sendPacket(SystemMessageId.SINCE_YOU_DO_NOT_HAVE_ENOUGH_ITEMS_TO_MAINTAIN_THE_SERVITOR_S_STAY_THE_SERVITOR_HAS_DISAPPEARED);
 					unSummon(getOwner());
 				}
 			}

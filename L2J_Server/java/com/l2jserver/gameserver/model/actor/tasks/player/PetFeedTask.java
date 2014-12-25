@@ -68,7 +68,7 @@ public class PetFeedTask implements Runnable
 					_player.setCurrentFeed(0);
 					_player.stopFeed();
 					_player.dismount();
-					_player.sendPacket(SystemMessageId.OUT_OF_FEED_MOUNT_CANCELED);
+					_player.sendPacket(SystemMessageId.YOU_ARE_OUT_OF_FEED_MOUNT_STATUS_CANCELED);
 				}
 				
 				List<Integer> foodIds = _player.getPetData(_player.getMountNpcId()).getFood();
@@ -93,7 +93,7 @@ public class PetFeedTask implements Runnable
 					if (handler != null)
 					{
 						handler.useItem(_player, food, false);
-						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PET_TOOK_S1_BECAUSE_HE_WAS_HUNGRY);
+						SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOUR_PET_WAS_HUNGRY_SO_IT_ATE_S1);
 						sm.addItemName(food.getId());
 						_player.sendPacket(sm);
 					}

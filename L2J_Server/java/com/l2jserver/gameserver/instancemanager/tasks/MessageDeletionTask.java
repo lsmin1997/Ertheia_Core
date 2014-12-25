@@ -60,7 +60,7 @@ public final class MessageDeletionTask implements Runnable
 				if (sender != null)
 				{
 					msg.getAttachments().returnToWh(sender.getWarehouse());
-					sender.sendPacket(SystemMessageId.MAIL_RETURNED);
+					sender.sendPacket(SystemMessageId.THE_MAIL_WAS_RETURNED_DUE_TO_THE_EXCEEDED_WAITING_TIME);
 				}
 				else
 				{
@@ -73,7 +73,7 @@ public final class MessageDeletionTask implements Runnable
 				final L2PcInstance receiver = L2World.getInstance().getPlayer(msg.getReceiverId());
 				if (receiver != null)
 				{
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.MAIL_RETURNED);
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_MAIL_WAS_RETURNED_DUE_TO_THE_EXCEEDED_WAITING_TIME);
 					// sm.addString(msg.getReceiverName());
 					receiver.sendPacket(sm);
 				}

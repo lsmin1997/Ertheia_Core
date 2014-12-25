@@ -88,7 +88,7 @@ public final class L2TeleporterInstance extends L2Npc
 				case 32539:
 					if (player.isFlyingMounted())
 					{
-						player.sendPacket(SystemMessageId.YOU_CANNOT_ENTER_SEED_IN_FLYING_TRANSFORM);
+						player.sendPacket(SystemMessageId.YOU_CANNOT_ENTER_A_SEED_WHILE_IN_A_FLYING_TRANSFORMATION_STATE);
 						return;
 					}
 					break;
@@ -253,12 +253,12 @@ public final class L2TeleporterInstance extends L2Npc
 			// you cannot teleport to village that is in siege
 			if (SiegeManager.getInstance().getSiege(list.getLocX(), list.getLocY(), list.getLocZ()) != null)
 			{
-				player.sendPacket(SystemMessageId.NO_PORT_THAT_IS_IN_SIGE);
+				player.sendPacket(SystemMessageId.YOU_CANNOT_TELEPORT_TO_A_VILLAGE_THAT_IS_IN_A_SIEGE);
 				return;
 			}
 			else if (TownManager.townHasCastleInSiege(list.getLocX(), list.getLocY()) && isInsideZone(ZoneId.TOWN))
 			{
-				player.sendPacket(SystemMessageId.NO_PORT_THAT_IS_IN_SIGE);
+				player.sendPacket(SystemMessageId.YOU_CANNOT_TELEPORT_TO_A_VILLAGE_THAT_IS_IN_A_SIEGE);
 				return;
 			}
 			else if (!Config.ALT_GAME_KARMA_PLAYER_CAN_USE_GK && (player.getKarma() > 0)) // karma

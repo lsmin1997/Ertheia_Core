@@ -52,7 +52,7 @@ public final class RequestFriendList extends L2GameClientPacket
 		SystemMessage sm;
 		
 		// ======<Friend List>======
-		activeChar.sendPacket(SystemMessageId.FRIEND_LIST_HEADER);
+		activeChar.sendPacket(SystemMessageId.FRIENDS_LIST);
 		
 		L2PcInstance friend = null;
 		for (int id : activeChar.getFriendList())
@@ -70,13 +70,13 @@ public final class RequestFriendList extends L2GameClientPacket
 			if ((friend == null) || !friend.isOnline())
 			{
 				// (Currently: Offline)
-				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_OFFLINE);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CURRENTLY_OFFLINE);
 				sm.addString(friendName);
 			}
 			else
 			{
 				// (Currently: Online)
-				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ONLINE);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CURRENTLY_ONLINE);
 				sm.addString(friendName);
 			}
 			
@@ -84,7 +84,7 @@ public final class RequestFriendList extends L2GameClientPacket
 		}
 		
 		// =========================
-		activeChar.sendPacket(SystemMessageId.FRIEND_LIST_FOOTER);
+		activeChar.sendPacket(SystemMessageId.EMPTY3);
 	}
 	
 	@Override

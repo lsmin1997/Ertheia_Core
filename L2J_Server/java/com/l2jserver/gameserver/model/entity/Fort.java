@@ -419,7 +419,7 @@ public final class Fort extends AbstractResidence
 		// if clan already have castle, don't store him in fortress
 		if (clan.getCastleId() > 0)
 		{
-			getSiege().announceToPlayer(SystemMessage.getSystemMessage(SystemMessageId.NPCS_RECAPTURED_FORTRESS));
+			getSiege().announceToPlayer(SystemMessage.getSystemMessage(SystemMessageId.THE_REBEL_ARMY_RECAPTURED_THE_FORTRESS));
 			return false;
 		}
 		
@@ -835,7 +835,7 @@ public final class Fort extends AbstractResidence
 			{
 				clan.setFortId(getResidenceId()); // Set has fort flag for new owner
 				SystemMessage sm;
-				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CLAN_IS_VICTORIOUS_IN_THE_FORTRESS_BATTLE_OF_S2);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_IS_VICTORIOUS_IN_THE_FORTRESS_BATTLE_OF_S2);
 				sm.addString(clan.getName());
 				sm.addCastleId(getResidenceId());
 				L2World.getInstance().getPlayers().forEach(p -> p.sendPacket(sm));

@@ -67,14 +67,14 @@ public final class RequestBlock extends L2GameClientPacket
 				if (targetId <= 0)
 				{
 					// Incorrect player name.
-					activeChar.sendPacket(SystemMessageId.FAILED_TO_REGISTER_TO_IGNORE_LIST);
+					activeChar.sendPacket(SystemMessageId.YOU_HAVE_FAILED_TO_REGISTER_THE_USER_TO_YOUR_IGNORE_LIST);
 					return;
 				}
 				
 				if (targetAL > 0)
 				{
 					// Cannot block a GM character.
-					activeChar.sendPacket(SystemMessageId.YOU_MAY_NOT_IMPOSE_A_BLOCK_ON_GM);
+					activeChar.sendPacket(SystemMessageId.YOU_MAY_NOT_IMPOSE_A_BLOCK_ON_A_GM);
 					return;
 				}
 				

@@ -169,7 +169,7 @@ public class PcStatus extends PlayableStatus
 				mpDam = (int) (value - mpDam);
 				if (mpDam > getActiveChar().getCurrentMp())
 				{
-					getActiveChar().sendPacket(SystemMessageId.MP_BECAME_0_ARCANE_SHIELD_DISAPPEARING);
+					getActiveChar().sendPacket(SystemMessageId.MP_BECAME_0_AND_THE_ARCANE_SHIELD_IS_DISAPPEARING);
 					getActiveChar().stopSkillEffects(true, 1556);
 					value = mpDam - getActiveChar().getCurrentMp();
 					getActiveChar().setCurrentMp(0);
@@ -242,7 +242,7 @@ public class PcStatus extends PlayableStatus
 			{
 				SystemMessage smsg;
 				// Send a System Message to the L2PcInstance
-				smsg = SystemMessage.getSystemMessage(SystemMessageId.C1_RECEIVED_DAMAGE_OF_S3_FROM_C2);
+				smsg = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_RECEIVED_S3_DAMAGE_FROM_C2);
 				smsg.addString(getActiveChar().getName());
 				smsg.addCharName(attacker);
 				smsg.addInt(fullValue);
@@ -250,7 +250,7 @@ public class PcStatus extends PlayableStatus
 				
 				if (tDmg > 0)
 				{
-					smsg = SystemMessage.getSystemMessage(SystemMessageId.C1_RECEIVED_DAMAGE_OF_S3_FROM_C2);
+					smsg = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_RECEIVED_S3_DAMAGE_FROM_C2);
 					smsg.addString(getActiveChar().getSummon().getName());
 					smsg.addCharName(attacker);
 					smsg.addInt(tDmg);
@@ -258,7 +258,7 @@ public class PcStatus extends PlayableStatus
 					
 					if (attackerPlayer != null)
 					{
-						smsg = SystemMessage.getSystemMessage(SystemMessageId.GIVEN_S1_DAMAGE_TO_YOUR_TARGET_AND_S2_DAMAGE_TO_SERVITOR);
+						smsg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_DEALT_S1_DAMAGE_TO_YOUR_TARGET_AND_S2_DAMAGE_TO_THE_SERVITOR);
 						smsg.addInt(fullValue);
 						smsg.addInt(tDmg);
 						attackerPlayer.sendPacket(smsg);

@@ -62,7 +62,7 @@ public final class RequestFriendDel extends L2GameClientPacket
 		
 		if (id == -1)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_NOT_ON_YOUR_FRIENDS_LIST);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_NOT_ON_YOUR_FRIEND_LIST);
 			sm.addString(_name);
 			activeChar.sendPacket(sm);
 			return;
@@ -70,7 +70,7 @@ public final class RequestFriendDel extends L2GameClientPacket
 		
 		if (!activeChar.getFriendList().contains(id))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_NOT_ON_YOUR_FRIENDS_LIST);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_NOT_ON_YOUR_FRIEND_LIST);
 			sm.addString(_name);
 			activeChar.sendPacket(sm);
 			return;

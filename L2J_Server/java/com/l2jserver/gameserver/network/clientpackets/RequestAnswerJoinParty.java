@@ -62,7 +62,7 @@ public final class RequestAnswerJoinParty extends L2GameClientPacket
 			{
 				if (requestor.getParty().getMemberCount() >= 9)
 				{
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PARTY_FULL);
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_PARTY_IS_FULL);
 					player.sendPacket(sm);
 					requestor.sendPacket(sm);
 					return;
@@ -115,7 +115,7 @@ public final class RequestAnswerJoinParty extends L2GameClientPacket
 		}
 		else if (_response == -1)
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_SET_TO_REFUSE_PARTY_REQUEST);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_SET_TO_REFUSE_PARTY_REQUESTS_AND_CANNOT_RECEIVE_A_PARTY_REQUEST);
 			sm.addPcName(player);
 			requestor.sendPacket(sm);
 			
@@ -128,7 +128,7 @@ public final class RequestAnswerJoinParty extends L2GameClientPacket
 		else
 		// 0
 		{
-			// requestor.sendPacket(SystemMessageId.PLAYER_DECLINED); FIXME: Done in client?
+			// requestor.sendPacket(SystemMessageId.THE_PLAYER_DECLINED_TO_JOIN_YOUR_PARTY); FIXME: Done in client?
 			
 			// activate garbage collection if there are no other members in party (happens when we were creating new one)
 			if (requestor.isInParty() && (requestor.getParty().getMemberCount() == 1))

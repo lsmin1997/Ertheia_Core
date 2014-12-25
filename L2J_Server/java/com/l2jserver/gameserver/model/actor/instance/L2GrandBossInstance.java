@@ -83,7 +83,7 @@ public final class L2GrandBossInstance extends L2MonsterInstance
 		
 		if (player != null)
 		{
-			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.RAID_WAS_SUCCESSFUL));
+			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.CONGRATULATIONS_YOUR_RAID_WAS_SUCCESSFUL));
 			if (player.getParty() != null)
 			{
 				for (L2PcInstance member : player.getParty().getMembers())

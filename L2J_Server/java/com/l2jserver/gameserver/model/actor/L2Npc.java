@@ -662,7 +662,7 @@ public class L2Npc extends L2Character
 		}
 		if (player.isLockedTarget() && (player.getLockedTarget() != this))
 		{
-			player.sendPacket(SystemMessageId.FAILED_CHANGE_TARGET);
+			player.sendPacket(SystemMessageId.FAILED_TO_CHANGE_ENMITY);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return false;
 		}

@@ -176,10 +176,10 @@ public class L2SiegeZone extends L2ZoneType
 					}
 				}
 				
-				character.sendPacket(SystemMessageId.ENTERED_COMBAT_ZONE);
+				character.sendPacket(SystemMessageId.YOU_HAVE_ENTERED_A_COMBAT_ZONE);
 				if (!Config.ALLOW_WYVERN_DURING_SIEGE && (plyer.getMountType() == MountType.WYVERN))
 				{
-					plyer.sendPacket(SystemMessageId.AREA_CANNOT_BE_ENTERED_WHILE_MOUNTED_WYVERN);
+					plyer.sendPacket(SystemMessageId.THIS_AREA_CANNOT_BE_ENTERED_WHILE_MOUNTED_ATOP_OF_A_WYVERN_YOU_WILL_BE_DISMOUNTED_FROM_YOUR_WYVERN_IF_YOU_DO_NOT_LEAVE);
 					plyer.enteredNoLanding(DISMOUNT_DELAY);
 				}
 			}
@@ -197,7 +197,7 @@ public class L2SiegeZone extends L2ZoneType
 			if (character.isPlayer())
 			{
 				L2PcInstance player = character.getActingPlayer();
-				character.sendPacket(SystemMessageId.LEFT_COMBAT_ZONE);
+				character.sendPacket(SystemMessageId.YOU_HAVE_LEFT_A_COMBAT_ZONE);
 				if (player.getMountType() == MountType.WYVERN)
 				{
 					player.exitedNoLanding();
@@ -286,7 +286,7 @@ public class L2SiegeZone extends L2ZoneType
 				if (character.isPlayer())
 				{
 					player = character.getActingPlayer();
-					character.sendPacket(SystemMessageId.LEFT_COMBAT_ZONE);
+					character.sendPacket(SystemMessageId.YOU_HAVE_LEFT_A_COMBAT_ZONE);
 					player.stopFameTask();
 					if (player.getMountType() == MountType.WYVERN)
 					{

@@ -81,7 +81,7 @@ public final class RequestMakeMacro extends L2GameClientPacket
 		if (_commandsLenght > 255)
 		{
 			// Invalid macro. Refer to the Help file for instructions.
-			player.sendPacket(SystemMessageId.INVALID_MACRO);
+			player.sendPacket(SystemMessageId.INVALID_MACRO_REFER_TO_THE_HELP_FILE_FOR_INSTRUCTIONS);
 			return;
 		}
 		if (player.getMacros().getAllMacroses().size() > 48)
@@ -93,13 +93,13 @@ public final class RequestMakeMacro extends L2GameClientPacket
 		if (_macro.getName().isEmpty())
 		{
 			// Enter the name of the macro.
-			player.sendPacket(SystemMessageId.ENTER_THE_MACRO_NAME);
+			player.sendPacket(SystemMessageId.ENTER_THE_NAME_OF_THE_MACRO);
 			return;
 		}
 		if (_macro.getDescr().length() > 32)
 		{
 			// Macro descriptions may contain up to 32 characters.
-			player.sendPacket(SystemMessageId.MACRO_DESCRIPTION_MAX_32_CHARS);
+			player.sendPacket(SystemMessageId.MACRO_DESCRIPTIONS_MAY_CONTAIN_UP_TO_32_CHARACTERS);
 			return;
 		}
 		player.registerMacro(_macro);

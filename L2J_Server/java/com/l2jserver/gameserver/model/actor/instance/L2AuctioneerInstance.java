@@ -241,7 +241,7 @@ public final class L2AuctioneerInstance extends L2Npc
 			{
 				if ((player.getClan() == null) || (player.getClan().getLevel() < 2))
 				{
-					player.sendPacket(SystemMessageId.AUCTION_ONLY_CLAN_LEVEL_2_HIGHER);
+					player.sendPacket(SystemMessageId.ONLY_A_CLAN_LEADER_WHOSE_CLAN_IS_OF_LEVEL_2_OR_ABOVE_IS_ALLOWED_TO_PARTICIPATE_IN_A_CLAN_HALL_AUCTION);
 					return;
 				}
 				
@@ -252,7 +252,7 @@ public final class L2AuctioneerInstance extends L2Npc
 				
 				if (((player.getClan().getAuctionBiddedAt() > 0) && (player.getClan().getAuctionBiddedAt() != Integer.parseInt(val))) || (player.getClan().getHideoutId() > 0))
 				{
-					player.sendPacket(SystemMessageId.ALREADY_SUBMITTED_BID);
+					player.sendPacket(SystemMessageId.SINCE_YOU_HAVE_ALREADY_SUBMITTED_A_BID_YOU_ARE_NOT_ALLOWED_TO_PARTICIPATE_IN_ANOTHER_AUCTION_AT_THIS_TIME);
 					return;
 				}
 				
@@ -502,12 +502,12 @@ public final class L2AuctioneerInstance extends L2Npc
 				}
 				else if ((player.getClan() != null) && (player.getClan().getHideoutId() == 0))
 				{
-					player.sendPacket(SystemMessageId.NO_OFFERINGS_OWN_OR_MADE_BID_FOR);
+					player.sendPacket(SystemMessageId.THERE_ARE_NO_OFFERINGS_I_OWN_OR_I_MADE_A_BID_FOR);
 					return;
 				}
 				else if (player.getClan() == null)
 				{
-					player.sendPacket(SystemMessageId.CANNOT_PARTICIPATE_IN_AN_AUCTION);
+					player.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIREMENTS_TO_PARTICIPATE_IN_AN_AUCTION);
 					return;
 				}
 			}
@@ -529,7 +529,7 @@ public final class L2AuctioneerInstance extends L2Npc
 				if (AuctionManager.getInstance().getAuction(player.getClan().getAuctionBiddedAt()) != null)
 				{
 					AuctionManager.getInstance().getAuction(player.getClan().getAuctionBiddedAt()).cancelBid(player.getClanId());
-					player.sendPacket(SystemMessageId.CANCELED_BID);
+					player.sendPacket(SystemMessageId.YOU_HAVE_CANCELED_YOUR_BID);
 				}
 				return;
 			}

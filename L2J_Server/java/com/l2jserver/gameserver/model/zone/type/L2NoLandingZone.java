@@ -58,7 +58,7 @@ public class L2NoLandingZone extends L2ZoneType
 			character.setInsideZone(ZoneId.NO_LANDING, true);
 			if (character.getActingPlayer().getMountType() == MountType.WYVERN)
 			{
-				character.sendPacket(SystemMessageId.AREA_CANNOT_BE_ENTERED_WHILE_MOUNTED_WYVERN);
+				character.sendPacket(SystemMessageId.THIS_AREA_CANNOT_BE_ENTERED_WHILE_MOUNTED_ATOP_OF_A_WYVERN_YOU_WILL_BE_DISMOUNTED_FROM_YOUR_WYVERN_IF_YOU_DO_NOT_LEAVE);
 				character.getActingPlayer().enteredNoLanding(dismountDelay);
 			}
 		}

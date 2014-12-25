@@ -51,8 +51,8 @@ public final class RequestAnswerJoinAlly extends L2GameClientPacket
 		
 		if (_response == 0)
 		{
-			activeChar.sendPacket(SystemMessageId.YOU_DID_NOT_RESPOND_TO_ALLY_INVITATION);
-			requestor.sendPacket(SystemMessageId.NO_RESPONSE_TO_ALLY_INVITATION);
+			activeChar.sendPacket(SystemMessageId.NO_RESPONSE_YOUR_ENTRANCE_TO_THE_ALLIANCE_HAS_BEEN_CANCELLED);
+			requestor.sendPacket(SystemMessageId.NO_RESPONSE_INVITATION_TO_JOIN_AN_ALLIANCE_HAS_BEEN_CANCELLED);
 		}
 		else
 		{
@@ -66,8 +66,8 @@ public final class RequestAnswerJoinAlly extends L2GameClientPacket
 			if (clan.checkAllyJoinCondition(requestor, activeChar))
 			{
 				// TODO: Need correct message id
-				requestor.sendPacket(SystemMessageId.YOU_HAVE_SUCCEEDED_INVITING_FRIEND);
-				activeChar.sendPacket(SystemMessageId.YOU_ACCEPTED_ALLIANCE);
+				requestor.sendPacket(SystemMessageId.THAT_PERSON_HAS_BEEN_SUCCESSFULLY_ADDED_TO_YOUR_FRIEND_LIST);
+				activeChar.sendPacket(SystemMessageId.YOU_HAVE_ACCEPTED_THE_ALLIANCE);
 				
 				activeChar.getClan().setAllyId(clan.getAllyId());
 				activeChar.getClan().setAllyName(clan.getAllyName());

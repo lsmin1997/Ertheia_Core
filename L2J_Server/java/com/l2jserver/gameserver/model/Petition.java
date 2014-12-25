@@ -79,14 +79,14 @@ public final class Petition
 			else
 			{
 				// Ending petition consultation with <Player>.
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PETITION_ENDED_WITH_C1);
+				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.PETITION_CONSULTATION_WITH_C1_HAS_ENDED);
 				sm.addString(getPetitioner().getName());
 				getResponder().sendPacket(sm);
 				
 				if (endState == PetitionState.PETITIONER_CANCEL)
 				{
 					// Receipt No. <ID> petition cancelled.
-					sm = SystemMessage.getSystemMessage(SystemMessageId.RECENT_NO_S1_CANCELED);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.RECEIPT_NO_S1_PETITION_CANCELLED);
 					sm.addInt(getId());
 					getResponder().sendPacket(sm);
 				}
@@ -96,7 +96,7 @@ public final class Petition
 		// End petition consultation and inform them, if they are still online. And if petitioner is online, enable Evaluation button
 		if ((getPetitioner() != null) && getPetitioner().isOnline())
 		{
-			getPetitioner().sendPacket(SystemMessageId.THIS_END_THE_PETITION_PLEASE_PROVIDE_FEEDBACK);
+			getPetitioner().sendPacket(SystemMessageId.THIS_ENDS_THE_GM_PETITION_CONSULTATION_NPLEASE_GIVE_US_FEEDBACK_ON_THE_PETITION_SERVICE);
 			getPetitioner().sendPacket(PetitionVotePacket.STATIC_PACKET);
 		}
 		

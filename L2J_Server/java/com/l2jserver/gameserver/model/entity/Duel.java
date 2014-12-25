@@ -712,7 +712,7 @@ public class Duel
 		SystemMessage sm = null;
 		if (_countdown > 0)
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.THE_DUEL_WILL_BEGIN_IN_S1_SECONDS);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.THE_DUEL_WILL_BEGIN_IN_S1_SECOND_S);
 			sm.addInt(_countdown);
 		}
 		else
@@ -751,7 +751,7 @@ public class Duel
 				// send SystemMessage
 				if (_partyDuel)
 				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_PARTY_HAS_WON_THE_DUEL);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_S_PARTY_HAS_WON_THE_DUEL);
 				}
 				else
 				{
@@ -768,7 +768,7 @@ public class Duel
 				// send SystemMessage
 				if (_partyDuel)
 				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_PARTY_HAS_WON_THE_DUEL);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.C1_S_PARTY_HAS_WON_THE_DUEL);
 				}
 				else
 				{

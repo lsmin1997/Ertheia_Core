@@ -574,7 +574,7 @@ public final class BlockCheckerEngine
 	
 	/*
 	 * private class CountDown implements Runnable {
-	 * @Override public void run() { _holder.broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.BLOCK_CHECKER_ENDS_5)); ThreadPoolManager.getInstance().scheduleGeneral(new EndEvent(), 5000); } }
+	 * @Override public void run() { _holder.broadCastPacketToTeam(SystemMessage.getSystemMessage(SystemMessageId.BLOCK_CHECKER_WILL_END_IN_5_SECONDS)); ThreadPoolManager.getInstance().scheduleGeneral(new EndEvent(), 5000); } }
 	 */
 	
 	/**
@@ -635,7 +635,7 @@ public final class BlockCheckerEngine
 			{
 				rewardAsWinner(true);
 				rewardAsLooser(false);
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.TEAM_C1_WON);
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.THE_C1_TEAM_HAS_WON);
 				msg.addString("Red Team");
 				_holder.broadCastPacketToTeam(msg);
 			}
@@ -643,7 +643,7 @@ public final class BlockCheckerEngine
 			{
 				rewardAsWinner(false);
 				rewardAsLooser(true);
-				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.TEAM_C1_WON);
+				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.THE_C1_TEAM_HAS_WON);
 				msg.addString("Blue Team");
 				_holder.broadCastPacketToTeam(msg);
 			}

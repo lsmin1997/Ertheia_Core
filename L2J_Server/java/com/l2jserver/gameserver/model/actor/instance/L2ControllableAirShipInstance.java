@@ -127,7 +127,7 @@ public class L2ControllableAirShipInstance extends L2AirShipInstance
 				final int z = player.getInVehiclePosition().getZ() - 0x6b;
 				if (((x * x) + (y * y) + (z * z)) > 2500)
 				{
-					player.sendPacket(SystemMessageId.CANT_CONTROL_TOO_FAR);
+					player.sendPacket(SystemMessageId.YOU_CANNOT_CONTROL_BECAUSE_YOU_ARE_TOO_FAR);
 					return false;
 				}
 				// TODO: Missing message ID: 2739 Message: You cannot control the helm because you do not meet the requirements.
@@ -219,11 +219,11 @@ public class L2ControllableAirShipInstance extends L2AirShipInstance
 		
 		if ((_fuel == 0) && (old > 0))
 		{
-			broadcastToPassengers(SystemMessage.getSystemMessage(SystemMessageId.THE_AIRSHIP_FUEL_RUN_OUT));
+			broadcastToPassengers(SystemMessage.getSystemMessage(SystemMessageId.THE_AIRSHIP_S_FUEL_EP_HAS_RUN_OUT_THE_AIRSHIP_S_SPEED_WILL_BE_GREATLY_DECREASED_IN_THIS_CONDITION));
 		}
 		else if (_fuel < LOW_FUEL)
 		{
-			broadcastToPassengers(SystemMessage.getSystemMessage(SystemMessageId.THE_AIRSHIP_FUEL_SOON_RUN_OUT));
+			broadcastToPassengers(SystemMessage.getSystemMessage(SystemMessageId.THE_AIRSHIP_S_FUEL_EP_WILL_SOON_RUN_OUT));
 		}
 	}
 	

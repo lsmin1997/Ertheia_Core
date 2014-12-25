@@ -51,13 +51,13 @@ public final class RequestFriendInvite extends L2GameClientPacket
 		// Target is not found in the game.
 		if ((friend == null) || !friend.isOnline() || friend.isInvisible())
 		{
-			activeChar.sendPacket(SystemMessageId.THE_USER_YOU_REQUESTED_IS_NOT_IN_GAME);
+			activeChar.sendPacket(SystemMessageId.THE_USER_WHO_REQUESTED_TO_BECOME_FRIENDS_IS_NOT_FOUND_IN_THE_GAME);
 			return;
 		}
 		// You cannot add yourself to your own friend list.
 		if (friend == activeChar)
 		{
-			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_ADD_YOURSELF_TO_OWN_FRIEND_LIST);
+			activeChar.sendPacket(SystemMessageId.YOU_CANNOT_ADD_YOURSELF_TO_YOUR_OWN_FRIEND_LIST);
 			return;
 		}
 		// Target is in olympiad.
@@ -76,7 +76,7 @@ public final class RequestFriendInvite extends L2GameClientPacket
 		// Target is blocked.
 		if (BlockList.isBlocked(activeChar, friend))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.BLOCKED_C1);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_BLOCKED_C1);
 			sm.addCharName(friend);
 			activeChar.sendPacket(sm);
 			return;
@@ -84,7 +84,7 @@ public final class RequestFriendInvite extends L2GameClientPacket
 		// Target already in friend list.
 		if (activeChar.getFriendList().contains(friend.getObjectId()))
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ALREADY_IN_FRIENDS_LIST);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.THIS_PLAYER_IS_ALREADY_REGISTERED_ON_YOUR_FRIENDS_LIST);
 			sm.addString(_name);
 			activeChar.sendPacket(sm);
 			return;
@@ -92,7 +92,7 @@ public final class RequestFriendInvite extends L2GameClientPacket
 		// Target is busy.
 		if (friend.isProcessingRequest())
 		{
-			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER);
+			sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_ON_ANOTHER_TASK_PLEASE_TRY_AGAIN_LATER);
 			sm.addString(_name);
 			activeChar.sendPacket(sm);
 			return;
@@ -100,7 +100,7 @@ public final class RequestFriendInvite extends L2GameClientPacket
 		// Friend request sent.
 		activeChar.onTransactionRequest(friend);
 		friend.sendPacket(new FriendAddRequest(activeChar.getName()));
-		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_REQUESTED_C1_TO_BE_FRIEND);
+		sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_VE_REQUESTED_C1_TO_BE_ON_YOUR_FRIENDS_LIST);
 		sm.addString(_name);
 		activeChar.sendPacket(sm);
 	}

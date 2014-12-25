@@ -50,7 +50,7 @@ public final class RequestRecipeBookOpen extends L2GameClientPacket
 		
 		if (activeChar.isCastingNow() || activeChar.isCastingSimultaneouslyNow())
 		{
-			activeChar.sendPacket(SystemMessageId.NO_RECIPE_BOOK_WHILE_CASTING);
+			activeChar.sendPacket(SystemMessageId.YOUR_RECIPE_BOOK_MAY_NOT_BE_ACCESSED_WHILE_USING_A_SKILL);
 			return;
 		}
 		

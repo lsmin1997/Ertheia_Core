@@ -109,7 +109,7 @@ public final class CommunityBoardHandler implements IHandler<IParseBoardHandler,
 		
 		if (!Config.ENABLE_COMMUNITY_BOARD)
 		{
-			player.sendPacket(SystemMessageId.CB_OFFLINE);
+			player.sendPacket(SystemMessageId.THE_COMMUNITY_SERVER_IS_CURRENTLY_OFFLINE);
 			return;
 		}
 		
@@ -142,7 +142,7 @@ public final class CommunityBoardHandler implements IHandler<IParseBoardHandler,
 		
 		if (!Config.ENABLE_COMMUNITY_BOARD)
 		{
-			player.sendPacket(SystemMessageId.CB_OFFLINE);
+			player.sendPacket(SystemMessageId.THE_COMMUNITY_SERVER_IS_CURRENTLY_OFFLINE);
 			return;
 		}
 		

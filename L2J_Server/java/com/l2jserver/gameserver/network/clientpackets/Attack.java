@@ -69,7 +69,7 @@ public final class Attack extends L2GameClientPacket
 		// Avoid Attacks in Boat.
 		if (activeChar.isPlayable() && activeChar.isInBoat())
 		{
-			activeChar.sendPacket(SystemMessageId.NOT_ALLOWED_ON_BOAT);
+			activeChar.sendPacket(SystemMessageId.THIS_IS_NOT_ALLOWED_WHILE_RIDING_A_FERRY_OR_BOAT);
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
@@ -81,7 +81,7 @@ public final class Attack extends L2GameClientPacket
 			{
 				if (!effect.checkCondition(-1))
 				{
-					activeChar.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_SO_ACTIONS_NOT_ALLOWED);
+					activeChar.sendPacket(SystemMessageId.YOU_HAVE_BEEN_REPORTED_AS_AN_ILLEGAL_PROGRAM_USER_SO_YOUR_ACTIONS_HAVE_BEEN_RESTRICTED);
 					activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}

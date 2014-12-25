@@ -879,11 +879,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				{
 					if (wpn.getItemType() == WeaponType.FISHINGROD)
 					{
-						sendPacket(SystemMessageId.CANNOT_ATTACK_WITH_FISHING_POLE);
+						sendPacket(SystemMessageId.YOU_LOOK_ODDLY_AT_THE_FISHING_POLE_IN_DISBELIEF_AND_REALIZE_THAT_YOU_CAN_T_ATTACK_ANYTHING_WITH_THIS);
 					}
 					else
 					{
-						sendPacket(SystemMessageId.THAT_WEAPON_CANT_ATTACK);
+						sendPacket(SystemMessageId.THAT_WEAPON_CANNOT_PERFORM_ANY_ATTACKS);
 					}
 					sendPacket(ActionFailed.STATIC_PACKET);
 					return;
@@ -901,7 +901,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				
 				else if ((target.getActingPlayer() != null) && (getActingPlayer().getSiegeState() > 0) && isInsideZone(ZoneId.SIEGE) && (target.getActingPlayer().getSiegeState() == getActingPlayer().getSiegeState()) && (target.getActingPlayer() != this) && (target.getActingPlayer().getSiegeSide() == getActingPlayer().getSiegeSide()))
 				{
-					sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
+					sendPacket(SystemMessageId.FORCE_ATTACK_IS_IMPOSSIBLE_AGAINST_A_TEMPORARY_ALLIED_MEMBER_DURING_A_SIEGE);
 					sendPacket(ActionFailed.STATIC_PACKET);
 					return;
 				}
@@ -929,7 +929,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			// GeoData Los Check here (or dz > 1000)
 			if (!GeoData.getInstance().canSeeTarget(this, target))
 			{
-				sendPacket(SystemMessageId.CANT_SEE_TARGET);
+				sendPacket(SystemMessageId.CANNOT_SEE_TARGET);
 				getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
 				sendPacket(ActionFailed.STATIC_PACKET);
 				return;
@@ -958,7 +958,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 							// Cancel the action because the L2PcInstance have no arrow
 							getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 							sendPacket(ActionFailed.STATIC_PACKET);
-							sendPacket(SystemMessageId.NOT_ENOUGH_ARROWS);
+							sendPacket(SystemMessageId.YOU_HAVE_RUN_OUT_OF_ARROWS);
 							return;
 						}
 						
@@ -1315,7 +1315,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		if (isPlayer())
 		{
 			// Send a system message
-			sendPacket(SystemMessageId.CROSSBOW_PREPARING_TO_FIRE);
+			sendPacket(SystemMessageId.YOUR_CROSSBOW_IS_PREPARING_TO_FIRE);
 			
 			// Send a Server->Client packet SetupGauge
 			SetupGauge sg = new SetupGauge(SetupGauge.RED, sAtk + reuse);
@@ -1905,7 +1905,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				
 				if (getActingPlayer() != null)
 				{
-					getActingPlayer().sendPacket(SystemMessageId.SKILL_READY_TO_USE_AGAIN);
+					getActingPlayer().sendPacket(SystemMessageId.A_SKILL_IS_READY_TO_BE_USED_AGAIN);
 				}
 			}
 			
@@ -1925,7 +1925,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				if (!destroyItemByItemId("Consume", skill.getItemConsumeId(), skill.getItemConsumeCount(), null, true))
 				{
-					getActingPlayer().sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+					getActingPlayer().sendPacket(SystemMessageId.INCORRECT_ITEM_COUNT2);
 					abortCast();
 					return;
 				}
@@ -1962,12 +1962,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				}
 				case 2046: // Wolf Collar
 				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMON_A_PET);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMONING_YOUR_PET);
 					break;
 				}
 				default:
 				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.USE_S1);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_USE_S1);
 					sm.addSkillName(skill);
 					break;
 				}
@@ -2121,7 +2121,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			}
 			if (!canCast)
 			{
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED);
+				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS);
 				sm.addSkillName(skill);
 				sendPacket(sm);
 				return false;
@@ -2147,7 +2147,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				{
 					if (getActingPlayer() != null)
 					{
-						sendPacket(SystemMessageId.WEAPON_CAN_USE_ONLY_WEAPON_SKILL);
+						sendPacket(SystemMessageId.THAT_WEAPON_CANNOT_USE_ANY_OTHER_SKILL_EXCEPT_THE_WEAPON_S_SKILL);
 					}
 					return false;
 				}
@@ -2167,7 +2167,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				// Checked: when a summon skill failed, server show required consume item count
 				if (skill.hasEffectType(L2EffectType.SUMMON))
 				{
-					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMONING_SERVITOR_COSTS_S2_S1);
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.SUMMONING_A_SERVITOR_COSTS_S2_S1);
 					sm.addItemName(skill.getItemConsumeId());
 					sm.addInt(skill.getItemConsumeCount());
 					sendPacket(sm);
@@ -5160,7 +5160,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			if (isPlayer())
 			{
 				// Send a system message
-				sendPacket(SystemMessageId.ATTACK_FAILED);
+				sendPacket(SystemMessageId.YOUR_ATTACK_HAS_FAILED);
 			}
 		}
 	}
@@ -5179,7 +5179,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			if (isPlayer())
 			{
 				// Send a system message
-				sendPacket(SystemMessageId.CASTING_INTERRUPTED);
+				sendPacket(SystemMessageId.YOUR_CASTING_HAS_BEEN_INTERRUPTED);
 			}
 		}
 	}
@@ -5211,7 +5211,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		if (isInsidePeaceZone(player))
 		{
 			// If L2Character or target is in a peace zone, send a system message TARGET_IN_PEACEZONE a Server->Client packet ActionFailed
-			player.sendPacket(SystemMessageId.TARGET_IN_PEACEZONE);
+			player.sendPacket(SystemMessageId.YOU_MAY_NOT_ATTACK_THIS_TARGET_IN_A_PEACEFUL_ZONE);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
@@ -5246,7 +5246,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		// GeoData Los Check or dz > 1000
 		if (!GeoData.getInstance().canSeeTarget(player, this))
 		{
-			player.sendPacket(SystemMessageId.CANT_SEE_TARGET);
+			player.sendPacket(SystemMessageId.CANNOT_SEE_TARGET);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
@@ -5619,15 +5619,15 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				{
 					if (_skiprange > 0)
 					{
-						sendPacket(SystemMessageId.DIST_TOO_FAR_CASTING_STOPPED);
+						sendPacket(SystemMessageId.THE_DISTANCE_IS_TOO_FAR_AND_SO_THE_CASTING_HAS_BEEN_STOPPED);
 					}
 					else if (_skipgeo > 0)
 					{
-						sendPacket(SystemMessageId.CANT_SEE_TARGET);
+						sendPacket(SystemMessageId.CANNOT_SEE_TARGET);
 					}
 					else if (_skippeace > 0)
 					{
-						sendPacket(SystemMessageId.A_MALICIOUS_SKILL_CANNOT_BE_USED_IN_PEACE_ZONE);
+						sendPacket(SystemMessageId.A_MALICIOUS_SKILL_CANNOT_BE_USED_IN_A_PEACE_ZONE);
 					}
 				}
 				abortCast();

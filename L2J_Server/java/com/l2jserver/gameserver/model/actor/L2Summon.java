@@ -422,7 +422,7 @@ public abstract class L2Summon extends L2Playable
 				if ((getInventory() != null) && (getInventory().getSize() > 0))
 				{
 					getOwner().setPetInvItems(true);
-					sendPacket(SystemMessageId.ITEMS_IN_PET_INVENTORY);
+					sendPacket(SystemMessageId.THERE_ARE_ITEMS_IN_YOUR_PET_INVENTORY_RENDERING_YOU_UNABLE_TO_SELL_TRADE_DROP_PET_SUMMONING_ITEMS_PLEASE_EMPTY_YOUR_PET_INVENTORY);
 				}
 				else
 				{
@@ -648,14 +648,14 @@ public abstract class L2Summon extends L2Playable
 		// Check the validity of the target
 		if (target == null)
 		{
-			sendPacket(SystemMessageId.TARGET_CANT_FOUND);
+			sendPacket(SystemMessageId.YOUR_TARGET_CANNOT_BE_FOUND);
 			return false;
 		}
 		
 		// Check if this skill is enabled (e.g. reuse time)
 		if (isSkillDisabled(skill))
 		{
-			sendPacket(SystemMessageId.PET_SKILL_CANNOT_BE_USED_RECHARCHING);
+			sendPacket(SystemMessageId.THAT_PET_SERVITOR_SKILL_CANNOT_BE_USED_BECAUSE_IT_IS_RECHARGING);
 			return false;
 		}
 		
@@ -687,7 +687,7 @@ public abstract class L2Summon extends L2Playable
 			if (isInsidePeaceZone(this, target) && !getOwner().getAccessLevel().allowPeaceAttack())
 			{
 				// If summon or target is in a peace zone, send a system message:
-				sendPacket(SystemMessageId.TARGET_IN_PEACEZONE);
+				sendPacket(SystemMessageId.YOU_MAY_NOT_ATTACK_THIS_TARGET_IN_A_PEACEFUL_ZONE);
 				return false;
 			}
 			
@@ -700,7 +700,7 @@ public abstract class L2Summon extends L2Playable
 			
 			if ((target.getActingPlayer() != null) && (getOwner().getSiegeState() > 0) && getOwner().isInsideZone(ZoneId.SIEGE) && (target.getActingPlayer().getSiegeState() == getOwner().getSiegeState()) && (target.getActingPlayer() != getOwner()) && (target.getActingPlayer().getSiegeSide() == getOwner().getSiegeSide()))
 			{
-				sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
+				sendPacket(SystemMessageId.FORCE_ATTACK_IS_IMPOSSIBLE_AGAINST_A_TEMPORARY_ALLIED_MEMBER_DURING_A_SIEGE);
 				sendPacket(ActionFailed.STATIC_PACKET);
 				return false;
 			}
@@ -774,11 +774,11 @@ public abstract class L2Summon extends L2Playable
 			{
 				if (isServitor())
 				{
-					sendPacket(SystemMessageId.CRITICAL_HIT_BY_SUMMONED_MOB);
+					sendPacket(SystemMessageId.SUMMONED_MONSTER_S_CRITICAL_HIT);
 				}
 				else
 				{
-					sendPacket(SystemMessageId.CRITICAL_HIT_BY_PET);
+					sendPacket(SystemMessageId.PET_S_CRITICAL_HIT);
 				}
 			}
 			
@@ -791,11 +791,11 @@ public abstract class L2Summon extends L2Playable
 			
 			if (target.isInvul() && !(target instanceof L2NpcInstance))
 			{
-				sm = SystemMessage.getSystemMessage(SystemMessageId.ATTACK_WAS_BLOCKED);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.THE_ATTACK_HAS_BEEN_BLOCKED);
 			}
 			else
 			{
-				sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DONE_S3_DAMAGE_TO_C2_S4);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_INFLICTED_S3_DAMAGE_ON_C2);
 				sm.addNpcName(this);
 				sm.addCharName(target);
 				sm.addInt(damage);
@@ -812,7 +812,7 @@ public abstract class L2Summon extends L2Playable
 		super.reduceCurrentHp(damage, attacker, skill);
 		if ((getOwner() != null) && (attacker != null))
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_RECEIVED_DAMAGE_OF_S3_FROM_C2);
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_RECEIVED_S3_DAMAGE_FROM_C2);
 			sm.addNpcName(this);
 			sm.addCharName(attacker);
 			sm.addInt((int) damage);
@@ -827,7 +827,7 @@ public abstract class L2Summon extends L2Playable
 		if (!actingPlayer.checkPvpSkill(getTarget(), skill) && !actingPlayer.getAccessLevel().allowPeaceAttack())
 		{
 			// Send a System Message to the L2PcInstance
-			actingPlayer.sendPacket(SystemMessageId.TARGET_IS_INCORRECT);
+			actingPlayer.sendPacket(SystemMessageId.THAT_IS_AN_INCORRECT_TARGET);
 			
 			// Send a Server->Client packet ActionFailed to the L2PcInstance
 			actingPlayer.sendPacket(ActionFailed.STATIC_PACKET);
@@ -1019,7 +1019,7 @@ public abstract class L2Summon extends L2Playable
 		
 		if (isBetrayed())
 		{
-			sendPacket(SystemMessageId.PET_REFUSING_ORDER);
+			sendPacket(SystemMessageId.YOUR_PET_SERVITOR_IS_UNRESPONSIVE_AND_WILL_NOT_OBEY_ANY_ORDERS);
 			sendPacket(ActionFailed.STATIC_PACKET);
 			return false;
 		}
@@ -1035,7 +1035,7 @@ public abstract class L2Summon extends L2Playable
 		
 		if (isPet() && ((getLevel() - getOwner().getLevel()) > 20))
 		{
-			sendPacket(SystemMessageId.PET_TOO_HIGH_TO_CONTROL);
+			sendPacket(SystemMessageId.YOUR_PET_IS_TOO_HIGH_LEVEL_TO_CONTROL);
 			sendPacket(ActionFailed.STATIC_PACKET);
 			return false;
 		}
@@ -1049,20 +1049,20 @@ public abstract class L2Summon extends L2Playable
 		
 		if ((target.getActingPlayer() != null) && (getOwner().getSiegeState() > 0) && getOwner().isInsideZone(ZoneId.SIEGE) && (target.getActingPlayer().getSiegeSide() == getOwner().getSiegeSide()))
 		{
-			sendPacket(SystemMessageId.FORCED_ATTACK_IS_IMPOSSIBLE_AGAINST_SIEGE_SIDE_TEMPORARY_ALLIED_MEMBERS);
+			sendPacket(SystemMessageId.FORCE_ATTACK_IS_IMPOSSIBLE_AGAINST_A_TEMPORARY_ALLIED_MEMBER_DURING_A_SIEGE);
 			sendPacket(ActionFailed.STATIC_PACKET);
 			return false;
 		}
 		
 		if (!getOwner().getAccessLevel().allowPeaceAttack() && getOwner().isInsidePeaceZone(this, target))
 		{
-			sendPacket(SystemMessageId.TARGET_IN_PEACEZONE);
+			sendPacket(SystemMessageId.YOU_MAY_NOT_ATTACK_THIS_TARGET_IN_A_PEACEFUL_ZONE);
 			return false;
 		}
 		
 		if (isLockedTarget())
 		{
-			sendPacket(SystemMessageId.FAILED_CHANGE_TARGET);
+			sendPacket(SystemMessageId.FAILED_TO_CHANGE_ENMITY);
 			return false;
 		}
 		
@@ -1071,7 +1071,7 @@ public abstract class L2Summon extends L2Playable
 		{
 			setFollowStatus(false);
 			getAI().setIntention(CtrlIntention.AI_INTENTION_FOLLOW, target);
-			sendPacket(SystemMessageId.INCORRECT_TARGET);
+			sendPacket(SystemMessageId.INVALID_TARGET);
 			return false;
 		}
 		

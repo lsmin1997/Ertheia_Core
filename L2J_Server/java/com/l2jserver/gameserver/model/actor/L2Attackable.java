@@ -1021,7 +1021,7 @@ public class L2Attackable extends L2Npc
 				// Broadcast message if RaidBoss was defeated
 				if (isRaid() && !isRaidMinion())
 				{
-					final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_DROPPED_S3_S2);
+					final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DIED_AND_DROPPED_S3_S2_S);
 					sm.addCharName(this);
 					sm.addItemName(item);
 					sm.addLong(drop.getCount());
@@ -1202,7 +1202,7 @@ public class L2Attackable extends L2Npc
 		{
 			if (sendMessage && (attacker != null))
 			{
-				attacker.sendPacket(SystemMessageId.CORPSE_TOO_OLD_SKILL_NOT_USED);
+				attacker.sendPacket(SystemMessageId.THE_CORPSE_IS_TOO_OLD_THE_SKILL_CANNOT_BE_USED);
 			}
 			return true;
 		}
@@ -1220,7 +1220,7 @@ public class L2Attackable extends L2Npc
 		{
 			if (sendMessage)
 			{
-				sweeper.sendPacket(SystemMessageId.SWEEP_NOT_ALLOWED);
+				sweeper.sendPacket(SystemMessageId.THERE_ARE_NO_PRIORITY_RIGHTS_ON_A_SWEEPER);
 			}
 			return false;
 		}

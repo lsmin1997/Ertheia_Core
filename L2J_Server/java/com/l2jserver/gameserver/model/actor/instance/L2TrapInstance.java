@@ -327,11 +327,11 @@ public final class L2TrapInstance extends L2Npc
 		
 		if (target.isInvul() && !(target instanceof L2NpcInstance))
 		{
-			_owner.sendPacket(SystemMessageId.ATTACK_WAS_BLOCKED);
+			_owner.sendPacket(SystemMessageId.THE_ATTACK_HAS_BEEN_BLOCKED);
 		}
 		else
 		{
-			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_DONE_S3_DAMAGE_TO_C2_S4);
+			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_INFLICTED_S3_DAMAGE_ON_C2);
 			sm.addCharName(this);
 			sm.addCharName(target);
 			sm.addInt(damage);

@@ -1307,17 +1307,17 @@ public final class L2ItemInstance extends L2Object
 			switch (_mana)
 			{
 				case 10:
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S1S_REMAINING_MANA_IS_NOW_10);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S_REMAINING_MANA_IS_NOW_10);
 					sm.addItemName(_item);
 					player.sendPacket(sm);
 					break;
 				case 5:
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S1S_REMAINING_MANA_IS_NOW_5);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S_REMAINING_MANA_IS_NOW_5);
 					sm.addItemName(_item);
 					player.sendPacket(sm);
 					break;
 				case 1:
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S1S_REMAINING_MANA_IS_NOW_1);
+					sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S_REMAINING_MANA_IS_NOW_1_IT_WILL_DISAPPEAR_SOON);
 					sm.addItemName(_item);
 					player.sendPacket(sm);
 					break;
@@ -1325,7 +1325,7 @@ public final class L2ItemInstance extends L2Object
 			
 			if (_mana == 0) // The life time has expired
 			{
-				sm = SystemMessage.getSystemMessage(SystemMessageId.S1S_REMAINING_MANA_IS_NOW_0);
+				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S_REMAINING_MANA_IS_NOW_0_AND_THE_ITEM_HAS_DISAPPEARED);
 				sm.addItemName(_item);
 				player.sendPacket(sm);
 				
@@ -1857,7 +1857,7 @@ public final class L2ItemInstance extends L2Object
 			{
 				player.getWarehouse().destroyItem("L2ItemInstance", this, player, null);
 			}
-			player.sendPacket(SystemMessageId.TIME_LIMITED_ITEM_DELETED);
+			player.sendPacket(SystemMessageId.THE_LIMITED_TIME_ITEM_HAS_DISAPPEARED_BECAUSE_THE_REMAINING_TIME_RAN_OUT);
 			// delete from world
 			L2World.getInstance().removeObject(this);
 		}

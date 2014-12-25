@@ -88,7 +88,7 @@ public final class RequestPartyMatchDetail extends L2GameClientPacket
 				
 				_member.sendPacket(new ExManagePartyRoomMember(_activeChar, _room, 0));
 				
-				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_ENTERED_PARTY_ROOM);
+				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_ENTERED_THE_PARTY_ROOM);
 				sm.addCharName(_activeChar);
 				_member.sendPacket(sm);
 			}
@@ -99,7 +99,7 @@ public final class RequestPartyMatchDetail extends L2GameClientPacket
 		}
 		else
 		{
-			_activeChar.sendPacket(SystemMessageId.CANT_ENTER_PARTY_ROOM);
+			_activeChar.sendPacket(SystemMessageId.YOU_DO_NOT_MEET_THE_REQUIREMENTS_TO_ENTER_THAT_PARTY_ROOM);
 		}
 	}
 	

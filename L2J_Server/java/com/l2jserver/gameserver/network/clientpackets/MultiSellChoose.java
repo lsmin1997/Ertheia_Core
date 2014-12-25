@@ -139,13 +139,13 @@ public class MultiSellChoose extends L2GameClientPacket
 				
 				if (!inv.validateWeight(weight))
 				{
-					player.sendPacket(SystemMessageId.WEIGHT_LIMIT_EXCEEDED);
+					player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_WEIGHT_LIMIT);
 					return;
 				}
 				
 				if (!inv.validateCapacity(slots))
 				{
-					player.sendPacket(SystemMessageId.SLOTS_FULL);
+					player.sendPacket(SystemMessageId.YOUR_INVENTORY_IS_FULL);
 					return;
 				}
 				
@@ -167,7 +167,7 @@ public class MultiSellChoose extends L2GameClientPacket
 						{
 							if ((ex.getItemCount() + e.getItemCount()) > Integer.MAX_VALUE)
 							{
-								player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_QUANTITY_THAT_CAN_BE_INPUTTED);
+								player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_QUANTITY_THAT_CAN_BE_INPUTTED);
 								return;
 							}
 							// two same ingredients, merge into one and replace old
@@ -190,7 +190,7 @@ public class MultiSellChoose extends L2GameClientPacket
 				{
 					if ((e.getItemCount() * _amount) > Integer.MAX_VALUE)
 					{
-						player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_QUANTITY_THAT_CAN_BE_INPUTTED);
+						player.sendPacket(SystemMessageId.YOU_HAVE_EXCEEDED_THE_QUANTITY_THAT_CAN_BE_INPUTTED);
 						return;
 					}
 					if (e.getItemId() < 0)
@@ -207,7 +207,7 @@ public class MultiSellChoose extends L2GameClientPacket
 						final long required = ((Config.ALT_BLACKSMITH_USE_RECIPES || !e.getMaintainIngredient()) ? (e.getItemCount() * _amount) : e.getItemCount());
 						if (inv.getInventoryItemCount(e.getItemId(), list.getMaintainEnchantment() ? e.getEnchantLevel() : -1, false) < required)
 						{
-							SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_UNIT_OF_THE_ITEM_S1_REQUIRED);
+							SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_NEED_S2_S1_S);
 							sm.addItemName(e.getTemplate());
 							sm.addLong(required);
 							player.sendPacket(sm);
@@ -423,7 +423,7 @@ public class MultiSellChoose extends L2GameClientPacket
 							
 							if ((e.getItemCount() * _amount) > 1)
 							{
-								sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S);
+								sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S2_S1_S);
 								sm.addItemName(e.getItemId());
 								sm.addLong(e.getItemCount() * _amount);
 								player.sendPacket(sm);
@@ -438,7 +438,7 @@ public class MultiSellChoose extends L2GameClientPacket
 								}
 								else
 								{
-									sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_ITEM_S1);
+									sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_EARNED_S1);
 									sm.addItemName(e.getItemId());
 								}
 								player.sendPacket(sm);

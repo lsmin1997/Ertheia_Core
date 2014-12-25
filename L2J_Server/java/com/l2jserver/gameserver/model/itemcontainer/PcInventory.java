@@ -868,10 +868,10 @@ public class PcInventory extends Inventory
 		boolean inventoryStatusOK = validateCapacity(requiredSlots) && validateWeight(lootWeight);
 		if (!inventoryStatusOK && sendMessage)
 		{
-			_owner.sendPacket(SystemMessageId.SLOTS_FULL);
+			_owner.sendPacket(SystemMessageId.YOUR_INVENTORY_IS_FULL);
 			if (sendSkillMessage)
 			{
-				_owner.sendPacket(SystemMessageId.WEIGHT_EXCEEDED_SKILL_UNAVAILABLE);
+				_owner.sendPacket(SystemMessageId.WEIGHT_AND_VOLUME_LIMIT_HAVE_BEEN_EXCEEDED_THAT_SKILL_IS_CURRENTLY_UNAVAILABLE);
 			}
 		}
 		return inventoryStatusOK;

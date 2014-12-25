@@ -219,7 +219,7 @@ public final class L2BabyPetInstance extends L2PetInstance
 		setTarget(getOwner());
 		useMagic(skill, false, false);
 		
-		SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.PET_USES_S1);
+		SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.YOUR_PET_USES_S1);
 		msg.addSkillName(skill);
 		sendPacket(msg);
 		
