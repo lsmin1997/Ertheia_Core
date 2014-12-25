@@ -36,9 +36,7 @@ public final class TradeOtherAdd extends AbstractItemPacket
 	protected final void writeImpl()
 	{
 		writeC(0x1B);
-		
 		writeH(1); // item count
-		writeH(0);
-		writeItem(_item);
+		writeTradeItem(_item);
 	}
 }

@@ -25,6 +25,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.TradeOtherAdd;
 import com.l2jserver.gameserver.network.serverpackets.TradeOwnAdd;
+import com.l2jserver.gameserver.network.serverpackets.TradeUpdate;
 
 /**
  * This class ...
@@ -98,7 +99,8 @@ public final class AddTradeItem extends L2GameClientPacket
 		if (item != null)
 		{
 			player.sendPacket(new TradeOwnAdd(item));
-			trade.getPartner().sendPacket(new TradeOtherAdd(item));
+			player.sendPacket(new TradeUpdate(player, item));
+			partner.sendPacket(new TradeOtherAdd(item));
 		}
 	}
 	

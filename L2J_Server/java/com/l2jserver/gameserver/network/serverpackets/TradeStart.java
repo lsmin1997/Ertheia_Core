@@ -26,26 +26,46 @@ import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 public final class TradeStart extends AbstractItemPacket
 {
 	private final L2PcInstance _activeChar;
+	private final L2PcInstance _partner;
 	private final L2ItemInstance[] _itemList;
+	private int _mask = 0;
 	
 	public TradeStart(L2PcInstance player)
 	{
 		_activeChar = player;
+		_partner = player.getActiveTradeList().getPartner();
 		_itemList = _activeChar.getInventory().getAvailableItems(true, (_activeChar.canOverrideCond(PcCondOverride.ITEM_CONDITIONS) && Config.GM_TRADE_RESTRICTED_ITEMS), false);
+		
+		if (_partner != null)
+		{
+			if (player.getFriendList().contains(_partner.getObjectId()))
+			{
+				_mask |= 0x01;
+			}
+			if ((player.getClanId() > 0) && (_partner.getClanId() == _partner.getClanId()))
+			{
+				_mask |= 0x02;
+			}
+			// TODO : if mentor, _mask |= 0x04;
+			if ((player.getAllyId() > 0) && (player.getAllyId() == _partner.getAllyId()))
+			{
+				_mask |= 0x08;
+			}
+		}
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
-		if ((_activeChar.getActiveTradeList() == null) || (_activeChar.getActiveTradeList().getPartner() == null))
+		if ((_activeChar.getActiveTradeList() == null) || (_partner == null))
 		{
 			return;
 		}
 		
 		writeC(0x14);
-		writeD(_activeChar.getActiveTradeList().getPartner().getObjectId());
-		writeC(0x00); // some kind of mask
-		writeC(_activeChar.getActiveTradeList().getPartner().getLevel()); // if(!previous readC & 10)
+		writeD(_partner.getObjectId());
+		writeC(_mask); // some kind of mask
+		writeC(_partner.getLevel());
 		writeH(_itemList.length);
 		for (L2ItemInstance item : _itemList)
 		{

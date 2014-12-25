@@ -67,6 +67,21 @@ public abstract class AbstractItemPacket extends AbstractMaskPacket<ItemListType
 		writeItem(new ItemInfo(item));
 	}
 	
+	protected void writeTradeItem(TradeItem item)
+	{
+		writeH(item.getItem().getType1());
+		writeD(item.getObjectId()); // ObjectId
+		writeD(item.getItem().getDisplayId()); // ItemId
+		writeQ(item.getCount()); // Quantity
+		writeC(item.getItem().getType2()); // Item Type 2 : 00-weapon, 01-shield/armor, 02-ring/earring/necklace, 03-questitem, 04-adena, 05-item
+		writeC(item.getCustomType1()); // Filler (always 0)
+		writeQ(item.getItem().getBodyPart()); // Slot : 0006-lr.ear, 0008-neck, 0030-lr.finger, 0040-head, 0100-l.hand, 0200-gloves, 0400-chest, 0800-pants, 1000-feet, 4000-r.hand, 8000-r.hand
+		writeH(item.getEnchant()); // Enchant level (pet level shown in control item)
+		writeH(0x00); // Equipped : 00-No, 01-yes
+		writeH(item.getCustomType2());
+		writeItemElementalAndEnchant(new ItemInfo(item));
+	}
+	
 	protected void writeItem(ItemInfo item)
 	{
 		final int mask = calculateMask(item);

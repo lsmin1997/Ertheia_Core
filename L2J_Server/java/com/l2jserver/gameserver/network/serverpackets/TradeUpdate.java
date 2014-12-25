@@ -19,24 +19,28 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.gameserver.model.TradeItem;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * @author Yme
+ * @author daemon
  */
-public final class TradeOwnAdd extends AbstractItemPacket
+public class TradeUpdate extends AbstractItemPacket
 {
 	private final TradeItem _item;
+	private final long _newCount;
 	
-	public TradeOwnAdd(TradeItem item)
+	public TradeUpdate(L2PcInstance player, TradeItem item)
 	{
 		_item = item;
+		_newCount = player.getInventory().getItemByObjectId(item.getObjectId()).getCount() - item.getCount();
 	}
 	
 	@Override
-	protected final void writeImpl()
+	protected void writeImpl()
 	{
-		writeC(0x1A);
-		writeH(1); // items added count
+		writeC(0x81);
+		writeH(1);
+		writeH((_newCount > 0) && _item.getItem().isStackable() ? 3 : 2);
 		writeTradeItem(_item);
 	}
 }
