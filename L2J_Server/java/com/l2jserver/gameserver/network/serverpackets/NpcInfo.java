@@ -53,6 +53,7 @@ public class NpcInfo extends AbstractMaskPacket<NpcInfoType>
 	private int _allyCrest = 0;
 	private int _allyId = 0;
 	private int _clanId = 0;
+	private int _statusMask = 0;
 	
 	public NpcInfo(L2Npc npc)
 	{
@@ -163,15 +164,26 @@ public class NpcInfo extends AbstractMaskPacket<NpcInfoType>
 		
 		addComponentType(NpcInfoType.UNKNOWN8);
 		
-		for (int i = 0x0C; i <= 0x16; ++i)
+		// TODO: Confirm me
+		if (npc.isInCombat())
 		{
-			if (containsMask(i))
-			{
-				// Add one byte.
-				_blockSize++;
-				break;
-			}
+			_statusMask |= 0x01;
 		}
+		if (npc.isDead())
+		{
+			_statusMask |= 0x02;
+		}
+		if (npc.isTargetable())
+		{
+			_statusMask |= 0x04;
+		}
+		if (npc.isShowName())
+		{
+			_statusMask |= 0x08;
+		}
+		
+		// Add one byte.
+		_blockSize++;
 	}
 	
 	@Override
@@ -370,14 +382,7 @@ public class NpcInfo extends AbstractMaskPacket<NpcInfoType>
 			writeD(_allyCrest);
 		}
 		
-		for (int i = 0x0C; i <= 0x16; ++i)
-		{
-			if (containsMask(i))
-			{
-				writeC(i);
-				break;
-			}
-		}
+		writeC(_statusMask);
 		
 		if (containsMask(NpcInfoType.ABNORMALS))
 		{
