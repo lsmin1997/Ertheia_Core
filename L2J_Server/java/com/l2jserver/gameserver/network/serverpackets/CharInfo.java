@@ -172,9 +172,9 @@ public class CharInfo extends L2GameServerPacket
 		writeF(_activeChar.getCollisionRadius());
 		writeF(_activeChar.getCollisionHeight());
 		
-		writeD(_activeChar.getAppearance().getHairStyle());
-		writeD(_activeChar.getAppearance().getHairColor());
-		writeD(_activeChar.getAppearance().getFace());
+		writeD(_activeChar.getVisualHair());
+		writeD(_activeChar.getVisualHairColor());
+		writeD(_activeChar.getVisualFace());
 		
 		writeS(gmSeeInvis ? "Invisible" : _activeChar.getAppearance().getVisibleTitle());
 		

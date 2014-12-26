@@ -798,6 +798,16 @@ public final class RequestActionUse extends L2GameClientPacket
 			case 66: // Shyness
 				tryBroadcastSocial(15);
 				break;
+			case 87: // Propose
+				tryBroadcastSocial(28);
+				break;
+			case 88: // Provoke
+				tryBroadcastSocial(29);
+				break;
+			case 89: // Beauty Shop
+				tryBroadcastSocial(30);
+				activeChar.broadcastInfo();
+				break;
 			default:
 				_log.warning(activeChar.getName() + ": unhandled action type " + _actionId);
 				break;

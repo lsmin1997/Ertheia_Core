@@ -18,6 +18,7 @@
  */
 package com.l2jserver.gameserver.model.actor.appearance;
 
+import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 public class PcAppearance
@@ -142,6 +143,14 @@ public class PcAppearance
 	public final boolean getSex()
 	{
 		return _sex;
+	}
+	
+	/**
+	 * @return Sex of the char
+	 */
+	public Sex getSexType()
+	{
+		return _sex ? Sex.FEMALE : Sex.MALE;
 	}
 	
 	/**

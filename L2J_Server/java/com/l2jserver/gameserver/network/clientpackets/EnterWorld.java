@@ -25,6 +25,7 @@ import com.l2jserver.gameserver.LoginServerThread;
 import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.AnnouncementsTable;
+import com.l2jserver.gameserver.datatables.BeautyShopData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
@@ -62,6 +63,7 @@ import com.l2jserver.gameserver.network.serverpackets.Die;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
+import com.l2jserver.gameserver.network.serverpackets.ExBeautyItemList;
 import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
@@ -563,6 +565,11 @@ public class EnterWorld extends L2GameClientPacket
 		}
 		
 		activeChar.broadcastUserInfo();
+		
+		if (BeautyShopData.getInstance().hasBeautyData(activeChar.getRace(), activeChar.getAppearance().getSexType()))
+		{
+			activeChar.sendPacket(new ExBeautyItemList(activeChar));
+		}
 	}
 	
 	/**

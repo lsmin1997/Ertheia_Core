@@ -1472,15 +1472,15 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestEventKalieToken(); // (d)
 								break;
 							case 0xCA:
-								// msg = new RequestShowBeautyList();
+								msg = new RequestShowBeautyList();
 								break;
 							case 0xCB:
-								// msg = new RequestRegistBeauty();
+								msg = new RequestRegistBeauty();
 								break;
 							case 0xCC:
 								break;
 							case 0xCD:
-								// msg = new RequestShowResetShopList();
+								msg = new RequestShowResetShopList();
 								break;
 							case 0xCE:
 								// NetPing
@@ -1539,7 +1539,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// ResponsePetitionAlarm
 								break;
 							case 0xE1:
-								// msg = new NotifyExitBeautyShop();
+								msg = new NotifyExitBeautyShop();
 								break;
 							case 0xE2:
 								// RequestRegisterXMasWishCard

@@ -42,6 +42,7 @@ import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.AnnouncementsTable;
 import com.l2jserver.gameserver.datatables.ArmorSetsData;
 import com.l2jserver.gameserver.datatables.AugmentationData;
+import com.l2jserver.gameserver.datatables.BeautyShopData;
 import com.l2jserver.gameserver.datatables.BotReportTable;
 import com.l2jserver.gameserver.datatables.BuyListData;
 import com.l2jserver.gameserver.datatables.CategoryData;
@@ -246,6 +247,7 @@ public class GameServer
 		RaidBossPointsManager.getInstance();
 		PetDataTable.getInstance();
 		CharSummonTable.getInstance().init();
+		BeautyShopData.getInstance();
 		
 		printSection("Clans");
 		ClanTable.getInstance();

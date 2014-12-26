@@ -54,6 +54,7 @@ public class PcInventory extends Inventory
 	private final L2PcInstance _owner;
 	private L2ItemInstance _adena;
 	private L2ItemInstance _ancientAdena;
+	private L2ItemInstance _beautyTickets;
 	
 	private int[] _blockItems = null;
 	
@@ -113,6 +114,17 @@ public class PcInventory extends Inventory
 	public long getAncientAdena()
 	{
 		return (_ancientAdena != null) ? _ancientAdena.getCount() : 0;
+	}
+	
+	public L2ItemInstance getBeautyTicketsInstance()
+	{
+		return _beautyTickets;
+	}
+	
+	@Override
+	public long getBeautyTickets()
+	{
+		return _beautyTickets != null ? _beautyTickets.getCount() : 0;
 	}
 	
 	/**
@@ -433,7 +445,7 @@ public class PcInventory extends Inventory
 	}
 	
 	/**
-	 * Adds adena to PCInventory
+	 * Adds adena to PcInventory
 	 * @param process : String Identifier of process triggering this action
 	 * @param count : int Quantity of adena to be added
 	 * @param actor : L2PcInstance Player requesting the item add
@@ -448,7 +460,22 @@ public class PcInventory extends Inventory
 	}
 	
 	/**
-	 * Removes adena to PCInventory
+	 * Adds Beauty Tickets to PcInventory
+	 * @param process : String Identifier of process triggering this action
+	 * @param count : int Quantity of Beauty Tickets to be added
+	 * @param actor : L2PcInstance Player requesting the item add
+	 * @param reference : Object Object referencing current action like NPC selling item or previous item in transformation
+	 */
+	public void addBeautyTickets(String process, long count, L2PcInstance actor, Object reference)
+	{
+		if (count > 0)
+		{
+			addItem(process, BEAUTY_TICKET_ID, count, actor, reference);
+		}
+	}
+	
+	/**
+	 * Removes adena to PcInventory
 	 * @param process : String Identifier of process triggering this action
 	 * @param count : int Quantity of adena to be removed
 	 * @param actor : L2PcInstance Player requesting the item add
@@ -460,6 +487,23 @@ public class PcInventory extends Inventory
 		if (count > 0)
 		{
 			return destroyItemByItemId(process, ADENA_ID, count, actor, reference) != null;
+		}
+		return false;
+	}
+	
+	/**
+	 * Removes Beauty Tickets to PcInventory
+	 * @param process : String Identifier of process triggering this action
+	 * @param count : int Quantity of Beauty Tickets to be removed
+	 * @param actor : L2PcInstance Player requesting the item add
+	 * @param reference : Object Object referencing current action like NPC selling item or previous item in transformation
+	 * @return boolean : true if adena was reduced
+	 */
+	public boolean reduceBeautyTickets(String process, long count, L2PcInstance actor, Object reference)
+	{
+		if (count > 0)
+		{
+			return destroyItemByItemId(process, BEAUTY_TICKET_ID, count, actor, reference) != null;
 		}
 		return false;
 	}
@@ -509,48 +553,21 @@ public class PcInventory extends Inventory
 	{
 		item = super.addItem(process, item, actor, reference);
 		
-		if ((item != null) && (item.getId() == ADENA_ID) && !item.equals(_adena))
-		{
-			_adena = item;
-		}
-		
-		if ((item != null) && (item.getId() == ANCIENT_ADENA_ID) && !item.equals(_ancientAdena))
-		{
-			_ancientAdena = item;
-		}
-		
-		if (item != null)
-		{
-			// Notify to scripts
-			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerItemAdd(actor, item), item.getItem());
-		}
-		return item;
-	}
-	
-	/**
-	 * Adds item in inventory and checks _adena and _ancientAdena
-	 * @param process : String Identifier of process triggering this action
-	 * @param itemId : int Item Identifier of the item to be added
-	 * @param count : int Quantity of items to be added
-	 * @param actor : L2PcInstance Player requesting the item creation
-	 * @param reference : Object Object referencing current action like NPC selling item or previous item in transformation
-	 * @return L2ItemInstance corresponding to the new item or the updated item in inventory
-	 */
-	@Override
-	public L2ItemInstance addItem(String process, int itemId, long count, L2PcInstance actor, Object reference)
-	{
-		final L2ItemInstance item = super.addItem(process, itemId, count, actor, reference);
 		if (item != null)
 		{
 			if ((item.getId() == ADENA_ID) && !item.equals(_adena))
 			{
 				_adena = item;
 			}
-			
-			if ((item.getId() == ANCIENT_ADENA_ID) && !item.equals(_ancientAdena))
+			else if ((item.getId() == ANCIENT_ADENA_ID) && !item.equals(_ancientAdena))
 			{
 				_ancientAdena = item;
 			}
+			else if ((item.getId() == BEAUTY_TICKET_ID) && !item.equals(_beautyTickets))
+			{
+				_beautyTickets = item;
+			}
+			
 			if (actor != null)
 			{
 				// Send inventory update packet
@@ -572,6 +589,60 @@ public class PcInventory extends Inventory
 				EventDispatcher.getInstance().notifyEventAsync(new OnPlayerItemAdd(actor, item), item.getItem());
 			}
 		}
+		
+		return item;
+	}
+	
+	/**
+	 * Adds item in inventory and checks _adena and _ancientAdena
+	 * @param process : String Identifier of process triggering this action
+	 * @param itemId : int Item Identifier of the item to be added
+	 * @param count : int Quantity of items to be added
+	 * @param actor : L2PcInstance Player requesting the item creation
+	 * @param reference : Object Object referencing current action like NPC selling item or previous item in transformation
+	 * @return L2ItemInstance corresponding to the new item or the updated item in inventory
+	 */
+	@Override
+	public L2ItemInstance addItem(String process, int itemId, long count, L2PcInstance actor, Object reference)
+	{
+		L2ItemInstance item = super.addItem(process, itemId, count, actor, reference);
+		if (item != null)
+		{
+			if ((item.getId() == ADENA_ID) && !item.equals(_adena))
+			{
+				_adena = item;
+			}
+			else if ((item.getId() == ANCIENT_ADENA_ID) && !item.equals(_ancientAdena))
+			{
+				_ancientAdena = item;
+			}
+			else if ((item.getId() == BEAUTY_TICKET_ID) && !item.equals(_beautyTickets))
+			{
+				_beautyTickets = item;
+			}
+		}
+		
+		if ((item != null) && (actor != null))
+		{
+			// Send inventory update packet
+			if (!Config.FORCE_INVENTORY_UPDATE)
+			{
+				InventoryUpdate playerIU = new InventoryUpdate();
+				playerIU.addItem(item);
+				actor.sendPacket(playerIU);
+			}
+			else
+			{
+				actor.sendPacket(new ItemList(actor, false));
+			}
+			
+			// Update current load as well
+			actor.sendPacket(new ExUserInfoInvenWeight(actor));
+			
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerItemAdd(actor, item), item.getItem());
+		}
+		
 		return item;
 	}
 	
@@ -777,6 +848,10 @@ public class PcInventory extends Inventory
 		{
 			_ancientAdena = null;
 		}
+		else if (item.getId() == BEAUTY_TICKET_ID)
+		{
+			_beautyTickets = null;
+		}
 		
 		if (item.isQuestItem())
 		{
@@ -812,6 +887,7 @@ public class PcInventory extends Inventory
 		super.restore();
 		_adena = getItemByItemId(ADENA_ID);
 		_ancientAdena = getItemByItemId(ANCIENT_ADENA_ID);
+		_beautyTickets = getItemByItemId(BEAUTY_TICKET_ID);
 	}
 	
 	public static int[][] restoreVisibleInventory(int objectId)

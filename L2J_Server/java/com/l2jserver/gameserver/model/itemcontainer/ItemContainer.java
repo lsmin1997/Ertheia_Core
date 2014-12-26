@@ -547,16 +547,26 @@ public abstract class ItemContainer
 	 */
 	public long getAdena()
 	{
-		long count = 0;
 		for (L2ItemInstance item : _items)
 		{
 			if ((item != null) && (item.getId() == Inventory.ADENA_ID))
 			{
-				count = item.getCount();
-				return count;
+				return item.getCount();
 			}
 		}
-		return count;
+		return 0;
+	}
+	
+	public long getBeautyTickets()
+	{
+		for (L2ItemInstance item : _items)
+		{
+			if ((item != null) && (item.getId() == Inventory.BEAUTY_TICKET_ID))
+			{
+				return item.getCount();
+			}
+		}
+		return 0;
 	}
 	
 	/**

@@ -2986,6 +2986,14 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/**
+	 * @return the Beauty Tickets of the L2PcInstance.
+	 */
+	public long getBeautyTickets()
+	{
+		return _inventory.getBeautyTickets();
+	}
+	
+	/**
 	 * Add adena to Inventory of the L2PcInstance and send a Server->Client InventoryUpdate packet to the L2PcInstance.
 	 * @param process : String Identifier of process triggering this action
 	 * @param count : int Quantity of adena to be added
@@ -3063,6 +3071,66 @@ public final class L2PcInstance extends L2Playable
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ADENA_DISAPPEARED);
 				sm.addLong(count);
 				sendPacket(sm);
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Reduce Beauty Tickets in Inventory of the L2PcInstance and send a Server->Client InventoryUpdate packet to the L2PcInstance.
+	 * @param process : String Identifier of process triggering this action
+	 * @param count : long Quantity of Beauty Tickets to be reduced
+	 * @param reference : L2Object Object referencing current action like NPC selling item or previous item in transformation
+	 * @param sendMessage : boolean Specifies whether to send message to Client about this action
+	 * @return boolean informing if the action was successful
+	 */
+	public boolean reduceBeautyTickets(String process, long count, L2Object reference, boolean sendMessage)
+	{
+		if (count > getBeautyTickets())
+		{
+			if (sendMessage)
+			{
+				sendPacket(SystemMessageId.INCORRECT_ITEM_COUNT2);
+			}
+			return false;
+		}
+		
+		if (count > 0)
+		{
+			L2ItemInstance beautyTickets = _inventory.getAdenaInstance();
+			if (!_inventory.reduceBeautyTickets(process, count, this, reference))
+			{
+				return false;
+			}
+			
+			// Send update packet
+			if (!Config.FORCE_INVENTORY_UPDATE)
+			{
+				InventoryUpdate iu = new InventoryUpdate();
+				iu.addItem(beautyTickets);
+				sendPacket(iu);
+			}
+			else
+			{
+				sendPacket(new ItemList(this, false));
+			}
+			
+			if (sendMessage)
+			{
+				if (count > 1)
+				{
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_S_DISAPPEARED);
+					sm.addItemName(Inventory.BEAUTY_TICKET_ID);
+					sm.addLong(count);
+					sendPacket(sm);
+				}
+				else
+				{
+					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_DISAPPEARED);
+					sm.addItemName(Inventory.BEAUTY_TICKET_ID);
+					sendPacket(sm);
+				}
 			}
 		}
 		
@@ -14271,5 +14339,35 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		return false;
+	}
+	
+	public void setVisualHair(int hairId)
+	{
+		getVariables().set("visualHairId", hairId);
+	}
+	
+	public void setVisualHairColor(int colorId)
+	{
+		getVariables().set("visualHairColorId", colorId);
+	}
+	
+	public void setVisualFace(int faceId)
+	{
+		getVariables().set("visualFaceId", faceId);
+	}
+	
+	public int getVisualHair()
+	{
+		return getVariables().getInt("visualHairId", getAppearance().getHairStyle());
+	}
+	
+	public int getVisualHairColor()
+	{
+		return getVariables().getInt("visualHairColorId", getAppearance().getHairColor());
+	}
+	
+	public int getVisualFace()
+	{
+		return getVariables().getInt("visualFaceId", getAppearance().getFace());
 	}
 }
