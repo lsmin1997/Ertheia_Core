@@ -130,7 +130,7 @@ public class L2Npc extends L2Character
 	private static final int MINIMUM_SOCIAL_INTERVAL = 6000;
 	/** Support for random animation switching */
 	private boolean _isRandomAnimationEnabled = true;
-	private boolean _isTalking = true;
+	private boolean _isTalkable = getTemplate().isTalkable();
 	
 	protected RandomAnimationTask _rAniTask = null;
 	private int _currentLHandId; // normally this shouldn't change from the template, but there exist exceptions
@@ -1030,7 +1030,7 @@ public class L2Npc extends L2Character
 	 */
 	public void showChatWindow(L2PcInstance player, int val)
 	{
-		if (!isTalking())
+		if (!isTalkable())
 		{
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
@@ -1832,18 +1832,18 @@ public class L2Npc extends L2Character
 	 * Sets if the players can talk with this npc or not
 	 * @param val {@code true} if the players can talk, {@code false} otherwise
 	 */
-	public void setTalking(boolean val)
+	public void setIsTalkable(boolean val)
 	{
-		_isTalking = val;
+		_isTalkable = val;
 	}
 	
 	/**
 	 * Checks if the players can talk to this npc.
 	 * @return {@code true} if the players can talk, {@code false} otherwise.
 	 */
-	public boolean isTalking()
+	public boolean isTalkable()
 	{
-		return _isTalking;
+		return _isTalkable;
 	}
 	
 	/**
