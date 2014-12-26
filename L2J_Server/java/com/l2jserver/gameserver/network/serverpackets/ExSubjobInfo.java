@@ -35,7 +35,7 @@ public class ExSubjobInfo extends L2GameServerPacket
 	{
 		_subs = new ArrayList<>();
 		
-		_currClassId = player.getActiveClass();
+		_currClassId = player.getClassId().getId();
 		_currClassIndex = player.getClassIndex();
 		_currRace = player.getRace().ordinal();
 		

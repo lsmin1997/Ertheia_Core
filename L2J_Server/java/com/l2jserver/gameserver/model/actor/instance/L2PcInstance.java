@@ -10020,8 +10020,6 @@ public final class L2PcInstance extends L2Playable
 					storeSkill(newSkill, prevSkill, classIndex);
 				}
 			}
-			
-			sendPacket(new ExSubjobInfo(this));
 			return true;
 		}
 		finally
@@ -10088,7 +10086,6 @@ public final class L2PcInstance extends L2Playable
 				return false;
 			}
 			getSubClasses().remove(classIndex);
-			sendPacket(new ExSubjobInfo(this));
 		}
 		finally
 		{
@@ -10300,7 +10297,7 @@ public final class L2PcInstance extends L2Playable
 			broadcastPacket(new SocialAction(getObjectId(), SocialAction.LEVEL_UP));
 			sendPacket(new SkillCoolTime(this));
 			sendPacket(new ExStorageMaxCount(this));
-			
+			sendPacket(new ExSubjobInfo(this));
 			return true;
 		}
 		finally
