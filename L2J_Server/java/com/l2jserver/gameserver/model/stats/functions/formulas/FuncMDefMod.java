@@ -70,6 +70,7 @@ public class FuncMDefMod extends AbstractFunction
 			{
 				value -= p.getTemplate().getBaseDefBySlot(p.isTransformed() ? p.getTransformation().getBaseDefBySlot(p, Inventory.PAPERDOLL_NECK) : Inventory.PAPERDOLL_NECK);
 			}
+			value *= BaseStats.CHA.calcBonus(effector);
 		}
 		else if (effector.isPet() && (effector.getInventory().getPaperdollObjectId(Inventory.PAPERDOLL_NECK) != 0))
 		{

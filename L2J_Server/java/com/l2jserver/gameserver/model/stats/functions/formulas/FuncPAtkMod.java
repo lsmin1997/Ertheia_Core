@@ -44,6 +44,6 @@ public class FuncPAtkMod extends AbstractFunction
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.STR.calcBonus(effector) * effector.getLevelMod();
+		return initVal * BaseStats.STR.calcBonus(effector) * effector.getLevelMod() * BaseStats.CHA.calcBonus(effector);
 	}
 }

@@ -44,6 +44,6 @@ public class FuncMaxMpMul extends AbstractFunction
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.MEN.calcBonus(effector);
+		return initVal * BaseStats.MEN.calcBonus(effector) * BaseStats.CHA.calcBonus(effector);
 	}
 }

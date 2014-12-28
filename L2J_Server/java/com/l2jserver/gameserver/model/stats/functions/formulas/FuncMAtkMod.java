@@ -47,6 +47,6 @@ public class FuncMAtkMod extends AbstractFunction
 		// Level Modifier^2 * INT Modifier^2
 		double lvlMod = effector.isPlayer() ? BaseStats.INT.calcBonus(effector.getActingPlayer()) : BaseStats.INT.calcBonus(effector);
 		double intMod = effector.isPlayer() ? effector.getActingPlayer().getLevelMod() : effector.getLevelMod();
-		return initVal * Math.pow(lvlMod, 2) * Math.pow(intMod, 2);
+		return initVal * Math.pow(lvlMod, 2) * Math.pow(intMod, 2) * BaseStats.CHA.calcBonus(effector);
 	}
 }

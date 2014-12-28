@@ -44,6 +44,6 @@ public class FuncPAtkSpeed extends AbstractFunction
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.DEX.calcBonus(effector);
+		return initVal * BaseStats.DEX.calcBonus(effector) * BaseStats.CHA.calcBonus(effector);
 	}
 }

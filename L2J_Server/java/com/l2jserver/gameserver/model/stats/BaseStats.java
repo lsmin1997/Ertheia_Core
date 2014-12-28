@@ -18,233 +18,85 @@
  */
 package com.l2jserver.gameserver.model.stats;
 
-import java.io.File;
-import java.util.NoSuchElementException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-
-import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
- * @author DS
+ * @author Sdw
  */
 public enum BaseStats
 {
-	STR(new STR()),
-	INT(new INT()),
-	DEX(new DEX()),
-	WIT(new WIT()),
-	CON(new CON()),
-	MEN(new MEN()),
-	NONE(new NONE());
-	
-	private static final Logger _log = Logger.getLogger(BaseStats.class.getName());
-	
-	public static final int MAX_STAT_VALUE = 100;
-	
-	protected static final double[] STRbonus = new double[MAX_STAT_VALUE];
-	protected static final double[] INTbonus = new double[MAX_STAT_VALUE];
-	protected static final double[] DEXbonus = new double[MAX_STAT_VALUE];
-	protected static final double[] WITbonus = new double[MAX_STAT_VALUE];
-	protected static final double[] CONbonus = new double[MAX_STAT_VALUE];
-	protected static final double[] MENbonus = new double[MAX_STAT_VALUE];
-	
-	private final BaseStat _stat;
-	
-	public final String getValue()
-	{
-		return _stat.getClass().getSimpleName();
-	}
-	
-	private BaseStats(BaseStat s)
-	{
-		_stat = s;
-	}
-	
-	public final double calcBonus(L2Character actor)
-	{
-		if (actor != null)
-		{
-			return _stat.calcBonus(actor);
-		}
-		
-		return 1;
-	}
-	
-	public static final BaseStats valueOfXml(String name)
-	{
-		name = name.intern();
-		for (BaseStats s : values())
-		{
-			if (s.getValue().equalsIgnoreCase(name))
-			{
-				return s;
-			}
-		}
-		throw new NoSuchElementException("Unknown name '" + name + "' for enum BaseStats");
-	}
-	
-	private interface BaseStat
-	{
-		public double calcBonus(L2Character actor);
-	}
-	
-	protected static final class STR implements BaseStat
+	STR // #TODO Check if correct
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return STRbonus[actor.getSTR()];
+			return Math.pow(1.009, actor.getSTR() - 49);
 		}
-	}
-	
-	protected static final class INT implements BaseStat
+	},
+	INT // @TODO Update
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return INTbonus[actor.getINT()];
+			return Math.pow(1.01, actor.getINT() - 49.4);
 		}
-	}
-	
-	protected static final class DEX implements BaseStat
+	},
+	DEX // Updated and better Formula to match Ertheia
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return DEXbonus[actor.getDEX()];
+			return Math.pow(1.005, actor.getDEX() - 23);
 		}
-	}
-	
-	protected static final class WIT implements BaseStat
+	},
+	WIT // Updated and better Formula to match Ertheia
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return WITbonus[actor.getWIT()];
+			return Math.pow(1.015, actor.getWIT() - 90);
 		}
-	}
-	
-	protected static final class CON implements BaseStat
+	},
+	CON // Updated and better Formula to match Ertheia
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return CONbonus[actor.getCON()];
+			return Math.pow(1.012, actor.getCON() - 35); // maybe - 36
 		}
-	}
-	
-	protected static final class MEN implements BaseStat
+	},
+	MEN // Updated and better Formula to match Ertheia
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return MENbonus[actor.getMEN()];
+			return Math.pow(1.004, actor.getMEN() + 30);
 		}
-	}
-	
-	protected static final class NONE implements BaseStat
+	},
+	CHA // Addition for Ertheia
 	{
 		@Override
-		public final double calcBonus(L2Character actor)
+		public double calcBonus(L2Character actor)
 		{
-			return 1f;
+			return Math.pow(1.001, actor.getCHA() - 43);
 		}
-	}
-	
-	static
+	},
+	LUC // @TODO: Implement
 	{
-		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setValidating(false);
-		factory.setIgnoringComments(true);
-		final File file = new File(Config.DATAPACK_ROOT, "data/stats/statBonus.xml");
-		Document doc = null;
-		
-		if (file.exists())
+		@Override
+		public double calcBonus(L2Character actor)
 		{
-			try
-			{
-				doc = factory.newDocumentBuilder().parse(file);
-			}
-			catch (Exception e)
-			{
-				_log.log(Level.WARNING, "[BaseStats] Could not parse file: " + e.getMessage(), e);
-			}
-			
-			if (doc != null)
-			{
-				String statName;
-				int val;
-				double bonus;
-				NamedNodeMap attrs;
-				for (Node list = doc.getFirstChild(); list != null; list = list.getNextSibling())
-				{
-					if ("list".equalsIgnoreCase(list.getNodeName()))
-					{
-						for (Node stat = list.getFirstChild(); stat != null; stat = stat.getNextSibling())
-						{
-							statName = stat.getNodeName();
-							for (Node value = stat.getFirstChild(); value != null; value = value.getNextSibling())
-							{
-								if ("stat".equalsIgnoreCase(value.getNodeName()))
-								{
-									attrs = value.getAttributes();
-									try
-									{
-										val = Integer.parseInt(attrs.getNamedItem("value").getNodeValue());
-										bonus = Double.parseDouble(attrs.getNamedItem("bonus").getNodeValue());
-									}
-									catch (Exception e)
-									{
-										_log.severe("[BaseStats] Invalid stats value: " + value.getNodeValue() + ", skipping");
-										continue;
-									}
-									
-									if ("STR".equalsIgnoreCase(statName))
-									{
-										STRbonus[val] = bonus;
-									}
-									else if ("INT".equalsIgnoreCase(statName))
-									{
-										INTbonus[val] = bonus;
-									}
-									else if ("DEX".equalsIgnoreCase(statName))
-									{
-										DEXbonus[val] = bonus;
-									}
-									else if ("WIT".equalsIgnoreCase(statName))
-									{
-										WITbonus[val] = bonus;
-									}
-									else if ("CON".equalsIgnoreCase(statName))
-									{
-										CONbonus[val] = bonus;
-									}
-									else if ("MEN".equalsIgnoreCase(statName))
-									{
-										MENbonus[val] = bonus;
-									}
-									else
-									{
-										_log.severe("[BaseStats] Invalid stats name: " + statName + ", skipping");
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+			return 1;
 		}
-		else
+	},
+	NONE
+	{
+		@Override
+		public double calcBonus(L2Character actor)
 		{
-			throw new Error("[BaseStats] File not found: " + file.getName());
+			return 1;
 		}
-	}
+	};
+	
+	public abstract double calcBonus(L2Character actor);
 }

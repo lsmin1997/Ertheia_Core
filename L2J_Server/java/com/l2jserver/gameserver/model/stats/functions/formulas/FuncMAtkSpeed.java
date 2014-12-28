@@ -44,6 +44,6 @@ public class FuncMAtkSpeed extends AbstractFunction
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.WIT.calcBonus(effector);
+		return initVal * BaseStats.WIT.calcBonus(effector) * BaseStats.CHA.calcBonus(effector);
 	}
 }

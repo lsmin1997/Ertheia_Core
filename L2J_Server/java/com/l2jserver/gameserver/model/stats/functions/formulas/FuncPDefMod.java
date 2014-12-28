@@ -23,6 +23,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.skills.Skill;
+import com.l2jserver.gameserver.model.stats.BaseStats;
 import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 
@@ -78,6 +79,8 @@ public class FuncPDefMod extends AbstractFunction
 			{
 				value -= p.getTemplate().getBaseDefBySlot(p.isTransformed() ? p.getTransformation().getBaseDefBySlot(p, Inventory.PAPERDOLL_CLOAK) : Inventory.PAPERDOLL_CLOAK);
 			}
+			
+			value *= BaseStats.CHA.calcBonus(p);
 		}
 		return value * effector.getLevelMod();
 	}

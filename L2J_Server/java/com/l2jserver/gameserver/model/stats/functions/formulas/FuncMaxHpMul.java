@@ -44,6 +44,6 @@ public class FuncMaxHpMul extends AbstractFunction
 	@Override
 	public double calc(L2Character effector, L2Character effected, Skill skill, double initVal)
 	{
-		return initVal * BaseStats.CON.calcBonus(effector);
+		return initVal * BaseStats.CON.calcBonus(effector) * BaseStats.CHA.calcBonus(effector);
 	}
 }
