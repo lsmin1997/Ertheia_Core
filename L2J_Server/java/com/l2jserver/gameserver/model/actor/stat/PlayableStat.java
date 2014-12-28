@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.ExperienceTable;
 import com.l2jserver.gameserver.datatables.PetDataTable;
+import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.instancemanager.ZoneManager;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -32,6 +33,7 @@ import com.l2jserver.gameserver.model.events.impl.character.playable.OnPlayableE
 import com.l2jserver.gameserver.model.events.returns.TerminateReturn;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.model.zone.type.L2SwampZone;
+import com.l2jserver.gameserver.network.serverpackets.ExNewSkillToLearnByLevelUp;
 
 public class PlayableStat extends CharStat
 {
@@ -60,6 +62,7 @@ public class PlayableStat extends CharStat
 			value = getExpForLevel(getMaxLevel()) - 1 - getExp();
 		}
 		
+		final int oldLevel = getLevel();
 		setExp(getExp() + value);
 		
 		byte minimumLevel = 1;
@@ -80,9 +83,19 @@ public class PlayableStat extends CharStat
 			level = --tmp;
 			break;
 		}
+		
 		if ((level != getLevel()) && (level >= minimumLevel))
 		{
 			addLevel((byte) (level - getLevel()));
+		}
+		
+		if ((getLevel() > oldLevel) && getActiveChar().isPlayer())
+		{
+			final L2PcInstance activeChar = getActiveChar().getActingPlayer();
+			if (SkillTreesData.getInstance().hasAvailableSkills(activeChar, activeChar.getClassId()))
+			{
+				getActiveChar().sendPacket(ExNewSkillToLearnByLevelUp.STATIC_PACKET);
+			}
 		}
 		
 		return true;

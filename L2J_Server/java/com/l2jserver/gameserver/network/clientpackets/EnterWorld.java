@@ -65,6 +65,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExBeautyItemList;
 import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
+import com.l2jserver.gameserver.network.serverpackets.ExNewSkillToLearnByLevelUp;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
 import com.l2jserver.gameserver.network.serverpackets.ExPledgeCount;
@@ -569,6 +570,11 @@ public class EnterWorld extends L2GameClientPacket
 		if (BeautyShopData.getInstance().hasBeautyData(activeChar.getRace(), activeChar.getAppearance().getSexType()))
 		{
 			activeChar.sendPacket(new ExBeautyItemList(activeChar));
+		}
+		
+		if (SkillTreesData.getInstance().hasAvailableSkills(activeChar, activeChar.getClassId()))
+		{
+			activeChar.sendPacket(ExNewSkillToLearnByLevelUp.STATIC_PACKET);
 		}
 	}
 	

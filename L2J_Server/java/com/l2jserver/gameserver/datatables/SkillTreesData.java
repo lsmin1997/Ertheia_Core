@@ -493,6 +493,33 @@ public final class SkillTreesData extends DocumentParser
 	}
 	
 	/**
+	 * @param player
+	 * @param classId
+	 * @return {@code true} if player is able to learn new skills on his current level, {@code false} otherwise.
+	 */
+	public boolean hasAvailableSkills(L2PcInstance player, ClassId classId)
+	{
+		final Map<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(classId);
+		for (L2SkillLearn skill : skills.values())
+		{
+			if ((skill.getSkillId() == CommonSkill.DIVINE_INSPIRATION.getId()) || skill.isAutoGet() || skill.isLearnedByFS())
+			{
+				continue;
+			}
+			final Skill oldSkill = player.getKnownSkill(skill.getSkillId());
+			if ((oldSkill != null) && (oldSkill.getLevel() == (skill.getSkillLevel() - 1)))
+			{
+				return true;
+			}
+			else if (skill.getSkillLevel() == 1)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Gets the available skills.
 	 * @param player the learning skill player
 	 * @param classId the learning skill class Id
