@@ -1545,10 +1545,10 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// RequestRegisterXMasWishCard
 								break;
 							case 0xE3:
-								// msg = new RequestExAddEnchantScrollItem();
+								msg = new RequestExAddEnchantScrollItem();
 								break;
 							case 0xE4:
-								// msg = new RequestExRemoveEnchantSupportItem();
+								msg = new RequestExRemoveEnchantSupportItem();
 								break;
 							case 0xE5:
 								// msg = new RequestCardReward();

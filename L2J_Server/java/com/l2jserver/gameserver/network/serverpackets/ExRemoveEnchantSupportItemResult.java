@@ -18,36 +18,19 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-public class EnchantResult extends L2GameServerPacket
+/**
+ * @author Sdw
+ */
+public class ExRemoveEnchantSupportItemResult extends L2GameServerPacket
 {
-	private final int _result;
-	private final int _crystal;
-	private final int _count;
-	private final int _enchantLevel;
-	
-	public EnchantResult(int result, int crystal, int count)
+	public ExRemoveEnchantSupportItemResult()
 	{
-		this(result, crystal, count, 0);
-	}
-	
-	public EnchantResult(int result, int crystal, int count, int enchantLevel)
-	{
-		_result = result;
-		_crystal = crystal;
-		_count = count;
-		_enchantLevel = enchantLevel;
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
-		writeC(0x87);
-		writeD(_result);
-		writeD(_crystal);
-		writeQ(_count);
-		writeD(_enchantLevel);
-		writeH(0x00);
-		writeH(0x00);
-		writeH(0x00);
+		writeC(0xFE);
+		writeH(0x153);
 	}
 }

@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.EnchantItemData;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
@@ -186,7 +187,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 						item.setEnchantLevel(item.getEnchantLevel() + 1);
 						item.updateDatabase();
 					}
-					activeChar.sendPacket(new EnchantResult(0, 0, 0));
+					activeChar.sendPacket(new EnchantResult(0, 0, 0, item.getEnchantLevel()));
 					
 					if (Config.LOG_ITEM_ENCHANTS)
 					{
@@ -238,7 +239,7 @@ public final class RequestEnchantItem extends L2GameClientPacket
 					{
 						// safe enchant - remain old value
 						activeChar.sendPacket(SystemMessageId.ENCHANT_FAILED_THE_ENCHANT_SKILL_FOR_THE_CORRESPONDING_ITEM_WILL_BE_EXACTLY_RETAINED);
-						activeChar.sendPacket(new EnchantResult(5, 0, 0));
+						activeChar.sendPacket(new EnchantResult(5, 0, 0, item.getEnchantLevel()));
 						
 						if (Config.LOG_ITEM_ENCHANTS)
 						{
@@ -388,7 +389,6 @@ public final class RequestEnchantItem extends L2GameClientPacket
 				}
 			}
 			
-			activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
 			if (!Config.FORCE_INVENTORY_UPDATE)
 			{
 				if (scroll.getCount() == 0)
@@ -428,7 +428,8 @@ public final class RequestEnchantItem extends L2GameClientPacket
 				activeChar.sendPacket(new ItemList(activeChar, true));
 			}
 			
-			activeChar.broadcastUserInfo();
+			activeChar.broadcastUserInfo(UserInfoType.ENCHANTLEVEL);
+			activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
 			activeChar.setActiveEnchantItemId(L2PcInstance.ID_NONE);
 		}
 	}
