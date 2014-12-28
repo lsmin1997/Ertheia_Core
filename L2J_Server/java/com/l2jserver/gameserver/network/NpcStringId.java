@@ -33148,8 +33148,13 @@ public final class NpcStringId
 	
 	public static final NpcStringId getNpcStringId(final int id)
 	{
+		return getNpcStringIdOrDefault(id, new NpcStringId(id));
+	}
+	
+	public static final NpcStringId getNpcStringIdOrDefault(final int id, NpcStringId defaultValue)
+	{
 		final NpcStringId nsi = getNpcStringIdInternal(id);
-		return nsi == null ? new NpcStringId(id) : nsi;
+		return nsi == null ? defaultValue : nsi;
 	}
 	
 	private static final NpcStringId getNpcStringIdInternal(final int id)
