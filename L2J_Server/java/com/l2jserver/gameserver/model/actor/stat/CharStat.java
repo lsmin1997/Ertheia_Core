@@ -362,7 +362,7 @@ public class CharStat
 	 */
 	public final int getMCriticalHit(L2Character target, Skill skill)
 	{
-		int val = (int) calcStat(Stats.MCRITICAL_RATE, 1, target, skill);
+		int val = (int) calcStat(Stats.MCRITICAL_RATE, getActiveChar().getTemplate().getBaseMCritRate(), target, skill);
 		
 		if (!_activeChar.canOverrideCond(PcCondOverride.MAX_STATS_VALUE))
 		{
