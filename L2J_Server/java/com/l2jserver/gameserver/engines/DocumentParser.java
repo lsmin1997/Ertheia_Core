@@ -137,27 +137,6 @@ public abstract class DocumentParser
 	}
 	
 	/**
-	 * Wrapper for {@link #parseDirectory(File, boolean)}.
-	 * @param path the path to the directory where the XML files are.
-	 * @return {@code false} if it fails to find the directory, {@code true} otherwise.
-	 */
-	protected boolean parseDirectory(String path)
-	{
-		return parseDirectory(new File(path), false);
-	}
-	
-	/**
-	 * Wrapper for {@link #parseDirectory(File, boolean)}.
-	 * @param path the path to the directory where the XML files are.
-	 * @param recursive parses all sub folders if there is.
-	 * @return {@code false} if it fails to find the directory, {@code true} otherwise.
-	 */
-	protected boolean parseDirectory(String path, boolean recursive)
-	{
-		return parseDirectory(new File(path), recursive);
-	}
-	
-	/**
 	 * Loads all XML files from {@code path} and calls {@link #parseFile(File)} for each one of them.
 	 * @param dir the directory object to scan.
 	 * @param recursive parses all sub folders if there is.
@@ -194,7 +173,12 @@ public abstract class DocumentParser
 	 */
 	protected boolean parseDatapackDirectory(String path, boolean recursive)
 	{
-		return parseDirectory(new File(Config.DATAPACK_ROOT, path), recursive);
+		File dir = new File(path);
+		if (!dir.exists())
+		{
+			dir = new File(Config.DATAPACK_ROOT, path);
+		}
+		return parseDirectory(dir, recursive);
 	}
 	
 	/**

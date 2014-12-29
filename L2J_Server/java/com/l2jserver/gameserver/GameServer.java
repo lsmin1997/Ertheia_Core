@@ -89,6 +89,7 @@ import com.l2jserver.gameserver.datatables.SpawnTable;
 import com.l2jserver.gameserver.datatables.StaticObjects;
 import com.l2jserver.gameserver.datatables.SummonSkillsTable;
 import com.l2jserver.gameserver.datatables.TeleportLocationTable;
+import com.l2jserver.gameserver.datatables.TeleportersData;
 import com.l2jserver.gameserver.datatables.TransformData;
 import com.l2jserver.gameserver.datatables.UIData;
 import com.l2jserver.gameserver.geoeditorcon.GeoEditorListener;
@@ -285,6 +286,7 @@ public class GameServer
 		HtmCache.getInstance();
 		CrestTable.getInstance();
 		TeleportLocationTable.getInstance();
+		TeleportersData.getInstance();
 		UIData.getInstance();
 		PartyMatchWaitingList.getInstance();
 		PartyMatchRoomList.getInstance();
