@@ -1497,40 +1497,40 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// RequestExEvent_Campaign_Info
 								break;
 							case 0xD3:
-								// msg = new RequestPledgeRecruitInfo();
+								msg = new RequestPledgeRecruitInfo();
 								break;
 							case 0xD4:
-								// msg = new RequestPledgeRecruitBoardSearch();
+								msg = new RequestPledgeRecruitBoardSearch();
 								break;
 							case 0xD5:
-								// msg = new RequestPledgeRecruitBoardAccess();
+								msg = new RequestPledgeRecruitBoardAccess();
 								break;
 							case 0xD6:
-								// msg = new RequestPledgeRecruitBoardDetail();
+								msg = new RequestPledgeRecruitBoardDetail();
 								break;
 							case 0xD7:
-								// msg = new RequestPledgeWaitingApply();
+								msg = new RequestPledgeWaitingApply();
 								break;
 							case 0xD8:
-								// msg = new RequestPledgeWaitingApplied();
+								msg = new RequestPledgeWaitingApplied();
 								break;
 							case 0xD9:
-								// msg = new RequestPledgeWaitingList();
+								msg = new RequestPledgeWaitingList();
 								break;
 							case 0xDA:
-								// msg = new RequestPledgeWaitingUser();
+								msg = new RequestPledgeWaitingUser();
 								break;
 							case 0xDB:
-								// msg = new RequestPledgeWaitingUserAccept();
+								msg = new RequestPledgeWaitingUserAccept();
 								break;
 							case 0xDC:
-								// msg = new RequestPledgeDraftListSearch();
+								msg = new RequestPledgeDraftListSearch();
 								break;
 							case 0xDD:
-								// msg = new RequestPledgeDraftListApply();
+								msg = new RequestPledgeDraftListApply();
 								break;
 							case 0xDE:
-								// msg = new RequestPledgeRecruitApplyInfo();
+								msg = new RequestPledgeRecruitApplyInfo();
 								break;
 							case 0xDF:
 								// msg = new RequestPledgeJoinSys();
