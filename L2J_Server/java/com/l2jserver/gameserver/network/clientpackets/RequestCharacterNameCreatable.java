@@ -18,10 +18,6 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.network.serverpackets.ExIsCharNameCreatable;
@@ -80,23 +76,6 @@ public class RequestCharacterNameCreatable extends L2GameClientPacket
 	
 	private boolean isValidName(String text)
 	{
-		boolean result = true;
-		String test = text;
-		Pattern pattern;
-		try
-		{
-			pattern = Pattern.compile(Config.CNAME_TEMPLATE);
-		}
-		catch (PatternSyntaxException e) // case of illegal pattern
-		{
-			_log.warning("ERROR : Character name pattern of config is wrong!");
-			pattern = Pattern.compile(".*");
-		}
-		Matcher regexp = pattern.matcher(test);
-		if (!regexp.matches())
-		{
-			result = false;
-		}
-		return result;
+		return Config.CHARNAME_TEMPLATE_PATTERN.matcher(text).matches();
 	}
 }
