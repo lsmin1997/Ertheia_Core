@@ -80,11 +80,13 @@ import com.l2jserver.gameserver.model.conditions.ConditionPlayerHasClanHall;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerHasFort;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerHasPet;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerHp;
+import com.l2jserver.gameserver.model.conditions.ConditionPlayerImmobile;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerInsideZoneId;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerInstanceId;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerInvSize;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerIsClanLeader;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerIsHero;
+import com.l2jserver.gameserver.model.conditions.ConditionPlayerIsInCombat;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerLandingZone;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerLevel;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerLevelRange;
@@ -661,7 +663,7 @@ public abstract class DocumentBase
 					while (st.hasMoreTokens())
 					{
 						String item = st.nextToken().trim();
-						array.add(Integer.decode(getValue(item, null)));
+						array.add(Integer.decode(getValue(item, template)));
 					}
 					cond = joinAnd(cond, new ConditionPlayerHasClanHall(array));
 					break;
@@ -737,7 +739,7 @@ public abstract class DocumentBase
 					while (st.hasMoreTokens())
 					{
 						String item = st.nextToken().trim();
-						array.add(Integer.decode(getValue(item, null)));
+						array.add(Integer.decode(getValue(item, template)));
 					}
 					cond = joinAnd(cond, new ConditionPlayerClassIdRestriction(array));
 					break;
@@ -760,7 +762,7 @@ public abstract class DocumentBase
 					while (st.hasMoreTokens())
 					{
 						String item = st.nextToken().trim();
-						array.add(Integer.decode(getValue(item, null)));
+						array.add(Integer.decode(getValue(item, template)));
 					}
 					cond = joinAnd(cond, new ConditionPlayerInstanceId(array));
 					break;
@@ -784,7 +786,7 @@ public abstract class DocumentBase
 					while (st.hasMoreTokens())
 					{
 						String item = st.nextToken().trim();
-						array.add(Integer.decode(getValue(item, null)));
+						array.add(Integer.decode(getValue(item, template)));
 					}
 					cond = joinAnd(cond, new ConditionPlayerHasPet(array));
 					break;
@@ -885,7 +887,7 @@ public abstract class DocumentBase
 					while (st.hasMoreTokens())
 					{
 						String item = st.nextToken().trim();
-						array.add(Integer.decode(getValue(item, null)));
+						array.add(Integer.decode(getValue(item, template)));
 					}
 					cond = joinAnd(cond, new ConditionPlayerInsideZoneId(array));
 					break;
@@ -910,9 +912,19 @@ public abstract class DocumentBase
 					final Set<CategoryType> array = new HashSet<>(values.length);
 					for (String value : values)
 					{
-						array.add(CategoryType.valueOf(getValue(value, null)));
+						array.add(CategoryType.valueOf(getValue(value, template)));
 					}
 					cond = joinAnd(cond, new ConditionCategoryType(array));
+					break;
+				}
+				case "immobile":
+				{
+					cond = joinAnd(cond, new ConditionPlayerImmobile(Boolean.parseBoolean(a.getNodeValue())));
+					break;
+				}
+				case "incombat":
+				{
+					cond = joinAnd(cond, new ConditionPlayerIsInCombat(Boolean.parseBoolean(a.getNodeValue())));
 					break;
 				}
 			}

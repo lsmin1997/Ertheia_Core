@@ -38,6 +38,7 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.Server;
 import com.l2jserver.UPnPService;
 import com.l2jserver.gameserver.cache.HtmCache;
+import com.l2jserver.gameserver.datatables.AbilityPointsData;
 import com.l2jserver.gameserver.datatables.AdminTable;
 import com.l2jserver.gameserver.datatables.AnnouncementsTable;
 import com.l2jserver.gameserver.datatables.ArmorSetsData;
@@ -210,6 +211,7 @@ public class GameServer
 		printSection("Data");
 		CategoryData.getInstance();
 		SecondaryAuthData.getInstance();
+		AbilityPointsData.getInstance();
 		
 		printSection("Skills");
 		EffectHandler.getInstance().executeScript();

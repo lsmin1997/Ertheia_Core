@@ -1568,25 +1568,25 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestDivideAdena();
 								break;
 							case 0xE9:
-								// msg = new RequestAcquireAbilityList();
+								msg = new RequestAcquireAbilityList();
 								break;
 							case 0xEA:
-								// msg = new RequestAbilityList();
+								msg = new RequestAbilityList();
 								break;
 							case 0xEB:
-								// msg = new RequestResetAbilityPoint();
+								msg = new RequestResetAbilityPoint();
 								break;
 							case 0xEC:
-								// msg = new RequestChangeAbilityPoint();
+								msg = new RequestChangeAbilityPoint();
 								break;
 							case 0xED:
 								// msg = new RequestStopMove();
 								break;
 							case 0xEE:
-								// msg = new RequestAbilityWndOpen();
+								msg = new RequestAbilityWndOpen();
 								break;
 							case 0xEF:
-								// msg = new RequestAbilityWndClose();
+								msg = new RequestAbilityWndClose();
 								break;
 							case 0xF0:
 								// msg = ExPCCafeRequestOpenWindowWithoutNPC();

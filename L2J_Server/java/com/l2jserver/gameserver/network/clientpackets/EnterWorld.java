@@ -62,6 +62,7 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.Die;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquireAPSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExBeautyItemList;
@@ -582,6 +583,8 @@ public class EnterWorld extends L2GameClientPacket
 		{
 			activeChar.sendPacket(ExNewSkillToLearnByLevelUp.STATIC_PACKET);
 		}
+		
+		activeChar.sendPacket(new ExAcquireAPSkillList(activeChar));
 	}
 	
 	/**

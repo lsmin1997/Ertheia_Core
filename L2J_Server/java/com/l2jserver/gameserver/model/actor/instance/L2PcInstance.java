@@ -14405,4 +14405,24 @@ public final class L2PcInstance extends L2Playable
 	{
 		return MentorManager.getInstance().isMentee(getObjectId());
 	}
+	
+	public int getAbilityPoints()
+	{
+		return getVariables().getInt("ABILITY_POINTS", 0);
+	}
+	
+	public void setAbilityPoints(int points)
+	{
+		getVariables().set("ABILITY_POINTS", points);
+	}
+	
+	public int getAbilityPointsUsed()
+	{
+		return getVariables().getInt("ABILITY_POINTS_USED", 0);
+	}
+	
+	public void setAbilityPointsUsed(int points)
+	{
+		getVariables().set("ABILITY_POINTS_USED", points);
+	}
 }

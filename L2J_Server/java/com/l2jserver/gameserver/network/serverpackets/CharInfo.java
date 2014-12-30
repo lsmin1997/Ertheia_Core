@@ -262,7 +262,7 @@ public class CharInfo extends L2GameServerPacket
 		}
 		writeC(0x00); // TODO: Find me!
 		writeC(_activeChar.isHairAccessoryEnabled() ? 0x01 : 0x00); // Hair accessory
-		writeC(0x00); // Used Ability Points
+		writeC(_activeChar.getAbilityPointsUsed()); // Used Ability Points
 	}
 	
 	@Override

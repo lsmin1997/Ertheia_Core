@@ -85,6 +85,7 @@ public final class SkillTreesData implements DocumentParser
 	private static final Map<Integer, L2SkillLearn> _transformSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _commonSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _subClassChangeSkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _abilitySkillTree = new HashMap<>();
 	// Other skill trees
 	private static final Map<Integer, L2SkillLearn> _nobleSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _heroSkillTree = new HashMap<>();
@@ -122,6 +123,8 @@ public final class SkillTreesData implements DocumentParser
 		_transferSkillTrees.clear();
 		_transformSkillTree.clear();
 		_nobleSkillTree.clear();
+		_subClassChangeSkillTree.clear();
+		_abilitySkillTree.clear();
 		_heroSkillTree.clear();
 		_gameMasterSkillTree.clear();
 		_gameMasterAuraSkillTree.clear();
@@ -275,6 +278,11 @@ public final class SkillTreesData implements DocumentParser
 									case "nobleSkillTree":
 									{
 										_nobleSkillTree.put(skillHashCode, skillLearn);
+										break;
+									}
+									case "abilitySkillTree":
+									{
+										_abilitySkillTree.put(skillHashCode, skillLearn);
 										break;
 									}
 									case "heroSkillTree":
@@ -431,6 +439,15 @@ public final class SkillTreesData implements DocumentParser
 	public Map<Integer, L2SkillLearn> getTransformSkillTree()
 	{
 		return _transformSkillTree;
+	}
+	
+	/**
+	 * Gets the ability skill tree.
+	 * @return the complete Ability Skill Tree
+	 */
+	public Map<Integer, L2SkillLearn> getAbilitySkillTree()
+	{
+		return _abilitySkillTree;
 	}
 	
 	/**
@@ -959,6 +976,17 @@ public final class SkillTreesData implements DocumentParser
 	}
 	
 	/**
+	 * Gets the ability skill.
+	 * @param id the ability skill Id
+	 * @param lvl the ability skill level
+	 * @return the ability skill from the Ability Skill Tree for a given {@code id} and {@code lvl}
+	 */
+	public L2SkillLearn getAbilitySkill(int id, int lvl)
+	{
+		return _abilitySkillTree.get(SkillData.getSkillHashCode(id, lvl));
+	}
+	
+	/**
 	 * Gets the class skill.
 	 * @param id the class skill Id
 	 * @param lvl the class skill level.
@@ -1260,6 +1288,11 @@ public final class SkillTreesData implements DocumentParser
 			list.add(SkillData.getSkillHashCode(s.getSkillId(), s.getSkillLevel()));
 		}
 		
+		for (L2SkillLearn s : _abilitySkillTree.values())
+		{
+			list.add(SkillData.getSkillHashCode(s.getSkillId(), s.getSkillLevel()));
+		}
+		
 		_allSkillsHashCodes = new int[list.size()];
 		int j = 0;
 		for (int hashcode : list)
@@ -1368,6 +1401,8 @@ public final class SkillTreesData implements DocumentParser
 		LOGGER.info(className + ": Loaded " + _heroSkillTree.size() + " Hero Skills.");
 		LOGGER.info(className + ": Loaded " + _gameMasterSkillTree.size() + " Game Master Skills.");
 		LOGGER.info(className + ": Loaded " + _gameMasterAuraSkillTree.size() + " Game Master Aura Skills.");
+		LOGGER.info(className + ": Loaded " + _abilitySkillTree.size() + " Ability Skills.");
+		
 		final int commonSkills = _commonSkillTree.size();
 		if (commonSkills > 0)
 		{
