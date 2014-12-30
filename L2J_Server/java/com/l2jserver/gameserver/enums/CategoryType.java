@@ -147,7 +147,8 @@ public enum CategoryType
 	DEINONYCHUS_PET_GROUP,
 	BEASTFARM_BEAST,
 	BEASTFARM_INVADER,
-	ICEQUEEN_NPC;
+	ICEQUEEN_NPC,
+	AWAKEN_GROUP;
 	
 	/**
 	 * Finds category by it's name

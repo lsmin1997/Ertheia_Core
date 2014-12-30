@@ -37,6 +37,11 @@ import com.l2jserver.gameserver.network.clientpackets.friend.RequestFriendDel;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestFriendDetailInfo;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestFriendList;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestSendFriendMsg;
+import com.l2jserver.gameserver.network.clientpackets.mentoring.ConfirmMenteeAdd;
+import com.l2jserver.gameserver.network.clientpackets.mentoring.RequestMenteeAdd;
+import com.l2jserver.gameserver.network.clientpackets.mentoring.RequestMenteeWaitingList;
+import com.l2jserver.gameserver.network.clientpackets.mentoring.RequestMentorCancel;
+import com.l2jserver.gameserver.network.clientpackets.mentoring.RequestMentorList;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.CannotMoveAnymoreInShuttle;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.MoveToLocationInShuttle;
 import com.l2jserver.gameserver.network.clientpackets.shuttle.RequestShuttleGetOff;
@@ -1406,19 +1411,19 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestBR_PresentBuyProduct();
 								break;
 							case 0xB4:
-								// msg = new ConfirmMenteeAdd();
+								msg = new ConfirmMenteeAdd();
 								break;
 							case 0xB5:
-								// msg = new RequestMentorCancel();
+								msg = new RequestMentorCancel();
 								break;
 							case 0xB6:
-								// msg = new RequestMentorList();
+								msg = new RequestMentorList();
 								break;
 							case 0xB7:
-								// msg = new RequestMenteeAdd();
+								msg = new RequestMenteeAdd();
 								break;
 							case 0xB8:
-								// msg = new RequestMenteeWaitingList();
+								msg = new RequestMenteeWaitingList();
 								break;
 							case 0xB9:
 								// msg = new RequestClanAskJoinByName();

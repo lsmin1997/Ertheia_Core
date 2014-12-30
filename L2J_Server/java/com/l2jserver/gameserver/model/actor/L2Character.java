@@ -3315,6 +3315,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		_effectList.stopSkillEffects(removed, skillId);
 	}
 	
+	public void stopSkillEffects(Skill skill)
+	{
+		_effectList.stopSkillEffects(true, skill.getId());
+	}
+	
 	public final void stopEffects(L2EffectType type)
 	{
 		_effectList.stopEffects(type);

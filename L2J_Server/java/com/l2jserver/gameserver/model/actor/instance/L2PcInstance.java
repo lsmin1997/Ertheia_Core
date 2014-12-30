@@ -109,6 +109,7 @@ import com.l2jserver.gameserver.instancemanager.GrandBossManager;
 import com.l2jserver.gameserver.instancemanager.HandysBlockCheckerManager;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
+import com.l2jserver.gameserver.instancemanager.MentorManager;
 import com.l2jserver.gameserver.instancemanager.PunishmentManager;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.instancemanager.SiegeManager;
@@ -205,6 +206,8 @@ import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerProfe
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerPvPChanged;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerPvPKill;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerTransform;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMenteeStatus;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMentorStatus;
 import com.l2jserver.gameserver.model.fishing.L2Fish;
 import com.l2jserver.gameserver.model.fishing.L2Fishing;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
@@ -7517,7 +7520,7 @@ public final class L2PcInstance extends L2Playable
 						continue;
 					}
 					
-					if (skill.isToggle())
+					if (skill.isToggle() || skill.isMentoring())
 					{
 						continue;
 					}
@@ -10530,6 +10533,17 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		EventDispatcher.getInstance().notifyEventAsync(new OnPlayerLogin(this), this);
+		
+		if (isMentee())
+		{
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerMenteeStatus(this, true), this);
+		}
+		else if (isMentor())
+		{
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerMentorStatus(this, true), this);
+		}
 	}
 	
 	public long getLastAccess()
@@ -11535,6 +11549,17 @@ public final class L2PcInstance extends L2Playable
 		for (L2PcInstance player : _snoopListener)
 		{
 			player.removeSnooped(this);
+		}
+		
+		if (isMentee())
+		{
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerMenteeStatus(this, false), this);
+		}
+		else if (isMentor())
+		{
+			// Notify to scripts
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerMentorStatus(this, false), this);
 		}
 		
 		// Remove L2Object object from _allObjects of L2World
@@ -14369,5 +14394,15 @@ public final class L2PcInstance extends L2Playable
 	public int getVisualFace()
 	{
 		return getVariables().getInt("visualFaceId", getAppearance().getFace());
+	}
+	
+	public boolean isMentor()
+	{
+		return MentorManager.getInstance().isMentor(getObjectId());
+	}
+	
+	public boolean isMentee()
+	{
+		return MentorManager.getInstance().isMentee(getObjectId());
 	}
 }

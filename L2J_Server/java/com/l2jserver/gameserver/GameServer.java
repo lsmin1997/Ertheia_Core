@@ -118,6 +118,7 @@ import com.l2jserver.gameserver.instancemanager.ItemAuctionManager;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.instancemanager.MailManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
+import com.l2jserver.gameserver.instancemanager.MentorManager;
 import com.l2jserver.gameserver.instancemanager.MercTicketManager;
 import com.l2jserver.gameserver.instancemanager.PetitionManager;
 import com.l2jserver.gameserver.instancemanager.PunishmentManager;
@@ -250,6 +251,7 @@ public class GameServer
 		PetDataTable.getInstance();
 		CharSummonTable.getInstance().init();
 		BeautyShopData.getInstance();
+		MentorManager.getInstance();
 		
 		printSection("Clans");
 		ClanTable.getInstance();

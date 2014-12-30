@@ -85,6 +85,11 @@ import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnP
 import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnPlayerItemDrop;
 import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnPlayerItemPickup;
 import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnPlayerItemTransfer;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMenteeAdd;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMenteeLeft;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMenteeRemove;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMenteeStatus;
+import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMentorStatus;
 import com.l2jserver.gameserver.model.events.impl.character.trap.OnTrapAction;
 import com.l2jserver.gameserver.model.events.impl.clan.OnClanWarFinish;
 import com.l2jserver.gameserver.model.events.impl.clan.OnClanWarStart;
@@ -198,6 +203,12 @@ public enum EventType
 	ON_PLAYER_ITEM_DROP(OnPlayerItemDrop.class, void.class),
 	ON_PLAYER_ITEM_PICKUP(OnPlayerItemPickup.class, void.class),
 	ON_PLAYER_ITEM_TRANSFER(OnPlayerItemTransfer.class, void.class),
+	// Mentoring events
+	ON_PLAYER_MENTEE_ADD(OnPlayerMenteeAdd.class, void.class),
+	ON_PLAYER_MENTEE_LEFT(OnPlayerMenteeLeft.class, void.class),
+	ON_PLAYER_MENTEE_REMOVE(OnPlayerMenteeRemove.class, void.class),
+	ON_PLAYER_MENTEE_STATUS(OnPlayerMenteeStatus.class, void.class),
+	ON_PLAYER_MENTOR_STATUS(OnPlayerMentorStatus.class, void.class),
 	// Other player events
 	ON_PLAYER_KARMA_CHANGED(OnPlayerKarmaChanged.class, void.class),
 	ON_PLAYER_LEVEL_CHANGED(OnPlayerLevelChanged.class, void.class),

@@ -219,6 +219,9 @@ public final class Skill implements IIdentifiable
 	private final int _channelingTickInitialDelay;
 	private final int _channelingTickInterval;
 	
+	// Mentoring
+	private final boolean _isMentoring;
+	
 	public Skill(StatsSet set)
 	{
 		_id = set.getInt("skill_id");
@@ -389,6 +392,8 @@ public final class Skill implements IIdentifiable
 		_channelingSkillId = set.getInt("channelingSkillId", 0);
 		_channelingTickInterval = set.getInt("channelingTickInterval", 2) * 1000;
 		_channelingTickInitialDelay = set.getInt("channelingTickInitialDelay", _channelingTickInterval / 1000) * 1000;
+		
+		_isMentoring = set.getBoolean("isMentoring", false);
 	}
 	
 	public TraitType getTraitType()
@@ -1848,5 +1853,10 @@ public final class Skill implements IIdentifiable
 	public Set<MountType> getRideState()
 	{
 		return _rideState;
+	}
+	
+	public boolean isMentoring()
+	{
+		return _isMentoring;
 	}
 }
