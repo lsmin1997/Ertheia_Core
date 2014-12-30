@@ -23,8 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
+import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.CharNameTable;
@@ -216,27 +215,9 @@ public final class CharacterCreate extends L2GameClientPacket
 		_logAccounting.log(record);
 	}
 	
-	private boolean isValidName(String text)
+	private static boolean isValidName(String text)
 	{
-		boolean result = true;
-		String test = text;
-		Pattern pattern;
-		// UnAfraid: TODO: Move that into Config
-		try
-		{
-			pattern = Pattern.compile(Config.CNAME_TEMPLATE);
-		}
-		catch (PatternSyntaxException e) // case of illegal pattern
-		{
-			_log.warning("ERROR : Character name pattern of config is wrong!");
-			pattern = Pattern.compile(".*");
-		}
-		Matcher regexp = pattern.matcher(test);
-		if (!regexp.matches())
-		{
-			result = false;
-		}
-		return result;
+		return Config.CHARNAME_TEMPLATE_PATTERN.matcher(text).matches();
 	}
 	
 	private void initNewChar(L2GameClient client, L2PcInstance newChar)
