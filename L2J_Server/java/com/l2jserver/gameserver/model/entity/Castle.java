@@ -1121,4 +1121,10 @@ public final class Castle extends AbstractResidence
 			}
 		}
 	}
+	
+	// TODO: Implement me
+	public int getState()
+	{
+		return 1;
+	}
 }

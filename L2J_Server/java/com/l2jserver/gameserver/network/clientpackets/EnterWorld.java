@@ -46,6 +46,7 @@ import com.l2jserver.gameserver.model.PcCondOverride;
 import com.l2jserver.gameserver.model.TeleportWhereType;
 import com.l2jserver.gameserver.model.actor.instance.L2ClassMasterInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.entity.Couple;
 import com.l2jserver.gameserver.model.entity.Fort;
 import com.l2jserver.gameserver.model.entity.FortSiege;
@@ -61,9 +62,9 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.Die;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
-import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExBeautyItemList;
+import com.l2jserver.gameserver.network.serverpackets.ExCastleState;
 import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExNewSkillToLearnByLevelUp;
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
@@ -84,10 +85,10 @@ import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.PledgeShowMemberListAll;
 import com.l2jserver.gameserver.network.serverpackets.PledgeShowMemberListUpdate;
 import com.l2jserver.gameserver.network.serverpackets.PledgeSkillList;
-import com.l2jserver.gameserver.network.serverpackets.PledgeStatusChanged;
 import com.l2jserver.gameserver.network.serverpackets.QuestList;
 import com.l2jserver.gameserver.network.serverpackets.ShortCutInit;
 import com.l2jserver.gameserver.network.serverpackets.SkillCoolTime;
+import com.l2jserver.gameserver.network.serverpackets.SkillList;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.friend.L2FriendList;
 
@@ -223,8 +224,6 @@ public class EnterWorld extends L2GameClientPacket
 		// Clan related checks are here
 		if (activeChar.getClan() != null)
 		{
-			activeChar.sendPacket(new PledgeSkillList(activeChar.getClan()));
-			
 			notifyClanMembers(activeChar);
 			
 			notifySponsorOrApprentice(activeChar);
@@ -294,9 +293,6 @@ public class EnterWorld extends L2GameClientPacket
 				}
 			}
 			
-			sendPacket(new PledgeShowMemberListAll(activeChar.getClan()));
-			sendPacket(new PledgeStatusChanged(activeChar.getClan()));
-			
 			// Residential skills support
 			if (activeChar.getClan().getCastleId() > 0)
 			{
@@ -309,56 +305,21 @@ public class EnterWorld extends L2GameClientPacket
 			}
 			
 			showClanNotice = activeChar.getClan().isNoticeEnabled();
-			
-			activeChar.sendPacket(new ExPledgeCount(activeChar.getClan()));
 		}
 		
 		if (Config.ENABLE_VITALITY)
 		{
-			if (Config.RECOVER_VITALITY_ON_RECONNECT)
-			{
-				float points = (Config.RATE_RECOVERY_ON_RECONNECT * (System.currentTimeMillis() - activeChar.getLastAccess())) / 60000;
-				if (points > 0)
-				{
-					activeChar.updateVitalityPoints(points, false, true);
-				}
-			}
 			activeChar.sendPacket(new ExVitalityEffectInfo(activeChar));
-		}
-		
-		activeChar.checkRecoBonusTask();
-		
-		activeChar.broadcastUserInfo();
-		
-		// Send Inventory Info
-		activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
-		
-		// Send Adena Info
-		activeChar.sendPacket(new ExAdenaInvenCount(activeChar));
-		
-		// Send Equipped Items
-		activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
-		
-		// Send SubClass Info
-		activeChar.sendPacket(new ExSubjobInfo(activeChar));
-		
-		// Send Unread Mail Count
-		if (MailManager.getInstance().hasUnreadPost(activeChar))
-		{
-			activeChar.sendPacket(new ExUnReadMailCount(activeChar));
 		}
 		
 		// Send Macro List
 		activeChar.getMacros().sendAllMacros();
 		
-		// Send Item List
-		sendPacket(new ItemList(activeChar, false));
-		
-		// Send GG check
-		activeChar.queryGameGuard();
-		
 		// Send Teleport Bookmark List
 		sendPacket(new ExGetBookMarkInfoPacket(activeChar));
+		
+		// Send Item List
+		sendPacket(new ItemList(activeChar, false));
 		
 		// Send Shortcuts
 		sendPacket(new ShortCutInit(activeChar));
@@ -366,17 +327,60 @@ public class EnterWorld extends L2GameClientPacket
 		// Send Action list
 		activeChar.sendPacket(ExBasicActionList.STATIC_PACKET);
 		
+		// Send blank skill list
+		activeChar.sendPacket(new SkillList());
+		
+		// Send castle state.
+		for (Castle castle : CastleManager.getInstance().getCastles())
+		{
+			activeChar.sendPacket(new ExCastleState(castle));
+		}
+		
+		// Send GG check
+		activeChar.queryGameGuard();
+		
+		// Send Dye Information
+		activeChar.sendPacket(new HennaInfo(activeChar));
+		
 		// Send Skill list
 		activeChar.sendSkillList();
 		
 		// Send acquirable skill list
 		activeChar.sendPacket(new AcquireSkillList(activeChar));
 		
-		// Send Dye Information
-		activeChar.sendPacket(new HennaInfo(activeChar));
+		// Send EtcStatusUpdate
+		activeChar.sendPacket(new EtcStatusUpdate(activeChar));
+		
+		// Clan packets
+		if (activeChar.getClan() != null)
+		{
+			final L2Clan clan = activeChar.getClan();
+			clan.broadcastToOnlineMembers(new PledgeShowMemberListUpdate(activeChar));
+			sendPacket(new PledgeShowMemberListAll(clan));
+			activeChar.sendPacket(new ExPledgeCount(clan));
+			activeChar.sendPacket(new PledgeSkillList(clan));
+		}
+		
+		activeChar.broadcastUserInfo();
+		
+		// Send SubClass Info
+		activeChar.sendPacket(new ExSubjobInfo(activeChar));
+		
+		// Send Inventory Info
+		activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
+		
+		// Send Equipped Items
+		activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
+		
+		// Send Unread Mail Count
+		if (MailManager.getInstance().hasUnreadPost(activeChar))
+		{
+			activeChar.sendPacket(new ExUnReadMailCount(activeChar));
+		}
 		
 		Quest.playerEnter(activeChar);
 		
+		// Send Quest List
 		activeChar.sendPacket(new QuestList());
 		
 		if (Config.PLAYER_SPAWN_PROTECTION > 0)
@@ -407,23 +411,11 @@ public class EnterWorld extends L2GameClientPacket
 		
 		activeChar.updateEffectIcons();
 		
-		activeChar.sendPacket(new EtcStatusUpdate(activeChar));
-		
 		// Expand Skill
 		activeChar.sendPacket(new ExStorageMaxCount(activeChar));
 		
+		// Friend list
 		sendPacket(new L2FriendList(activeChar));
-		
-		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOUR_FRIEND_S1_JUST_LOGGED_IN);
-		sm.addString(activeChar.getName());
-		for (int id : activeChar.getFriendList())
-		{
-			L2Object obj = L2World.getInstance().findObject(id);
-			if (obj != null)
-			{
-				obj.sendPacket(sm);
-			}
-		}
 		
 		if (Config.SHOW_GOD_VIDEO_INTRO && activeChar.getVariables().getBoolean("intro_god_video", false))
 		{
@@ -435,6 +427,17 @@ public class EnterWorld extends L2GameClientPacket
 			else
 			{
 				activeChar.sendPacket(ExShowUsm.ERTHEIA_INTRO_FOR_OTHERS);
+			}
+		}
+		
+		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOUR_FRIEND_S1_JUST_LOGGED_IN);
+		sm.addString(activeChar.getName());
+		for (int id : activeChar.getFriendList())
+		{
+			L2Object obj = L2World.getInstance().findObject(id);
+			if (obj != null)
+			{
+				obj.sendPacket(sm);
 			}
 		}
 		
@@ -509,8 +512,7 @@ public class EnterWorld extends L2GameClientPacket
 		// remove combat flag before teleporting
 		if (activeChar.getInventory().getItemByItemId(9819) != null)
 		{
-			Fort fort = FortManager.getInstance().getFort(activeChar);
-			
+			final Fort fort = FortManager.getInstance().getFort(activeChar);
 			if (fort != null)
 			{
 				FortSiegeManager.getInstance().dropCombatFlag(activeChar, fort.getResidenceId());
