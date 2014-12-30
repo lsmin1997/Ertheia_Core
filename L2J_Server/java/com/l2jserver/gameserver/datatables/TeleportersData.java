@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -34,7 +35,7 @@ import com.l2jserver.gameserver.model.teleporter.TeleportType;
 /**
  * @author UnAfraid
  */
-public class TeleportersData extends DocumentParser
+public class TeleportersData implements DocumentParser
 {
 	private final Map<Integer, TeleportHolder> _teleporters = new HashMap<>();
 	
@@ -48,13 +49,13 @@ public class TeleportersData extends DocumentParser
 	{
 		_teleporters.clear();
 		parseDatapackDirectory("data/teleporters", true);
-		_log.log(Level.INFO, "Loaded: " + _teleporters.size() + " npc teleporters.");
+		LOGGER.log(Level.INFO, "Loaded: " + _teleporters.size() + " npc teleporters.");
 	}
 	
 	@Override
-	protected void parseDocument()
+	public void parseDocument(Document doc)
 	{
-		for (Node listNode = getCurrentDocument().getFirstChild(); listNode != null; listNode = listNode.getNextSibling())
+		for (Node listNode = doc.getFirstChild(); listNode != null; listNode = listNode.getNextSibling())
 		{
 			if ("list".equals(listNode.getNodeName()))
 			{
