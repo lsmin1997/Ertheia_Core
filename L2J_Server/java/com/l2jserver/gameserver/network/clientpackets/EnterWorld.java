@@ -62,6 +62,7 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.Die;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
+import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExBeautyItemList;
 import com.l2jserver.gameserver.network.serverpackets.ExCastleState;
@@ -368,6 +369,9 @@ public class EnterWorld extends L2GameClientPacket
 		
 		// Send Inventory Info
 		activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
+		
+		// Send Adena / Inventory Count Info
+		activeChar.sendPacket(new ExAdenaInvenCount(activeChar));
 		
 		// Send Equipped Items
 		activeChar.sendPacket(new ExUserInfoEquipSlot(activeChar));
