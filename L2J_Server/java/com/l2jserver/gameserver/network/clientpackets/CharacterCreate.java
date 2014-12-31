@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.logging.Logger;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.CharNameTable;
@@ -269,6 +267,11 @@ public final class CharacterCreate extends L2GameClientPacket
 					newChar.getInventory().equipItem(item);
 				}
 			}
+		}
+		
+		for (L2SkillLearn skill : SkillTreesData.getInstance().getRaceSkillTree(newChar.getRace()))
+		{
+			newChar.addSkill(SkillData.getInstance().getSkill(skill.getSkillId(), skill.getSkillLevel()), true);
 		}
 		
 		for (L2SkillLearn skill : SkillTreesData.getInstance().getAvailableSkills(newChar, newChar.getClassId(), false, true))

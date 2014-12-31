@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.datatables;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,7 @@ public final class SkillTreesData implements DocumentParser
 	// ClassId, FastMap of Skill Hash Code, L2SkillLearn
 	private static final Map<ClassId, Map<Integer, L2SkillLearn>> _classSkillTrees = new HashMap<>();
 	private static final Map<ClassId, Map<Integer, L2SkillLearn>> _transferSkillTrees = new HashMap<>();
+	private static final Map<Race, Map<Integer, L2SkillLearn>> _raceSkillTree = new HashMap<>();
 	// Skill Hash Code, L2SkillLearn
 	private static final Map<Integer, L2SkillLearn> _collectSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _fishingSkillTree = new HashMap<>();
@@ -128,6 +130,7 @@ public final class SkillTreesData implements DocumentParser
 		_heroSkillTree.clear();
 		_gameMasterSkillTree.clear();
 		_gameMasterAuraSkillTree.clear();
+		_raceSkillTree.clear();
 		
 		// Load files.
 		parseDatapackDirectory("data/skillTrees/", false);
@@ -150,6 +153,7 @@ public final class SkillTreesData implements DocumentParser
 		NamedNodeMap attrs;
 		Node attr;
 		String type = null;
+		Race race = null;
 		int cId = -1;
 		int parentClassId = -1;
 		ClassId classId = null;
@@ -162,7 +166,8 @@ public final class SkillTreesData implements DocumentParser
 					if ("skillTree".equalsIgnoreCase(d.getNodeName()))
 					{
 						final Map<Integer, L2SkillLearn> classSkillTree = new HashMap<>();
-						final Map<Integer, L2SkillLearn> trasferSkillTree = new HashMap<>();
+						final Map<Integer, L2SkillLearn> transferSkillTree = new HashMap<>();
+						final Map<Integer, L2SkillLearn> raceSkillTree = new HashMap<>();
 						
 						type = d.getAttributes().getNamedItem("type").getNodeValue();
 						attr = d.getAttributes().getNamedItem("classId");
@@ -174,6 +179,12 @@ public final class SkillTreesData implements DocumentParser
 						else
 						{
 							cId = -1;
+						}
+						
+						attr = d.getAttributes().getNamedItem("race");
+						if (attr != null)
+						{
+							race = parseEnum(attr, Race.class);
 						}
 						
 						attr = d.getAttributes().getNamedItem("parentClassId");
@@ -242,12 +253,17 @@ public final class SkillTreesData implements DocumentParser
 									}
 									case "transferSkillTree":
 									{
-										trasferSkillTree.put(skillHashCode, skillLearn);
+										transferSkillTree.put(skillHashCode, skillLearn);
 										break;
 									}
 									case "collectSkillTree":
 									{
 										_collectSkillTree.put(skillHashCode, skillLearn);
+										break;
+									}
+									case "raceSkillTree":
+									{
+										raceSkillTree.put(skillHashCode, skillLearn);
 										break;
 									}
 									case "fishingSkillTree":
@@ -315,7 +331,7 @@ public final class SkillTreesData implements DocumentParser
 						
 						if (type.equals("transferSkillTree"))
 						{
-							_transferSkillTrees.put(classId, trasferSkillTree);
+							_transferSkillTrees.put(classId, transferSkillTree);
 						}
 						else if (type.equals("classSkillTree") && (cId > -1))
 						{
@@ -326,6 +342,17 @@ public final class SkillTreesData implements DocumentParser
 							else
 							{
 								_classSkillTrees.get(classId).putAll(classSkillTree);
+							}
+						}
+						else if (type.equals("raceSkillTree") && (race != null))
+						{
+							if (!_raceSkillTree.containsKey(race))
+							{
+								_raceSkillTree.put(race, raceSkillTree);
+							}
+							else
+							{
+								_raceSkillTree.get(race).putAll(raceSkillTree);
 							}
 						}
 					}
@@ -367,6 +394,16 @@ public final class SkillTreesData implements DocumentParser
 			return getTransferSkillTree(classId.getParent());
 		}
 		return _transferSkillTrees.get(classId);
+	}
+	
+	/**
+	 * Gets the race skill tree.<br>
+	 * @param race the race skill tree Id
+	 * @return the complete race Skill Tree for a given {@code Race}
+	 */
+	public Collection<L2SkillLearn> getRaceSkillTree(Race race)
+	{
+		return _raceSkillTree.containsKey(race) ? _raceSkillTree.get(race).values() : Collections.emptyList();
 	}
 	
 	/**
@@ -633,6 +670,16 @@ public final class SkillTreesData implements DocumentParser
 		}
 		
 		final Race race = player.getRace();
+		
+		// Race skills
+		for (L2SkillLearn skill : getRaceSkillTree(race))
+		{
+			if (player.getKnownSkill(skill.getSkillId()) == null)
+			{
+				result.add(skill);
+			}
+		}
+		
 		for (L2SkillLearn skill : skills.values())
 		{
 			if (!skill.getRaces().isEmpty() && !skill.getRaces().contains(race))
@@ -1052,6 +1099,25 @@ public final class SkillTreesData implements DocumentParser
 	}
 	
 	/**
+	 * Gets the race skill.
+	 * @param id the race skill Id
+	 * @param lvl the race skill level.
+	 * @param race the race skill tree Id
+	 * @return the transfer skill from the Race Skill Trees for a given {@code race}, {@code id} and {@code lvl}
+	 */
+	public L2SkillLearn getRaceSkill(int id, int lvl, Race race)
+	{
+		for (L2SkillLearn skill : getRaceSkillTree(race))
+		{
+			if ((skill.getSkillId() == id) && (skill.getSkillLevel() == lvl))
+			{
+				return skill;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Gets the sub class skill.
 	 * @param id the sub-class skill Id
 	 * @param lvl the sub-class skill level
@@ -1350,6 +1416,12 @@ public final class SkillTreesData implements DocumentParser
 		{
 			return true;
 		}
+		
+		// Exclude Race skills from this check.
+		if (getRaceSkill(skill.getId(), Math.min(skill.getLevel(), maxLvl), player.getRace()) != null)
+		{
+			return true;
+		}
 		return false;
 	}
 	
@@ -1364,10 +1436,16 @@ public final class SkillTreesData implements DocumentParser
 			classSkillTreeCount += classSkillTree.size();
 		}
 		
-		int trasferSkillTreeCount = 0;
+		int transferSkillTreeCount = 0;
 		for (Map<Integer, L2SkillLearn> trasferSkillTree : _transferSkillTrees.values())
 		{
-			trasferSkillTreeCount += trasferSkillTree.size();
+			transferSkillTreeCount += trasferSkillTree.size();
+		}
+		
+		int raceSkillTreeCount = 0;
+		for (Map<Integer, L2SkillLearn> raceSkillTree : _raceSkillTree.values())
+		{
+			raceSkillTreeCount += raceSkillTree.size();
 		}
 		
 		int dwarvenOnlyFishingSkillCount = 0;
@@ -1391,7 +1469,8 @@ public final class SkillTreesData implements DocumentParser
 		final String className = getClass().getSimpleName();
 		LOGGER.info(className + ": Loaded " + classSkillTreeCount + " Class Skills for " + _classSkillTrees.size() + " Class Skill Trees.");
 		LOGGER.info(className + ": Loaded " + _subClassSkillTree.size() + " Sub-Class Skills.");
-		LOGGER.info(className + ": Loaded " + trasferSkillTreeCount + " Transfer Skills for " + _transferSkillTrees.size() + " Transfer Skill Trees.");
+		LOGGER.info(className + ": Loaded " + transferSkillTreeCount + " Transfer Skills for " + _transferSkillTrees.size() + " Transfer Skill Trees.");
+		LOGGER.info(className + ": Loaded " + raceSkillTreeCount + " Race skills for " + _raceSkillTree.size() + " Race Skill Trees.");
 		LOGGER.info(className + ": Loaded " + _fishingSkillTree.size() + " Fishing Skills, " + dwarvenOnlyFishingSkillCount + " Dwarven only Fishing Skills.");
 		LOGGER.info(className + ": Loaded " + _collectSkillTree.size() + " Collect Skills.");
 		LOGGER.info(className + ": Loaded " + _pledgeSkillTree.size() + " Pledge Skills, " + (_pledgeSkillTree.size() - resSkillCount) + " for Pledge and " + resSkillCount + " Residential.");
