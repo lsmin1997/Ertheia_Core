@@ -18,9 +18,13 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
+import java.util.stream.Stream;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.cache.HtmCache;
@@ -37,10 +41,12 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 import com.l2jserver.gameserver.model.items.L2Item;
+import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.model.teleporter.TeleportHolder;
 import com.l2jserver.gameserver.model.teleporter.TeleportLocation;
 import com.l2jserver.gameserver.model.teleporter.TeleportType;
 import com.l2jserver.gameserver.model.zone.ZoneId;
+import com.l2jserver.gameserver.network.NpcStringId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -100,7 +106,19 @@ public final class L2TeleporterInstance extends L2Npc
 				final NpcHtmlMessage msg = new NpcHtmlMessage(getObjectId());
 				msg.setFile(player.getHtmlPrefix(), "data/html/teleporter/teleports.htm");
 				final StringBuilder sb = new StringBuilder();
-				for (TeleportLocation loc : holder.getLocations(type))
+				final Collection<TeleportLocation> locs = holder.getLocations(type);
+				final List<NpcStringId> questLocations = new ArrayList<>();
+				for (QuestState qs : player.getAllQuestStates())
+				{
+					final NpcStringId npcString = qs.getQuestLocation();
+					if ((npcString != null) && !questLocations.contains(npcString))
+					{
+						questLocations.add(npcString);
+					}
+				}
+				
+				final Stream<TeleportLocation> stream = !questLocations.isEmpty() ? locs.stream().sorted((o1, o2) -> questLocations.contains(o1.getNpcStringId()) ? 1 : questLocations.contains(o2.getNpcStringId()) ? -1 : 0) : locs.stream();
+				stream.forEach(loc ->
 				{
 					final int id = loc.getId();
 					
@@ -115,8 +133,8 @@ public final class L2TeleporterInstance extends L2Npc
 					{
 						finalName += " - " + loc.getFeeCount() + " " + getItemName(loc.getFeeId(), true);
 					}
-					sb.append("<button align=left icon=teleport action=\"bypass -h npc_" + getObjectId() + "_teleport " + type.ordinal() + " " + id + "\" msg=\"811;" + confirmDesc + "\">" + finalName + "</button>");
-				}
+					sb.append("<button align=left icon=" + (!questLocations.contains(loc.getNpcStringId()) ? "teleport" : "quest") + " action=\"bypass -h npc_" + getObjectId() + "_teleport " + type.ordinal() + " " + id + "\" msg=\"811;" + confirmDesc + "\">" + finalName + "</button>");
+				});
 				msg.replace("%locations%", sb.toString());
 				player.sendPacket(msg);
 				break;

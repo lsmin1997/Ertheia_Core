@@ -1466,6 +1466,14 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/**
+	 * @return List of {@link QuestState}s of the current player.
+	 */
+	public List<QuestState> getAllQuestStates()
+	{
+		return new ArrayList<>(_quests.values());
+	}
+	
+	/**
 	 * @return a table containing all Quest in progress from the table _quests.
 	 */
 	public Quest[] getAllActiveQuests()
