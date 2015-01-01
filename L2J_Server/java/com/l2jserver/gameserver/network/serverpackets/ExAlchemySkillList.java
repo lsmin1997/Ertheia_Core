@@ -18,44 +18,44 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.l2jserver.gameserver.model.L2SkillLearn;
-import com.l2jserver.gameserver.model.base.AcquireSkillType;
+import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.skills.Skill;
 
 /**
  * @author UnAfraid
  */
-public class ExAcquirableSkillListByClass extends L2GameServerPacket
+public class ExAlchemySkillList extends L2GameServerPacket
 {
-	final List<L2SkillLearn> _learnable;
-	final AcquireSkillType _type;
+	private final List<Skill> _skills = new ArrayList<>();
 	
-	public ExAcquirableSkillListByClass(List<L2SkillLearn> learnable, AcquireSkillType type)
+	public ExAlchemySkillList(final L2PcInstance player)
 	{
-		_learnable = learnable;
-		_type = type;
+		for (Skill skill : player.getAllSkills())
+		{
+			// Make sure its alchemy skill.
+			if (SkillTreesData.getInstance().getAlchemySkill(skill.getId(), skill.getLevel()) != null)
+			{
+				_skills.add(skill);
+			}
+		}
 	}
 	
 	@Override
 	protected void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0xFA);
-		writeH(_type.getId());
-		writeH(_learnable.size());
-		for (L2SkillLearn skill : _learnable)
+		writeH(0x174);
+		writeD(_skills.size());
+		for (Skill skill : _skills)
 		{
-			writeD(skill.getSkillId());
-			writeH(skill.getSkillLevel());
-			writeH(skill.getSkillLevel());
-			writeC(skill.getGetLevel());
-			writeQ(skill.getLevelUpSp());
-			writeC(skill.getRequiredItems().size());
-			if (_type == AcquireSkillType.SUBPLEDGE)
-			{
-				writeH(0x00);
-			}
+			writeD(skill.getId());
+			writeD(skill.getLevel());
+			writeQ(0x00); // Always 0 on Naia, SP i guess?
+			writeC(0x01); // Always 1 on Naia
 		}
 	}
 }

@@ -1619,7 +1619,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new ExSendSelectedQuestZoneID();
 								break;
 							case 0xFF:
-								// msg = new RequestAlchemySkillList();
+								msg = new RequestAlchemySkillList();
 								break;
 							case 0x100:
 								// msg = new RequestAlchemyTryMixCube();

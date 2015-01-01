@@ -20,6 +20,7 @@ package com.l2jserver.gameserver.network.clientpackets;
 
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.model.ClanPrivilege;
 import com.l2jserver.gameserver.model.L2SkillLearn;
 import com.l2jserver.gameserver.model.actor.L2Npc;
@@ -132,6 +133,15 @@ public final class RequestAcquireSkillInfo extends L2GameClientPacket
 			case SUBPLEDGE:
 			{
 				if (!activeChar.isClanLeader() || !activeChar.hasClanPrivilege(ClanPrivilege.CL_TROOPS_FAME))
+				{
+					return;
+				}
+				sendPacket(new AcquireSkillInfo(_skillType, s));
+				break;
+			}
+			case ALCHEMY:
+			{
+				if (activeChar.getRace() != Race.ERTHEIA)
 				{
 					return;
 				}

@@ -88,6 +88,7 @@ public final class SkillTreesData implements DocumentParser
 	private static final Map<Integer, L2SkillLearn> _commonSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _subClassChangeSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _abilitySkillTree = new HashMap<>();
+	private static final Map<Integer, L2SkillLearn> _alchemySkillTree = new HashMap<>();
 	// Other skill trees
 	private static final Map<Integer, L2SkillLearn> _nobleSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _heroSkillTree = new HashMap<>();
@@ -127,6 +128,7 @@ public final class SkillTreesData implements DocumentParser
 		_nobleSkillTree.clear();
 		_subClassChangeSkillTree.clear();
 		_abilitySkillTree.clear();
+		_alchemySkillTree.clear();
 		_heroSkillTree.clear();
 		_gameMasterSkillTree.clear();
 		_gameMasterAuraSkillTree.clear();
@@ -299,6 +301,11 @@ public final class SkillTreesData implements DocumentParser
 									case "abilitySkillTree":
 									{
 										_abilitySkillTree.put(skillHashCode, skillLearn);
+										break;
+									}
+									case "alchemySkillTree":
+									{
+										_alchemySkillTree.put(skillHashCode, skillLearn);
 										break;
 									}
 									case "heroSkillTree":
@@ -485,6 +492,15 @@ public final class SkillTreesData implements DocumentParser
 	public Map<Integer, L2SkillLearn> getAbilitySkillTree()
 	{
 		return _abilitySkillTree;
+	}
+	
+	/**
+	 * Gets the ability skill tree.
+	 * @return the complete Ability Skill Tree
+	 */
+	public Map<Integer, L2SkillLearn> getAlchemySkillTree()
+	{
+		return _alchemySkillTree;
 	}
 	
 	/**
@@ -726,6 +742,37 @@ public final class SkillTreesData implements DocumentParser
 			if (skill.isLearnedByNpc() && (player.getLevel() >= skill.getGetLevel()))
 			{
 				final Skill oldSkill = player.getSkills().get(skill.getSkillId());
+				if (oldSkill != null)
+				{
+					if (oldSkill.getLevel() == (skill.getSkillLevel() - 1))
+					{
+						result.add(skill);
+					}
+				}
+				else if (skill.getSkillLevel() == 1)
+				{
+					result.add(skill);
+				}
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Gets the available alchemy skills, restricted to Ertheia
+	 * @param player the player requesting the alchemy skills
+	 * @return all the available alchemy skills for a given {@code player}
+	 */
+	public List<L2SkillLearn> getAvailableAlchemySkills(L2PcInstance player)
+	{
+		final List<L2SkillLearn> result = new ArrayList<>();
+		
+		for (L2SkillLearn skill : _alchemySkillTree.values())
+		{
+			if (skill.isLearnedByNpc() && (player.getLevel() >= skill.getGetLevel()))
+			{
+				final Skill oldSkill = player.getSkills().get(skill.getSkillId());
+				
 				if (oldSkill != null)
 				{
 					if (oldSkill.getLevel() == (skill.getSkillLevel() - 1))
@@ -1007,6 +1054,9 @@ public final class SkillTreesData implements DocumentParser
 			case COLLECT:
 				sl = getCollectSkill(id, lvl);
 				break;
+			case ALCHEMY:
+				sl = getAlchemySkill(id, lvl);
+				break;
 		}
 		return sl;
 	}
@@ -1031,6 +1081,17 @@ public final class SkillTreesData implements DocumentParser
 	public L2SkillLearn getAbilitySkill(int id, int lvl)
 	{
 		return _abilitySkillTree.get(SkillData.getSkillHashCode(id, lvl));
+	}
+	
+	/**
+	 * Gets the alchemy skill.
+	 * @param id the alchemy skill Id
+	 * @param lvl the alchemy skill level
+	 * @return the alchemy skill from the Alchemy Skill Tree for a given {@code id} and {@code lvl}
+	 */
+	public L2SkillLearn getAlchemySkill(int id, int lvl)
+	{
+		return _alchemySkillTree.get(SkillData.getSkillHashCode(id, lvl));
 	}
 	
 	/**
@@ -1359,6 +1420,11 @@ public final class SkillTreesData implements DocumentParser
 			list.add(SkillData.getSkillHashCode(s.getSkillId(), s.getSkillLevel()));
 		}
 		
+		for (L2SkillLearn s : _alchemySkillTree.values())
+		{
+			list.add(SkillData.getSkillHashCode(s.getSkillId(), s.getSkillLevel()));
+		}
+		
 		_allSkillsHashCodes = new int[list.size()];
 		int j = 0;
 		for (int hashcode : list)
@@ -1481,6 +1547,7 @@ public final class SkillTreesData implements DocumentParser
 		LOGGER.info(className + ": Loaded " + _gameMasterSkillTree.size() + " Game Master Skills.");
 		LOGGER.info(className + ": Loaded " + _gameMasterAuraSkillTree.size() + " Game Master Aura Skills.");
 		LOGGER.info(className + ": Loaded " + _abilitySkillTree.size() + " Ability Skills.");
+		LOGGER.info(className + ": Loaded " + _alchemySkillTree.size() + " Alchemy Skills.");
 		
 		final int commonSkills = _commonSkillTree.size();
 		if (commonSkills > 0)

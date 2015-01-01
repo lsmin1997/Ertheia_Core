@@ -24,6 +24,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
 import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
+import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.instancemanager.QuestManager;
 import com.l2jserver.gameserver.model.ClanPrivilege;
@@ -48,6 +49,7 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillDone;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExAcquirableSkillListByClass;
+import com.l2jserver.gameserver.network.serverpackets.ExAlchemySkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExBasicActionList;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
@@ -382,6 +384,34 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 				{
 					giveSkill(activeChar, trainer, skill);
 				}
+				break;
+			}
+			case ALCHEMY:
+			{
+				if (activeChar.getRace() != Race.ERTHEIA)
+				{
+					return;
+				}
+				
+				if (checkPlayerSkill(activeChar, trainer, s))
+				{
+					giveSkill(activeChar, trainer, skill);
+					
+					activeChar.sendPacket(new AcquireSkillDone());
+					activeChar.sendPacket(new ExAlchemySkillList(activeChar));
+					
+					final List<L2SkillLearn> alchemySkills = SkillTreesData.getInstance().getAvailableAlchemySkills(activeChar);
+					
+					if (alchemySkills.isEmpty())
+					{
+						activeChar.sendPacket(SystemMessageId.THERE_ARE_NO_OTHER_SKILLS_TO_LEARN);
+					}
+					else
+					{
+						activeChar.sendPacket(new ExAcquirableSkillListByClass(alchemySkills, AcquireSkillType.ALCHEMY));
+					}
+				}
+				
 				break;
 			}
 			default:

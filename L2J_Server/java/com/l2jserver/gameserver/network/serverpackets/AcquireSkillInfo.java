@@ -116,7 +116,7 @@ public class AcquireSkillInfo extends L2GameServerPacket
 		writeD(_id);
 		writeD(_level);
 		writeQ(_spCost);
-		writeD(_type.ordinal());
+		writeD(_type.getId());
 		writeD(_reqs.size());
 		for (Req temp : _reqs)
 		{

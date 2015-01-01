@@ -16,50 +16,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model.base;
+package com.l2jserver.gameserver.network.clientpackets;
+
+import com.l2jserver.gameserver.enums.Race;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.network.serverpackets.ExAlchemySkillList;
 
 /**
- * Learning skill types.
- * @author Zoey76
+ * @author UnAfraid
  */
-public enum AcquireSkillType
+public class RequestAlchemySkillList extends L2GameClientPacket
 {
-	CLASS(0),
-	DUMMY(1),
-	PLEDGE(2),
-	SUBPLEDGE(3),
-	TRANSFORM(4),
-	TRANSFER(5),
-	SUBCLASS(6),
-	COLLECT(7),
-	DUMMY2(8),
-	DUMMY3(9),
-	FISHING(10),
-	REVELATION(11), // Need proper ID
-	REVELATION_DUALCLASS(12), // Need proper ID
-	ALCHEMY(140);
-	
-	private final int _id;
-	
-	private AcquireSkillType(int id)
+	@Override
+	protected void readImpl()
 	{
-		_id = id;
+		// Nothing to read
 	}
 	
-	public int getId()
+	@Override
+	protected void runImpl()
 	{
-		return _id;
-	}
-	
-	public static AcquireSkillType getAcquireSkillType(int id)
-	{
-		for (AcquireSkillType type : values())
+		final L2PcInstance activeChar = getActiveChar();
+		if ((activeChar == null) || (activeChar.getRace() != Race.ERTHEIA))
 		{
-			if (type.getId() == id)
-			{
-				return type;
-			}
+			return;
 		}
-		return null;
+		activeChar.sendPacket(new ExAlchemySkillList(activeChar));
+	}
+	
+	@Override
+	public String getType()
+	{
+		return getClass().getSimpleName();
 	}
 }
