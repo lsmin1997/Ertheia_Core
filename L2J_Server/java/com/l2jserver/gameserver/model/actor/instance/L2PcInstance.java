@@ -81,6 +81,7 @@ import com.l2jserver.gameserver.datatables.PlayerXpPercentLostData;
 import com.l2jserver.gameserver.datatables.RecipeData;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.enums.HtmlActionScope;
 import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
 import com.l2jserver.gameserver.enums.InstanceType;
@@ -671,9 +672,6 @@ public final class L2PcInstance extends L2Playable
 	private int _lvlJoinedAcademy = 0;
 	
 	private int _wantsPeace = 0;
-	
-	// Death Penalty Buff Level
-	private int _deathPenaltyBuffLevel = 0;
 	
 	// charges
 	private final AtomicInteger _charges = new AtomicInteger();
@@ -2608,9 +2606,6 @@ public final class L2PcInstance extends L2Playable
 		
 		// Reload passive skills from armors / jewels / weapons
 		getInventory().reloadEquippedItems();
-		
-		// Add Death Penalty Buff Level
-		restoreDeathPenaltyBuffLevel();
 	}
 	
 	/**
@@ -5322,6 +5317,9 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		
+		// calculate Shilen's Breath debuff level
+		calculateShilensBreathDebuffLevel(killer);
+		
 		// Kill the L2PcInstance
 		if (!super.doDie(killer))
 		{
@@ -5360,9 +5358,6 @@ public final class L2PcInstance extends L2Playable
 		{
 			setAgathionId(0);
 		}
-		
-		// calculate death penalty buff
-		calculateDeathPenaltyBuffLevel(killer);
 		
 		stopRentPet();
 		stopWaterTask();
@@ -6994,8 +6989,6 @@ public final class L2PcInstance extends L2Playable
 					
 					CursedWeaponsManager.getInstance().checkPlayer(player);
 					
-					player.setDeathPenaltyBuffLevel(rset.getInt("death_penalty_level"));
-					
 					player.setVitalityPoints(rset.getInt("vitality_points"), true);
 					
 					// Set the x,y,z position of the L2PcInstance and make it invisible
@@ -7447,7 +7440,7 @@ public final class L2PcInstance extends L2Playable
 			statement.setLong(43, getClanJoinExpiryTime());
 			statement.setLong(44, getClanCreateExpiryTime());
 			statement.setString(45, getName());
-			statement.setLong(46, getDeathPenaltyBuffLevel());
+			statement.setLong(46, 0); // unset
 			statement.setInt(47, getBookMarkSlot());
 			statement.setInt(48, getVitalityPoints());
 			statement.setString(49, getLang());
@@ -10328,9 +10321,6 @@ public final class L2PcInstance extends L2Playable
 			
 			restoreRecipeBook(false);
 			
-			// Restore any Death Penalty Buff
-			restoreDeathPenaltyBuffLevel();
-			
 			restoreSkills();
 			rewardSkills();
 			regiveTemporarySkills();
@@ -12359,21 +12349,17 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public int getDeathPenaltyBuffLevel()
+	public int getShilensBreathDebuffLevel()
 	{
-		return _deathPenaltyBuffLevel;
+		final BuffInfo buff = getEffectList().getBuffInfoBySkillId(CommonSkill.SHILENS_BREATH.getId());
+		return buff == null ? 0 : buff.getSkill().getLevel();
 	}
 	
-	public void setDeathPenaltyBuffLevel(int level)
-	{
-		_deathPenaltyBuffLevel = level;
-	}
-	
-	public void calculateDeathPenaltyBuffLevel(L2Character killer)
+	public void calculateShilensBreathDebuffLevel(L2Character killer)
 	{
 		if (killer == null)
 		{
-			_log.warning(this + " called calculateDeathPenaltyBuffLevel with killer null!");
+			_log.warning(this + " called calculateShilensBreathDebuffLevel with killer null!");
 			return;
 		}
 		
@@ -12396,75 +12382,43 @@ public final class L2PcInstance extends L2Playable
 			percent *= calcStat(Stats.REDUCE_DEATH_PENALTY_BY_PVP, 1);
 		}
 		
-		if (Rnd.get(1, 100) <= ((Config.DEATH_PENALTY_CHANCE) * percent))
+		if (killer.isInCategory(CategoryType.SHILENS_FOLLOWERS) || (Rnd.get(1, 100) <= ((Config.DEATH_PENALTY_CHANCE) * percent)))
 		{
 			if (!killer.isPlayable() || (getKarma() > 0))
 			{
-				increaseDeathPenaltyBuffLevel();
+				increaseShilensBreathDebuff();
 			}
 		}
 	}
 	
-	public void increaseDeathPenaltyBuffLevel()
+	public void increaseShilensBreathDebuff()
 	{
-		if (getDeathPenaltyBuffLevel() >= 15)
+		int nextLv = getShilensBreathDebuffLevel() + 1;
+		if (nextLv > 5)
 		{
-			return;
+			nextLv = 5;
 		}
 		
-		if (getDeathPenaltyBuffLevel() != 0)
-		{
-			Skill skill = SkillData.getInstance().getSkill(5076, getDeathPenaltyBuffLevel());
-			
-			if (skill != null)
-			{
-				removeSkill(skill, true);
-			}
-		}
-		_deathPenaltyBuffLevel++;
-		addSkill(SkillData.getInstance().getSkill(5076, getDeathPenaltyBuffLevel()), false);
-		sendPacket(new EtcStatusUpdate(this));
-		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_VE_BEEN_AFFLICTED_BY_SHILEN_S_BREATH_LEVEL_S1);
-		sm.addInt(getDeathPenaltyBuffLevel());
-		sendPacket(sm);
-	}
-	
-	public void reduceDeathPenaltyBuffLevel()
-	{
-		if (getDeathPenaltyBuffLevel() <= 0)
-		{
-			return;
-		}
-		
-		Skill skill = SkillData.getInstance().getSkill(5076, getDeathPenaltyBuffLevel());
-		
+		final Skill skill = SkillData.getInstance().getSkill(CommonSkill.SHILENS_BREATH.getId(), nextLv);
 		if (skill != null)
 		{
-			removeSkill(skill, true);
+			skill.applyEffects(this, this);
+			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_VE_BEEN_AFFLICTED_BY_SHILEN_S_BREATH_LEVEL_S1).addInt(nextLv));
 		}
-		
-		_deathPenaltyBuffLevel--;
-		
-		if (getDeathPenaltyBuffLevel() > 0)
+	}
+	
+	public void decreaseShilensBreathDebuff()
+	{
+		final int nextLv = getShilensBreathDebuffLevel() - 1;
+		if (nextLv > 0)
 		{
-			addSkill(SkillData.getInstance().getSkill(5076, getDeathPenaltyBuffLevel()), false);
-			sendPacket(new EtcStatusUpdate(this));
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_VE_BEEN_AFFLICTED_BY_SHILEN_S_BREATH_LEVEL_S1);
-			sm.addInt(getDeathPenaltyBuffLevel());
-			sendPacket(sm);
+			final Skill skill = SkillData.getInstance().getSkill(CommonSkill.SHILENS_BREATH.getId(), nextLv);
+			skill.applyEffects(this, this);
+			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_VE_BEEN_AFFLICTED_BY_SHILEN_S_BREATH_LEVEL_S1).addInt(nextLv));
 		}
 		else
 		{
-			sendPacket(new EtcStatusUpdate(this));
 			sendPacket(SystemMessageId.SHILEN_S_BREATH_HAS_BEEN_PURIFIED);
-		}
-	}
-	
-	public void restoreDeathPenaltyBuffLevel()
-	{
-		if (getDeathPenaltyBuffLevel() > 0)
-		{
-			addSkill(SkillData.getInstance().getSkill(5076, getDeathPenaltyBuffLevel()), false);
 		}
 	}
 	

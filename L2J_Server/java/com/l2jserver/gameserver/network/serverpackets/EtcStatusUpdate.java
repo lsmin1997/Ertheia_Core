@@ -45,7 +45,7 @@ public class EtcStatusUpdate extends L2GameServerPacket
 		writeD(_activeChar.getWeightPenalty()); // 1-4 weight penalty, lvl (1=50%, 2=66.6%, 3=80%, 4=100%)
 		writeC(_activeChar.getExpertiseWeaponPenalty()); // Weapon Grade Penalty [1-4]
 		writeC(_activeChar.getExpertiseArmorPenalty()); // Armor Grade Penalty [1-4]
-		writeC(_activeChar.getDeathPenaltyBuffLevel()); // 1-15 death penalty, lvl (combat ability decreased due to death)
+		writeC(0); // Death Penalty [1-15, 0 = disabled)], not used anymore in Ertheia
 		writeC(_activeChar.getChargedSouls());
 		writeC(_mask);
 	}
