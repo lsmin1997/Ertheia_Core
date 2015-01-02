@@ -820,6 +820,36 @@ public abstract class Inventory extends ItemContainer
 		}
 	}
 	
+	private static final class BroochListener implements PaperdollListener
+	{
+		private static BroochListener instance = new BroochListener();
+		
+		public static BroochListener getInstance()
+		{
+			return instance;
+		}
+		
+		@Override
+		public void notifyUnequiped(int slot, L2ItemInstance item, Inventory inventory)
+		{
+			if (item.getItem().getBodyPart() == L2Item.SLOT_BROOCH)
+			{
+				inventory.unEquipItemInSlot(PAPERDOLL_BROOCH_JEWEL1);
+				inventory.unEquipItemInSlot(PAPERDOLL_BROOCH_JEWEL2);
+				inventory.unEquipItemInSlot(PAPERDOLL_BROOCH_JEWEL3);
+				inventory.unEquipItemInSlot(PAPERDOLL_BROOCH_JEWEL4);
+				inventory.unEquipItemInSlot(PAPERDOLL_BROOCH_JEWEL5);
+				inventory.unEquipItemInSlot(PAPERDOLL_BROOCH_JEWEL6);
+			}
+		}
+		
+		// Note (April 3, 2009): Currently on equip, talismans do not display properly, do we need checks here to fix this?
+		@Override
+		public void notifyEquiped(int slot, L2ItemInstance item, Inventory inventory)
+		{
+		}
+	}
+	
 	/**
 	 * Constructor of the inventory
 	 */
@@ -834,6 +864,7 @@ public abstract class Inventory extends ItemContainer
 			addPaperdollListener(BowCrossRodListener.getInstance());
 			addPaperdollListener(ItemSkillsListener.getInstance());
 			addPaperdollListener(BraceletListener.getInstance());
+			addPaperdollListener(BroochListener.getInstance());
 		}
 		
 		// common

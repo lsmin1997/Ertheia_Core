@@ -2189,7 +2189,7 @@ public final class L2PcInstance extends L2Playable
 			
 			int slot = getInventory().getSlotFromItem(item);
 			// we can't unequip talisman by body slot
-			if (slot == L2Item.SLOT_DECO)
+			if ((slot == L2Item.SLOT_DECO) || (slot == L2Item.SLOT_BROOCH_JEWEL))
 			{
 				items = getInventory().unEquipItemInSlotAndRecord(item.getLocationSlot());
 			}

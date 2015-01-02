@@ -314,8 +314,8 @@ public class UserInfo extends AbstractMaskPacket<UserInfoType>
 		if (containsMask(UserInfoType.SLOTS))
 		{
 			writeH(9);
-			writeC(_activeChar.getInventory().getTalismanSlots());
-			writeC(_activeChar.getInventory().canEquipCloak() ? 0x01 : 0x00);
+			writeC(_activeChar.getInventory().getTalismanSlots()); // Confirmed
+			writeC(_activeChar.getInventory().getBroochJewelSlots()); // Confirmed
 			writeC(_activeChar.getTeam().getId()); // Confirmed
 			writeC(0x00); // Red dotted ring on the floor
 			writeC(0x00);
