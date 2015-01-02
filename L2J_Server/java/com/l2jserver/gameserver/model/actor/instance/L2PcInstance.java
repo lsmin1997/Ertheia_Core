@@ -279,6 +279,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
 import com.l2jserver.gameserver.network.serverpackets.ExSubjobInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExUseSharedGroupItem;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoAbnormalVisualEffect;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoCubic;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.FlyToLocation.FlyType;
 import com.l2jserver.gameserver.network.serverpackets.GameGuardQuery;
@@ -4282,7 +4283,6 @@ public final class L2PcInstance extends L2Playable
 		
 		// Send a Server->Client packet CharInfo to all L2PcInstance in _KnownPlayers of the L2PcInstance
 		broadcastPacket(new CharInfo(this));
-		broadcastPacket(new ExBrExtraUserInfo(this));
 	}
 	
 	public final void broadcastUserInfo(UserInfoType... types)
@@ -4302,10 +4302,8 @@ public final class L2PcInstance extends L2Playable
 		UserInfo ui = new UserInfo(this, false);
 		ui.addComponentType(UserInfoType.CLAN);
 		sendPacket(ui);
-		sendPacket(new ExBrExtraUserInfo(this));
 		
 		// Send a Server->Client packet TitleUpdate to all L2PcInstance in _KnownPlayers of the L2PcInstance
-		
 		broadcastPacket(new NicknameChanged(this));
 	}
 	
@@ -9167,7 +9165,8 @@ public final class L2PcInstance extends L2Playable
 				cubic.cancelDisappear();
 			}
 			_cubics.clear();
-			broadcastUserInfo();
+			sendPacket(new ExUserInfoCubic(this));
+			broadcastPacket(new CharInfo(this));
 		}
 	}
 	
@@ -9188,7 +9187,8 @@ public final class L2PcInstance extends L2Playable
 			}
 			if (broadcast)
 			{
-				broadcastUserInfo();
+				sendPacket(new ExUserInfoCubic(this));
+				broadcastPacket(new CharInfo(this));
 			}
 		}
 	}
@@ -9540,6 +9540,7 @@ public final class L2PcInstance extends L2Playable
 				cubic.cancelDisappear();
 			}
 			_cubics.clear();
+			sendPacket(new ExUserInfoCubic(this));
 		}
 		
 		if (getParty() != null)
