@@ -235,7 +235,9 @@ public final class L2TeleporterInstance extends L2Npc
 		if (type == TeleportType.NORMAL)
 		{
 			final Calendar cal = Calendar.getInstance();
-			if (((cal.get(Calendar.HOUR_OF_DAY) >= 20) && (cal.get(Calendar.HOUR_OF_DAY) <= 0)) && ((cal.get(Calendar.DAY_OF_WEEK) >= Calendar.MONDAY) && (cal.get(Calendar.DAY_OF_WEEK) <= Calendar.TUESDAY)))
+			final int hour = cal.get(Calendar.HOUR_OF_DAY);
+			final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+			if ((hour >= 20) && ((dayOfWeek >= Calendar.MONDAY) && (dayOfWeek <= Calendar.TUESDAY)))
 			{
 				return loc.getFeeCount() / 2;
 			}
