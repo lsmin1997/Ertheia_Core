@@ -89,7 +89,7 @@ public class Message
 		final String[] elemDef = rset.getString("elementals").split(";");
 		for (int i = 0; i < 6; i++)
 		{
-			_elementals[i] = Integer.valueOf(elemDef[i]).intValue();
+			_elementals[i] = Integer.parseInt(elemDef[i]);
 		}
 	}
 	
