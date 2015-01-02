@@ -277,7 +277,6 @@ public final class L2SkillLearn
 	
 	public void addRemoveSkills(int skillId)
 	{
-		
 		_removeSkills.add(skillId);
 	}
 	
