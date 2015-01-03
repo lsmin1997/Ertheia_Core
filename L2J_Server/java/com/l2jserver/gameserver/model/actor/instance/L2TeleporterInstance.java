@@ -227,13 +227,13 @@ public final class L2TeleporterInstance extends L2Npc
 	 */
 	private long calculateFee(L2PcInstance player, TeleportType type, TeleportLocation loc)
 	{
-		if (player.getLevel() < 77)
-		{
-			return 0;
-		}
-		
 		if (type == TeleportType.NORMAL)
 		{
+			if (!player.isSubClassActive() && (player.getLevel() < 77))
+			{
+				return 0;
+			}
+			
 			final Calendar cal = Calendar.getInstance();
 			final int hour = cal.get(Calendar.HOUR_OF_DAY);
 			final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
@@ -242,13 +242,12 @@ public final class L2TeleporterInstance extends L2Npc
 				return loc.getFeeCount() / 2;
 			}
 		}
-		
 		return loc.getFeeCount();
 	}
 	
 	protected boolean shouldPayFee(L2PcInstance player, TeleportType type, TeleportLocation loc)
 	{
-		return (type == TeleportType.NORMAL) && (Config.ALT_GAME_FREE_TELEPORT || ((player.getLevel() >= 76) && ((loc.getFeeId() != 0) && (loc.getFeeCount() > 0))));
+		return (type != TeleportType.NORMAL) || (!Config.ALT_GAME_FREE_TELEPORT && ((player.getLevel() > 76) || player.isSubClassActive()) && ((loc.getFeeId() != 0) && (loc.getFeeCount() > 0)));
 	}
 	
 	protected int parseNextInt(StringTokenizer st, int defaultVal)
