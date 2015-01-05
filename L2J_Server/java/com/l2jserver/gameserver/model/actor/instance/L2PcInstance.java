@@ -370,9 +370,9 @@ public final class L2PcInstance extends L2Playable
 	private static final String DELETE_TP_BOOKMARK = "DELETE FROM character_tpbookmark WHERE charId=? AND Id=?";
 	
 	// Character Subclass SQL String Definitions:
-	private static final String RESTORE_CHAR_SUBCLASSES = "SELECT class_id,exp,sp,level,class_index FROM character_subclasses WHERE charId=? ORDER BY class_index ASC";
-	private static final String ADD_CHAR_SUBCLASS = "INSERT INTO character_subclasses (charId,class_id,exp,sp,level,class_index) VALUES (?,?,?,?,?,?)";
-	private static final String UPDATE_CHAR_SUBCLASS = "UPDATE character_subclasses SET exp=?,sp=?,level=?,class_id=? WHERE charId=? AND class_index =?";
+	private static final String RESTORE_CHAR_SUBCLASSES = "SELECT class_id,exp,sp,level,class_index,dual_class FROM character_subclasses WHERE charId=? ORDER BY class_index ASC";
+	private static final String ADD_CHAR_SUBCLASS = "INSERT INTO character_subclasses (charId,class_id,exp,sp,level,class_index,dual_class) VALUES (?,?,?,?,?,?,?)";
+	private static final String UPDATE_CHAR_SUBCLASS = "UPDATE character_subclasses SET exp=?,sp=?,level=?,class_id=?,dual_class=? WHERE charId=? AND class_index =?";
 	private static final String DELETE_CHAR_SUBCLASS = "DELETE FROM character_subclasses WHERE charId=? AND class_index=?";
 	
 	// Character Henna SQL String Definitions:
@@ -7164,8 +7164,9 @@ public final class L2PcInstance extends L2Playable
 					subClass.setClassId(rset.getInt("class_id"));
 					subClass.setLevel(rset.getByte("level"));
 					subClass.setExp(rset.getLong("exp"));
-					subClass.setSp(rset.getInt("sp"));
+					subClass.setSp(rset.getLong("sp"));
 					subClass.setClassIndex(rset.getInt("class_index"));
+					subClass.setIsDualClass(rset.getBoolean("dual_class"));
 					
 					// Enforce the correct indexing of _subClasses against their class indexes.
 					player.getSubClasses().put(subClass.getClassIndex(), subClass);
@@ -7470,7 +7471,7 @@ public final class L2PcInstance extends L2Playable
 				statement.setInt(4, subClass.getClassId());
 				statement.setInt(5, getObjectId());
 				statement.setInt(6, subClass.getClassIndex());
-				
+				statement.setBoolean(7, subClass.isDualClass());
 				statement.execute();
 				statement.clearParameters();
 			}
@@ -10062,7 +10063,8 @@ public final class L2PcInstance extends L2Playable
 				statement.setLong(3, newClass.getExp());
 				statement.setLong(4, newClass.getSp());
 				statement.setInt(5, newClass.getLevel());
-				statement.setInt(6, newClass.getClassIndex()); // <-- Added
+				statement.setInt(6, newClass.getClassIndex());
+				statement.setBoolean(7, newClass.isDualClass());
 				statement.execute();
 			}
 			catch (Exception e)
@@ -10171,6 +10173,19 @@ public final class L2PcInstance extends L2Playable
 	public boolean isSubClassActive()
 	{
 		return _classIndex > 0;
+	}
+	
+	public void setDualClass(int classIndex)
+	{
+		if (isSubClassActive())
+		{
+			getSubClasses().get(_classIndex).setIsDualClass(true);
+		}
+	}
+	
+	public boolean isDualClassActive()
+	{
+		return isSubClassActive() && getSubClasses().get(_classIndex).isDualClass();
 	}
 	
 	public Map<Integer, SubClass> getSubClasses()
