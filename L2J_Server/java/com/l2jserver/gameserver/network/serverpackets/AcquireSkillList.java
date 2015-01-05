@@ -36,6 +36,7 @@ public class AcquireSkillList extends L2GameServerPacket
 	public AcquireSkillList(L2PcInstance activeChar)
 	{
 		_learnable = SkillTreesData.getInstance().getAvailableSkills(activeChar, activeChar.getClassId(), false, false);
+		_learnable.addAll(SkillTreesData.getInstance().getNextAvailableSkills(activeChar, activeChar.getClassId(), false, false));
 	}
 	
 	@Override

@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -617,7 +618,7 @@ public final class SkillTreesData implements DocumentParser
 	 */
 	private List<L2SkillLearn> getAvailableSkills(L2PcInstance player, ClassId classId, boolean includeByFs, boolean includeAutoGet, ISkillsHolder holder)
 	{
-		final List<L2SkillLearn> result = new ArrayList<>();
+		final List<L2SkillLearn> result = new LinkedList<>();
 		final Map<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(classId);
 		
 		if (skills.isEmpty())
@@ -1241,6 +1242,37 @@ public final class SkillTreesData implements DocumentParser
 			}
 		}
 		return minLevel;
+	}
+	
+	public List<L2SkillLearn> getNextAvailableSkills(L2PcInstance player, ClassId classId, boolean includeByFs, boolean includeAutoGet)
+	{
+		final Map<Integer, L2SkillLearn> completeClassSkillTree = getCompleteClassSkillTree(classId);
+		final List<L2SkillLearn> result = new LinkedList<>();
+		if (completeClassSkillTree.isEmpty())
+		{
+			return result;
+		}
+		final int minLevelForNewSkill = getMinLevelForNewSkill(player, completeClassSkillTree);
+		
+		for (L2SkillLearn skill : completeClassSkillTree.values())
+		{
+			if (((includeAutoGet && skill.isAutoGet()) || skill.isLearnedByNpc() || (includeByFs && skill.isLearnedByFS())) && (minLevelForNewSkill == skill.getGetLevel()))
+			{
+				final Skill oldSkill = player.getKnownSkill(skill.getSkillId());
+				if (oldSkill != null)
+				{
+					if (oldSkill.getLevel() == (skill.getSkillLevel() - 1))
+					{
+						result.add(skill);
+					}
+				}
+				else if (skill.getSkillLevel() == 1)
+				{
+					result.add(skill);
+				}
+			}
+		}
+		return result;
 	}
 	
 	/**
