@@ -1371,7 +1371,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestCallToChangeClass();
 								break;
 							case 0xA2:
-								// msg = new RequestChangeToAwakenedClass();
+								msg = new RequestChangeToAwakenedClass();
 								break;
 							case 0xA3:
 								// msg = new RequestWorldStatistics();
