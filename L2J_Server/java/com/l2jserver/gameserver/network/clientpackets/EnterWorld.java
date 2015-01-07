@@ -72,6 +72,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExNewSkillToLearnByLevelUp
 import com.l2jserver.gameserver.network.serverpackets.ExNoticePostArrived;
 import com.l2jserver.gameserver.network.serverpackets.ExNotifyPremiumItem;
 import com.l2jserver.gameserver.network.serverpackets.ExPledgeCount;
+import com.l2jserver.gameserver.network.serverpackets.ExPledgeWaitingListAlarm;
 import com.l2jserver.gameserver.network.serverpackets.ExShowScreenMessage;
 import com.l2jserver.gameserver.network.serverpackets.ExShowUsm;
 import com.l2jserver.gameserver.network.serverpackets.ExStorageMaxCount;
@@ -361,6 +362,10 @@ public class EnterWorld extends L2GameClientPacket
 			sendPacket(new PledgeShowMemberListAll(clan));
 			activeChar.sendPacket(new ExPledgeCount(clan));
 			activeChar.sendPacket(new PledgeSkillList(clan));
+		}
+		else
+		{
+			activeChar.sendPacket(ExPledgeWaitingListAlarm.STATIC_PACKET);
 		}
 		
 		activeChar.broadcastUserInfo();
