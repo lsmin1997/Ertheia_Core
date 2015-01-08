@@ -18,28 +18,27 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import com.l2jserver.gameserver.datatables.CrestTable;
-import com.l2jserver.gameserver.model.L2Crest;
+import com.l2jserver.Config;
 
 /**
- * @author -Wooden-
+ * @author -Wooden-, Sdw
  */
-public class ExPledgeCrestLarge extends L2GameServerPacket
+public class ExPledgeEmblem extends L2GameServerPacket
 {
 	private final int _crestId;
+	private final int _clanId;
 	private final byte[] _data;
+	private final int _chunkId;
+	private final int _chunkSize;
+	private static final int TOTAL_SIZE = 65664;
 	
-	public ExPledgeCrestLarge(int crestId)
+	public ExPledgeEmblem(int crestId, byte[] chunkedData, int clanId, int chunkId, int chunkSize)
 	{
 		_crestId = crestId;
-		final L2Crest crest = CrestTable.getInstance().getCrest(crestId);
-		_data = crest != null ? crest.getData() : null;
-	}
-	
-	public ExPledgeCrestLarge(int crestId, byte[] data)
-	{
-		_crestId = crestId;
-		_data = data;
+		_data = chunkedData;
+		_clanId = clanId;
+		_chunkId = chunkId;
+		_chunkSize = chunkSize;
 	}
 	
 	@Override
@@ -47,8 +46,12 @@ public class ExPledgeCrestLarge extends L2GameServerPacket
 	{
 		writeC(0xFE);
 		writeH(0x1B);
-		writeD(0x00);
+		writeD(Config.SERVER_ID);
+		writeD(_clanId);
 		writeD(_crestId);
+		writeD(_chunkId);
+		writeD(TOTAL_SIZE);
+		writeD(_chunkSize);
 		if (_data != null)
 		{
 			writeD(_data.length);
