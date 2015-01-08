@@ -82,6 +82,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.ExVitalityEffectInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
+import com.l2jserver.gameserver.network.serverpackets.ExWorldChatCnt;
 import com.l2jserver.gameserver.network.serverpackets.HennaInfo;
 import com.l2jserver.gameserver.network.serverpackets.ItemList;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -590,6 +591,7 @@ public class EnterWorld extends L2GameClientPacket
 		}
 		
 		activeChar.sendPacket(new ExAcquireAPSkillList(activeChar));
+		activeChar.sendPacket(new ExWorldChatCnt(activeChar));
 	}
 	
 	/**

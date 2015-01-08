@@ -38,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -547,6 +548,10 @@ public final class Config
 	public static boolean USE_SAY_FILTER;
 	public static String CHAT_FILTER_CHARS;
 	public static int[] BAN_CHAT_CHANNELS;
+	public static int WORLD_CHAT_MIN_LEVEL;
+	public static int WORLD_CHAT_POINTS_PER_DAY;
+	public static Duration WORLD_CHAT_INTERVAL;
+	public static String WORLD_CHAT_RESET_TIME;
 	public static int ALT_OLY_START_TIME;
 	public static int ALT_OLY_MIN;
 	public static int ALT_OLY_MAX_BUFFS;
@@ -1883,6 +1888,10 @@ public final class Config
 			{
 				_log.log(Level.WARNING, nfe.getMessage(), nfe);
 			}
+			WORLD_CHAT_MIN_LEVEL = General.getInt("WorldChatMinLevel", 95);
+			WORLD_CHAT_POINTS_PER_DAY = General.getInt("WorldChatPointsPerDay", 10);
+			WORLD_CHAT_INTERVAL = General.getDuration("WorldChatInterval", "20secs", Duration.ofSeconds(20));
+			WORLD_CHAT_RESET_TIME = General.getString("WorldChatResetTime", "06:30:00");
 			ALT_MANOR_REFRESH_TIME = General.getInt("AltManorRefreshTime", 20);
 			ALT_MANOR_REFRESH_MIN = General.getInt("AltManorRefreshMin", 0);
 			ALT_MANOR_APPROVE_TIME = General.getInt("AltManorApproveTime", 4);

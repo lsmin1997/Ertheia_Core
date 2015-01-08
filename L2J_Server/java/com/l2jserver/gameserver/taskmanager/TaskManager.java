@@ -44,6 +44,7 @@ import com.l2jserver.gameserver.taskmanager.tasks.TaskBirthday;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskClanLeaderApply;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskCleanUp;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskDailySkillReuseClean;
+import com.l2jserver.gameserver.taskmanager.tasks.TaskDailyWorldChatPointReset;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskGlobalVariablesSave;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskJython;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskOlympiadSave;
@@ -190,6 +191,7 @@ public final class TaskManager
 		registerTask(new TaskClanLeaderApply());
 		registerTask(new TaskCleanUp());
 		registerTask(new TaskDailySkillReuseClean());
+		registerTask(new TaskDailyWorldChatPointReset());
 		registerTask(new TaskGlobalVariablesSave());
 		registerTask(new TaskJython());
 		registerTask(new TaskOlympiadSave());

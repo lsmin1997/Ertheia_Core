@@ -394,6 +394,8 @@ public final class L2PcInstance extends L2Playable
 	
 	public static final int REQUEST_TIMEOUT = 15;
 	
+	public static final String WORLD_CHAT_VARIABLE_NAME = "WORLD_CHAT_POINTS";
+	
 	private final List<IEventListener> _eventListeners = new FastList<IEventListener>().shared();
 	
 	public class AIAccessor extends L2Character.AIAccessor
@@ -9732,6 +9734,42 @@ public final class L2PcInstance extends L2Playable
 		return _blockList;
 	}
 	
+	/**
+	 * @param player
+	 * @return returns {@code true} if player is current player cannot accepting messages from the target player, {@code false} otherwise
+	 */
+	public boolean isBlocking(L2PcInstance player)
+	{
+		return _blockList.isBlockAll() || _blockList.isInBlockList(player);
+	}
+	
+	/**
+	 * @param player
+	 * @return returns {@code true} if player is current player can accepting messages from the target player, {@code false} otherwise
+	 */
+	public boolean isNotBlocking(L2PcInstance player)
+	{
+		return !_blockList.isBlockAll() && !_blockList.isInBlockList(player);
+	}
+	
+	/**
+	 * @param player
+	 * @return returns {@code true} if player is target player cannot accepting messages from the current player, {@code false} otherwise
+	 */
+	public boolean isBlocked(L2PcInstance player)
+	{
+		return player.getBlockList().isBlockAll() || player.getBlockList().isInBlockList(this);
+	}
+	
+	/**
+	 * @param player
+	 * @return returns {@code true} if player is target player can accepting messages from the current player, {@code false} otherwise
+	 */
+	public boolean isNotBlocked(L2PcInstance player)
+	{
+		return !player.getBlockList().isBlockAll() && !player.getBlockList().isInBlockList(this);
+	}
+	
 	public void setHero(boolean hero)
 	{
 		if (hero && (_baseClass == _activeClass))
@@ -14254,63 +14292,121 @@ public final class L2PcInstance extends L2Playable
 		return false;
 	}
 	
+	/**
+	 * Sets the beauty shop hair
+	 * @param hairId
+	 */
 	public void setVisualHair(int hairId)
 	{
 		getVariables().set("visualHairId", hairId);
 	}
 	
+	/**
+	 * Sets the beauty shop hair color
+	 * @param colorId
+	 */
 	public void setVisualHairColor(int colorId)
 	{
 		getVariables().set("visualHairColorId", colorId);
 	}
 	
+	/**
+	 * Sets the beauty shop modified face
+	 * @param faceId
+	 */
 	public void setVisualFace(int faceId)
 	{
 		getVariables().set("visualFaceId", faceId);
 	}
 	
+	/**
+	 * @return the beauty shop hair, or his normal if not changed.
+	 */
 	public int getVisualHair()
 	{
 		return getVariables().getInt("visualHairId", getAppearance().getHairStyle());
 	}
 	
+	/**
+	 * @return the beauty shop hair color, or his normal if not changed.
+	 */
 	public int getVisualHairColor()
 	{
 		return getVariables().getInt("visualHairColorId", getAppearance().getHairColor());
 	}
 	
+	/**
+	 * @return the beauty shop modified face, or his normal if not changed.
+	 */
 	public int getVisualFace()
 	{
 		return getVariables().getInt("visualFaceId", getAppearance().getFace());
 	}
 	
+	/**
+	 * @return {@code true} if player has mentees, {@code false} otherwise
+	 */
 	public boolean isMentor()
 	{
 		return MentorManager.getInstance().isMentor(getObjectId());
 	}
 	
+	/**
+	 * @return {@code true} if player has mentor, {@code false} otherwise
+	 */
 	public boolean isMentee()
 	{
 		return MentorManager.getInstance().isMentee(getObjectId());
 	}
 	
+	/**
+	 * @return the amount of ability points player can spend on learning skills.
+	 */
 	public int getAbilityPoints()
 	{
 		return getVariables().getInt("ABILITY_POINTS", 0);
 	}
 	
+	/**
+	 * Sets the amount of ability points player can spend on learning skills.
+	 * @param points
+	 */
 	public void setAbilityPoints(int points)
 	{
 		getVariables().set("ABILITY_POINTS", points);
 	}
 	
+	/**
+	 * @return how much ability points player has spend on learning skills.
+	 */
 	public int getAbilityPointsUsed()
 	{
 		return getVariables().getInt("ABILITY_POINTS_USED", 0);
 	}
 	
+	/**
+	 * Sets how much ability points player has spend on learning skills.
+	 * @param points
+	 */
 	public void setAbilityPointsUsed(int points)
 	{
 		getVariables().set("ABILITY_POINTS_USED", points);
+	}
+	
+	/**
+	 * @return The amount of times player can use world chat
+	 */
+	public int getWorldChatPoints()
+	{
+		return getVariables().getInt(WORLD_CHAT_VARIABLE_NAME, 1);
+	}
+	
+	/**
+	 * Sets the amount of times player can use world chat
+	 * @param points
+	 */
+	public void setWorldChatPoints(int points)
+	{
+		getVariables().set(WORLD_CHAT_VARIABLE_NAME, points);
 	}
 }
