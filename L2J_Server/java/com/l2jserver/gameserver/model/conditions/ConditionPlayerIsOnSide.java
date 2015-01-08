@@ -16,31 +16,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets;
+package com.l2jserver.gameserver.model.conditions;
 
 import com.l2jserver.gameserver.enums.CastleSide;
-import com.l2jserver.gameserver.model.entity.Castle;
+import com.l2jserver.gameserver.model.actor.L2Character;
+import com.l2jserver.gameserver.model.items.L2Item;
+import com.l2jserver.gameserver.model.skills.Skill;
 
 /**
- * @author UnAfraid
+ * The Class ConditionPlayerIsOnSide.
+ * @author St3eT
  */
-public class ExCastleState extends L2GameServerPacket
+public class ConditionPlayerIsOnSide extends Condition
 {
-	private final int _castleId;
-	private final CastleSide _castleSide;
+	private final CastleSide _side;
 	
-	public ExCastleState(Castle castle)
+	/**
+	 * Instantiates a new condition player race.
+	 * @param side the allowed Castle side.
+	 */
+	public ConditionPlayerIsOnSide(CastleSide side)
 	{
-		_castleId = castle.getResidenceId();
-		_castleSide = castle.getSide();
+		_side = side;
 	}
 	
 	@Override
-	protected void writeImpl()
+	public boolean testImpl(L2Character effector, L2Character effected, Skill skill, L2Item item)
 	{
-		writeC(0xFE);
-		writeH(0x12D);
-		writeD(_castleId);
-		writeD(_castleSide.ordinal());
+		if ((effector == null) || !effector.isPlayer())
+		{
+			return false;
+		}
+		return effector.getActingPlayer().getPlayerSide() == _side;
 	}
 }
