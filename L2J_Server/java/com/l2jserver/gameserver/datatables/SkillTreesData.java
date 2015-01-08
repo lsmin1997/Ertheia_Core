@@ -1322,21 +1322,24 @@ public final class SkillTreesData implements DocumentParser
 		}
 		final int minLevelForNewSkill = getMinLevelForNewSkill(player, completeClassSkillTree);
 		
-		for (L2SkillLearn skill : completeClassSkillTree.values())
+		if (minLevelForNewSkill > 0)
 		{
-			if (((includeAutoGet && skill.isAutoGet()) || skill.isLearnedByNpc() || (includeByFs && skill.isLearnedByFS())) && (minLevelForNewSkill == skill.getGetLevel()))
+			for (L2SkillLearn skill : completeClassSkillTree.values())
 			{
-				final Skill oldSkill = player.getKnownSkill(skill.getSkillId());
-				if (oldSkill != null)
+				if (((includeAutoGet && skill.isAutoGet()) || skill.isLearnedByNpc() || (includeByFs && skill.isLearnedByFS())) && (minLevelForNewSkill == skill.getGetLevel()))
 				{
-					if (oldSkill.getLevel() == (skill.getSkillLevel() - 1))
+					final Skill oldSkill = player.getKnownSkill(skill.getSkillId());
+					if (oldSkill != null)
+					{
+						if (oldSkill.getLevel() == (skill.getSkillLevel() - 1))
+						{
+							result.add(skill);
+						}
+					}
+					else if (skill.getSkillLevel() == 1)
 					{
 						result.add(skill);
 					}
-				}
-				else if (skill.getSkillLevel() == 1)
-				{
-					result.add(skill);
 				}
 			}
 		}
