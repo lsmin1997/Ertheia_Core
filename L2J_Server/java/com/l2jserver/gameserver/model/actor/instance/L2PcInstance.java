@@ -10215,6 +10215,11 @@ public final class L2PcInstance extends L2Playable
 		return isSubClassActive() && getSubClasses().get(_classIndex).isDualClass();
 	}
 	
+	public boolean haveDualClass()
+	{
+		return getSubClasses().values().stream().anyMatch(SubClass::isDualClass);
+	}
+	
 	public Map<Integer, SubClass> getSubClasses()
 	{
 		if (_subClasses == null)
