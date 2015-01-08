@@ -52,6 +52,7 @@ import com.l2jserver.gameserver.taskmanager.tasks.TaskRecom;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskRestart;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskScript;
 import com.l2jserver.gameserver.taskmanager.tasks.TaskShutdown;
+import com.l2jserver.gameserver.taskmanager.tasks.TaskVitalityReset;
 
 /**
  * @author Layane
@@ -197,6 +198,7 @@ public final class TaskManager
 		registerTask(new TaskRestart());
 		registerTask(new TaskScript());
 		registerTask(new TaskShutdown());
+		registerTask(new TaskVitalityReset());
 	}
 	
 	public void registerTask(Task task)

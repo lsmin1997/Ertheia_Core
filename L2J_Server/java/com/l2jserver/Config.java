@@ -956,18 +956,15 @@ public final class Config
 	// Vitality Settings
 	// --------------------------------------------------
 	public static boolean ENABLE_VITALITY;
-	public static boolean RECOVER_VITALITY_ON_RECONNECT;
-	public static boolean ENABLE_DROP_VITALITY_HERBS;
-	public static float RATE_VITALITY_LEVEL_1;
-	public static float RATE_VITALITY_LEVEL_2;
-	public static float RATE_VITALITY_LEVEL_3;
-	public static float RATE_VITALITY_LEVEL_4;
+	public static int STARTING_VITALITY_POINTS;
+	
+	public static int ALT_VITALITY_DATE_RESET;
+	public static String ALT_VITALITY_HOUR_RESET;
+	
+	public static float RATE_VITALITY_EXP_MULTIPLIER;
 	public static float RATE_DROP_VITALITY_HERBS;
-	public static float RATE_RECOVERY_VITALITY_PEACE_ZONE;
 	public static float RATE_VITALITY_LOST;
 	public static float RATE_VITALITY_GAIN;
-	public static float RATE_RECOVERY_ON_RECONNECT;
-	public static int STARTING_VITALITY_POINTS;
 	
 	// --------------------------------------------------
 	// No classification assigned to the following yet
@@ -1500,8 +1497,14 @@ public final class Config
 			FEE_DELETE_TRANSFER_SKILLS = Character.getInt("FeeDeleteTransferSkills", 10000000);
 			FEE_DELETE_SUBCLASS_SKILLS = Character.getInt("FeeDeleteSubClassSkills", 10000000);
 			ENABLE_VITALITY = Character.getBoolean("EnableVitality", true);
-			RECOVER_VITALITY_ON_RECONNECT = Character.getBoolean("RecoverVitalityOnReconnect", true);
-			STARTING_VITALITY_POINTS = Character.getInt("StartingVitalityPoints", 20000);
+			STARTING_VITALITY_POINTS = Character.getInt("StartingVitalityPoints", 140000);
+			ALT_VITALITY_DATE_RESET = Character.getInt("AltVitalityDateReset", 3);
+			if ((ALT_VITALITY_DATE_RESET < 1) || (ALT_VITALITY_DATE_RESET > 7))
+			{
+				_log.log(Level.WARNING, "Wrong value specified for AltVitalityDateReset: " + ALT_VITALITY_DATE_RESET);
+				ALT_VITALITY_DATE_RESET = 3;
+			}
+			ALT_VITALITY_HOUR_RESET = Character.getString("AltVitalityHourReset", "06:30:00");
 			MAX_BONUS_EXP = Character.getDouble("MaxExpBonus", 3.5);
 			MAX_BONUS_SP = Character.getDouble("MaxSpBonus", 3.5);
 			MAX_RUN_SPEED = Character.getInt("MaxRunSpeed", 250);
@@ -2076,14 +2079,9 @@ public final class Config
 			RATE_HB_TRUST_INCREASE = RatesSettings.getFloat("RateHellboundTrustIncrease", 1);
 			RATE_HB_TRUST_DECREASE = RatesSettings.getFloat("RateHellboundTrustDecrease", 1);
 			
-			RATE_VITALITY_LEVEL_1 = RatesSettings.getFloat("RateVitalityLevel1", 1.5f);
-			RATE_VITALITY_LEVEL_2 = RatesSettings.getFloat("RateVitalityLevel2", 2);
-			RATE_VITALITY_LEVEL_3 = RatesSettings.getFloat("RateVitalityLevel3", 2.5f);
-			RATE_VITALITY_LEVEL_4 = RatesSettings.getFloat("RateVitalityLevel4", 3);
-			RATE_RECOVERY_VITALITY_PEACE_ZONE = RatesSettings.getFloat("RateRecoveryPeaceZone", 1);
+			RATE_VITALITY_EXP_MULTIPLIER = RatesSettings.getFloat("RateVitalityExpMultiplier", 2);
 			RATE_VITALITY_LOST = RatesSettings.getFloat("RateVitalityLost", 1);
 			RATE_VITALITY_GAIN = RatesSettings.getFloat("RateVitalityGain", 1);
-			RATE_RECOVERY_ON_RECONNECT = RatesSettings.getFloat("RateRecoveryOnReconnect", 4);
 			RATE_KARMA_LOST = RatesSettings.getFloat("RateKarmaLost", -1);
 			if (RATE_KARMA_LOST == -1)
 			{
@@ -2876,29 +2874,14 @@ public final class Config
 			case "ratehellboundtrustdecrease":
 				RATE_HB_TRUST_DECREASE = Float.parseFloat(pValue);
 				break;
-			case "ratevitalitylevel1":
-				RATE_VITALITY_LEVEL_1 = Float.parseFloat(pValue);
-				break;
-			case "ratevitalitylevel2":
-				RATE_VITALITY_LEVEL_2 = Float.parseFloat(pValue);
-				break;
-			case "ratevitalitylevel3":
-				RATE_VITALITY_LEVEL_3 = Float.parseFloat(pValue);
-				break;
-			case "ratevitalitylevel4":
-				RATE_VITALITY_LEVEL_4 = Float.parseFloat(pValue);
-				break;
-			case "raterecoverypeacezone":
-				RATE_RECOVERY_VITALITY_PEACE_ZONE = Float.parseFloat(pValue);
+			case "ratevitalityexpmultiplier":
+				RATE_VITALITY_EXP_MULTIPLIER = Float.parseFloat(pValue);
 				break;
 			case "ratevitalitylost":
 				RATE_VITALITY_LOST = Float.parseFloat(pValue);
 				break;
 			case "ratevitalitygain":
 				RATE_VITALITY_GAIN = Float.parseFloat(pValue);
-				break;
-			case "raterecoveryonreconnect":
-				RATE_RECOVERY_ON_RECONNECT = Float.parseFloat(pValue);
 				break;
 			case "ratekarmaexplost":
 				RATE_KARMA_EXP_LOST = Float.parseFloat(pValue);

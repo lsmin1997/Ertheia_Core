@@ -40,7 +40,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -168,7 +167,6 @@ import com.l2jserver.gameserver.model.actor.tasks.player.InventoryEnableTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.LookingForFishTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.PetFeedTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.PvPFlagTask;
-import com.l2jserver.gameserver.model.actor.tasks.player.RecoBonusTaskEnd;
 import com.l2jserver.gameserver.model.actor.tasks.player.RecoGiveTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.RentPetTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.ResetChargesTask;
@@ -176,7 +174,6 @@ import com.l2jserver.gameserver.model.actor.tasks.player.ResetSoulsTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.SitDownTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.StandUpTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.TeleportWatchdogTask;
-import com.l2jserver.gameserver.model.actor.tasks.player.VitalityTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.WarnUserTakeBreakTask;
 import com.l2jserver.gameserver.model.actor.tasks.player.WaterTask;
 import com.l2jserver.gameserver.model.actor.templates.L2PcTemplate;
@@ -488,9 +485,6 @@ public final class L2PcInstance extends L2Playable
 	private int _fame;
 	private ScheduledFuture<?> _fameTask;
 	
-	/** Vitality recovery task */
-	private ScheduledFuture<?> _vitalityTask;
-	
 	private volatile ScheduledFuture<?> _teleportWatchdog;
 	
 	/** The Siege state of the L2PcInstance */
@@ -568,8 +562,6 @@ public final class L2PcInstance extends L2Playable
 	private int _recomHave; // how much I was recommended by others
 	/** The number of recommendation that the L2PcInstance can give */
 	private int _recomLeft; // how many recommendations I can give to others
-	/** Recommendation Bonus task **/
-	private ScheduledFuture<?> _recoBonusTask;
 	/** Recommendation task **/
 	private ScheduledFuture<?> _recoGiveTask;
 	/** Recommendation Two Hours bonus **/
@@ -1117,8 +1109,6 @@ public final class L2PcInstance extends L2Playable
 		
 		// Create a L2Radar object
 		_radar = new L2Radar(this);
-		
-		startVitalityTask();
 	}
 	
 	@Override
@@ -5743,8 +5733,6 @@ public final class L2PcInstance extends L2Playable
 		stopSoulTask();
 		stopChargeTask();
 		stopFameTask();
-		stopVitalityTask();
-		stopRecoBonusTask();
 		stopRecoGiveTask();
 	}
 	
@@ -6987,8 +6975,6 @@ public final class L2PcInstance extends L2Playable
 					
 					CursedWeaponsManager.getInstance().checkPlayer(player);
 					
-					player.setVitalityPoints(rset.getInt("vitality_points"), true);
-					
 					// Set the x,y,z position of the L2PcInstance and make it invisible
 					player.setXYZInvisible(rset.getInt("x"), rset.getInt("y"), rset.getInt("z"));
 					
@@ -7083,6 +7069,9 @@ public final class L2PcInstance extends L2Playable
 				final long masks = player.getVariables().getLong(COND_OVERRIDE_KEY, PcCondOverride.getAllExceptionsMask());
 				player.setOverrideCond(masks);
 			}
+			
+			player.loadRecommendations();
+			player.startRecoGiveTask();
 		}
 		catch (Exception e)
 		{
@@ -7441,7 +7430,7 @@ public final class L2PcInstance extends L2Playable
 			statement.setString(45, getName());
 			statement.setLong(46, 0); // unset
 			statement.setInt(47, getBookMarkSlot());
-			statement.setInt(48, getVitalityPoints());
+			statement.setInt(48, 0); // unset
 			statement.setString(49, getLang());
 			statement.setInt(50, getObjectId());
 			
@@ -12225,23 +12214,6 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public void startVitalityTask()
-	{
-		if (Config.ENABLE_VITALITY && (_vitalityTask == null))
-		{
-			_vitalityTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new VitalityTask(this), 1000, 60000);
-		}
-	}
-	
-	public void stopVitalityTask()
-	{
-		if (_vitalityTask != null)
-		{
-			_vitalityTask.cancel(false);
-			_vitalityTask = null;
-		}
-	}
-	
 	public int getPowerGrade()
 	{
 		return _powerGrade;
@@ -12526,20 +12498,12 @@ public final class L2PcInstance extends L2Playable
 		return getStat().getVitalityPoints();
 	}
 	
-	/**
-	 * @return Vitality Level
-	 */
-	public int getVitalityLevel()
-	{
-		return getStat().getVitalityLevel();
-	}
-	
 	public void setVitalityPoints(int points, boolean quiet)
 	{
 		getStat().setVitalityPoints(points, quiet);
 	}
 	
-	public void updateVitalityPoints(float points, boolean useRates, boolean quiet)
+	public void updateVitalityPoints(int points, boolean useRates, boolean quiet)
 	{
 		getStat().updateVitalityPoints(points, useRates, quiet);
 	}
@@ -13871,11 +13835,9 @@ public final class L2PcInstance extends L2Playable
 	
 	/**
 	 * Load L2PcInstance Recommendations data.
-	 * @return
 	 */
-	private long loadRecommendations()
+	private void loadRecommendations()
 	{
-		long _time_left = 0;
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT rec_have,rec_left,time_left FROM character_reco_bonus WHERE charId=? LIMIT 1"))
 		{
@@ -13886,11 +13848,6 @@ public final class L2PcInstance extends L2Playable
 				{
 					setRecomHave(rset.getInt("rec_have"));
 					setRecomLeft(rset.getInt("rec_left"));
-					_time_left = rset.getLong("time_left");
-				}
-				else
-				{
-					_time_left = 3600000;
 				}
 			}
 		}
@@ -13898,7 +13855,6 @@ public final class L2PcInstance extends L2Playable
 		{
 			_log.log(Level.SEVERE, "Could not restore Recommendations for player: " + getObjectId(), e);
 		}
-		return _time_left;
 	}
 	
 	/**
@@ -13906,23 +13862,17 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void storeRecommendations()
 	{
-		long recoTaskEnd = 0;
-		if (_recoBonusTask != null)
-		{
-			recoTaskEnd = Math.max(0, _recoBonusTask.getDelay(TimeUnit.MILLISECONDS));
-		}
-		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("INSERT INTO character_reco_bonus (charId,rec_have,rec_left,time_left) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE rec_have=?, rec_left=?, time_left=?"))
 		{
 			statement.setInt(1, getObjectId());
 			statement.setInt(2, getRecomHave());
 			statement.setInt(3, getRecomLeft());
-			statement.setLong(4, recoTaskEnd);
+			statement.setLong(4, 0);
 			// Update part
 			statement.setInt(5, getRecomHave());
 			statement.setInt(6, getRecomLeft());
-			statement.setLong(7, recoTaskEnd);
+			statement.setLong(7, 0);
 			statement.execute();
 		}
 		catch (Exception e)
@@ -13931,37 +13881,13 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public void checkRecoBonusTask()
+	public void startRecoGiveTask()
 	{
-		// Load data
-		long taskTime = loadRecommendations();
-		
-		if (taskTime > 0)
-		{
-			// Add 20 recos on first login
-			if (taskTime == 3600000)
-			{
-				setRecomLeft(getRecomLeft() + 20);
-			}
-			
-			// If player have some timeleft, start bonus task
-			_recoBonusTask = ThreadPoolManager.getInstance().scheduleGeneral(new RecoBonusTaskEnd(this), taskTime);
-		}
-		
 		// Create task to give new recommendations
 		_recoGiveTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new RecoGiveTask(this), 7200000, 3600000);
 		
 		// Store new data
 		storeRecommendations();
-	}
-	
-	public void stopRecoBonusTask()
-	{
-		if (_recoBonusTask != null)
-		{
-			_recoBonusTask.cancel(false);
-			_recoBonusTask = null;
-		}
 	}
 	
 	public void stopRecoGiveTask()
@@ -13981,22 +13907,6 @@ public final class L2PcInstance extends L2Playable
 	public void setRecoTwoHoursGiven(boolean val)
 	{
 		_recoTwoHoursGiven = val;
-	}
-	
-	public int getRecomBonusTime()
-	{
-		if (_recoBonusTask != null)
-		{
-			return (int) Math.max(0, _recoBonusTask.getDelay(TimeUnit.SECONDS));
-		}
-		
-		return 0;
-	}
-	
-	public int getRecomBonusType()
-	{
-		// Maintain = 1
-		return 0;
 	}
 	
 	public void setLastPetitionGmName(String gmName)
