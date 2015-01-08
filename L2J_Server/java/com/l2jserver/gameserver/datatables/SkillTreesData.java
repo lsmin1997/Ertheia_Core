@@ -604,7 +604,7 @@ public final class SkillTreesData implements DocumentParser
 		final Map<Integer, L2SkillLearn> skills = getCompleteClassSkillTree(classId);
 		for (L2SkillLearn skill : skills.values())
 		{
-			if ((skill.getSkillId() == CommonSkill.DIVINE_INSPIRATION.getId()) || skill.isAutoGet() || skill.isLearnedByFS())
+			if ((skill.getSkillId() == CommonSkill.DIVINE_INSPIRATION.getId()) || skill.isAutoGet() || skill.isLearnedByFS() || (skill.getGetLevel() > player.getLevel()))
 			{
 				continue;
 			}
@@ -613,7 +613,7 @@ public final class SkillTreesData implements DocumentParser
 			{
 				return true;
 			}
-			else if (skill.getSkillLevel() == 1)
+			else if ((oldSkill == null) && (skill.getSkillLevel() == 1))
 			{
 				return true;
 			}
