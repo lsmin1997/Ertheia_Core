@@ -307,12 +307,15 @@ public class PcStat extends PlayableStat
 		// Send acquirable skill list
 		getActiveChar().sendPacket(new AcquireSkillList(getActiveChar()));
 		getActiveChar().sendPacket(new ExVoteSystemInfo(getActiveChar()));
-		getActiveChar().sendPacket(new ExAcquireAPSkillList(getActiveChar()));
 		if (getActiveChar().isInParty())
 		{
 			final PartySmallWindowUpdate partyWindow = new PartySmallWindowUpdate(getActiveChar(), false);
 			partyWindow.addUpdateType(PartySmallWindowUpdateType.LEVEL);
 			getActiveChar().getParty().broadcastToPartyMembers(getActiveChar(), partyWindow);
+		}
+		if ((getLevel() == 99) && getActiveChar().isNoble())
+		{
+			getActiveChar().sendPacket(new ExAcquireAPSkillList(getActiveChar()));
 		}
 		
 		return levelIncreased;

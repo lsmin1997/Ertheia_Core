@@ -6145,7 +6145,7 @@ public final class L2PcInstance extends L2Playable
 	@Override
 	protected void reduceArrowCount(boolean bolts)
 	{
-		L2ItemInstance arrows = getInventory().getPaperdollItem(Inventory.PAPERDOLL_LHAND);
+		final L2ItemInstance arrows = getInventory().getPaperdollItem(Inventory.PAPERDOLL_LHAND);
 		
 		if (arrows == null)
 		{
@@ -6159,6 +6159,12 @@ public final class L2PcInstance extends L2Playable
 				_arrowItem = null;
 			}
 			sendPacket(new ItemList(this, false));
+			return;
+		}
+		
+		// Infinite quiver doesn't decreases arrows upon use
+		if (arrows.isEtcItem() && arrows.getEtcItem().isInfinite())
+		{
 			return;
 		}
 		
