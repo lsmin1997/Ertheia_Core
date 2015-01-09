@@ -39,6 +39,7 @@ import com.l2jserver.gameserver.model.stats.Stats;
 import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquireAPSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVitalityPointInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
@@ -305,8 +306,8 @@ public class PcStat extends PlayableStat
 		getActiveChar().sendPacket(new UserInfo(getActiveChar()));
 		// Send acquirable skill list
 		getActiveChar().sendPacket(new AcquireSkillList(getActiveChar()));
-		getActiveChar().sendPacket(new ExBrExtraUserInfo(getActiveChar()));
 		getActiveChar().sendPacket(new ExVoteSystemInfo(getActiveChar()));
+		getActiveChar().sendPacket(new ExAcquireAPSkillList(getActiveChar()));
 		if (getActiveChar().isInParty())
 		{
 			final PartySmallWindowUpdate partyWindow = new PartySmallWindowUpdate(getActiveChar(), false);

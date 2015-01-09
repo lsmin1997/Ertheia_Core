@@ -260,6 +260,7 @@ import com.l2jserver.gameserver.network.serverpackets.CharInfo;
 import com.l2jserver.gameserver.network.serverpackets.ConfirmDlg;
 import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.ExAbnormalStatusUpdateFromTarget;
+import com.l2jserver.gameserver.network.serverpackets.ExAcquireAPSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExAutoSoulShot;
 import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
@@ -9960,6 +9961,10 @@ public final class L2PcInstance extends L2Playable
 		_noble = val;
 		
 		sendSkillList();
+		if (val && (getLevel() == 99))
+		{
+			sendPacket(new ExAcquireAPSkillList(this));
+		}
 	}
 	
 	public void setLvlJoinedAcademy(int lvl)
