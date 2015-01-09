@@ -16,31 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets;
+package com.l2jserver.gameserver.model.holders;
 
 import com.l2jserver.gameserver.enums.CastleSide;
-import com.l2jserver.gameserver.model.entity.Castle;
+import com.l2jserver.gameserver.model.Location;
 
 /**
- * @author UnAfraid
+ * @author St3eT
  */
-public class ExCastleState extends L2GameServerPacket
+public class CastleSpawnHolder extends Location
 {
-	private final int _castleId;
-	private final CastleSide _castleSide;
+	private final int _npcId;
+	private final CastleSide _side;
 	
-	public ExCastleState(Castle castle)
+	public CastleSpawnHolder(int npcId, CastleSide side, int x, int y, int z, int heading)
 	{
-		_castleId = castle.getResidenceId();
-		_castleSide = castle.getSide();
+		super(x, y, z, heading);
+		_npcId = npcId;
+		_side = side;
 	}
 	
-	@Override
-	protected void writeImpl()
+	public final int getNpcId()
 	{
-		writeC(0xFE);
-		writeH(0x12D);
-		writeD(_castleId);
-		writeD(_castleSide.ordinal());
+		return _npcId;
+	}
+	
+	public final CastleSide getSide()
+	{
+		return _side;
 	}
 }

@@ -80,6 +80,7 @@ import com.l2jserver.gameserver.datatables.PlayerXpPercentLostData;
 import com.l2jserver.gameserver.datatables.RecipeData;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.datatables.SkillTreesData;
+import com.l2jserver.gameserver.enums.CastleSide;
 import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.enums.HtmlActionScope;
 import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
@@ -5522,6 +5523,10 @@ public final class L2PcInstance extends L2Playable
 				{
 					increasePvpKills(target);
 				}
+			}
+			else if (targetPlayer.isOnDarkSide()) // Member's of Dark side can be killed without any penalty
+			{
+				increasePvpKills(target);
 			}
 			else if (targetPlayer.getPvpFlag() == 0) // Target player doesn't have karma
 			{
@@ -14413,5 +14418,33 @@ public final class L2PcInstance extends L2Playable
 	public void setWorldChatPoints(int points)
 	{
 		getVariables().set(WORLD_CHAT_VARIABLE_NAME, points);
+	}
+	
+	/**
+	 * @return Side of the player.
+	 */
+	public CastleSide getPlayerSide()
+	{
+		if ((getClan() == null) || (getClan().getCastleId() == 0))
+		{
+			return CastleSide.NEUTRAL;
+		}
+		return CastleManager.getInstance().getCastleById(getClan().getCastleId()).getSide();
+	}
+	
+	/**
+	 * @return {@code true} if player is on Dark side, {@code false} otherwise.
+	 */
+	public boolean isOnDarkSide()
+	{
+		return getPlayerSide() == CastleSide.DARK;
+	}
+	
+	/**
+	 * @return {@code true} if player is on Light side, {@code false} otherwise.
+	 */
+	public boolean isOnLightSide()
+	{
+		return getPlayerSide() == CastleSide.LIGHT;
 	}
 }

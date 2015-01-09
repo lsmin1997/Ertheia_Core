@@ -16,31 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.network.serverpackets;
-
-import com.l2jserver.gameserver.enums.CastleSide;
-import com.l2jserver.gameserver.model.entity.Castle;
+package com.l2jserver.gameserver.enums;
 
 /**
- * @author UnAfraid
+ * @author St3eT
  */
-public class ExCastleState extends L2GameServerPacket
+public enum CastleSide
 {
-	private final int _castleId;
-	private final CastleSide _castleSide;
-	
-	public ExCastleState(Castle castle)
-	{
-		_castleId = castle.getResidenceId();
-		_castleSide = castle.getSide();
-	}
-	
-	@Override
-	protected void writeImpl()
-	{
-		writeC(0xFE);
-		writeH(0x12D);
-		writeD(_castleId);
-		writeD(_castleSide.ordinal());
-	}
+	NEUTRAL,
+	LIGHT,
+	DARK;
 }
