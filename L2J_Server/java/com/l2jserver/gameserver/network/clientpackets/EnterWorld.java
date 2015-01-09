@@ -361,7 +361,7 @@ public class EnterWorld extends L2GameClientPacket
 			final L2Clan clan = activeChar.getClan();
 			clan.broadcastToOnlineMembers(new PledgeShowMemberListUpdate(activeChar));
 			sendPacket(new PledgeShowMemberListAll(clan));
-			activeChar.sendPacket(new ExPledgeCount(clan));
+			clan.broadcastToOnlineMembers(new ExPledgeCount(clan));
 			activeChar.sendPacket(new PledgeSkillList(clan));
 		}
 		else

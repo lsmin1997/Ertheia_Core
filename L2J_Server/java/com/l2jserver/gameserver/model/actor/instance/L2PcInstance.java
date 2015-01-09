@@ -270,6 +270,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExGetOnAirShip;
 import com.l2jserver.gameserver.network.serverpackets.ExMagicAttackInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExOlympiadMode;
+import com.l2jserver.gameserver.network.serverpackets.ExPledgeCount;
 import com.l2jserver.gameserver.network.serverpackets.ExPrivateStoreSetWholeMsg;
 import com.l2jserver.gameserver.network.serverpackets.ExSetCompassZoneCode;
 import com.l2jserver.gameserver.network.serverpackets.ExStartScenePlayer;
@@ -10220,7 +10221,7 @@ public final class L2PcInstance extends L2Playable
 		return isSubClassActive() && getSubClasses().get(_classIndex).isDualClass();
 	}
 	
-	public boolean haveDualClass()
+	public boolean hasDualClass()
 	{
 		return getSubClasses().values().stream().anyMatch(SubClass::isDualClass);
 	}
@@ -11589,6 +11590,7 @@ public final class L2PcInstance extends L2Playable
 		if (getClanId() > 0)
 		{
 			getClan().broadcastToOtherOnlineMembers(new PledgeShowMemberListUpdate(this), this);
+			getClan().broadcastToOnlineMembers(new ExPledgeCount(getClan()));
 			// ClanTable.getInstance().getClan(getClanId()).broadcastToOnlineMembers(new PledgeShowMemberListAdd(this));
 		}
 		
