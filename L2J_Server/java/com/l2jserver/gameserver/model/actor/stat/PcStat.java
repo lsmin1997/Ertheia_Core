@@ -313,7 +313,7 @@ public class PcStat extends PlayableStat
 			partyWindow.addUpdateType(PartySmallWindowUpdateType.LEVEL);
 			getActiveChar().getParty().broadcastToPartyMembers(getActiveChar(), partyWindow);
 		}
-		if ((getLevel() == 99) && getActiveChar().isNoble())
+		if ((getLevel() == ExperienceTable.getInstance().getMaxLevel()) && getActiveChar().isNoble())
 		{
 			getActiveChar().sendPacket(new ExAcquireAPSkillList(getActiveChar()));
 		}
