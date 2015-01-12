@@ -576,19 +576,19 @@ public abstract class DocumentBase
 				}
 				case "hp":
 				{
-					int hp = Integer.decode(getValue(a.getNodeValue(), null));
+					int hp = Integer.decode(getValue(a.getNodeValue(), template));
 					cond = joinAnd(cond, new ConditionPlayerHp(hp));
 					break;
 				}
 				case "mp":
 				{
-					int hp = Integer.decode(getValue(a.getNodeValue(), null));
-					cond = joinAnd(cond, new ConditionPlayerMp(hp));
+					int mp = Integer.decode(getValue(a.getNodeValue(), template));
+					cond = joinAnd(cond, new ConditionPlayerMp(mp));
 					break;
 				}
 				case "cp":
 				{
-					int cp = Integer.decode(getValue(a.getNodeValue(), null));
+					int cp = Integer.decode(getValue(a.getNodeValue(), template));
 					cond = joinAnd(cond, new ConditionPlayerCp(cp));
 					break;
 				}
