@@ -621,6 +621,8 @@ public final class L2PcInstance extends L2Playable
 	private int _hennaMEN;
 	private int _hennaWIT;
 	private int _hennaCON;
+	private int _hennaLUC;
+	private int _hennaCHA;
 	
 	/** The L2Summon of the L2PcInstance */
 	private L2Summon _summon = null;
@@ -8178,6 +8180,8 @@ public final class L2PcInstance extends L2Playable
 		_hennaMEN = 0;
 		_hennaWIT = 0;
 		_hennaDEX = 0;
+		_hennaLUC = 0;
+		_hennaCHA = 0;
 		
 		for (L2Henna h : _henna)
 		{
@@ -8192,6 +8196,8 @@ public final class L2PcInstance extends L2Playable
 			_hennaCON += ((_hennaCON + h.getStatCON()) > 5) ? 5 - _hennaCON : h.getStatCON();
 			_hennaWIT += ((_hennaWIT + h.getStatWIT()) > 5) ? 5 - _hennaWIT : h.getStatWIT();
 			_hennaDEX += ((_hennaDEX + h.getStatDEX()) > 5) ? 5 - _hennaDEX : h.getStatDEX();
+			_hennaLUC += ((_hennaLUC + h.getStatLUC()) > 5) ? 5 - _hennaLUC : h.getStatLUC();
+			_hennaCHA += ((_hennaCHA + h.getStatCHA()) > 5) ? 5 - _hennaCHA : h.getStatCHA();
 		}
 	}
 	
@@ -8277,6 +8283,22 @@ public final class L2PcInstance extends L2Playable
 	public int getHennaStatDEX()
 	{
 		return _hennaDEX;
+	}
+	
+	/**
+	 * @return the LUC Henna modifier of this L2PcInstance.
+	 */
+	public int getHennaStatLUC()
+	{
+		return _hennaLUC;
+	}
+	
+	/**
+	 * @return the CHA Henna modifier of this L2PcInstance.
+	 */
+	public int getHennaStatCHA()
+	{
+		return _hennaCHA;
 	}
 	
 	/**
