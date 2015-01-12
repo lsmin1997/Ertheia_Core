@@ -42,7 +42,7 @@ public class NpcInfo extends AbstractMaskPacket<NpcInfoType>
 		(byte) 0x0C,
 		(byte) 0x0C,
 		(byte) 0x00,
-		(byte) 0x04
+		(byte) 0x00
 	};
 	
 	private int _initSize = 0;
@@ -182,8 +182,10 @@ public class NpcInfo extends AbstractMaskPacket<NpcInfoType>
 			_statusMask |= 0x08;
 		}
 		
-		// Add one byte.
-		_blockSize++;
+		if (_statusMask != 0)
+		{
+			addComponentType(NpcInfoType.VISUAL_STATE);
+		}
 	}
 	
 	@Override
@@ -382,7 +384,10 @@ public class NpcInfo extends AbstractMaskPacket<NpcInfoType>
 			writeD(_allyCrest);
 		}
 		
-		writeC(_statusMask);
+		if (containsMask(NpcInfoType.VISUAL_STATE))
+		{
+			writeC(_statusMask);
+		}
 		
 		if (containsMask(NpcInfoType.ABNORMALS))
 		{
