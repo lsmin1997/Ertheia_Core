@@ -40,7 +40,6 @@ import com.l2jserver.gameserver.model.zone.ZoneId;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList;
 import com.l2jserver.gameserver.network.serverpackets.ExAcquireAPSkillList;
-import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVitalityPointInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExVoteSystemInfo;
 import com.l2jserver.gameserver.network.serverpackets.PartySmallWindowUpdate;
@@ -104,7 +103,6 @@ public class PcStat extends PlayableStat
 		
 		// EXP status update currently not used in retail
 		activeChar.sendPacket(new UserInfo(activeChar));
-		activeChar.sendPacket(new ExBrExtraUserInfo(activeChar));
 		return true;
 	}
 	

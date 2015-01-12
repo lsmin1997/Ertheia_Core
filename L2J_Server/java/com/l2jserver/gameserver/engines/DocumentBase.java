@@ -109,7 +109,7 @@ import com.l2jserver.gameserver.model.conditions.ConditionPlayerVehicleMounted;
 import com.l2jserver.gameserver.model.conditions.ConditionPlayerWeight;
 import com.l2jserver.gameserver.model.conditions.ConditionSiegeZone;
 import com.l2jserver.gameserver.model.conditions.ConditionSlotItemId;
-import com.l2jserver.gameserver.model.conditions.ConditionTargetAbnormal;
+import com.l2jserver.gameserver.model.conditions.ConditionTargetAbnormalType;
 import com.l2jserver.gameserver.model.conditions.ConditionTargetActiveEffectId;
 import com.l2jserver.gameserver.model.conditions.ConditionTargetActiveSkillId;
 import com.l2jserver.gameserver.model.conditions.ConditionTargetAggro;
@@ -1033,10 +1033,10 @@ public abstract class DocumentBase
 					cond = joinAnd(cond, new ConditionTargetActiveSkillId(skill_id, skill_lvl));
 					break;
 				}
-				case "abnormal":
+				case "abnormaltype":
 				{
-					int abnormalId = Integer.decode(getValue(a.getNodeValue(), template));
-					cond = joinAnd(cond, new ConditionTargetAbnormal(abnormalId));
+					AbnormalType abnormalType = AbnormalType.getAbnormalType(getValue(a.getNodeValue(), template));
+					cond = joinAnd(cond, new ConditionTargetAbnormalType(abnormalType));
 					break;
 				}
 				case "mindistance":
