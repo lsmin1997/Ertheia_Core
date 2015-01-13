@@ -10713,7 +10713,8 @@ public final class L2PcInstance extends L2Playable
 			}
 			ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.C1_IS_ATTEMPTING_TO_DO_A_RESURRECTION_THAT_RESTORES_S2_S3_XP_ACCEPT.getId());
 			dlg.addPcName(reviver);
-			dlg.addString(Integer.toString(restoreExp));
+			dlg.addInt(restoreExp);
+			dlg.addInt(power);
 			sendPacket(dlg);
 		}
 	}
