@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +98,8 @@ public final class SkillTreesData implements DocumentParser
 	private static final Map<Integer, L2SkillLearn> _heroSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _gameMasterSkillTree = new HashMap<>();
 	private static final Map<Integer, L2SkillLearn> _gameMasterAuraSkillTree = new HashMap<>();
+	// Remove skill tree
+	private static final Map<ClassId, Set<Integer>> _removeSkillCache = new HashMap<>();
 	
 	// Checker, sorted arrays of hash codes
 	private Map<Integer, int[]> _skillsByClassIdHashCodes; // Occupation skills
@@ -248,7 +251,9 @@ public final class SkillTreesData implements DocumentParser
 											skillLearn.addSubclassConditions(parseInteger(attrs, "slot"), parseInteger(attrs, "lvl"));
 											break;
 										case "removeSkill":
-											skillLearn.addRemoveSkills(parseInteger(attrs, "id"));
+											final int removeSkillId = parseInteger(attrs, "id");
+											skillLearn.addRemoveSkills(removeSkillId);
+											_removeSkillCache.computeIfAbsent(classId, k -> new HashSet<>()).add(removeSkillId);
 											break;
 									}
 								}
@@ -658,6 +663,12 @@ public final class SkillTreesData implements DocumentParser
 		for (L2SkillLearn skill : skills.values())
 		{
 			if (((skill.getSkillId() == CommonSkill.DIVINE_INSPIRATION.getId()) && (!Config.AUTO_LEARN_DIVINE_INSPIRATION && includeAutoGet) && !player.isGM()) || (!includeAutoGet && skill.isAutoGet()) || (!includeByFs && skill.isLearnedByFS()))
+			{
+				continue;
+			}
+			
+			final Set<Integer> removeSkills = _removeSkillCache.get(classId);
+			if ((removeSkills != null) && removeSkills.contains(skill.getSkillId()))
 			{
 				continue;
 			}
@@ -1330,7 +1341,7 @@ public final class SkillTreesData implements DocumentParser
 				{
 					continue;
 				}
-				if (minLevelForNewSkill == skill.getGetLevel())
+				if (minLevelForNewSkill <= skill.getGetLevel())
 				{
 					final Skill oldSkill = player.getKnownSkill(skill.getSkillId());
 					if (oldSkill != null)

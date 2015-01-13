@@ -619,11 +619,15 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 				
 				if (!s.getRemoveSkills().isEmpty())
 				{
-					s.getRemoveSkills().forEach(sk ->
+					s.getRemoveSkills().forEach(skillId ->
 					{
-						if (player.getSkillLevel(sk) > 0)
+						if (player.getSkillLevel(skillId) > 0)
 						{
-							player.removeSkill(sk, true);
+							final Skill skillToRemove = player.getKnownSkill(skillId);
+							if (skillToRemove != null)
+							{
+								player.removeSkill(skillToRemove, true);
+							}
 						}
 					});
 				}
