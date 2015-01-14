@@ -36,6 +36,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillLaunched;
@@ -239,6 +240,7 @@ public final class Evolve
 		player.sendPacket(iu);
 		
 		player.sendPacket(new ExUserInfoInvenWeight(player));
+		player.sendPacket(new ExAdenaInvenCount(player));
 		
 		player.broadcastUserInfo();
 		

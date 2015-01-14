@@ -75,6 +75,7 @@ import com.l2jserver.gameserver.model.options.Options;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.DropItem;
+import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.GetItem;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
@@ -1354,6 +1355,7 @@ public final class L2ItemInstance extends L2Object
 					player.sendPacket(iu);
 					
 					player.sendPacket(new ExUserInfoInvenWeight(player));
+					player.sendPacket(new ExAdenaInvenCount(player));
 					
 				}
 				else
@@ -1851,6 +1853,7 @@ public final class L2ItemInstance extends L2Object
 				player.sendPacket(iu);
 				
 				player.sendPacket(new ExUserInfoInvenWeight(player));
+				player.sendPacket(new ExAdenaInvenCount(player));
 				
 			}
 			else
