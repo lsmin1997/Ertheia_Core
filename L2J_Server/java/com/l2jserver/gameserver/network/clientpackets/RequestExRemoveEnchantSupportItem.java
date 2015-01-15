@@ -47,10 +47,12 @@ public class RequestExRemoveEnchantSupportItem extends L2GameClientPacket
 		
 		activeChar.setActiveEnchantTimestamp(System.currentTimeMillis());
 		
-		final L2ItemInstance supportItem = activeChar.getInventory().getItemByItemId(activeChar.getActiveEnchantSupportItemId());
+		final L2ItemInstance supportItem = activeChar.getInventory().getItemByObjectId(activeChar.getActiveEnchantSupportItemId());
 		
 		if ((supportItem == null) || (supportItem.getCount() < 1))
 		{
+			activeChar.setActiveEnchantItemId(L2PcInstance.ID_NONE);
+			activeChar.setActiveEnchantSupportItemId(L2PcInstance.ID_NONE);
 			activeChar.sendPacket(ExRemoveEnchantSupportItemResult.STATIC_PACKET);
 		}
 	}
