@@ -51,10 +51,10 @@ public class RequestExRemoveEnchantSupportItem extends L2GameClientPacket
 		
 		if ((supportItem == null) || (supportItem.getCount() < 1))
 		{
-			activeChar.setActiveEnchantItemId(L2PcInstance.ID_NONE);
 			activeChar.setActiveEnchantSupportItemId(L2PcInstance.ID_NONE);
-			activeChar.sendPacket(ExRemoveEnchantSupportItemResult.STATIC_PACKET);
 		}
+		
+		activeChar.sendPacket(ExRemoveEnchantSupportItemResult.STATIC_PACKET);
 	}
 	
 	@Override

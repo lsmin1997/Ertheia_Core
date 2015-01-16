@@ -24,7 +24,6 @@ import com.l2jserver.gameserver.model.items.enchant.EnchantScroll;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExPutEnchantScrollItemResult;
-import com.l2jserver.gameserver.network.serverpackets.ExPutEnchantSupportItemResult;
 
 /**
  * @author Sdw
@@ -61,7 +60,6 @@ public class RequestExAddEnchantScrollItem extends L2GameClientPacket
 			{
 				// message may be custom
 				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITIONS);
-				activeChar.setActiveEnchantSupportItemId(L2PcInstance.ID_NONE);
 				return;
 			}
 			
@@ -71,8 +69,7 @@ public class RequestExAddEnchantScrollItem extends L2GameClientPacket
 			{
 				// message may be custom
 				activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITIONS);
-				activeChar.setActiveEnchantSupportItemId(L2PcInstance.ID_NONE);
-				activeChar.sendPacket(new ExPutEnchantSupportItemResult(0));
+				activeChar.sendPacket(new ExPutEnchantScrollItemResult(0));
 				return;
 			}
 			activeChar.sendPacket(new ExPutEnchantScrollItemResult(_scrollObjectId));
