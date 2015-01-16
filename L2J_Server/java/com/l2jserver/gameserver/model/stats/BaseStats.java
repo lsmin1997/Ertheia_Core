@@ -46,7 +46,7 @@ public enum BaseStats
 		@Override
 		public double calcBonus(L2Character actor)
 		{
-			return Math.pow(1.005256361489536, actor.getDEX() - 22.29);
+			return Math.pow(1.004558949443461, actor.getDEX() - 19.27356040917275);
 		}
 	},
 	WIT // Updated and better Formula to match Ertheia
