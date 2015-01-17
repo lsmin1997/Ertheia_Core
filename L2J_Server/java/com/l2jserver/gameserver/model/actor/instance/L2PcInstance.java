@@ -10698,22 +10698,21 @@ public final class L2PcInstance extends L2Playable
 		if ((Pet && hasPet() && getSummon().isDead()) || (!Pet && isDead()))
 		{
 			_reviveRequested = 1;
-			int restoreExp = 0;
-			
 			_revivePower = Formulas.calculateSkillResurrectRestorePercent(power, reviver);
-			restoreExp = (int) Math.round(((getExpBeforeDeath() - getExp()) * _revivePower) / 100);
 			_revivePet = Pet;
 			
 			if (hasCharmOfCourage())
 			{
-				ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.YOUR_CHARM_OF_COURAGE_IS_TRYING_TO_RESURRECT_YOU_WOULD_YOU_LIKE_TO_RESURRECT_NOW.getId());
+				final ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.YOUR_CHARM_OF_COURAGE_IS_TRYING_TO_RESURRECT_YOU_WOULD_YOU_LIKE_TO_RESURRECT_NOW.getId());
 				dlg.addTime(60000);
 				sendPacket(dlg);
 				return;
 			}
+			
+			final long restoreExp = Math.round(((getExpBeforeDeath() - getExp()) * _revivePower) / 100);
 			ConfirmDlg dlg = new ConfirmDlg(SystemMessageId.C1_IS_ATTEMPTING_TO_DO_A_RESURRECTION_THAT_RESTORES_S2_S3_XP_ACCEPT.getId());
 			dlg.addPcName(reviver);
-			dlg.addInt(restoreExp);
+			dlg.addLong(restoreExp);
 			dlg.addInt(power);
 			sendPacket(dlg);
 		}
