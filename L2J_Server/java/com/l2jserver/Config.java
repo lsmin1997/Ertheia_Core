@@ -3714,37 +3714,46 @@ public final class Config
 	
 	public static int getServerTypeId(String[] serverTypes)
 	{
-		int tType = 0;
+		int serverType = 0;
 		for (String cType : serverTypes)
 		{
 			switch (cType.trim().toLowerCase())
 			{
 				case "Normal":
-					tType |= 0x01;
+					serverType |= 0x01;
 					break;
 				case "Relax":
-					tType |= 0x02;
+					serverType |= 0x02;
 					break;
 				case "Test":
-					tType |= 0x04;
+					serverType |= 0x04;
 					break;
-				case "NoLabel":
-					tType |= 0x08;
+				case "Broad":
+					serverType |= 0x08;
 					break;
 				case "Restricted":
-					tType |= 0x10;
+					serverType |= 0x10;
 					break;
 				case "Event":
-					tType |= 0x20;
+					serverType |= 0x20;
 					break;
 				case "Free":
-					tType |= 0x40;
+					serverType |= 0x40;
+					break;
+				case "World":
+					serverType |= 0x100;
+					break;
+				case "New":
+					serverType |= 0x200;
+					break;
+				case "Classic":
+					serverType |= 0x400;
 					break;
 				default:
 					break;
 			}
 		}
-		return tType;
+		return serverType;
 	}
 	
 	public static final class ClassMasterSettings
