@@ -6859,7 +6859,7 @@ public final class L2PcInstance extends L2Playable
 					player.getStat().setExp(rset.getLong("exp"));
 					player.setExpBeforeDeath(rset.getLong("expBeforeDeath"));
 					player.getStat().setLevel(rset.getByte("level"));
-					player.getStat().setSp(rset.getInt("sp"));
+					player.getStat().setSp(rset.getLong("sp"));
 					
 					player.setWantsPeace(rset.getInt("wantspeace"));
 					
