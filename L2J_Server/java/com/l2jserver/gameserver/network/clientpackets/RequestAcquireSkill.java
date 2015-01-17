@@ -310,6 +310,16 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 				{
 					giveSkill(activeChar, trainer, skill);
 				}
+				
+				final List<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableTransferSkills(activeChar);
+				if (skills.isEmpty())
+				{
+					activeChar.sendPacket(SystemMessageId.THERE_ARE_NO_OTHER_SKILLS_TO_LEARN);
+				}
+				else
+				{
+					activeChar.sendPacket(new ExAcquirableSkillListByClass(skills, AcquireSkillType.TRANSFER));
+				}
 				break;
 			}
 			case SUBCLASS:
