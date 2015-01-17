@@ -432,10 +432,6 @@ public final class SkillTreesData implements DocumentParser
 	 */
 	public Map<Integer, L2SkillLearn> getTransferSkillTree(ClassId classId)
 	{
-		if (classId.level() >= 3)
-		{
-			return getTransferSkillTree(classId.getParent());
-		}
 		return _transferSkillTrees.get(classId);
 	}
 	
@@ -888,12 +884,7 @@ public final class SkillTreesData implements DocumentParser
 	public List<L2SkillLearn> getAvailableTransferSkills(L2PcInstance player)
 	{
 		final List<L2SkillLearn> result = new ArrayList<>();
-		ClassId classId = player.getClassId();
-		// If new classes are implemented over 3rd class, a different way should be implemented.
-		if (classId.level() == 3)
-		{
-			classId = classId.getParent();
-		}
+		final ClassId classId = player.getClassId();
 		
 		if (!_transferSkillTrees.containsKey(classId))
 		{
@@ -1219,13 +1210,9 @@ public final class SkillTreesData implements DocumentParser
 	 */
 	public L2SkillLearn getTransferSkill(int id, int lvl, ClassId classId)
 	{
-		if (classId.getParent() != null)
+		if (_transferSkillTrees.get(classId) != null)
 		{
-			final ClassId parentId = classId.getParent();
-			if (_transferSkillTrees.get(parentId) != null)
-			{
-				return _transferSkillTrees.get(parentId).get(SkillData.getSkillHashCode(id, lvl));
-			}
+			return _transferSkillTrees.get(classId).get(SkillData.getSkillHashCode(id, lvl));
 		}
 		return null;
 	}
