@@ -3719,37 +3719,35 @@ public final class Config
 		{
 			switch (cType.trim().toLowerCase())
 			{
-				case "Normal":
+				case "normal":
 					serverType |= 0x01;
 					break;
-				case "Relax":
+				case "relax":
 					serverType |= 0x02;
 					break;
-				case "Test":
+				case "test":
 					serverType |= 0x04;
 					break;
-				case "Broad":
+				case "broad":
 					serverType |= 0x08;
 					break;
-				case "Restricted":
+				case "restricted":
 					serverType |= 0x10;
 					break;
-				case "Event":
+				case "event":
 					serverType |= 0x20;
 					break;
-				case "Free":
+				case "free":
 					serverType |= 0x40;
 					break;
-				case "World":
+				case "world":
 					serverType |= 0x100;
 					break;
-				case "New":
+				case "new":
 					serverType |= 0x200;
 					break;
-				case "Classic":
+				case "classic":
 					serverType |= 0x400;
-					break;
-				default:
 					break;
 			}
 		}
