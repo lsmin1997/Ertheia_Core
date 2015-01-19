@@ -91,6 +91,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExChangeNpcState;
 import com.l2jserver.gameserver.network.serverpackets.MagicSkillUse;
 import com.l2jserver.gameserver.network.serverpackets.NpcHtmlMessage;
 import com.l2jserver.gameserver.network.serverpackets.NpcInfo;
+import com.l2jserver.gameserver.network.serverpackets.NpcInfoAbnormalVisualEffect;
 import com.l2jserver.gameserver.network.serverpackets.ServerObjectInfo;
 import com.l2jserver.gameserver.network.serverpackets.SocialAction;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
@@ -566,7 +567,7 @@ public class L2Npc extends L2Character
 			}
 			else
 			{
-				player.sendPacket(new NpcInfo(this));
+				player.sendPacket(new NpcInfoAbnormalVisualEffect(this));
 			}
 		}
 	}
