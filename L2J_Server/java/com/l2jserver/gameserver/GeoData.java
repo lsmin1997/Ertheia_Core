@@ -18,13 +18,13 @@
  */
 package com.l2jserver.gameserver;
 
-import java.io.FileNotFoundException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.datatables.DoorTable;
+import com.l2jserver.gameserver.data.xml.impl.DoorData;
 import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.Location;
@@ -50,12 +50,6 @@ public class GeoData
 	
 	protected GeoData()
 	{
-		if (Config.GEODATA == 0)
-		{
-			LOGGER.info(getClass().getSimpleName() + ": Disabled.");
-			return;
-		}
-		
 		int loadedRegions = 0;
 		try
 		{
@@ -74,7 +68,7 @@ public class GeoData
 							loadedRegions++;
 						}
 					}
-					else if (Config.TRY_LOAD_UNSPECIFIED_REGIONS)
+					else if (Config.TRY_LOAD_UNSPECIFIED_REGIONS && Files.exists(geoFilePath))
 					{
 						try
 						{
@@ -84,11 +78,7 @@ public class GeoData
 						}
 						catch (Exception e)
 						{
-							// ignore file not found errors
-							if (!(e instanceof FileNotFoundException))
-							{
-								LOGGER.log(Level.WARNING, getClass().getSimpleName() + ": Failed to load " + geoFilePath.getFileName() + "!", e);
-							}
+							LOGGER.log(Level.WARNING, getClass().getSimpleName() + ": Failed to load " + geoFilePath.getFileName() + "!", e);
 						}
 					}
 				}
@@ -326,7 +316,7 @@ public class GeoData
 	 */
 	public boolean canSeeTarget(int x, int y, int z, int instanceId, int tx, int ty, int tz)
 	{
-		if (DoorTable.getInstance().checkIfDoorsBetween(x, y, z, tx, ty, tz, instanceId, true))
+		if (DoorData.getInstance().checkIfDoorsBetween(x, y, z, tx, ty, tz, instanceId, true))
 		{
 			return false;
 		}
@@ -507,7 +497,7 @@ public class GeoData
 		int tGeoY = getGeoY(ty);
 		tz = getNearestZ(tGeoX, tGeoY, tz, Z_DELTA_LIMIT);
 		
-		if (DoorTable.getInstance().checkIfDoorsBetween(x, y, z, tx, ty, tz, instanceId, false))
+		if (DoorData.getInstance().checkIfDoorsBetween(x, y, z, tx, ty, tz, instanceId, false))
 		{
 			return new Location(x, y, getHeight(x, y, z));
 		}
@@ -569,7 +559,7 @@ public class GeoData
 		int tGeoY = getGeoY(toY);
 		toZ = getNearestZ(tGeoX, tGeoY, toZ, Z_DELTA_LIMIT);
 		
-		if (DoorTable.getInstance().checkIfDoorsBetween(fromX, fromY, fromZ, toX, toY, toZ, instanceId, false))
+		if (DoorData.getInstance().checkIfDoorsBetween(fromX, fromY, fromZ, toX, toY, toZ, instanceId, false))
 		{
 			return false;
 		}

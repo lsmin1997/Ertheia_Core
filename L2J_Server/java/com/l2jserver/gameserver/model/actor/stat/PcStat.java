@@ -21,8 +21,8 @@ package com.l2jserver.gameserver.model.actor.stat;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.l2jserver.Config;
-import com.l2jserver.gameserver.datatables.ExperienceTable;
-import com.l2jserver.gameserver.datatables.PetDataTable;
+import com.l2jserver.gameserver.data.xml.impl.ExperienceData;
+import com.l2jserver.gameserver.data.xml.impl.PetDataTable;
 import com.l2jserver.gameserver.enums.PartySmallWindowUpdateType;
 import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.model.L2PetLevelData;
@@ -237,7 +237,7 @@ public class PcStat extends PlayableStat
 	@Override
 	public final boolean addLevel(byte value)
 	{
-		if ((getLevel() + value) > (ExperienceTable.getInstance().getMaxLevel() - 1))
+		if ((getLevel() + value) > (ExperienceData.getInstance().getMaxLevel() - 1))
 		{
 			return false;
 		}
@@ -311,7 +311,7 @@ public class PcStat extends PlayableStat
 			partyWindow.addUpdateType(PartySmallWindowUpdateType.LEVEL);
 			getActiveChar().getParty().broadcastToPartyMembers(getActiveChar(), partyWindow);
 		}
-		if ((getLevel() == ExperienceTable.getInstance().getMaxLevel()) && getActiveChar().isNoble())
+		if ((getLevel() == ExperienceData.getInstance().getMaxLevel()) && getActiveChar().isNoble())
 		{
 			getActiveChar().sendPacket(new ExAcquireAPSkillList(getActiveChar()));
 		}
@@ -336,7 +336,7 @@ public class PcStat extends PlayableStat
 	@Override
 	public final long getExpForLevel(int level)
 	{
-		return ExperienceTable.getInstance().getExpForLevel(level);
+		return ExperienceData.getInstance().getExpForLevel(level);
 	}
 	
 	@Override
@@ -448,9 +448,9 @@ public class PcStat extends PlayableStat
 	@Override
 	public final void setLevel(byte value)
 	{
-		if (value > (ExperienceTable.getInstance().getMaxLevel() - 1))
+		if (value > (ExperienceData.getInstance().getMaxLevel() - 1))
 		{
-			value = (byte) (ExperienceTable.getInstance().getMaxLevel() - 1);
+			value = (byte) (ExperienceData.getInstance().getMaxLevel() - 1);
 		}
 		
 		if (getActiveChar().isSubClassActive())

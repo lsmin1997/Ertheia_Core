@@ -58,7 +58,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.l2jserver.gameserver.engines.DocumentParser;
+import com.l2jserver.gameserver.data.xml.IXmlReader;
 import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.holders.ItemHolder;
@@ -466,7 +466,6 @@ public final class Config
 	public static boolean HTML_ACTION_CACHE_DEBUG;
 	public static boolean PACKET_HANDLER_DEBUG;
 	public static boolean DEVELOPER;
-	public static boolean ACCEPT_GEOEDITOR_CONN;
 	public static boolean ALT_DEV_NO_HANDLERS;
 	public static boolean ALT_DEV_NO_QUESTS;
 	public static boolean ALT_DEV_NO_SPAWNS;
@@ -1098,9 +1097,8 @@ public final class Config
 	public static int CHS_FAME_FREQUENCY;
 	
 	// GeoData Settings
-	public static int GEODATA;
+	public static int PATHFINDING;
 	public static File PATHNODE_DIR;
-	public static boolean GEODATA_CELLFINDING;
 	public static String PATHFIND_BUFFERS;
 	public static float LOW_WEIGHT;
 	public static float MEDIUM_WEIGHT;
@@ -1785,7 +1783,6 @@ public final class Config
 			HTML_ACTION_CACHE_DEBUG = General.getBoolean("HtmlActionCacheDebug", false);
 			PACKET_HANDLER_DEBUG = General.getBoolean("PacketHandlerDebug", false);
 			DEVELOPER = General.getBoolean("Developer", false);
-			ACCEPT_GEOEDITOR_CONN = General.getBoolean("AcceptGeoeditorConn", false);
 			ALT_DEV_NO_HANDLERS = General.getBoolean("AltDevNoHandlers", false) || Boolean.getBoolean("nohandlers");
 			ALT_DEV_NO_QUESTS = General.getBoolean("AltDevNoQuests", false) || Boolean.getBoolean("noquests");
 			ALT_DEV_NO_SPAWNS = General.getBoolean("AltDevNoSpawns", false) || Boolean.getBoolean("nospawns");
@@ -1989,6 +1986,7 @@ public final class Config
 			BOTREPORT_RESETPOINT_HOUR = General.getString("BotReportPointsResetHour", "00:00").split(":");
 			BOTREPORT_REPORT_DELAY = General.getInt("BotReportDelay", 30) * 60000;
 			BOTREPORT_ALLOW_REPORTS_FROM_SAME_CLAN_MEMBERS = General.getBoolean("AllowReportsFromSameClanMembers", false);
+			ENABLE_FALLING_DAMAGE = General.getBoolean("EnableFallingDamage", true);
 			
 			// Load FloodProtector L2Properties file
 			final PropertiesParser FloodProtectors = new PropertiesParser(FLOOD_PROTECTOR_FILE);
@@ -2696,8 +2694,6 @@ public final class Config
 			
 			final PropertiesParser geoData = new PropertiesParser(GEODATA_FILE);
 			
-			GEODATA = geoData.getInt("GeoData", 0);
-			
 			try
 			{
 				PATHNODE_DIR = new File(geoData.getString("PathnodeDirectory", "data/pathnode").replaceAll("\\\\", "/")).getCanonicalFile();
@@ -2708,7 +2704,7 @@ public final class Config
 				PATHNODE_DIR = new File("data/pathnode");
 			}
 			
-			GEODATA_CELLFINDING = geoData.getBoolean("CellPathFinding", false);
+			PATHFINDING = geoData.getInt("PathFinding", 0);
 			PATHFIND_BUFFERS = geoData.getString("PathFindBuffers", "100x6;128x6;192x6;256x4;320x4;384x4;500x2");
 			LOW_WEIGHT = geoData.getFloat("LowWeight", 0.5f);
 			MEDIUM_WEIGHT = geoData.getFloat("MediumWeight", 2);
@@ -2733,9 +2729,6 @@ public final class Config
 					}
 				}
 			}
-			
-			String str = General.getString("EnableFallingDamage", "auto");
-			ENABLE_FALLING_DAMAGE = "auto".equalsIgnoreCase(str) ? GEODATA > 0 : Boolean.parseBoolean(str);
 		}
 		else if (Server.serverMode == Server.MODE_LOGINSERVER)
 		{
@@ -3905,7 +3898,7 @@ public final class Config
 		return result;
 	}
 	
-	private static class IPConfigData implements DocumentParser
+	private static class IPConfigData implements IXmlReader
 	{
 		private static final List<String> _subnets = new ArrayList<>(5);
 		private static final List<String> _hosts = new ArrayList<>(5);
