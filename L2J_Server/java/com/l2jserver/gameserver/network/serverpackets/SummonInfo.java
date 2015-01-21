@@ -358,7 +358,7 @@ public class SummonInfo extends AbstractMaskPacket<NpcInfoType>
 		}
 		if (containsMask(NpcInfoType.PVP_FLAG))
 		{
-			writeC(0x00); // PVP flag
+			writeC(_summon.getPvpFlag()); // PVP flag
 		}
 		if (containsMask(NpcInfoType.NAME_COLOR))
 		{
