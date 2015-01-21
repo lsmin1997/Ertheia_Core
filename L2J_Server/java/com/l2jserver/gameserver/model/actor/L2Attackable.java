@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model.actor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
@@ -472,7 +473,14 @@ public class L2Attackable extends L2Npc
 					
 					// Penalty applied to the attacker's XP
 					// If this attacker have servitor, get Exp Penalty applied for the servitor.
-					final float penalty = attacker.hasServitor() ? ((L2ServitorInstance) attacker.getSummon()).getExpMultiplier() : 1;
+					float penalty = 1;
+					
+					Optional<L2Summon> summon = attacker.getServitors().values().stream().filter(s -> ((L2ServitorInstance) s).getExpMultiplier() > 1).findFirst();
+					if (summon.isPresent())
+					{
+						penalty = ((L2ServitorInstance) summon.get()).getExpMultiplier();
+						
+					}
 					
 					// If there's NO party in progress
 					if (attackerParty == null)

@@ -188,7 +188,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 			_summonLifeTask.cancel(false);
 		}
 		
-		CharSummonTable.getInstance().removeServitor(getOwner());
+		CharSummonTable.getInstance().removeServitor(getOwner(), getObjectId());
 		return true;
 		
 	}
@@ -465,7 +465,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		
 		if (!_restoreSummon)
 		{
-			CharSummonTable.getInstance().removeServitor(owner);
+			CharSummonTable.getInstance().removeServitor(owner, getObjectId());
 		}
 	}
 	

@@ -48,7 +48,7 @@ public final class RequestChangePetName extends L2GameClientPacket
 			return;
 		}
 		
-		final L2Summon pet = activeChar.getSummon();
+		final L2Summon pet = activeChar.getPet();
 		if (pet == null)
 		{
 			return;

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
@@ -623,8 +624,10 @@ public final class L2PcInstance extends L2Playable
 	private int _hennaLUC;
 	private int _hennaCHA;
 	
-	/** The L2Summon of the L2PcInstance */
-	private L2Summon _summon = null;
+	/** The Pet of the L2PcInstance */
+	private L2Summon _pet = null;
+	/** Servitors of the L2PcInstance */
+	private volatile Map<Integer, L2Summon> _servitors = null;
 	/** The L2Decoy of the L2PcInstance */
 	private L2Decoy _decoy = null;
 	/** The L2Trap of the L2PcInstance */
@@ -1711,17 +1714,48 @@ public final class L2PcInstance extends L2Playable
 		// If this player has a pet update the pets pvp flag as well
 		if (hasSummon())
 		{
-			sendPacket(new RelationChanged(getSummon(), getRelation(this), false));
+			final RelationChanged rc = new RelationChanged();
+			final L2Summon pet = getPet();
+			if (pet != null)
+			{
+				rc.addRelation(pet, getRelation(this), false);
+			}
+			if (hasServitors())
+			{
+				getServitors().values().forEach(s -> rc.addRelation(s, getRelation(this), false));
+			}
+			sendPacket(rc);
 		}
 		
-		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
+		final Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
 		
-		for (L2PcInstance target : plrs)
+		for (L2PcInstance player : plrs)
 		{
-			target.sendPacket(new RelationChanged(this, getRelation(target), isAutoAttackable(target)));
-			if (hasSummon())
+			if ((player == null) || !isVisibleFor(player))
 			{
-				target.sendPacket(new RelationChanged(getSummon(), getRelation(target), isAutoAttackable(target)));
+				continue;
+			}
+			
+			final int relation = getRelation(player);
+			Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
+			if ((oldrelation == null) || (oldrelation != relation))
+			{
+				final RelationChanged rc = new RelationChanged();
+				rc.addRelation(this, relation, isAutoAttackable(player));
+				if (hasSummon())
+				{
+					final L2Summon pet = getPet();
+					if (pet != null)
+					{
+						rc.addRelation(pet, relation, isAutoAttackable(player));
+					}
+					if (hasServitors())
+					{
+						getServitors().values().forEach(s -> rc.addRelation(s, relation, isAutoAttackable(player)));
+					}
+				}
+				player.sendPacket(rc);
+				getKnownList().getKnownRelations().put(player.getObjectId(), relation);
 			}
 		}
 	}
@@ -3938,7 +3972,8 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Pet is summoned and not the item that summoned the pet AND not the buggle from strider you're mounting
-		if ((hasSummon() && (getSummon().getControlObjectId() == objectId)) || (getMountObjectID() == objectId))
+		final L2Summon pet = getPet();
+		if (((pet != null) && (pet.getControlObjectId() == objectId)) || (getMountObjectID() == objectId))
 		{
 			if (Config.DEBUG)
 			{
@@ -4307,18 +4342,26 @@ public final class L2PcInstance extends L2Playable
 				continue;
 			}
 			player.sendPacket(mov);
-			if (mov instanceof CharInfo)
+			final int relation = getRelation(player);
+			Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
+			if ((oldrelation == null) || (oldrelation != relation))
 			{
-				int relation = getRelation(player);
-				Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
-				if ((oldrelation != null) && (oldrelation != relation))
+				final RelationChanged rc = new RelationChanged();
+				rc.addRelation(this, relation, isAutoAttackable(player));
+				if (hasSummon())
 				{
-					player.sendPacket(new RelationChanged(this, relation, isAutoAttackable(player)));
-					if (hasSummon())
+					final L2Summon pet = getPet();
+					if (pet != null)
 					{
-						player.sendPacket(new RelationChanged(getSummon(), relation, isAutoAttackable(player)));
+						rc.addRelation(pet, relation, isAutoAttackable(player));
+					}
+					if (hasServitors())
+					{
+						getServitors().values().forEach(s -> rc.addRelation(s, relation, isAutoAttackable(player)));
 					}
 				}
+				player.sendPacket(rc);
+				getKnownList().getKnownRelations().put(player.getObjectId(), relation);
 			}
 		}
 	}
@@ -4333,28 +4376,36 @@ public final class L2PcInstance extends L2Playable
 		
 		mov.setInvisible(isInvisible());
 		
-		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
+		final Collection<L2PcInstance> plrs = getKnownList().getKnownPlayersInRadius(radiusInKnownlist);
 		for (L2PcInstance player : plrs)
 		{
-			if (player == null)
+			if ((player == null) || !isVisibleFor(player))
 			{
 				continue;
 			}
-			if (isInsideRadius(player, radiusInKnownlist, false, false))
+			player.sendPacket(mov);
+			if (mov instanceof CharInfo)
 			{
-				player.sendPacket(mov);
-				if (mov instanceof CharInfo)
+				final int relation = getRelation(player);
+				Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
+				if ((oldrelation == null) || (oldrelation != relation))
 				{
-					int relation = getRelation(player);
-					Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
-					if ((oldrelation != null) && (oldrelation != relation))
+					final RelationChanged rc = new RelationChanged();
+					rc.addRelation(this, relation, isAutoAttackable(player));
+					if (hasSummon())
 					{
-						player.sendPacket(new RelationChanged(this, relation, isAutoAttackable(player)));
-						if (hasSummon())
+						final L2Summon pet = getPet();
+						if (pet != null)
 						{
-							player.sendPacket(new RelationChanged(getSummon(), relation, isAutoAttackable(player)));
+							rc.addRelation(pet, relation, isAutoAttackable(player));
+						}
+						if (hasServitors())
+						{
+							getServitors().values().forEach(s -> rc.addRelation(s, relation, isAutoAttackable(player)));
 						}
 					}
+					player.sendPacket(rc);
+					getKnownList().getKnownRelations().put(player.getObjectId(), relation);
 				}
 			}
 		}
@@ -5398,6 +5449,8 @@ public final class L2PcInstance extends L2Playable
 				
 				int itemDropPercent = 0;
 				
+				final L2Summon pet = getPet();
+				
 				for (L2ItemInstance itemDrop : getInventory().getItems())
 				{
 					// Don't drop
@@ -5405,7 +5458,7 @@ public final class L2PcInstance extends L2Playable
 					itemDrop.isTimeLimitedItem() || // Dont drop Time Limited Items
 					!itemDrop.isDropable() || (itemDrop.getId() == Inventory.ADENA_ID) || // Adena
 					(itemDrop.getItem().getType2() == L2Item.TYPE2_QUEST) || // Quest Items
-					(hasSummon() && (getSummon().getControlObjectId() == itemDrop.getId())) || // Control Item of active pet
+					((pet != null) && (pet.getControlObjectId() == itemDrop.getId())) || // Control Item of active pet
 					(Arrays.binarySearch(Config.KARMA_LIST_NONDROPPABLE_ITEMS, itemDrop.getId()) >= 0) || // Item listed in the non droppable item list
 					(Arrays.binarySearch(Config.KARMA_LIST_NONDROPPABLE_PET_ITEMS, itemDrop.getId()) >= 0 // Item listed in the non droppable pet item list
 					))
@@ -5731,9 +5784,26 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	@Override
-	public L2Summon getSummon()
+	public L2Summon getPet()
 	{
-		return _summon;
+		return _pet;
+	}
+	
+	@Override
+	public Map<Integer, L2Summon> getServitors()
+	{
+		return _servitors == null ? Collections.emptyMap() : _servitors;
+	}
+	
+	public L2Summon getAnyServitor()
+	{
+		return getServitors().values().stream().findAny().orElse(null);
+	}
+	
+	@Override
+	public L2Summon getServitor(int objectId)
+	{
+		return getServitors().get(objectId);
 	}
 	
 	/**
@@ -5754,11 +5824,26 @@ public final class L2PcInstance extends L2Playable
 	
 	/**
 	 * Set the L2Summon of the L2PcInstance.
-	 * @param summon
+	 * @param pet
 	 */
-	public void setPet(L2Summon summon)
+	public void setPet(L2Summon pet)
 	{
-		_summon = summon;
+		_pet = pet;
+	}
+	
+	public void addServitor(L2Summon servitor)
+	{
+		if (_servitors == null)
+		{
+			synchronized (this)
+			{
+				if (_servitors == null)
+				{
+					_servitors = new ConcurrentHashMap<>(1);
+				}
+			}
+		}
+		_servitors.put(servitor.getObjectId(), servitor);
 	}
 	
 	/**
@@ -6689,13 +6774,35 @@ public final class L2PcInstance extends L2Playable
 		StatusUpdate su = new StatusUpdate(this);
 		su.addAttribute(StatusUpdate.PVP_FLAG, getKarma());
 		sendPacket(su);
-		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
+		
+		final Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
 		for (L2PcInstance player : plrs)
 		{
-			player.sendPacket(new RelationChanged(this, getRelation(player), isAutoAttackable(player)));
-			if (hasSummon())
+			if ((player == null) || !isVisibleFor(player))
 			{
-				player.sendPacket(new RelationChanged(getSummon(), getRelation(player), isAutoAttackable(player)));
+				continue;
+			}
+			
+			final int relation = getRelation(player);
+			Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
+			if ((oldrelation == null) || (oldrelation != relation))
+			{
+				final RelationChanged rc = new RelationChanged();
+				rc.addRelation(this, relation, isAutoAttackable(player));
+				if (hasSummon())
+				{
+					final L2Summon pet = getPet();
+					if (pet != null)
+					{
+						rc.addRelation(pet, relation, isAutoAttackable(player));
+					}
+					if (hasServitors())
+					{
+						getServitors().values().forEach(s -> rc.addRelation(s, relation, isAutoAttackable(player)));
+					}
+				}
+				player.sendPacket(rc);
+				getKnownList().getKnownRelations().put(player.getObjectId(), relation);
 			}
 		}
 	}
@@ -6709,13 +6816,34 @@ public final class L2PcInstance extends L2Playable
 		su.addAttribute(StatusUpdate.KARMA, getKarma());
 		sendPacket(su);
 		
-		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
+		final Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
 		for (L2PcInstance player : plrs)
 		{
-			player.sendPacket(new RelationChanged(this, getRelation(player), isAutoAttackable(player)));
-			if (hasSummon())
+			if ((player == null) || !isVisibleFor(player))
 			{
-				player.sendPacket(new RelationChanged(getSummon(), getRelation(player), isAutoAttackable(player)));
+				continue;
+			}
+			
+			final int relation = getRelation(player);
+			Integer oldrelation = getKnownList().getKnownRelations().get(player.getObjectId());
+			if ((oldrelation == null) || (oldrelation != relation))
+			{
+				final RelationChanged rc = new RelationChanged();
+				rc.addRelation(this, relation, isAutoAttackable(player));
+				if (hasSummon())
+				{
+					final L2Summon pet = getPet();
+					if (pet != null)
+					{
+						rc.addRelation(pet, relation, isAutoAttackable(player));
+					}
+					if (hasServitors())
+					{
+						getServitors().values().forEach(s -> rc.addRelation(s, relation, isAutoAttackable(player)));
+					}
+				}
+				player.sendPacket(rc);
+				getKnownList().getKnownRelations().put(player.getObjectId(), relation);
 			}
 		}
 	}
@@ -7045,9 +7173,18 @@ public final class L2PcInstance extends L2Playable
 			
 			// Restore pet if exists in the world
 			player.setPet(L2World.getInstance().getPet(player.getObjectId()));
-			if (player.hasSummon())
+			final L2Summon pet = player.getPet();
+			if (pet != null)
 			{
-				player.getSummon().setOwner(player);
+				pet.setOwner(player);
+			}
+			
+			if (player.hasServitors())
+			{
+				for (L2Summon summon : player.getServitors().values())
+				{
+					summon.setOwner(player);
+				}
 			}
 			
 			// Update the overloaded status of the L2PcInstance
@@ -8300,7 +8437,7 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Check if the attacker isn't the L2PcInstance Pet
-		if ((attacker == this) || (attacker == getSummon()))
+		if ((attacker == this) || (attacker == getPet()) || attacker.hasServitor(attacker.getObjectId()))
 		{
 			return false;
 		}
@@ -8612,9 +8749,11 @@ public final class L2PcInstance extends L2Playable
 				target = this;
 				break;
 			case PET:
+				target = getPet();
+				break;
 			case SERVITOR:
 			case SUMMON:
-				target = getSummon();
+				target = getServitors().values().stream().findFirst().orElse(null);
 				break;
 			default:
 				target = getTarget();
@@ -9530,9 +9669,15 @@ public final class L2PcInstance extends L2Playable
 	
 	public void enterOlympiadObserverMode(Location loc, int id)
 	{
-		if (hasSummon())
+		final L2Summon pet = getPet();
+		if (pet != null)
 		{
-			getSummon().unSummon(this);
+			pet.unSummon(this);
+		}
+		
+		if (hasServitors())
+		{
+			getServitors().values().forEach(s -> s.unSummon(this));
 		}
 		
 		// Remove Hide.
@@ -9995,9 +10140,14 @@ public final class L2PcInstance extends L2Playable
 	{
 		super.setTeam(team);
 		broadcastUserInfo();
-		if (hasSummon())
+		final L2Summon pet = getPet();
+		if (pet != null)
 		{
-			getSummon().broadcastStatusUpdate();
+			pet.broadcastStatusUpdate();
+		}
+		if (hasServitors())
+		{
+			getServitors().values().forEach(L2Summon::broadcastStatusUpdate);
 		}
 	}
 	
@@ -10336,9 +10486,9 @@ public final class L2PcInstance extends L2Playable
 			_charges.set(0);
 			stopChargeTask();
 			
-			if (hasServitor())
+			if (hasServitors())
 			{
-				getSummon().unSummon(this);
+				getServitors().values().forEach(s -> s.unSummon(this));
 			}
 			
 			if (classIndex == 0)
@@ -10683,7 +10833,8 @@ public final class L2PcInstance extends L2Playable
 			}
 			return;
 		}
-		if ((Pet && hasPet() && getSummon().isDead()) || (!Pet && isDead()))
+		final L2Summon pet = getPet();
+		if ((Pet && (pet != null) && pet.isDead()) || (!Pet && isDead()))
 		{
 			_reviveRequested = 1;
 			_revivePower = Formulas.calculateSkillResurrectRestorePercent(power, reviver);
@@ -10708,7 +10859,8 @@ public final class L2PcInstance extends L2Playable
 	
 	public void reviveAnswer(int answer)
 	{
-		if ((_reviveRequested != 1) || (!isDead() && !_revivePet) || (_revivePet && hasPet() && !getSummon().isDead()))
+		final L2Summon pet = getPet();
+		if ((_reviveRequested != 1) || (!isDead() && !_revivePet) || (_revivePet && (pet != null) && !pet.isDead()))
 		{
 			return;
 		}
@@ -10726,15 +10878,15 @@ public final class L2PcInstance extends L2Playable
 					doRevive();
 				}
 			}
-			else if (hasPet())
+			else if (pet != null)
 			{
 				if (_revivePower != 0)
 				{
-					getSummon().doRevive(_revivePower);
+					pet.doRevive(_revivePower);
 				}
 				else
 				{
-					getSummon().doRevive();
+					pet.doRevive();
 				}
 			}
 		}
@@ -10842,15 +10994,24 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Modify the position of the pet if necessary
-		final L2Summon summon = getSummon();
-		if (summon != null)
+		final L2Summon pet = getPet();
+		if (pet != null)
 		{
-			summon.setFollowStatus(false);
-			summon.teleToLocation(getLocation(), false);
-			((L2SummonAI) summon.getAI()).setStartFollowController(true);
-			summon.setFollowStatus(true);
-			summon.updateAndBroadcastStatus(0);
+			pet.setFollowStatus(false);
+			pet.teleToLocation(getLocation(), false);
+			((L2SummonAI) pet.getAI()).setStartFollowController(true);
+			pet.setFollowStatus(true);
+			pet.updateAndBroadcastStatus(0);
 		}
+		
+		getServitors().values().forEach(s ->
+		{
+			s.setFollowStatus(false);
+			s.teleToLocation(getLocation(), false);
+			((L2SummonAI) s.getAI()).setStartFollowController(true);
+			s.setFollowStatus(true);
+			s.updateAndBroadcastStatus(0);
+		});
 		
 		TvTEvent.onTeleported(this);
 	}
@@ -11084,7 +11245,8 @@ public final class L2PcInstance extends L2Playable
 		}
 		
 		// Pet is summoned and not the item that summoned the pet AND not the buggle from strider you're mounting
-		if ((hasSummon() && (getSummon().getControlObjectId() == objectId)) || (getMountObjectID() == objectId))
+		final L2Summon pet = getPet();
+		if (((pet != null) && (pet.getControlObjectId() == objectId)) || (getMountObjectID() == objectId))
 		{
 			if (Config.DEBUG)
 			{
@@ -11423,14 +11585,24 @@ public final class L2PcInstance extends L2Playable
 		{
 			try
 			{
-				getSummon().setRestoreSummon(true);
-				
-				getSummon().unSummon(this);
-				// Dead pet wasn't unsummoned, broadcast npcinfo changes (pet will be without owner name - means owner offline)
-				if (hasSummon())
+				L2Summon pet = getPet();
+				if (pet != null)
 				{
-					getSummon().broadcastNpcInfo(0);
+					pet.setRestoreSummon(true);
+					pet.unSummon(this);
+					// Dead pet wasn't unsummoned, broadcast npcinfo changes (pet will be without owner name - means owner offline)
+					pet = getPet();
+					if (pet != null)
+					{
+						pet.broadcastNpcInfo(0);
+					}
 				}
+				
+				getServitors().values().forEach(s ->
+				{
+					s.setRestoreSummon(true);
+					s.unSummon(this);
+				});
 			}
 			catch (Exception e)
 			{
@@ -11511,10 +11683,11 @@ public final class L2PcInstance extends L2Playable
 						final int x = loc.getX() + Rnd.get(-30, 30);
 						final int y = loc.getY() + Rnd.get(-30, 30);
 						setXYZInvisible(x, y, loc.getZ());
-						if (hasSummon()) // dead pet
+						final L2Summon pet = getPet();
+						if (pet != null) // dead pet
 						{
-							getSummon().teleToLocation(loc, true);
-							getSummon().setInstanceId(0);
+							pet.teleToLocation(loc, true);
+							pet.setInstanceId(0);
 						}
 					}
 				}
@@ -12638,10 +12811,11 @@ public final class L2PcInstance extends L2Playable
 		{
 			return;
 		}
-		if (hasSummon())
+		if (hasPet())
 		{
-			setCurrentFeed(((L2PetInstance) getSummon()).getCurrentFed());
-			_controlItemId = getSummon().getControlObjectId();
+			final L2Summon pet = getPet();
+			setCurrentFeed(((L2PetInstance) pet).getCurrentFed());
+			_controlItemId = pet.getControlObjectId();
 			sendPacket(new SetupGauge(3, (getCurrentFeed() * 10000) / getFeedConsume(), (getMaxFeed() * 10000) / getFeedConsume()));
 			if (!isDead())
 			{
@@ -13111,77 +13285,58 @@ public final class L2PcInstance extends L2Playable
 			setXYZ(getBoat().getLocation());
 			
 			activeChar.sendPacket(new CharInfo(this));
-			int relation1 = getRelation(activeChar);
-			int relation2 = activeChar.getRelation(this);
-			Integer oldrelation = getKnownList().getKnownRelations().get(activeChar.getObjectId());
-			if ((oldrelation != null) && (oldrelation != relation1))
-			{
-				activeChar.sendPacket(new RelationChanged(this, relation1, isAutoAttackable(activeChar)));
-				if (hasSummon())
-				{
-					activeChar.sendPacket(new RelationChanged(getSummon(), relation1, isAutoAttackable(activeChar)));
-				}
-			}
-			oldrelation = activeChar.getKnownList().getKnownRelations().get(getObjectId());
-			if ((oldrelation != null) && (oldrelation != relation2))
-			{
-				sendPacket(new RelationChanged(activeChar, relation2, activeChar.isAutoAttackable(this)));
-				if (activeChar.hasSummon())
-				{
-					sendPacket(new RelationChanged(activeChar.getSummon(), relation2, activeChar.isAutoAttackable(this)));
-				}
-			}
 			activeChar.sendPacket(new GetOnVehicle(getObjectId(), getBoat().getObjectId(), getInVehiclePosition()));
 		}
 		else if (isInAirShip())
 		{
 			setXYZ(getAirShip().getLocation());
 			activeChar.sendPacket(new CharInfo(this));
-			int relation1 = getRelation(activeChar);
-			int relation2 = activeChar.getRelation(this);
-			Integer oldrelation = getKnownList().getKnownRelations().get(activeChar.getObjectId());
-			if ((oldrelation != null) && (oldrelation != relation1))
-			{
-				activeChar.sendPacket(new RelationChanged(this, relation1, isAutoAttackable(activeChar)));
-				if (hasSummon())
-				{
-					activeChar.sendPacket(new RelationChanged(getSummon(), relation1, isAutoAttackable(activeChar)));
-				}
-			}
-			oldrelation = activeChar.getKnownList().getKnownRelations().get(getObjectId());
-			if ((oldrelation != null) && (oldrelation != relation2))
-			{
-				sendPacket(new RelationChanged(activeChar, relation2, activeChar.isAutoAttackable(this)));
-				if (activeChar.hasSummon())
-				{
-					sendPacket(new RelationChanged(activeChar.getSummon(), relation2, activeChar.isAutoAttackable(this)));
-				}
-			}
 			activeChar.sendPacket(new ExGetOnAirShip(this, getAirShip()));
 		}
 		else
 		{
 			activeChar.sendPacket(new CharInfo(this));
-			int relation1 = getRelation(activeChar);
-			int relation2 = activeChar.getRelation(this);
-			Integer oldrelation = getKnownList().getKnownRelations().get(activeChar.getObjectId());
-			if ((oldrelation != null) && (oldrelation != relation1))
+		}
+		
+		int relation1 = getRelation(activeChar);
+		int relation2 = activeChar.getRelation(this);
+		Integer oldrelation = getKnownList().getKnownRelations().get(activeChar.getObjectId());
+		if ((oldrelation != null) && (oldrelation != relation1))
+		{
+			final RelationChanged rc = new RelationChanged();
+			rc.addRelation(this, relation1, isAutoAttackable(activeChar));
+			if (hasSummon())
 			{
-				activeChar.sendPacket(new RelationChanged(this, relation1, isAutoAttackable(activeChar)));
-				if (hasSummon())
+				final L2Summon pet = getPet();
+				if (pet != null)
 				{
-					activeChar.sendPacket(new RelationChanged(getSummon(), relation1, isAutoAttackable(activeChar)));
+					rc.addRelation(pet, relation1, isAutoAttackable(activeChar));
+				}
+				if (hasServitors())
+				{
+					getServitors().values().forEach(s -> rc.addRelation(s, relation1, isAutoAttackable(activeChar)));
 				}
 			}
-			oldrelation = activeChar.getKnownList().getKnownRelations().get(getObjectId());
-			if ((oldrelation != null) && (oldrelation != relation2))
+			activeChar.sendPacket(rc);
+		}
+		oldrelation = activeChar.getKnownList().getKnownRelations().get(getObjectId());
+		if ((oldrelation != null) && (oldrelation != relation2))
+		{
+			final RelationChanged rc = new RelationChanged();
+			rc.addRelation(activeChar, relation2, activeChar.isAutoAttackable(this));
+			if (activeChar.hasSummon())
 			{
-				sendPacket(new RelationChanged(activeChar, relation2, activeChar.isAutoAttackable(this)));
-				if (activeChar.hasSummon())
+				final L2Summon pet = getPet();
+				if (pet != null)
 				{
-					sendPacket(new RelationChanged(activeChar.getSummon(), relation2, activeChar.isAutoAttackable(this)));
+					rc.addRelation(pet, relation2, activeChar.isAutoAttackable(this));
+				}
+				if (hasServitors())
+				{
+					getServitors().values().forEach(s -> rc.addRelation(s, relation2, activeChar.isAutoAttackable(this)));
 				}
 			}
+			sendPacket(rc);
 		}
 		
 		switch (getPrivateStoreType())
@@ -14463,5 +14618,15 @@ public final class L2PcInstance extends L2Playable
 	public boolean isOnLightSide()
 	{
 		return getPlayerSide() == CastleSide.LIGHT;
+	}
+	
+	public int getMaxSummonPoints()
+	{
+		return (int) getStat().calcStat(Stats.MAX_SUMMON_POINTS, 0, null, null);
+	}
+	
+	public int getSummonPoints()
+	{
+		return getServitors().values().stream().mapToInt(L2Summon::getSummonPoints).sum();
 	}
 }

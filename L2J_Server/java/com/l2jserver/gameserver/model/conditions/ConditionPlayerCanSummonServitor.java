@@ -1,70 +1,60 @@
 /*
- * Copyright (C) 2004-2015 L2J Server
- * 
+ * Copyright (C) 2004-2014 L2J Server
+ *
  * This file is part of L2J Server.
- * 
+ *
  * L2J Server is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * L2J Server is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import java.util.ArrayList;
-
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.L2Summon;
-import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.Skill;
 
 /**
- * The Class ConditionPlayerHasPet.
+ * Player Can Summon condition implementation.
+ * @author Sdw
  */
-public class ConditionPlayerHasPet extends Condition
+public class ConditionPlayerCanSummonServitor extends Condition
 {
-	private final ArrayList<Integer> _controlItemIds;
+	private final boolean _val;
 	
-	/**
-	 * Instantiates a new condition player has pet.
-	 * @param itemIds the item ids
-	 */
-	public ConditionPlayerHasPet(ArrayList<Integer> itemIds)
+	public ConditionPlayerCanSummonServitor(boolean val)
 	{
-		if ((itemIds.size() == 1) && (itemIds.get(0) == 0))
-		{
-			_controlItemIds = null;
-		}
-		else
-		{
-			_controlItemIds = itemIds;
-		}
+		_val = val;
 	}
 	
 	@Override
 	public boolean testImpl(L2Character effector, L2Character effected, Skill skill, L2Item item)
 	{
-		final L2Summon pet = effector.getActingPlayer().getPet();
-		if ((effector.getActingPlayer() == null) || (pet == null))
+		final L2PcInstance player = effector.getActingPlayer();
+		if (player == null)
 		{
 			return false;
 		}
 		
-		if (_controlItemIds == null)
-		{
-			return true;
-		}
+		boolean canSummon = true;
 		
-		final L2ItemInstance controlItem = ((L2PetInstance) pet).getControlItem();
-		return (controlItem != null) && _controlItemIds.contains(controlItem.getId());
+		if (player.isFlyingMounted() || player.isMounted() || player.inObserverMode() || player.isTeleporting())
+		{
+			canSummon = false;
+		}
+		else if (player.getServitors().size() >= 4)
+		{
+			canSummon = false;
+		}
+		return canSummon == _val;
 	}
 }

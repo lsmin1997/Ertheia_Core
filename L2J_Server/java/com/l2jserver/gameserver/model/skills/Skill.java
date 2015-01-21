@@ -47,6 +47,7 @@ import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Playable;
+import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2BlockInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2CubicInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
@@ -1197,13 +1198,14 @@ public final class Skill implements IIdentifiable
 		return true;
 	}
 	
-	public static final boolean addSummon(L2Character caster, L2PcInstance owner, int radius, boolean isDead)
+	public static final boolean addPet(L2Character caster, L2PcInstance owner, int radius, boolean isDead)
 	{
-		if (!owner.hasSummon())
+		final L2Summon pet = owner.getPet();
+		if (pet == null)
 		{
 			return false;
 		}
-		return addCharacter(caster, owner.getSummon(), radius, isDead);
+		return addCharacter(caster, pet, radius, isDead);
 	}
 	
 	public static final boolean addCharacter(L2Character caster, L2Character target, int radius, boolean isDead)
@@ -1375,11 +1377,14 @@ public final class Skill implements IIdentifiable
 			}
 			
 			// Support for buff sharing feature including healing herbs.
-			if (effected.isPlayer() && effected.hasServitor())
+			if (effected.isPlayer() && effected.hasServitors())
 			{
 				if ((addContinuousEffects && isContinuous() && !isDebuff()) || isRecoveryHerb())
 				{
-					applyEffects(effector, effected.getSummon(), isRecoveryHerb(), 0);
+					effected.getServitors().values().forEach(s ->
+					{
+						applyEffects(effector, s, isRecoveryHerb(), 0);
+					});
 				}
 			}
 		}
@@ -1404,9 +1409,12 @@ public final class Skill implements IIdentifiable
 			
 			// Support for buff sharing feature.
 			// Avoiding Servitor Share since it's implementation already "shares" the effect.
-			if (addContinuousEffects && info.getEffected().isPlayer() && info.getEffected().hasServitor() && isContinuous() && !isDebuff() && (getId() != CommonSkill.SERVITOR_SHARE.getId()))
+			if (addContinuousEffects && info.getEffected().isPlayer() && info.getEffected().hasServitors() && isContinuous() && !isDebuff() && (getId() != CommonSkill.SERVITOR_SHARE.getId()))
 			{
-				applyEffects(effector, info.getEffected().getSummon(), false, 0);
+				info.getEffected().getServitors().values().forEach(s ->
+				{
+					applyEffects(effector, s, false, 0);
+				});
 			}
 		}
 		

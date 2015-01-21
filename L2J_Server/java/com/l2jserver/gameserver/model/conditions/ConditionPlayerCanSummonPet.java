@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004-2015 L2J Server
+ * Copyright (C) 2004-2014 L2J Server
  *
  * This file is part of L2J Server.
  *
@@ -30,11 +30,11 @@ import com.l2jserver.gameserver.network.SystemMessageId;
  * Player Can Summon condition implementation.
  * @author Zoey76
  */
-public class ConditionPlayerCanSummon extends Condition
+public class ConditionPlayerCanSummonPet extends Condition
 {
 	private final boolean _val;
 	
-	public ConditionPlayerCanSummon(boolean val)
+	public ConditionPlayerCanSummonPet(boolean val)
 	{
 		_val = val;
 	}
@@ -49,22 +49,18 @@ public class ConditionPlayerCanSummon extends Condition
 		}
 		
 		boolean canSummon = true;
-		if (Config.RESTORE_SERVITOR_ON_RECONNECT && CharSummonTable.getInstance().getServitors().containsKey(player.getObjectId()))
+		
+		if (Config.RESTORE_PET_ON_RECONNECT && CharSummonTable.getInstance().getPets().containsKey(player.getObjectId()))
 		{
 			player.sendPacket(SystemMessageId.YOU_MAY_NOT_SUMMON_MULTIPLE_PETS_AT_THE_SAME_TIME);
 			canSummon = false;
 		}
-		else if (Config.RESTORE_PET_ON_RECONNECT && CharSummonTable.getInstance().getPets().containsKey(player.getObjectId()))
+		else if (player.hasPet())
 		{
 			player.sendPacket(SystemMessageId.YOU_MAY_NOT_SUMMON_MULTIPLE_PETS_AT_THE_SAME_TIME);
 			canSummon = false;
 		}
-		else if (player.hasSummon())
-		{
-			player.sendPacket(SystemMessageId.YOU_MAY_NOT_SUMMON_MULTIPLE_PETS_AT_THE_SAME_TIME);
-			canSummon = false;
-		}
-		else if (player.isFlyingMounted() || player.isMounted())
+		else if (player.isFlyingMounted() || player.isMounted() || player.inObserverMode() || player.isTeleporting())
 		{
 			canSummon = false;
 		}

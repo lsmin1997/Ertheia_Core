@@ -18,53 +18,49 @@
  */
 package com.l2jserver.gameserver.model.conditions;
 
-import java.util.ArrayList;
-
 import com.l2jserver.gameserver.model.actor.L2Character;
-import com.l2jserver.gameserver.model.actor.L2Summon;
-import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.items.L2Item;
-import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.model.skills.Skill;
+import com.l2jserver.gameserver.network.SystemMessageId;
+import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
- * The Class ConditionPlayerHasPet.
+ * @author Sdw
  */
-public class ConditionPlayerHasPet extends Condition
+public class ConditionPlayerHasFreeSummonPoints extends Condition
 {
-	private final ArrayList<Integer> _controlItemIds;
+	private final int _summonPoints;
 	
-	/**
-	 * Instantiates a new condition player has pet.
-	 * @param itemIds the item ids
-	 */
-	public ConditionPlayerHasPet(ArrayList<Integer> itemIds)
+	public ConditionPlayerHasFreeSummonPoints(int summonPoints)
 	{
-		if ((itemIds.size() == 1) && (itemIds.get(0) == 0))
-		{
-			_controlItemIds = null;
-		}
-		else
-		{
-			_controlItemIds = itemIds;
-		}
+		_summonPoints = summonPoints;
 	}
 	
 	@Override
 	public boolean testImpl(L2Character effector, L2Character effected, Skill skill, L2Item item)
 	{
-		final L2Summon pet = effector.getActingPlayer().getPet();
-		if ((effector.getActingPlayer() == null) || (pet == null))
+		final L2PcInstance player = effector.getActingPlayer();
+		if (player == null)
 		{
 			return false;
 		}
 		
-		if (_controlItemIds == null)
+		boolean canSummon = true;
+		
+		if ((_summonPoints == 0) && player.hasServitors())
 		{
-			return true;
+			player.sendPacket(SystemMessageId.YOU_CANNOT_USE_THE_S1_SKILL_DUE_TO_INSUFFICIENT_SUMMON_POINTS);
+			canSummon = false;
+		}
+		else if ((player.getSummonPoints() + _summonPoints) > player.getMaxSummonPoints())
+		{
+			final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_CANNOT_USE_THE_S1_SKILL_DUE_TO_INSUFFICIENT_SUMMON_POINTS);
+			sm.addSkillName(skill);
+			player.sendPacket(sm);
+			canSummon = false;
 		}
 		
-		final L2ItemInstance controlItem = ((L2PetInstance) pet).getControlItem();
-		return (controlItem != null) && _controlItemIds.contains(controlItem.getId());
+		return canSummon;
 	}
 }

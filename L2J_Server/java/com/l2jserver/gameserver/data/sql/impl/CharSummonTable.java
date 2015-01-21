@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -48,21 +49,21 @@ public class CharSummonTable
 {
 	private static final Logger LOGGER = Logger.getLogger(CharSummonTable.class.getName());
 	private static final Map<Integer, Integer> _pets = new ConcurrentHashMap<>();
-	private static final Map<Integer, Integer> _servitors = new ConcurrentHashMap<>();
+	private static final Map<Integer, Set<Integer>> _servitors = new ConcurrentHashMap<>();
 	
 	// SQL
 	private static final String INIT_PET = "SELECT ownerId, item_obj_id FROM pets WHERE restore = 'true'";
-	private static final String INIT_SUMMONS = "SELECT ownerId, summonSkillId FROM character_summons";
-	private static final String LOAD_SUMMON = "SELECT curHp, curMp, time FROM character_summons WHERE ownerId = ? AND summonSkillId = ?";
-	private static final String REMOVE_SUMMON = "DELETE FROM character_summons WHERE ownerId = ?";
-	private static final String SAVE_SUMMON = "REPLACE INTO character_summons (ownerId,summonSkillId,curHp,curMp,time) VALUES (?,?,?,?,?)";
+	private static final String INIT_SUMMONS = "SELECT ownerId, summonId FROM character_summons";
+	private static final String LOAD_SUMMON = "SELECT summonSkillId, summonId, curHp, curMp, time FROM character_summons WHERE ownerId = ?";
+	private static final String REMOVE_SUMMON = "DELETE FROM character_summons WHERE ownerId = ? and summonId = ?";
+	private static final String SAVE_SUMMON = "REPLACE INTO character_summons (ownerId,summonId,summonSkillId,curHp,curMp,time) VALUES (?,?,?,?,?,?)";
 	
 	public Map<Integer, Integer> getPets()
 	{
 		return _pets;
 	}
 	
-	public Map<Integer, Integer> getServitors()
+	public Map<Integer, Set<Integer>> getServitors()
 	{
 		return _servitors;
 	}
@@ -77,7 +78,7 @@ public class CharSummonTable
 			{
 				while (rs.next())
 				{
-					_servitors.put(rs.getInt("ownerId"), rs.getInt("summonSkillId"));
+					_servitors.computeIfAbsent(rs.getInt("ownerId"), k -> ConcurrentHashMap.newKeySet()).add(rs.getInt("summonId"));
 				}
 			}
 			catch (Exception e)
@@ -104,13 +105,19 @@ public class CharSummonTable
 		}
 	}
 	
-	public void removeServitor(L2PcInstance activeChar)
+	public void removeServitor(L2PcInstance activeChar, int summonObjectId)
 	{
-		_servitors.remove(activeChar.getObjectId());
+		_servitors.computeIfPresent(activeChar.getObjectId(), (k, v) ->
+		{
+			v.remove(summonObjectId);
+			return !v.isEmpty() ? v : null;
+		});
+		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(REMOVE_SUMMON))
 		{
 			ps.setInt(1, activeChar.getObjectId());
+			ps.setInt(2, summonObjectId);
 			ps.execute();
 		}
 		catch (SQLException e)
@@ -176,37 +183,34 @@ public class CharSummonTable
 	
 	public void restoreServitor(L2PcInstance activeChar)
 	{
-		int skillId = _servitors.get(activeChar.getObjectId());
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(LOAD_SUMMON))
 		{
 			ps.setInt(1, activeChar.getObjectId());
-			ps.setInt(2, skillId);
 			try (ResultSet rs = ps.executeQuery())
 			{
 				Skill skill;
-				
 				while (rs.next())
 				{
+					int summonObjId = rs.getInt("summonId");
+					int skillId = rs.getInt("summonSkillId");
 					int curHp = rs.getInt("curHp");
 					int curMp = rs.getInt("curMp");
 					int time = rs.getInt("time");
 					
 					skill = SkillData.getInstance().getSkill(skillId, activeChar.getSkillLevel(skillId));
-					if (skill == null)
+					if ((skill == null) || !activeChar.hasServitor(summonObjId))
 					{
-						removeServitor(activeChar);
+						removeServitor(activeChar, summonObjId);
 						return;
 					}
 					
 					skill.applyEffects(activeChar, activeChar);
-					if (activeChar.hasServitor())
-					{
-						final L2ServitorInstance summon = (L2ServitorInstance) activeChar.getSummon();
-						summon.setCurrentHp(curHp);
-						summon.setCurrentMp(curMp);
-						summon.setLifeTimeRemaining(time);
-					}
+					
+					final L2ServitorInstance summon = (L2ServitorInstance) activeChar.getServitor(summonObjId);
+					summon.setCurrentHp(curHp);
+					summon.setCurrentMp(curMp);
+					summon.setLifeTimeRemaining(time);
 				}
 			}
 		}
@@ -223,16 +227,17 @@ public class CharSummonTable
 			return;
 		}
 		
-		_servitors.put(summon.getOwner().getObjectId(), summon.getReferenceSkill());
+		_servitors.computeIfAbsent(summon.getOwner().getObjectId(), k -> ConcurrentHashMap.newKeySet()).add(summon.getObjectId());
 		
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement ps = con.prepareStatement(SAVE_SUMMON))
 		{
 			ps.setInt(1, summon.getOwner().getObjectId());
-			ps.setInt(2, summon.getReferenceSkill());
-			ps.setInt(3, (int) Math.round(summon.getCurrentHp()));
-			ps.setInt(4, (int) Math.round(summon.getCurrentMp()));
-			ps.setInt(5, summon.getLifeTimeRemaining());
+			ps.setInt(2, summon.getObjectId());
+			ps.setInt(3, summon.getReferenceSkill());
+			ps.setInt(4, (int) Math.round(summon.getCurrentHp()));
+			ps.setInt(5, (int) Math.round(summon.getCurrentMp()));
+			ps.setInt(6, summon.getLifeTimeRemaining());
 			ps.execute();
 		}
 		catch (Exception e)

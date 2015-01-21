@@ -50,6 +50,7 @@ import com.l2jserver.gameserver.model.CharSelectInfoPackage;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.PcCondOverride;
+import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.L2Event;
 import com.l2jserver.gameserver.model.olympiad.OlympiadManager;
@@ -781,17 +782,25 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 						OlympiadManager.getInstance().unRegisterNoble(getActiveChar());
 						
 						// If the L2PcInstance has Pet, unsummon it
-						if (getActiveChar().hasSummon())
+						L2Summon pet = getActiveChar().getPet();
+						if (pet != null)
 						{
-							getActiveChar().getSummon().setRestoreSummon(true);
+							pet.setRestoreSummon(true);
 							
-							getActiveChar().getSummon().unSummon(getActiveChar());
+							pet.unSummon(getActiveChar());
+							pet = getActiveChar().getPet();
 							// Dead pet wasn't unsummoned, broadcast npcinfo changes (pet will be without owner name - means owner offline)
-							if (getActiveChar().getSummon() != null)
+							if (pet != null)
 							{
-								getActiveChar().getSummon().broadcastNpcInfo(0);
+								pet.broadcastNpcInfo(0);
 							}
 						}
+						
+						getActiveChar().getServitors().values().forEach(s ->
+						{
+							s.setRestoreSummon(true);
+							s.unSummon(getActiveChar());
+						});
 						
 						if (Config.OFFLINE_SET_NAME_COLOR)
 						{
@@ -941,10 +950,12 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 				if ((player != null) && player.isOnline()) // safety precaution
 				{
 					saveCharToDisk();
-					if (player.hasSummon())
+					final L2Summon pet = player.getPet();
+					if (pet != null)
 					{
-						player.getSummon().storeMe();
+						pet.storeMe();
 					}
+					player.getServitors().values().forEach(L2Summon::storeMe);
 				}
 			}
 			catch (Exception e)

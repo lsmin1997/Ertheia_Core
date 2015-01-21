@@ -1141,7 +1141,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			if (player != null)
 			{
 				AttackStanceTaskManager.getInstance().addAttackStanceTask(player);
-				if (player.getSummon() != target)
+				if ((player.getPet() != target) && !player.hasServitor(target.getObjectId()))
 				{
 					player.updatePvPStatus(target);
 				}
@@ -1677,7 +1677,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		switch (skill.getTargetType())
 		{
 			case AREA_SUMMON: // We need it to correct facing
-				target = getSummon();
+				target = getServitors().values().stream().findFirst().orElse(getPet());
 				break;
 			case AURA:
 			case AURA_CORPSE_MOB:
@@ -2860,7 +2860,20 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/**
 	 * @return the summon
 	 */
-	public L2Summon getSummon()
+	public L2Summon getPet()
+	{
+		return null;
+	}
+	
+	/**
+	 * @return the summon
+	 */
+	public Map<Integer, L2Summon> getServitors()
+	{
+		return Collections.emptyMap();
+	}
+	
+	public L2Summon getServitor(int objectId)
 	{
 		return null;
 	}
@@ -2870,7 +2883,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public final boolean hasSummon()
 	{
-		return getSummon() != null;
+		return (getPet() != null) || !getServitors().isEmpty();
 	}
 	
 	/**
@@ -2878,15 +2891,25 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public final boolean hasPet()
 	{
-		return hasSummon() && getSummon().isPet();
+		return getPet() != null;
+	}
+	
+	public final boolean hasServitor(int objectId)
+	{
+		return getServitors().containsKey(objectId);
 	}
 	
 	/**
 	 * @return {@code true} if the character has a servitor, {@code false} otherwise
 	 */
-	public final boolean hasServitor()
+	public final boolean hasServitors()
 	{
-		return hasSummon() && getSummon().isServitor();
+		return !getServitors().isEmpty();
+	}
+	
+	public void removeServitor(int objectId)
+	{
+		getServitors().remove(objectId);
 	}
 	
 	public final boolean isRooted()
@@ -3932,9 +3955,9 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 						broadcastPacket(su);
 					}
 				}
-				if ((getSummon() != null) && isAffected(EffectFlag.SERVITOR_SHARE))
+				if (hasServitors() && isAffected(EffectFlag.SERVITOR_SHARE))
 				{
-					getSummon().broadcastStatusUpdate();
+					getServitors().values().forEach(L2Summon::broadcastStatusUpdate);
 				}
 			}
 			else if (isNpc())
@@ -5988,7 +6011,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 									
 									// attack of the own pet does not flag player
 									// triggering trap not flag trap owner
-									if ((player.getSummon() != target) && !isTrap() && !((skill.getEffectPoint() == 0) && (skill.getAffectRange() > 0)))
+									if ((player.getPet() != target) && !player.hasServitor(target.getObjectId()) && !isTrap() && !((skill.getEffectPoint() == 0) && (skill.getAffectRange() > 0)))
 									{
 										player.updatePvPStatus((L2Character) target);
 									}
@@ -6050,9 +6073,19 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 								
 								if (player.hasSummon())
 								{
-									if ((targets.length == 1) && Util.contains(targets, player.getSummon()))
+									if (targets.length == 1)
 									{
-										skillEffectPoint = 0;
+										if (Util.contains(targets, player.getPet()))
+										{
+											skillEffectPoint = 0;
+										}
+										for (L2Summon servitor : player.getServitors().values())
+										{
+											if (Util.contains(targets, servitor))
+											{
+												skillEffectPoint = 0;
+											}
+										}
 									}
 								}
 								
@@ -6065,7 +6098,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 										{
 											if ((npcTarget == skillTarget) || (npcMob == skillTarget))
 											{
-												L2Character originalCaster = isSummon() ? getSummon() : player;
+												L2Character originalCaster = isSummon() ? this : player;
 												attackable.addDamageHate(originalCaster, 0, (skillEffectPoint * 150) / (attackable.getLevel() + 7));
 											}
 										}
