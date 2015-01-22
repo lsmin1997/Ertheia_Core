@@ -4848,6 +4848,7 @@ public final class L2PcInstance extends L2Playable
 		transformation.onTransform(this);
 		sendSkillList();
 		sendPacket(new SkillCoolTime(this));
+		sendPacket(new ExUserInfoAbnormalVisualEffect(this));
 		broadcastUserInfo();
 		
 		// Notify to scripts
