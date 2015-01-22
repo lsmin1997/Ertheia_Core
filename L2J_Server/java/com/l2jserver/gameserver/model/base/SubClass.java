@@ -84,7 +84,7 @@ public final class SubClass
 	
 	public void setExp(long expValue)
 	{
-		if (expValue > (ExperienceData.getInstance().getExpForLevel(_maxLevel + 1) - 1))
+		if (!_dualClass && (expValue > (ExperienceData.getInstance().getExpForLevel(_maxLevel + 1) - 1)))
 		{
 			expValue = ExperienceData.getInstance().getExpForLevel(_maxLevel + 1) - 1;
 		}

@@ -7287,11 +7287,11 @@ public final class L2PcInstance extends L2Playable
 				{
 					SubClass subClass = new SubClass();
 					subClass.setClassId(rset.getInt("class_id"));
+					subClass.setIsDualClass(rset.getBoolean("dual_class"));
 					subClass.setLevel(rset.getByte("level"));
 					subClass.setExp(rset.getLong("exp"));
 					subClass.setSp(rset.getLong("sp"));
 					subClass.setClassIndex(rset.getInt("class_index"));
-					subClass.setIsDualClass(rset.getBoolean("dual_class"));
 					
 					// Enforce the correct indexing of _subClasses against their class indexes.
 					player.getSubClasses().put(subClass.getClassIndex(), subClass);
@@ -7594,9 +7594,9 @@ public final class L2PcInstance extends L2Playable
 				statement.setLong(2, subClass.getSp());
 				statement.setInt(3, subClass.getLevel());
 				statement.setInt(4, subClass.getClassId());
-				statement.setInt(5, getObjectId());
-				statement.setInt(6, subClass.getClassIndex());
-				statement.setBoolean(7, subClass.isDualClass());
+				statement.setBoolean(5, subClass.isDualClass());
+				statement.setInt(6, getObjectId());
+				statement.setInt(7, subClass.getClassIndex());
 				statement.execute();
 				statement.clearParameters();
 			}
