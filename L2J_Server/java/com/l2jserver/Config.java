@@ -155,7 +155,6 @@ public final class Config
 	public static boolean DIVINE_SP_BOOK_NEEDED;
 	public static boolean ALT_GAME_SKILL_LEARN;
 	public static boolean ALT_GAME_SUBCLASS_WITHOUT_QUESTS;
-	public static boolean ALT_GAME_SUBCLASS_EVERYWHERE;
 	public static boolean ALLOW_TRANSFORM_WITHOUT_QUEST;
 	public static int FEE_DELETE_TRANSFER_SKILLS;
 	public static int FEE_DELETE_SUBCLASS_SKILLS;
@@ -173,6 +172,7 @@ public final class Config
 	public static int MAX_ABNORMAL_STATE_SUCCESS_RATE;
 	public static byte MAX_SUBCLASS;
 	public static byte BASE_SUBCLASS_LEVEL;
+	public static byte BASE_DUALCLASS_LEVEL;
 	public static byte MAX_SUBCLASS_LEVEL;
 	public static int MAX_PVTSTORESELL_SLOTS_DWARF;
 	public static int MAX_PVTSTORESELL_SLOTS_OTHER;
@@ -1499,7 +1499,6 @@ public final class Config
 			DIVINE_SP_BOOK_NEEDED = Character.getBoolean("DivineInspirationSpBookNeeded", true);
 			ALT_GAME_SKILL_LEARN = Character.getBoolean("AltGameSkillLearn", false);
 			ALT_GAME_SUBCLASS_WITHOUT_QUESTS = Character.getBoolean("AltSubClassWithoutQuests", false);
-			ALT_GAME_SUBCLASS_EVERYWHERE = Character.getBoolean("AltSubclassEverywhere", false);
 			RESTORE_SERVITOR_ON_RECONNECT = Character.getBoolean("RestoreServitorOnReconnect", true);
 			RESTORE_PET_ON_RECONNECT = Character.getBoolean("RestorePetOnReconnect", true);
 			ALLOW_TRANSFORM_WITHOUT_QUEST = Character.getBoolean("AltTransformationWithoutQuest", false);
@@ -1524,8 +1523,9 @@ public final class Config
 			MAX_EVASION = Character.getInt("MaxEvasion", 250);
 			MIN_ABNORMAL_STATE_SUCCESS_RATE = Character.getInt("MinAbnormalStateSuccessRate", 10);
 			MAX_ABNORMAL_STATE_SUCCESS_RATE = Character.getInt("MaxAbnormalStateSuccessRate", 90);
-			MAX_SUBCLASS = Character.getByte("MaxSubclass", (byte) 3);
+			MAX_SUBCLASS = (byte) Math.min(3, Character.getByte("MaxSubclass", (byte) 3));
 			BASE_SUBCLASS_LEVEL = Character.getByte("BaseSubclassLevel", (byte) 40);
+			BASE_DUALCLASS_LEVEL = Character.getByte("BaseDualclassLevel", (byte) 85);
 			MAX_SUBCLASS_LEVEL = Character.getByte("MaxSubclassLevel", (byte) 80);
 			MAX_PVTSTORESELL_SLOTS_DWARF = Character.getInt("MaxPvtStoreSellSlotsDwarf", 4);
 			MAX_PVTSTORESELL_SLOTS_OTHER = Character.getInt("MaxPvtStoreSellSlotsOther", 3);
@@ -3415,9 +3415,6 @@ public final class Config
 				break;
 			case "altsubclasswithoutquests":
 				ALT_GAME_SUBCLASS_WITHOUT_QUESTS = Boolean.parseBoolean(pValue);
-				break;
-			case "altsubclasseverywhere":
-				ALT_GAME_SUBCLASS_EVERYWHERE = Boolean.parseBoolean(pValue);
 				break;
 			case "altmemberscanwithdrawfromclanwh":
 				ALT_MEMBERS_CAN_WITHDRAW_FROM_CLANWH = Boolean.parseBoolean(pValue);
