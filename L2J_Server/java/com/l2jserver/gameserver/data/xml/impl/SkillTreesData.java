@@ -37,6 +37,7 @@ import org.w3c.dom.Node;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.data.xml.IXmlReader;
 import com.l2jserver.gameserver.datatables.SkillData;
+import com.l2jserver.gameserver.enums.CategoryType;
 import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.SubclassType;
 import com.l2jserver.gameserver.model.L2Clan;
@@ -657,15 +658,18 @@ public final class SkillTreesData implements IXmlReader
 			return result;
 		}
 		
-		for (L2SkillLearn skill : skills.values())
+		final boolean isAwaken = player.isInCategory(CategoryType.AWAKEN_GROUP);
+		
+		for (Entry<Integer, L2SkillLearn> entry : skills.entrySet())
 		{
-			if (((skill.getSkillId() == CommonSkill.DIVINE_INSPIRATION.getId()) && (!Config.AUTO_LEARN_DIVINE_INSPIRATION && includeAutoGet) && !player.isGM()) || (!includeAutoGet && skill.isAutoGet()) || (!includeByFs && skill.isLearnedByFS()))
+			final L2SkillLearn skill = entry.getValue();
+			
+			if (((skill.getSkillId() == CommonSkill.DIVINE_INSPIRATION.getId()) && (!Config.AUTO_LEARN_DIVINE_INSPIRATION && includeAutoGet) && !player.isGM()) || (!includeAutoGet && skill.isAutoGet()) || (!includeByFs && skill.isLearnedByFS()) || isRemoveSkill(classId, skill.getSkillId()))
 			{
 				continue;
 			}
 			
-			final Set<Integer> removeSkills = _removeSkillCache.get(classId);
-			if ((removeSkills != null) && removeSkills.contains(skill.getSkillId()))
+			if (isAwaken && !isCurrentClassSkillNoParent(classId, entry.getKey()))
 			{
 				continue;
 			}
@@ -1349,6 +1353,20 @@ public final class SkillTreesData implements IXmlReader
 		return result;
 	}
 	
+	public void cleanSkillUponAwakening(L2PcInstance player)
+	{
+		for (Skill skill : player.getAllSkills())
+		{
+			final int maxLvl = SkillData.getInstance().getMaxLevel(skill.getId());
+			final int hashCode = SkillData.getSkillHashCode(skill.getId(), maxLvl);
+			
+			if (!isCurrentClassSkillNoParent(player.getClassId(), hashCode) && !isRemoveSkill(player.getClassId(), skill.getId()))
+			{
+				player.removeSkill(skill, true, true);
+			}
+		}
+	}
+	
 	/**
 	 * Checks if is hero skill.
 	 * @param skillId the Id of the skill to check
@@ -1419,6 +1437,16 @@ public final class SkillTreesData implements IXmlReader
 	public boolean isSubClassChangeSkill(int skillId, int skillLevel)
 	{
 		return _subClassChangeSkillTree.containsKey(SkillData.getSkillHashCode(skillId, skillLevel));
+	}
+	
+	public boolean isRemoveSkill(ClassId classId, int skillId)
+	{
+		return _removeSkillCache.getOrDefault(classId, Collections.emptySet()).contains(skillId);
+	}
+	
+	public boolean isCurrentClassSkillNoParent(ClassId classId, Integer hashCode)
+	{
+		return _classSkillTrees.getOrDefault(classId, Collections.emptyMap()).containsKey(hashCode);
 	}
 	
 	/**

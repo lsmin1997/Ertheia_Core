@@ -39,6 +39,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Hero;
 import com.l2jserver.gameserver.model.events.EventDispatcher;
 import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcManorBypass;
+import com.l2jserver.gameserver.model.events.impl.character.npc.OnNpcMenuSelect;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerBypass;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
@@ -65,6 +66,7 @@ public final class RequestBypassToServer extends L2GameClientPacket
 		"_match",
 		"_diary",
 		"_olympiad?command",
+		"menu_select",
 		"manor_menu_select"
 	};
 	
@@ -258,6 +260,17 @@ public final class RequestBypassToServer extends L2GameClientPacket
 				if (handler != null)
 				{
 					handler.useBypass("arenachange " + (arenaId - 1), activeChar, null);
+				}
+			}
+			else if (_command.startsWith("menu_select"))
+			{
+				final L2Npc lastNpc = activeChar.getLastFolkNPC();
+				if ((lastNpc != null) && lastNpc.canInteract(activeChar))
+				{
+					final String[] split = _command.substring(_command.indexOf("?") + 1).split("&");
+					final int ask = Integer.parseInt(split[0].split("=")[1]);
+					final int reply = Integer.parseInt(split[1].split("=")[1]);
+					EventDispatcher.getInstance().notifyEventAsync(new OnNpcMenuSelect(activeChar, lastNpc, ask, reply), lastNpc);
 				}
 			}
 			else if (_command.startsWith("manor_menu_select"))

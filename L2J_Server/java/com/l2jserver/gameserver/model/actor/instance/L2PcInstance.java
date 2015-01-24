@@ -2690,6 +2690,14 @@ public final class L2PcInstance extends L2Playable
 		Skill skill;
 		for (L2SkillLearn s : autoGetSkills)
 		{
+			final int maxLvl = SkillData.getInstance().getMaxLevel(s.getSkillId());
+			final int hashCode = SkillData.getSkillHashCode(s.getSkillId(), maxLvl);
+			
+			if (SkillTreesData.getInstance().isCurrentClassSkillNoParent(getClassId(), hashCode) || SkillTreesData.getInstance().isRemoveSkill(getClassId(), s.getSkillId()))
+			{
+				continue;
+			}
+			
 			skill = st.getSkill(s.getSkillId(), s.getSkillLevel());
 			if (skill != null)
 			{
@@ -10223,9 +10231,10 @@ public final class L2PcInstance extends L2Playable
 	 * 2. This method no longer changes the active _classIndex of the player. This is only done by the calling of setActiveClass() method as that should be the only way to do so.
 	 * @param classId
 	 * @param classIndex
+	 * @param isDualClass
 	 * @return boolean subclassAdded
 	 */
-	public boolean addSubClass(int classId, int classIndex)
+	public boolean addSubClass(int classId, int classIndex, boolean isDualClass)
 	{
 		if (!_subclassLock.tryLock())
 		{
@@ -10246,9 +10255,15 @@ public final class L2PcInstance extends L2Playable
 			
 			// Note: Never change _classIndex in any method other than setActiveClass().
 			
-			SubClass newClass = new SubClass();
+			final SubClass newClass = new SubClass();
 			newClass.setClassId(classId);
 			newClass.setClassIndex(classIndex);
+			if (isDualClass)
+			{
+				newClass.setIsDualClass(true);
+				newClass.setExp(ExperienceData.getInstance().getExpForLevel(Config.BASE_DUALCLASS_LEVEL));
+				newClass.setLevel(Config.BASE_DUALCLASS_LEVEL);
+			}
 			
 			try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 				PreparedStatement statement = con.prepareStatement(ADD_CHAR_SUBCLASS))
@@ -10277,12 +10292,12 @@ public final class L2PcInstance extends L2Playable
 			final Map<Integer, Skill> prevSkillList = new HashMap<>();
 			for (L2SkillLearn skillInfo : skillTree.values())
 			{
-				if (skillInfo.getGetLevel() <= 40)
+				if (skillInfo.getGetLevel() <= newClass.getLevel())
 				{
-					Skill prevSkill = prevSkillList.get(skillInfo.getSkillId());
-					Skill newSkill = SkillData.getInstance().getSkill(skillInfo.getSkillId(), skillInfo.getSkillLevel());
+					final Skill prevSkill = prevSkillList.get(skillInfo.getSkillId());
+					final Skill newSkill = SkillData.getInstance().getSkill(skillInfo.getSkillId(), skillInfo.getSkillLevel());
 					
-					if ((prevSkill != null) && (prevSkill.getLevel() > newSkill.getLevel()))
+					if (((prevSkill != null) && (prevSkill.getLevel() > newSkill.getLevel())) || SkillTreesData.getInstance().isRemoveSkill(subTemplate, skillInfo.getSkillId()))
 					{
 						continue;
 					}
@@ -10305,9 +10320,10 @@ public final class L2PcInstance extends L2Playable
 	 * 3. Upon Exception, revert the player to their BaseClass to avoid further problems.
 	 * @param classIndex the class index to delete
 	 * @param newClassId the new class Id
+	 * @param isDualClass is subclass dualclass
 	 * @return {@code true} if the sub-class was modified, {@code false} otherwise
 	 */
-	public boolean modifySubClass(int classIndex, int newClassId)
+	public boolean modifySubClass(int classIndex, int newClassId, boolean isDualClass)
 	{
 		if (!_subclassLock.tryLock())
 		{
@@ -10363,7 +10379,7 @@ public final class L2PcInstance extends L2Playable
 			_subclassLock.unlock();
 		}
 		
-		return addSubClass(newClassId, classIndex);
+		return addSubClass(newClassId, classIndex, isDualClass);
 	}
 	
 	public boolean isSubClassActive()
