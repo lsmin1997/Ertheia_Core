@@ -18,10 +18,12 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
+import com.l2jserver.gameserver.model.L2Party;
 import com.l2jserver.gameserver.model.L2Party.messageType;
 import com.l2jserver.gameserver.model.PartyMatchRoom;
 import com.l2jserver.gameserver.model.PartyMatchRoomList;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.actor.request.PartyRequest;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExManagePartyRoomMember;
 import com.l2jserver.gameserver.network.serverpackets.JoinParty;
@@ -48,19 +50,26 @@ public final class RequestAnswerJoinParty extends L2GameClientPacket
 			return;
 		}
 		
-		final L2PcInstance requestor = player.getActiveRequester();
+		final PartyRequest request = player.getRequest(PartyRequest.class);
+		if ((request == null) || request.isProcessing())
+		{
+			return;
+		}
+		request.setProcessing(true);
+		
+		final L2PcInstance requestor = request.getActiveChar();
 		if (requestor == null)
 		{
 			return;
 		}
-		
+		final L2Party party = requestor.getParty();
 		requestor.sendPacket(new JoinParty(_response));
 		
 		if (_response == 1)
 		{
-			if (requestor.isInParty())
+			if (party != null)
 			{
-				if (requestor.getParty().getMemberCount() >= 9)
+				if (party.getMemberCount() >= 9)
 				{
 					SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.THE_PARTY_IS_FULL);
 					player.sendPacket(sm);
@@ -68,7 +77,7 @@ public final class RequestAnswerJoinParty extends L2GameClientPacket
 					return;
 				}
 			}
-			player.joinParty(requestor.getParty());
+			player.joinParty(party);
 			
 			if (requestor.isInPartyMatchRoom() && player.isInPartyMatchRoom())
 			{
@@ -120,30 +129,29 @@ public final class RequestAnswerJoinParty extends L2GameClientPacket
 			requestor.sendPacket(sm);
 			
 			// activate garbage collection if there are no other members in party (happens when we were creating new one)
-			if (requestor.isInParty() && (requestor.getParty().getMemberCount() == 1))
+			if ((party != null) && (party.getMemberCount() == 1))
 			{
 				requestor.getParty().removePartyMember(requestor, messageType.None);
 			}
 		}
 		else
-		// 0
 		{
 			// requestor.sendPacket(SystemMessageId.THE_PLAYER_DECLINED_TO_JOIN_YOUR_PARTY); FIXME: Done in client?
 			
 			// activate garbage collection if there are no other members in party (happens when we were creating new one)
-			if (requestor.isInParty() && (requestor.getParty().getMemberCount() == 1))
+			if ((party != null) && (party.getMemberCount() == 1))
 			{
 				requestor.getParty().removePartyMember(requestor, messageType.None);
 			}
 		}
 		
-		if (requestor.isInParty())
+		if (party != null)
 		{
-			requestor.getParty().setPendingInvitation(false); // if party is null, there is no need of decreasing
+			party.setPendingInvitation(false); // if party is null, there is no need of decreasing
 		}
 		
-		player.setActiveRequester(null);
-		requestor.onTransactionResponse();
+		request.setProcessing(false);
+		player.removeRequest(request.getClass());
 	}
 	
 	@Override

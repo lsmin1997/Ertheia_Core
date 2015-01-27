@@ -52,13 +52,12 @@ public final class RequestRestart extends L2GameClientPacket
 	protected void runImpl()
 	{
 		final L2PcInstance player = getClient().getActiveChar();
-		
 		if (player == null)
 		{
 			return;
 		}
 		
-		if ((player.getActiveEnchantItemId() != L2PcInstance.ID_NONE) || (player.getActiveEnchantAttrItemId() != L2PcInstance.ID_NONE))
+		if (player.hasItemRequest())
 		{
 			sendPacket(RestartResponse.valueOf(false));
 			return;

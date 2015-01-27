@@ -160,6 +160,7 @@ import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.L2Vehicle;
 import com.l2jserver.gameserver.model.actor.appearance.PcAppearance;
 import com.l2jserver.gameserver.model.actor.knownlist.PcKnownList;
+import com.l2jserver.gameserver.model.actor.request.AbstractRequest;
 import com.l2jserver.gameserver.model.actor.stat.PcStat;
 import com.l2jserver.gameserver.model.actor.status.PcStatus;
 import com.l2jserver.gameserver.model.actor.tasks.player.DismountTask;
@@ -738,11 +739,7 @@ public final class L2PcInstance extends L2Playable
 	private int _expertiseWeaponPenalty = 0;
 	private int _expertisePenaltyBonus = 0;
 	
-	private boolean _isEnchanting = false;
-	private int _activeEnchantItemId = ID_NONE;
-	private int _activeEnchantSupportItemId = ID_NONE;
-	private int _activeEnchantAttrItemId = ID_NONE;
-	private long _activeEnchantTimestamp = 0;
+	private volatile Map<Class<? extends AbstractRequest>, AbstractRequest> _requests;
 	
 	protected boolean _inventoryDisable = false;
 	/** Player's cubics. */
@@ -2435,63 +2432,6 @@ public final class L2PcInstance extends L2Playable
 		return getStat().getExp();
 	}
 	
-	public void setActiveEnchantAttrItemId(int objectId)
-	{
-		_activeEnchantAttrItemId = objectId;
-	}
-	
-	public int getActiveEnchantAttrItemId()
-	{
-		return _activeEnchantAttrItemId;
-	}
-	
-	public void setActiveEnchantItemId(int objectId)
-	{
-		// If we don't have a Enchant Item, we are not enchanting.
-		if (objectId == ID_NONE)
-		{
-			setActiveEnchantSupportItemId(ID_NONE);
-			setActiveEnchantTimestamp(0);
-			setIsEnchanting(false);
-		}
-		_activeEnchantItemId = objectId;
-	}
-	
-	public int getActiveEnchantItemId()
-	{
-		return _activeEnchantItemId;
-	}
-	
-	public void setActiveEnchantSupportItemId(int objectId)
-	{
-		_activeEnchantSupportItemId = objectId;
-	}
-	
-	public int getActiveEnchantSupportItemId()
-	{
-		return _activeEnchantSupportItemId;
-	}
-	
-	public long getActiveEnchantTimestamp()
-	{
-		return _activeEnchantTimestamp;
-	}
-	
-	public void setActiveEnchantTimestamp(long val)
-	{
-		_activeEnchantTimestamp = val;
-	}
-	
-	public void setIsEnchanting(boolean val)
-	{
-		_isEnchanting = val;
-	}
-	
-	public boolean isEnchanting()
-	{
-		return _isEnchanting;
-	}
-	
 	/**
 	 * Set the fists weapon of the L2PcInstance (used when no weapon is equiped).
 	 * @param weaponItem The fists L2Weapon to set to the L2PcInstance
@@ -3991,7 +3931,7 @@ public final class L2PcInstance extends L2Playable
 			return null;
 		}
 		
-		if (getActiveEnchantItemId() == objectId)
+		if (isProcessingItem(objectId))
 		{
 			if (Config.DEBUG)
 			{
@@ -11273,7 +11213,7 @@ public final class L2PcInstance extends L2Playable
 			return false;
 		}
 		
-		if (getActiveEnchantItemId() == objectId)
+		if (isProcessingItem(objectId))
 		{
 			if (Config.DEBUG)
 			{
@@ -14647,13 +14587,118 @@ public final class L2PcInstance extends L2Playable
 		return getPlayerSide() == CastleSide.LIGHT;
 	}
 	
+	/**
+	 * @return the maximum amount of points that player can use
+	 */
 	public int getMaxSummonPoints()
 	{
 		return (int) getStat().calcStat(Stats.MAX_SUMMON_POINTS, 0, null, null);
 	}
 	
+	/**
+	 * @return the amount of points that player used
+	 */
 	public int getSummonPoints()
 	{
 		return getServitors().values().stream().mapToInt(L2Summon::getSummonPoints).sum();
+	}
+	
+	/**
+	 * @param request
+	 * @return {@code true} if the request was registered successfully, {@code false} otherwise.
+	 */
+	public boolean addRequest(AbstractRequest request)
+	{
+		if (_requests == null)
+		{
+			synchronized (this)
+			{
+				if (_requests == null)
+				{
+					_requests = new ConcurrentHashMap<>();
+				}
+			}
+		}
+		return canRequest(request) && (_requests.putIfAbsent(request.getClass(), request) == null);
+	}
+	
+	public boolean canRequest(AbstractRequest request)
+	{
+		return (_requests != null) && _requests.values().stream().allMatch(request::canWorkWith);
+	}
+	
+	/**
+	 * @param clazz
+	 * @return {@code true} if request was successfully removed, {@code false} in case processing set is not created or not containing the request.
+	 */
+	public boolean removeRequest(Class<? extends AbstractRequest> clazz)
+	{
+		return (_requests != null) && (_requests.remove(clazz) != null);
+	}
+	
+	/**
+	 * @param <T>
+	 * @param requestClass
+	 * @return object that is instance of {@code requestClass} param, {@code null} if not instance or not set.
+	 */
+	public <T extends AbstractRequest> T getRequest(Class<T> requestClass)
+	{
+		return _requests != null ? requestClass.cast(_requests.get(requestClass)) : null;
+	}
+	
+	/**
+	 * @return {@code true} if player has any processing request set, {@code false} otherwise.
+	 */
+	public boolean hasRequests()
+	{
+		return (_requests != null) && !_requests.isEmpty();
+	}
+	
+	public boolean hasItemRequest()
+	{
+		return (_requests != null) && _requests.values().stream().anyMatch(AbstractRequest::isItemRequest);
+	}
+	
+	/**
+	 * @param requestClass
+	 * @param classes
+	 * @return {@code true} if player has the provided request and processing it, {@code false} otherwise.
+	 */
+	@SafeVarargs
+	public final boolean hasRequest(Class<? extends AbstractRequest> requestClass, Class<? extends AbstractRequest>... classes)
+	{
+		if (_requests != null)
+		{
+			for (Class<? extends AbstractRequest> clazz : classes)
+			{
+				if (_requests.containsKey(clazz))
+				{
+					return true;
+				}
+			}
+			return _requests.containsKey(requestClass);
+		}
+		return false;
+	}
+	
+	/**
+	 * @param objectId
+	 * @return {@code true} if item object id is currently in use by some request, {@code false} otherwise.
+	 */
+	public boolean isProcessingItem(int objectId)
+	{
+		return (_requests != null) && _requests.values().stream().anyMatch(req -> req.isUsing(objectId));
+	}
+	
+	/**
+	 * Removing all requests associated with the item object id provided.
+	 * @param objectId
+	 */
+	public void removeRequestsThatProcessesItem(int objectId)
+	{
+		if (_requests != null)
+		{
+			_requests.values().removeIf(req -> req.isUsing(objectId));
+		}
 	}
 }
