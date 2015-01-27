@@ -30,6 +30,9 @@ import org.mmocore.network.ReceivablePacket;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.network.L2GameClient.GameClientState;
 import com.l2jserver.gameserver.network.clientpackets.*;
+import com.l2jserver.gameserver.network.clientpackets.adenadistribution.RequestDivideAdena;
+import com.l2jserver.gameserver.network.clientpackets.adenadistribution.RequestDivideAdenaCancel;
+import com.l2jserver.gameserver.network.clientpackets.adenadistribution.RequestDivideAdenaStart;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeEstimate;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeItemCancel;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestAnswerFriendInvite;
@@ -1559,13 +1562,13 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestCardReward();
 								break;
 							case 0xE6:
-								// msg = new RequestDivideAdenaStart();
+								msg = new RequestDivideAdenaStart();
 								break;
 							case 0xE7:
-								// msg = new RequestDivideAdenaCancel();
+								msg = new RequestDivideAdenaCancel();
 								break;
 							case 0xE8:
-								// msg = new RequestDivideAdena();
+								msg = new RequestDivideAdena();
 								break;
 							case 0xE9:
 								msg = new RequestAcquireAbilityList();
