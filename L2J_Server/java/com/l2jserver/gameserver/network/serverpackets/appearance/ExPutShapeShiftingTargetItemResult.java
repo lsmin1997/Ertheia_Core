@@ -16,36 +16,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model.interfaces;
+package com.l2jserver.gameserver.network.serverpackets.appearance;
 
-import java.time.Duration;
+import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
 /**
- * More advanced interface for parsers.<br>
- * Allows usage of get methods without fall back value.<br>
- * @author xban1x
+ * @author UnAfraid
  */
-public interface IParserAdvUtils extends IParserUtils
+public class ExPutShapeShiftingTargetItemResult extends L2GameServerPacket
 {
+	public static int RESULT_FAILED = 0x00;
+	public static int RESULT_SUCCESS = 0x01;
 	
-	public boolean getBoolean(String key);
+	public static ExPutShapeShiftingTargetItemResult FAILED = new ExPutShapeShiftingTargetItemResult(RESULT_FAILED, 0L);
 	
-	public byte getByte(String key);
+	private final int _resultId;
+	private final long _price;
 	
-	public short getShort(String key);
+	public ExPutShapeShiftingTargetItemResult(int resultId, long price)
+	{
+		_resultId = resultId;
+		_price = price;
+	}
 	
-	public int getInt(String key);
-	
-	public long getLong(String key);
-	
-	public float getFloat(String key);
-	
-	public double getDouble(String key);
-	
-	public String getString(String key);
-	
-	public Duration getDuration(String key);
-	
-	public <T extends Enum<T>> T getEnum(String key, Class<T> clazz);
-	
+	@Override
+	protected void writeImpl()
+	{
+		writeC(0xFE);
+		writeH(0x12A);
+		writeD(_resultId);
+		writeQ(_price);
+	}
 }

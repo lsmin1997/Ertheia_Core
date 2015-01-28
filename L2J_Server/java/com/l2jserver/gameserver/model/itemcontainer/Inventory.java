@@ -645,6 +645,16 @@ public abstract class Inventory extends ItemContainer
 				}
 			}
 			
+			final L2ArmorSet visualArmorSet = ArmorSetsData.getInstance().getSet(chestItem.getVisualId());
+			if ((visualArmorSet != null) && visualArmorSet.isVisual())
+			{
+				int pieces = visualArmorSet.getVisualPiecesCount(player);
+				if (pieces >= visualArmorSet.getMinimumPieces())
+				{
+					addSkills(player, item, visualArmorSet.getSkills(), visualArmorSet.getPiecesCount(player));
+				}
+			}
+			
 			if (update)
 			{
 				player.sendSkillList();
@@ -688,6 +698,11 @@ public abstract class Inventory extends ItemContainer
 				{
 					remove = true;
 				}
+				
+				if (removeArmorsetBonus(player, ArmorSetsData.getInstance().getSet(item.getVisualId())))
+				{
+					remove = true;
+				}
 			}
 			else
 			{
@@ -698,7 +713,7 @@ public abstract class Inventory extends ItemContainer
 				}
 				
 				final L2ArmorSet armorSet = ArmorSetsData.getInstance().getSet(chestItem.getId());
-				if (armorSet != null)
+				if ((armorSet != null) && !armorSet.isVisual())
 				{
 					if (armorSet.containItem(slot, item.getId())) // removed part of set
 					{
@@ -716,6 +731,25 @@ public abstract class Inventory extends ItemContainer
 					else if (armorSet.containShield(item.getId())) // removed shield
 					{
 						if (removeShieldSkills(player, armorSet.getShieldSkills()))
+						{
+							remove = true;
+						}
+					}
+				}
+				
+				final L2ArmorSet visualArmorSet = ArmorSetsData.getInstance().getSet(chestItem.getVisualId());
+				if ((visualArmorSet != null) && visualArmorSet.isVisual())
+				{
+					if (visualArmorSet.containItem(slot, item.getVisualId())) // removed part of set
+					{
+						if (removeArmorsetBonus(player, visualArmorSet))
+						{
+							remove = true;
+						}
+					}
+					else if (visualArmorSet.containShield(item.getVisualId())) // removed shield
+					{
+						if (removeShieldSkills(player, visualArmorSet.getShieldSkills()))
 						{
 							remove = true;
 						}
@@ -1104,6 +1138,17 @@ public abstract class Inventory extends ItemContainer
 	{
 		final L2ItemInstance item = _paperdoll[slot];
 		return (item != null) ? item.getDisplayId() : 0;
+	}
+	
+	/**
+	 * Returns the visual id of the item in the paperdoll slot
+	 * @param slot : int designating the slot
+	 * @return int designating the ID of the item
+	 */
+	public int getPaperdollItemVisualId(int slot)
+	{
+		final L2ItemInstance item = _paperdoll[slot];
+		return (item != null) ? item.getVisualId() : 0;
 	}
 	
 	public int getPaperdollAugmentationId(int slot)

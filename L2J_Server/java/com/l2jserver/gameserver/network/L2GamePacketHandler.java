@@ -33,6 +33,10 @@ import com.l2jserver.gameserver.network.clientpackets.*;
 import com.l2jserver.gameserver.network.clientpackets.adenadistribution.RequestDivideAdena;
 import com.l2jserver.gameserver.network.clientpackets.adenadistribution.RequestDivideAdenaCancel;
 import com.l2jserver.gameserver.network.clientpackets.adenadistribution.RequestDivideAdenaStart;
+import com.l2jserver.gameserver.network.clientpackets.appearance.RequestExCancelShape_Shifting_Item;
+import com.l2jserver.gameserver.network.clientpackets.appearance.RequestExTryToPutShapeShiftingEnchantSupportItem;
+import com.l2jserver.gameserver.network.clientpackets.appearance.RequestExTryToPutShapeShiftingTargetItem;
+import com.l2jserver.gameserver.network.clientpackets.appearance.RequestShapeShiftingItem;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeEstimate;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeItemCancel;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestAnswerFriendInvite;
@@ -1467,16 +1471,16 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new ExSysstring(); (chdS)
 								break;
 							case 0xC4:
-								// msg = new RequestExTryToPutShapeShiftingTargetItem();
+								msg = new RequestExTryToPutShapeShiftingTargetItem();
 								break;
 							case 0xC5:
-								// msg = new RequestExTryToPutShapeShiftingEnchantSupportItem();
+								msg = new RequestExTryToPutShapeShiftingEnchantSupportItem();
 								break;
 							case 0xC6:
-								// msg = new RequestExCancelShape_Shifting_Item();
+								msg = new RequestExCancelShape_Shifting_Item();
 								break;
 							case 0xC7:
-								// msg = new RequestShapeShiftingItem();
+								msg = new RequestShapeShiftingItem();
 								break;
 							case 0xC8:
 								// msg = new NCGuardSendDataToServer(); // (chdb)

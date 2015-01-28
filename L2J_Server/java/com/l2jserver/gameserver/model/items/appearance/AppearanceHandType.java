@@ -16,36 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model.interfaces;
-
-import java.time.Duration;
+package com.l2jserver.gameserver.model.items.appearance;
 
 /**
- * More advanced interface for parsers.<br>
- * Allows usage of get methods without fall back value.<br>
- * @author xban1x
+ * @author UnAfraid
  */
-public interface IParserAdvUtils extends IParserUtils
+public enum AppearanceHandType
 {
-	
-	public boolean getBoolean(String key);
-	
-	public byte getByte(String key);
-	
-	public short getShort(String key);
-	
-	public int getInt(String key);
-	
-	public long getLong(String key);
-	
-	public float getFloat(String key);
-	
-	public double getDouble(String key);
-	
-	public String getString(String key);
-	
-	public Duration getDuration(String key);
-	
-	public <T extends Enum<T>> T getEnum(String key, Class<T> clazz);
-	
+	NONE,
+	ONE_HANDED,
+	TWO_HANDED,
 }

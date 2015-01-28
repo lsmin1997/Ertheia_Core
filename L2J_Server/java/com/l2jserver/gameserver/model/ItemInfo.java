@@ -75,6 +75,8 @@ public class ItemInfo
 	};
 	
 	private int[] _option;
+	private int _visualId;
+	private long _visualExpiration;
 	
 	/**
 	 * Get all information from L2ItemInstance to generate ItemInfo.
@@ -148,12 +150,14 @@ public class ItemInfo
 			_elemDefAttr[i] = item.getElementDefAttr(i);
 		}
 		_option = item.getEnchantOptions();
+		_visualId = item.getVisualId();
 	}
 	
 	public ItemInfo(L2ItemInstance item, int change)
 	{
 		this(item);
 		_change = change;
+		_visualExpiration = item.getVisualLifeTime() > 0 ? (item.getVisualLifeTime() - System.currentTimeMillis()) / 1000 : 0;
 	}
 	
 	public ItemInfo(TradeItem item)
@@ -202,6 +206,7 @@ public class ItemInfo
 		}
 		
 		_option = item.getEnchantOptions();
+		_visualId = item.getVisualId();
 	}
 	
 	public ItemInfo(Product item)
@@ -350,7 +355,7 @@ public class ItemInfo
 	
 	public int getTime()
 	{
-		return _time;
+		return _time > 0 ? _time : _visualExpiration > 0 ? (int) _visualExpiration : -9999;
 	}
 	
 	public int getLocation()
@@ -376,5 +381,15 @@ public class ItemInfo
 	public int[] getEnchantOptions()
 	{
 		return _option;
+	}
+	
+	public int getVisualId()
+	{
+		return _visualId;
+	}
+	
+	public long getVisualExpiration()
+	{
+		return _visualExpiration;
 	}
 }

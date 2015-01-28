@@ -41,6 +41,7 @@ import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnP
 import com.l2jserver.gameserver.model.events.impl.character.player.inventory.OnPlayerItemTransfer;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.instance.L2ItemInstance;
+import com.l2jserver.gameserver.model.variables.ItemVariables;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
@@ -905,12 +906,11 @@ public class PcInventory extends Inventory
 				while (invdata.next())
 				{
 					int slot = invdata.getInt("loc_data");
+					final ItemVariables vars = new ItemVariables(invdata.getInt("object_id"));
 					paperdoll[slot][0] = invdata.getInt("object_id");
 					paperdoll[slot][1] = invdata.getInt("item_id");
 					paperdoll[slot][2] = invdata.getInt("enchant_level");
-					/*
-					 * if (slot == Inventory.PAPERDOLL_RHAND) { paperdoll[Inventory.PAPERDOLL_RHAND][0] = invdata.getInt("object_id"); paperdoll[Inventory.PAPERDOLL_RHAND][1] = invdata.getInt("item_id"); paperdoll[Inventory.PAPERDOLL_RHAND][2] = invdata.getInt("enchant_level"); }
-					 */
+					paperdoll[slot][3] = vars.getInt(ItemVariables.VISUAL_ID, 0);
 				}
 			}
 		}

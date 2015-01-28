@@ -113,7 +113,7 @@ public abstract class AbstractItemPacket extends AbstractMaskPacket<ItemListType
 		}
 		if (containsMask(mask, ItemListType.VISUAL_ID))
 		{
-			writeD(0x00); // Item remodel visual ID
+			writeD(item.getVisualId()); // Item remodel visual ID
 		}
 	}
 	

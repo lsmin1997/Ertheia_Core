@@ -49,6 +49,7 @@ import com.l2jserver.gameserver.data.sql.impl.SummonSkillsTable;
 import com.l2jserver.gameserver.data.sql.impl.TeleportLocationTable;
 import com.l2jserver.gameserver.data.xml.impl.AbilityPointsData;
 import com.l2jserver.gameserver.data.xml.impl.AdminData;
+import com.l2jserver.gameserver.data.xml.impl.AppearanceItemData;
 import com.l2jserver.gameserver.data.xml.impl.ArmorSetsData;
 import com.l2jserver.gameserver.data.xml.impl.BeautyShopData;
 import com.l2jserver.gameserver.data.xml.impl.BuyListData;
@@ -238,6 +239,7 @@ public class GameServer
 		FishingRodsData.getInstance();
 		HennaData.getInstance();
 		PrimeShopData.getInstance();
+		AppearanceItemData.getInstance();
 		
 		printSection("Characters");
 		ClassListData.getInstance();

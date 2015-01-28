@@ -31,21 +31,50 @@ import com.l2jserver.L2DatabaseFactory;
 /**
  * @author UnAfraid
  */
-public class AccountVariables extends AbstractVariables
+public class ItemVariables extends AbstractVariables
 {
-	private static final Logger _log = Logger.getLogger(AccountVariables.class.getName());
+	private static final Logger _log = Logger.getLogger(ItemVariables.class.getName());
 	
 	// SQL Queries.
-	private static final String SELECT_QUERY = "SELECT * FROM account_gsdata WHERE account_name = ?";
-	private static final String DELETE_QUERY = "DELETE FROM account_gsdata WHERE account_name = ?";
-	private static final String INSERT_QUERY = "INSERT INTO account_gsdata (account_name, var, value) VALUES (?, ?, ?)";
+	private static final String SELECT_QUERY = "SELECT * FROM item_variables WHERE id = ?";
+	private static final String SELECT_COUNT = "SELECT COUNT(*) FROM item_variables WHERE id = ?";
+	private static final String DELETE_QUERY = "DELETE FROM item_variables WHERE id = ?";
+	private static final String INSERT_QUERY = "INSERT INTO item_variables (id, var, val) VALUES (?, ?, ?)";
 	
-	private final String _accountName;
+	private final int _objectId;
 	
-	public AccountVariables(String accountName)
+	// Static Constants
+	public static final String VISUAL_ID = "visualId";
+	public static final String VISUAL_APPEARANCE_STONE_ID = "visualAppearanceStoneId";
+	public static final String VISUAL_APPEARANCE_LIFE_TIME = "visualAppearanceLifetime";
+	
+	public ItemVariables(int objectId)
 	{
-		_accountName = accountName;
+		_objectId = objectId;
 		restoreMe();
+	}
+	
+	public static boolean hasVariables(int objectId)
+	{
+		// Restore previous variables.
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement st = con.prepareStatement(SELECT_COUNT))
+		{
+			st.setInt(1, objectId);
+			try (ResultSet rset = st.executeQuery())
+			{
+				if (rset.next())
+				{
+					return rset.getInt(1) > 0;
+				}
+			}
+		}
+		catch (SQLException e)
+		{
+			_log.log(Level.WARNING, ItemVariables.class.getSimpleName() + ": Couldn't select variables count for: " + objectId, e);
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
@@ -55,18 +84,18 @@ public class AccountVariables extends AbstractVariables
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement st = con.prepareStatement(SELECT_QUERY))
 		{
-			st.setString(1, _accountName);
+			st.setInt(1, _objectId);
 			try (ResultSet rset = st.executeQuery())
 			{
 				while (rset.next())
 				{
-					set(rset.getString("var"), rset.getString("value"));
+					set(rset.getString("var"), rset.getString("val"), false);
 				}
 			}
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't restore variables for: " + _accountName, e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't restore variables for: " + _objectId, e);
 			return false;
 		}
 		finally
@@ -90,14 +119,14 @@ public class AccountVariables extends AbstractVariables
 			// Clear previous entries.
 			try (PreparedStatement st = con.prepareStatement(DELETE_QUERY))
 			{
-				st.setString(1, _accountName);
+				st.setInt(1, _objectId);
 				st.execute();
 			}
 			
 			// Insert all variables.
 			try (PreparedStatement st = con.prepareStatement(INSERT_QUERY))
 			{
-				st.setString(1, _accountName);
+				st.setInt(1, _objectId);
 				for (Entry<String, Object> entry : getSet().entrySet())
 				{
 					st.setString(2, entry.getKey());
@@ -109,7 +138,7 @@ public class AccountVariables extends AbstractVariables
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't update variables for: " + _accountName, e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't update variables for: " + _objectId, e);
 			return false;
 		}
 		finally
@@ -127,7 +156,7 @@ public class AccountVariables extends AbstractVariables
 			// Clear previous entries.
 			try (PreparedStatement st = con.prepareStatement(DELETE_QUERY))
 			{
-				st.setString(1, _accountName);
+				st.setInt(1, _objectId);
 				st.execute();
 			}
 			
@@ -136,7 +165,7 @@ public class AccountVariables extends AbstractVariables
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't delete variables for: " + _accountName, e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Couldn't delete variables for: " + _objectId, e);
 			return false;
 		}
 		return true;

@@ -44,6 +44,8 @@ public class TradeItem
 		0
 	};
 	private final int[] _enchantOptions;
+	private int _visualId;
+	private int _augmentId;
 	
 	public TradeItem(L2ItemInstance item, long count, long price)
 	{
@@ -62,6 +64,8 @@ public class TradeItem
 			_elemDefAttr[i] = item.getElementDefAttr(i);
 		}
 		_enchantOptions = item.getEnchantOptions();
+		_visualId = item.getVisualId();
+		_augmentId = item.isAugmented() ? item.getAugmentation().getAugmentationId() : 0;
 	}
 	
 	public TradeItem(L2Item item, long count, long price)
@@ -98,6 +102,7 @@ public class TradeItem
 			_elemDefAttr[i] = item.getElementDefAttr(i);
 		}
 		_enchantOptions = item.getEnchantOptions();
+		_visualId = item.getVisualId();
 	}
 	
 	public void setObjectId(int objectId)
@@ -183,5 +188,15 @@ public class TradeItem
 	public int[] getEnchantOptions()
 	{
 		return _enchantOptions;
+	}
+	
+	public int getAugmentId()
+	{
+		return _augmentId;
+	}
+	
+	public int getVisualId()
+	{
+		return _visualId;
 	}
 }

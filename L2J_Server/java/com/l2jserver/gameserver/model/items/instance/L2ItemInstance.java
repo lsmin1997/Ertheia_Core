@@ -37,12 +37,14 @@ import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
+import com.l2jserver.gameserver.data.xml.impl.AppearanceItemData;
 import com.l2jserver.gameserver.data.xml.impl.EnchantItemOptionsData;
 import com.l2jserver.gameserver.data.xml.impl.OptionData;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.enums.ItemLocation;
 import com.l2jserver.gameserver.enums.ShotType;
+import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.ItemsOnGroundManager;
 import com.l2jserver.gameserver.instancemanager.MercTicketManager;
@@ -69,14 +71,17 @@ import com.l2jserver.gameserver.model.items.L2Armor;
 import com.l2jserver.gameserver.model.items.L2EtcItem;
 import com.l2jserver.gameserver.model.items.L2Item;
 import com.l2jserver.gameserver.model.items.L2Weapon;
+import com.l2jserver.gameserver.model.items.appearance.AppearanceStone;
 import com.l2jserver.gameserver.model.items.type.EtcItemType;
 import com.l2jserver.gameserver.model.items.type.ItemType;
 import com.l2jserver.gameserver.model.options.EnchantOptions;
 import com.l2jserver.gameserver.model.options.Options;
 import com.l2jserver.gameserver.model.stats.functions.AbstractFunction;
+import com.l2jserver.gameserver.model.variables.ItemVariables;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.DropItem;
 import com.l2jserver.gameserver.network.serverpackets.ExAdenaInvenCount;
+import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoInvenWeight;
 import com.l2jserver.gameserver.network.serverpackets.GetItem;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
@@ -163,6 +168,7 @@ public final class L2ItemInstance extends L2Object
 	
 	private ScheduledFuture<?> itemLootShedule = null;
 	private ScheduledFuture<?> _lifeTimeTask;
+	private ScheduledFuture<?> _appearanceLifeTimeTask;
 	
 	private final DropProtection _dropProtection = new DropProtection();
 	
@@ -2219,5 +2225,101 @@ public final class L2ItemInstance extends L2Object
 			_lifeTimeTask.cancel(false);
 			_lifeTimeTask = null;
 		}
+		
+		if ((_appearanceLifeTimeTask != null) && !_appearanceLifeTimeTask.isDone())
+		{
+			_appearanceLifeTimeTask.cancel(false);
+			_appearanceLifeTimeTask = null;
+		}
+	}
+	
+	public final ItemVariables getVariables()
+	{
+		final ItemVariables vars = getScript(ItemVariables.class);
+		return vars != null ? vars : addScript(new ItemVariables(getObjectId()));
+	}
+	
+	public int getVisualId()
+	{
+		final int visualId = getVariables().getInt(ItemVariables.VISUAL_ID, 0);
+		if (visualId > 0)
+		{
+			final int appearanceStoneId = getVariables().getInt(ItemVariables.VISUAL_APPEARANCE_STONE_ID, 0);
+			if (appearanceStoneId > 0)
+			{
+				final AppearanceStone stone = AppearanceItemData.getInstance().getStone(appearanceStoneId);
+				if (stone != null)
+				{
+					final L2PcInstance player = getActingPlayer();
+					if (player != null)
+					{
+						if (!stone.getRaces().isEmpty() && !stone.getRaces().contains(player.getRace()))
+						{
+							return 0;
+						}
+						if (!stone.getRacesNot().isEmpty() && stone.getRacesNot().contains(player.getRace()))
+						{
+							return 0;
+						}
+					}
+				}
+			}
+		}
+		return visualId;
+	}
+	
+	public void setVisualId(int visualId)
+	{
+		getVariables().set(ItemVariables.VISUAL_ID, visualId);
+	}
+	
+	public long getVisualLifeTime()
+	{
+		return getVariables().getLong(ItemVariables.VISUAL_APPEARANCE_LIFE_TIME, 0);
+	}
+	
+	public void scheduleVisualLifeTime()
+	{
+		if (_appearanceLifeTimeTask != null)
+		{
+			_appearanceLifeTimeTask.cancel(false);
+		}
+		if (getVisualLifeTime() > 0)
+		{
+			final long time = getVisualLifeTime() - System.currentTimeMillis();
+			if (time > 0)
+			{
+				_appearanceLifeTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(this::onVisualLifeTimeEnd, time);
+			}
+			else
+			{
+				ThreadPoolManager.getInstance().executeGeneral(this::onVisualLifeTimeEnd);
+			}
+		}
+	}
+	
+	private final void onVisualLifeTimeEnd()
+	{
+		final ItemVariables vars = getVariables();
+		vars.remove(ItemVariables.VISUAL_ID);
+		vars.remove(ItemVariables.VISUAL_APPEARANCE_STONE_ID);
+		vars.remove(ItemVariables.VISUAL_APPEARANCE_LIFE_TIME);
+		vars.storeMe();
+		
+		final L2PcInstance player = getActingPlayer();
+		if (player != null)
+		{
+			final InventoryUpdate iu = new InventoryUpdate();
+			iu.addModifiedItem(this);
+			player.broadcastUserInfo(UserInfoType.APPAREANCE);
+			player.sendPacket(new ExUserInfoEquipSlot(player));
+			player.sendPacket(iu);
+			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.S1_HAS_BEEN_RESTORED_TO_ITS_PREVIOUS_APPEARANCE_AS_ITS_TEMPORARY_MODIFICATION_HAS_EXPIRED).addItemName(this));
+		}
+	}
+	
+	public boolean isAppearanceable()
+	{
+		return isWeapon() || isArmor();
 	}
 }
