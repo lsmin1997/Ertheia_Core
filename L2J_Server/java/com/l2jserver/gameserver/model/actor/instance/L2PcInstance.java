@@ -41,6 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -13408,6 +13409,13 @@ public final class L2PcInstance extends L2Playable
 		return -1;
 	}
 	
+	public int getBirthdays()
+	{
+		long time = (System.currentTimeMillis() - getCreateDate().getTimeInMillis()) / 1000;
+		time /= TimeUnit.DAYS.toMillis(365);
+		return (int) time;
+	}
+	
 	/**
 	 * list of character friends
 	 */
@@ -14700,5 +14708,22 @@ public final class L2PcInstance extends L2Playable
 		{
 			_requests.values().removeIf(req -> req.isUsing(objectId));
 		}
+	}
+	
+	/**
+	 * @return the prime shop points of the player.
+	 */
+	public int getPrimePoints()
+	{
+		return getAccountVariables().getInt("PrimePoints", 0);
+	}
+	
+	/**
+	 * Sets prime shop for current player.
+	 * @param points
+	 */
+	public void setPrimePoints(int points)
+	{
+		getAccountVariables().set("PrimePoints", points);
 	}
 }

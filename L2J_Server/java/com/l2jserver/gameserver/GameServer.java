@@ -76,6 +76,7 @@ import com.l2jserver.gameserver.data.xml.impl.OptionData;
 import com.l2jserver.gameserver.data.xml.impl.PetDataTable;
 import com.l2jserver.gameserver.data.xml.impl.PlayerTemplateData;
 import com.l2jserver.gameserver.data.xml.impl.PlayerXpPercentLostData;
+import com.l2jserver.gameserver.data.xml.impl.PrimeShopData;
 import com.l2jserver.gameserver.data.xml.impl.RecipeData;
 import com.l2jserver.gameserver.data.xml.impl.SecondaryAuthData;
 import com.l2jserver.gameserver.data.xml.impl.ShuttleData;
@@ -236,6 +237,7 @@ public class GameServer
 		FishingMonstersData.getInstance();
 		FishingRodsData.getInstance();
 		HennaData.getInstance();
+		PrimeShopData.getInstance();
 		
 		printSection("Characters");
 		ClassListData.getInstance();
