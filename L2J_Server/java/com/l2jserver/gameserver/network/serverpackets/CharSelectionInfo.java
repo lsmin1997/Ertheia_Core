@@ -45,6 +45,18 @@ public class CharSelectionInfo extends L2GameServerPacket
 	private int _activeId;
 	private final CharSelectInfoPackage[] _characterPackages;
 	
+	private static final int[] PAPERDOLL_ORDER_VISUAL_ID = new int[]
+	{
+		Inventory.PAPERDOLL_RHAND,
+		Inventory.PAPERDOLL_LHAND,
+		Inventory.PAPERDOLL_GLOVES,
+		Inventory.PAPERDOLL_CHEST,
+		Inventory.PAPERDOLL_LEGS,
+		Inventory.PAPERDOLL_FEET,
+		Inventory.PAPERDOLL_HAIR,
+		Inventory.PAPERDOLL_HAIR2,
+	};
+	
 	/**
 	 * Constructor for CharSelectionInfo.
 	 * @param loginName
@@ -362,5 +374,11 @@ public class CharSelectionInfo extends L2GameServerPacket
 		charInfopackage.setDeleteTimer(deletetime);
 		charInfopackage.setLastAccess(chardata.getLong("lastAccess"));
 		return charInfopackage;
+	}
+	
+	@Override
+	protected int[] getPaperdollOrderVisualId()
+	{
+		return PAPERDOLL_ORDER_VISUAL_ID;
 	}
 }
