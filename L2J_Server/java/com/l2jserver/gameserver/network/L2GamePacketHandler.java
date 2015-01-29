@@ -37,6 +37,15 @@ import com.l2jserver.gameserver.network.clientpackets.appearance.RequestExCancel
 import com.l2jserver.gameserver.network.clientpackets.appearance.RequestExTryToPutShapeShiftingEnchantSupportItem;
 import com.l2jserver.gameserver.network.clientpackets.appearance.RequestExTryToPutShapeShiftingTargetItem;
 import com.l2jserver.gameserver.network.clientpackets.appearance.RequestShapeShiftingItem;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionBuyInfo;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionBuyItem;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionCancel;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionDelete;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionInfo;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionList;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionRegister;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionRegisteredItem;
+import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionRegistrableItemList;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeEstimate;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeItemCancel;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestAnswerFriendInvite;
@@ -1353,31 +1362,31 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestInzonePartyInfoHistory();
 								break;
 							case 0x98:
-								// msg = new RequestCommissionRegistrableItemList();
+								msg = new RequestCommissionRegistrableItemList();
 								break;
 							case 0x99:
-								// msg = new RequestCommissionInfo();
+								msg = new RequestCommissionInfo();
 								break;
 							case 0x9A:
-								// msg = new RequestCommissionRegister();
+								msg = new RequestCommissionRegister();
 								break;
 							case 0x9B:
-								// msg = new RequestCommissionCancel();
+								msg = new RequestCommissionCancel();
 								break;
 							case 0x9C:
-								// msg = new RequestCommissionDelete();
+								msg = new RequestCommissionDelete();
 								break;
 							case 0x9D:
-								// msg = new RequestCommissionList();
+								msg = new RequestCommissionList();
 								break;
 							case 0x9E:
-								// msg = new RequestCommissionBuyInfo();
+								msg = new RequestCommissionBuyInfo();
 								break;
 							case 0x9F:
-								// msg = new RequestCommissionBuyItem();
+								msg = new RequestCommissionBuyItem();
 								break;
 							case 0xA0:
-								// msg = new RequestCommissionRegisteredItem();
+								msg = new RequestCommissionRegisteredItem();
 								break;
 							case 0xA1:
 								// msg = new RequestCallToChangeClass();

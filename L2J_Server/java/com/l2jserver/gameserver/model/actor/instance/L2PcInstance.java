@@ -328,6 +328,7 @@ import com.l2jserver.gameserver.network.serverpackets.TradeOtherDone;
 import com.l2jserver.gameserver.network.serverpackets.TradeStart;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
+import com.l2jserver.gameserver.network.serverpackets.commission.ExResponseCommissionInfo;
 import com.l2jserver.gameserver.network.serverpackets.friend.L2FriendStatus;
 import com.l2jserver.gameserver.taskmanager.AttackStanceTaskManager;
 import com.l2jserver.gameserver.util.Broadcast;
@@ -712,6 +713,8 @@ public final class L2PcInstance extends L2Playable
 	private long _protectEndTime = 0;
 	
 	private L2ItemInstance _lure = null;
+	
+	private volatile Map<Integer, ExResponseCommissionInfo> _lastCommissionInfos;
 	
 	public boolean isSpawnProtected()
 	{
@@ -14725,5 +14728,24 @@ public final class L2PcInstance extends L2Playable
 	public void setPrimePoints(int points)
 	{
 		getAccountVariables().set("PrimePoints", points);
+	}
+	
+	/**
+	 * Gets the last commission infos.
+	 * @return the last commission infos
+	 */
+	public Map<Integer, ExResponseCommissionInfo> getLastCommissionInfos()
+	{
+		if (_lastCommissionInfos == null)
+		{
+			synchronized (this)
+			{
+				if (_lastCommissionInfos == null)
+				{
+					_lastCommissionInfos = new ConcurrentHashMap<>();
+				}
+			}
+		}
+		return _lastCommissionInfos;
 	}
 }

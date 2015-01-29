@@ -33,6 +33,7 @@ import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.commission.CommissionItemType;
 import com.l2jserver.gameserver.model.conditions.Condition;
 import com.l2jserver.gameserver.model.events.ListenersContainer;
 import com.l2jserver.gameserver.model.holders.SkillHolder;
@@ -159,6 +160,8 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 	private final int _reuseDelay;
 	private final int _sharedReuseGroup;
 	
+	private final CommissionItemType _commissionItemType;
+	
 	/**
 	 * Constructor of the L2Item that fill class variables.<BR>
 	 * <BR>
@@ -203,6 +206,7 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 		_defaultEnchantLevel = set.getInt("enchanted", 0);
 		_reuseDelay = set.getInt("reuse_delay", 0);
 		_sharedReuseGroup = set.getInt("shared_reuse_group", 0);
+		_commissionItemType = set.getEnum("commissionItemType", CommissionItemType.class, CommissionItemType.OTHER_ITEM);
 		
 		String skills = set.getString("item_skill", null);
 		if (skills != null)
@@ -928,6 +932,11 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 	public int getSharedReuseGroup()
 	{
 		return _sharedReuseGroup;
+	}
+	
+	public CommissionItemType getCommissionItemType()
+	{
+		return _commissionItemType;
 	}
 	
 	/**
