@@ -151,6 +151,13 @@ public class RequestExTryToPutShapeShiftingTargetItem extends L2GameClientPacket
 				player.removeRequest(ShapeShiftingItemRequest.class);
 				return;
 			}
+			else if (targetItem.isArmor() && !appearanceStone.getBodyParts().isEmpty() && !appearanceStone.getBodyParts().contains(targetItem.getItem().getBodyPart()))
+			{
+				player.sendPacket(SystemMessageId.THIS_ITEM_DOES_NOT_MEET_REQUIREMENTS);
+				player.sendPacket(ExPutShapeShiftingTargetItemResult.FAILED);
+				player.removeRequest(ShapeShiftingItemRequest.class);
+				return;
+			}
 		}
 		
 		if (appearanceStone.getWeaponType() != WeaponType.NONE)

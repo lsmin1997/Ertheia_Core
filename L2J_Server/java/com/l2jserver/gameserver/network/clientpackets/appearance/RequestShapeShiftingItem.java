@@ -37,6 +37,7 @@ import com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket;
 import com.l2jserver.gameserver.network.serverpackets.ExUserInfoEquipSlot;
 import com.l2jserver.gameserver.network.serverpackets.InventoryUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+import com.l2jserver.gameserver.network.serverpackets.appearance.ExPutShapeShiftingTargetItemResult;
 import com.l2jserver.gameserver.network.serverpackets.appearance.ExShapeShiftingResult;
 
 /**
@@ -158,6 +159,12 @@ public class RequestShapeShiftingItem extends L2GameClientPacket
 			else if (targetItem.isArmor() && !appearanceStone.getTargetTypes().contains(AppearanceTargetType.ARMOR) && !appearanceStone.getTargetTypes().contains(AppearanceTargetType.ACCESSORY))
 			{
 				player.sendPacket(ExShapeShiftingResult.FAILED);
+				player.removeRequest(ShapeShiftingItemRequest.class);
+				return;
+			}
+			else if (targetItem.isArmor() && !appearanceStone.getBodyParts().isEmpty() && !appearanceStone.getBodyParts().contains(targetItem.getItem().getBodyPart()))
+			{
+				player.sendPacket(ExPutShapeShiftingTargetItemResult.FAILED);
 				player.removeRequest(ShapeShiftingItemRequest.class);
 				return;
 			}
