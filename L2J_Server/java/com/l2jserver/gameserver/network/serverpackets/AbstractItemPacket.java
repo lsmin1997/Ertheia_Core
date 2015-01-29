@@ -153,6 +153,10 @@ public abstract class AbstractItemPacket extends AbstractMaskPacket<ItemListType
 			}
 		}
 		
+		if (item.getVisualId() > 0)
+		{
+			mask |= ItemListType.VISUAL_ID.getMask();
+		}
 		return mask;
 	}
 	
