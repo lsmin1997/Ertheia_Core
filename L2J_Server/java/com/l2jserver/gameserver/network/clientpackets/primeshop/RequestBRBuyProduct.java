@@ -78,10 +78,13 @@ public final class RequestBRBuyProduct extends L2GameClientPacket
 				activeChar.sendPacket(new ExBRBuyProduct(ExBrProductReplyType.LACK_OF_POINT));
 				return;
 			}
-			else if ((paymentId > 0) && !activeChar.destroyItemByItemId("PrimeShop-" + item.getBrId(), paymentId, price, activeChar, true))
+			else if (paymentId > 0)
 			{
-				activeChar.sendPacket(new ExBRBuyProduct(ExBrProductReplyType.LACK_OF_POINT));
-				return;
+				if (!activeChar.destroyItemByItemId("PrimeShop-" + item.getBrId(), paymentId, price, activeChar, true))
+				{
+					activeChar.sendPacket(new ExBRBuyProduct(ExBrProductReplyType.LACK_OF_POINT));
+					return;
+				}
 			}
 			else if (paymentId == 0)
 			{
@@ -91,12 +94,11 @@ public final class RequestBRBuyProduct extends L2GameClientPacket
 					return;
 				}
 				activeChar.setPrimePoints(activeChar.getPrimePoints() - price);
-				
 			}
 			
-			for (PrimeShopItem itm : item.getItems())
+			for (PrimeShopItem subItem : item.getItems())
 			{
-				activeChar.addItem("PrimeShop", itm.getId(), itm.getCount() * _count, activeChar, true);
+				activeChar.addItem("PrimeShop", subItem.getId(), subItem.getCount() * _count, activeChar, true);
 			}
 			
 			activeChar.sendPacket(new ExBRBuyProduct(ExBrProductReplyType.SUCCESS));
