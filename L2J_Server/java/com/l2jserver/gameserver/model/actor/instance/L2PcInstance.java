@@ -14718,7 +14718,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public int getPrimePoints()
 	{
-		return getAccountVariables().getInt("PrimePoints", 0);
+		return getAccountVariables().getInt("PRIME_POINTS", 0);
 	}
 	
 	/**
@@ -14727,7 +14727,10 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public void setPrimePoints(int points)
 	{
-		getAccountVariables().set("PrimePoints", points);
+		// Immediate store upon change
+		final AccountVariables vars = getAccountVariables();
+		vars.set("PRIME_POINTS", points);
+		vars.storeMe();
 	}
 	
 	/**
