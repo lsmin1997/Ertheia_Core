@@ -674,7 +674,7 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 		player.sendPacket(new ItemList(player, false));
 		player.sendPacket(new ShortCutInit(player));
 		player.sendPacket(new ExBasicActionList(ExBasicActionList.DEFAULT_ACTION_LIST));
-		player.sendSkillList();
+		player.sendSkillList(skill.getId());
 		
 		player.updateShortCuts(_id, _level);
 		showSkillList(trainer, player);

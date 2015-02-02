@@ -10126,6 +10126,11 @@ public final class L2PcInstance extends L2Playable
 	
 	public void sendSkillList()
 	{
+		sendSkillList(0);
+	}
+	
+	public void sendSkillList(int lastLearnedSkillId)
+	{
 		boolean isDisabled = false;
 		SkillList sl = new SkillList();
 		
@@ -10166,7 +10171,10 @@ public final class L2PcInstance extends L2Playable
 			
 			sl.addSkill(s.getDisplayId(), s.getDisplayLevel(), s.isPassive(), isDisabled, isEnchantable);
 		}
-		
+		if (lastLearnedSkillId > 0)
+		{
+			sl.setLastLearnedSkillId(lastLearnedSkillId);
+		}
 		sendPacket(sl);
 	}
 	
