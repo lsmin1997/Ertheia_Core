@@ -2634,14 +2634,6 @@ public final class L2PcInstance extends L2Playable
 		Skill skill;
 		for (L2SkillLearn s : autoGetSkills)
 		{
-			final int maxLvl = SkillData.getInstance().getMaxLevel(s.getSkillId());
-			final int hashCode = SkillData.getSkillHashCode(s.getSkillId(), maxLvl);
-			
-			if (SkillTreesData.getInstance().isCurrentClassSkillNoParent(getClassId(), hashCode) || SkillTreesData.getInstance().isRemoveSkill(getClassId(), s.getSkillId()))
-			{
-				continue;
-			}
-			
 			skill = st.getSkill(s.getSkillId(), s.getSkillLevel());
 			if (skill != null)
 			{

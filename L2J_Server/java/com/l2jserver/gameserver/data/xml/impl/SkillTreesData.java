@@ -746,9 +746,12 @@ public final class SkillTreesData implements IXmlReader
 				continue;
 			}
 			
+			final int maxLvl = SkillData.getInstance().getMaxLevel(skill.getSkillId());
+			final int hashCode = SkillData.getSkillHashCode(skill.getSkillId(), maxLvl);
+			
 			if (skill.isAutoGet() && (player.getLevel() >= skill.getGetLevel()))
 			{
-				final Skill oldSkill = player.getSkills().get(skill.getSkillId());
+				final Skill oldSkill = player.getKnownSkill(skill.getSkillId());
 				if (oldSkill != null)
 				{
 					if (oldSkill.getLevel() < skill.getSkillLevel())
@@ -756,7 +759,7 @@ public final class SkillTreesData implements IXmlReader
 						result.add(skill);
 					}
 				}
-				else
+				else if (!player.isInCategory(CategoryType.AWAKEN_GROUP) || SkillTreesData.getInstance().isCurrentClassSkillNoParent(player.getClassId(), hashCode))
 				{
 					result.add(skill);
 				}
