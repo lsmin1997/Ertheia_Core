@@ -207,6 +207,7 @@ import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerPKCha
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerProfessionChange;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerPvPChanged;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerPvPKill;
+import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerSubChange;
 import com.l2jserver.gameserver.model.events.impl.character.player.OnPlayerTransform;
 import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMenteeStatus;
 import com.l2jserver.gameserver.model.events.impl.character.player.mentoring.OnPlayerMentorStatus;
@@ -3045,6 +3046,8 @@ public final class L2PcInstance extends L2Playable
 				sendPacket(new ItemList(this, false));
 			}
 			
+			sendPacket(new ExAdenaInvenCount(this));
+			
 			if (sendMessage)
 			{
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_ADENA_DISAPPEARED);
@@ -3554,7 +3557,6 @@ public final class L2PcInstance extends L2Playable
 		
 		// Update current load as well
 		sendPacket(new ExUserInfoInvenWeight(this));
-		sendPacket(new ExAdenaInvenCount(this));
 		
 		// Sends message to client if requested
 		if (sendMessage)
@@ -10544,6 +10546,8 @@ public final class L2PcInstance extends L2Playable
 			sendPacket(new SkillCoolTime(this));
 			sendPacket(new ExStorageMaxCount(this));
 			sendPacket(new ExSubjobInfo(this));
+			
+			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerSubChange(this), this);
 			return true;
 		}
 		finally

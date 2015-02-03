@@ -16,51 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model.base;
+package com.l2jserver.gameserver.model.events.impl.character.player;
+
+import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+import com.l2jserver.gameserver.model.events.EventType;
+import com.l2jserver.gameserver.model.events.impl.IBaseEvent;
 
 /**
- * Learning skill types.
- * @author Zoey76
+ * @author malyelfik
  */
-public enum AcquireSkillType
+public final class OnPlayerSubChange implements IBaseEvent
 {
-	CLASS(0),
-	DUMMY(1),
-	PLEDGE(2),
-	SUBPLEDGE(3),
-	TRANSFORM(4),
-	TRANSFER(5),
-	SUBCLASS(6),
-	COLLECT(7),
-	DUMMY2(8),
-	DUMMY3(9),
-	FISHING(10),
-	REVELATION(11), // Need proper ID
-	REVELATION_DUALCLASS(12), // Need proper ID
-	DUALCLASS(13), // Need proper ID
-	ALCHEMY(140);
+	private final L2PcInstance _activeChar;
 	
-	private final int _id;
-	
-	private AcquireSkillType(int id)
+	public OnPlayerSubChange(L2PcInstance activeChar)
 	{
-		_id = id;
+		_activeChar = activeChar;
 	}
 	
-	public int getId()
+	public final L2PcInstance getActiveChar()
 	{
-		return _id;
+		return _activeChar;
 	}
 	
-	public static AcquireSkillType getAcquireSkillType(int id)
+	@Override
+	public EventType getType()
 	{
-		for (AcquireSkillType type : values())
-		{
-			if (type.getId() == id)
-			{
-				return type;
-			}
-		}
-		return null;
+		return EventType.ON_PLAYER_SUB_CHANGE;
 	}
 }
