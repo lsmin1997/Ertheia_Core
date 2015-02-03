@@ -729,13 +729,17 @@ public final class SkillTreesData implements IXmlReader
 		}
 		
 		final Race race = player.getRace();
+		final boolean isAwaken = player.isInCategory(CategoryType.AWAKEN_GROUP);
 		
 		// Race skills
-		for (L2SkillLearn skill : getRaceSkillTree(race))
+		if (isAwaken)
 		{
-			if (player.getKnownSkill(skill.getSkillId()) == null)
+			for (L2SkillLearn skill : getRaceSkillTree(race))
 			{
-				result.add(skill);
+				if (player.getKnownSkill(skill.getSkillId()) == null)
+				{
+					result.add(skill);
+				}
 			}
 		}
 		
@@ -759,7 +763,7 @@ public final class SkillTreesData implements IXmlReader
 						result.add(skill);
 					}
 				}
-				else if (!player.isInCategory(CategoryType.AWAKEN_GROUP) || SkillTreesData.getInstance().isCurrentClassSkillNoParent(player.getClassId(), hashCode))
+				else if (!isAwaken || SkillTreesData.getInstance().isCurrentClassSkillNoParent(player.getClassId(), hashCode))
 				{
 					result.add(skill);
 				}
