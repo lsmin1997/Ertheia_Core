@@ -99,7 +99,6 @@ public final class Config
 	public static final String CONFIGURATION_FILE = "./config/Server.properties";
 	public static final String IP_CONFIG_FILE = "./config/ipconfig.xml";
 	public static final String SIEGE_CONFIGURATION_FILE = "./config/Siege.properties";
-	public static final String TW_CONFIGURATION_FILE = "./config/TerritoryWar.properties";
 	public static final String TELNET_FILE = "./config/Telnet.properties";
 	public static final String FLOOD_PROTECTOR_FILE = "./config/FloodProtector.properties";
 	public static final String MMO_CONFIG_FILE = "./config/MMO.properties";
@@ -158,6 +157,7 @@ public final class Config
 	public static boolean ALLOW_TRANSFORM_WITHOUT_QUEST;
 	public static int FEE_DELETE_TRANSFER_SKILLS;
 	public static int FEE_DELETE_SUBCLASS_SKILLS;
+	public static int FEE_DELETE_DUALCLASS_SKILLS;
 	public static boolean RESTORE_SERVITOR_ON_RECONNECT;
 	public static boolean RESTORE_PET_ON_RECONNECT;
 	public static double MAX_BONUS_EXP;
@@ -1452,6 +1452,7 @@ public final class Config
 			ALLOW_TRANSFORM_WITHOUT_QUEST = Character.getBoolean("AltTransformationWithoutQuest", false);
 			FEE_DELETE_TRANSFER_SKILLS = Character.getInt("FeeDeleteTransferSkills", 10000000);
 			FEE_DELETE_SUBCLASS_SKILLS = Character.getInt("FeeDeleteSubClassSkills", 10000000);
+			FEE_DELETE_DUALCLASS_SKILLS = Character.getInt("FeeDeleteDualClassSkills", 20000000);
 			ENABLE_VITALITY = Character.getBoolean("EnableVitality", true);
 			STARTING_VITALITY_POINTS = Character.getInt("StartingVitalityPoints", 140000);
 			ALT_VITALITY_DATE_RESET = Character.getInt("AltVitalityDateReset", 4);
