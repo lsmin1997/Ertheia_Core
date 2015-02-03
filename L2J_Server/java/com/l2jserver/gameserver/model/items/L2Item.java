@@ -161,6 +161,8 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 	private final int _sharedReuseGroup;
 	
 	private final CommissionItemType _commissionItemType;
+	private final int _compoundItem;
+	private final float _compoundChance;
 	
 	/**
 	 * Constructor of the L2Item that fill class variables.<BR>
@@ -207,6 +209,8 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 		_reuseDelay = set.getInt("reuse_delay", 0);
 		_sharedReuseGroup = set.getInt("shared_reuse_group", 0);
 		_commissionItemType = set.getEnum("commissionItemType", CommissionItemType.class, CommissionItemType.OTHER_ITEM);
+		_compoundItem = set.getInt("compoundItem", 0);
+		_compoundChance = set.getFloat("compoundChance", 0);
 		
 		String skills = set.getString("item_skill", null);
 		if (skills != null)
@@ -937,6 +941,16 @@ public abstract class L2Item extends ListenersContainer implements IIdentifiable
 	public CommissionItemType getCommissionItemType()
 	{
 		return _commissionItemType;
+	}
+	
+	public int getCompoundItem()
+	{
+		return _compoundItem;
+	}
+	
+	public float getCompoundChance()
+	{
+		return _compoundChance;
 	}
 	
 	/**

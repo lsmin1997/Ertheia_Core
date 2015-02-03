@@ -46,6 +46,12 @@ import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissi
 import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionRegister;
 import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionRegisteredItem;
 import com.l2jserver.gameserver.network.clientpackets.commission.RequestCommissionRegistrableItemList;
+import com.l2jserver.gameserver.network.clientpackets.compound.RequestNewEnchantClose;
+import com.l2jserver.gameserver.network.clientpackets.compound.RequestNewEnchantPushOne;
+import com.l2jserver.gameserver.network.clientpackets.compound.RequestNewEnchantPushTwo;
+import com.l2jserver.gameserver.network.clientpackets.compound.RequestNewEnchantRemoveOne;
+import com.l2jserver.gameserver.network.clientpackets.compound.RequestNewEnchantRemoveTwo;
+import com.l2jserver.gameserver.network.clientpackets.compound.RequestNewEnchantTry;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeEstimate;
 import com.l2jserver.gameserver.network.clientpackets.crystalization.RequestCrystallizeItemCancel;
 import com.l2jserver.gameserver.network.clientpackets.friend.RequestAnswerFriendInvite;
@@ -1619,22 +1625,22 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new NotifyTrainingRoomEnd();
 								break;
 							case 0xF4:
-								// msg = new RequestNewEnchantPushOne();
+								msg = new RequestNewEnchantPushOne();
 								break;
 							case 0xF5:
-								// msg = new RequestNewEnchantRemoveOne();
+								msg = new RequestNewEnchantRemoveOne();
 								break;
 							case 0xF6:
-								// msg = new RequestNewEnchantPushTwo();
+								msg = new RequestNewEnchantPushTwo();
 								break;
 							case 0xF7:
-								// msg = new RequestNewEnchantRemoveTwo();
+								msg = new RequestNewEnchantRemoveTwo();
 								break;
 							case 0xF8:
-								// nsg = new RequestNewEnchantClose();
+								msg = new RequestNewEnchantClose();
 								break;
 							case 0xF9:
-								// msg = new RequestNewEnchantTry();
+								msg = new RequestNewEnchantTry();
 								break;
 							case 0xFE:
 								// msg = new ExSendSelectedQuestZoneID();
