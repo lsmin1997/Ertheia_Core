@@ -279,7 +279,7 @@ public class RequestShapeShiftingItem extends L2GameClientPacket
 				return;
 			}
 			
-			if (!extracItem.isEtcItem() && (targetItem.getItem().getItemGrade().ordinal() <= extracItem.getItem().getItemGrade().ordinal()))
+			if (!extracItem.isEtcItem() && (targetItem.getItem().getCrystalType().ordinal() <= extracItem.getItem().getCrystalType().ordinal()))
 			{
 				player.sendPacket(ExShapeShiftingResult.FAILED);
 				player.removeRequest(ShapeShiftingItemRequest.class);
