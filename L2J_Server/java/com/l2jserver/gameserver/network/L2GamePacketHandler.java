@@ -1158,7 +1158,7 @@ public final class L2GamePacketHandler implements IPacketHandler<L2GameClient>, 
 								// msg = new RequestAskMemberShip();
 								break;
 							case 0x7a:
-								// @TODO: RequestAddExpandQuestAlarm
+								msg = new RequestAddExpandQuestAlarm();
 								break;
 							case 0x7b:
 								msg = new RequestVoteNew();
