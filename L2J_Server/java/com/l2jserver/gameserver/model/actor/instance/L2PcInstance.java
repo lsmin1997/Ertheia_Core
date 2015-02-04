@@ -96,6 +96,7 @@ import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.Sex;
 import com.l2jserver.gameserver.enums.ShortcutType;
 import com.l2jserver.gameserver.enums.ShotType;
+import com.l2jserver.gameserver.enums.SubclassInfoType;
 import com.l2jserver.gameserver.enums.Team;
 import com.l2jserver.gameserver.enums.UserInfoType;
 import com.l2jserver.gameserver.handler.IItemHandler;
@@ -2369,6 +2370,8 @@ public final class L2PcInstance extends L2Playable
 			{
 				getClan().broadcastToOnlineMembers(new PledgeShowMemberListUpdate(this));
 			}
+			
+			sendPacket(new ExSubjobInfo(this, SubclassInfoType.CLASS_CHANGED));
 			
 			// Add AutoGet skills and normal skills and/or learnByFS depending on configurations.
 			rewardSkills();
@@ -10522,7 +10525,6 @@ public final class L2PcInstance extends L2Playable
 			broadcastPacket(new SocialAction(getObjectId(), SocialAction.LEVEL_UP));
 			sendPacket(new SkillCoolTime(this));
 			sendPacket(new ExStorageMaxCount(this));
-			sendPacket(new ExSubjobInfo(this));
 			
 			EventDispatcher.getInstance().notifyEventAsync(new OnPlayerSubChange(this), this);
 			return true;

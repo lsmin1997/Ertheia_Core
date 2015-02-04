@@ -28,6 +28,7 @@ import com.l2jserver.gameserver.data.xml.impl.AdminData;
 import com.l2jserver.gameserver.data.xml.impl.BeautyShopData;
 import com.l2jserver.gameserver.data.xml.impl.SkillTreesData;
 import com.l2jserver.gameserver.enums.Race;
+import com.l2jserver.gameserver.enums.SubclassInfoType;
 import com.l2jserver.gameserver.instancemanager.CHSiegeManager;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
@@ -372,7 +373,7 @@ public class EnterWorld extends L2GameClientPacket
 		activeChar.broadcastUserInfo();
 		
 		// Send SubClass Info
-		activeChar.sendPacket(new ExSubjobInfo(activeChar));
+		activeChar.sendPacket(new ExSubjobInfo(activeChar, SubclassInfoType.NO_CHANGES));
 		
 		// Send Inventory Info
 		activeChar.sendPacket(new ExUserInfoInvenWeight(activeChar));
