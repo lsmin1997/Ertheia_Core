@@ -545,7 +545,6 @@ public final class Config
 	public static int BOAT_BROADCAST_RADIUS;
 	public static boolean ALLOW_CURSED_WEAPONS;
 	public static boolean ALLOW_MANOR;
-	public static boolean ALLOW_PET_WALKERS;
 	public static boolean SERVER_NEWS;
 	public static boolean ENABLE_COMMUNITY_BOARD;
 	public static String BBS_DEFAULT;
@@ -1822,7 +1821,6 @@ public final class Config
 			ALLOW_BOAT = General.getBoolean("AllowBoat", true);
 			BOAT_BROADCAST_RADIUS = General.getInt("BoatBroadcastRadius", 20000);
 			ALLOW_CURSED_WEAPONS = General.getBoolean("AllowCursedWeapons", true);
-			ALLOW_PET_WALKERS = General.getBoolean("AllowPetWalkers", true);
 			SERVER_NEWS = General.getBoolean("ShowServerNews", false);
 			ENABLE_COMMUNITY_BOARD = General.getBoolean("EnableCommunityBoard", true);
 			BBS_DEFAULT = General.getString("BBSDefault", "_bbshome");
@@ -3029,9 +3027,6 @@ public final class Config
 				break;
 			case "allowmanor":
 				ALLOW_MANOR = Boolean.parseBoolean(pValue);
-				break;
-			case "allowpetwalkers":
-				ALLOW_PET_WALKERS = Boolean.parseBoolean(pValue);
 				break;
 			case "enablecommunityboard":
 				ENABLE_COMMUNITY_BOARD = Boolean.parseBoolean(pValue);

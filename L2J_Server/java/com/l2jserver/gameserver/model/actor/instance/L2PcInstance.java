@@ -593,9 +593,6 @@ public final class L2PcInstance extends L2Playable
 	// Multisell
 	private PreparedListContainer _currentMultiSell = null;
 	
-	/** Bitmask used to keep track of one-time/newbie quest rewards */
-	private int _newbie;
-	
 	private boolean _noble = false;
 	private boolean _hero = false;
 	
@@ -927,8 +924,6 @@ public final class L2PcInstance extends L2Playable
 		player.setCreateDate(Calendar.getInstance());
 		// Set the base class ID to that of the actual class ID.
 		player.setBaseClass(player.getClassId());
-		// Kept for backwards compatibility.
-		player.setNewbie(1);
 		// Give 20 recommendations
 		player.setRecomLeft(20);
 		// Add the player in the characters table of the database
@@ -1223,23 +1218,6 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		return super.getLevelMod();
-	}
-	
-	/**
-	 * @return the _newbie rewards state of the L2PcInstance.
-	 */
-	public int getNewbie()
-	{
-		return _newbie;
-	}
-	
-	/**
-	 * Set the _newbie rewards state of the L2PcInstance.
-	 * @param newbieRewards The Identifier of the _newbie state
-	 */
-	public void setNewbie(int newbieRewards)
-	{
-		_newbie = newbieRewards;
 	}
 	
 	public void setBaseClass(int baseClass)
@@ -6875,7 +6853,7 @@ public final class L2PcInstance extends L2Playable
 			statement.setInt(31, getClanPrivileges().getBitmask());
 			statement.setInt(32, getWantsPeace());
 			statement.setInt(33, getBaseClass());
-			statement.setInt(34, getNewbie());
+			statement.setInt(34, 0); // Unused
 			statement.setInt(35, isNoble() ? 1 : 0);
 			statement.setLong(36, 0);
 			statement.setDate(37, new Date(getCreateDate().getTimeInMillis()));
@@ -6933,7 +6911,6 @@ public final class L2PcInstance extends L2Playable
 					player.setPvpKills(rset.getInt("pvpkills"));
 					player.setPkKills(rset.getInt("pkkills"));
 					player.setOnlineTime(rset.getLong("onlinetime"));
-					player.setNewbie(rset.getInt("newbie"));
 					player.setNoble(rset.getInt("nobless") == 1);
 					
 					player.setClanJoinExpiryTime(rset.getLong("clan_join_expiry_time"));
@@ -7500,7 +7477,7 @@ public final class L2PcInstance extends L2Playable
 			}
 			
 			statement.setLong(35, totalOnlineTime);
-			statement.setInt(36, getNewbie());
+			statement.setInt(36, 0); // Unused
 			statement.setInt(37, isNoble() ? 1 : 0);
 			statement.setInt(38, getPowerGrade());
 			statement.setInt(39, getPledgeType());
