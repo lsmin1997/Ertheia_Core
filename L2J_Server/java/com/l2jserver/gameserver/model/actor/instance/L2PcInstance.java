@@ -84,6 +84,7 @@ import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.SkillData;
 import com.l2jserver.gameserver.enums.CastleSide;
 import com.l2jserver.gameserver.enums.CategoryType;
+import com.l2jserver.gameserver.enums.ChatType;
 import com.l2jserver.gameserver.enums.HtmlActionScope;
 import com.l2jserver.gameserver.enums.IllegalActionPunishmentType;
 import com.l2jserver.gameserver.enums.InstanceType;
@@ -900,6 +901,8 @@ public final class L2PcInstance extends L2Playable
 	private String _lastPetitionGmName = null;
 	
 	private boolean _hasCharmOfCourage = false;
+	
+	private final Set<Integer> _whispepers = ConcurrentHashMap.newKeySet();
 	
 	/**
 	 * Create a new L2PcInstance and add it in the characters table of the database.<br>
@@ -11054,11 +11057,11 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	public void broadcastSnoop(int type, String name, String _text)
+	public void broadcastSnoop(ChatType type, String name, String _text)
 	{
 		if (!_snoopListener.isEmpty())
 		{
-			Snoop sn = new Snoop(getObjectId(), getName(), type, name, _text);
+			final Snoop sn = new Snoop(getObjectId(), getName(), type, name, _text);
 			
 			for (L2PcInstance pci : _snoopListener)
 			{
@@ -14733,5 +14736,14 @@ public final class L2PcInstance extends L2Playable
 			}
 		}
 		return _lastCommissionInfos;
+	}
+	
+	/**
+	 * Gets the whisperers.
+	 * @return the whisperers
+	 */
+	public Set<Integer> getWhisperers()
+	{
+		return _whispepers;
 	}
 }
