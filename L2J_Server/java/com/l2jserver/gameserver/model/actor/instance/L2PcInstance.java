@@ -902,7 +902,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private boolean _hasCharmOfCourage = false;
 	
-	private final Set<Integer> _whispepers = ConcurrentHashMap.newKeySet();
+	private final Set<Integer> _whisperers = ConcurrentHashMap.newKeySet();
 	
 	/**
 	 * Create a new L2PcInstance and add it in the characters table of the database.<br>
@@ -14744,6 +14744,6 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public Set<Integer> getWhisperers()
 	{
-		return _whispepers;
+		return _whisperers;
 	}
 }
