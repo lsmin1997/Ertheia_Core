@@ -47,13 +47,13 @@
 		</mapper>
 	</pathconvert>
 
-	<target name="init" depends="clean,checkRequirements,getChangelogDateVersion" description="Create the output directories.">
+	<target name="init" depends="clean,checkRequirements" description="Create the output directories.">
 		<mkdir dir="${build}" />
 		<mkdir dir="${build.classes}" />
 	</target>
 
 	<target name="compile" depends="init" description="Compile the source.">
-		<javac destdir="${build.classes}" compiler="javac1.7" debug="true" debuglevel="lines,vars,source" includeantruntime="false" source="1.7" target="1.7">
+		<javac destdir="${build.classes}" compiler="javac1.8" debug="true" debuglevel="lines,vars,source" includeantruntime="false" source="1.8" target="1.8">
 			<src path="${src}" />
 			<classpath refid="classpath" />
 		</javac>
@@ -109,7 +109,12 @@
 		<fixcrlf srcdir="${build.dist.game}" eol="lf" eof="remove" includes="**/*.sh" />
 		<fixcrlf srcdir="${build.dist.login}" eol="crlf" eof="remove" includes="**/*.bat" />
 		<fixcrlf srcdir="${build.dist.login}" eol="lf" eof="remove" includes="**/*.sh" />
-		<zip destfile="${build}/L2J_Server.zip" basedir="${build.dist}" />
+
+		<tstamp>
+			<format property="build.date" pattern="yyyy-MM-dd" />
+		</tstamp>
+
+		<zip destfile="${build}/L2J_Server_${build.date}.zip" basedir="${build.dist}" />
 	</target>
 
 	<target name="clean" description="Remove the output directories">
@@ -124,18 +129,7 @@
 				</not>
 			</condition>
 		</fail>
-		<available classname="java.lang.AutoCloseable" property="JDK7.present" />
-		<fail unless="JDK7.present" message="Java 1.7 is required. But your version is Java ${ant.java.version} and probably JDK is not installed." />
-	</target>
-
-	<target name="getChangelogDateVersion" description="Get Changelog, Date, Version">
-		<exec dir="." executable="svn" outputproperty="l2j.changelog">
-			<arg value="log" />
-			<arg value="--stop-on-copy" />
-		</exec>
-		<tstamp>
-			<format property="build.tstamp" pattern="dd/MM/yyyy HH:mm" />
-		</tstamp>
-		<exec dir="." executable="svnversion" outputproperty="l2j.version" />
+		<available classname="java.util.stream.Stream" property="JDK8.present" />
+		<fail unless="JDK8.present" message="Java 1.8 is required. But your version is Java ${ant.java.version} and probably JDK is not installed." />
 	</target>
 </project>
