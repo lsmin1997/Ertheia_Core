@@ -61,8 +61,8 @@ public class AutoSpawnHandler
 	
 	private AutoSpawnHandler()
 	{
-		_registeredSpawns = new FastMap<Integer, AutoSpawnInstance>();
-		_runningSpawns = new FastMap<Integer, ScheduledFuture<?>>();
+		_registeredSpawns = new FastMap<>();
+		_runningSpawns = new FastMap<>();
 		
 		restoreSpawnData();
 	}
@@ -97,8 +97,8 @@ public class AutoSpawnHandler
 		}
 		
 		// create clean list
-		_registeredSpawns = new FastMap<Integer, AutoSpawnInstance>();
-		_runningSpawns = new FastMap<Integer, ScheduledFuture<?>>();
+		_registeredSpawns = new FastMap<>();
+		_runningSpawns = new FastMap<>();
 		
 		// load
 		restoreSpawnData();
@@ -391,7 +391,7 @@ public class AutoSpawnHandler
 	
 	public Map<Integer, AutoSpawnInstance> getAutoSpawnInstances(int npcId)
 	{
-		Map<Integer, AutoSpawnInstance> spawnInstList = new FastMap<Integer, AutoSpawnInstance>();
+		Map<Integer, AutoSpawnInstance> spawnInstList = new FastMap<>();
 		
 		for (AutoSpawnInstance spawnInst : _registeredSpawns.values())
 		{
@@ -642,9 +642,9 @@ public class AutoSpawnHandler
 		
 		protected int _lastLocIndex = -1;
 		
-		private final List<L2Npc> _npcList = new FastList<L2Npc>();
+		private final List<L2Npc> _npcList = new FastList<>();
 		
-		private final List<Location> _locList = new FastList<Location>();
+		private final List<Location> _locList = new FastList<>();
 		
 		private boolean _spawnActive;
 		
@@ -724,7 +724,7 @@ public class AutoSpawnHandler
 		
 		public L2Spawn[] getSpawns()
 		{
-			List<L2Spawn> npcSpawns = new FastList<L2Spawn>();
+			List<L2Spawn> npcSpawns = new FastList<>();
 			
 			for (L2Npc npcInst : _npcList)
 			{

@@ -170,7 +170,7 @@ public class FortManager implements InstanceListManager
 	{
 		if (_forts == null)
 		{
-			_forts = new FastList<Fort>();
+			_forts = new FastList<>();
 		}
 		return _forts;
 	}

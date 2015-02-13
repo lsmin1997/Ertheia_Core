@@ -184,10 +184,8 @@ public class SiegeManager
 	// Method - Private
 	private final void load()
 	{
-		InputStream is = null;
-		try
+		try (InputStream is = new FileInputStream(new File(Config.SIEGE_CONFIGURATION_FILE)))
 		{
-			is = new FileInputStream(new File(Config.SIEGE_CONFIGURATION_FILE));
 			Properties siegeSettings = new Properties();
 			siegeSettings.load(is);
 			
@@ -201,13 +199,13 @@ public class SiegeManager
 			_bloodAllianceReward = Integer.decode(siegeSettings.getProperty("BloodAllianceReward", "0"));
 			
 			// Siege spawns settings
-			_controlTowerSpawnList = new TIntObjectHashMap<FastList<SiegeSpawn>>();
-			_artefactSpawnList = new TIntObjectHashMap<FastList<SiegeSpawn>>();
-			_flameTowerSpawnList = new TIntObjectHashMap<FastList<SiegeSpawn>>();
+			_controlTowerSpawnList = new TIntObjectHashMap<>();
+			_artefactSpawnList = new TIntObjectHashMap<>();
+			_flameTowerSpawnList = new TIntObjectHashMap<>();
 			
 			for (Castle castle : CastleManager.getInstance().getCastles())
 			{
-				FastList<SiegeSpawn> _controlTowersSpawns = new FastList<SiegeSpawn>();
+				FastList<SiegeSpawn> _controlTowersSpawns = new FastList<>();
 				
 				for (int i = 1; i < 0xFF; i++)
 				{
@@ -236,7 +234,7 @@ public class SiegeManager
 					}
 				}
 				
-				FastList<SiegeSpawn> _flameTowersSpawns = new FastList<SiegeSpawn>();
+				FastList<SiegeSpawn> _flameTowersSpawns = new FastList<>();
 				
 				for (int i = 1; i < 0xFF; i++)
 				{
@@ -265,7 +263,7 @@ public class SiegeManager
 					}
 				}
 				
-				FastList<SiegeSpawn> _artefactSpawns = new FastList<SiegeSpawn>();
+				FastList<SiegeSpawn> _artefactSpawns = new FastList<>();
 				
 				for (int i = 1; i < 0xFF; i++)
 				{
@@ -306,16 +304,6 @@ public class SiegeManager
 		{
 			// _initialized = false;
 			_log.log(Level.WARNING, "Error while loading siege data: " + e.getMessage(), e);
-		}
-		finally
-		{
-			try
-			{
-				is.close();
-			}
-			catch (Exception e)
-			{
-			}
 		}
 	}
 	
@@ -390,7 +378,7 @@ public class SiegeManager
 	
 	public final List<Siege> getSieges()
 	{
-		FastList<Siege> sieges = new FastList<Siege>();
+		FastList<Siege> sieges = new FastList<>();
 		for (Castle castle : CastleManager.getInstance().getCastles())
 		{
 			sieges.add(castle.getSiege());

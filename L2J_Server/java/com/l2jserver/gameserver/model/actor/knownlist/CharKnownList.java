@@ -206,7 +206,7 @@ public class CharKnownList extends ObjectKnownList
 	
 	public Collection<L2Character> getKnownCharacters()
 	{
-		FastList<L2Character> result = new FastList<L2Character>();
+		FastList<L2Character> result = new FastList<>();
 		
 		final Collection<L2Object> objs = getKnownObjects().values();
 		// synchronized (getKnownObjects())
@@ -224,7 +224,7 @@ public class CharKnownList extends ObjectKnownList
 	
 	public Collection<L2Character> getKnownCharactersInRadius(long radius)
 	{
-		FastList<L2Character> result = new FastList<L2Character>();
+		FastList<L2Character> result = new FastList<>();
 		
 		final Collection<L2Object> objs = getKnownObjects().values();
 		// synchronized (getKnownObjects())
@@ -272,7 +272,7 @@ public class CharKnownList extends ObjectKnownList
 	
 	public final Collection<L2PcInstance> getKnownPlayersInRadius(long radius)
 	{
-		FastList<L2PcInstance> result = new FastList<L2PcInstance>();
+		FastList<L2PcInstance> result = new FastList<>();
 		
 		final Collection<L2PcInstance> plrs = getKnownPlayers().values();
 		// synchronized (getKnownPlayers())

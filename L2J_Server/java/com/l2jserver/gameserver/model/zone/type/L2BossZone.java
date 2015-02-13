@@ -54,13 +54,13 @@ public class L2BossZone extends L2ZoneType
 		0,
 		0
 	};
-	protected L2FastList<L2Character> _raidList = new L2FastList<L2Character>();
+	protected L2FastList<L2Character> _raidList = new L2FastList<>();
 	
 	public L2BossZone(int id)
 	{
 		super(id);
-		_playerAllowedReEntryTimes = new FastMap<Integer, Long>();
-		_playersAllowed = new L2FastList<Integer>();
+		_playerAllowedReEntryTimes = new FastMap<>();
+		_playersAllowed = new L2FastList<>();
 		_oustLoc = new int[3];
 		GrandBossManager.getInstance().addZone(this);
 	}

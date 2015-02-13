@@ -175,10 +175,8 @@ public class FortSiegeManager
 	// Method - Private
 	private final void load()
 	{
-		InputStream is = null;
-		try
+		try (InputStream is = new FileInputStream(new File(Config.FORTSIEGE_CONFIGURATION_FILE)))
 		{
-			is = new FileInputStream(new File(Config.FORTSIEGE_CONFIGURATION_FILE));
 			Properties siegeSettings = new Properties();
 			siegeSettings.load(is);
 			
@@ -191,13 +189,13 @@ public class FortSiegeManager
 			_suspiciousMerchantRespawnDelay = Integer.decode(siegeSettings.getProperty("SuspiciousMerchantRespawnDelay", "180"));
 			
 			// Siege spawns settings
-			_commanderSpawnList = new FastMap<Integer, FastList<SiegeSpawn>>();
-			_flagList = new FastMap<Integer, FastList<CombatFlag>>();
+			_commanderSpawnList = new FastMap<>();
+			_flagList = new FastMap<>();
 			
 			for (Fort fort : FortManager.getInstance().getForts())
 			{
-				FastList<SiegeSpawn> _commanderSpawns = new FastList<SiegeSpawn>();
-				FastList<CombatFlag> _flagSpawns = new FastList<CombatFlag>();
+				FastList<SiegeSpawn> _commanderSpawns = new FastList<>();
+				FastList<CombatFlag> _flagSpawns = new FastList<>();
 				for (int i = 1; i < 5; i++)
 				{
 					String _spawnParams = siegeSettings.getProperty(fort.getName().replace(" ", "") + "Commander" + i, "");
@@ -257,42 +255,18 @@ public class FortSiegeManager
 			// _initialized = false;
 			_log.log(Level.WARNING, "Error while loading fortsiege data." + e.getMessage(), e);
 		}
-		finally
-		{
-			try
-			{
-				is.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
 	// =========================================================
 	// Property - Public
 	public final FastList<SiegeSpawn> getCommanderSpawnList(int _fortId)
 	{
-		if (_commanderSpawnList.containsKey(_fortId))
-		{
-			return _commanderSpawnList.get(_fortId);
-		}
-		else
-		{
-			return null;
-		}
+		return _commanderSpawnList.get(_fortId);
 	}
 	
 	public final FastList<CombatFlag> getFlagList(int _fortId)
 	{
-		if (_flagList.containsKey(_fortId))
-		{
-			return _flagList.get(_fortId);
-		}
-		else
-		{
-			return null;
-		}
+		return _flagList.get(_fortId);
 	}
 	
 	public final int getAttackerMaxClans()
@@ -346,7 +320,7 @@ public class FortSiegeManager
 	{
 		if (_sieges == null)
 		{
-			_sieges = new FastList<FortSiege>();
+			_sieges = new FastList<>();
 		}
 		return _sieges;
 	}
@@ -355,7 +329,7 @@ public class FortSiegeManager
 	{
 		if (_sieges == null)
 		{
-			_sieges = new FastList<FortSiege>();
+			_sieges = new FastList<>();
 		}
 		_sieges.add(fortSiege);
 	}

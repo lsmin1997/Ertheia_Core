@@ -199,11 +199,8 @@ public class L2SignsPriestInstance extends L2Npc
 						showChatWindow(player, SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_33_dawn_no.htm");
 						break;
 					}
-					else
-					{
-						showChatWindow(player, SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_33_dawn.htm");
-						break;
-					}
+					showChatWindow(player, SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_33_dawn.htm");
+					break;
 				case 3: // Join Cabal Intro 1
 				case 8: // Festival of Darkness Intro - SevenSigns x [0]1
 					showChatWindow(player, val, SevenSigns.getCabalShortName(cabal), false);
@@ -442,151 +439,148 @@ public class L2SignsPriestInstance extends L2Npc
 						player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CONTRIB_SCORE_EXCEEDED));
 						break;
 					}
-					else
+					long redContribCount = 0;
+					long greenContribCount = 0;
+					long blueContribCount = 0;
+					
+					String contribStoneColor = null;
+					String stoneColorContr = null;
+					
+					long stoneCountContr = 0;
+					int stoneIdContr = 0;
+					
+					switch (stoneType)
 					{
-						long redContribCount = 0;
-						long greenContribCount = 0;
-						long blueContribCount = 0;
-						
-						String contribStoneColor = null;
-						String stoneColorContr = null;
-						
-						long stoneCountContr = 0;
-						int stoneIdContr = 0;
-						
-						switch (stoneType)
-						{
-							case 1:
-								contribStoneColor = "Blue";
-								stoneColorContr = "blue";
-								stoneIdContr = SevenSigns.SEAL_STONE_BLUE_ID;
-								stoneCountContr = blueStoneCount;
-								break;
-							case 2:
-								contribStoneColor = "Green";
-								stoneColorContr = "green";
-								stoneIdContr = SevenSigns.SEAL_STONE_GREEN_ID;
-								stoneCountContr = greenStoneCount;
-								break;
-							case 3:
-								contribStoneColor = "Red";
-								stoneColorContr = "red";
-								stoneIdContr = SevenSigns.SEAL_STONE_RED_ID;
-								stoneCountContr = redStoneCount;
-								break;
-							case 4:
-								long tempContribScore = contribScore;
-								redContribCount = (Config.ALT_MAXIMUM_PLAYER_CONTRIB - tempContribScore) / SevenSigns.RED_CONTRIB_POINTS;
-								if (redContribCount > redStoneCount)
+						case 1:
+							contribStoneColor = "Blue";
+							stoneColorContr = "blue";
+							stoneIdContr = SevenSigns.SEAL_STONE_BLUE_ID;
+							stoneCountContr = blueStoneCount;
+							break;
+						case 2:
+							contribStoneColor = "Green";
+							stoneColorContr = "green";
+							stoneIdContr = SevenSigns.SEAL_STONE_GREEN_ID;
+							stoneCountContr = greenStoneCount;
+							break;
+						case 3:
+							contribStoneColor = "Red";
+							stoneColorContr = "red";
+							stoneIdContr = SevenSigns.SEAL_STONE_RED_ID;
+							stoneCountContr = redStoneCount;
+							break;
+						case 4:
+							long tempContribScore = contribScore;
+							redContribCount = (Config.ALT_MAXIMUM_PLAYER_CONTRIB - tempContribScore) / SevenSigns.RED_CONTRIB_POINTS;
+							if (redContribCount > redStoneCount)
+							{
+								redContribCount = redStoneCount;
+							}
+							
+							tempContribScore += redContribCount * SevenSigns.RED_CONTRIB_POINTS;
+							greenContribCount = (Config.ALT_MAXIMUM_PLAYER_CONTRIB - tempContribScore) / SevenSigns.GREEN_CONTRIB_POINTS;
+							if (greenContribCount > greenStoneCount)
+							{
+								greenContribCount = greenStoneCount;
+							}
+							
+							tempContribScore += greenContribCount * SevenSigns.GREEN_CONTRIB_POINTS;
+							blueContribCount = (Config.ALT_MAXIMUM_PLAYER_CONTRIB - tempContribScore) / SevenSigns.BLUE_CONTRIB_POINTS;
+							if (blueContribCount > blueStoneCount)
+							{
+								blueContribCount = blueStoneCount;
+							}
+							
+							if (redContribCount > 0)
+							{
+								if (player.destroyItemByItemId("SevenSigns", SevenSigns.SEAL_STONE_RED_ID, redContribCount, this, false))
 								{
-									redContribCount = redStoneCount;
+									stonesFound = true;
+									SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
+									msg.addItemName(SevenSigns.SEAL_STONE_RED_ID);
+									msg.addItemNumber(redContribCount);
+									player.sendPacket(msg);
 								}
-								
-								tempContribScore += redContribCount * SevenSigns.RED_CONTRIB_POINTS;
-								greenContribCount = (Config.ALT_MAXIMUM_PLAYER_CONTRIB - tempContribScore) / SevenSigns.GREEN_CONTRIB_POINTS;
-								if (greenContribCount > greenStoneCount)
+							}
+							if (greenContribCount > 0)
+							{
+								if (player.destroyItemByItemId("SevenSigns", SevenSigns.SEAL_STONE_GREEN_ID, greenContribCount, this, false))
 								{
-									greenContribCount = greenStoneCount;
+									stonesFound = true;
+									SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
+									msg.addItemName(SevenSigns.SEAL_STONE_GREEN_ID);
+									msg.addItemNumber(greenContribCount);
+									player.sendPacket(msg);
 								}
-								
-								tempContribScore += greenContribCount * SevenSigns.GREEN_CONTRIB_POINTS;
-								blueContribCount = (Config.ALT_MAXIMUM_PLAYER_CONTRIB - tempContribScore) / SevenSigns.BLUE_CONTRIB_POINTS;
-								if (blueContribCount > blueStoneCount)
+							}
+							if (blueContribCount > 0)
+							{
+								if (player.destroyItemByItemId("SevenSigns", SevenSigns.SEAL_STONE_BLUE_ID, blueContribCount, this, false))
 								{
-									blueContribCount = blueStoneCount;
+									stonesFound = true;
+									SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
+									msg.addItemName(SevenSigns.SEAL_STONE_BLUE_ID);
+									msg.addItemNumber(blueContribCount);
+									player.sendPacket(msg);
 								}
-								
-								if (redContribCount > 0)
+							}
+							
+							if (!stonesFound)
+							{
+								if (this instanceof L2DawnPriestInstance)
 								{
-									if (player.destroyItemByItemId("SevenSigns", SevenSigns.SEAL_STONE_RED_ID, redContribCount, this, false))
-									{
-										stonesFound = true;
-										SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
-										msg.addItemName(SevenSigns.SEAL_STONE_RED_ID);
-										msg.addItemNumber(redContribCount);
-										player.sendPacket(msg);
-									}
-								}
-								if (greenContribCount > 0)
-								{
-									if (player.destroyItemByItemId("SevenSigns", SevenSigns.SEAL_STONE_GREEN_ID, greenContribCount, this, false))
-									{
-										stonesFound = true;
-										SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
-										msg.addItemName(SevenSigns.SEAL_STONE_GREEN_ID);
-										msg.addItemNumber(greenContribCount);
-										player.sendPacket(msg);
-									}
-								}
-								if (blueContribCount > 0)
-								{
-									if (player.destroyItemByItemId("SevenSigns", SevenSigns.SEAL_STONE_BLUE_ID, blueContribCount, this, false))
-									{
-										stonesFound = true;
-										SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
-										msg.addItemName(SevenSigns.SEAL_STONE_BLUE_ID);
-										msg.addItemNumber(blueContribCount);
-										player.sendPacket(msg);
-									}
-								}
-								
-								if (!stonesFound)
-								{
-									if (this instanceof L2DawnPriestInstance)
-									{
-										showChatWindow(player, val, "dawn_no_stones", false);
-									}
-									else
-									{
-										showChatWindow(player, val, "dusk_no_stones", false);
-									}
+									showChatWindow(player, val, "dawn_no_stones", false);
 								}
 								else
 								{
-									contribScore = SevenSigns.getInstance().addPlayerStoneContrib(player.getObjectId(), blueContribCount, greenContribCount, redContribCount);
-									sm = SystemMessage.getSystemMessage(SystemMessageId.CONTRIB_SCORE_INCREASED_S1);
-									sm.addItemNumber(contribScore);
-									player.sendPacket(sm);
-									
-									if (this instanceof L2DawnPriestInstance)
-									{
-										showChatWindow(player, 6, "dawn", false);
-									}
-									else
-									{
-										showChatWindow(player, 6, "dusk", false);
-									}
+									showChatWindow(player, val, "dusk_no_stones", false);
 								}
-								return;
-						}
+							}
+							else
+							{
+								contribScore = SevenSigns.getInstance().addPlayerStoneContrib(player.getObjectId(), blueContribCount, greenContribCount, redContribCount);
+								sm = SystemMessage.getSystemMessage(SystemMessageId.CONTRIB_SCORE_INCREASED_S1);
+								sm.addItemNumber(contribScore);
+								player.sendPacket(sm);
+								
+								if (this instanceof L2DawnPriestInstance)
+								{
+									showChatWindow(player, 6, "dawn", false);
+								}
+								else
+								{
+									showChatWindow(player, 6, "dusk", false);
+								}
+							}
+							return;
+					}
+					
+					if (this instanceof L2DawnPriestInstance)
+					{
+						path = SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_6_dawn_contribute.htm";
+					}
+					else
+					{
+						path = SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_6_dusk_contribute.htm";
+					}
+					
+					String contentContr = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), path);
+					
+					if (contentContr != null)
+					{
+						contentContr = contentContr.replaceAll("%contribStoneColor%", contribStoneColor);
+						contentContr = contentContr.replaceAll("%stoneColor%", stoneColorContr);
+						contentContr = contentContr.replaceAll("%stoneCount%", String.valueOf(stoneCountContr));
+						contentContr = contentContr.replaceAll("%stoneItemId%", String.valueOf(stoneIdContr));
+						contentContr = contentContr.replaceAll("%objectId%", String.valueOf(getObjectId()));
 						
-						if (this instanceof L2DawnPriestInstance)
-						{
-							path = SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_6_dawn_contribute.htm";
-						}
-						else
-						{
-							path = SevenSigns.SEVEN_SIGNS_HTML_PATH + "signs_6_dusk_contribute.htm";
-						}
-						
-						String contentContr = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), path);
-						
-						if (contentContr != null)
-						{
-							contentContr = contentContr.replaceAll("%contribStoneColor%", contribStoneColor);
-							contentContr = contentContr.replaceAll("%stoneColor%", stoneColorContr);
-							contentContr = contentContr.replaceAll("%stoneCount%", String.valueOf(stoneCountContr));
-							contentContr = contentContr.replaceAll("%stoneItemId%", String.valueOf(stoneIdContr));
-							contentContr = contentContr.replaceAll("%objectId%", String.valueOf(getObjectId()));
-							
-							NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-							html.setHtml(contentContr);
-							player.sendPacket(html);
-						}
-						else
-						{
-							_log.warning("Problem with HTML text " + path);
-						}
+						NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+						html.setHtml(contentContr);
+						player.sendPacket(html);
+					}
+					else
+					{
+						_log.warning("Problem with HTML text " + path);
 					}
 					break;
 				case 7: // Exchange Ancient Adena for Adena - SevenSigns 7 xxxxxxx

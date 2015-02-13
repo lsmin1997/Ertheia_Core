@@ -111,7 +111,7 @@ public abstract class Inventory extends ItemContainer
 		ChangeRecorder(Inventory inventory)
 		{
 			_inventory = inventory;
-			_changed = new FastList<L2ItemInstance>();
+			_changed = new FastList<>();
 			_inventory.addPaperdollListener(this);
 		}
 		
@@ -794,7 +794,7 @@ public abstract class Inventory extends ItemContainer
 	protected Inventory()
 	{
 		_paperdoll = new L2ItemInstance[PAPERDOLL_TOTALSLOTS];
-		_paperdollListeners = new ArrayList<PaperdollListener>();
+		_paperdollListeners = new ArrayList<>();
 		
 		if (this instanceof PcInventory)
 		{
@@ -1029,10 +1029,7 @@ public abstract class Inventory extends ItemContainer
 			{
 				return item.getAugmentation().getAugmentationId();
 			}
-			else
-			{
-				return 0;
-			}
+			return 0;
 		}
 		return 0;
 	}

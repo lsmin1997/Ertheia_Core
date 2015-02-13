@@ -39,7 +39,7 @@ public class DimensionalRift
 {
 	protected byte _type;
 	protected L2Party _party;
-	protected FastList<Byte> _completedRooms = new FastList<Byte>();
+	protected FastList<Byte> _completedRooms = new FastList<>();
 	private static final long seconds_5 = 5000L;
 	// private static final int MILLISECONDS_IN_MINUTE = 60000;
 	protected byte jumps_current = 0;
@@ -53,8 +53,8 @@ public class DimensionalRift
 	
 	protected byte _choosenRoom = -1;
 	private boolean _hasJumped = false;
-	protected FastList<L2PcInstance> deadPlayers = new FastList<L2PcInstance>();
-	protected FastList<L2PcInstance> revivedInWaitingRoom = new FastList<L2PcInstance>();
+	protected FastList<L2PcInstance> deadPlayers = new FastList<>();
+	protected FastList<L2PcInstance> revivedInWaitingRoom = new FastList<>();
 	private boolean isBossRoom = false;
 	
 	// private final static Log _log = LogFactory.getLog(DimensionalRift.class.getName());
@@ -255,10 +255,8 @@ public class DimensionalRift
 			DimensionalRiftManager.getInstance().showHtmlFile(player, "data/html/seven_signs/rift/AlreadyTeleported.htm", npc);
 			return;
 		}
-		else
-		{
-			_hasJumped = true;
-		}
+		
+		_hasJumped = true;
 		
 		DimensionalRiftManager.getInstance().getRoom(_type, _choosenRoom).unspawn().setPartyInside(false);
 		_completedRooms.add(_choosenRoom);
@@ -402,15 +400,11 @@ public class DimensionalRift
 	private long calcTimeToNextJump()
 	{
 		int time = Rnd.get(Config.RIFT_AUTO_JUMPS_TIME_MIN, Config.RIFT_AUTO_JUMPS_TIME_MAX) * 1000;
-		
 		if (isBossRoom)
 		{
 			return (long) (time * Config.RIFT_BOSS_ROOM_TIME_MUTIPLY);
 		}
-		else
-		{
-			return time;
-		}
+		return time;
 	}
 	
 	public void memberDead(L2PcInstance player)
@@ -484,9 +478,6 @@ public class DimensionalRift
 		{
 			return (byte) Config.RIFT_MAX_JUMPS;
 		}
-		else
-		{
-			return 4;
-		}
+		return 4;
 	}
 }

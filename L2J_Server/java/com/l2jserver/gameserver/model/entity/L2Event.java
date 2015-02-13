@@ -47,13 +47,13 @@ public class L2Event
 	protected static final Logger _log = Logger.getLogger(L2Event.class.getName());
 	public static String eventName = "";
 	public static int teamsNumber = 0;
-	public static final HashMap<Integer, String> names = new HashMap<Integer, String>();
-	public static final LinkedList<String> participatingPlayers = new LinkedList<String>(); // TODO store by objid
-	public static final HashMap<Integer, LinkedList<String>> players = new HashMap<Integer, LinkedList<String>>();
+	public static final HashMap<Integer, String> names = new HashMap<>();
+	public static final LinkedList<String> participatingPlayers = new LinkedList<>(); // TODO store by objid
+	public static final HashMap<Integer, LinkedList<String>> players = new HashMap<>();
 	public static int id = 12760;
-	public static final LinkedList<String> npcs = new LinkedList<String>();
+	public static final LinkedList<String> npcs = new LinkedList<>();
 	public static boolean active = false;
-	public static final HashMap<String, EventData> connectionLossData = new HashMap<String, EventData>();
+	public static final HashMap<String, EventData> connectionLossData = new HashMap<>();
 	
 	public static int getTeamOfPlayer(String name)
 	{
@@ -77,7 +77,7 @@ public class L2Event
 		String[] killers = new String[N];
 		String playerTemp = "";
 		int kills = 0;
-		LinkedList<String> killersTemp = new LinkedList<String>();
+		LinkedList<String> killersTemp = new LinkedList<>();
 		
 		for (int k = 0; k < N; k++)
 		{
@@ -140,10 +140,11 @@ public class L2Event
 			NpcHtmlMessage adminReply = new NpcHtmlMessage(5);
 			
 			DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("data/events/" + eventName)));
-			BufferedReader inbr = new BufferedReader(new InputStreamReader(in));
-			
 			final StringBuilder replyMSG = new StringBuilder();
-			StringUtil.append(replyMSG, "<html><body>" + "<center><font color=\"LEVEL\">", eventName, "</font><font color=\"FF0000\"> bY ", inbr.readLine(), "</font></center><br>" + "<br>", inbr.readLine());
+			try (BufferedReader inbr = new BufferedReader(new InputStreamReader(in)))
+			{
+				StringUtil.append(replyMSG, "<html><body>" + "<center><font color=\"LEVEL\">", eventName, "</font><font color=\"FF0000\"> bY ", inbr.readLine(), "</font></center><br>" + "<br>", inbr.readLine());
+			}
 			
 			if (L2Event.participatingPlayers.contains(player.getName()))
 			{

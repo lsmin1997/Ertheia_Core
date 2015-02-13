@@ -81,18 +81,12 @@ public class L2SiegeFlagInstance extends L2Npc
 		{
 			throw new NullPointerException(getClass().getSimpleName() + ": Initialization failed.");
 		}
-		else
+		L2SiegeClan sc = _siege.getAttackerClan(_clan);
+		if (sc == null)
 		{
-			L2SiegeClan sc = _siege.getAttackerClan(_clan);
-			if (sc == null)
-			{
-				throw new NullPointerException(getClass().getSimpleName() + ": Cannot find siege clan.");
-			}
-			else
-			{
-				sc.addFlag(this);
-			}
+			throw new NullPointerException(getClass().getSimpleName() + ": Cannot find siege clan.");
 		}
+		sc.addFlag(this);
 		_isAdvanced = advanced;
 		getStatus();
 		setIsInvul(false);

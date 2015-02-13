@@ -78,7 +78,7 @@ public class OlympiadManager
 			{
 				if (result == null)
 				{
-					result = new FastList<List<Integer>>();
+					result = new FastList<>();
 				}
 				
 				result.add(classList.getValue());
@@ -283,7 +283,7 @@ public class OlympiadManager
 				}
 				
 				int teamPoints = 0;
-				ArrayList<Integer> team = new ArrayList<Integer>(party.getMemberCount());
+				ArrayList<Integer> team = new ArrayList<>(party.getMemberCount());
 				for (L2PcInstance noble : party.getPartyMembers())
 				{
 					if (!checkNoble(noble, player))

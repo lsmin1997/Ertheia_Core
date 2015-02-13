@@ -451,10 +451,7 @@ public final class ItemAuction
 				{
 					return false;
 				}
-				else
-				{
-					break;
-				}
+				break;
 		}
 		
 		final int playerObjId = player.getObjectId();

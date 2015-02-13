@@ -201,27 +201,25 @@ public class L2Npc extends L2Character
 		{
 			return true;
 		}
+		
+		// _spiritshotcharged = false;
+		if (_spsrecharged)
+		{
+			_spiritshotamount = getSpiritShot();
+			_spsrecharged = false;
+		}
+		else if (_spiritshotamount > 0)
+		{
+			if (Rnd.get(100) <= getSpiritShotChance())
+			{
+				_spiritshotamount = _spiritshotamount - 1;
+				Broadcast.toSelfAndKnownPlayersInRadius(this, new MagicSkillUse(this, this, 2061, 1, 0, 0), 360000);
+				_spiritshotcharged = true;
+			}
+		}
 		else
 		{
-			// _spiritshotcharged = false;
-			if (_spsrecharged)
-			{
-				_spiritshotamount = getSpiritShot();
-				_spsrecharged = false;
-			}
-			else if (_spiritshotamount > 0)
-			{
-				if (Rnd.get(100) <= getSpiritShotChance())
-				{
-					_spiritshotamount = _spiritshotamount - 1;
-					Broadcast.toSelfAndKnownPlayersInRadius(this, new MagicSkillUse(this, this, 2061, 1, 0, 0), 360000);
-					_spiritshotcharged = true;
-				}
-			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 		
 		return _spiritshotcharged;
@@ -309,37 +307,17 @@ public class L2Npc extends L2Character
 	
 	public boolean hasLSkill()
 	{
-		L2NpcAIData AI = getTemplate().getAIDataStatic();
-		
-		if (AI.getLongRangeSkill() == 0)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-		
+		return getTemplate().getAIDataStatic().getLongRangeSkill() != 0;
 	}
 	
 	public boolean hasSSkill()
 	{
-		L2NpcAIData AI = getTemplate().getAIDataStatic();
-		
-		if (AI.getShortRangeSkill() == 0)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-		
+		return getTemplate().getAIDataStatic().getShortRangeSkill() != 0;
 	}
 	
 	public FastList<L2Skill> getLrangeSkill()
 	{
-		FastList<L2Skill> skilldata = new FastList<L2Skill>();
+		FastList<L2Skill> skilldata = new FastList<>();
 		boolean hasLrange = false;
 		L2NpcAIData AI = getTemplate().getAIDataStatic();
 		
@@ -405,7 +383,7 @@ public class L2Npc extends L2Character
 	
 	public FastList<L2Skill> getSrangeSkill()
 	{
-		FastList<L2Skill> skilldata = new FastList<L2Skill>();
+		FastList<L2Skill> skilldata = new FastList<>();
 		boolean hasSrange = false;
 		L2NpcAIData AI = getTemplate().getAIDataStatic();
 		
@@ -1806,22 +1784,19 @@ public class L2Npc extends L2Character
 			player.sendPacket(msg);
 			return;
 		}
-		else
-		{
-			NpcHtmlMessage noTeachMsg = new NpcHtmlMessage(getObjectId());
-			noTeachMsg.setHtml(html);
-			noTeachMsg.replace("%objectId%", String.valueOf(getObjectId()));
-			player.sendPacket(noTeachMsg);
-		}
+		NpcHtmlMessage noTeachMsg = new NpcHtmlMessage(getObjectId());
+		noTeachMsg.setHtml(html);
+		noTeachMsg.replace("%objectId%", String.valueOf(getObjectId()));
+		player.sendPacket(noTeachMsg);
 	}
 	
 	public L2Npc scheduleDespawn(long delay)
 	{
-		ThreadPoolManager.getInstance().scheduleGeneral(this.new DespawnTask(), delay);
+		ThreadPoolManager.getInstance().scheduleGeneral(new DespawnTask(), delay);
 		return this;
 	}
 	
-	private class DespawnTask implements Runnable
+	protected class DespawnTask implements Runnable
 	{
 		@Override
 		public void run()

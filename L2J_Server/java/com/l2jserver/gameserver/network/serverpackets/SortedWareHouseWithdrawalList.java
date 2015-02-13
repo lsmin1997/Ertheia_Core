@@ -44,7 +44,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	private static final String _S__54_SORTEDWAREHOUSEWITHDRAWALLIST = "[S] 42 SortedWareHouseWithdrawalList";
 	private L2PcInstance _activeChar;
 	private long _playerAdena;
-	private List<L2WarehouseItem> _objects = new FastList<L2WarehouseItem>();
+	private List<L2WarehouseItem> _objects = new FastList<>();
 	private int _whType;
 	private byte _sortorder;
 	private WarehouseListType _itemtype;
@@ -318,12 +318,9 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 					return 0;
 				}
 			}
-			else
-			{
-				String s1 = o1.getItemName();
-				String s2 = o2.getItemName();
-				return (order == A2Z ? s1.compareTo(s2) : s2.compareTo(s1));
-			}
+			String s1 = o1.getItemName();
+			String s2 = o2.getItemName();
+			return (order == A2Z ? s1.compareTo(s2) : s2.compareTo(s1));
 		}
 	}
 	
@@ -430,7 +427,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createWeaponList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if (item.isWeapon() || (item.getItem().getType2() == L2Item.TYPE2_WEAPON) || (item.isEtcItem() && (item.getItemType() == L2EtcItemType.ARROW)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -455,7 +452,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createArmorList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if (item.isArmor() || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -480,7 +477,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createEtcItemList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if (item.isEtcItem() || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -505,7 +502,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createMatList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.MATERIAL)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -530,7 +527,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createRecipeList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.RECIPE)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -555,7 +552,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createAmulettList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (item.getItemName().toUpperCase().startsWith("AMULET"))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -580,7 +577,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createSpellbookList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (!item.getItemName().toUpperCase().startsWith("AMULET"))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -605,7 +602,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createConsumableList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && ((item.getEtcItem().getItemType() == L2EtcItemType.SCROLL) || (item.getEtcItem().getItemType() == L2EtcItemType.SHOT))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -630,7 +627,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createShotList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SHOT)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -655,7 +652,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createScrollList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SCROLL)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -680,7 +677,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createSeedList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SEED)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -705,7 +702,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createOtherList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item.isEtcItem() && ((item.getEtcItem().getItemType() != L2EtcItemType.MATERIAL) && (item.getEtcItem().getItemType() != L2EtcItemType.RECIPE) && (item.getEtcItem().getItemType() != L2EtcItemType.SCROLL) && (item.getEtcItem().getItemType() != L2EtcItemType.SHOT))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
@@ -730,7 +727,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	 */
 	private List<L2WarehouseItem> createAllList(L2ItemInstance[] _items)
 	{
-		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
+		List<L2WarehouseItem> _list = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if (_list.size() < MAX_SORT_LIST_ITEMS)

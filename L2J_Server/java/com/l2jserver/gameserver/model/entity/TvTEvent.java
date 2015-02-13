@@ -177,7 +177,7 @@ public class TvTEvent
 		setState(EventState.STARTING);
 		
 		// Randomize and balance team distribution
-		Map<Integer, L2PcInstance> allParticipants = new FastMap<Integer, L2PcInstance>();
+		Map<Integer, L2PcInstance> allParticipants = new FastMap<>();
 		allParticipants.putAll(_teams[0].getParticipatedPlayers());
 		allParticipants.putAll(_teams[1].getParticipatedPlayers());
 		_teams[0].cleanMe();
@@ -337,10 +337,7 @@ public class TvTEvent
 				rewardTeam(_teams[1]);
 				return "TvT Event: Event has ended with both teams tying.";
 			}
-			else
-			{
-				return "TvT Event: Event has ended with both teams tying.";
-			}
+			return "TvT Event: Event has ended with both teams tying.";
 		}
 		
 		// Set state REWARDING so nobody can point anymore

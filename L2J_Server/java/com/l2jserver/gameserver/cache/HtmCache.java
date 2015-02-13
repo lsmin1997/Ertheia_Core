@@ -52,7 +52,7 @@ public class HtmCache
 		}
 		else
 		{
-			_cache = new FastMap<Integer, String>();
+			_cache = new FastMap<>();
 		}
 		reload();
 	}
@@ -95,7 +95,7 @@ public class HtmCache
 		return _loadedFiles;
 	}
 	
-	private static class HtmFilter implements FileFilter
+	protected static class HtmFilter implements FileFilter
 	{
 		@Override
 		public boolean accept(File file)
@@ -136,12 +136,9 @@ public class HtmCache
 		if (file.exists() && filter.accept(file) && !file.isDirectory())
 		{
 			String content;
-			FileInputStream fis = null;
-			
-			try
+			try (FileInputStream fis = new FileInputStream(file);
+				BufferedInputStream bis = new BufferedInputStream(fis))
 			{
-				fis = new FileInputStream(file);
-				BufferedInputStream bis = new BufferedInputStream(fis);
 				int bytes = bis.available();
 				byte[] raw = new byte[bytes];
 				
@@ -168,16 +165,6 @@ public class HtmCache
 			catch (Exception e)
 			{
 				_log.log(Level.WARNING, "Problem with htm file " + e.getMessage(), e);
-			}
-			finally
-			{
-				try
-				{
-					fis.close();
-				}
-				catch (Exception e1)
-				{
-				}
 			}
 		}
 		

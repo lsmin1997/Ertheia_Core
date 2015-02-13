@@ -67,10 +67,10 @@ public class Castle
 	
 	// =========================================================
 	// Data Field
-	private List<CropProcure> _procure = new ArrayList<CropProcure>();
-	private List<SeedProduction> _production = new ArrayList<SeedProduction>();
-	private List<CropProcure> _procureNext = new ArrayList<CropProcure>();
-	private List<SeedProduction> _productionNext = new ArrayList<SeedProduction>();
+	private List<CropProcure> _procure = new ArrayList<>();
+	private List<SeedProduction> _production = new ArrayList<>();
+	private List<CropProcure> _procureNext = new ArrayList<>();
+	private List<SeedProduction> _productionNext = new ArrayList<>();
 	private boolean _isNextPeriodApproved = false;
 	
 	private static final String CASTLE_MANOR_DELETE_PRODUCTION = "DELETE FROM castle_manor_production WHERE castle_id=?;";
@@ -82,8 +82,8 @@ public class Castle
 	// =========================================================
 	// Data Field
 	private int _castleId = 0;
-	private final List<L2DoorInstance> _doors = new FastList<L2DoorInstance>();
-	private final List<String> _doorDefault = new FastList<String>();
+	private final List<L2DoorInstance> _doors = new FastList<>();
+	private final List<String> _doorDefault = new FastList<>();
 	private String _name = "";
 	private int _ownerId = 0;
 	private Siege _siege = null;
@@ -98,10 +98,10 @@ public class Castle
 	private L2CastleZone _castleZone = null;
 	private L2CastleTeleportZone _teleZone;
 	private L2Clan _formerOwner = null;
-	private final List<L2ArtefactInstance> _artefacts = new ArrayList<L2ArtefactInstance>(1);
+	private final List<L2ArtefactInstance> _artefacts = new ArrayList<>(1);
 	private final TIntIntHashMap _engrave = new TIntIntHashMap(1);
 	private final Map<Integer, CastleFunction> _function;
-	private final FastList<L2Skill> _residentialSkills = new FastList<L2Skill>();
+	private final FastList<L2Skill> _residentialSkills = new FastList<>();
 	
 	/** Castle Functions */
 	public static final int FUNC_TELEPORT = 1;
@@ -276,7 +276,7 @@ public class Castle
 		 */
 		load();
 		loadDoor();
-		_function = new FastMap<Integer, CastleFunction>();
+		_function = new FastMap<>();
 		final FastList<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(castleId);
 		for (L2SkillLearn s : residentialSkills)
 		{

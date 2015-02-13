@@ -56,7 +56,7 @@ public class ZoneManager
 	private static final Logger _log = Logger.getLogger(ZoneManager.class.getName());
 	
 	// private final FastMap<Integer, L2ZoneType> _zones = new FastMap<Integer, L2ZoneType>();
-	private final Map<Class<? extends L2ZoneType>, Map<Integer, ? extends L2ZoneType>> _classZones = new FastMap<Class<? extends L2ZoneType>, Map<Integer, ? extends L2ZoneType>>();
+	private final Map<Class<? extends L2ZoneType>, Map<Integer, ? extends L2ZoneType>> _classZones = new FastMap<>();
 	private int _lastDynamicId = 300000;
 	private List<L2ItemInstance> _debugItems;
 	
@@ -85,9 +85,9 @@ public class ZoneManager
 		L2WorldRegion[][] worldRegions = L2World.getInstance().getAllWorldRegions();
 		for (L2WorldRegion[] worldRegion : worldRegions)
 		{
-			for (int y = 0; y < worldRegion.length; y++)
+			for (L2WorldRegion element : worldRegion)
 			{
-				worldRegion[y].getZones().clear();
+				element.getZones().clear();
 				count++;
 			}
 		}
@@ -131,7 +131,7 @@ public class ZoneManager
 			}
 			
 			File[] files = dir.listFiles();
-			FastList<File> hash = new FastList<File>(files.length);
+			FastList<File> hash = new FastList<>(files.length);
 			for (File f : files)
 			{
 				// default file first
@@ -462,7 +462,7 @@ public class ZoneManager
 		Map<Integer, T> map = (Map<Integer, T>) _classZones.get(zone.getClass());
 		if (map == null)
 		{
-			map = new FastMap<Integer, T>();
+			map = new FastMap<>();
 			map.put(id, zone);
 			_classZones.put(zone.getClass(), map);
 		}
@@ -480,7 +480,7 @@ public class ZoneManager
 	@Deprecated
 	public Collection<L2ZoneType> getAllZones()
 	{
-		FastList<L2ZoneType> zones = new FastList<L2ZoneType>();
+		FastList<L2ZoneType> zones = new FastList<>();
 		for (Map<Integer, ? extends L2ZoneType> map : _classZones.values())
 		{
 			zones.addAll(map.values());
@@ -564,7 +564,7 @@ public class ZoneManager
 	public FastList<L2ZoneType> getZones(int x, int y)
 	{
 		L2WorldRegion region = L2World.getInstance().getRegion(x, y);
-		FastList<L2ZoneType> temp = new FastList<L2ZoneType>();
+		FastList<L2ZoneType> temp = new FastList<>();
 		for (L2ZoneType zone : region.getZones())
 		{
 			if (zone.isInsideZone(x, y))
@@ -585,7 +585,7 @@ public class ZoneManager
 	public FastList<L2ZoneType> getZones(int x, int y, int z)
 	{
 		L2WorldRegion region = L2World.getInstance().getRegion(x, y);
-		FastList<L2ZoneType> temp = new FastList<L2ZoneType>();
+		FastList<L2ZoneType> temp = new FastList<>();
 		for (L2ZoneType zone : region.getZones())
 		{
 			if (zone.isInsideZone(x, y, z))
@@ -676,12 +676,8 @@ public class ZoneManager
 					zone = temp;
 				}
 			}
-			return zone;
 		}
-		else
-		{
-			return zone;
-		}
+		return zone;
 	}
 	
 	/**
@@ -692,7 +688,7 @@ public class ZoneManager
 	{
 		if (_debugItems == null)
 		{
-			_debugItems = new FastList<L2ItemInstance>();
+			_debugItems = new FastList<>();
 		}
 		return _debugItems;
 	}

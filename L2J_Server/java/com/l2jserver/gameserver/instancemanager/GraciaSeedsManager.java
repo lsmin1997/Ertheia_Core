@@ -36,7 +36,7 @@ public class GraciaSeedsManager
 	private int _SoDState = 1;
 	private final Calendar _SoDLastStateChangeDate;
 	
-	private GraciaSeedsManager()
+	protected GraciaSeedsManager()
 	{
 		_log.info(getClass().getSimpleName() + ": Initializing");
 		_SoDLastStateChangeDate = Calendar.getInstance();

@@ -54,26 +54,26 @@ import com.l2jserver.util.Rnd;
  */
 public final class BlockCheckerEngine
 {
-	private static final Logger _log = Logger.getLogger(BlockCheckerEngine.class.getName());
+	protected static final Logger _log = Logger.getLogger(BlockCheckerEngine.class.getName());
 	// The object which holds all basic members info
-	private HandysBlockCheckerManager.ArenaParticipantsHolder _holder;
+	protected HandysBlockCheckerManager.ArenaParticipantsHolder _holder;
 	// Maps to hold player of each team and his points
-	private final FastMap<L2PcInstance, Integer> _redTeamPoints = new FastMap<L2PcInstance, Integer>();
-	private final FastMap<L2PcInstance, Integer> _blueTeamPoints = new FastMap<L2PcInstance, Integer>();
+	protected final FastMap<L2PcInstance, Integer> _redTeamPoints = new FastMap<>();
+	protected final FastMap<L2PcInstance, Integer> _blueTeamPoints = new FastMap<>();
 	// The initial points of the event
-	private int _redPoints = 15;
-	private int _bluePoints = 15;
+	protected int _redPoints = 15;
+	protected int _bluePoints = 15;
 	// Current used arena
-	private int _arena = -1;
+	protected int _arena = -1;
 	// All blocks
-	private final FastList<L2Spawn> _spawns = new FastList<L2Spawn>();
+	protected final FastList<L2Spawn> _spawns = new FastList<>();
 	// Sets if the red team won the event at the end of this (used for packets)
-	private boolean _isRedWinner;
+	protected boolean _isRedWinner;
 	// Time when the event starts. Used on packet sending
-	private long _startedTime;
+	protected long _startedTime;
 	// The needed arena coordinates
 	// Arena X: team1X, team1Y, team2X, team2Y, ArenaCenterX, ArenaCenterY
-	private static final int[][] _arenaCoordinates =
+	protected static final int[][] _arenaCoordinates =
 	{
 		// Arena 0 - Team 1 XY, Team 2 XY - CENTER XY
 		{
@@ -115,15 +115,15 @@ public final class BlockCheckerEngine
 	// Common z coordinate
 	private static final int _zCoord = -2405;
 	// List of dropped items in event (for later deletion)
-	private final FastList<L2ItemInstance> _drops = new FastList<L2ItemInstance>();
+	protected final FastList<L2ItemInstance> _drops = new FastList<>();
 	// Default arena
 	private static final byte DEFAULT_ARENA = -1;
 	// Event is started
-	private boolean _isStarted = false;
+	protected boolean _isStarted = false;
 	// Event end
-	private ScheduledFuture<?> _task;
+	protected ScheduledFuture<?> _task;
 	// Preserve from exploit reward by logging out
-	private boolean _abnormalEnd = false;
+	protected boolean _abnormalEnd = false;
 	
 	public BlockCheckerEngine(HandysBlockCheckerManager.ArenaParticipantsHolder holder, int arena)
 	{
@@ -220,10 +220,7 @@ public final class BlockCheckerEngine
 		{
 			return _redTeamPoints.get(player);
 		}
-		else
-		{
-			return _blueTeamPoints.get(player);
-		}
+		return _blueTeamPoints.get(player);
 	}
 	
 	/**
@@ -278,7 +275,7 @@ public final class BlockCheckerEngine
 	/**
 	 * Will send all packets for the event members with the relation info
 	 */
-	private void broadcastRelationChanged(L2PcInstance plr)
+	protected void broadcastRelationChanged(L2PcInstance plr)
 	{
 		for (L2PcInstance p : _holder.getAllPlayers())
 		{
@@ -554,7 +551,7 @@ public final class BlockCheckerEngine
 	{
 		private final L2Spawn _spawn;
 		
-		private CarryingGirlUnspawn(L2Spawn spawn)
+		protected CarryingGirlUnspawn(L2Spawn spawn)
 		{
 			_spawn = spawn;
 		}
@@ -581,7 +578,7 @@ public final class BlockCheckerEngine
 	/**
 	 * This class erase all event parameters on player and port them back near Handy. Also, unspawn blocks, runs a garbage collector and set as free the used arena
 	 */
-	private class EndEvent implements Runnable
+	protected class EndEvent implements Runnable
 	{
 		// Garbage collector and arena free setter
 		private void clearMe()

@@ -142,7 +142,7 @@ public final class CommunityServerThread extends NetConnection
 		{
 			try
 			{
-				super.sleep(10000L);
+				Thread.sleep(10000L);
 			}
 			catch (InterruptedException e)
 			{

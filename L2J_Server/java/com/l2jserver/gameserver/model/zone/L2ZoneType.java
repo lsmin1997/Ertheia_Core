@@ -424,12 +424,12 @@ public abstract class L2ZoneType
 	{
 		if (_questEvents == null)
 		{
-			_questEvents = new FastMap<Quest.QuestEventType, FastList<Quest>>();
+			_questEvents = new FastMap<>();
 		}
 		FastList<Quest> questByEvents = _questEvents.get(EventType);
 		if (questByEvents == null)
 		{
-			questByEvents = new FastList<Quest>();
+			questByEvents = new FastList<>();
 		}
 		if (!questByEvents.contains(q))
 		{

@@ -36,9 +36,6 @@ public class ControllableAirShipStat extends VehicleStat
 		{
 			return super.getMoveSpeed();
 		}
-		else
-		{
-			return super.getMoveSpeed() * 0.05f;
-		}
+		return super.getMoveSpeed() * 0.05f;
 	}
 }

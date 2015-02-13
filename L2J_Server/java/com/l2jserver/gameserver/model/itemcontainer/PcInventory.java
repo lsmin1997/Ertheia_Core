@@ -130,11 +130,6 @@ public class PcInventory extends Inventory
 			boolean isDuplicate = false;
 			for (L2ItemInstance litem : list)
 			{
-				if (item == null)
-				{
-					continue;
-				}
-				
 				if (litem.getItemId() == item.getItemId())
 				{
 					isDuplicate = true;
@@ -849,10 +844,7 @@ public class PcInventory extends Inventory
 		{
 			return (((_items.size() - _questSlots) + slots) <= _owner.getInventoryLimit());
 		}
-		else
-		{
-			return (_questSlots + slots) <= _owner.getQuestInventoryLimit();
-		}
+		return (_questSlots + slots) <= _owner.getQuestInventoryLimit();
 	}
 	
 	@Override
@@ -962,10 +954,7 @@ public class PcInventory extends Inventory
 		{
 			return _questSlots;
 		}
-		else
-		{
-			return getSize() - _questSlots;
-		}
+		return getSize() - _questSlots;
 	}
 	
 	@Override

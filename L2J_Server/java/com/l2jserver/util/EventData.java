@@ -32,7 +32,7 @@ public class EventData
 	public int eventPvpKills;
 	public int eventPkKills;
 	public String eventTitle;
-	public LinkedList<String> kills = new LinkedList<String>();
+	public LinkedList<String> kills = new LinkedList<>();
 	public boolean eventSitForced = false;
 	
 	public EventData(int pEventX, int pEventY, int pEventZ, int pEventkarma, int pEventpvpkills, int pEventpkkills, String pEventTitle, LinkedList<String> pKills, boolean pEventSitForced)

@@ -44,19 +44,16 @@ public class StaticObjects
 	
 	private StaticObjects()
 	{
-		_staticObjects = new TIntObjectHashMap<L2StaticObjectInstance>();
+		_staticObjects = new TIntObjectHashMap<>();
 		parseData();
 		_log.info("StaticObject: Loaded " + _staticObjects.size() + " StaticObject Templates.");
 	}
 	
 	private void parseData()
 	{
-		LineNumberReader lnr = null;
-		try
+		File doorData = new File(Config.DATAPACK_ROOT, "data/staticobjects.csv");
+		try (LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(doorData))))
 		{
-			File doorData = new File(Config.DATAPACK_ROOT, "data/staticobjects.csv");
-			lnr = new LineNumberReader(new BufferedReader(new FileReader(doorData)));
-			
 			String line = null;
 			while ((line = lnr.readLine()) != null)
 			{
@@ -76,16 +73,6 @@ public class StaticObjects
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Error while creating StaticObjects table " + e.getMessage(), e);
-		}
-		finally
-		{
-			try
-			{
-				lnr.close();
-			}
-			catch (Exception e)
-			{
-			}
 		}
 	}
 	

@@ -34,7 +34,7 @@ public class ItemsAutoDestroy
 	private ItemsAutoDestroy()
 	{
 		_log.info("Initializing ItemsAutoDestroy.");
-		_items = new FastList<L2ItemInstance>();
+		_items = new FastList<>();
 		_sleep = Config.AUTODESTROY_ITEM_AFTER * 1000;
 		if (_sleep == 0)
 		{

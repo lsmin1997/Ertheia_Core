@@ -43,7 +43,7 @@ public class AbnormalStatusUpdate extends L2GameServerPacket
 	
 	public AbnormalStatusUpdate()
 	{
-		_effects = new FastList<Effect>();
+		_effects = new FastList<>();
 	}
 	
 	public void addEffect(int skillId, int level, int duration)

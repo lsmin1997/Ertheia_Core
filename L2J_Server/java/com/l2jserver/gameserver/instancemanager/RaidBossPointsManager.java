@@ -55,7 +55,7 @@ public class RaidBossPointsManager
 	
 	private final void init()
 	{
-		_list = new FastMap<Integer, Map<Integer, Integer>>();
+		_list = new FastMap<>();
 		Connection con = null;
 		try
 		{
@@ -70,7 +70,7 @@ public class RaidBossPointsManager
 				Map<Integer, Integer> values = _list.get(charId);
 				if (values == null)
 				{
-					values = new FastMap<Integer, Integer>();
+					values = new FastMap<>();
 				}
 				values.put(bossId, points);
 				_list.put(charId, values);
@@ -119,7 +119,7 @@ public class RaidBossPointsManager
 		Map<Integer, Integer> tmpPoint = _list.get(ownerId);
 		if (tmpPoint == null)
 		{
-			tmpPoint = new FastMap<Integer, Integer>();
+			tmpPoint = new FastMap<>();
 			tmpPoint.put(bossId, points);
 			updatePointsInDB(player, bossId, points);
 		}
@@ -190,8 +190,8 @@ public class RaidBossPointsManager
 	
 	public Map<Integer, Integer> getRankList()
 	{
-		Map<Integer, Integer> tmpRanking = new FastMap<Integer, Integer>();
-		Map<Integer, Integer> tmpPoints = new FastMap<Integer, Integer>();
+		Map<Integer, Integer> tmpRanking = new FastMap<>();
+		Map<Integer, Integer> tmpPoints = new FastMap<>();
 		
 		for (int ownerId : _list.keySet())
 		{
@@ -201,7 +201,7 @@ public class RaidBossPointsManager
 				tmpPoints.put(ownerId, totalPoints);
 			}
 		}
-		ArrayList<Entry<Integer, Integer>> list = new ArrayList<Map.Entry<Integer, Integer>>(tmpPoints.entrySet());
+		ArrayList<Entry<Integer, Integer>> list = new ArrayList<>(tmpPoints.entrySet());
 		
 		Collections.sort(list, _comparator);
 		
@@ -214,7 +214,6 @@ public class RaidBossPointsManager
 		return tmpRanking;
 	}
 	
-	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder
 	{
 		protected static final RaidBossPointsManager _instance = new RaidBossPointsManager();

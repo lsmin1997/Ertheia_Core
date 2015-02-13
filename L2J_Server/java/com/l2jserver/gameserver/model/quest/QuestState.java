@@ -202,7 +202,7 @@ public final class QuestState
 	{
 		if (_vars == null)
 		{
-			_vars = new FastMap<String, String>();
+			_vars = new FastMap<>();
 		}
 		
 		if (val == null)
@@ -229,7 +229,7 @@ public final class QuestState
 	{
 		if (_vars == null)
 		{
-			_vars = new FastMap<String, String>();
+			_vars = new FastMap<>();
 		}
 		
 		if (val == null)

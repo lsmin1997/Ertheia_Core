@@ -208,7 +208,7 @@ public class TradeList
 	
 	public TradeList(L2PcInstance owner)
 	{
-		_items = new FastList<TradeItem>();
+		_items = new FastList<>();
 		_owner = owner;
 	}
 	
@@ -308,10 +308,7 @@ public class TradeList
 					{
 						return null;
 					}
-					else
-					{
-						return new TradeItem(item, item.getCount() - exclItem.getCount(), item.getReferencePrice());
-					}
+					return new TradeItem(item, item.getCount() - exclItem.getCount(), item.getReferencePrice());
 				}
 			}
 		}
@@ -1029,10 +1026,7 @@ public class TradeList
 		{
 			return 0;
 		}
-		else
-		{
-			return 2;
-		}
+		return 2;
 	}
 	
 	/**

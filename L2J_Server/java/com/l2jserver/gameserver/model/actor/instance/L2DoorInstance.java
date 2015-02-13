@@ -439,14 +439,7 @@ public class L2DoorInstance extends L2Character
 		
 		if (TerritoryWarManager.getInstance().isTWInProgress())
 		{
-			if (TerritoryWarManager.getInstance().isAllyField(actingPlayer, activeSiegeId))
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
+			return !TerritoryWarManager.getInstance().isAllyField(actingPlayer, activeSiegeId);
 		}
 		else if (isFort)
 		{
@@ -658,7 +651,7 @@ public class L2DoorInstance extends L2Character
 	
 	public Collection<L2DefenderInstance> getKnownDefenders()
 	{
-		FastList<L2DefenderInstance> result = new FastList<L2DefenderInstance>();
+		FastList<L2DefenderInstance> result = new FastList<>();
 		
 		Collection<L2Object> objs = getKnownList().getKnownObjects().values();
 		// synchronized (getKnownList().getKnownObjects())

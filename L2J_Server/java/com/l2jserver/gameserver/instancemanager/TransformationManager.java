@@ -37,7 +37,7 @@ public class TransformationManager
 	
 	private TransformationManager()
 	{
-		_transformations = new TIntObjectHashMap<L2Transformation>();
+		_transformations = new TIntObjectHashMap<>();
 	}
 	
 	public void report()
@@ -54,10 +54,7 @@ public class TransformationManager
 			trans.start();
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	public L2Transformation getTransformationById(int id)

@@ -76,7 +76,7 @@ public class ClanTable
 			ForumsBBSManager.getInstance().initRoot();
 		}
 		
-		_clans = new FastMap<Integer, L2Clan>();
+		_clans = new FastMap<>();
 		L2Clan clan;
 		Connection con = null;
 		try

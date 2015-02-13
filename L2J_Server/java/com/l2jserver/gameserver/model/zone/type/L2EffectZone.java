@@ -41,10 +41,10 @@ public class L2EffectZone extends L2ZoneType
 	private int _initialDelay;
 	private int _reuse;
 	private boolean _enabled;
-	private boolean _bypassConditions;
+	protected boolean _bypassConditions;
 	private boolean _isShowDangerIcon;
 	private Future<?> _task;
-	private FastMap<Integer, Integer> _skills;
+	protected FastMap<Integer, Integer> _skills;
 	
 	public L2EffectZone(int id)
 	{
@@ -88,7 +88,7 @@ public class L2EffectZone extends L2ZoneType
 		else if (name.equals("skillIdLvl"))
 		{
 			String[] propertySplit = value.split(";");
-			_skills = new FastMap<Integer, Integer>(propertySplit.length);
+			_skills = new FastMap<>(propertySplit.length);
 			for (String skill : propertySplit)
 			{
 				String[] skillSplit = skill.split("-");
@@ -171,7 +171,7 @@ public class L2EffectZone extends L2ZoneType
 		}
 	}
 	
-	private L2Skill getSkill(int skillId, int skillLvl)
+	protected L2Skill getSkill(int skillId, int skillLvl)
 	{
 		return SkillTable.getInstance().getInfo(skillId, skillLvl);
 	}
@@ -234,10 +234,7 @@ public class L2EffectZone extends L2ZoneType
 		{
 			return 0;
 		}
-		else
-		{
-			return _skills.get(skillId);
-		}
+		return _skills.get(skillId);
 	}
 	
 	protected Collection<L2Character> getCharacterList()
@@ -269,7 +266,7 @@ public class L2EffectZone extends L2ZoneType
 							for (Entry<Integer, Integer> e : _skills.entrySet())
 							{
 								L2Skill skill = getSkill(e.getKey(), e.getValue());
-								if (_bypassConditions || ((skill != null) && skill.checkCondition(temp, temp, false)))
+								if ((skill != null) && (_bypassConditions || skill.checkCondition(temp, temp, false)))
 								{
 									if (temp.getFirstEffect(e.getKey()) == null)
 									{

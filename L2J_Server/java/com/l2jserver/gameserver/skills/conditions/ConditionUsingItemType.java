@@ -78,17 +78,15 @@ public final class ConditionUsingItemType extends Condition
 			{
 				return true;
 			}
-			else
-			{ // check legs armor
-				L2ItemInstance legs = inv.getPaperdollItem(Inventory.PAPERDOLL_LEGS);
-				if (legs == null)
-				{
-					return false;
-				}
-				int legMask = legs.getItem().getItemMask();
-				// return true if legs armor matches too
-				return (_mask & legMask) != 0;
+			
+			L2ItemInstance legs = inv.getPaperdollItem(Inventory.PAPERDOLL_LEGS);
+			if (legs == null)
+			{
+				return false;
 			}
+			int legMask = legs.getItem().getItemMask();
+			// return true if legs armor matches too
+			return (_mask & legMask) != 0;
 		}
 		return (_mask & inv.getWearedMask()) != 0;
 	}

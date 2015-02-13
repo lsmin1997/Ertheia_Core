@@ -58,7 +58,7 @@ public class Auction
 	private long _currentBid = 0;
 	private long _startingBid = 0;
 	
-	private final Map<Integer, Bidder> _bidders = new FastMap<Integer, Bidder>();
+	private final Map<Integer, Bidder> _bidders = new FastMap<>();
 	
 	private static final String[] ItemTypeName =
 	{

@@ -59,9 +59,9 @@ public final class L2ScriptEngineManager
 		return SingletonHolder._instance;
 	}
 	
-	private final Map<String, ScriptEngine> _nameEngines = new FastMap<String, ScriptEngine>();
-	private final Map<String, ScriptEngine> _extEngines = new FastMap<String, ScriptEngine>();
-	private final List<ScriptManager<?>> _scriptManagers = new LinkedList<ScriptManager<?>>();
+	private final Map<String, ScriptEngine> _nameEngines = new FastMap<>();
+	private final Map<String, ScriptEngine> _extEngines = new FastMap<>();
+	private final List<ScriptManager<?>> _scriptManagers = new LinkedList<>();
 	
 	private final CompiledScriptCache _cache;
 	
@@ -328,7 +328,7 @@ public final class L2ScriptEngineManager
 		}
 	}
 	
-	public CompiledScriptCache getCompiledScriptCache() throws IOException
+	public CompiledScriptCache getCompiledScriptCache()
 	{
 		return _cache;
 	}
@@ -371,10 +371,7 @@ public final class L2ScriptEngineManager
 				}
 				return new CompiledScriptCache();
 			}
-			else
-			{
-				return new CompiledScriptCache();
-			}
+			return new CompiledScriptCache();
 		}
 		return null;
 	}
@@ -398,10 +395,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new ScriptException("No engine registered for extension (" + extension + ")");
 		}
-		else
-		{
-			this.executeScript(engine, file);
-		}
+		executeScript(engine, file);
 	}
 	
 	public void executeScript(String engineName, File file) throws FileNotFoundException, ScriptException
@@ -411,10 +405,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new ScriptException("No engine registered with name (" + engineName + ")");
 		}
-		else
-		{
-			this.executeScript(engine, file);
-		}
+		executeScript(engine, file);
 	}
 	
 	public void executeScript(ScriptEngine engine, File file) throws FileNotFoundException, ScriptException
@@ -516,10 +507,7 @@ public final class L2ScriptEngineManager
 		{
 			throw new IllegalStateException("No engine registered with name (" + engineName + ")");
 		}
-		else
-		{
-			return this.getScriptContext(engine);
-		}
+		return getScriptContext(engine);
 	}
 	
 	public Object eval(ScriptEngine engine, String script, ScriptContext context) throws ScriptException
@@ -530,10 +518,7 @@ public final class L2ScriptEngineManager
 			CompiledScript cs = eng.compile(script);
 			return context != null ? cs.eval(context) : cs.eval();
 		}
-		else
-		{
-			return context != null ? engine.eval(script, context) : engine.eval(script);
-		}
+		return context != null ? engine.eval(script, context) : engine.eval(script);
 	}
 	
 	public Object eval(String engineName, String script) throws ScriptException
@@ -548,15 +533,12 @@ public final class L2ScriptEngineManager
 		{
 			throw new ScriptException("No engine registered with name (" + engineName + ")");
 		}
-		else
-		{
-			return this.eval(engine, script, context);
-		}
+		return eval(engine, script, context);
 	}
 	
 	public Object eval(ScriptEngine engine, String script) throws ScriptException
 	{
-		return this.eval(engine, script, null);
+		return eval(engine, script, null);
 	}
 	
 	public void reportScriptFileError(File script, ScriptException e)
@@ -566,15 +548,21 @@ public final class L2ScriptEngineManager
 		if (dir != null)
 		{
 			File file = new File(dir + "/" + name);
-			FileOutputStream fos = null;
-			try
+			if (!file.exists())
 			{
-				if (!file.exists())
+				try
 				{
+					
 					file.createNewFile();
 				}
-				
-				fos = new FileOutputStream(file);
+				catch (Exception ex)
+				{
+					
+				}
+			}
+			
+			try (FileOutputStream fos = new FileOutputStream(file))
+			{
 				String errorHeader = "Error on: " + file.getCanonicalPath() + "\r\nLine: " + e.getLineNumber() + " - Column: " + e.getColumnNumber() + "\r\n\r\n";
 				fos.write(errorHeader.getBytes());
 				fos.write(e.getMessage().getBytes());
@@ -583,16 +571,6 @@ public final class L2ScriptEngineManager
 			catch (IOException ioe)
 			{
 				_log.log(Level.WARNING, "Failed executing script: " + script.getAbsolutePath() + "\r\n" + e.getMessage() + "Additionally failed when trying to write an error report on script directory. Reason: " + ioe.getMessage(), ioe);
-			}
-			finally
-			{
-				try
-				{
-					fos.close();
-				}
-				catch (Exception e1)
-				{
-				}
 			}
 		}
 		else

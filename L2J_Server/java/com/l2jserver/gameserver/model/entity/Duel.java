@@ -90,7 +90,7 @@ public class Duel
 			_duelEndTime.add(Calendar.SECOND, 120);
 		}
 		
-		_playerConditions = new FastList<PlayerCondition>();
+		_playerConditions = new FastList<>();
 		
 		setFinished(false);
 		
@@ -170,7 +170,7 @@ public class Duel
 		{
 			if (_debuffs == null)
 			{
-				_debuffs = new FastList<L2Effect>();
+				_debuffs = new FastList<>();
 			}
 			
 			_debuffs.add(debuff);
@@ -856,10 +856,7 @@ public class Duel
 			{
 				return DuelResultEnum.Team1Surrender;
 			}
-			else
-			{
-				return DuelResultEnum.Team2Surrender;
-			}
+			return DuelResultEnum.Team2Surrender;
 		}
 		// duel timed out
 		else if (getRemainingTime() <= 0)

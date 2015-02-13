@@ -43,7 +43,7 @@ public class HennaTable
 	
 	private HennaTable()
 	{
-		_henna = new TIntObjectHashMap<L2Henna>();
+		_henna = new TIntObjectHashMap<>();
 		restoreHennaData();
 	}
 	

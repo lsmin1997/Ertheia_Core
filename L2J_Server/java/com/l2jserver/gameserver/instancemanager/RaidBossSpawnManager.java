@@ -42,7 +42,7 @@ import com.l2jserver.util.Rnd;
  */
 public class RaidBossSpawnManager
 {
-	private static Logger _log = Logger.getLogger(RaidBossSpawnManager.class.getName());
+	protected static Logger _log = Logger.getLogger(RaidBossSpawnManager.class.getName());
 	
 	protected static Map<Integer, L2RaidBossInstance> _bosses;
 	protected static Map<Integer, L2Spawn> _spawns;
@@ -68,10 +68,10 @@ public class RaidBossSpawnManager
 	
 	private void init()
 	{
-		_bosses = new FastMap<Integer, L2RaidBossInstance>();
-		_schedules = new FastMap<Integer, ScheduledFuture<?>>();
-		_storedInfo = new FastMap<Integer, StatsSet>();
-		_spawns = new FastMap<Integer, L2Spawn>();
+		_bosses = new FastMap<>();
+		_schedules = new FastMap<>();
+		_storedInfo = new FastMap<>();
+		_spawns = new FastMap<>();
 		
 		Connection con = null;
 		try

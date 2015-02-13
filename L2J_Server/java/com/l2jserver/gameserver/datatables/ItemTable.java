@@ -57,11 +57,11 @@ public class ItemTable
 	private static Logger _log = Logger.getLogger(ItemTable.class.getName());
 	private static Logger _logItems = Logger.getLogger("item");
 	
-	public static final Map<String, Integer> _materials = new FastMap<String, Integer>();
-	public static final Map<String, Integer> _crystalTypes = new FastMap<String, Integer>();
-	public static final Map<String, Integer> _slots = new FastMap<String, Integer>();
-	public static final Map<String, L2WeaponType> _weaponTypes = new FastMap<String, L2WeaponType>();
-	public static final Map<String, L2ArmorType> _armorTypes = new FastMap<String, L2ArmorType>();
+	public static final Map<String, Integer> _materials = new FastMap<>();
+	public static final Map<String, Integer> _crystalTypes = new FastMap<>();
+	public static final Map<String, Integer> _slots = new FastMap<>();
+	public static final Map<String, L2WeaponType> _weaponTypes = new FastMap<>();
+	public static final Map<String, L2ArmorType> _armorTypes = new FastMap<>();
 	
 	private L2Item[] _allTemplates;
 	private final Map<Integer, L2EtcItem> _etcItems;
@@ -182,9 +182,9 @@ public class ItemTable
 	 */
 	private ItemTable()
 	{
-		_etcItems = new FastMap<Integer, L2EtcItem>();
-		_armors = new FastMap<Integer, L2Armor>();
-		_weapons = new FastMap<Integer, L2Weapon>();
+		_etcItems = new FastMap<>();
+		_armors = new FastMap<>();
+		_weapons = new FastMap<>();
 		load();
 	}
 	
@@ -255,10 +255,7 @@ public class ItemTable
 		{
 			return null;
 		}
-		else
-		{
-			return _allTemplates[id];
-		}
+		return _allTemplates[id];
 	}
 	
 	/**

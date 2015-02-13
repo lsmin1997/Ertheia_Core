@@ -54,8 +54,8 @@ public class GeoEngine extends GeoData
 	private static final byte SOUTH = 4;
 	private static final byte NORTH = 8;
 	private static final byte NSWE_ALL = 15;
-	private static TShortObjectHashMap<MappedByteBuffer> _geodata = new TShortObjectHashMap<MappedByteBuffer>();
-	private static TShortObjectHashMap<IntBuffer> _geodataIndex = new TShortObjectHashMap<IntBuffer>();
+	private static TShortObjectHashMap<MappedByteBuffer> _geodata = new TShortObjectHashMap<>();
+	private static TShortObjectHashMap<IntBuffer> _geodataIndex = new TShortObjectHashMap<>();
 	private static BufferedOutputStream _geoBugsOut;
 	
 	public static GeoEngine getInstance()
@@ -68,37 +68,24 @@ public class GeoEngine extends GeoData
 		nInitGeodata();
 	}
 	
-	// Public Methods
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#getType(int, int)
-	 */
 	@Override
 	public short getType(int x, int y)
 	{
 		return nGetType((x - L2World.MAP_MIN_X) >> 4, (y - L2World.MAP_MIN_Y) >> 4);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#getHeight(int, int, int)
-	 */
 	@Override
 	public short getHeight(int x, int y, int z)
 	{
 		return nGetHeight((x - L2World.MAP_MIN_X) >> 4, (y - L2World.MAP_MIN_Y) >> 4, z);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#getSpawnHeight(int, int, int, int, int)
-	 */
 	@Override
 	public short getSpawnHeight(int x, int y, int zmin, int zmax, L2Spawn spawn)
 	{
 		return nGetSpawnHeight((x - L2World.MAP_MIN_X) >> 4, (y - L2World.MAP_MIN_Y) >> 4, zmin, zmax, spawn);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#geoPosition(int, int)
-	 */
 	@Override
 	public String geoPosition(int x, int y)
 	{
@@ -107,9 +94,6 @@ public class GeoEngine extends GeoData
 		return "bx: " + getBlock(gx) + " by: " + getBlock(gy) + " cx: " + getCell(gx) + " cy: " + getCell(gy) + "  region offset: " + getRegionOffset(gx, gy);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#canSeeTarget(L2Object, Point3D)
-	 */
 	@Override
 	public boolean canSeeTarget(L2Object cha, Point3D target)
 	{
@@ -121,16 +105,9 @@ public class GeoEngine extends GeoData
 		{
 			return canSeeTarget(cha.getX(), cha.getY(), cha.getZ(), target.getX(), target.getY(), target.getZ());
 		}
-		else
-		{
-			return canSeeTarget(target.getX(), target.getY(), target.getZ(), cha.getX(), cha.getY(), cha.getZ());
-		}
-		
+		return canSeeTarget(target.getX(), target.getY(), target.getZ(), cha.getX(), cha.getY(), cha.getZ());
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#canSeeTarget(com.l2jserver.gameserver.model.L2Object, com.l2jserver.gameserver.model.L2Object)
-	 */
 	@Override
 	public boolean canSeeTarget(L2Object cha, L2Object target)
 	{
@@ -169,15 +146,9 @@ public class GeoEngine extends GeoData
 		{
 			return canSeeTarget(cha.getX(), cha.getY(), z, target.getX(), target.getY(), z2);
 		}
-		else
-		{
-			return canSeeTarget(target.getX(), target.getY(), z2, cha.getX(), cha.getY(), z);
-		}
+		return canSeeTarget(target.getX(), target.getY(), z2, cha.getX(), cha.getY(), z);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#canSeeTargetDebug(com.l2jserver.gameserver.model.actor.instance.L2PcInstance, com.l2jserver.gameserver.model.L2Object)
-	 */
 	@Override
 	public boolean canSeeTargetDebug(L2PcInstance gm, L2Object target)
 	{
@@ -194,15 +165,9 @@ public class GeoEngine extends GeoData
 		{
 			return canSeeDebug(gm, (gm.getX() - L2World.MAP_MIN_X) >> 4, (gm.getY() - L2World.MAP_MIN_Y) >> 4, z, (target.getX() - L2World.MAP_MIN_X) >> 4, (target.getY() - L2World.MAP_MIN_Y) >> 4, z2);
 		}
-		else
-		{
-			return canSeeDebug(gm, (target.getX() - L2World.MAP_MIN_X) >> 4, (target.getY() - L2World.MAP_MIN_Y) >> 4, z2, (gm.getX() - L2World.MAP_MIN_X) >> 4, (gm.getY() - L2World.MAP_MIN_Y) >> 4, z);
-		}
+		return canSeeDebug(gm, (target.getX() - L2World.MAP_MIN_X) >> 4, (target.getY() - L2World.MAP_MIN_Y) >> 4, z2, (gm.getX() - L2World.MAP_MIN_X) >> 4, (gm.getY() - L2World.MAP_MIN_Y) >> 4, z);
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#getNSWE(int, int, int)
-	 */
 	@Override
 	public short getNSWE(int x, int y, int z)
 	{
@@ -216,9 +181,6 @@ public class GeoEngine extends GeoData
 		return ((destiny.getX() == tx) && (destiny.getY() == ty) && (destiny.getZ() == tz));
 	}
 	
-	/**
-	 * @see com.l2jserver.gameserver.GeoData#moveCheck(int, int, int, int, int, int, int)
-	 */
 	@Override
 	public Location moveCheck(int x, int y, int z, int tx, int ty, int tz, int instanceId)
 	{
@@ -607,10 +569,7 @@ public class GeoEngine extends GeoData
 					{
 						return new Location((x << 4) + L2World.MAP_MIN_X, (y << 4) + L2World.MAP_MIN_Y, (int) z);
 					}
-					else
-					{
-						z = tempz;
-					}
+					z = tempz;
 					next_y += inc_y;
 					// _log.warning("2: next_x:"+next_x+" next_y"+next_y);
 					tempz = nCanMoveNext(next_x, y, (int) z, next_x, next_y, tz);
@@ -618,10 +577,7 @@ public class GeoEngine extends GeoData
 					{
 						return new Location((x << 4) + L2World.MAP_MIN_X, (y << 4) + L2World.MAP_MIN_Y, (int) z);
 					}
-					else
-					{
-						z = tempz;
-					}
+					z = tempz;
 				}
 				else
 				{
@@ -633,10 +589,7 @@ public class GeoEngine extends GeoData
 					{
 						return new Location((x << 4) + L2World.MAP_MIN_X, (y << 4) + L2World.MAP_MIN_Y, (int) z);
 					}
-					else
-					{
-						z = tempz;
-					}
+					z = tempz;
 				}
 			}
 		}
@@ -658,10 +611,7 @@ public class GeoEngine extends GeoData
 					{
 						return new Location((x << 4) + L2World.MAP_MIN_X, (y << 4) + L2World.MAP_MIN_Y, (int) z);
 					}
-					else
-					{
-						z = tempz;
-					}
+					z = tempz;
 					next_x += inc_x;
 					// _log.warning("5: next_x:"+next_x+" next_y"+next_y);
 					tempz = nCanMoveNext(x, next_y, (int) z, next_x, next_y, tz);
@@ -669,10 +619,7 @@ public class GeoEngine extends GeoData
 					{
 						return new Location((x << 4) + L2World.MAP_MIN_X, (y << 4) + L2World.MAP_MIN_Y, (int) z);
 					}
-					else
-					{
-						z = tempz;
-					}
+					z = tempz;
 				}
 				else
 				{
@@ -684,10 +631,7 @@ public class GeoEngine extends GeoData
 					{
 						return new Location((x << 4) + L2World.MAP_MIN_X, (y << 4) + L2World.MAP_MIN_Y, (int) z);
 					}
-					else
-					{
-						z = tempz;
-					}
+					z = tempz;
 				}
 			}
 		}
@@ -695,10 +639,7 @@ public class GeoEngine extends GeoData
 		{
 			return destiny;
 		}
-		else
-		{
-			return new Location(destiny.getX(), destiny.getY(), (int) z);
-		}
+		return new Location(destiny.getX(), destiny.getY(), (int) z);
 	}
 	
 	private static byte sign(int x)
@@ -707,10 +648,7 @@ public class GeoEngine extends GeoData
 		{
 			return +1;
 		}
-		else
-		{
-			return -1;
-		}
+		return -1;
 	}
 	
 	// GeoEngine
@@ -795,11 +733,10 @@ public class GeoEngine extends GeoData
 		_log.info("Geo Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
 		File Geo = new File(fname);
 		int size, index = 0, block = 0, flor = 0;
-		FileChannel roChannel = null;
-		try
+		
+		try (RandomAccessFile raf = new RandomAccessFile(Geo, "r"))
 		{
-			// Create a read-only memory-mapped file
-			roChannel = new RandomAccessFile(Geo, "r").getChannel();
+			FileChannel roChannel = raf.getChannel();
 			size = (int) roChannel.size();
 			MappedByteBuffer geo;
 			if (Config.FORCE_GEODATA)
@@ -855,16 +792,6 @@ public class GeoEngine extends GeoData
 		{
 			_log.log(Level.WARNING, "Failed to Load GeoFile at block: " + block, e);
 			return false;
-		}
-		finally
-		{
-			try
-			{
-				roChannel.close();
-			}
-			catch (Exception e)
-			{
-			}
 		}
 		return true;
 	}
@@ -1276,10 +1203,7 @@ public class GeoEngine extends GeoData
 			{
 				return height;
 			}
-			else
-			{
-				return Double.MIN_VALUE;
-			}
+			return Double.MIN_VALUE;
 		}
 		else
 		// multilevel, type == 2
@@ -1324,10 +1248,7 @@ public class GeoEngine extends GeoData
 			{
 				return tempz;
 			}
-			else
-			{
-				return Double.MIN_VALUE;
-			}
+			return Double.MIN_VALUE;
 		}
 	}
 	
@@ -1384,10 +1305,7 @@ public class GeoEngine extends GeoData
 			{
 				return (z + inc_z) > height;
 			}
-			else
-			{
-				return (z + inc_z) < height;
-			}
+			return (z + inc_z) < height;
 		}
 		else if (type == 1) // complex
 		{
@@ -1410,10 +1328,7 @@ public class GeoEngine extends GeoData
 				}
 				return true;
 			}
-			else
-			{
-				return true;
-			}
+			return true;
 		}
 		else
 		// multilevel, type == 2
@@ -1455,11 +1370,8 @@ public class GeoEngine extends GeoData
 					NSWE = (short) (NSWE & 0x0F);
 					break;
 				}
-				else
-				{
-					highestlayer = false;
-					upperHeight = tempZ;
-				}
+				highestlayer = false;
+				upperHeight = tempZ;
 				
 				temp_layers--;
 				index += 2;
@@ -1497,10 +1409,7 @@ public class GeoEngine extends GeoData
 					}
 					return true; // we see over it, e.g. a fence
 				}
-				else
-				{
-					return true;
-				}
+				return true;
 			}
 			if (!checkNSWE(NSWE, x, y, x + inc_x, y + inc_y))
 			{
@@ -1511,10 +1420,7 @@ public class GeoEngine extends GeoData
 				}
 				return true;
 			}
-			else
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 	

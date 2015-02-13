@@ -149,10 +149,7 @@ public class L2SkillSiegeFlag extends L2Skill
 		{
 			return checkIfOkToPlaceFlag(activeChar, castle, isCheckOnly);
 		}
-		else
-		{
-			return checkIfOkToPlaceFlag(activeChar, fort, isCheckOnly);
-		}
+		return checkIfOkToPlaceFlag(activeChar, fort, isCheckOnly);
 	}
 	
 	/**

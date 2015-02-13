@@ -69,8 +69,8 @@ public final class ItemAuctionInstance
 	{
 		_instanceId = instanceId;
 		_auctionIds = auctionIds;
-		_auctions = new TIntObjectHashMap<ItemAuction>();
-		_items = new ArrayList<AuctionItem>();
+		_auctions = new TIntObjectHashMap<>();
+		_items = new ArrayList<>();
 		
 		final NamedNodeMap nanode = node.getAttributes();
 		final StatsSet generatorConfig = new StatsSet();
@@ -348,7 +348,7 @@ public final class ItemAuctionInstance
 	public final ItemAuction[] getAuctionsByBidder(final int bidderObjId)
 	{
 		final ItemAuction[] auctions = getAuctions();
-		final ArrayList<ItemAuction> stack = new ArrayList<ItemAuction>(auctions.length);
+		final ArrayList<ItemAuction> stack = new ArrayList<>(auctions.length);
 		for (final ItemAuction auction : getAuctions())
 		{
 			if (auction.getAuctionState() != ItemAuctionState.CREATED)
@@ -595,7 +595,7 @@ public final class ItemAuctionInstance
 			statement.setInt(1, auctionId);
 			rset = statement.executeQuery();
 			
-			final ArrayList<ItemAuctionBid> auctionBids = new ArrayList<ItemAuctionBid>();
+			final ArrayList<ItemAuctionBid> auctionBids = new ArrayList<>();
 			
 			while (rset.next())
 			{

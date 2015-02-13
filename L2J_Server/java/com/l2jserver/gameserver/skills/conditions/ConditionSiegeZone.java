@@ -81,19 +81,13 @@ public final class ConditionSiegeZone extends Condition
 			{
 				return true;
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 		if (castle != null)
 		{
 			return checkIfOk(target, castle, _value);
 		}
-		else
-		{
-			return checkIfOk(target, fort, _value);
-		}
+		return checkIfOk(target, fort, _value);
 	}
 	
 	/**

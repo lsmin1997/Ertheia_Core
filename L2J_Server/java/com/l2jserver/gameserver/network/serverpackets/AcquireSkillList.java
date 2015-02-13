@@ -71,7 +71,7 @@ public final class AcquireSkillList extends L2GameServerPacket
 	{
 		if (_skills == null)
 		{
-			_skills = new FastList<Skill>();
+			_skills = new FastList<>();
 		}
 		_skills.add(new Skill(id, nextLevel, maxLevel, spCost, requirements));
 	}

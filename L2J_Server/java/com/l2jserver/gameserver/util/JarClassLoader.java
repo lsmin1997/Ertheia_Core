@@ -32,7 +32,7 @@ import java.util.zip.ZipFile;
 public class JarClassLoader extends ClassLoader
 {
 	private static Logger _log = Logger.getLogger(JarClassLoader.class.getCanonicalName());
-	HashSet<String> _jars = new HashSet<String>();
+	HashSet<String> _jars = new HashSet<>();
 	
 	public void addJarFile(String filename)
 	{
@@ -58,12 +58,9 @@ public class JarClassLoader extends ClassLoader
 		byte[] classData = null;
 		for (String jarFile : _jars)
 		{
-			ZipFile zipFile = null;
-			DataInputStream zipStream = null;
-			try
+			File file = new File(jarFile);
+			try (ZipFile zipFile = new ZipFile(file);)
 			{
-				File file = new File(jarFile);
-				zipFile = new ZipFile(file);
 				String fileName = name.replace('.', '/') + ".class";
 				ZipEntry entry = zipFile.getEntry(fileName);
 				if (entry == null)
@@ -71,32 +68,17 @@ public class JarClassLoader extends ClassLoader
 					continue;
 				}
 				classData = new byte[(int) entry.getSize()];
-				zipStream = new DataInputStream(zipFile.getInputStream(entry));
-				zipStream.readFully(classData, 0, (int) entry.getSize());
+				
+				try (DataInputStream zipStream = new DataInputStream(zipFile.getInputStream(entry)))
+				{
+					zipStream.readFully(classData, 0, (int) entry.getSize());
+				}
 				break;
 			}
 			catch (IOException e)
 			{
 				_log.log(Level.WARNING, jarFile + ": " + e.getMessage(), e);
 				continue;
-			}
-			finally
-			{
-				try
-				{
-					zipFile.close();
-				}
-				catch (Exception e)
-				{
-				}
-				
-				try
-				{
-					zipStream.close();
-				}
-				catch (Exception e)
-				{
-				}
 			}
 		}
 		if (classData == null)

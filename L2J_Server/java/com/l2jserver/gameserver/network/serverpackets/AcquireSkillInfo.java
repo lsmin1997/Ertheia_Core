@@ -56,7 +56,7 @@ public class AcquireSkillInfo extends L2GameServerPacket
 	
 	public AcquireSkillInfo(int id, int level, int spCost, SkillType type)
 	{
-		_reqs = new FastList<Req>();
+		_reqs = new FastList<>();
 		_id = id;
 		_level = level;
 		_spCost = spCost;

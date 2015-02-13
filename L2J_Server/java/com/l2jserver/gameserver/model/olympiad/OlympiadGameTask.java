@@ -133,10 +133,7 @@ public final class OlympiadGameTask implements Runnable
 			_needAnnounce = false;
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	public final L2OlympiadStadiumZone getZone()

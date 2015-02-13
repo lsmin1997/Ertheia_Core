@@ -37,13 +37,8 @@ import com.l2jserver.loginserver.GameServerTable;
 /**
  * @author KenM
  */
-@SuppressWarnings("serial")
 public class RegisterDialog extends JDialog implements ActionListener
 {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 352665586401078063L;
 	private final ResourceBundle _bundle;
 	private final JComboBox<ComboServer> _combo;
@@ -68,7 +63,7 @@ public class RegisterDialog extends JDialog implements ActionListener
 		final JLabel label = new JLabel(_bundle.getString("serverName"));
 		this.add(label, cons);
 		
-		_combo = new JComboBox<ComboServer>();
+		_combo = new JComboBox<>();
 		_combo.setEditable(false);
 		for (Map.Entry<Integer, String> entry : GameServerTable.getInstance().getServerNames().entrySet())
 		{

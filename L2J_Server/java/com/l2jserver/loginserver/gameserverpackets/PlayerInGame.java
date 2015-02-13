@@ -33,7 +33,7 @@ public class PlayerInGame extends BaseRecievePacket
 	public PlayerInGame(byte[] decrypt)
 	{
 		super(decrypt);
-		_accounts = new FastList<String>();
+		_accounts = new FastList<>();
 		int size = readH();
 		for (int i = 0; i < size; i++)
 		{

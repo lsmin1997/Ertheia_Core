@@ -15,8 +15,10 @@
 package com.l2jserver;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.zip.GZIPOutputStream;
 
 import com.l2jserver.util.StringUtil;
 
@@ -600,60 +602,28 @@ public class Base64
 		// Compress?
 		if (gzip == GZIP)
 		{
-			java.io.ByteArrayOutputStream baos = null;
-			java.util.zip.GZIPOutputStream gzos = null;
-			Base64.OutputStream b64os = null;
-			
-			try
+			try (ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+				OutputStream b64os = new OutputStream(baos, ENCODE | dontBreakLines);
+				GZIPOutputStream gzos = new GZIPOutputStream(b64os))
 			{
-				// GZip -> Base64 -> ByteArray
-				baos = new java.io.ByteArrayOutputStream();
-				b64os = new Base64.OutputStream(baos, ENCODE | dontBreakLines);
-				gzos = new java.util.zip.GZIPOutputStream(b64os);
-				
 				gzos.write(source, off, len);
-				gzos.close();
-			} // end try
+				
+				// Return value according to relevant encoding.
+				try
+				{
+					return new String(baos.toByteArray(), PREFERRED_ENCODING);
+				}
+				catch (java.io.UnsupportedEncodingException uue)
+				{
+					return new String(baos.toByteArray());
+				}
+			}
 			catch (java.io.IOException e)
 			{
 				e.printStackTrace();
 				return null;
-			} // end catch
-			finally
-			{
-				try
-				{
-					gzos.close();
-				}
-				catch (Exception e)
-				{
-				}
-				try
-				{
-					b64os.close();
-				}
-				catch (Exception e)
-				{
-				}
-				try
-				{
-					baos.close();
-				}
-				catch (Exception e)
-				{
-				}
-			} // end finally
-			
-			// Return value according to relevant encoding.
-			try
-			{
-				return new String(baos.toByteArray(), PREFERRED_ENCODING);
-			} // end try
-			catch (java.io.UnsupportedEncodingException uue)
-			{
-				return new String(baos.toByteArray());
-			} // end catch
-		} // end if: compress
+			}
+		}
 		
 		// Convert option to boolean in way that code likes it.
 		boolean breakLines = dontBreakLines == 0;

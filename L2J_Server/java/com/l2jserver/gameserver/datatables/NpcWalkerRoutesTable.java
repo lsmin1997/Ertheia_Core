@@ -40,7 +40,7 @@ public class NpcWalkerRoutesTable
 {
 	private final static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 	
-	private final TIntObjectHashMap<List<L2NpcWalkerNode>> _routes = new TIntObjectHashMap<List<L2NpcWalkerNode>>();
+	private final TIntObjectHashMap<List<L2NpcWalkerNode>> _routes = new TIntObjectHashMap<>();
 	
 	public static NpcWalkerRoutesTable getInstance()
 	{
@@ -73,6 +73,7 @@ public class NpcWalkerRoutesTable
 			catch (Exception e)
 			{
 				_log.log(Level.WARNING, "Could not parse WalkerRoutes.xml file: " + e.getMessage(), e);
+				return;
 			}
 			
 			Node n = doc.getFirstChild();
@@ -80,7 +81,7 @@ public class NpcWalkerRoutesTable
 			{
 				if (d.getNodeName().equals("walker"))
 				{
-					List<L2NpcWalkerNode> list = new ArrayList<L2NpcWalkerNode>();
+					List<L2NpcWalkerNode> list = new ArrayList<>();
 					int npcId = Integer.parseInt(d.getAttributes().getNamedItem("npcId").getNodeValue());
 					for (Node r = d.getFirstChild(); r != null; r = r.getNextSibling())
 					{

@@ -66,7 +66,7 @@ public class AccessLevels
 	 */
 	private void loadAccessLevels()
 	{
-		_accessLevels = new TIntObjectHashMap<L2AccessLevel>();
+		_accessLevels = new TIntObjectHashMap<>();
 		
 		Connection con = null;
 		

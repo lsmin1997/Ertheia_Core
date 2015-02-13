@@ -14,8 +14,6 @@
  */
 package com.l2jserver.loginserver.loginserverpackets;
 
-import java.io.IOException;
-
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.util.network.BaseSendablePacket;
 
@@ -35,12 +33,8 @@ public class AuthResponse extends BaseSendablePacket
 		writeS(GameServerTable.getInstance().getServerNameById(serverId));
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jserver.loginserver.serverpackets.ServerBasePacket#getContent()
-	 */
 	@Override
-	public byte[] getContent() throws IOException
+	public byte[] getContent()
 	{
 		return getBytes();
 	}

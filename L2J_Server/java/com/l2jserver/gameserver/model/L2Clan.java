@@ -76,7 +76,7 @@ public class L2Clan
 	private String _name;
 	private int _clanId;
 	private L2ClanMember _leader;
-	private final Map<Integer, L2ClanMember> _members = new FastMap<Integer, L2ClanMember>();
+	private final Map<Integer, L2ClanMember> _members = new FastMap<>();
 	
 	private String _allyName;
 	private int _allyId;
@@ -104,8 +104,8 @@ public class L2Clan
 	public static final int PENALTY_TYPE_DISSOLVE_ALLY = 4;
 	
 	private final ItemContainer _warehouse = new ClanWarehouse(this);
-	private final List<Integer> _atWarWith = new FastList<Integer>();
-	private final List<Integer> _atWarAttackers = new FastList<Integer>();
+	private final List<Integer> _atWarWith = new FastList<>();
+	private final List<Integer> _atWarAttackers = new FastList<>();
 	
 	private Forum _forum;
 	
@@ -161,10 +161,10 @@ public class L2Clan
 	public static final int SUBUNIT_KNIGHT4 = 2002;
 	
 	/** FastMap(Integer, L2Skill) containing all skills of the L2Clan */
-	private final Map<Integer, L2Skill> _skills = new FastMap<Integer, L2Skill>();
-	private final Map<Integer, RankPrivs> _privs = new FastMap<Integer, RankPrivs>();
-	private final Map<Integer, SubPledge> _subPledges = new FastMap<Integer, SubPledge>();
-	private final Map<Integer, L2Skill> _subPledgeSkills = new FastMap<Integer, L2Skill>();
+	private final Map<Integer, L2Skill> _skills = new FastMap<>();
+	private final Map<Integer, RankPrivs> _privs = new FastMap<>();
+	private final Map<Integer, SubPledge> _subPledges = new FastMap<>();
+	private final Map<Integer, L2Skill> _subPledgeSkills = new FastMap<>();
 	
 	private int _reputationScore = 0;
 	private int _rank = 0;
@@ -1536,10 +1536,10 @@ public class L2Clan
 	
 	public static class SubPledge
 	{
-		private final int _id;
+		protected final int _id;
 		private String _subPledgeName;
 		private int _leaderId;
-		private final Map<Integer, L2Skill> _subPledgeSkills = new FastMap<Integer, L2Skill>();
+		protected final Map<Integer, L2Skill> _subPledgeSkills = new FastMap<>();
 		
 		public SubPledge(int id, String name, int leaderId)
 		{
@@ -1723,58 +1723,56 @@ public class L2Clan
 			player.sendPacket(sp);
 			return null;
 		}
-		else
+		
+		Connection con = null;
+		try
 		{
-			Connection con = null;
-			try
+			con = L2DatabaseFactory.getInstance().getConnection();
+			PreparedStatement statement = con.prepareStatement("INSERT INTO clan_subpledges (clan_id,sub_pledge_id,name,leader_id) values (?,?,?,?)");
+			statement.setInt(1, getClanId());
+			statement.setInt(2, pledgeType);
+			statement.setString(3, subPledgeName);
+			if (pledgeType != -1)
 			{
-				con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement statement = con.prepareStatement("INSERT INTO clan_subpledges (clan_id,sub_pledge_id,name,leader_id) values (?,?,?,?)");
-				statement.setInt(1, getClanId());
-				statement.setInt(2, pledgeType);
-				statement.setString(3, subPledgeName);
-				if (pledgeType != -1)
+				statement.setInt(4, leaderId);
+			}
+			else
+			{
+				statement.setInt(4, 0);
+			}
+			statement.execute();
+			statement.close();
+			
+			subPledge = new SubPledge(pledgeType, subPledgeName, leaderId);
+			_subPledges.put(pledgeType, subPledge);
+			
+			if (pledgeType != -1)
+			{
+				// Royal Guard 5000 points per each
+				// Order of Knights 10000 points per each
+				if (pledgeType < L2Clan.SUBUNIT_KNIGHT1)
 				{
-					statement.setInt(4, leaderId);
+					setReputationScore(getReputationScore() - Config.ROYAL_GUARD_COST, true);
 				}
 				else
 				{
-					statement.setInt(4, 0);
-				}
-				statement.execute();
-				statement.close();
-				
-				subPledge = new SubPledge(pledgeType, subPledgeName, leaderId);
-				_subPledges.put(pledgeType, subPledge);
-				
-				if (pledgeType != -1)
-				{
-					// Royal Guard 5000 points per each
-					// Order of Knights 10000 points per each
-					if (pledgeType < L2Clan.SUBUNIT_KNIGHT1)
-					{
-						setReputationScore(getReputationScore() - Config.ROYAL_GUARD_COST, true);
-					}
-					else
-					{
-						setReputationScore(getReputationScore() - Config.KNIGHT_UNIT_COST, true);
-						// TODO: clan lvl9 or more can reinforce knights cheaper if first knight unit already created, use Config.KNIGHT_REINFORCE_COST
-					}
-				}
-				
-				if (Config.DEBUG)
-				{
-					_log.fine("New sub_clan saved in db: " + getClanId() + "; " + pledgeType);
+					setReputationScore(getReputationScore() - Config.KNIGHT_UNIT_COST, true);
+					// TODO: clan lvl9 or more can reinforce knights cheaper if first knight unit already created, use Config.KNIGHT_REINFORCE_COST
 				}
 			}
-			catch (Exception e)
+			
+			if (Config.DEBUG)
 			{
-				_log.log(Level.SEVERE, "Error saving sub clan data: " + e.getMessage(), e);
+				_log.fine("New sub_clan saved in db: " + getClanId() + "; " + pledgeType);
 			}
-			finally
-			{
-				L2DatabaseFactory.close(con);
-			}
+		}
+		catch (Exception e)
+		{
+			_log.log(Level.SEVERE, "Error saving sub clan data: " + e.getMessage(), e);
+		}
+		finally
+		{
+			L2DatabaseFactory.close(con);
 		}
 		broadcastToOnlineMembers(new PledgeShowInfoUpdate(_leader.getClan()));
 		broadcastToOnlineMembers(new PledgeReceiveSubPledgeCreated(subPledge, _leader.getClan()));
@@ -1897,10 +1895,7 @@ public class L2Clan
 		{
 			return _privs.get(rank).getPrivs();
 		}
-		else
-		{
-			return CP_NOTHING;
-		}
+		return CP_NOTHING;
 	}
 	
 	public void setRankPrivs(int rank, int privs)

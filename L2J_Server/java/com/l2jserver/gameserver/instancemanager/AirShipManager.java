@@ -42,9 +42,9 @@ public class AirShipManager
 	private static final String UPDATE_DB = "UPDATE airships SET fuel=? WHERE owner_id=?";
 	
 	private L2CharTemplate _airShipTemplate = null;
-	private final TIntObjectHashMap<StatsSet> _airShipsInfo = new TIntObjectHashMap<StatsSet>();
-	private final TIntObjectHashMap<L2AirShipInstance> _airShips = new TIntObjectHashMap<L2AirShipInstance>();
-	private final TIntObjectHashMap<AirShipTeleportList> _teleports = new TIntObjectHashMap<AirShipTeleportList>();
+	private final TIntObjectHashMap<StatsSet> _airShipsInfo = new TIntObjectHashMap<>();
+	private final TIntObjectHashMap<L2AirShipInstance> _airShips = new TIntObjectHashMap<>();
+	private final TIntObjectHashMap<AirShipTeleportList> _teleports = new TIntObjectHashMap<>();
 	
 	public static final AirShipManager getInstance()
 	{

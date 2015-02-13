@@ -32,7 +32,7 @@ public class L2DropCategory
 	public L2DropCategory(int categoryType)
 	{
 		_categoryType = categoryType;
-		_drops = new FastList<L2DropData>(0);
+		_drops = new FastList<>(0);
 		_categoryChance = 0;
 		_categoryBalancedChance = 0;
 	}
@@ -107,10 +107,7 @@ public class L2DropCategory
 		{
 			return _categoryChance;
 		}
-		else
-		{
-			return L2DropData.MAX_CHANCE;
-		}
+		return L2DropData.MAX_CHANCE;
 	}
 	
 	public int getCategoryBalancedChance()
@@ -119,10 +116,7 @@ public class L2DropCategory
 		{
 			return _categoryBalancedChance;
 		}
-		else
-		{
-			return L2DropData.MAX_CHANCE;
-		}
+		return L2DropData.MAX_CHANCE;
 	}
 	
 	public int getCategoryType()
@@ -137,7 +131,7 @@ public class L2DropCategory
 	 */
 	public synchronized L2DropData dropSeedAllowedDropsOnly()
 	{
-		FastList<L2DropData> drops = new FastList<L2DropData>();
+		FastList<L2DropData> drops = new FastList<>();
 		int subCatChance = 0;
 		for (L2DropData drop : getAllDrops())
 		{

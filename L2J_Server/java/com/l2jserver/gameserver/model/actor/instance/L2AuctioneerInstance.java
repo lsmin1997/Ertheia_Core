@@ -43,7 +43,7 @@ public final class L2AuctioneerInstance extends L2Npc
 	private static final int COND_BUSY_BECAUSE_OF_SIEGE = 1;
 	private static final int COND_REGULAR = 3;
 	
-	private final Map<Integer, Auction> _pendingAuctions = new FastMap<Integer, Auction>();
+	private final Map<Integer, Auction> _pendingAuctions = new FastMap<>();
 	
 	public L2AuctioneerInstance(int objectId, L2NpcTemplate template)
 	{
@@ -354,10 +354,7 @@ public final class L2AuctioneerInstance extends L2Npc
 					{
 						return;
 					}
-					else
-					{
-						auctionId = player.getClan().getAuctionBiddedAt();
-					}
+					auctionId = player.getClan().getAuctionBiddedAt();
 				}
 				else
 				{
@@ -660,10 +657,7 @@ public final class L2AuctioneerInstance extends L2Npc
 			{
 				return COND_BUSY_BECAUSE_OF_SIEGE; // Busy because of siege
 			}
-			else
-			{
-				return COND_REGULAR;
-			}
+			return COND_REGULAR;
 		}
 		
 		return COND_ALL_FALSE;

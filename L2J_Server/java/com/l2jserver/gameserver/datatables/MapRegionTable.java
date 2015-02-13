@@ -483,10 +483,7 @@ public class MapRegionTable
 					{
 						return new Location(-186330, 242944, 2544);
 					}
-					else
-					{
-						return new Location(17817, 170079, -3530);
-					}
+					return new Location(17817, 170079, -3530);
 				}
 			}
 			

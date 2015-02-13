@@ -180,7 +180,7 @@ public final class Calculator
 	 */
 	public synchronized FastList<Stats> removeOwner(Object owner)
 	{
-		FastList<Stats> modifiedStats = new FastList<Stats>();
+		FastList<Stats> modifiedStats = new FastList<>();
 		
 		for (Func func : _functions)
 		{

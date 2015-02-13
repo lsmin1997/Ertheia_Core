@@ -48,7 +48,7 @@ public class TeleportLocationTable
 	
 	public void reloadAll()
 	{
-		_teleports = new TIntObjectHashMap<L2TeleportLocation>();
+		_teleports = new TIntObjectHashMap<>();
 		
 		Connection con = null;
 		try

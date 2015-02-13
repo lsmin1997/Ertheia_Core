@@ -378,7 +378,7 @@ public abstract class L2Character extends L2Object
 			_calculators = Formulas.getStdDoorCalculators();
 			_skills = null;
 		}
-		else if ((template != null) && (this instanceof L2Npc))
+		else if (this instanceof L2Npc)
 		{
 			// Copy the Standard Calcultors of the L2NPCInstance in _calculators
 			_calculators = NPC_STD_CALCULATOR;
@@ -2275,12 +2275,9 @@ public abstract class L2Character extends L2Object
 					sendPacket(sm);
 					return false;
 				}
-				else
-				{
-					// Send a System Message to the caster
-					sendPacket(SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_NOT_ENOUGH_NECESSARY_ITEMS_TO_USE_THE_SKILL));
-					return false;
-				}
+				// Send a System Message to the caster
+				sendPacket(SystemMessage.getSystemMessage(SystemMessageId.THERE_ARE_NOT_ENOUGH_NECESSARY_ITEMS_TO_USE_THE_SKILL));
+				return false;
 			}
 		}
 		
@@ -2581,7 +2578,7 @@ public abstract class L2Character extends L2Object
 		{
 			if (_attackByList == null)
 			{
-				_attackByList = new WeakFastSet<L2Character>(true);
+				_attackByList = new WeakFastSet<>(true);
 			}
 		}
 		return _attackByList;
@@ -4090,7 +4087,7 @@ public abstract class L2Character extends L2Object
 	public final void addStatFuncs(Func[] funcs)
 	{
 		
-		FastList<Stats> modifiedStats = new FastList<Stats>();
+		FastList<Stats> modifiedStats = new FastList<>();
 		
 		for (Func f : funcs)
 		{
@@ -4181,7 +4178,7 @@ public abstract class L2Character extends L2Object
 	public final void removeStatFuncs(Func[] funcs)
 	{
 		
-		FastList<Stats> modifiedStats = new FastList<Stats>();
+		FastList<Stats> modifiedStats = new FastList<>();
 		
 		for (Func f : funcs)
 		{
@@ -5057,10 +5054,7 @@ public abstract class L2Character extends L2Object
 						{
 							return;
 						}
-						else
-						{
-							_move.onGeodataPathIndex = -1; // Set not on geodata path
-						}
+						_move.onGeodataPathIndex = -1; // Set not on geodata path
 					}
 					catch (NullPointerException e)
 					{
@@ -5122,14 +5116,12 @@ public abstract class L2Character extends L2Object
 							getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
 							return;
 						}
-						else
-						{
-							m.disregardingGeodata = true;
-							x = originalX;
-							y = originalY;
-							z = originalZ;
-							distance = originalDistance;
-						}
+						
+						m.disregardingGeodata = true;
+						x = originalX;
+						y = originalY;
+						z = originalZ;
+						distance = originalDistance;
 					}
 					else
 					{
@@ -5480,22 +5472,13 @@ public abstract class L2Character extends L2Object
 			{
 				return ((dx * dx) + (dy * dy) + (dz * dz)) < (radius * radius);
 			}
-			else
-			{
-				return ((dx * dx) + (dy * dy)) < (radius * radius);
-			}
+			return ((dx * dx) + (dy * dy)) < (radius * radius);
 		}
-		else
+		if (checkZ)
 		{
-			if (checkZ)
-			{
-				return ((dx * dx) + (dy * dy) + (dz * dz)) <= (radius * radius);
-			}
-			else
-			{
-				return ((dx * dx) + (dy * dy)) <= (radius * radius);
-			}
+			return ((dx * dx) + (dy * dy) + (dz * dz)) <= (radius * radius);
 		}
+		return ((dx * dx) + (dy * dy)) <= (radius * radius);
 	}
 	
 	// /**
@@ -6562,7 +6545,7 @@ public abstract class L2Character extends L2Object
 			int _skiprange = 0;
 			int _skipgeo = 0;
 			int _skippeace = 0;
-			List<L2Character> targetList = new FastList<L2Character>(targets.length);
+			List<L2Character> targetList = new FastList<>(targets.length);
 			for (L2Object target : targets)
 			{
 				if (target instanceof L2Character)
@@ -6903,12 +6886,10 @@ public abstract class L2Character extends L2Object
 			setIsCastingSimultaneouslyNow(false);
 			return;
 		}
-		else
-		{
-			_skillCast = null;
-			setIsCastingNow(false);
-			_castInterruptTime = 0;
-		}
+		
+		_skillCast = null;
+		setIsCastingNow(false);
+		_castInterruptTime = 0;
 		
 		final L2Skill skill = mut.skill;
 		final L2Object target = mut.targets.length > 0 ? mut.targets[0] : null;
@@ -7464,10 +7445,7 @@ public abstract class L2Character extends L2Object
 		{
 			return isInFrontOf((L2Character) target);
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	/**

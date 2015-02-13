@@ -709,11 +709,11 @@ public final class Config
 	public static String ANNOUNCE_PVP_MSG;
 	public static boolean L2JMOD_CHAT_ADMIN;
 	public static boolean L2JMOD_MULTILANG_ENABLE;
-	public static List<String> L2JMOD_MULTILANG_ALLOWED = new ArrayList<String>();
+	public static List<String> L2JMOD_MULTILANG_ALLOWED = new ArrayList<>();
 	public static String L2JMOD_MULTILANG_DEFAULT;
 	public static boolean L2JMOD_MULTILANG_VOICED_ALLOW;
 	public static boolean L2JMOD_MULTILANG_SM_ENABLE;
-	public static List<String> L2JMOD_MULTILANG_SM_ALLOWED = new ArrayList<String>();
+	public static List<String> L2JMOD_MULTILANG_SM_ALLOWED = new ArrayList<>();
 	public static boolean L2WALKER_PROTECTION;
 	public static boolean L2JMOD_DEBUG_VOICE_COMMAND;
 	public static int L2JMOD_DUALBOX_CHECK_MAX_PLAYERS_PER_IP;
@@ -1100,8 +1100,8 @@ public final class Config
 				
 				File file = new File(IP_CONFIG_FILE);
 				Document doc = null;
-				ArrayList<String> subnets = new ArrayList<String>(5);
-				ArrayList<String> hosts = new ArrayList<String>(5);
+				ArrayList<String> subnets = new ArrayList<>(5);
+				ArrayList<String> hosts = new ArrayList<>(5);
 				try
 				{
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -1243,9 +1243,9 @@ public final class Config
 					CH_FRONT2_FEE = Integer.parseInt(Feature.getProperty("ClanHallFrontPlatformFunctionFeeLvl2", "4000"));
 					CH_BUFF_FREE = Boolean.parseBoolean(Feature.getProperty("AltClanHallMpBuffFree", "False"));
 					
-					CL_SET_SIEGE_TIME_LIST = new ArrayList<String>();
-					SIEGE_HOUR_LIST_MORNING = new ArrayList<Integer>();
-					SIEGE_HOUR_LIST_AFTERNOON = new ArrayList<Integer>();
+					CL_SET_SIEGE_TIME_LIST = new ArrayList<>();
+					SIEGE_HOUR_LIST_MORNING = new ArrayList<>();
+					SIEGE_HOUR_LIST_AFTERNOON = new ArrayList<>();
 					String[] sstl = Feature.getProperty("CLSetSiegeTimeList", "").split(",");
 					if (sstl.length != 0)
 					{
@@ -1638,7 +1638,7 @@ public final class Config
 					TELEPORT_WATCHDOG_TIMEOUT = Integer.parseInt(Character.getProperty("TeleportWatchdogTimeout", "0"));
 					PLAYER_SPAWN_PROTECTION = Integer.parseInt(Character.getProperty("PlayerSpawnProtection", "0"));
 					String[] items = Character.getProperty("PlayerSpawnProtectionAllowedItems", "0").split(",");
-					SPAWN_PROTECTION_ALLOWED_ITEMS = new ArrayList<Integer>(items.length);
+					SPAWN_PROTECTION_ALLOWED_ITEMS = new ArrayList<>(items.length);
 					for (String item : items)
 					{
 						Integer itm = 0;
@@ -2298,9 +2298,9 @@ public final class Config
 						}
 						else
 						{
-							TVT_EVENT_REWARDS = new ArrayList<int[]>();
-							TVT_DOORS_IDS_TO_OPEN = new ArrayList<Integer>();
-							TVT_DOORS_IDS_TO_CLOSE = new ArrayList<Integer>();
+							TVT_EVENT_REWARDS = new ArrayList<>();
+							TVT_DOORS_IDS_TO_OPEN = new ArrayList<>();
+							TVT_DOORS_IDS_TO_CLOSE = new ArrayList<>();
 							TVT_EVENT_PARTICIPATION_NPC_COORDINATES = new int[4];
 							TVT_EVENT_TEAM_1_COORDINATES = new int[3];
 							TVT_EVENT_TEAM_2_COORDINATES = new int[3];
@@ -2516,7 +2516,7 @@ public final class Config
 					
 					L2JMOD_MULTILANG_ENABLE = Boolean.parseBoolean(L2JModSettings.getProperty("MultiLangEnable", "false"));
 					String[] allowed = L2JModSettings.getProperty("MultiLangAllowed", "en").split(";");
-					L2JMOD_MULTILANG_ALLOWED = new ArrayList<String>(allowed.length);
+					L2JMOD_MULTILANG_ALLOWED = new ArrayList<>(allowed.length);
 					for (String lang : allowed)
 					{
 						L2JMOD_MULTILANG_ALLOWED.add(lang);
@@ -2529,7 +2529,7 @@ public final class Config
 					L2JMOD_MULTILANG_VOICED_ALLOW = Boolean.parseBoolean(L2JModSettings.getProperty("MultiLangVoiceCommand", "True"));
 					L2JMOD_MULTILANG_SM_ENABLE = Boolean.parseBoolean(L2JModSettings.getProperty("MultiLangSystemMessageEnable", "false"));
 					allowed = L2JModSettings.getProperty("MultiLangSystemMessageAllowed", "").split(";");
-					L2JMOD_MULTILANG_SM_ALLOWED = new ArrayList<String>(allowed.length);
+					L2JMOD_MULTILANG_SM_ALLOWED = new ArrayList<>(allowed.length);
 					for (String lang : allowed)
 					{
 						if (!lang.isEmpty())
@@ -2842,10 +2842,9 @@ public final class Config
 					throw new Error("Failed to Load " + GRACIASEEDS_CONFIG_FILE + " File.");
 				}
 				
-				try
+				try (LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(new File(CHAT_FILTER_FILE)))))
 				{
-					FILTER_LIST = new ArrayList<String>();
-					LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(new File(CHAT_FILTER_FILE))));
+					FILTER_LIST = new ArrayList<>();
 					String line = null;
 					while ((line = lnr.readLine()) != null)
 					{
@@ -4276,9 +4275,9 @@ public final class Config
 		
 		public ClassMasterSettings(String _configLine)
 		{
-			_claimItems = new TIntObjectHashMap<TIntIntHashMap>(3);
-			_rewardItems = new TIntObjectHashMap<TIntIntHashMap>(3);
-			_allowedClassChange = new TIntObjectHashMap<Boolean>(3);
+			_claimItems = new TIntObjectHashMap<>(3);
+			_rewardItems = new TIntObjectHashMap<>(3);
+			_allowedClassChange = new TIntObjectHashMap<>(3);
 			if (_configLine != null)
 			{
 				parseConfigLine(_configLine.trim());

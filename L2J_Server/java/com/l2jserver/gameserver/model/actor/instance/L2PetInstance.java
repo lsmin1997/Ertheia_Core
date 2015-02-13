@@ -236,10 +236,7 @@ public class L2PetInstance extends L2Summon
 			{
 				return getPetLevelData().getPetFeedBattle();
 			}
-			else
-			{
-				return getPetLevelData().getPetFeedNormal();
-			}
+			return getPetLevelData().getPetFeedNormal();
 		}
 	}
 	

@@ -54,7 +54,7 @@ public class L2Manor
 	
 	public FastList<Integer> getAllCrops()
 	{
-		FastList<Integer> crops = new FastList<Integer>();
+		FastList<Integer> crops = new FastList<>();
 		
 		for (SeedData seed : _seeds.values())
 		{
@@ -75,10 +75,7 @@ public class L2Manor
 		{
 			return seedItem.getReferencePrice();
 		}
-		else
-		{
-			return 0;
-		}
+		return 0;
 	}
 	
 	public int getSeedBasicPriceByCrop(int cropId)
@@ -96,15 +93,7 @@ public class L2Manor
 	public int getCropBasicPrice(int cropId)
 	{
 		L2Item cropItem = ItemTable.getInstance().getTemplate(cropId);
-		
-		if (cropItem != null)
-		{
-			return cropItem.getReferencePrice();
-		}
-		else
-		{
-			return 0;
-		}
+		return (cropItem != null) ? cropItem.getReferencePrice() : 0;
 	}
 	
 	public int getMatureCrop(int cropId)
@@ -231,7 +220,7 @@ public class L2Manor
 	 */
 	public FastList<Integer> getCropsForCastle(int castleId)
 	{
-		FastList<Integer> crops = new FastList<Integer>();
+		FastList<Integer> crops = new FastList<>();
 		
 		for (SeedData seed : _seeds.values())
 		{
@@ -251,7 +240,7 @@ public class L2Manor
 	 */
 	public FastList<Integer> getSeedsForCastle(int castleId)
 	{
-		FastList<Integer> seedsID = new FastList<Integer>();
+		FastList<Integer> seedsID = new FastList<>();
 		
 		for (SeedData seed : _seeds.values())
 		{
@@ -401,6 +390,7 @@ public class L2Manor
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Could not parse seeds.xml file: " + e.getMessage(), e);
+			return;
 		}
 		
 		doc.getDocumentElement().normalize();

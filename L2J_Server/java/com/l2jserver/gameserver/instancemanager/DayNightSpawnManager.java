@@ -50,9 +50,9 @@ public class DayNightSpawnManager
 	
 	private DayNightSpawnManager()
 	{
-		_dayCreatures = new ArrayList<L2Spawn>();
-		_nightCreatures = new ArrayList<L2Spawn>();
-		_bosses = new FastMap<L2Spawn, L2RaidBossInstance>();
+		_dayCreatures = new ArrayList<>();
+		_nightCreatures = new ArrayList<>();
+		_bosses = new FastMap<>();
 		
 		_log.info("DayNightSpawnManager: Day/Night handler initialized");
 	}
@@ -204,7 +204,7 @@ public class DayNightSpawnManager
 					continue;
 				}
 				
-				if ((boss == null) && (mode == 0))
+				if ((boss == null) || (mode == 0))
 				{
 					continue;
 				}
@@ -251,10 +251,7 @@ public class DayNightSpawnManager
 			
 			return raidboss;
 		}
-		else
-		{
-			_bosses.put(spawnDat, null);
-		}
+		_bosses.put(spawnDat, null);
 		
 		return null;
 	}

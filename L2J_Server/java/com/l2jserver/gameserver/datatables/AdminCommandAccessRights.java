@@ -59,7 +59,7 @@ public class AdminCommandAccessRights
 	 */
 	private void loadAdminCommandAccessRights()
 	{
-		_adminCommandAccessRights = new FastMap<String, L2AdminCommandAccessRight>();
+		_adminCommandAccessRights = new FastMap<>();
 		
 		Connection con = null;
 		

@@ -63,9 +63,9 @@ public class Quest extends ManagedScript
 	protected static final Logger _log = Logger.getLogger(Quest.class.getName());
 	
 	/** HashMap containing events from String value of the event */
-	private static Map<String, Quest> _allEventsS = new FastMap<String, Quest>();
+	private static Map<String, Quest> _allEventsS = new FastMap<>();
 	/** HashMap containing lists of timers from the name of the timer */
-	private final Map<String, FastList<QuestTimer>> _allEventTimers = new FastMap<String, FastList<QuestTimer>>();
+	private final Map<String, FastList<QuestTimer>> _allEventTimers = new FastMap<>();
 	
 	private final ReentrantReadWriteLock _rwLock = new ReentrantReadWriteLock();
 	
@@ -247,7 +247,7 @@ public class Quest extends ManagedScript
 		// no timer exists with the same name, at all
 		if (timers == null)
 		{
-			timers = new FastList<QuestTimer>();
+			timers = new FastList<>();
 			timers.add(new QuestTimer(this, name, time, npc, player, repeating));
 			_allEventTimers.put(name, timers);
 		}
@@ -522,10 +522,7 @@ public class Quest extends ManagedScript
 			return showResult(player, res);
 			// else tell the player that
 		}
-		else
-		{
-			player.sendPacket(ActionFailed.STATIC_PACKET);
-		}
+		player.sendPacket(ActionFailed.STATIC_PACKET);
 		// note: if the default html for this npc needs to be shown, onFirstTalk should
 		// call npc.showChatWindow(player) and then return null.
 		return true;
@@ -732,10 +729,7 @@ public class Quest extends ManagedScript
 		{
 			return onAdvEvent("", (L2Npc) killer, qs.getPlayer());
 		}
-		else
-		{
-			return onAdvEvent("", null, qs.getPlayer());
-		}
+		return onAdvEvent("", null, qs.getPlayer());
 	}
 	
 	public String onAdvEvent(String event, L2Npc npc, L2PcInstance player)
@@ -1535,7 +1529,7 @@ public class Quest extends ManagedScript
 		
 		// if the player is in a party, gather a list of all matching party members (possibly
 		// including this player)
-		FastList<L2PcInstance> candidates = new FastList<L2PcInstance>();
+		FastList<L2PcInstance> candidates = new FastList<>();
 		
 		// get the target for enforcing distance limitations.
 		L2Object target = player.getTarget();
@@ -1597,7 +1591,7 @@ public class Quest extends ManagedScript
 		
 		// if the player is in a party, gather a list of all matching party members (possibly
 		// including this player)
-		FastList<L2PcInstance> candidates = new FastList<L2PcInstance>();
+		FastList<L2PcInstance> candidates = new FastList<>();
 		
 		// get the target for enforcing distance limitations.
 		L2Object target = player.getTarget();
@@ -1852,10 +1846,7 @@ public class Quest extends ManagedScript
 		{
 			return QuestManager.getInstance().removeQuest(this);
 		}
-		else
-		{
-			return true;
-		}
+		return true;
 	}
 	
 	@Override

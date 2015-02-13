@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.network.gameserverpackets;
 
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPublicKey;
 import java.util.logging.Level;
@@ -44,21 +43,18 @@ public class BlowFishKey extends BaseSendablePacket
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
 			rsaCipher.init(Cipher.ENCRYPT_MODE, publicKey);
 			encrypted = rsaCipher.doFinal(blowfishKey);
+			
+			writeD(encrypted.length);
+			writeB(encrypted);
 		}
 		catch (GeneralSecurityException e)
 		{
 			_log.log(Level.SEVERE, "Error While encrypting blowfish key for transmision (Crypt error): " + e.getMessage(), e);
 		}
-		writeD(encrypted.length);
-		writeB(encrypted);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
-	 */
 	@Override
-	public byte[] getContent() throws IOException
+	public byte[] getContent()
 	{
 		return getBytes();
 	}

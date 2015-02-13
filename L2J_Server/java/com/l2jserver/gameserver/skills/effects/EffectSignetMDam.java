@@ -138,7 +138,7 @@ public class EffectSignetMDam extends L2Effect
 			}
 		}
 		
-		FastList<L2Character> targets = new FastList<L2Character>();
+		FastList<L2Character> targets = new FastList<>();
 		
 		for (L2Character cha : _actor.getKnownList().getKnownCharactersInRadius(getSkill().getSkillRadius()))
 		{
@@ -159,10 +159,7 @@ public class EffectSignetMDam extends L2Effect
 					caster.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SKILL_REMOVED_DUE_LACK_MP));
 					return false;
 				}
-				else
-				{
-					caster.reduceCurrentMp(mpConsume);
-				}
+				caster.reduceCurrentMp(mpConsume);
 				
 				if (cha instanceof L2Playable)
 				{

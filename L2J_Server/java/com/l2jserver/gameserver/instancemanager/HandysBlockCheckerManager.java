@@ -56,7 +56,7 @@ public final class HandysBlockCheckerManager
 	private static FastMap<Integer, Boolean> _arenaStatus;
 	
 	// Registration request penalty (10 seconds)
-	private static FastList<Integer> _registrationPenalty = new FastList<Integer>();
+	protected static FastList<Integer> _registrationPenalty = new FastList<>();
 	
 	/**
 	 * Return the number of event-start votes for the spcified arena id
@@ -105,12 +105,12 @@ public final class HandysBlockCheckerManager
 		_arenaVotes.put(arena, 0);
 	}
 	
-	private HandysBlockCheckerManager()
+	protected HandysBlockCheckerManager()
 	{
 		// Initialize arena status
 		if (_arenaStatus == null)
 		{
-			_arenaStatus = new FastMap<Integer, Boolean>();
+			_arenaStatus = new FastMap<>();
 			_arenaStatus.put(0, false);
 			_arenaStatus.put(1, false);
 			_arenaStatus.put(2, false);
@@ -361,7 +361,7 @@ public final class HandysBlockCheckerManager
 	
 	private static class SingletonHolder
 	{
-		private static HandysBlockCheckerManager _instance = new HandysBlockCheckerManager();
+		protected static final HandysBlockCheckerManager _instance = new HandysBlockCheckerManager();
 	}
 	
 	public class ArenaParticipantsHolder
@@ -374,8 +374,8 @@ public final class HandysBlockCheckerManager
 		public ArenaParticipantsHolder(int arena)
 		{
 			_arena = arena;
-			_redPlayers = new ArrayList<L2PcInstance>(6);
-			_bluePlayers = new ArrayList<L2PcInstance>(6);
+			_redPlayers = new ArrayList<>(6);
+			_bluePlayers = new ArrayList<>(6);
 			_engine = new BlockCheckerEngine(this, _arena);
 		}
 		
@@ -391,7 +391,7 @@ public final class HandysBlockCheckerManager
 		
 		public ArrayList<L2PcInstance> getAllPlayers()
 		{
-			ArrayList<L2PcInstance> all = new ArrayList<L2PcInstance>(12);
+			ArrayList<L2PcInstance> all = new ArrayList<>(12);
 			all.addAll(_redPlayers);
 			all.addAll(_bluePlayers);
 			return all;
@@ -475,7 +475,7 @@ public final class HandysBlockCheckerManager
 			_engine.updatePlayersOnStart(this);
 		}
 		
-		private void checkAndShuffle()
+		protected void checkAndShuffle()
 		{
 			int redSize = _redPlayers.size();
 			int blueSize = _bluePlayers.size();

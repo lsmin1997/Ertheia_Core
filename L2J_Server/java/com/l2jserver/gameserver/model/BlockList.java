@@ -49,7 +49,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 public class BlockList
 {
 	private static Logger _log = Logger.getLogger(BlockList.class.getName());
-	private static Map<Integer, List<Integer>> _offlineList = new FastMap<Integer, List<Integer>>();
+	private static Map<Integer, List<Integer>> _offlineList = new FastMap<>();
 	
 	private final L2PcInstance _owner;
 	private List<Integer> _blockList;
@@ -84,7 +84,7 @@ public class BlockList
 	private static List<Integer> loadList(int ObjId)
 	{
 		Connection con = null;
-		List<Integer> list = new FastList<Integer>();
+		List<Integer> list = new FastList<>();
 		
 		try
 		{

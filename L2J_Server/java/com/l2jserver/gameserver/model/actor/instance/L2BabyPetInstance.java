@@ -44,14 +44,14 @@ public final class L2BabyPetInstance extends L2PetInstance
 	private static final int BUFF_CONTROL = 5771;
 	private static final int AWAKENING = 5753;
 	
-	private FastList<SkillHolder> _buffs = null;
-	private SkillHolder _majorHeal = null;
-	private SkillHolder _minorHeal = null;
-	private SkillHolder _recharge = null;
+	protected FastList<SkillHolder> _buffs = null;
+	protected SkillHolder _majorHeal = null;
+	protected SkillHolder _minorHeal = null;
+	protected SkillHolder _recharge = null;
 	
 	private Future<?> _castTask;
 	
-	private boolean _bufferMode = true;
+	protected boolean _bufferMode = true;
 	
 	public L2BabyPetInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, L2ItemInstance control)
 	{
@@ -114,7 +114,7 @@ public final class L2BabyPetInstance extends L2PetInstance
 					case BUFF:
 						if (_buffs == null)
 						{
-							_buffs = new FastList<SkillHolder>();
+							_buffs = new FastList<>();
 						}
 						_buffs.add(new SkillHolder(skill));
 						break;
@@ -224,7 +224,7 @@ public final class L2BabyPetInstance extends L2PetInstance
 	private class CastTask implements Runnable
 	{
 		private final L2BabyPetInstance _baby;
-		private final List<L2Skill> _currentBuffs = new FastList<L2Skill>();
+		private final List<L2Skill> _currentBuffs = new FastList<>();
 		
 		public CastTask(L2BabyPetInstance baby)
 		{

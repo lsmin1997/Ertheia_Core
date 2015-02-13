@@ -77,7 +77,7 @@ public class CursedWeaponsManager
 	private void init()
 	{
 		_log.info("Initializing CursedWeaponsManager");
-		_cursedWeapons = new FastMap<Integer, CursedWeapon>();
+		_cursedWeapons = new FastMap<>();
 		
 		if (!Config.ALLOW_CURSED_WEAPONS)
 		{

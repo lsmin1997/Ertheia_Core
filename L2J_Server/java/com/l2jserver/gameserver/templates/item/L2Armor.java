@@ -140,7 +140,7 @@ public final class L2Armor extends L2Item
 			return _emptyFunctionSet;
 		}
 		
-		ArrayList<Func> funcs = new ArrayList<Func>(_funcTemplates.length);
+		ArrayList<Func> funcs = new ArrayList<>(_funcTemplates.length);
 		
 		Env env = new Env();
 		env.player = player;

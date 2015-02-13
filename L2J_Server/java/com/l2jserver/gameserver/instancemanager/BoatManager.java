@@ -31,7 +31,7 @@ import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 
 public class BoatManager
 {
-	private final Map<Integer, L2BoatInstance> _boats = new FastMap<Integer, L2BoatInstance>();
+	private final Map<Integer, L2BoatInstance> _boats = new FastMap<>();
 	private final boolean[] _docksBusy = new boolean[3];
 	
 	public static final int TALKING_ISLAND = 1;

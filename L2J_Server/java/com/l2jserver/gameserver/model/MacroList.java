@@ -43,7 +43,7 @@ public class MacroList
 	private final L2PcInstance _owner;
 	private int _revision;
 	private int _macroId;
-	private final Map<Integer, L2Macro> _macroses = new FastMap<Integer, L2Macro>();
+	private final Map<Integer, L2Macro> _macroses = new FastMap<>();
 	
 	public MacroList(L2PcInstance owner)
 	{

@@ -55,9 +55,9 @@ public class ClanHallManager
 	private ClanHallManager()
 	{
 		_log.info("Initializing ClanHallManager");
-		_clanHall = new FastMap<Integer, ClanHall>();
-		_freeClanHall = new FastMap<Integer, ClanHall>();
-		_allClanHalls = new FastMap<Integer, ClanHall>();
+		_clanHall = new FastMap<>();
+		_freeClanHall = new FastMap<>();
+		_allClanHalls = new FastMap<>();
 		load();
 	}
 	
@@ -103,10 +103,7 @@ public class ClanHallManager
 						owner.setHasHideout(id);
 						continue;
 					}
-					else
-					{
-						ch.free();
-					}
+					ch.free();
 				}
 				_freeClanHall.put(id, ch);
 				

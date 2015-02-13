@@ -96,8 +96,8 @@ public class L2RaceManagerInstance extends L2Npc
 		{
 			_notInitialized = false;
 			// *
-			_history = new FastList<Race>();
-			_managers = new FastList<L2RaceManagerInstance>();
+			_history = new FastList<>();
+			_managers = new FastList<>();
 			
 			ThreadPoolManager s = ThreadPoolManager.getInstance();
 			s.scheduleGeneralAtFixedRate(new Announcement(SystemMessageId.MONSRACE_TICKETS_AVAILABLE_FOR_S1_RACE), 0, 10 * MINUTE);

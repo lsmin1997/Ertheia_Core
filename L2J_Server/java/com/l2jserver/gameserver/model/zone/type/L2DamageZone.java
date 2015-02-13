@@ -146,7 +146,7 @@ public class L2DamageZone extends L2ZoneType
 		}
 	}
 	
-	private Castle getCastle()
+	protected Castle getCastle()
 	{
 		if ((_castleId > 0) && (_castle == null))
 		{

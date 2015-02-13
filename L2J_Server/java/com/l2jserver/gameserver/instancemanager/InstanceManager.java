@@ -15,7 +15,7 @@
 package com.l2jserver.gameserver.instancemanager;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,13 +42,13 @@ import com.l2jserver.gameserver.model.entity.Instance;
 public class InstanceManager
 {
 	private final static Logger _log = Logger.getLogger(InstanceManager.class.getName());
-	private final FastMap<Integer, Instance> _instanceList = new FastMap<Integer, Instance>();
-	private final FastMap<Integer, InstanceWorld> _instanceWorlds = new FastMap<Integer, InstanceWorld>();
+	private final FastMap<Integer, Instance> _instanceList = new FastMap<>();
+	private final FastMap<Integer, InstanceWorld> _instanceWorlds = new FastMap<>();
 	private int _dynamic = 300000;
 	
 	// InstanceId Names
-	private final static Map<Integer, String> _instanceIdNames = new FastMap<Integer, String>();
-	private final Map<Integer, Map<Integer, Long>> _playerInstanceTimes = new FastMap<Integer, Map<Integer, Long>>();
+	private final static Map<Integer, String> _instanceIdNames = new FastMap<>();
+	private final Map<Integer, Map<Integer, Long>> _playerInstanceTimes = new FastMap<>();
 	
 	private static final String ADD_INSTANCE_TIME = "INSERT INTO character_instance_time (charId,instanceId,time) values (?,?,?) ON DUPLICATE KEY UPDATE time=?";
 	private static final String RESTORE_INSTANCE_TIMES = "SELECT instanceId,time FROM character_instance_time WHERE charId=?";
@@ -181,10 +181,8 @@ public class InstanceManager
 	
 	private void loadInstanceNames()
 	{
-		InputStream in = null;
-		try
+		try (InputStream in = new FileInputStream(Config.DATAPACK_ROOT + "/data/instancenames.xml"))
 		{
-			in = new FileInputStream(Config.DATAPACK_ROOT + "/data/instancenames.xml");
 			XMLStreamReaderImpl xpp = new XMLStreamReaderImpl();
 			xpp.setInput(new UTF8StreamReader().setInput(in));
 			for (int e = xpp.getEventType(); e != XMLStreamConstants.END_DOCUMENT; e = xpp.next())
@@ -200,7 +198,7 @@ public class InstanceManager
 				}
 			}
 		}
-		catch (FileNotFoundException e)
+		catch (IOException e)
 		{
 			_log.warning("instancenames.xml could not be loaded: file not found");
 		}
@@ -208,23 +206,13 @@ public class InstanceManager
 		{
 			_log.log(Level.WARNING, "Error while loading instance names: " + xppe.getMessage(), xppe);
 		}
-		finally
-		{
-			try
-			{
-				in.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
 	public static class InstanceWorld
 	{
 		public int instanceId;
 		public int templateId = -1;
-		public FastList<Integer> allowed = new FastList<Integer>();
+		public FastList<Integer> allowed = new FastList<>();
 		public volatile int status;
 	}
 	
@@ -342,7 +330,7 @@ public class InstanceManager
 		return true;
 	}
 	
-	public boolean createInstanceFromTemplate(int id, String template) throws FileNotFoundException
+	public boolean createInstanceFromTemplate(int id, String template)
 	{
 		if (getInstance(id) != null)
 		{
@@ -376,14 +364,7 @@ public class InstanceManager
 		_instanceList.put(_dynamic, instance);
 		if (template != null)
 		{
-			try
-			{
-				instance.loadInstanceTemplate(template);
-			}
-			catch (FileNotFoundException e)
-			{
-				_log.log(Level.WARNING, "InstanceManager: Failed creating instance from template " + template + ", " + e.getMessage(), e);
-			}
+			instance.loadInstanceTemplate(template);
 		}
 		return _dynamic;
 	}

@@ -41,7 +41,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
  */
 public class MailManager
 {
-	private static Logger _log = Logger.getLogger(MailManager.class.getName());
+	protected static Logger _log = Logger.getLogger(MailManager.class.getName());
 	
 	private final Map<Integer, Message> _messages = new FastMap<Integer, Message>().shared();
 	
@@ -147,7 +147,7 @@ public class MailManager
 	
 	public final List<Message> getInbox(int objectId)
 	{
-		List<Message> inbox = new FastList<Message>();
+		List<Message> inbox = new FastList<>();
 		for (Message msg : _messages.values())
 		{
 			if ((msg != null) && (msg.getReceiverId() == objectId) && !msg.isDeletedByReceiver())
@@ -160,7 +160,7 @@ public class MailManager
 	
 	public final List<Message> getOutbox(int objectId)
 	{
-		List<Message> outbox = new FastList<Message>();
+		List<Message> outbox = new FastList<>();
 		for (Message msg : _messages.values())
 		{
 			if ((msg != null) && (msg.getSenderId() == objectId) && !msg.isDeletedBySender())

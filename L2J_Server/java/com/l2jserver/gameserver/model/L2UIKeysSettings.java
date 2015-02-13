@@ -166,7 +166,7 @@ public class L2UIKeysSettings
 			return;
 		}
 		
-		_storedCategories = new FastMap<Integer, List<Integer>>();
+		_storedCategories = new FastMap<>();
 		
 		Connection con = null;
 		try
@@ -207,7 +207,7 @@ public class L2UIKeysSettings
 			return;
 		}
 		
-		_storedKeys = new FastMap<Integer, List<ActionKey>>();
+		_storedKeys = new FastMap<>();
 		
 		Connection con = null;
 		try
@@ -253,7 +253,7 @@ public class L2UIKeysSettings
 		}
 		else
 		{
-			List<Integer> tmp = new FastList<Integer>();
+			List<Integer> tmp = new FastList<>();
 			tmp.add(cmd);
 			_storedCategories.put(cat, tmp);
 		}
@@ -268,7 +268,7 @@ public class L2UIKeysSettings
 		}
 		else
 		{
-			List<ActionKey> tmp = new FastList<ActionKey>();
+			List<ActionKey> tmp = new FastList<>();
 			tmp.add(tmk);
 			_storedKeys.put(cat, tmp);
 		}

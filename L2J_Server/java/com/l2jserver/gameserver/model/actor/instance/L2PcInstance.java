@@ -437,7 +437,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private int _bookmarkslot = 0; // The Teleport Bookmark Slot
 	
-	private List<TeleportBookmark> tpbookmark = new FastList<TeleportBookmark>();
+	private List<TeleportBookmark> tpbookmark = new FastList<>();
 	
 	private PunishLevel _punishLevel = PunishLevel.NONE;
 	private long _punishTimer = 0;
@@ -506,11 +506,11 @@ public final class L2PcInstance extends L2Playable
 	private int _transformationId = 0;
 	
 	/** The table containing all L2RecipeList of the L2PcInstance */
-	private final Map<Integer, L2RecipeList> _dwarvenRecipeBook = new FastMap<Integer, L2RecipeList>();
-	private final Map<Integer, L2RecipeList> _commonRecipeBook = new FastMap<Integer, L2RecipeList>();
+	private final Map<Integer, L2RecipeList> _dwarvenRecipeBook = new FastMap<>();
+	private final Map<Integer, L2RecipeList> _commonRecipeBook = new FastMap<>();
 	
 	/** Premium Items */
-	private final Map<Integer, L2PremiumItem> _premiumItems = new FastMap<Integer, L2PremiumItem>();
+	private final Map<Integer, L2PremiumItem> _premiumItems = new FastMap<>();
 	
 	/** True if the L2PcInstance is sitting */
 	private boolean _waitTypeSitting;
@@ -533,7 +533,7 @@ public final class L2PcInstance extends L2Playable
 	/** Recommendation task **/
 	private ScheduledFuture<?> _recoGiveTask;
 	/** Recommendation Two Hours bonus **/
-	private boolean _recoTwoHoursGiven = false;
+	protected boolean _recoTwoHoursGiven = false;
 	
 	private final PcInventory _inventory = new PcInventory(this);
 	private PcWarehouse _warehouse;
@@ -564,7 +564,7 @@ public final class L2PcInstance extends L2Playable
 	private int _questNpcObject = 0;
 	
 	/** The table containing all Quests began by the L2PcInstance */
-	private final Map<String, QuestState> _quests = new FastMap<String, QuestState>();
+	private final Map<String, QuestState> _quests = new FastMap<>();
 	
 	/** The list containing all shortCuts of this L2PcInstance */
 	private final ShortCuts _shortCuts = new ShortCuts(this);
@@ -572,8 +572,8 @@ public final class L2PcInstance extends L2Playable
 	/** The list containing all macroses of this L2PcInstance */
 	private final MacroList _macroses = new MacroList(this);
 	
-	private final List<L2PcInstance> _snoopListener = new FastList<L2PcInstance>();
-	private final List<L2PcInstance> _snoopedPlayer = new FastList<L2PcInstance>();
+	private final List<L2PcInstance> _snoopListener = new FastList<>();
+	private final List<L2PcInstance> _snoopedPlayer = new FastList<>();
 	
 	// hennas
 	private final L2HennaInstance[] _henna = new L2HennaInstance[3];
@@ -688,7 +688,7 @@ public final class L2PcInstance extends L2Playable
 	/** The fists L2Weapon of the L2PcInstance (used when no weapon is equiped) */
 	private L2Weapon _fistsWeaponItem;
 	
-	private final Map<Integer, String> _chars = new FastMap<Integer, String>();
+	private final Map<Integer, String> _chars = new FastMap<>();
 	
 	// private byte _updateKnownCounter = 0;
 	
@@ -718,7 +718,7 @@ public final class L2PcInstance extends L2Playable
 	public int eventpvpkills;
 	public int eventpkkills;
 	public String eventTitle;
-	public LinkedList<String> kills = new LinkedList<String>();
+	public LinkedList<String> kills = new LinkedList<>();
 	public boolean eventSitForced = false;
 	public boolean atEvent = false;
 	
@@ -750,8 +750,8 @@ public final class L2PcInstance extends L2Playable
 	private ScheduledFuture<?> _taskWater;
 	
 	/** Bypass validations */
-	private final List<String> _validBypass = new FastList<String>();
-	private final List<String> _validBypass2 = new FastList<String>();
+	private final List<String> _validBypass = new FastList<>();
+	private final List<String> _validBypass2 = new FastList<>();
 	
 	private Forum _forumMail;
 	private Forum _forumMemo;
@@ -919,16 +919,11 @@ public final class L2PcInstance extends L2Playable
 	/** ShortBuff clearing Task */
 	ScheduledFuture<?> _shortBuffTask = null;
 	
-	private class ShortBuffTask implements Runnable
+	protected class ShortBuffTask implements Runnable
 	{
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this == null)
-			{
-				return;
-			}
-			
 			L2PcInstance.this.sendPacket(new ShortBuffStatusUpdate(0, 0, 0));
 			setShortBuffTaskSkillId(0);
 		}
@@ -981,7 +976,7 @@ public final class L2PcInstance extends L2Playable
 	// summon friend
 	private final SummonRequest _summonRequest = new SummonRequest();
 	
-	private static class SummonRequest
+	protected static class SummonRequest
 	{
 		private L2PcInstance _target = null;
 		private L2Skill _skill = null;
@@ -1006,7 +1001,7 @@ public final class L2PcInstance extends L2Playable
 	// open/close gates
 	private final GatesRequest _gatesRequest = new GatesRequest();
 	
-	private static class GatesRequest
+	protected static class GatesRequest
 	{
 		private L2DoorInstance _target = null;
 		
@@ -1665,7 +1660,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public Quest[] getAllActiveQuests()
 	{
-		FastList<Quest> quests = new FastList<Quest>();
+		FastList<Quest> quests = new FastList<>();
 		
 		for (QuestState qs : _quests.values())
 		{
@@ -1928,7 +1923,7 @@ public final class L2PcInstance extends L2Playable
 			{
 				if (_notifyQuestOfDeathList == null)
 				{
-					_notifyQuestOfDeathList = new FastList<QuestState>();
+					_notifyQuestOfDeathList = new FastList<>();
 				}
 			}
 		}
@@ -3407,7 +3402,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * Sit down Task
 	 */
-	private class SitDownTask implements Runnable
+	protected class SitDownTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -3420,7 +3415,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * Stand up Task
 	 */
-	private class StandUpTask implements Runnable
+	protected class StandUpTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -4904,14 +4899,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public int getAllyId()
 	{
-		if (_clan == null)
-		{
-			return 0;
-		}
-		else
-		{
-			return _clan.getAllyId();
-		}
+		return _clan == null ? 0 : _clan.getAllyId();
 	}
 	
 	public int getAllyCrestId()
@@ -4958,11 +4946,8 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class GameGuardCheck implements Runnable
+	protected class GameGuardCheck implements Runnable
 	{
-		/**
-		 * @see java.lang.Runnable#run()
-		 */
 		@Override
 		public void run()
 		{
@@ -6661,7 +6646,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (_tamedBeast == null)
 		{
-			_tamedBeast = new FastList<L2TamedBeastInstance>();
+			_tamedBeast = new FastList<>();
 		}
 		_tamedBeast.add(tamedBeast);
 	}
@@ -6983,14 +6968,7 @@ public final class L2PcInstance extends L2Playable
 	 */
 	public boolean isClanLeader()
 	{
-		if (getClan() == null)
-		{
-			return false;
-		}
-		else
-		{
-			return getObjectId() == getClan().getLeaderId();
-		}
+		return (getClan() != null) && (getObjectId() == getClan().getLeaderId());
 	}
 	
 	/**
@@ -8013,6 +7991,11 @@ public final class L2PcInstance extends L2Playable
 			rset.close();
 			statement.close();
 			
+			if (player == null)
+			{
+				return null;
+			}
+			
 			// Set Hero status if it applies
 			if ((Hero.getInstance().getHeroes() != null) && Hero.getInstance().getHeroes().containsKey(objectId))
 			{
@@ -8535,7 +8518,7 @@ public final class L2PcInstance extends L2Playable
 			
 			int buff_index = 0;
 			
-			final List<Integer> storedSkills = new FastList<Integer>();
+			final List<Integer> storedSkills = new FastList<>();
 			
 			// Store all effect data along with calulated remaining
 			// reuse delays for matching skills. 'restore_type'= 0.
@@ -8650,10 +8633,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return getClient().isDetached() ? 2 : 1;
 		}
-		else
-		{
-			return 0;
-		}
+		return 0;
 	}
 	
 	public boolean isIn7sDungeon()
@@ -8695,10 +8675,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return removeSkill(skill);
 		}
-		else
-		{
-			return super.removeSkill(skill, true);
-		}
+		return super.removeSkill(skill, true);
 	}
 	
 	public L2Skill removeSkill(L2Skill skill, boolean store, boolean cancelEffect)
@@ -8707,10 +8684,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return removeSkill(skill);
 		}
-		else
-		{
-			return super.removeSkill(skill, cancelEffect);
-		}
+		return super.removeSkill(skill, cancelEffect);
 	}
 	
 	/**
@@ -9351,14 +9325,7 @@ public final class L2PcInstance extends L2Playable
 		// Check if the attacker is in olympia and olympia start
 		if ((attacker instanceof L2PcInstance) && ((L2PcInstance) attacker).isInOlympiadMode())
 		{
-			if (isInOlympiadMode() && isOlympiadStart() && (((L2PcInstance) attacker).getOlympiadGameId() == getOlympiadGameId()))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return isInOlympiadMode() && isOlympiadStart() && (((L2PcInstance) attacker).getOlympiadGameId() == getOlympiadGameId());
 		}
 		
 		// Check if the attacker is in TvT and TvT is started
@@ -10043,10 +10010,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return checkIfOkToUseStriderSiegeAssault(castle);
 		}
-		else
-		{
-			return checkIfOkToUseStriderSiegeAssault(fort);
-		}
+		return checkIfOkToUseStriderSiegeAssault(fort);
 		
 	}
 	
@@ -10465,7 +10429,7 @@ public final class L2PcInstance extends L2Playable
 		return _inventoryDisable;
 	}
 	
-	private class InventoryEnable implements Runnable
+	protected class InventoryEnable implements Runnable
 	{
 		@Override
 		public void run()
@@ -10734,10 +10698,7 @@ public final class L2PcInstance extends L2Playable
 			sendPacket(sm);
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	/**
@@ -10757,7 +10718,7 @@ public final class L2PcInstance extends L2Playable
 	
 	private ScheduledFuture<?> _taskWarnUserTakeBreak;
 	
-	private class WarnUserTakeBreak implements Runnable
+	protected class WarnUserTakeBreak implements Runnable
 	{
 		@Override
 		public void run()
@@ -10774,7 +10735,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class RentPetTask implements Runnable
+	protected class RentPetTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -10783,7 +10744,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class WaterTask implements Runnable
+	protected class WaterTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -11534,7 +11495,7 @@ public final class L2PcInstance extends L2Playable
 			
 			final ClassId subTemplate = ClassId.values()[classId];
 			final FastMap<Integer, L2SkillLearn> skillTree = SkillTreesData.getInstance().getCompleteClassSkillTree(subTemplate);
-			final FastMap<Integer, L2Skill> prevSkillList = new FastMap<Integer, L2Skill>();
+			final FastMap<Integer, L2Skill> prevSkillList = new FastMap<>();
 			
 			for (L2SkillLearn skillInfo : skillTree.values())
 			{
@@ -11664,7 +11625,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (_subClasses == null)
 		{
-			_subClasses = new FastMap<Integer, SubClass>();
+			_subClasses = new FastMap<>();
 		}
 		
 		return _subClasses;
@@ -13982,7 +13943,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class PunishTask implements Runnable
+	protected class PunishTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -14275,7 +14236,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class SoulTask implements Runnable
+	protected class SoulTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -14875,7 +14836,7 @@ public final class L2PcInstance extends L2Playable
 	}
 	
 	/** Section for mounted pets */
-	private class FeedTask implements Runnable
+	protected class FeedTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -14985,7 +14946,7 @@ public final class L2PcInstance extends L2Playable
 		_data = null;
 	}
 	
-	private final L2PetData getPetData(int npcId)
+	protected final L2PetData getPetData(int npcId)
 	{
 		if (_data == null)
 		{
@@ -15008,17 +14969,14 @@ public final class L2PcInstance extends L2Playable
 		return _curFeed;
 	}
 	
-	private int getFeedConsume()
+	protected int getFeedConsume()
 	{
 		// if pet is attacking
 		if (isAttackingNow())
 		{
 			return getPetLevelData(_mountNpcId).getPetFeedBattle();
 		}
-		else
-		{
-			return getPetLevelData(_mountNpcId).getPetFeedNormal();
-		}
+		return getPetLevelData(_mountNpcId).getPetFeedNormal();
 	}
 	
 	public void setCurrentFeed(int num)
@@ -15033,12 +14991,12 @@ public final class L2PcInstance extends L2Playable
 		return getPetLevelData(_mountNpcId).getPetMaxFeed();
 	}
 	
-	private boolean isHungry()
+	protected boolean isHungry()
 	{
 		return _canFeed ? (getCurrentFeed() < ((getPetData(getMountNpcId()).getHungry_limit() / 100f) * getPetLevelData(getMountNpcId()).getPetMaxFeed())) : false;
 	}
 	
-	private class Dismount implements Runnable
+	protected class Dismount implements Runnable
 	{
 		@Override
 		public void run()
@@ -15056,7 +15014,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public void enteredNoLanding(int delay)
 	{
-		_dismountTask = ThreadPoolManager.getInstance().scheduleGeneral(new L2PcInstance.Dismount(), delay * 1000);
+		_dismountTask = ThreadPoolManager.getInstance().scheduleGeneral(new Dismount(), delay * 1000);
 	}
 	
 	public void exitedNoLanding()
@@ -15174,13 +15132,11 @@ public final class L2PcInstance extends L2Playable
 			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.FORCE_MAXLEVEL_REACHED));
 			return;
 		}
-		else
+		
+		// if no charges - start clear task
+		if (_charges.get() == 0)
 		{
-			// if no charges - start clear task
-			if (_charges.get() == 0)
-			{
-				restartChargeTask();
-			}
+			restartChargeTask();
 		}
 		
 		if (_charges.addAndGet(count) >= max)
@@ -15246,7 +15202,7 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class ChargeTask implements Runnable
+	protected class ChargeTask implements Runnable
 	{
 		
 		@Override
@@ -15362,7 +15318,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public void teleportBookmarkGo(int Id)
 	{
-		if (!teleportBookmarkCondition(0) || (this == null))
+		if (!teleportBookmarkCondition(0))
 		{
 			return;
 		}
@@ -15476,11 +15432,6 @@ public final class L2PcInstance extends L2Playable
 	
 	public void teleportBookmarkAdd(int x, int y, int z, int icon, String tag, String name)
 	{
-		if (this == null)
-		{
-			return;
-		}
-		
 		if (!teleportBookmarkCondition(1))
 		{
 			return;
@@ -15500,7 +15451,7 @@ public final class L2PcInstance extends L2Playable
 		
 		int count = 0;
 		int id = 1;
-		FastList<Integer> idlist = new FastList<Integer>();
+		FastList<Integer> idlist = new FastList<>();
 		
 		int size = tpbookmark.size();
 		
@@ -15522,7 +15473,7 @@ public final class L2PcInstance extends L2Playable
 		TeleportBookmark tpadd = new TeleportBookmark(id, x, y, z, icon, tag, name);
 		if (tpbookmark == null)
 		{
-			tpbookmark = new FastList<TeleportBookmark>();
+			tpbookmark = new FastList<>();
 		}
 		
 		tpbookmark.add(tpadd);
@@ -15569,7 +15520,7 @@ public final class L2PcInstance extends L2Playable
 	{
 		if (tpbookmark == null)
 		{
-			tpbookmark = new FastList<TeleportBookmark>();
+			tpbookmark = new FastList<>();
 		}
 		Connection con = null;
 		
@@ -15789,16 +15740,13 @@ public final class L2PcInstance extends L2Playable
 		{
 			return 0;
 		}
-		else
+		
+		for (int i = 1; i < 6; i++)
 		{
-			int i;
-			for (i = 1; i < 6; i++)
+			now.add(Calendar.HOUR_OF_DAY, 24);
+			if ((now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)) && (now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)) && (now.get(Calendar.YEAR) != birth.get(Calendar.YEAR)))
 			{
-				now.add(Calendar.HOUR_OF_DAY, 24);
-				if ((now.get(Calendar.MONTH) == birth.get(Calendar.MONTH)) && (now.get(Calendar.DAY_OF_MONTH) == birth.get(Calendar.DAY_OF_MONTH)) && (now.get(Calendar.YEAR) != birth.get(Calendar.YEAR)))
-				{
-					return i;
-				}
+				return i;
 			}
 		}
 		return -1;
@@ -15807,7 +15755,7 @@ public final class L2PcInstance extends L2Playable
 	/**
 	 * list of character friends
 	 */
-	private final List<Integer> _friendList = new FastList<Integer>();
+	private final List<Integer> _friendList = new FastList<>();
 	
 	public List<Integer> getFriendList()
 	{
@@ -15964,10 +15912,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return getBaseTemplate().fCollisionRadius_female;
 		}
-		else
-		{
-			return getBaseTemplate().fCollisionRadius;
-		}
+		return getBaseTemplate().fCollisionRadius;
 	}
 	
 	public double getCollisionHeight()
@@ -15976,10 +15921,7 @@ public final class L2PcInstance extends L2Playable
 		{
 			return getBaseTemplate().fCollisionHeight_female;
 		}
-		else
-		{
-			return getBaseTemplate().fCollisionHeight;
-		}
+		return getBaseTemplate().fCollisionHeight;
 	}
 	
 	public final int getClientX()
@@ -16212,13 +16154,11 @@ public final class L2PcInstance extends L2Playable
 			{
 				continue;
 			}
-			else
+			
+			// player level is too low for such skill level
+			if (getLevel() < (learn.getGetLevel() - 9))
 			{
-				// player level is too low for such skill level
-				if (getLevel() < (learn.getGetLevel() - 9))
-				{
-					deacreaseSkillLevel(id);
-				}
+				deacreaseSkillLevel(id);
 			}
 		}
 	}
@@ -16252,14 +16192,7 @@ public final class L2PcInstance extends L2Playable
 	
 	public boolean canMakeSocialAction()
 	{
-		if ((getPrivateStoreType() == 0) && (getActiveRequester() == null) && !isAlikeDead() && (!isAllSkillsDisabled() || isInDuel()) && !isCastingNow() && !isCastingSimultaneouslyNow() && (getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) && !AttackStanceTaskManager.getInstance().getAttackStanceTask(this) && !isInOlympiadMode())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return (getPrivateStoreType() == 0) && (getActiveRequester() == null) && !isAlikeDead() && (!isAllSkillsDisabled() || isInDuel()) && !isCastingNow() && !isCastingSimultaneouslyNow() && (getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE) && !AttackStanceTaskManager.getInstance().getAttackStanceTask(this) && !isInOlympiadMode();
 	}
 	
 	public void setMultiSocialAction(int id, int targetId)
@@ -16562,16 +16495,11 @@ public final class L2PcInstance extends L2Playable
 		}
 	}
 	
-	private class RecoGiveTask implements Runnable
+	protected class RecoGiveTask implements Runnable
 	{
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this == null)
-			{
-				stopRecoGiveTask();
-				return;
-			}
 			int reco_to_give;
 			// 10 recommendations to give out after 2 hours of being logged in
 			// 1 more recommendation to give out every hour after that.
@@ -16590,22 +16518,17 @@ public final class L2PcInstance extends L2Playable
 			
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.YOU_OBTAINED_S1_RECOMMENDATIONS);
 			sm.addNumber(reco_to_give);
-			L2PcInstance.this.sendPacket(sm);
-			L2PcInstance.this.sendPacket(new UserInfo(L2PcInstance.this));
+			sendPacket(sm);
+			sendPacket(new UserInfo(L2PcInstance.this));
 		}
 	}
 	
-	private class RecoBonusTaskEnd implements Runnable
+	protected class RecoBonusTaskEnd implements Runnable
 	{
 		@Override
 		public void run()
 		{
-			if (L2PcInstance.this == null)
-			{
-				return;
-			}
-			
-			L2PcInstance.this.sendPacket(new ExVoteSystemInfo(L2PcInstance.this));
+			sendPacket(new ExVoteSystemInfo(L2PcInstance.this));
 		}
 	}
 	

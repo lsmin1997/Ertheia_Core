@@ -52,7 +52,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 {
 	protected static final Logger _log = Logger.getLogger(RequestPreviewItem.class.getName());
 	
-	private L2PcInstance _activeChar;
+	protected L2PcInstance _activeChar;
 	private Map<Integer, Integer> _item_list;
 	@SuppressWarnings("unused")
 	private int _unk;
@@ -60,7 +60,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 	private int _count;
 	private int[] _items;
 	
-	private class RemoveWearItemsTask implements Runnable
+	protected class RemoveWearItemsTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -149,7 +149,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		L2TradeList list = null;
 		
 		// Get the current merchant targeted by the player
-		L2MerchantInstance merchant = (target instanceof L2MerchantInstance) ? (L2MerchantInstance) target : null;
+		L2MerchantInstance merchant = (L2MerchantInstance) target;
 		
 		List<L2TradeList> lists = TradeController.getInstance().getBuyListByNpcId(merchant.getNpcId());
 		
@@ -175,7 +175,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		
 		long totalPrice = 0;
 		_listId = list.getListId();
-		_item_list = new FastMap<Integer, Integer>();
+		_item_list = new FastMap<>();
 		
 		for (int i = 0; i < _count; i++)
 		{
@@ -229,10 +229,8 @@ public final class RequestPreviewItem extends L2GameClientPacket
 				_activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_CAN_NOT_TRY_THOSE_ITEMS_ON_AT_THE_SAME_TIME));
 				return;
 			}
-			else
-			{
-				_item_list.put(slot, itemId);
-			}
+			
+			_item_list.put(slot, itemId);
 			
 			totalPrice += Config.WEAR_PRICE;
 			if (totalPrice > PcInventory.MAX_ADENA)

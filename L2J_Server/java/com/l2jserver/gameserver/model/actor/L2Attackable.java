@@ -16,6 +16,7 @@ package com.l2jserver.gameserver.model.actor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import javolution.util.FastList;
@@ -714,7 +715,7 @@ public class L2Attackable extends L2Npc
 				RewardInfo reward2;
 				int[] tmp;
 				
-				for (FastMap.Entry<L2Character, RewardInfo> entry = rewards.head(), end = rewards.tail(); (entry = entry.getNext()) != end;)
+				for (Entry<L2Character, RewardInfo> entry : rewards.entrySet())
 				{
 					if (entry == null)
 					{
@@ -835,7 +836,7 @@ public class L2Attackable extends L2Npc
 						partyLvl = 0;
 						
 						// Get all L2Character that can be rewarded in the party
-						List<L2Playable> rewardedMembers = new FastList<L2Playable>();
+						List<L2Playable> rewardedMembers = new FastList<>();
 						// Go through all L2PcInstance in the party
 						List<L2PcInstance> groupMembers;
 						
@@ -1109,18 +1110,16 @@ public class L2Attackable extends L2Npc
 				((L2AttackableAI) getAI()).setGlobalAggro(-25);
 				return;
 			}
-			else
+			
+			for (L2Character aggroed : getAggroList().keySet())
 			{
-				for (L2Character aggroed : getAggroList().keySet())
+				AggroInfo ai = getAggroList().get(aggroed);
+				
+				if (ai == null)
 				{
-					AggroInfo ai = getAggroList().get(aggroed);
-					
-					if (ai == null)
-					{
-						return;
-					}
-					ai.addHate(-amount);
+					return;
 				}
+				ai.addHate(-amount);
 			}
 			
 			amount = getHating(mostHated);
@@ -1217,7 +1216,7 @@ public class L2Attackable extends L2Npc
 		L2Character mostHated = null;
 		L2Character secondMostHated = null;
 		int maxHate = 0;
-		List<L2Character> result = new FastList<L2Character>();
+		List<L2Character> result = new FastList<>();
 		
 		// While iterating over this map removing objects is not allowed
 		// synchronized (getAggroList())
@@ -1257,7 +1256,7 @@ public class L2Attackable extends L2Npc
 		{
 			return null;
 		}
-		List<L2Character> result = new FastList<L2Character>();
+		List<L2Character> result = new FastList<>();
 		
 		// synchronized (getAggroList())
 		{
@@ -1868,7 +1867,7 @@ public class L2Attackable extends L2Npc
 					// according to sh1ny, seeded mobs CAN be spoiled and swept.
 					if (isSpoil()/* && !isSeeded() */)
 					{
-						FastList<RewardItem> sweepList = new FastList<RewardItem>();
+						FastList<RewardItem> sweepList = new FastList<>();
 						
 						for (L2DropData drop : cat.getAllDrops())
 						{
@@ -2493,7 +2492,7 @@ public class L2Attackable extends L2Npc
 			count += diff;
 		}
 		
-		FastList<RewardItem> harvested = new FastList<RewardItem>();
+		FastList<RewardItem> harvested = new FastList<>();
 		
 		harvested.add(new RewardItem(L2Manor.getInstance().getCropType(_seedType), count * Config.RATE_DROP_MANOR));
 		

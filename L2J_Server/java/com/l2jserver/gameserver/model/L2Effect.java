@@ -85,8 +85,8 @@ public abstract class L2Effect
 	
 	// period, seconds
 	private final int _abnormalTime;
-	private int _periodStartTicks;
-	private int _periodFirstTime;
+	protected int _periodStartTicks;
+	protected int _periodFirstTime;
 	
 	private final EffectTemplate _template;
 	
@@ -111,7 +111,7 @@ public abstract class L2Effect
 	
 	public boolean preventExitUpdate;
 	
-	private final class EffectTask implements Runnable
+	protected final class EffectTask implements Runnable
 	{
 		@Override
 		public void run()
@@ -563,7 +563,7 @@ public abstract class L2Effect
 		{
 			return _emptyFunctionSet;
 		}
-		ArrayList<Func> funcs = new ArrayList<Func>(_funcTemplates.length);
+		ArrayList<Func> funcs = new ArrayList<>(_funcTemplates.length);
 		
 		Env env = new Env();
 		env.player = getEffector();

@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.network.gameserverpackets;
 
-import java.io.IOException;
-
 import javolution.util.FastList;
 
 import com.l2jserver.util.network.BaseSendablePacket;
@@ -42,14 +40,9 @@ public class PlayerInGame extends BaseSendablePacket
 		}
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
-	 */
 	@Override
-	public byte[] getContent() throws IOException
+	public byte[] getContent()
 	{
 		return getBytes();
 	}
-	
 }

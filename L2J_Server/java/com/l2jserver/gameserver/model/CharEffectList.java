@@ -165,10 +165,7 @@ public class CharEffectList
 							{
 								return e;
 							}
-							else
-							{
-								effectNotInUse = e;
-							}
+							effectNotInUse = e;
 						}
 					}
 				}
@@ -192,10 +189,7 @@ public class CharEffectList
 							{
 								return e;
 							}
-							else
-							{
-								effectNotInUse = e;
-							}
+							effectNotInUse = e;
 						}
 					}
 				}
@@ -239,50 +233,42 @@ public class CharEffectList
 						{
 							return e;
 						}
-						else
-						{
-							effectNotInUse = e;
-						}
+						effectNotInUse = e;
 					}
 				}
 			}
 			return effectNotInUse;
 		}
-		else
+		
+		if (_buffs == null)
 		{
-			if (_buffs == null)
+			return null;
+		}
+		
+		// synchronized (_buffs)
+		{
+			if (_buffs.isEmpty())
 			{
 				return null;
 			}
 			
-			// synchronized (_buffs)
+			for (L2Effect e : _buffs)
 			{
-				if (_buffs.isEmpty())
+				if (e == null)
 				{
-					return null;
+					continue;
 				}
-				
-				for (L2Effect e : _buffs)
+				if (e.getSkill() == skill)
 				{
-					if (e == null)
+					if (e.getInUse())
 					{
-						continue;
+						return e;
 					}
-					if (e.getSkill() == skill)
-					{
-						if (e.getInUse())
-						{
-							return e;
-						}
-						else
-						{
-							effectNotInUse = e;
-						}
-					}
+					effectNotInUse = e;
 				}
 			}
-			return effectNotInUse;
 		}
+		return effectNotInUse;
 	}
 	
 	/**
@@ -312,10 +298,7 @@ public class CharEffectList
 							{
 								return e;
 							}
-							else
-							{
-								effectNotInUse = e;
-							}
+							effectNotInUse = e;
 						}
 					}
 				}
@@ -340,10 +323,7 @@ public class CharEffectList
 							{
 								return e;
 							}
-							else
-							{
-								effectNotInUse = e;
-							}
+							effectNotInUse = e;
 						}
 					}
 				}
@@ -776,8 +756,8 @@ public class CharEffectList
 		{
 			return;
 		}
-		_addQueue = new LinkedBlockingQueue<L2Effect>();
-		_removeQueue = new LinkedBlockingQueue<L2Effect>();
+		_addQueue = new LinkedBlockingQueue<>();
+		_removeQueue = new LinkedBlockingQueue<>();
 		_queuesInitialized = true;
 	}
 	
@@ -1094,7 +1074,7 @@ public class CharEffectList
 		L2Effect effectToRemove = null;
 		if (_stackedEffects == null)
 		{
-			_stackedEffects = new FastMap<String, List<L2Effect>>();
+			_stackedEffects = new FastMap<>();
 		}
 		
 		// Get the list of all stacked effects corresponding to the stack type of the L2Effect to add
@@ -1147,7 +1127,7 @@ public class CharEffectList
 		}
 		else
 		{
-			stackQueue = new FastList<L2Effect>();
+			stackQueue = new FastList<>();
 			stackQueue.add(0, newEffect);
 		}
 		

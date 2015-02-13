@@ -85,7 +85,7 @@ public class DesireTable
 		
 		public Desires(DesireType... desireList)
 		{
-			_desireTable = new FastMap<DesireType, DesireValue>();
+			_desireTable = new FastMap<>();
 			
 			for (DesireType desire : desireList)
 			{
@@ -125,7 +125,7 @@ public class DesireTable
 	public DesireTable(DesireType... desireList)
 	{
 		_desireTypes = desireList;
-		_objectDesireTable = new FastMap<L2Object, Desires>();
+		_objectDesireTable = new FastMap<>();
 		_generalDesires = new Desires(_desireTypes);
 	}
 	

@@ -40,7 +40,7 @@ public abstract class AbstractRefinePacket extends L2GameClientPacket
 	protected static final int GEMSTONE_C = 2131;
 	protected static final int GEMSTONE_B = 2132;
 	
-	private static final Map<Integer, LifeStone> _lifeStones = new FastMap<Integer, LifeStone>();
+	private static final Map<Integer, LifeStone> _lifeStones = new FastMap<>();
 	
 	protected static final class LifeStone
 	{

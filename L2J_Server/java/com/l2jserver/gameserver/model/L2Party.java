@@ -103,10 +103,10 @@ public class L2Party
 	private DimensionalRift _dr;
 	private byte _requestChangeLoot = -1;
 	private List<Integer> _changeLootAnswers = null;
-	private long _requestChangeLootTimer = 0;
+	protected long _requestChangeLootTimer = 0;
 	private Future<?> _checkTask = null;
 	private Future<?> _positionBroadcastTask = null;
-	private PartyMemberPosition _positionPacket;
+	protected PartyMemberPosition _positionPacket;
 	
 	/**
 	 * constructor ensures party has always one member - leader
@@ -115,7 +115,7 @@ public class L2Party
 	 */
 	public L2Party(L2PcInstance leader, int itemDistribution)
 	{
-		_members = new FastList<L2PcInstance>();
+		_members = new FastList<>();
 		_itemDistribution = itemDistribution;
 		getPartyMembers().add(leader);
 		_partyLvl = leader.getLevel();
@@ -173,7 +173,7 @@ public class L2Party
 	 */
 	private L2PcInstance getCheckedRandomMember(int ItemId, L2Character target)
 	{
-		List<L2PcInstance> availableMembers = new FastList<L2PcInstance>();
+		List<L2PcInstance> availableMembers = new FastList<>();
 		for (L2PcInstance member : getPartyMembers())
 		{
 			if (member.getInventory().validateCapacityByItemId(ItemId) && Util.checkIfInRange(Config.ALT_PARTY_RANGE2, target, member, true))
@@ -185,10 +185,7 @@ public class L2Party
 		{
 			return availableMembers.get(Rnd.get(availableMembers.size()));
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	}
 	
 	/**
@@ -799,10 +796,7 @@ public class L2Party
 					{
 						continue;
 					}
-					else
-					{
-						penalty = (float) 0.85;
-					}
+					penalty = (float) 0.85;
 				}
 				
 				// Calculate and add the EXP and SP reward to the member
@@ -871,7 +865,7 @@ public class L2Party
 	
 	private List<L2Playable> getValidMembers(List<L2Playable> members, int topLvl)
 	{
-		List<L2Playable> validMembers = new FastList<L2Playable>();
+		List<L2Playable> validMembers = new FastList<>();
 		
 		// Fixed LevelDiff cutoff point
 		if (Config.PARTY_XP_CUTOFF_METHOD.equalsIgnoreCase("level"))
@@ -959,10 +953,7 @@ public class L2Party
 			// not is a valid party
 			return getBaseExpSpBonus(membersCount);
 		}
-		else
-		{
-			return getBaseExpSpBonus(membersCount) * Config.RATE_PARTY_XP;
-		}
+		return getBaseExpSpBonus(membersCount) * Config.RATE_PARTY_XP;
 	}
 	
 	private double getSpBonus(int membersCount)
@@ -972,10 +963,7 @@ public class L2Party
 			// not is a valid party
 			return getBaseExpSpBonus(membersCount);
 		}
-		else
-		{
-			return getBaseExpSpBonus(membersCount) * Config.RATE_PARTY_SP;
-		}
+		return getBaseExpSpBonus(membersCount) * Config.RATE_PARTY_SP;
 	}
 	
 	public int getLevel()
@@ -1076,7 +1064,7 @@ public class L2Party
 		}
 	}
 	
-	private synchronized void finishLootRequest(boolean success)
+	protected synchronized void finishLootRequest(boolean success)
 	{
 		if (_requestChangeLoot == -1)
 		{
@@ -1105,7 +1093,7 @@ public class L2Party
 		_requestChangeLootTimer = 0;
 	}
 	
-	private class ChangeLootCheck implements Runnable
+	protected class ChangeLootCheck implements Runnable
 	{
 		@Override
 		public void run()
@@ -1117,7 +1105,7 @@ public class L2Party
 		}
 	}
 	
-	private class PositionBroadcast implements Runnable
+	protected class PositionBroadcast implements Runnable
 	{
 		@Override
 		public void run()

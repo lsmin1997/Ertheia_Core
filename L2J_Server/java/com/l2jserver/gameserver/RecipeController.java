@@ -66,7 +66,7 @@ public class RecipeController
 	protected static final Logger _log = Logger.getLogger(RecipeController.class.getName());
 	
 	private final Map<Integer, L2RecipeList> _lists;
-	private static final Map<Integer, RecipeItemMaker> _activeMakers = new FastMap<Integer, RecipeItemMaker>();
+	protected static final Map<Integer, RecipeItemMaker> _activeMakers = new FastMap<>();
 	private static final String RECIPES_FILE = "recipes.xml";
 	
 	public static RecipeController getInstance()
@@ -76,7 +76,7 @@ public class RecipeController
 	
 	private RecipeController()
 	{
-		_lists = new FastMap<Integer, L2RecipeList>();
+		_lists = new FastMap<>();
 		
 		try
 		{
@@ -247,9 +247,9 @@ public class RecipeController
 		if (file.exists())
 		{
 			Document doc = factory.newDocumentBuilder().parse(file);
-			List<L2RecipeInstance> recipePartList = new FastList<L2RecipeInstance>();
-			List<L2RecipeStatInstance> recipeStatUseList = new FastList<L2RecipeStatInstance>();
-			List<L2RecipeStatInstance> recipeAltStatChangeList = new FastList<L2RecipeStatInstance>();
+			List<L2RecipeInstance> recipePartList = new FastList<>();
+			List<L2RecipeStatInstance> recipeStatUseList = new FastList<>();
+			List<L2RecipeStatInstance> recipeAltStatChangeList = new FastList<>();
 			
 			for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 			{
@@ -830,7 +830,7 @@ public class RecipeController
 		{
 			L2RecipeInstance[] recipes = _recipeList.getRecipes();
 			Inventory inv = _target.getInventory();
-			List<TempItem> materials = new FastList<TempItem>();
+			List<TempItem> materials = new FastList<>();
 			SystemMessage sm;
 			
 			for (L2RecipeInstance recipe : recipes)

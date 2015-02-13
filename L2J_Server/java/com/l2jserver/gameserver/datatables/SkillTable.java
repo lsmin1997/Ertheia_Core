@@ -39,7 +39,7 @@ public class SkillTable
 	
 	private SkillTable()
 	{
-		_skills = new TIntObjectHashMap<L2Skill>();
+		_skills = new TIntObjectHashMap<>();
 		_skillMaxLevel = new TIntIntHashMap();
 		_enchantable = new TIntArrayList();
 		load();
@@ -191,9 +191,9 @@ public class SkillTable
 		THE_VANQUISHED_OF_WAR(5075, 1),
 		SPECIAL_TREE_RECOVERY_BONUS(2139, 1);
 		
-		private final int _id;
-		private final int _level;
-		private L2Skill _skill = null;
+		protected final int _id;
+		protected final int _level;
+		protected L2Skill _skill = null;
 		
 		private FrequentSkill(int id, int level)
 		{

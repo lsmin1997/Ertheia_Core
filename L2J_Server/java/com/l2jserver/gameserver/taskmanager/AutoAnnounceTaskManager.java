@@ -32,7 +32,7 @@ public class AutoAnnounceTaskManager
 {
 	protected static final Logger _log = Logger.getLogger(AutoAnnounceTaskManager.class.getName());
 	
-	protected List<AutoAnnouncement> _announces = new FastList<AutoAnnouncement>();
+	protected List<AutoAnnouncement> _announces = new FastList<>();
 	
 	private int _nextId = 1;
 	
@@ -159,7 +159,7 @@ public class AutoAnnounceTaskManager
 	
 	public class AutoAnnouncement implements Runnable
 	{
-		private final int _id;
+		protected final int _id;
 		private final long _delay;
 		private int _repeat = -1;
 		private final String[] _memo;

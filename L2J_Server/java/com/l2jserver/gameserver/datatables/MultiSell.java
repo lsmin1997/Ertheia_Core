@@ -61,7 +61,7 @@ public class MultiSell
 	
 	private MultiSell()
 	{
-		_entries = new TIntObjectHashMap<ListContainer>();
+		_entries = new TIntObjectHashMap<>();
 		load();
 	}
 	
@@ -170,7 +170,7 @@ public class MultiSell
 	{
 		Document doc = null;
 		int id = 0;
-		List<File> files = new FastList<File>();
+		List<File> files = new FastList<>();
 		hashFiles("multisell", files);
 		
 		for (File f : files)

@@ -175,7 +175,7 @@ public class Olympiad
 	
 	private void load()
 	{
-		_nobles = new FastMap<Integer, StatsSet>();
+		_nobles = new FastMap<>();
 		
 		Connection con = null;
 		
@@ -213,27 +213,14 @@ public class Olympiad
 			_log.log(Level.INFO, "Olympiad System: failed to load data from database, trying to load from file.");
 			
 			Properties OlympiadProperties = new Properties();
-			InputStream is = null;
-			try
+			try (InputStream is = new FileInputStream(new File("./" + OLYMPIAD_DATA_FILE)))
 			{
-				is = new FileInputStream(new File("./" + OLYMPIAD_DATA_FILE));
 				OlympiadProperties.load(is);
 			}
 			catch (Exception e)
 			{
 				_log.log(Level.SEVERE, "Olympiad System: Error loading olympiad properties: ", e);
 				return;
-			}
-			finally
-			{
-				try
-				{
-					is.close();
-				}
-				catch (Exception e)
-				{
-					_log.log(Level.WARNING, "", e);
-				}
 			}
 			
 			_currentCycle = Integer.parseInt(OlympiadProperties.getProperty("CurrentCycle", "1"));
@@ -901,7 +888,7 @@ public class Olympiad
 			}
 		}
 		
-		_heroesToBe = new L2FastList<StatsSet>();
+		_heroesToBe = new L2FastList<>();
 		
 		Connection con = null;
 		
@@ -911,7 +898,7 @@ public class Olympiad
 			PreparedStatement statement = con.prepareStatement(OLYMPIAD_GET_HEROS);
 			ResultSet rset;
 			StatsSet hero;
-			L2FastList<StatsSet> soulHounds = new L2FastList<StatsSet>();
+			L2FastList<StatsSet> soulHounds = new L2FastList<>();
 			for (int element : HERO_IDS)
 			{
 				statement.setInt(1, element);
@@ -1046,7 +1033,7 @@ public class Olympiad
 	{
 		// if (_period != 1) return;
 		
-		L2FastList<String> names = new L2FastList<String>();
+		L2FastList<String> names = new L2FastList<>();
 		
 		Connection con = null;
 		

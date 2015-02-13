@@ -48,8 +48,8 @@ public class UITable
 	
 	private UITable()
 	{
-		_storedKeys = new FastMap<Integer, List<ActionKey>>();
-		_storedCategories = new FastMap<Integer, List<Integer>>();
+		_storedKeys = new FastMap<>();
+		_storedCategories = new FastMap<>();
 		
 		parseCatData();
 		parseKeyData();
@@ -59,12 +59,9 @@ public class UITable
 	
 	private void parseCatData()
 	{
-		LineNumberReader lnr = null;
-		try
+		File uiData = new File(Config.DATAPACK_ROOT, "data/uicats_en.csv");
+		try (LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(uiData))))
 		{
-			File uiData = new File(Config.DATAPACK_ROOT, "data/uicats_en.csv");
-			lnr = new LineNumberReader(new BufferedReader(new FileReader(uiData)));
-			
 			String line = null;
 			while ((line = lnr.readLine()) != null)
 			{
@@ -89,26 +86,13 @@ public class UITable
 		{
 			_log.log(Level.WARNING, "Error while creating UI Default Categories table " + e.getMessage(), e);
 		}
-		finally
-		{
-			try
-			{
-				lnr.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
 	private void parseKeyData()
 	{
-		LineNumberReader lnr = null;
-		try
+		File uiData = new File(Config.DATAPACK_ROOT, "data/uikeys_en.csv");
+		try (LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(uiData))))
 		{
-			File uiData = new File(Config.DATAPACK_ROOT, "data/uikeys_en.csv");
-			lnr = new LineNumberReader(new BufferedReader(new FileReader(uiData)));
-			
 			String line = null;
 			while ((line = lnr.readLine()) != null)
 			{
@@ -137,16 +121,6 @@ public class UITable
 		{
 			_log.log(Level.WARNING, "Error while creating UI Default Keys table " + e.getMessage(), e);
 		}
-		finally
-		{
-			try
-			{
-				lnr.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
 	private void insertCategory(int cat, int cmd)
@@ -157,7 +131,7 @@ public class UITable
 		}
 		else
 		{
-			List<Integer> tmp = new FastList<Integer>();
+			List<Integer> tmp = new FastList<>();
 			tmp.add(cmd);
 			_storedCategories.put(cat, tmp);
 		}
@@ -172,7 +146,7 @@ public class UITable
 		}
 		else
 		{
-			List<ActionKey> tmp = new FastList<ActionKey>();
+			List<ActionKey> tmp = new FastList<>();
 			tmp.add(tmk);
 			_storedKeys.put(cat, tmp);
 		}

@@ -123,7 +123,7 @@ public class AuctionManager
 	private AuctionManager()
 	{
 		_log.info("Initializing AuctionManager");
-		_auctions = new FastList<Auction>();
+		_auctions = new FastList<>();
 		load();
 	}
 	

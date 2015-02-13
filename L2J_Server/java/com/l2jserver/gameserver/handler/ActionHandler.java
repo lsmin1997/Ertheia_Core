@@ -32,8 +32,8 @@ public class ActionHandler
 	
 	private ActionHandler()
 	{
-		_actions = new FastMap<InstanceType, IActionHandler>();
-		_actionsShift = new FastMap<InstanceType, IActionHandler>();
+		_actions = new FastMap<>();
+		_actionsShift = new FastMap<>();
 	}
 	
 	public void registerActionHandler(IActionHandler handler)

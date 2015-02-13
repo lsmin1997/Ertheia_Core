@@ -51,8 +51,8 @@ public class DoorTable
 	
 	private DoorTable()
 	{
-		_staticItems = new TIntObjectHashMap<L2DoorInstance>();
-		_regions = new TIntObjectHashMap<ArrayList<L2DoorInstance>>();
+		_staticItems = new TIntObjectHashMap<>();
+		_regions = new TIntObjectHashMap<>();
 		parseData();
 		onStart();
 	}
@@ -71,12 +71,9 @@ public class DoorTable
 	
 	public void parseData()
 	{
-		LineNumberReader lnr = null;
-		try
+		File doorData = new File(Config.DATAPACK_ROOT, "data/door.csv");
+		try (LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader(doorData))))
 		{
-			File doorData = new File(Config.DATAPACK_ROOT, "data/door.csv");
-			lnr = new LineNumberReader(new BufferedReader(new FileReader(doorData)));
-			
 			String line = null;
 			_log.info("Searching clan halls doors:");
 			
@@ -111,16 +108,6 @@ public class DoorTable
 		catch (IOException e)
 		{
 			_log.log(Level.WARNING, "Error while creating door table " + e.getMessage(), e);
-		}
-		finally
-		{
-			try
-			{
-				lnr.close();
-			}
-			catch (Exception e1)
-			{ /* ignore problems */
-			}
 		}
 	}
 	
@@ -274,7 +261,7 @@ public class DoorTable
 		}
 		else
 		{
-			final ArrayList<L2DoorInstance> region = new ArrayList<L2DoorInstance>();
+			final ArrayList<L2DoorInstance> region = new ArrayList<>();
 			region.add(door);
 			_regions.put(door.getMapRegion(), region);
 		}

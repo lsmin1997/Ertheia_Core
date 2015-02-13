@@ -58,7 +58,7 @@ public class GameServerTable
 	private static GameServerTable _instance;
 	
 	// Server Names Config
-	private static Map<Integer, String> _serverNames = new FastMap<Integer, String>();
+	private static Map<Integer, String> _serverNames = new FastMap<>();
 	
 	// Game Server Table
 	private final Map<Integer, GameServerInfo> _gameServerTable = new FastMap<Integer, GameServerInfo>().shared();
@@ -294,7 +294,7 @@ public class GameServerTable
 		private int _status;
 		
 		// network
-		private final ArrayList<GameServerAddress> _addrs = new ArrayList<GameServerAddress>(5);
+		private final ArrayList<GameServerAddress> _addrs = new ArrayList<>(5);
 		private int _port;
 		
 		// config

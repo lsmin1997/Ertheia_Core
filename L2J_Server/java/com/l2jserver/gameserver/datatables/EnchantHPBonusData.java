@@ -42,7 +42,7 @@ public class EnchantHPBonusData
 {
 	protected static final Logger _log = Logger.getLogger(EnchantHPBonusData.class.getName());
 	
-	private final TIntObjectHashMap<Integer[]> _armorHPBonus = new TIntObjectHashMap<Integer[]>();
+	private final TIntObjectHashMap<Integer[]> _armorHPBonus = new TIntObjectHashMap<>();
 	private static final float fullArmorModifier = 1.5f;
 	
 	public static final EnchantHPBonusData getInstance()
@@ -78,6 +78,7 @@ public class EnchantHPBonusData
 			catch (Exception e)
 			{
 				_log.log(Level.WARNING, "Could not parse enchantHPBonus.xml file: " + e.getMessage(), e);
+				return;
 			}
 			
 			for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
@@ -190,10 +191,7 @@ public class EnchantHPBonusData
 		{
 			return (int) (values[Math.min(item.getEnchantLevel(), values.length) - 1] * fullArmorModifier);
 		}
-		else
-		{
-			return values[Math.min(item.getEnchantLevel(), values.length) - 1];
-		}
+		return values[Math.min(item.getEnchantLevel(), values.length) - 1];
 	}
 	
 	@SuppressWarnings("synthetic-access")

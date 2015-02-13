@@ -270,7 +270,7 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 		return _frame;
 	}
 	
-	private class ButtonCellRenderer implements TableCellRenderer
+	protected class ButtonCellRenderer implements TableCellRenderer
 	{
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
@@ -353,12 +353,8 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 		}
 	}
 	
-	@SuppressWarnings("serial")
 	private class JTableModel extends DefaultTableModel
 	{
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -1673664465505085018L;
 		
 		public JTableModel(Object[] columnNames)

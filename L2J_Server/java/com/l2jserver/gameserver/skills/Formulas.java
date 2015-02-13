@@ -2343,10 +2343,7 @@ public final class Formulas
 		{
 			return 2700;
 		}
-		else
-		{
-			return (int) (470000 / rate);
-		}
+		return (int) (470000 / rate);
 	}
 	
 	/** Calculate delay (in milliseconds) for skills cast */

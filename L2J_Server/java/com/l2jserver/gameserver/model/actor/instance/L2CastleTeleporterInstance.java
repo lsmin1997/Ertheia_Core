@@ -75,10 +75,7 @@ public final class L2CastleTeleporterInstance extends L2Npc
 			player.sendPacket(html);
 			return;
 		}
-		else
-		{
-			super.onBypassFeedback(player, command);
-		}
+		super.onBypassFeedback(player, command);
 	}
 	
 	@Override

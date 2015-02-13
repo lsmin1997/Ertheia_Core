@@ -56,7 +56,7 @@ public class DimensionalRiftManager
 {
 	
 	private static Logger _log = Logger.getLogger(DimensionalRiftManager.class.getName());
-	private final TByteObjectHashMap<TByteObjectHashMap<DimensionalRiftRoom>> _rooms = new TByteObjectHashMap<TByteObjectHashMap<DimensionalRiftRoom>>(7);
+	private final TByteObjectHashMap<TByteObjectHashMap<DimensionalRiftRoom>> _rooms = new TByteObjectHashMap<>(7);
 	private final int DIMENSIONAL_FRAGMENT_ITEM_ID = 7079;
 	
 	public static DimensionalRiftManager getInstance()
@@ -260,10 +260,7 @@ public class DimensionalRiftManager
 		{
 			return _rooms.get((byte) 0).get((byte) 1).checkIfInZone(x, y, z);
 		}
-		else
-		{
-			return _rooms.get((byte) 0).get((byte) 1).checkIfInZone(x, y, z) && !_rooms.get((byte) 0).get((byte) 0).checkIfInZone(x, y, z);
-		}
+		return _rooms.get((byte) 0).get((byte) 1).checkIfInZone(x, y, z) && !_rooms.get((byte) 0).get((byte) 0).checkIfInZone(x, y, z);
 	}
 	
 	public boolean checkIfInPeaceZone(int x, int y, int z)
@@ -454,8 +451,8 @@ public class DimensionalRiftManager
 				zT
 			};
 			_isBossRoom = isBossRoom;
-			_roomSpawns = new FastList<L2Spawn>();
-			_roomMobs = new FastList<L2Npc>();
+			_roomSpawns = new FastList<>();
+			_roomMobs = new FastList<>();
 			_s = new Polygon(new int[]
 			{
 				xMin,
@@ -591,7 +588,7 @@ public class DimensionalRiftManager
 	
 	public FastList<Byte> getFreeRooms(byte type)
 	{
-		FastList<Byte> list = new FastList<Byte>();
+		FastList<Byte> list = new FastList<>();
 		for (Object room : _rooms.get(type).getValues())
 		{
 			if (!((DimensionalRiftRoom) room).ispartyInside())

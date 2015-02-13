@@ -150,13 +150,10 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 					}
 					break;
 				}
-				else
+				final L2SkillLearn s = SkillTreesData.getInstance().getClassSkill(_id, _level, activeChar.getLearningClass());
+				if (checkPlayerSkill(activeChar, trainer, s))
 				{
-					final L2SkillLearn s = SkillTreesData.getInstance().getClassSkill(_id, _level, activeChar.getLearningClass());
-					if (checkPlayerSkill(activeChar, trainer, s))
-					{
-						giveSkill(activeChar, trainer, skill);
-					}
+					giveSkill(activeChar, trainer, skill);
 				}
 				break;
 			}
@@ -284,13 +281,10 @@ public final class RequestAcquireSkill extends L2GameClientPacket
 								activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ITEM_MISSING_TO_LEARN_SKILL));
 								return;
 							}
-							else
-							{
-								final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
-								sm.addItemName(itemId);
-								sm.addItemNumber(itemCount);
-								activeChar.sendPacket(sm);
-							}
+							final SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S2_S1_DISAPPEARED);
+							sm.addItemName(itemId);
+							sm.addItemNumber(itemCount);
+							activeChar.sendPacket(sm);
 						}
 						
 						if (rep > 0)

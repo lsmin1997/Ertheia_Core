@@ -107,13 +107,13 @@ public class Hero
 	
 	private void init()
 	{
-		_heroes = new FastMap<Integer, StatsSet>();
-		_completeHeroes = new FastMap<Integer, StatsSet>();
+		_heroes = new FastMap<>();
+		_completeHeroes = new FastMap<>();
 		
-		_herofights = new FastMap<Integer, List<StatsSet>>();
-		_herocounts = new FastMap<Integer, StatsSet>();
-		_herodiary = new FastMap<Integer, List<StatsSet>>();
-		_heroMessage = new FastMap<Integer, String>();
+		_herofights = new FastMap<>();
+		_herocounts = new FastMap<>();
+		_herodiary = new FastMap<>();
+		_heroMessage = new FastMap<>();
 		
 		Connection con = null;
 		try
@@ -289,7 +289,7 @@ public class Hero
 	
 	public void loadDiary(int charId)
 	{
-		_diary = new FastList<StatsSet>();
+		_diary = new FastList<>();
 		
 		int diaryentries = 0;
 		Connection con = null;
@@ -357,7 +357,7 @@ public class Hero
 	
 	public void loadFights(int charId)
 	{
-		_fights = new FastList<StatsSet>();
+		_fights = new FastList<>();
 		
 		StatsSet _herocountdata = new StatsSet();
 		
@@ -755,7 +755,7 @@ public class Hero
 			return;
 		}
 		
-		Map<Integer, StatsSet> heroes = new FastMap<Integer, StatsSet>();
+		Map<Integer, StatsSet> heroes = new FastMap<>();
 		
 		for (StatsSet hero : newHeroes)
 		{

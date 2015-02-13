@@ -40,7 +40,7 @@ public class LanguageControl extends Control
 	}
 	
 	@Override
-	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IllegalAccessException, InstantiationException, IOException
+	public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IOException
 	{
 		if ((baseName == null) || (locale == null) || (format == null) || (loader == null))
 		{
@@ -52,15 +52,10 @@ public class LanguageControl extends Control
 			format = "properties";
 			String bundleName = toBundleName(baseName, locale);
 			String resourceName = LANGUAGES_DIRECTORY + toResourceName(bundleName, format);
-			BufferedInputStream bis = null;
-			try
+			
+			try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(resourceName)))
 			{
-				bis = new BufferedInputStream(new FileInputStream(resourceName));
 				bundle = new PropertyResourceBundle(bis);
-			}
-			finally
-			{
-				bis.close();
 			}
 		}
 		return bundle;

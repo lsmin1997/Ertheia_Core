@@ -39,7 +39,7 @@ public class FastMRUCache<K, V> extends FastCollection implements Reusable
 	
 	private final FastMap<K, CacheNode> _cache = new FastMap<K, CacheNode>().setKeyComparator(FastComparator.DIRECT);
 	private FastMap<K, V> _map;
-	private final FastList<K> _mruList = new FastList<K>();
+	private final FastList<K> _mruList = new FastList<>();
 	private int _cacheSize;
 	private int _forgetTime;
 	

@@ -703,7 +703,7 @@ public abstract class L2Item
 			return _emptyFunctionSet;
 		}
 		
-		ArrayList<Func> funcs = new ArrayList<Func>(_funcTemplates.length);
+		ArrayList<Func> funcs = new ArrayList<>(_funcTemplates.length);
 		
 		Env env = new Env();
 		env.player = player;
@@ -862,7 +862,7 @@ public abstract class L2Item
 	{
 		if (_preConditions == null)
 		{
-			_preConditions = new FastList<Condition>();
+			_preConditions = new FastList<>();
 		}
 		if (!_preConditions.contains(c))
 		{

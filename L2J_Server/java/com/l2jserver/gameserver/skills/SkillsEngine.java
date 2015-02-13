@@ -35,8 +35,8 @@ public class SkillsEngine
 	
 	protected static final Logger _log = Logger.getLogger(SkillsEngine.class.getName());
 	
-	private final List<File> _itemFiles = new FastList<File>();
-	private final List<File> _skillFiles = new FastList<File>();
+	private final List<File> _itemFiles = new FastList<>();
+	private final List<File> _skillFiles = new FastList<>();
 	
 	public static SkillsEngine getInstance()
 	{
@@ -109,7 +109,7 @@ public class SkillsEngine
 	 */
 	public List<L2Item> loadItems()
 	{
-		List<L2Item> list = new FastList<L2Item>();
+		List<L2Item> list = new FastList<>();
 		for (File f : _itemFiles)
 		{
 			DocumentItem document = new DocumentItem(f);

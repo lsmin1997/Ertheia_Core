@@ -177,10 +177,7 @@ public class Siege implements Siegable
 						_scheduledStartSiegeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleStartSiegeTask(_castleInst), regTimeRemaining);
 						return;
 					}
-					else
-					{
-						endTimeRegistration(true);
-					}
+					endTimeRegistration(true);
 				}
 				
 				long timeRemaining = getSiegeDate().getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
@@ -225,13 +222,13 @@ public class Siege implements Siegable
 		}
 	}
 	
-	private final List<L2SiegeClan> _attackerClans = new FastList<L2SiegeClan>();
-	private final List<L2SiegeClan> _defenderClans = new FastList<L2SiegeClan>();
-	private final List<L2SiegeClan> _defenderWaitingClans = new FastList<L2SiegeClan>();
+	private final List<L2SiegeClan> _attackerClans = new FastList<>();
+	private final List<L2SiegeClan> _defenderClans = new FastList<>();
+	private final List<L2SiegeClan> _defenderWaitingClans = new FastList<>();
 	
 	// Castle setting
-	private List<L2ControlTowerInstance> _controlTowers = new FastList<L2ControlTowerInstance>();
-	private List<L2FlameTowerInstance> _flameTowers = new FastList<L2FlameTowerInstance>();
+	private List<L2ControlTowerInstance> _controlTowers = new FastList<>();
+	private List<L2FlameTowerInstance> _flameTowers = new FastList<>();
 	private final Castle[] _castle;
 	private boolean _isInProgress = false;
 	private boolean _isNormalSide = true; // true = Atk is Atk, false = Atk is Def
@@ -782,7 +779,7 @@ public class Siege implements Siegable
 	@Override
 	public List<L2PcInstance> getAttackersInZone()
 	{
-		List<L2PcInstance> players = new FastList<L2PcInstance>();
+		List<L2PcInstance> players = new FastList<>();
 		L2Clan clan;
 		for (L2SiegeClan siegeclan : getAttackerClans())
 		{
@@ -806,7 +803,7 @@ public class Siege implements Siegable
 	/** Return list of L2PcInstance registered as defender but not owner in the zone. */
 	public List<L2PcInstance> getDefendersButNotOwnersInZone()
 	{
-		List<L2PcInstance> players = new FastList<L2PcInstance>();
+		List<L2PcInstance> players = new FastList<>();
 		L2Clan clan;
 		for (L2SiegeClan siegeclan : getDefenderClans())
 		{
@@ -840,7 +837,7 @@ public class Siege implements Siegable
 	/** Return list of L2PcInstance owning the castle in the zone. */
 	public List<L2PcInstance> getOwnersInZone()
 	{
-		List<L2PcInstance> players = new FastList<L2PcInstance>();
+		List<L2PcInstance> players = new FastList<>();
 		L2Clan clan;
 		for (L2SiegeClan siegeclan : getDefenderClans())
 		{
@@ -868,7 +865,7 @@ public class Siege implements Siegable
 	/** Return list of L2PcInstance not registered as attacker or defender in the zone. */
 	public List<L2PcInstance> getSpectatorsInZone()
 	{
-		List<L2PcInstance> players = new FastList<L2PcInstance>();
+		List<L2PcInstance> players = new FastList<>();
 		
 		// synchronized (L2World.getInstance().getAllPlayers())
 		for (L2PcInstance player : getCastle().getZone().getAllPlayers())
@@ -1533,7 +1530,7 @@ public class Siege implements Siegable
 		// Set control tower array size if one does not exist
 		if (_controlTowers == null)
 		{
-			_controlTowers = new FastList<L2ControlTowerInstance>();
+			_controlTowers = new FastList<>();
 		}
 		
 		for (SiegeSpawn _sp : SiegeManager.getInstance().getControlTowerSpawnList(Id))
@@ -1558,7 +1555,7 @@ public class Siege implements Siegable
 		// Set control tower array size if one does not exist
 		if (_flameTowers == null)
 		{
-			_flameTowers = new FastList<L2FlameTowerInstance>();
+			_flameTowers = new FastList<>();
 		}
 		
 		for (SiegeSpawn _sp : SiegeManager.getInstance().getFlameTowerSpawnList(Id))

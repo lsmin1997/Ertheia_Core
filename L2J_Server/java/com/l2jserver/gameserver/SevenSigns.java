@@ -151,10 +151,10 @@ public class SevenSigns
 	
 	private SevenSigns()
 	{
-		_signsPlayerData = new FastMap<Integer, StatsSet>();
-		_signsSealOwners = new FastMap<Integer, Integer>();
-		_signsDuskSealTotals = new FastMap<Integer, Integer>();
-		_signsDawnSealTotals = new FastMap<Integer, Integer>();
+		_signsPlayerData = new FastMap<>();
+		_signsSealOwners = new FastMap<>();
+		_signsDuskSealTotals = new FastMap<>();
+		_signsDawnSealTotals = new FastMap<>();
 		
 		try
 		{
@@ -244,10 +244,7 @@ public class SevenSigns
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	/**

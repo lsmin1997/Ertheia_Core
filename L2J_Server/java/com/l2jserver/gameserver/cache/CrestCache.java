@@ -40,11 +40,11 @@ public class CrestCache
 {
 	private static Logger _log = Logger.getLogger(CrestCache.class.getName());
 	
-	private final FastMRUCache<Integer, byte[]> _cachePledge = new FastMRUCache<Integer, byte[]>();
+	private final FastMRUCache<Integer, byte[]> _cachePledge = new FastMRUCache<>();
 	
-	private final FastMRUCache<Integer, byte[]> _cachePledgeLarge = new FastMRUCache<Integer, byte[]>();
+	private final FastMRUCache<Integer, byte[]> _cachePledgeLarge = new FastMRUCache<>();
 	
-	private final FastMRUCache<Integer, byte[]> _cacheAlly = new FastMRUCache<Integer, byte[]>();
+	private final FastMRUCache<Integer, byte[]> _cacheAlly = new FastMRUCache<>();
 	
 	private int _loadedFiles;
 	
@@ -85,12 +85,11 @@ public class CrestCache
 		
 		for (File file : files)
 		{
-			RandomAccessFile f = null;
+			
 			synchronized (this)
 			{
-				try
+				try (RandomAccessFile f = new RandomAccessFile(file, "r"))
 				{
-					f = new RandomAccessFile(file, "r");
 					content = new byte[(int) f.length()];
 					f.readFully(content);
 					
@@ -112,16 +111,6 @@ public class CrestCache
 				catch (Exception e)
 				{
 					_log.log(Level.WARNING, "Problem with crest bmp file " + e.getMessage(), e);
-				}
-				finally
-				{
-					try
-					{
-						f.close();
-					}
-					catch (Exception e1)
-					{
-					}
 				}
 			}
 		}
@@ -261,10 +250,8 @@ public class CrestCache
 	public boolean savePledgeCrest(int newId, byte[] data)
 	{
 		File crestFile = new File(Config.DATAPACK_ROOT, "data/crests/Crest_" + newId + ".bmp");
-		FileOutputStream out = null;
-		try
+		try (FileOutputStream out = new FileOutputStream(crestFile))
 		{
-			out = new FileOutputStream(crestFile);
 			out.write(data);
 			_cachePledge.getContentMap().put(newId, data);
 			return true;
@@ -274,25 +261,13 @@ public class CrestCache
 			_log.log(Level.INFO, "Error saving pledge crest" + crestFile + ":", e);
 			return false;
 		}
-		finally
-		{
-			try
-			{
-				out.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
 	public boolean savePledgeCrestLarge(int newId, byte[] data)
 	{
 		File crestFile = new File(Config.DATAPACK_ROOT, "data/crests/Crest_Large_" + newId + ".bmp");
-		FileOutputStream out = null;
-		try
+		try (FileOutputStream out = new FileOutputStream(crestFile))
 		{
-			out = new FileOutputStream(crestFile);
 			out.write(data);
 			_cachePledgeLarge.getContentMap().put(newId, data);
 			return true;
@@ -302,25 +277,13 @@ public class CrestCache
 			_log.log(Level.INFO, "Error saving Large pledge crest" + crestFile + ":", e);
 			return false;
 		}
-		finally
-		{
-			try
-			{
-				out.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
 	public boolean saveAllyCrest(int newId, byte[] data)
 	{
 		File crestFile = new File(Config.DATAPACK_ROOT, "data/crests/AllyCrest_" + newId + ".bmp");
-		FileOutputStream out = null;
-		try
+		try (FileOutputStream out = new FileOutputStream(crestFile))
 		{
-			out = new FileOutputStream(crestFile);
 			out.write(data);
 			_cacheAlly.getContentMap().put(newId, data);
 			return true;
@@ -330,19 +293,9 @@ public class CrestCache
 			_log.log(Level.INFO, "Error saving ally crest" + crestFile + ":", e);
 			return false;
 		}
-		finally
-		{
-			try
-			{
-				out.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
 	}
 	
-	private static class BmpFilter implements FileFilter
+	protected static class BmpFilter implements FileFilter
 	{
 		@Override
 		public boolean accept(File file)
@@ -351,7 +304,7 @@ public class CrestCache
 		}
 	}
 	
-	private static class OldPledgeFilter implements FileFilter
+	protected static class OldPledgeFilter implements FileFilter
 	{
 		@Override
 		public boolean accept(File file)

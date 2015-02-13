@@ -27,8 +27,8 @@ import com.l2jserver.gameserver.datatables.SkillTable;
  */
 public class L2PetData
 {
-	private final TIntObjectHashMap<L2PetLevelData> _levelStats = new TIntObjectHashMap<L2PetLevelData>();
-	private final List<L2PetSkillLearn> _skills = new ArrayList<L2PetSkillLearn>();
+	private final TIntObjectHashMap<L2PetLevelData> _levelStats = new TIntObjectHashMap<>();
+	private final List<L2PetSkillLearn> _skills = new ArrayList<>();
 	
 	private int _load = 20000;
 	private int _hungry_limit = 1;

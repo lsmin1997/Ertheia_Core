@@ -101,14 +101,11 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					player.sendPacket(html);
 					return;
 				}
-				else
-				{
-					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-					html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-noprivs.htm");
-					html.replace("%objectId%", String.valueOf(getObjectId()));
-					player.sendPacket(html);
-					return;
-				}
+				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+				html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-noprivs.htm");
+				html.replace("%objectId%", String.valueOf(getObjectId()));
+				player.sendPacket(html);
+				return;
 			}
 			else if (actualCommand.equalsIgnoreCase("banish_foreigner"))
 			{
@@ -121,14 +118,11 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					player.sendPacket(html);
 					return;
 				}
-				else
-				{
-					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-					html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-noprivs.htm");
-					html.replace("%objectId%", String.valueOf(getObjectId()));
-					player.sendPacket(html);
-					return;
-				}
+				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+				html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-noprivs.htm");
+				html.replace("%objectId%", String.valueOf(getObjectId()));
+				player.sendPacket(html);
+				return;
 			}
 			else if (actualCommand.equalsIgnoreCase("receive_report"))
 			{
@@ -154,34 +148,31 @@ public class L2FortManagerInstance extends L2MerchantInstance
 					player.sendPacket(html);
 					return;
 				}
+				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+				html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-castlereport.htm");
+				html.replace("%objectId%", String.valueOf(getObjectId()));
+				int hour, minutes;
+				if (Config.FS_MAX_OWN_TIME > 0)
+				{
+					hour = (int) Math.floor(getFort().getTimeTillRebelArmy() / 3600);
+					minutes = (int) (Math.floor(getFort().getTimeTillRebelArmy() - (hour * 3600)) / 60);
+					html.replace("%hr%", String.valueOf(hour));
+					html.replace("%min%", String.valueOf(minutes));
+				}
 				else
 				{
-					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-					html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-castlereport.htm");
-					html.replace("%objectId%", String.valueOf(getObjectId()));
-					int hour, minutes;
-					if (Config.FS_MAX_OWN_TIME > 0)
-					{
-						hour = (int) Math.floor(getFort().getTimeTillRebelArmy() / 3600);
-						minutes = (int) (Math.floor(getFort().getTimeTillRebelArmy() - (hour * 3600)) / 60);
-						html.replace("%hr%", String.valueOf(hour));
-						html.replace("%min%", String.valueOf(minutes));
-					}
-					else
-					{
-						hour = (int) Math.floor(getFort().getOwnedTime() / 3600);
-						minutes = (int) (Math.floor(getFort().getOwnedTime() - (hour * 3600)) / 60);
-						html.replace("%hr%", String.valueOf(hour));
-						html.replace("%min%", String.valueOf(minutes));
-					}
-					hour = (int) Math.floor(getFort().getTimeTillNextFortUpdate() / 3600);
-					minutes = (int) (Math.floor(getFort().getTimeTillNextFortUpdate() - (hour * 3600)) / 60);
-					html.replace("%castle%", CastleManager.getInstance().getCastleById(getFort().getCastleId()).getName());
-					html.replace("%hr2%", String.valueOf(hour));
-					html.replace("%min2%", String.valueOf(minutes));
-					player.sendPacket(html);
-					return;
+					hour = (int) Math.floor(getFort().getOwnedTime() / 3600);
+					minutes = (int) (Math.floor(getFort().getOwnedTime() - (hour * 3600)) / 60);
+					html.replace("%hr%", String.valueOf(hour));
+					html.replace("%min%", String.valueOf(minutes));
 				}
+				hour = (int) Math.floor(getFort().getTimeTillNextFortUpdate() / 3600);
+				minutes = (int) (Math.floor(getFort().getTimeTillNextFortUpdate() - (hour * 3600)) / 60);
+				html.replace("%castle%", CastleManager.getInstance().getCastleById(getFort().getCastleId()).getName());
+				html.replace("%hr2%", String.valueOf(hour));
+				html.replace("%min2%", String.valueOf(minutes));
+				player.sendPacket(html);
+				return;
 			}
 			else if (actualCommand.equalsIgnoreCase("operate_door")) // door
 			// control
@@ -203,33 +194,24 @@ public class L2FortManagerInstance extends L2MerchantInstance
 							player.sendPacket(html);
 							return;
 						}
-						else
-						{
-							NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-							html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-closed.htm");
-							html.replace("%objectId%", String.valueOf(getObjectId()));
-							player.sendPacket(html);
-							return;
-						}
-					}
-					else
-					{
 						NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-						html.setFile(player.getHtmlPrefix(), "data/html/fortress/" + getTemplate().npcId + "-d.htm");
+						html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-closed.htm");
 						html.replace("%objectId%", String.valueOf(getObjectId()));
-						html.replace("%npcname%", getName());
 						player.sendPacket(html);
 						return;
 					}
-				}
-				else
-				{
 					NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-					html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-noprivs.htm");
+					html.setFile(player.getHtmlPrefix(), "data/html/fortress/" + getTemplate().npcId + "-d.htm");
 					html.replace("%objectId%", String.valueOf(getObjectId()));
+					html.replace("%npcname%", getName());
 					player.sendPacket(html);
 					return;
 				}
+				NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+				html.setFile(player.getHtmlPrefix(), "data/html/fortress/foreman-noprivs.htm");
+				html.replace("%objectId%", String.valueOf(getObjectId()));
+				player.sendPacket(html);
+				return;
 			}
 			else if (actualCommand.equalsIgnoreCase("manage_vault"))
 			{

@@ -48,8 +48,8 @@ import com.l2jserver.gameserver.pathfinding.utils.FastNodeList;
 public class GeoPathFinding extends PathFinding
 {
 	private static Logger _log = Logger.getLogger(GeoPathFinding.class.getName());
-	private static Map<Short, ByteBuffer> _pathNodes = new FastMap<Short, ByteBuffer>();
-	private static Map<Short, IntBuffer> _pathNodesIndex = new FastMap<Short, IntBuffer>();
+	private static Map<Short, ByteBuffer> _pathNodes = new FastMap<>();
+	private static Map<Short, IntBuffer> _pathNodesIndex = new FastMap<>();
 	
 	public static GeoPathFinding getInstance()
 	{
@@ -130,7 +130,7 @@ public class GeoPathFinding extends PathFinding
 		FastNodeList visited = new FastNodeList(550);
 		
 		// List of Nodes to Visit
-		LinkedList<GeoNode> to_visit = new LinkedList<GeoNode>();
+		LinkedList<GeoNode> to_visit = new LinkedList<>();
 		to_visit.add(start);
 		int targetX = end.getLoc().getNodeX();
 		int targetY = end.getLoc().getNodeY();
@@ -150,43 +150,42 @@ public class GeoPathFinding extends PathFinding
 				// No Path found
 				return null;
 			}
+			
 			if (node.equals(end))
 			{
 				return constructPath2(node);
 			}
-			else
+			
+			i++;
+			visited.add(node);
+			node.attachNeighbors();
+			GeoNode[] neighbors = node.getNeighbors();
+			if (neighbors == null)
 			{
-				i++;
-				visited.add(node);
-				node.attachNeighbors();
-				GeoNode[] neighbors = node.getNeighbors();
-				if (neighbors == null)
+				continue;
+			}
+			for (GeoNode n : neighbors)
+			{
+				if (!visited.containsRev(n) && !to_visit.contains(n))
 				{
-					continue;
-				}
-				for (GeoNode n : neighbors)
-				{
-					if (!visited.containsRev(n) && !to_visit.contains(n))
+					added = false;
+					n.setParent(node);
+					dx = targetX - n.getLoc().getNodeX();
+					dy = targetY - n.getLoc().getNodeY();
+					n.setCost((dx * dx) + (dy * dy));
+					for (int index = 0; index < to_visit.size(); index++)
 					{
-						added = false;
-						n.setParent(node);
-						dx = targetX - n.getLoc().getNodeX();
-						dy = targetY - n.getLoc().getNodeY();
-						n.setCost((dx * dx) + (dy * dy));
-						for (int index = 0; index < to_visit.size(); index++)
+						// supposed to find it quite early..
+						if (to_visit.get(index).getCost() > n.getCost())
 						{
-							// supposed to find it quite early..
-							if (to_visit.get(index).getCost() > n.getCost())
-							{
-								to_visit.add(index, n);
-								added = true;
-								break;
-							}
+							to_visit.add(index, n);
+							added = true;
+							break;
 						}
-						if (!added)
-						{
-							to_visit.addLast(n);
-						}
+					}
+					if (!added)
+					{
+						to_visit.addLast(n);
 					}
 				}
 			}
@@ -197,7 +196,7 @@ public class GeoPathFinding extends PathFinding
 	
 	public List<AbstractNodeLoc> constructPath2(AbstractNode node)
 	{
-		LinkedList<AbstractNodeLoc> path = new LinkedList<AbstractNodeLoc>();
+		LinkedList<AbstractNodeLoc> path = new LinkedList<>();
 		int previousDirectionX = -1000;
 		int previousDirectionY = -1000;
 		int directionX;
@@ -229,7 +228,7 @@ public class GeoPathFinding extends PathFinding
 		short regoffset = getRegionOffset(getRegionX(node_x), getRegionY(node_y));
 		ByteBuffer pn = _pathNodes.get(regoffset);
 		
-		List<AbstractNode> Neighbors = new FastList<AbstractNode>(8);
+		List<AbstractNode> Neighbors = new FastList<>(8);
 		GeoNode newNode;
 		short new_node_x, new_node_y;
 		
@@ -453,11 +452,9 @@ public class GeoPathFinding extends PathFinding
 		_log.info("PathFinding Engine: - Loading: " + fname + " -> region offset: " + regionoffset + "X: " + rx + " Y: " + ry);
 		File Pn = new File(fname);
 		int node = 0, size, index = 0;
-		FileChannel roChannel = null;
-		try
+		
+		try (FileChannel roChannel = new RandomAccessFile(Pn, "r").getChannel())
 		{
-			// Create a read-only memory-mapped file
-			roChannel = new RandomAccessFile(Pn, "r").getChannel();
 			size = (int) roChannel.size();
 			MappedByteBuffer nodes;
 			if (Config.FORCE_GEODATA)
@@ -486,17 +483,6 @@ public class GeoPathFinding extends PathFinding
 		{
 			_log.log(Level.WARNING, "Failed to Load PathNode File: " + fname + " : " + e.getMessage(), e);
 		}
-		finally
-		{
-			try
-			{
-				roChannel.close();
-			}
-			catch (Exception e)
-			{
-			}
-		}
-		
 	}
 	
 	@SuppressWarnings("synthetic-access")

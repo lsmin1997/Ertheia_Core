@@ -1809,7 +1809,7 @@ public class MercTicketManager
 			{
 				if (_droppedTickets == null)
 				{
-					_droppedTickets = new FastList<L2ItemInstance>();
+					_droppedTickets = new FastList<>();
 				}
 			}
 		}

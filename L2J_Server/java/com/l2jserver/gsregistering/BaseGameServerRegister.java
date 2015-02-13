@@ -23,6 +23,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -351,31 +352,11 @@ public abstract class BaseGameServerRegister
 	
 	public static void unregisterAllGameServers() throws SQLException
 	{
-		Connection con = null;
-		PreparedStatement statement = null;
-		
-		try
+		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
+			Statement statement = con.createStatement())
 		{
-			con = L2DatabaseFactory.getInstance().getConnection();
-			statement = con.prepareStatement("DELETE FROM gameservers");
-			statement.executeUpdate();
+			statement.executeUpdate("DELETE FROM gameservers");
 			GameServerTable.getInstance().getRegisteredGameServers().clear();
-		}
-		finally
-		{
-			try
-			{
-				statement.close();
-			}
-			catch (SQLException e)
-			{
-				// nothing
-			}
-			
-			if (con != null)
-			{
-				L2DatabaseFactory.close(con);
-			}
 		}
 	}
 	

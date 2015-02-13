@@ -118,7 +118,7 @@ public class CellNodeBuffer
 	
 	public final FastList<CellNode> debugPath()
 	{
-		FastList<CellNode> result = new FastList<CellNode>();
+		FastList<CellNode> result = new FastList<>();
 		
 		for (CellNode n = _current; n.getParent() != null; n = (CellNode) n.getParent())
 		{
@@ -316,10 +316,7 @@ public class CellNodeBuffer
 				newNode.setNext(node.getNext());
 				break;
 			}
-			else
-			{
-				node = node.getNext();
-			}
+			node = node.getNext();
 		}
 		if (count == (MAX_ITERATIONS * 4))
 		{

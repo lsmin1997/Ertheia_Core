@@ -213,10 +213,7 @@ public final class SystemMessage extends L2GameServerPacket
 			{
 				return addString(((L2Npc) cha).getTemplate().name);
 			}
-			else
-			{
-				return addNpcName((L2Npc) cha);
-			}
+			return addNpcName((L2Npc) cha);
 		}
 		else if (cha instanceof L2PcInstance)
 		{
@@ -228,10 +225,7 @@ public final class SystemMessage extends L2GameServerPacket
 			{
 				return addString(((L2Summon) cha).getTemplate().name);
 			}
-			else
-			{
-				return addNpcName((L2Summon) cha);
-			}
+			return addNpcName((L2Summon) cha);
 		}
 		return addString(cha.getName());
 	}

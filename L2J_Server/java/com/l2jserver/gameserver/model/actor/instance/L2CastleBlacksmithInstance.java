@@ -74,10 +74,7 @@ public class L2CastleBlacksmithInstance extends L2NpcInstance
 				showChatWindow(player, val);
 				return;
 			}
-			else
-			{
-				super.onBypassFeedback(player, command);
-			}
+			super.onBypassFeedback(player, command);
 		}
 	}
 	

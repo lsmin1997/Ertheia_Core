@@ -891,9 +891,6 @@ abstract class AbstractAI implements Ctrl
 		{
 			return "Actor: null";
 		}
-		else
-		{
-			return "Actor: " + _actor;
-		}
+		return "Actor: " + _actor;
 	}
 }

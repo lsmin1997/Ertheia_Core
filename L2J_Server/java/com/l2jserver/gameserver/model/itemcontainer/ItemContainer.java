@@ -46,7 +46,7 @@ public abstract class ItemContainer
 	
 	protected ItemContainer()
 	{
-		_items = new FastList<L2ItemInstance>();
+		_items = new FastList<>();
 	}
 	
 	protected abstract L2Character getOwner();
@@ -115,7 +115,7 @@ public abstract class ItemContainer
 	 */
 	public List<L2ItemInstance> getItemsByItemId(int itemId)
 	{
-		List<L2ItemInstance> returnList = new FastList<L2ItemInstance>();
+		List<L2ItemInstance> returnList = new FastList<>();
 		for (L2ItemInstance item : _items)
 		{
 			if ((item != null) && (item.getItemId() == itemId))
@@ -454,24 +454,21 @@ public abstract class ItemContainer
 				
 				return item;
 			}
-			else
+			if (item.getCount() < count)
 			{
-				if (item.getCount() < count)
-				{
-					return null;
-				}
-				
-				boolean removed = removeItem(item);
-				if (!removed)
-				{
-					return null;
-				}
-				
-				ItemTable.getInstance().destroyItem(process, item, actor, reference);
-				
-				item.updateDatabase();
-				refreshWeight();
+				return null;
 			}
+			
+			boolean removed = removeItem(item);
+			if (!removed)
+			{
+				return null;
+			}
+			
+			ItemTable.getInstance().destroyItem(process, item, actor, reference);
+			
+			item.updateDatabase();
+			refreshWeight();
 		}
 		return item;
 	}
@@ -594,7 +591,7 @@ public abstract class ItemContainer
 		{
 			_log.log(Level.SEVERE, "deletedMe()", e);
 		}
-		List<L2Object> items = new FastList<L2Object>(_items);
+		List<L2Object> items = new FastList<>(_items);
 		_items.clear();
 		
 		L2World.getInstance().removeObjects(items);

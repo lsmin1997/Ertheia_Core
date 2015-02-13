@@ -60,7 +60,7 @@ public class Territory
 	
 	public void reload_data()
 	{
-		_territory = new FastMap<Integer, L2Territory>();
+		_territory = new FastMap<>();
 		
 		Integer[][] point = SqlUtils.get2DIntArray(new String[]
 		{

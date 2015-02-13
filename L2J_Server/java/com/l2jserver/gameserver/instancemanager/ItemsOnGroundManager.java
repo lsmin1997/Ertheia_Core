@@ -49,7 +49,7 @@ public class ItemsOnGroundManager
 	{
 		if (Config.SAVE_DROPPED_ITEM)
 		{
-			_items = new FastList<L2ItemInstance>();
+			_items = new FastList<>();
 		}
 		if (Config.SAVE_DROPPED_ITEM_INTERVAL > 0)
 		{

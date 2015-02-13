@@ -28,7 +28,7 @@ public class NpcBufferTable
 {
 	protected static Logger _log = Logger.getLogger(NpcBufferTable.class.getName());
 	
-	private final TIntObjectHashMap<NpcBufferSkills> _buffers = new TIntObjectHashMap<NpcBufferSkills>();
+	private final TIntObjectHashMap<NpcBufferSkills> _buffers = new TIntObjectHashMap<>();
 	
 	private static class NpcBufferSkills
 	{

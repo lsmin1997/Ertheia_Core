@@ -39,7 +39,7 @@ public abstract class L2SpawnZone extends L2ZoneType
 	{
 		if (_spawnLocs == null)
 		{
-			_spawnLocs = new ArrayList<Location>();
+			_spawnLocs = new ArrayList<>();
 		}
 		
 		_spawnLocs.add(new Location(x, y, z));
@@ -49,7 +49,7 @@ public abstract class L2SpawnZone extends L2ZoneType
 	{
 		if (_chaoticSpawnLocs == null)
 		{
-			_chaoticSpawnLocs = new ArrayList<Location>();
+			_chaoticSpawnLocs = new ArrayList<>();
 		}
 		
 		_chaoticSpawnLocs.add(new Location(x, y, z));
@@ -66,10 +66,7 @@ public abstract class L2SpawnZone extends L2ZoneType
 		{
 			return _spawnLocs.get(Rnd.get(_spawnLocs.size()));
 		}
-		else
-		{
-			return _spawnLocs.get(0);
-		}
+		return _spawnLocs.get(0);
 	}
 	
 	public final Location getChaoticSpawnLoc()
@@ -78,9 +75,6 @@ public abstract class L2SpawnZone extends L2ZoneType
 		{
 			return _chaoticSpawnLocs.get(Rnd.get(_chaoticSpawnLocs.size()));
 		}
-		else
-		{
-			return getSpawnLoc();
-		}
+		return getSpawnLoc();
 	}
 }

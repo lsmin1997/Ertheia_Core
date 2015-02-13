@@ -297,7 +297,7 @@ public final class L2Weapon extends L2Item
 			return _emptyFunctionSet;
 		}
 		
-		ArrayList<Func> funcs = new ArrayList<Func>(_funcTemplates.length);
+		ArrayList<Func> funcs = new ArrayList<>(_funcTemplates.length);
 		
 		Env env = new Env();
 		env.player = player;
@@ -329,7 +329,7 @@ public final class L2Weapon extends L2Item
 		{
 			return _emptyEffectSet;
 		}
-		List<L2Effect> effects = new FastList<L2Effect>();
+		List<L2Effect> effects = new FastList<>();
 		
 		if (_skillsOnCritCondition != null)
 		{

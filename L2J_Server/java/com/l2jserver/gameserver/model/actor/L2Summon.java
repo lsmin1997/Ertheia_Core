@@ -287,10 +287,7 @@ public abstract class L2Summon extends L2Playable
 		{
 			return (short) getTemplate().getAIDataStatic().getSoulShot();
 		}
-		else
-		{
-			return 1;
-		}
+		return 1;
 	}
 	
 	public short getSpiritShotsPerHit()
@@ -299,10 +296,7 @@ public abstract class L2Summon extends L2Playable
 		{
 			return (short) getTemplate().getAIDataStatic().getSpiritShot();
 		}
-		else
-		{
-			return 1;
-		}
+		return 1;
 	}
 	
 	public void setChargedSoulShot(int shotType)
@@ -578,10 +572,7 @@ public abstract class L2Summon extends L2Playable
 		{
 			return null;
 		}
-		else
-		{
-			return _owner.getParty();
-		}
+		return _owner.getParty();
 	}
 	
 	/**
@@ -595,10 +586,7 @@ public abstract class L2Summon extends L2Playable
 		{
 			return false;
 		}
-		else
-		{
-			return _owner.getParty() != null;
-		}
+		return _owner.getParty() != null;
 	}
 	
 	/**

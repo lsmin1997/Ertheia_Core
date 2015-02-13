@@ -47,7 +47,7 @@ public class ArmorSetsTable
 	
 	private ArmorSetsTable()
 	{
-		_armorSets = new TIntObjectHashMap<L2ArmorSet>();
+		_armorSets = new TIntObjectHashMap<>();
 		loadData();
 	}
 	

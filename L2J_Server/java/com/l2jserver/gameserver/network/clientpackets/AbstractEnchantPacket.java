@@ -26,8 +26,8 @@ import com.l2jserver.gameserver.templates.item.L2WeaponType;
 public abstract class AbstractEnchantPacket extends L2GameClientPacket
 {
 	
-	public static final TIntObjectHashMap<EnchantScroll> _scrolls = new TIntObjectHashMap<EnchantScroll>();
-	public static final TIntObjectHashMap<EnchantItem> _supports = new TIntObjectHashMap<EnchantItem>();
+	public static final TIntObjectHashMap<EnchantScroll> _scrolls = new TIntObjectHashMap<>();
+	public static final TIntObjectHashMap<EnchantItem> _supports = new TIntObjectHashMap<>();
 	
 	public static class EnchantItem
 	{

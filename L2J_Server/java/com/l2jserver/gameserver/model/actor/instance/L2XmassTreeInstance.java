@@ -32,7 +32,7 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 public class L2XmassTreeInstance extends L2Npc
 {
 	public static final int SPECIAL_TREE_ID = 13007;
-	private ScheduledFuture<?> _aiTask;
+	protected ScheduledFuture<?> _aiTask;
 	
 	class XmassAI implements Runnable
 	{

@@ -149,11 +149,9 @@ public class GameStatusThread extends Thread
 			telnetOutput(2, "");
 		}
 		
-		InputStream telnetIS = null;
-		try
+		try (InputStream telnetIS = new FileInputStream(new File(Config.TELNET_FILE)))
 		{
 			Properties telnetSettings = new Properties();
-			telnetIS = new FileInputStream(new File(Config.TELNET_FILE));
 			telnetSettings.load(telnetIS);
 			
 			String HostList = telnetSettings.getProperty("ListOfHosts", "127.0.0.1,localhost,::1");
@@ -188,16 +186,6 @@ public class GameStatusThread extends Thread
 				telnetOutput(4, "");
 			}
 			telnetOutput(1, "Error: " + e);
-		}
-		finally
-		{
-			try
-			{
-				telnetIS.close();
-			}
-			catch (Exception e)
-			{
-			}
 		}
 		
 		if (Config.DEVELOPER)
@@ -1212,7 +1200,6 @@ public class GameStatusThread extends Thread
 		return sb.toString();
 	}
 	
-	@SuppressWarnings("serial")
 	public void debugAll() throws IOException
 	{
 		Calendar cal = Calendar.getInstance();
@@ -1261,7 +1248,7 @@ public class GameStatusThread extends Thread
 		sb.append("## Threads Information ##\n");
 		Map<Thread, StackTraceElement[]> allThread = Thread.getAllStackTraces();
 		
-		FastTable<Entry<Thread, StackTraceElement[]>> entries = new FastTable<Entry<Thread, StackTraceElement[]>>();
+		FastTable<Entry<Thread, StackTraceElement[]>> entries = new FastTable<>();
 		entries.setValueComparator(new FastComparator<Entry<Thread, StackTraceElement[]>>()
 		{
 			
@@ -1370,10 +1357,7 @@ public class GameStatusThread extends Thread
 		{
 			return mbean.findDeadlockedThreads();
 		}
-		else
-		{
-			return mbean.findMonitorDeadlockedThreads();
-		}
+		return mbean.findMonitorDeadlockedThreads();
 	}
 	
 	private Thread findMatchingThread(ThreadInfo inf)

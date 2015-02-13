@@ -68,10 +68,10 @@ public class Fort
 	// =========================================================
 	// Data Field
 	private int _fortId = 0;
-	private final List<L2DoorInstance> _doors = new FastList<L2DoorInstance>();
+	private final List<L2DoorInstance> _doors = new FastList<>();
 	private L2StaticObjectInstance _flagPole = null;
-	private final List<String> _doorDefault = new FastList<String>();
-	private final List<String> _flagPoleStats = new FastList<String>();
+	private final List<String> _doorDefault = new FastList<>();
+	private final List<String> _flagPoleStats = new FastList<>();
 	private String _name = "";
 	private FortSiege _siege = null;
 	private Calendar _siegeDate;
@@ -85,14 +85,14 @@ public class Fort
 	private int _blood = 0;
 	private int _supplyLvL = 0;
 	private final FastMap<Integer, FortFunction> _function;
-	private final FastList<L2Skill> _residentialSkills = new FastList<L2Skill>();
+	private final FastList<L2Skill> _residentialSkills = new FastList<>();
 	private final ScheduledFuture<?>[] _FortUpdater = new ScheduledFuture<?>[2];
 	
 	// Spawn Data
 	private boolean _isSuspiciousMerchantSpawned = false;
-	private final FastList<L2Spawn> _siegeNpcs = new FastList<L2Spawn>();
-	private final FastList<L2Spawn> _npcCommanders = new FastList<L2Spawn>();
-	private final FastList<L2Spawn> _specialEnvoys = new FastList<L2Spawn>();
+	private final FastList<L2Spawn> _siegeNpcs = new FastList<>();
+	private final FastList<L2Spawn> _npcCommanders = new FastList<>();
+	private final FastList<L2Spawn> _specialEnvoys = new FastList<>();
 	
 	private final TIntIntHashMap _envoyCastles = new TIntIntHashMap(2);
 	
@@ -266,7 +266,7 @@ public class Fort
 		load();
 		loadDoor();
 		loadFlagPoles();
-		_function = new FastMap<Integer, FortFunction>();
+		_function = new FastMap<>();
 		FastList<L2SkillLearn> residentialSkills = SkillTreesData.getInstance().getAvailableResidentialSkills(fortId);
 		for (L2SkillLearn s : residentialSkills)
 		{
@@ -484,40 +484,38 @@ public class Fort
 			getSiege().announceToPlayer(SystemMessage.getSystemMessage(SystemMessageId.NPCS_RECAPTURED_FORTRESS));
 			return false;
 		}
-		else
+		
+		// Give points to new owner
+		if (updateClansReputation)
 		{
-			// Give points to new owner
-			if (updateClansReputation)
-			{
-				updateClansReputation(clan, false);
-			}
-			
-			spawnSpecialEnvoys();
-			ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleSpecialEnvoysDeSpawn(this), 1 * 60 * 60 * 1000); // Prepare 1hr task for special envoys despawn
-			// if clan have already fortress, remove it
-			if (clan.getHasFort() > 0)
-			{
-				FortManager.getInstance().getFortByOwner(clan).removeOwner(true);
-			}
-			
-			setBloodOathReward(0);
-			setSupplyLvL(0);
-			setOwnerClan(clan);
-			updateOwnerInDB(); // Update in database
-			saveFortVariables();
-			
-			if (getSiege().getIsInProgress())
-			{
-				getSiege().endSiege();
-			}
-			
-			for (L2PcInstance member : clan.getOnlineMembers(0))
-			{
-				giveResidentialSkills(member);
-				member.sendSkillList();
-			}
-			return true;
+			updateClansReputation(clan, false);
 		}
+		
+		spawnSpecialEnvoys();
+		ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleSpecialEnvoysDeSpawn(this), 1 * 60 * 60 * 1000); // Prepare 1hr task for special envoys despawn
+		// if clan have already fortress, remove it
+		if (clan.getHasFort() > 0)
+		{
+			FortManager.getInstance().getFortByOwner(clan).removeOwner(true);
+		}
+		
+		setBloodOathReward(0);
+		setSupplyLvL(0);
+		setOwnerClan(clan);
+		updateOwnerInDB(); // Update in database
+		saveFortVariables();
+		
+		if (getSiege().getIsInProgress())
+		{
+			getSiege().endSiege();
+		}
+		
+		for (L2PcInstance member : clan.getOnlineMembers(0))
+		{
+			giveResidentialSkills(member);
+			member.sendSkillList();
+		}
+		return true;
 	}
 	
 	public void removeOwner(boolean updateDB)

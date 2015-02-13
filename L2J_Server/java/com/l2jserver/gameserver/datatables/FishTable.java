@@ -50,9 +50,9 @@ public class FishTable
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			_fishsEasy = new FastList<FishData>();
-			_fishsNormal = new FastList<FishData>();
-			_fishsHard = new FastList<FishData>();
+			_fishsEasy = new FastList<>();
+			_fishsNormal = new FastList<>();
+			_fishsHard = new FastList<>();
 			FishData fish;
 			PreparedStatement statement = con.prepareStatement("SELECT id, level, name, hp, hpregen, fish_type, fish_group, fish_guts, guts_check_time, wait_time, combat_time FROM fish ORDER BY id");
 			ResultSet fishes = statement.executeQuery();
@@ -106,7 +106,7 @@ public class FishTable
 	 */
 	public List<FishData> getfish(int lvl, int type, int group)
 	{
-		List<FishData> result = new FastList<FishData>();
+		List<FishData> result = new FastList<>();
 		List<FishData> _Fishs = null;
 		switch (group)
 		{

@@ -53,7 +53,7 @@ public class Post
 	// public enum ConstructorType {REPLY, CREATE };
 	public Post(String _PostOwner, int _PostOwnerID, long date, int tid, int _PostForumID, String txt)
 	{
-		_post = new FastList<CPost>();
+		_post = new FastList<>();
 		CPost cp = new CPost();
 		cp.postId = 0;
 		cp.postOwner = _PostOwner;
@@ -97,7 +97,7 @@ public class Post
 	
 	public Post(Topic t)
 	{
-		_post = new FastList<CPost>();
+		_post = new FastList<>();
 		load(t);
 	}
 	

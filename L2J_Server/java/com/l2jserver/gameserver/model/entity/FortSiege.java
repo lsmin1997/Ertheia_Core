@@ -219,11 +219,11 @@ public class FortSiege implements Siegable
 		}
 	}
 	
-	private final List<L2SiegeClan> _attackerClans = new FastList<L2SiegeClan>();
+	private final List<L2SiegeClan> _attackerClans = new FastList<>();
 	
 	// Fort setting
-	protected FastList<L2Spawn> _commanders = new FastList<L2Spawn>();
-	private final Fort _fort;
+	protected FastList<L2Spawn> _commanders = new FastList<>();
+	protected final Fort _fort;
 	private boolean _isInProgress = false;
 	private FortSiegeGuardManager _siegeGuardManager;
 	ScheduledFuture<?> _siegeEnd = null;
@@ -539,7 +539,7 @@ public class FortSiege implements Siegable
 	@Override
 	public List<L2PcInstance> getAttackersInZone()
 	{
-		List<L2PcInstance> players = new FastList<L2PcInstance>();
+		List<L2PcInstance> players = new FastList<>();
 		L2Clan clan;
 		for (L2SiegeClan siegeclan : getAttackerClans())
 		{
@@ -569,7 +569,7 @@ public class FortSiege implements Siegable
 	/** Return list of L2PcInstance owning the fort in the zone. */
 	public List<L2PcInstance> getOwnersInZone()
 	{
-		List<L2PcInstance> players = new FastList<L2PcInstance>();
+		List<L2PcInstance> players = new FastList<>();
 		L2Clan clan;
 		if (getFort().getOwnerClan() != null)
 		{
@@ -811,43 +811,41 @@ public class FortSiege implements Siegable
 			ThreadPoolManager.getInstance().executeTask(new ScheduleSuspiciousMerchantSpawn());
 			return;
 		}
+		
+		loadSiegeClan();
+		if (getAttackerClans().isEmpty())
+		{
+			// no attackers - waiting for suspicious merchant spawn
+			ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleSuspiciousMerchantSpawn(), delay);
+		}
 		else
 		{
-			loadSiegeClan();
-			if (getAttackerClans().isEmpty())
+			// preparing start siege task
+			if (delay > 3600000) // more than hour, how this can happens ? spawn suspicious merchant
 			{
-				// no attackers - waiting for suspicious merchant spawn
-				ThreadPoolManager.getInstance().scheduleGeneral(new ScheduleSuspiciousMerchantSpawn(), delay);
+				ThreadPoolManager.getInstance().executeTask(new ScheduleSuspiciousMerchantSpawn());
+				_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(3600), delay - 3600000);
+			}
+			if (delay > 600000) // more than 10 min, spawn suspicious merchant
+			{
+				ThreadPoolManager.getInstance().executeTask(new ScheduleSuspiciousMerchantSpawn());
+				_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(600), delay - 600000);
+			}
+			else if (delay > 300000)
+			{
+				_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(300), delay - 300000);
+			}
+			else if (delay > 60000)
+			{
+				_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(60), delay - 60000);
 			}
 			else
 			{
-				// preparing start siege task
-				if (delay > 3600000) // more than hour, how this can happens ? spawn suspicious merchant
-				{
-					ThreadPoolManager.getInstance().executeTask(new ScheduleSuspiciousMerchantSpawn());
-					_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(3600), delay - 3600000);
-				}
-				if (delay > 600000) // more than 10 min, spawn suspicious merchant
-				{
-					ThreadPoolManager.getInstance().executeTask(new ScheduleSuspiciousMerchantSpawn());
-					_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(600), delay - 600000);
-				}
-				else if (delay > 300000)
-				{
-					_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(300), delay - 300000);
-				}
-				else if (delay > 60000)
-				{
-					_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(60), delay - 60000);
-				}
-				else
-				{
-					// lower than 1 min, set to 1 min
-					_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(60), 0);
-				}
-				
-				_log.info("Siege of " + getFort().getName() + " fort: " + getFort().getSiegeDate().getTime());
+				// lower than 1 min, set to 1 min
+				_siegeStartTask = ThreadPoolManager.getInstance().scheduleGeneral(new FortSiege.ScheduleStartSiegeTask(60), 0);
 			}
+			
+			_log.info("Siege of " + getFort().getName() + " fort: " + getFort().getSiegeDate().getTime());
 		}
 	}
 	

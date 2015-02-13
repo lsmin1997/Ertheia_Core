@@ -39,7 +39,7 @@ public class QuestManager extends ScriptManager<Quest>
 	
 	// =========================================================
 	// Data Field
-	private final Map<String, Quest> _quests = new FastMap<String, Quest>();
+	private final Map<String, Quest> _quests = new FastMap<>();
 	
 	// =========================================================
 	// Constructor

@@ -118,7 +118,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		_crypt = new GameCrypt();
 		_stats = new ClientStats();
 		
-		_packetQueue = new ArrayBlockingQueue<ReceivablePacket<L2GameClient>>(Config.CLIENT_PACKET_QUEUE_SIZE);
+		_packetQueue = new ArrayBlockingQueue<>(Config.CLIENT_PACKET_QUEUE_SIZE);
 		
 		if (Config.CHAR_STORE_INTERVAL > 0)
 		{
@@ -385,7 +385,7 @@ public final class L2GameClient extends MMOClient<MMOConnection<L2GameClient>> i
 		}
 	}
 	
-	public void markRestoredChar(int charslot) throws Exception
+	public void markRestoredChar(int charslot)
 	{
 		// have to make sure active character must be nulled
 		/*

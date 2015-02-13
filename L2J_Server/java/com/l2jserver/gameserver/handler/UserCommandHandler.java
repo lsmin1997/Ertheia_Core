@@ -37,7 +37,7 @@ public class UserCommandHandler
 	
 	private UserCommandHandler()
 	{
-		_datatable = new TIntObjectHashMap<IUserCommandHandler>();
+		_datatable = new TIntObjectHashMap<>();
 	}
 	
 	public void registerUserCommandHandler(IUserCommandHandler handler)

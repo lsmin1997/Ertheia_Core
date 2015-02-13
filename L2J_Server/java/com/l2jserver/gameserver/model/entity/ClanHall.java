@@ -241,8 +241,8 @@ public class ClanHall
 		_paidUntil = paidUntil;
 		_grade = Grade;
 		_paid = paid;
-		_doorDefault = new FastList<String>();
-		_functions = new FastMap<Integer, ClanHallFunction>();
+		_doorDefault = new FastList<>();
+		_functions = new FastMap<>();
 		
 		if (ownerId != 0)
 		{
@@ -311,7 +311,7 @@ public class ClanHall
 	{
 		if (_doors == null)
 		{
-			_doors = new FastList<L2DoorInstance>();
+			_doors = new FastList<>();
 		}
 		return _doors;
 	}
