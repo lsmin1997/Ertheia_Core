@@ -15,9 +15,9 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.logging.Logger;
 
-import com.l2jserver.Base64;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.Announcements;
 import com.l2jserver.gameserver.GmListTable;
@@ -691,8 +691,7 @@ public class EnterWorld extends L2GameClientPacket
 	{
 		try
 		{
-			String result = new String(Base64.decode(string), "UTF-8");
-			return result;
+			return new String(Base64.getDecoder().decode(string), "UTF-8");
 		}
 		catch (UnsupportedEncodingException e)
 		{
@@ -710,10 +709,6 @@ public class EnterWorld extends L2GameClientPacket
 		}
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
-	 */
 	@Override
 	public String getType()
 	{

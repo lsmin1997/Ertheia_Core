@@ -24,6 +24,7 @@ import java.security.spec.RSAKeyGenParameterSpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,7 +34,6 @@ import javax.crypto.Cipher;
 
 import javolution.util.FastMap;
 
-import com.l2jserver.Base64;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
@@ -575,7 +575,7 @@ public class LoginController
 			ResultSet rset = statement.executeQuery();
 			if (rset.next())
 			{
-				expected = Base64.decode(rset.getString("password"));
+				expected = Base64.getDecoder().decode(rset.getString("password"));
 				access = rset.getInt("accessLevel");
 				lastServer = rset.getInt("lastServer");
 				userIP = rset.getString("userIP");
@@ -600,7 +600,7 @@ public class LoginController
 					{
 						statement = con.prepareStatement("INSERT INTO accounts (login,password,lastactive,accessLevel,lastIP) values(?,?,?,?,?)");
 						statement.setString(1, user);
-						statement.setString(2, Base64.encodeBytes(hash));
+						statement.setString(2, Base64.getEncoder().encodeToString(hash));
 						statement.setLong(3, System.currentTimeMillis());
 						statement.setInt(4, 0);
 						statement.setString(5, address.getHostAddress());
