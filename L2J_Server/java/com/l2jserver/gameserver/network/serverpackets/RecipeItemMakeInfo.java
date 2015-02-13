@@ -21,13 +21,8 @@ import com.l2jserver.gameserver.RecipeController;
 import com.l2jserver.gameserver.model.L2RecipeList;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
- *
- *
- *
- * format   dddd
- *
+ * format dddd
  * @version $Revision: 1.1.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public class RecipeItemMakeInfo extends L2GameServerPacket
@@ -35,9 +30,9 @@ public class RecipeItemMakeInfo extends L2GameServerPacket
 	private static final String _S__D7_RECIPEITEMMAKEINFO = "[S] dd RecipeItemMakeInfo";
 	private static Logger _log = Logger.getLogger(RecipeItemMakeInfo.class.getName());
 	
-	private int _id;
-	private L2PcInstance _activeChar;
-	private boolean _success;
+	private final int _id;
+	private final L2PcInstance _activeChar;
+	private final boolean _success;
 	
 	public RecipeItemMakeInfo(int id, L2PcInstance player, boolean success)
 	{
@@ -68,10 +63,14 @@ public class RecipeItemMakeInfo extends L2GameServerPacket
 			writeD(_activeChar.getMaxMp());
 			writeD(_success ? 1 : 0); // item creation success/failed
 		}
-		else if (Config.DEBUG) _log.info("No recipe found with ID = " + _id);
+		else if (Config.DEBUG)
+		{
+			_log.info("No recipe found with ID = " + _id);
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

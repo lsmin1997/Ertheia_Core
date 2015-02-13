@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.network.serverpackets.HennaEquipList;
 
 /**
  * RequestHennaList - 0xba
- *
  * @author Tempy
  */
 public final class RequestHennaDrawList extends L2GameClientPacket
@@ -43,13 +42,16 @@ public final class RequestHennaDrawList extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		L2HennaInstance[] henna = HennaTreeTable.getInstance().getAvailableHenna(activeChar.getClassId());
 		activeChar.sendPacket(new HennaEquipList(activeChar, henna));
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

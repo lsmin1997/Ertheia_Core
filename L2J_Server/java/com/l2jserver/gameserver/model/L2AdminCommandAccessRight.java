@@ -25,11 +25,10 @@ public class L2AdminCommandAccessRight
 	private String _adminCommand = null;
 	/** The access levels which can use the admin command<br> */
 	private L2AccessLevel[] _accessLevels = null;
-	private boolean _requireConfirm;
+	private final boolean _requireConfirm;
 	
 	/**
 	 * Initialized members
-	 * 
 	 * @param adminCommand as String
 	 * @param accessLevels as String
 	 */
@@ -57,8 +56,8 @@ public class L2AdminCommandAccessRight
 	}
 	
 	/**
-	 * Returns the admin command the access right belongs to<br><br>
-	 * 
+	 * Returns the admin command the access right belongs to<br>
+	 * <br>
 	 * @return String: the admin command the access right belongs to<br>
 	 */
 	public String getAdminCommand()
@@ -67,26 +66,25 @@ public class L2AdminCommandAccessRight
 	}
 	
 	/**
-	 * Checks if the given characterAccessLevel is allowed to use the admin command which belongs to this access right<br><br>
-	 * 
-	 * @param characterAccessLevel<br><br>
-	 * 
+	 * Checks if the given characterAccessLevel is allowed to use the admin command which belongs to this access right<br>
+	 * <br>
+	 * @param characterAccessLevel<br>
+	 * <br>
 	 * @return boolean: true if characterAccessLevel is allowed to use the admin command which belongs to this access right, otherwise false<br>
 	 */
 	public boolean hasAccess(L2AccessLevel characterAccessLevel)
 	{
-		for (int i = 0; i < _accessLevels.length; ++i)
+		for (L2AccessLevel accessLevel : _accessLevels)
 		{
-			L2AccessLevel accessLevel = _accessLevels[i];
-			
-			if (accessLevel != null
-					&& (accessLevel.getLevel() == characterAccessLevel.getLevel() || characterAccessLevel.hasChildAccess(accessLevel)))
+			if ((accessLevel != null) && ((accessLevel.getLevel() == characterAccessLevel.getLevel()) || characterAccessLevel.hasChildAccess(accessLevel)))
+			{
 				return true;
+			}
 		}
 		
 		return false;
 	}
-
+	
 	public boolean getRequireConfirm()
 	{
 		return _requireConfirm;

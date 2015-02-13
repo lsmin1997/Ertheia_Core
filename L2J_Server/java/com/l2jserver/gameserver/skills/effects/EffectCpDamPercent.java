@@ -26,9 +26,11 @@ public class EffectCpDamPercent extends L2Effect
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
-		double cp = getEffected().getCurrentCp() * (100 - getEffectPower()) / 100;
+		double cp = (getEffected().getCurrentCp() * (100 - getEffectPower())) / 100;
 		getEffected().setCurrentCp(cp);
 		
 		StatusUpdate sucp = new StatusUpdate(getEffected());

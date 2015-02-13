@@ -15,8 +15,7 @@
 package com.l2jserver.gameserver.templates.skills;
 
 /**
- *
- * @author  nBd
+ * @author nBd
  */
 public enum L2EffectType
 {

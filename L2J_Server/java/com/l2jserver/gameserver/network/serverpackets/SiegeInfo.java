@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Castle;
 
-
 /**
  * Shows the Siege Info<BR>
  * <BR>
@@ -40,14 +39,13 @@ import com.l2jserver.gameserver.model.entity.Castle;
  * d = current time (seconds)<BR>
  * d = Siege time (seconds) (0 for selectable)<BR>
  * d = (UNKNOW) Siege Time Select Related?
- * 
  * @author KenM
  */
 public class SiegeInfo extends L2GameServerPacket
 {
 	private static final String _S__C9_SIEGEINFO = "[S] c9 SiegeInfo";
 	private static Logger _log = Logger.getLogger(SiegeInfo.class.getName());
-	private Castle _castle;
+	private final Castle _castle;
 	
 	public SiegeInfo(Castle castle)
 	{
@@ -58,7 +56,10 @@ public class SiegeInfo extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
-		if (activeChar == null) return;
+		if (activeChar == null)
+		{
+			return;
+		}
 		
 		writeC(0xc9);
 		writeD(_castle.getCastleId());
@@ -69,28 +70,31 @@ public class SiegeInfo extends L2GameServerPacket
 			L2Clan owner = ClanTable.getInstance().getClan(_castle.getOwnerId());
 			if (owner != null)
 			{
-				writeS(owner.getName());        // Clan Name
-				writeS(owner.getLeaderName());  // Clan Leader Name
-				writeD(owner.getAllyId());      // Ally ID
-				writeS(owner.getAllyName());    // Ally Name
+				writeS(owner.getName()); // Clan Name
+				writeS(owner.getLeaderName()); // Clan Leader Name
+				writeD(owner.getAllyId()); // Ally ID
+				writeS(owner.getAllyName()); // Ally Name
 			}
 			else
+			{
 				_log.warning("Null owner for castle: " + _castle.getName());
+			}
 		}
 		else
 		{
-			writeS("");  // Clan Name
-			writeS("");     // Clan Leader Name
-			writeD(0);      // Ally ID
-			writeS("");     // Ally Name
+			writeS(""); // Clan Name
+			writeS(""); // Clan Leader Name
+			writeD(0); // Ally ID
+			writeS(""); // Ally Name
 		}
 		
-		writeD((int) (Calendar.getInstance().getTimeInMillis()/1000));
-		writeD((int) (_castle.getSiege().getSiegeDate().getTimeInMillis()/1000));
-		writeD(0x00); //number of choices?
+		writeD((int) (Calendar.getInstance().getTimeInMillis() / 1000));
+		writeD((int) (_castle.getSiege().getSiegeDate().getTimeInMillis() / 1000));
+		writeD(0x00); // number of choices?
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

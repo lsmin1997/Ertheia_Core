@@ -28,7 +28,6 @@ import com.l2jserver.util.Rnd;
 
 /**
  * @author Nemesiss
- *
  */
 public class L2SkillCreateItem extends L2Skill
 {
@@ -52,10 +51,12 @@ public class L2SkillCreateItem extends L2Skill
 	{
 		L2PcInstance player = activeChar.getActingPlayer();
 		if (activeChar.isAlikeDead())
+		{
 			return;
+		}
 		if (activeChar instanceof L2Playable)
 		{
-			if (_createItemId == null || _createItemCount == 0)
+			if ((_createItemId == null) || (_createItemCount == 0))
 			{
 				SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_PREPARED_FOR_REUSE);
 				sm.addSkillName(this);

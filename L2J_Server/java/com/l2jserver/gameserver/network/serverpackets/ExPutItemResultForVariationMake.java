@@ -16,14 +16,13 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (ch)ddd
- *
  */
 public class ExPutItemResultForVariationMake extends L2GameServerPacket
 {
 	private static final String _S__FE_52_EXCONFIRMVARIATIONITEM = "[S] FE:53 ExPutItemResultForVariationMake";
 	
-	private int _itemObjId;
-	private int _itemId;
+	private final int _itemObjId;
+	private final int _itemId;
 	
 	public ExPutItemResultForVariationMake(int itemObjId, int itemId)
 	{

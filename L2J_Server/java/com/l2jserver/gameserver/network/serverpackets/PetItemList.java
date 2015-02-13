@@ -20,17 +20,15 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.4 $ $Date: 2005/03/27 15:29:39 $
  */
 public class PetItemList extends L2GameServerPacket
 {
 	private static Logger _log = Logger.getLogger(PetItemList.class.getName());
 	private static final String _S__cb_PETITEMLIST = "[S] b3 PetItemList";
-	private L2PetInstance _activeChar;
+	private final L2PetInstance _activeChar;
 	
 	public PetItemList(L2PetInstance character)
 	{
@@ -40,8 +38,7 @@ public class PetItemList extends L2GameServerPacket
 			L2ItemInstance[] items = _activeChar.getInventory().getItems();
 			for (L2ItemInstance temp : items)
 			{
-				_log.fine("item:" + temp.getItem().getName() +
-						" type1:" + temp.getItem().getType1() + " type2:" + temp.getItem().getType2());
+				_log.fine("item:" + temp.getItem().getName() + " type1:" + temp.getItem().getType1() + " type2:" + temp.getItem().getType2());
 			}
 		}
 	}
@@ -68,9 +65,13 @@ public class PetItemList extends L2GameServerPacket
 			writeH(temp.getEnchantLevel());
 			writeH(temp.getCustomType2());
 			if (temp.isAugmented())
+			{
 				writeD(temp.getAugmentation().getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(temp.getMana());
 			writeD(temp.isTimeLimitedItem() ? (int) (temp.getRemainingTime() / 1000) : -9999);
 			writeH(temp.getAttackElementType());
@@ -86,7 +87,8 @@ public class PetItemList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

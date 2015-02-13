@@ -32,7 +32,6 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * This class ...
- *
  * @author Nightmare
  * @version $Revision: 1.5.2.6.2.7 $ $Date: 2005/03/27 15:29:18 $
  */
@@ -40,7 +39,7 @@ public class SpawnTable
 {
 	private static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 	
-	private FastSet<L2Spawn> _spawntable = new FastSet<L2Spawn>().shared();
+	private final FastSet<L2Spawn> _spawntable = new FastSet<L2Spawn>().shared();
 	private int _npcSpawnCount;
 	private int _customSpawnCount;
 	
@@ -52,7 +51,9 @@ public class SpawnTable
 	private SpawnTable()
 	{
 		if (!Config.ALT_DEV_NO_SPAWNS)
+		{
 			fillSpawnTable();
+		}
 	}
 	
 	public FastSet<L2Spawn> getSpawnTable()
@@ -221,7 +222,9 @@ public class SpawnTable
 		}
 		
 		if (Config.DEBUG)
+		{
 			_log.fine("SpawnTable: Spawning completed, total number of NPCs in the world: " + (_npcSpawnCount + _customSpawnCount));
+		}
 		
 	}
 	
@@ -233,16 +236,19 @@ public class SpawnTable
 		{
 			String spawnTable;
 			if (spawn.isCustom() && Config.CUSTOM_SPAWNLIST_TABLE)
+			{
 				spawnTable = "custom_spawnlist";
+			}
 			else
+			{
 				spawnTable = "spawnlist";
+			}
 			
 			Connection con = null;
 			try
 			{
 				con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement statement = con.prepareStatement("INSERT INTO " + spawnTable
-						+ "(count,npc_templateid,locx,locy,locz,heading,respawn_delay,loc_id) values(?,?,?,?,?,?,?,?)");
+				PreparedStatement statement = con.prepareStatement("INSERT INTO " + spawnTable + "(count,npc_templateid,locx,locy,locz,heading,respawn_delay,loc_id) values(?,?,?,?,?,?,?,?)");
 				statement.setInt(1, spawn.getAmount());
 				statement.setInt(2, spawn.getNpcid());
 				statement.setInt(3, spawn.getLocx());
@@ -270,7 +276,9 @@ public class SpawnTable
 	{
 		
 		if (!_spawntable.remove(spawn))
+		{
 			return;
+		}
 		
 		if (updateDb)
 		{
@@ -278,8 +286,7 @@ public class SpawnTable
 			try
 			{
 				con = L2DatabaseFactory.getInstance().getConnection();
-				PreparedStatement statement = con.prepareStatement("DELETE FROM "
-						+ (spawn.isCustom() ? "custom_spawnlist" : "spawnlist") + " WHERE locx=? AND locy=? AND locz=? AND npc_templateid=? AND heading=?");
+				PreparedStatement statement = con.prepareStatement("DELETE FROM " + (spawn.isCustom() ? "custom_spawnlist" : "spawnlist") + " WHERE locx=? AND locy=? AND locz=? AND npc_templateid=? AND heading=?");
 				statement.setInt(1, spawn.getLocx());
 				statement.setInt(2, spawn.getLocy());
 				statement.setInt(3, spawn.getLocz());
@@ -301,15 +308,15 @@ public class SpawnTable
 		}
 	}
 	
-	//just wrapper
+	// just wrapper
 	public void reloadAll()
 	{
 		fillSpawnTable();
 	}
 	
 	/**
-	 * Get all the spawn of a NPC<BR><BR>
-	 *
+	 * Get all the spawn of a NPC<BR>
+	 * <BR>
 	 * @param npcId : ID of the NPC to find.
 	 * @return
 	 */
@@ -327,24 +334,34 @@ public class SpawnTable
 				{
 					if (teleportIndex == index)
 					{
-						if(showposition && _npc != null)
+						if (showposition && (_npc != null))
+						{
 							activeChar.teleToLocation(_npc.getX(), _npc.getY(), _npc.getZ(), true);
+						}
 						else
+						{
 							activeChar.teleToLocation(spawn.getLocx(), spawn.getLocy(), spawn.getLocz(), true);
+						}
 					}
 				}
 				else
 				{
-					if(showposition && _npc != null)
-						activeChar.sendMessage(index + " - " + spawn.getTemplate().name + " (" + spawn + "): " + _npc.getX() + " "+ _npc.getY() + " " + _npc.getZ());
+					if (showposition && (_npc != null))
+					{
+						activeChar.sendMessage(index + " - " + spawn.getTemplate().name + " (" + spawn + "): " + _npc.getX() + " " + _npc.getY() + " " + _npc.getZ());
+					}
 					else
-						activeChar.sendMessage(index + " - " + spawn.getTemplate().name + " (" + spawn + "): " + spawn.getLocx() + " "+ spawn.getLocy() + " " + spawn.getLocz());
+					{
+						activeChar.sendMessage(index + " - " + spawn.getTemplate().name + " (" + spawn + "): " + spawn.getLocx() + " " + spawn.getLocy() + " " + spawn.getLocz());
+					}
 				}
 			}
 		}
 		
 		if (index == 0)
+		{
 			activeChar.sendMessage("No current spawns found.");
+		}
 	}
 	
 	@SuppressWarnings("synthetic-access")

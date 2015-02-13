@@ -17,24 +17,14 @@ package com.l2jserver.loginserver.serverpackets;
 import com.l2jserver.loginserver.L2LoginClient;
 
 /**
- * Format: dd b dddd s
- * d: session id
- * d: protocol revision
- * b: 0x90 bytes : 0x80 bytes for the scrambled RSA public key
- *                 0x10 bytes at 0x00
- * d: unknow
- * d: unknow
- * d: unknow
- * d: unknow
- * s: blowfish key
- *
+ * Format: dd b dddd s d: session id d: protocol revision b: 0x90 bytes : 0x80 bytes for the scrambled RSA public key 0x10 bytes at 0x00 d: unknow d: unknow d: unknow d: unknow s: blowfish key
  */
 public final class Init extends L2LoginServerPacket
 {
-	private int _sessionId;
+	private final int _sessionId;
 	
-	private byte[] _publicKey;
-	private byte[] _blowfishKey;
+	private final byte[] _publicKey;
+	private final byte[] _blowfishKey;
 	
 	public Init(L2LoginClient client)
 	{

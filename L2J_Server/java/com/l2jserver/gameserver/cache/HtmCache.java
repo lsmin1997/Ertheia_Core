@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.util.Util;
 
 /**
  * @author Layane
- *
  */
 public class HtmCache
 {
@@ -48,9 +47,13 @@ public class HtmCache
 	private HtmCache()
 	{
 		if (Config.LAZY_CACHE)
+		{
 			_cache = new FastMap<Integer, String>().shared();
+		}
 		else
+		{
 			_cache = new FastMap<Integer, String>();
+		}
 		reload();
 	}
 	
@@ -94,6 +97,7 @@ public class HtmCache
 	
 	private static class HtmFilter implements FileFilter
 	{
+		@Override
 		public boolean accept(File file)
 		{
 			if (!file.isDirectory())
@@ -112,9 +116,13 @@ public class HtmCache
 		for (File file : files)
 		{
 			if (!file.isDirectory())
+			{
 				loadFile(file);
+			}
 			else
+			{
 				parseDir(file);
+			}
 		}
 	}
 	
@@ -150,7 +158,7 @@ public class HtmCache
 				}
 				else
 				{
-					_bytesBuffLen = _bytesBuffLen - oldContent.length() + bytes;
+					_bytesBuffLen = (_bytesBuffLen - oldContent.length()) + bytes;
 				}
 				
 				_cache.put(hashcode, content);
@@ -193,31 +201,39 @@ public class HtmCache
 	{
 		String newPath = null;
 		String content;
-		if (prefix != null && !prefix.isEmpty())
+		if ((prefix != null) && !prefix.isEmpty())
 		{
 			newPath = prefix + path;
 			content = getHtm(newPath);
 			if (content != null)
+			{
 				return content;
+			}
 		}
 		
 		content = getHtm(path);
-		if (content != null && newPath != null)
+		if ((content != null) && (newPath != null))
+		{
 			_cache.put(newPath.hashCode(), content);
+		}
 		
 		return content;
 	}
 	
 	private String getHtm(String path)
 	{
-		if (path == null || path.isEmpty())
+		if ((path == null) || path.isEmpty())
+		{
 			return ""; // avoid possible NPE
+		}
 		
 		final int hashCode = path.hashCode();
 		String content = _cache.get(hashCode);
 		
-		if (Config.LAZY_CACHE && content == null)
+		if (Config.LAZY_CACHE && (content == null))
+		{
 			content = loadFile(new File(Config.DATAPACK_ROOT, path));
+		}
 		
 		return content;
 	}
@@ -229,16 +245,17 @@ public class HtmCache
 	
 	/**
 	 * Check if an HTM exists and can be loaded
-	 * @param
-	 * path The path to the HTM
-	 * */
+	 * @param path The path to the HTM
+	 */
 	public boolean isLoadable(String path)
 	{
 		File file = new File(path);
 		HtmFilter filter = new HtmFilter();
 		
 		if (file.exists() && filter.accept(file) && !file.isDirectory())
+		{
 			return true;
+		}
 		
 		return false;
 	}

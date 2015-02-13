@@ -29,10 +29,8 @@ import java.util.Iterator;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2Object;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
@@ -53,6 +51,7 @@ public abstract class L2ObjectMap<T extends L2Object> implements Iterable<T>
 	
 	public abstract boolean contains(T obj);
 	
+	@Override
 	public abstract Iterator<T> iterator();
 	
 	public static L2ObjectMap<L2Object> createL2ObjectMap()

@@ -29,7 +29,6 @@ public class EffectManaDamOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -39,14 +38,15 @@ public class EffectManaDamOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		double manaDam = calc();
 		

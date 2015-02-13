@@ -26,7 +26,7 @@ public class CharCreateFail extends L2GameServerPacket
 	public static final int REASON_CREATE_NOT_ALLOWED = 0x05; // "Characters cannot be created from this server."
 	public static final int REASON_CHOOSE_ANOTHER_SVR = 0x06; // "Unable to create character. You are unable to create a new character on the selected server. A restriction is in place which restricts users from creating characters on different servers where no previous character exists. Please choose another server."
 	
-	private int _error;
+	private final int _error;
 	
 	public CharCreateFail(int errorCode)
 	{
@@ -40,7 +40,8 @@ public class CharCreateFail extends L2GameServerPacket
 		writeD(_error);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

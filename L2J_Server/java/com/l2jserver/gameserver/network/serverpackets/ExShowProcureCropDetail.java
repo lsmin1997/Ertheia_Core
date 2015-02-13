@@ -23,20 +23,16 @@ import com.l2jserver.gameserver.instancemanager.CastleManorManager.CropProcure;
 import com.l2jserver.gameserver.model.entity.Castle;
 
 /**
- * format(packet 0xFE) ch dd [dddc] c - id h - sub id
- * 
- * d - crop id d - size
- *  [ d - manor name d - buy residual d - buy price c - reward type ]
- * 
+ * format(packet 0xFE) ch dd [dddc] c - id h - sub id d - crop id d - size [ d - manor name d - buy residual d - buy price c - reward type ]
  * @author l3x
  */
 public class ExShowProcureCropDetail extends L2GameServerPacket
 {
 	private static final String _S__FE_22_EXSHOWPROCURECROPDETAIL = "[S] FE:78 ExShowProcureCropDetail";
 	
-	private int _cropId;
+	private final int _cropId;
 	
-	private FastMap<Integer, CropProcure> _castleCrops;
+	private final FastMap<Integer, CropProcure> _castleCrops;
 	
 	public ExShowProcureCropDetail(int cropId)
 	{
@@ -45,9 +41,8 @@ public class ExShowProcureCropDetail extends L2GameServerPacket
 		
 		for (Castle c : CastleManager.getInstance().getCastles())
 		{
-			CropProcure cropItem = c.getCrop(_cropId,
-					CastleManorManager.PERIOD_CURRENT);
-			if (cropItem != null && cropItem.getAmount() > 0)
+			CropProcure cropItem = c.getCrop(_cropId, CastleManorManager.PERIOD_CURRENT);
+			if ((cropItem != null) && (cropItem.getAmount() > 0))
 			{
 				_castleCrops.put(c.getCastleId(), cropItem);
 			}

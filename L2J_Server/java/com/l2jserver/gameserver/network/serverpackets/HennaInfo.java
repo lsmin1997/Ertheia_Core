@@ -23,7 +23,7 @@ public final class HennaInfo extends L2GameServerPacket
 	
 	private final L2PcInstance _activeChar;
 	private final L2HennaInstance[] _hennas = new L2HennaInstance[3];
-	private int _count;
+	private final int _count;
 	
 	public HennaInfo(L2PcInstance player)
 	{
@@ -32,9 +32,11 @@ public final class HennaInfo extends L2GameServerPacket
 		int j = 0;
 		for (int i = 0; i < 3; i++)
 		{
-			L2HennaInstance henna = _activeChar.getHenna(i+1);
+			L2HennaInstance henna = _activeChar.getHenna(i + 1);
 			if (henna != null)
+			{
 				_hennas[j++] = henna;
+			}
 		}
 		_count = j;
 	}
@@ -43,14 +45,14 @@ public final class HennaInfo extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xe5);
-		writeC(_activeChar.getHennaStatINT()); //equip INT
-		writeC(_activeChar.getHennaStatSTR()); //equip STR
-		writeC(_activeChar.getHennaStatCON()); //equip CON
-		writeC(_activeChar.getHennaStatMEN()); //equip MEM
-		writeC(_activeChar.getHennaStatDEX()); //equip DEX
-		writeC(_activeChar.getHennaStatWIT()); //equip WIT
+		writeC(_activeChar.getHennaStatINT()); // equip INT
+		writeC(_activeChar.getHennaStatSTR()); // equip STR
+		writeC(_activeChar.getHennaStatCON()); // equip CON
+		writeC(_activeChar.getHennaStatMEN()); // equip MEM
+		writeC(_activeChar.getHennaStatDEX()); // equip DEX
+		writeC(_activeChar.getHennaStatWIT()); // equip WIT
 		writeD(3); // slots?
-		writeD(_count); //size
+		writeD(_count); // size
 		for (int i = 0; i < _count; i++)
 		{
 			writeD(_hennas[i].getSymbolId());
@@ -58,7 +60,8 @@ public final class HennaInfo extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

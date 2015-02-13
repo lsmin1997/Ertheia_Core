@@ -17,10 +17,8 @@ package com.l2jserver.gameserver.network.clientpackets;
 import java.util.logging.Logger;
 
 /**
- * Format: (ch)
- * just a trigger
- * @author  -Wooden-
- *
+ * Format: (ch) just a trigger
+ * @author -Wooden-
  */
 public final class RequestExFishRanking extends L2GameClientPacket
 {

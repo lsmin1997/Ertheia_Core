@@ -25,10 +25,8 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
  * @author evill33t
- *
  */
 public class Couple
 {

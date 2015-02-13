@@ -19,30 +19,23 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.skills.Stats;
 
 /**
- * Format: (ch)ddddddd
- * d: Number of Inventory Slots
- * d: Number of Warehouse Slots
- * d: Number of Freight Slots (unconfirmed) (200 for a low level dwarf)
- * d: Private Sell Store Slots (unconfirmed) (4 for a low level dwarf)
- * d: Private Buy Store Slots (unconfirmed) (5 for a low level dwarf)
- * d: Dwarven Recipe Book Slots
- * d: Normal Recipe Book Slots
- * @author -Wooden-
- * format from KenM
+ * Format: (ch)ddddddd d: Number of Inventory Slots d: Number of Warehouse Slots d: Number of Freight Slots (unconfirmed) (200 for a low level dwarf) d: Private Sell Store Slots (unconfirmed) (4 for a low level dwarf) d: Private Buy Store Slots (unconfirmed) (5 for a low level dwarf) d: Dwarven
+ * Recipe Book Slots d: Normal Recipe Book Slots
+ * @author -Wooden- format from KenM
  */
 public class ExStorageMaxCount extends L2GameServerPacket
 {
 	private static final String _S__FE_2E_EXSTORAGEMAXCOUNT = "[S] FE:2f ExStorageMaxCount";
-	private L2PcInstance _activeChar;
-	private int _inventory;
-	private int _warehouse;
-	private int _clan;
-	private int _privateSell;
-	private int _privateBuy;
-	private int _receipeD;
-	private int _recipe;
-	private int _inventoryExtraSlots;
-	private int _inventoryQuestItems;
+	private final L2PcInstance _activeChar;
+	private final int _inventory;
+	private final int _warehouse;
+	private final int _clan;
+	private final int _privateSell;
+	private final int _privateBuy;
+	private final int _receipeD;
+	private final int _recipe;
+	private final int _inventoryExtraSlots;
+	private final int _inventoryQuestItems;
 	
 	public ExStorageMaxCount(L2PcInstance character)
 	{
@@ -58,7 +51,8 @@ public class ExStorageMaxCount extends L2GameServerPacket
 		_inventoryQuestItems = Config.INVENTORY_MAXIMUM_QUEST_ITEMS;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -78,7 +72,8 @@ public class ExStorageMaxCount extends L2GameServerPacket
 		writeD(_inventoryQuestItems);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

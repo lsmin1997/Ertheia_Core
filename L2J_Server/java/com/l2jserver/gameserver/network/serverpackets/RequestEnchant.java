@@ -15,12 +15,11 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- *
  * @author nBd
  */
 public class RequestEnchant extends L2GameServerPacket
 {
-	private int _unk;
+	private final int _unk;
 	private static final String _S__FE_81_REQUESTENCHANT = "[S] FE:81 RequestEnchant";
 	
 	/**

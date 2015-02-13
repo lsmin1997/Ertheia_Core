@@ -26,14 +26,15 @@ public class ExShowReceivedPostList extends L2GameServerPacket
 {
 	private static final String _S__FE_AA_EXSHOWRECEIVEDPOSTLIST = "[S] FE:AA ExShowReceivedPostList";
 	
-	private List<Message> _inbox;
+	private final List<Message> _inbox;
 	
 	public ExShowReceivedPostList(int objectId)
 	{
 		_inbox = MailManager.getInstance().getInbox(objectId);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -41,8 +42,8 @@ public class ExShowReceivedPostList extends L2GameServerPacket
 	{
 		writeC(0xfe);
 		writeH(0xaa);
-		writeD((int)(System.currentTimeMillis() / 1000));
-		if (_inbox != null && _inbox.size() > 0)
+		writeD((int) (System.currentTimeMillis() / 1000));
+		if ((_inbox != null) && (_inbox.size() > 0))
 		{
 			writeD(_inbox.size());
 			for (Message msg : _inbox)
@@ -66,7 +67,8 @@ public class ExShowReceivedPostList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

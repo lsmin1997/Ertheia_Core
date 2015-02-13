@@ -19,14 +19,12 @@ import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class PlayerAuthRequest extends BaseRecievePacket
 {
 	
-	private String _account;
-	private SessionKey _sessionKey;
-	
+	private final String _account;
+	private final SessionKey _sessionKey;
 	
 	/**
 	 * @param decrypt

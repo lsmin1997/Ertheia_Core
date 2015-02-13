@@ -21,8 +21,7 @@ import com.l2jserver.gameserver.model.zone.L2SpawnZone;
 
 /**
  * A Town zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2TownZone extends L2SpawnZone
 {
@@ -56,7 +55,9 @@ public class L2TownZone extends L2SpawnZone
 			_isPeaceZone = Boolean.parseBoolean(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override
@@ -66,14 +67,18 @@ public class L2TownZone extends L2SpawnZone
 		{
 			// PVP possible during siege, now for siege participants only
 			// Could also check if this town is in siege, or if any siege is going on
-			if (((L2PcInstance) character).getSiegeState() != 0 && Config.ZONE_TOWN == 1)
+			if ((((L2PcInstance) character).getSiegeState() != 0) && (Config.ZONE_TOWN == 1))
+			{
 				return;
+			}
 			
-			//((L2PcInstance)character).sendMessage("You entered "+_townName);
+			// ((L2PcInstance)character).sendMessage("You entered "+_townName);
 		}
 		
-		if (_isPeaceZone && Config.ZONE_TOWN != 2)
+		if (_isPeaceZone && (Config.ZONE_TOWN != 2))
+		{
 			character.setInsideZone(L2Character.ZONE_PEACE, true);
+		}
 		
 		character.setInsideZone(L2Character.ZONE_TOWN, true);
 		
@@ -84,12 +89,14 @@ public class L2TownZone extends L2SpawnZone
 	{
 		// TODO: there should be no exit if there was possibly no enter
 		if (_isPeaceZone)
+		{
 			character.setInsideZone(L2Character.ZONE_PEACE, false);
+		}
 		
 		character.setInsideZone(L2Character.ZONE_TOWN, false);
 		
 		// if (character instanceof L2PcInstance)
-		//((L2PcInstance)character).sendMessage("You left "+_townName);
+		// ((L2PcInstance)character).sendMessage("You left "+_townName);
 		
 	}
 	

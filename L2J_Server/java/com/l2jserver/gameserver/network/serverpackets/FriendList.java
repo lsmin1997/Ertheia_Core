@@ -23,26 +23,14 @@ import com.l2jserver.gameserver.model.L2World;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * Support for "Chat with Friends" dialog.
- *
- * This packet is sent only at login.
- *
- * Format: cd (dSdd)
- * d: Total Friend Count
- *
- * d: Player Object ID
- * S: Friend Name
- * d: Online/Offline
- * d: Unknown (0 if offline)
- *
+ * Support for "Chat with Friends" dialog. This packet is sent only at login. Format: cd (dSdd) d: Total Friend Count d: Player Object ID S: Friend Name d: Online/Offline d: Unknown (0 if offline)
  * @author Tempy
- * 
  */
 public class FriendList extends L2GameServerPacket
 {
 	// private static Logger _log = Logger.getLogger(FriendList.class.getName());
 	private static final String _S__FA_FRIENDLIST = "[S] 75 FriendList";
-	private List<FriendInfo> _info;
+	private final List<FriendInfo> _info;
 	
 	private static class FriendInfo
 	{
@@ -66,8 +54,10 @@ public class FriendList extends L2GameServerPacket
 			String name = CharNameTable.getInstance().getNameById(objId);
 			L2PcInstance player1 = L2World.getInstance().getPlayer(objId);
 			boolean online = false;
-			if (player1 != null && player1.isOnline())
+			if ((player1 != null) && player1.isOnline())
+			{
 				online = true;
+			}
 			_info.add(new FriendInfo(objId, name, online));
 		}
 	}
@@ -88,7 +78,6 @@ public class FriendList extends L2GameServerPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

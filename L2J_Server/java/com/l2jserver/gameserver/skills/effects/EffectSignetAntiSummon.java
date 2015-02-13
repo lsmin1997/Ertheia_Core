@@ -40,7 +40,6 @@ public class EffectSignetAntiSummon extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -50,7 +49,6 @@ public class EffectSignetAntiSummon extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -61,14 +59,15 @@ public class EffectSignetAntiSummon extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
-		if (getCount() == getTotalCount() - 1)
+		if (getCount() == (getTotalCount() - 1))
+		{
 			return true; // do nothing first time
+		}
 		int mpConsume = getSkill().getMpConsume();
 		
 		L2PcInstance caster = (L2PcInstance) getEffector();
@@ -76,7 +75,9 @@ public class EffectSignetAntiSummon extends L2Effect
 		for (L2Character cha : _actor.getKnownList().getKnownCharactersInRadius(getSkill().getSkillRadius()))
 		{
 			if (cha == null)
+			{
 				continue;
+			}
 			
 			if (cha instanceof L2Playable)
 			{
@@ -84,11 +85,15 @@ public class EffectSignetAntiSummon extends L2Effect
 				{
 					L2PcInstance owner = null;
 					if (cha instanceof L2Summon)
+					{
 						owner = ((L2Summon) cha).getOwner();
+					}
 					else
+					{
 						owner = (L2PcInstance) cha;
+					}
 					
-					if (owner != null && owner.getPet() != null)
+					if ((owner != null) && (owner.getPet() != null))
 					{
 						if (mpConsume > getEffector().getCurrentMp())
 						{
@@ -96,7 +101,9 @@ public class EffectSignetAntiSummon extends L2Effect
 							return false;
 						}
 						else
+						{
 							getEffector().reduceCurrentMp(mpConsume);
+						}
 						
 						owner.getPet().unSummon(owner);
 						owner.getAI().notifyEvent(CtrlEvent.EVT_ATTACKED, getEffector());
@@ -108,13 +115,14 @@ public class EffectSignetAntiSummon extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
 	public void onExit()
 	{
 		if (_actor != null)
+		{
 			_actor.deleteMe();
+		}
 	}
 }

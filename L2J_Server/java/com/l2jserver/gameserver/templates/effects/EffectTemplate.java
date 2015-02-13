@@ -28,10 +28,8 @@ import com.l2jserver.gameserver.skills.funcs.FuncTemplate;
 import com.l2jserver.gameserver.skills.funcs.Lambda;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
 
-
 /**
  * @author mkizub
- * 
  */
 public class EffectTemplate
 {
@@ -60,10 +58,7 @@ public class EffectTemplate
 	public final int triggeredLevel;
 	public final ChanceCondition chanceCondition;
 	
-	public EffectTemplate(Condition pAttachCond, Condition pApplayCond, String func, Lambda pLambda,
-			int pCounter, int pAbnormalTime, AbnormalEffect pAbnormalEffect, AbnormalEffect pSpecialEffect,
-			AbnormalEffect pEventEffect, String pAbnormalType, byte pAbnormalLvl, boolean showicon,
-			double ePower, L2SkillType eType, int trigId, int trigLvl, ChanceCondition chanceCond)
+	public EffectTemplate(Condition pAttachCond, Condition pApplayCond, String func, Lambda pLambda, int pCounter, int pAbnormalTime, AbnormalEffect pAbnormalEffect, AbnormalEffect pSpecialEffect, AbnormalEffect pEventEffect, String pAbnormalType, byte pAbnormalLvl, boolean showicon, double ePower, L2SkillType eType, int trigId, int trigLvl, ChanceCondition chanceCond)
 	{
 		attachCond = pAttachCond;
 		applayCond = pApplayCond;
@@ -104,8 +99,10 @@ public class EffectTemplate
 	
 	public L2Effect getEffect(Env env)
 	{
-		if (attachCond != null && !attachCond.test(env))
+		if ((attachCond != null) && !attachCond.test(env))
+		{
 			return null;
+		}
 		try
 		{
 			L2Effect effect = (L2Effect) _constructor.newInstance(env, this);
@@ -131,7 +128,6 @@ public class EffectTemplate
 	
 	/**
 	 * Creates an L2Effect instance from an existing one and an Env object.
-	 * 
 	 * @param env
 	 * @param stolen
 	 * @return
@@ -142,8 +138,7 @@ public class EffectTemplate
 		Constructor<?> stolenCons;
 		try
 		{
-			func = Class.forName("com.l2jserver.gameserver.skills.effects.Effect"
-					+ stolen.getEffectTemplate().funcName);
+			func = Class.forName("com.l2jserver.gameserver.skills.effects.Effect" + stolen.getEffectTemplate().funcName);
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -185,7 +180,10 @@ public class EffectTemplate
 	{
 		if (funcTemplates == null)
 		{
-			funcTemplates = new FuncTemplate[] { f };
+			funcTemplates = new FuncTemplate[]
+			{
+				f
+			};
 		}
 		else
 		{

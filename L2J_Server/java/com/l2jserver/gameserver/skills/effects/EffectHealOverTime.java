@@ -34,9 +34,8 @@ public class EffectHealOverTime extends L2Effect
 	{
 		super(env, effect);
 	}
-
+	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#effectCanBeStolen()
 	 */
 	@Override
@@ -44,9 +43,8 @@ public class EffectHealOverTime extends L2Effect
 	{
 		return true;
 	}
-
+	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -56,7 +54,6 @@ public class EffectHealOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -67,23 +64,28 @@ public class EffectHealOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		if (getEffected() instanceof L2DoorInstance)
+		{
 			return false;
+		}
 		
 		double hp = getEffected().getCurrentHp();
 		double maxhp = getEffected().getMaxHp();
 		hp += calc();
 		if (hp > maxhp)
+		{
 			hp = maxhp;
+		}
 		
 		getEffected().setCurrentHp(hp);
 		StatusUpdate suhp = new StatusUpdate(getEffected());

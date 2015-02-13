@@ -43,7 +43,6 @@ import com.l2jserver.gameserver.model.entity.Instance;
 import com.l2jserver.gameserver.model.zone.type.L2ArenaZone;
 import com.l2jserver.gameserver.model.zone.type.L2ClanHallZone;
 
-
 /**
  * This class ...
  */
@@ -71,7 +70,7 @@ public class MapRegionTable
 	{
 		int count2 = 0;
 		
-		//LineNumberReader lnr = null;
+		// LineNumberReader lnr = null;
 		Connection con = null;
 		try
 		{
@@ -87,14 +86,16 @@ public class MapRegionTable
 				{
 					_regions[j][region] = rset.getInt(j + 2);
 					count2++;
-					//_log.fine(j+","+region+" -> "+rset.getInt(j+2));
+					// _log.fine(j+","+region+" -> "+rset.getInt(j+2));
 				}
 			}
 			
 			rset.close();
 			statement.close();
 			if (Config.DEBUG)
+			{
 				_log.fine(count2 + " mapregion loaded");
+			}
 		}
 		catch (Exception e)
 		{
@@ -116,7 +117,9 @@ public class MapRegionTable
 		{
 			// Position sent is outside MapRegionTable area.
 			if (Config.DEBUG)
+			{
 				_log.log(Level.WARNING, "MapRegionTable: Player outside map regions at X,Y=" + posX + "," + posY, e);
+			}
 			return 0;
 		}
 	}
@@ -139,73 +142,73 @@ public class MapRegionTable
 		{
 			case 0:
 				castle = 1;
-				break;//Talking Island Village
+				break;// Talking Island Village
 			case 1:
 				castle = 4;
-				break; //Elven Village
+				break; // Elven Village
 			case 2:
 				castle = 4;
-				break; //Dark Elven Village
+				break; // Dark Elven Village
 			case 3:
 				castle = 9;
-				break; //Orc Village
+				break; // Orc Village
 			case 4:
 				castle = 9;
-				break; //Dwarven Village
+				break; // Dwarven Village
 			case 5:
 				castle = 1;
-				break; //Town of Gludio
+				break; // Town of Gludio
 			case 6:
 				castle = 1;
-				break; //Gludin Village
+				break; // Gludin Village
 			case 7:
 				castle = 2;
-				break; //Town of Dion
+				break; // Town of Dion
 			case 8:
 				castle = 3;
-				break; //Town of Giran
+				break; // Town of Giran
 			case 9:
 				castle = 4;
-				break; //Town of Oren
+				break; // Town of Oren
 			case 10:
 				castle = 5;
-				break; //Town of Aden
+				break; // Town of Aden
 			case 11:
 				castle = 5;
-				break; //Hunters Village
+				break; // Hunters Village
 			case 12:
 				castle = 3;
-				break; //Giran Harbor
+				break; // Giran Harbor
 			case 13:
 				castle = 6;
-				break; //Heine
+				break; // Heine
 			case 14:
 				castle = 8;
-				break; //Rune Township
+				break; // Rune Township
 			case 15:
 				castle = 7;
-				break; //Town of Goddard
+				break; // Town of Goddard
 			case 16:
 				castle = 9;
-				break; //Town of Shuttgart
+				break; // Town of Shuttgart
 			case 17:
 				castle = 2;
-				break; //Floran Village
+				break; // Floran Village
 			case 18:
 				castle = 8;
-				break; //Primeval Isle Wharf
+				break; // Primeval Isle Wharf
 			case 19:
 				castle = 5;
-				break; //Kamael Village
+				break; // Kamael Village
 			case 20:
 				castle = 6;
-				break; //South of Wastelands Camp
+				break; // South of Wastelands Camp
 			case 21:
 				castle = 8;
-				break; //Fantasy Island
+				break; // Fantasy Island
 			default:
 				castle = 5;
-				break; //Town of Aden
+				break; // Town of Aden
 		}
 		return castle;
 	}
@@ -358,15 +361,15 @@ public class MapRegionTable
 			
 			// If in Monster Derby Track
 			if (player.isInsideZone(L2Character.ZONE_MONSTERTRACK))
+			{
 				return new Location(12661, 181687, -3560);
+			}
 			
 			Castle castle = null;
 			Fort fort = null;
 			ClanHall clanhall = null;
 			
-			if (player.getClan() != null
-					&& !player.isFlyingMounted()
-					&& !player.isFlying()) // flying players in gracia cant use teleports to aden continent
+			if ((player.getClan() != null) && !player.isFlyingMounted() && !player.isFlying()) // flying players in gracia cant use teleports to aden continent
 			{
 				// If teleport to clan hall
 				if (teleportWhere == TeleportWhereType.ClanHall)
@@ -376,8 +379,10 @@ public class MapRegionTable
 					if (clanhall != null)
 					{
 						L2ClanHallZone zone = clanhall.getZone();
-						if (zone != null && !player.isFlyingMounted())
+						if ((zone != null) && !player.isFlyingMounted())
+						{
 							return zone.getSpawnLoc();
+						}
 					}
 				}
 				
@@ -390,12 +395,16 @@ public class MapRegionTable
 					if (castle == null)
 					{
 						castle = CastleManager.getInstance().getCastle(player);
-						if (!(castle != null && castle.getSiege().getIsInProgress() && castle.getSiege().getDefenderClan(player.getClan()) != null))
+						if (!((castle != null) && castle.getSiege().getIsInProgress() && (castle.getSiege().getDefenderClan(player.getClan()) != null)))
+						{
 							castle = null;
+						}
 					}
 					
-					if (castle != null && castle.getCastleId() > 0)
+					if ((castle != null) && (castle.getCastleId() > 0))
+					{
 						return castle.getCastleZone().getSpawnLoc();
+					}
 				}
 				
 				// If teleport to fortress
@@ -407,12 +416,16 @@ public class MapRegionTable
 					if (fort == null)
 					{
 						fort = FortManager.getInstance().getFort(player);
-						if (!(fort != null && fort.getSiege().getIsInProgress() && fort.getOwnerClan() == player.getClan()))
+						if (!((fort != null) && fort.getSiege().getIsInProgress() && (fort.getOwnerClan() == player.getClan())))
+						{
 							fort = null;
+						}
 					}
 					
-					if (fort != null && fort.getFortId() > 0)
+					if ((fort != null) && (fort.getFortId() > 0))
+					{
 						return fort.getFortZone().getSpawnLoc();
+					}
 				}
 				
 				// If teleport to SiegeHQ
@@ -422,14 +435,16 @@ public class MapRegionTable
 					fort = FortManager.getInstance().getFort(player);
 					L2SiegeFlagInstance tw_flag = TerritoryWarManager.getInstance().getFlagForClan(player.getClan());
 					if (tw_flag != null)
+					{
 						return new Location(tw_flag.getX(), tw_flag.getY(), tw_flag.getZ());
+					}
 					else if (castle != null)
 					{
 						if (castle.getSiege().getIsInProgress())
 						{
 							// Check if player's clan is attacker
 							List<L2Npc> flags = castle.getSiege().getFlag(player.getClan());
-							if (flags != null && !flags.isEmpty())
+							if ((flags != null) && !flags.isEmpty())
 							{
 								// Spawn to flag - Need more work to get player to the nearest flag
 								L2Npc flag = flags.get(0);
@@ -444,7 +459,7 @@ public class MapRegionTable
 						{
 							// Check if player's clan is attacker
 							List<L2Npc> flags = fort.getSiege().getFlag(player.getClan());
-							if (flags != null && !flags.isEmpty())
+							if ((flags != null) && !flags.isEmpty())
 							{
 								// Spawn to flag - Need more work to get player to the nearest flag
 								L2Npc flag = flags.get(0);
@@ -455,7 +470,7 @@ public class MapRegionTable
 				}
 			}
 			
-			//Karma player land out of city
+			// Karma player land out of city
 			if (player.getKarma() > 0)
 			{
 				try
@@ -464,28 +479,35 @@ public class MapRegionTable
 				}
 				catch (Exception e)
 				{
-					if (player.isFlyingMounted()) // prevent flying players to teleport outside of gracia
+					if (player.isFlyingMounted())
+					{
 						return new Location(-186330, 242944, 2544);
+					}
 					else
+					{
 						return new Location(17817, 170079, -3530);
+					}
 				}
 			}
 			
 			// Checking if in arena
 			L2ArenaZone arena = ZoneManager.getInstance().getArena(player);
 			if (arena != null)
+			{
 				return arena.getSpawnLoc();
+			}
 			
-			//Checking if needed to be respawned in "far" town from the castle;
+			// Checking if needed to be respawned in "far" town from the castle;
 			castle = CastleManager.getInstance().getCastle(player);
 			if (castle != null)
 			{
 				if (castle.getSiege().getIsInProgress())
 				{
 					// Check if player's clan is participating
-					if ((castle.getSiege().checkIsDefender(player.getClan()) || castle.getSiege().checkIsAttacker(player.getClan()))
-							&& SevenSigns.getInstance().getSealOwner(SevenSigns.SEAL_STRIFE) == SevenSigns.CABAL_DAWN)
+					if ((castle.getSiege().checkIsDefender(player.getClan()) || castle.getSiege().checkIsAttacker(player.getClan())) && (SevenSigns.getInstance().getSealOwner(SevenSigns.SEAL_STRIFE) == SevenSigns.CABAL_DAWN))
+					{
 						return TownManager.getSecondClosestTown(activeChar).getSpawnLoc();
+					}
 				}
 			}
 			
@@ -496,8 +518,10 @@ public class MapRegionTable
 				if (inst != null)
 				{
 					coord = inst.getSpawnLoc();
-					if (coord[0] != 0 && coord[1] != 0 && coord[2] != 0)
+					if ((coord[0] != 0) && (coord[1] != 0) && (coord[2] != 0))
+					{
 						return new Location(coord[0], coord[1], coord[2]);
+					}
 				}
 			}
 		}

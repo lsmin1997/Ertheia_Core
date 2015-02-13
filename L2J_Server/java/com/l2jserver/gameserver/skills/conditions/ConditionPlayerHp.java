@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionPlayerHp.
- *
  * @author mr
  */
 public class ConditionPlayerHp extends Condition
@@ -27,7 +26,6 @@ public class ConditionPlayerHp extends Condition
 	
 	/**
 	 * Instantiates a new condition player hp.
-	 *
 	 * @param hp the hp
 	 */
 	public ConditionPlayerHp(int hp)
@@ -35,12 +33,13 @@ public class ConditionPlayerHp extends Condition
 		_hp = hp;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		return env.player.getCurrentHp() * 100 / env.player.getMaxVisibleHp() <= _hp;
+		return ((env.player.getCurrentHp() * 100) / env.player.getMaxVisibleHp()) <= _hp;
 	}
 }

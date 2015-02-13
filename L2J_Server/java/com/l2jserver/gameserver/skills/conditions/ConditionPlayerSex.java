@@ -22,12 +22,11 @@ import com.l2jserver.gameserver.skills.Env;
  */
 public class ConditionPlayerSex extends Condition
 {
-	//male 0 fmale 1
+	// male 0 fmale 1
 	private final int _sex;
 	
 	/**
 	 * Instantiates a new condition player sex.
-	 *
 	 * @param sex the sex
 	 */
 	public ConditionPlayerSex(int sex)
@@ -35,12 +34,13 @@ public class ConditionPlayerSex extends Condition
 		_sex = sex;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		return (((L2PcInstance)env.player).getAppearance().getSex()? 1:0) == _sex;
+		return (((L2PcInstance) env.player).getAppearance().getSex() ? 1 : 0) == _sex;
 	}
 }

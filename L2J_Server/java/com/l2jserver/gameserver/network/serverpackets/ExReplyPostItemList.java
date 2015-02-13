@@ -19,13 +19,12 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author Migi, DS
- *
  */
 
 public class ExReplyPostItemList extends L2GameServerPacket
 {
 	L2PcInstance _activeChar;
-	private L2ItemInstance[] _itemList;
+	private final L2ItemInstance[] _itemList;
 	
 	public ExReplyPostItemList(L2PcInstance activeChar)
 	{
@@ -33,7 +32,8 @@ public class ExReplyPostItemList extends L2GameServerPacket
 		_itemList = _activeChar.getInventory().getAvailableItems(true, false);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -55,9 +55,13 @@ public class ExReplyPostItemList extends L2GameServerPacket
 			writeH(item.getEnchantLevel());
 			writeH(item.getCustomType2());
 			if (item.isAugmented())
+			{
 				writeD(item.getAugmentation().getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(item.getMana());
 			writeD(item.isTimeLimitedItem() ? (int) (item.getRemainingTime() / 1000) : -9999);
 			writeH(item.getAttackElementType());
@@ -73,7 +77,8 @@ public class ExReplyPostItemList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

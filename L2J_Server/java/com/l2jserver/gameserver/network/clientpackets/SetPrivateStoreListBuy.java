@@ -30,10 +30,7 @@ import com.l2jserver.gameserver.util.Util;
 
 /**
  * This class ...
- *
- * @version $Revision: 1.2.2.1.2.5 $ $Date: 2005/03/27 15:29:30 $
- * CPU Disasm
- * Packets: ddhhQQ cddb
+ * @version $Revision: 1.2.2.1.2.5 $ $Date: 2005/03/27 15:29:30 $ CPU Disasm Packets: ddhhQQ cddb
  */
 public final class SetPrivateStoreListBuy extends L2GameClientPacket
 {
@@ -47,7 +44,7 @@ public final class SetPrivateStoreListBuy extends L2GameClientPacket
 	protected void readImpl()
 	{
 		int count = readD();
-		if (count < 1 || count > Config.MAX_ITEM_IN_PACKET || count * BATCH_LENGTH != _buf.remaining())
+		if ((count < 1) || (count > Config.MAX_ITEM_IN_PACKET) || ((count * BATCH_LENGTH) != _buf.remaining()))
 		{
 			return;
 		}
@@ -62,7 +59,7 @@ public final class SetPrivateStoreListBuy extends L2GameClientPacket
 			long cnt = readQ();
 			long price = readQ();
 			
-			if (itemId < 1 || cnt < 1 || price < 0)
+			if ((itemId < 1) || (cnt < 1) || (price < 0))
 			{
 				_items = null;
 				return;
@@ -81,7 +78,9 @@ public final class SetPrivateStoreListBuy extends L2GameClientPacket
 	{
 		L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (_items == null)
 		{
@@ -170,7 +169,9 @@ public final class SetPrivateStoreListBuy extends L2GameClientPacket
 		public boolean addToTradeList(TradeList list)
 		{
 			if ((MAX_ADENA / _count) < _price)
+			{
 				return false;
+			}
 			
 			list.addItemByItemId(_itemId, _count, _price);
 			return true;

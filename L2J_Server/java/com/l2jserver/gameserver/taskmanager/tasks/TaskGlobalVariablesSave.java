@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 import com.l2jserver.gameserver.taskmanager.TaskTypes;
 
-
 /**
  * @author Gigiikun
  */
@@ -32,7 +31,6 @@ public class TaskGlobalVariablesSave extends Task
 	public static final String NAME = "global_varibales_save";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -42,7 +40,6 @@ public class TaskGlobalVariablesSave extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override
@@ -53,7 +50,6 @@ public class TaskGlobalVariablesSave extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#initializate()
 	 */
 	@Override

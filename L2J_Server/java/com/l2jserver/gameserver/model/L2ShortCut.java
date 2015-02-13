@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.model;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.1 $ $Date: 2005/03/27 15:29:32 $
  */
 public class L2ShortCut
@@ -36,8 +35,7 @@ public class L2ShortCut
 	private final int _characterType;
 	private int _sharedReuseGroup = -1;
 	
-	public L2ShortCut(int slotId, int pageId, int shortcutType,
-			int shortcutId, int shortcutLevel, int characterType)
+	public L2ShortCut(int slotId, int pageId, int shortcutType, int shortcutId, int shortcutLevel, int characterType)
 	{
 		_slot = slotId;
 		_page = pageId;

@@ -15,9 +15,7 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * Format: (chd) ddd
- * d: Winner Team
- * 
+ * Format: (chd) ddd d: Winner Team
  * @author mrTJO
  */
 public class ExCubeGameEnd extends L2GameServerPacket
@@ -27,7 +25,6 @@ public class ExCubeGameEnd extends L2GameServerPacket
 	
 	/**
 	 * Show Minigame Results
-	 * 
 	 * @param isRedTeamWin: Is Red Team Winner?
 	 */
 	public ExCubeGameEnd(boolean isRedTeamWin)
@@ -35,7 +32,8 @@ public class ExCubeGameEnd extends L2GameServerPacket
 		_isRedTeamWin = isRedTeamWin;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -48,7 +46,8 @@ public class ExCubeGameEnd extends L2GameServerPacket
 		writeD(_isRedTeamWin ? 0x01 : 0x00);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

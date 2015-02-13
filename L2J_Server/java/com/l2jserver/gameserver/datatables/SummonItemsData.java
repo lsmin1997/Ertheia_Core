@@ -69,7 +69,9 @@ public class SummonItemsData
 				continue;
 			}
 			else if (line.isEmpty())
+			{
 				continue;
+			}
 			
 			String[] lineSplit = line.split(";");
 			boolean ok = true;
@@ -83,7 +85,9 @@ public class SummonItemsData
 				npcID = Integer.parseInt(lineSplit[1]);
 				summonType = Byte.parseByte(lineSplit[2]);
 				if (summonType == 0)
+				{
 					despawn = Integer.parseInt(lineSplit[3]);
+				}
 			}
 			catch (Exception e)
 			{
@@ -93,7 +97,9 @@ public class SummonItemsData
 			}
 			
 			if (!ok)
+			{
 				continue;
+			}
 			
 			L2SummonItem summonitem = new L2SummonItem(itemID, npcID, summonType, despawn);
 			_summonitems.put(itemID, summonitem);

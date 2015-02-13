@@ -48,7 +48,7 @@ public class L2NpcInstance extends L2Npc
 	@Override
 	public FolkStatus getStatus()
 	{
-		return (FolkStatus)super.getStatus();
+		return (FolkStatus) super.getStatus();
 	}
 	
 	@Override
@@ -60,10 +60,14 @@ public class L2NpcInstance extends L2Npc
 	@Override
 	public void addEffect(L2Effect newEffect)
 	{
-		if (newEffect instanceof EffectDebuff || newEffect instanceof EffectBuff)
+		if ((newEffect instanceof EffectDebuff) || (newEffect instanceof EffectBuff))
+		{
 			super.addEffect(newEffect);
+		}
 		else if (newEffect != null)
+		{
 			newEffect.stopEffectTask();
+		}
 	}
 	
 	public ClassId[] getClassesToTeach()
@@ -81,12 +85,12 @@ public class L2NpcInstance extends L2Npc
 	{
 		if (Config.DEBUG)
 		{
-			_log.fine("SkillList activated on: "+npc.getObjectId());
+			_log.fine("SkillList activated on: " + npc.getObjectId());
 		}
 		
 		final int npcId = npc.getTemplate().npcId;
 		
-		if (npcId == 32611) //Tolonis (Officer)
+		if (npcId == 32611) // Tolonis (Officer)
 		{
 			final FastList<L2SkillLearn> skills = SkillTreesData.getInstance().getAvailableCollectSkills(player);
 			final AcquireSkillList asl = new AcquireSkillList(SkillType.Collect);
@@ -134,15 +138,7 @@ public class L2NpcInstance extends L2Npc
 		if (((L2NpcInstance) npc).getClassesToTeach() == null)
 		{
 			NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
-			final String sb = StringUtil.concat(
-					"<html><body>" +
-					"I cannot teach you. My class list is empty.<br> Ask admin to fix it. Need add my npcid and classes to skill_learn.sql.<br>NpcId:",
-					String.valueOf(npcId),
-					", Your classId:",
-					String.valueOf(player.getClassId().getId()),
-					"<br>" +
-					"</body></html>"
-			);
+			final String sb = StringUtil.concat("<html><body>" + "I cannot teach you. My class list is empty.<br> Ask admin to fix it. Need add my npcid and classes to skill_learn.sql.<br>NpcId:", String.valueOf(npcId), ", Your classId:", String.valueOf(player.getClassId().getId()), "<br>" + "</body></html>");
 			html.setHtml(sb);
 			player.sendPacket(html);
 			return;

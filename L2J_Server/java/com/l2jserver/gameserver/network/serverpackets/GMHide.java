@@ -14,8 +14,6 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-
-
 /**
  * @author Kerberos
  */
@@ -25,7 +23,6 @@ public class GMHide extends L2GameServerPacket
 	// cd
 	private static int _mode;
 	
-	
 	/**
 	 * @param _mode (0 = display windows, 1 = hide windows)
 	 */
@@ -34,7 +31,6 @@ public class GMHide extends L2GameServerPacket
 		_mode = mode;
 	}
 	
-	
 	@Override
 	protected final void writeImpl()
 	{
@@ -42,7 +38,8 @@ public class GMHide extends L2GameServerPacket
 		writeD(_mode);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

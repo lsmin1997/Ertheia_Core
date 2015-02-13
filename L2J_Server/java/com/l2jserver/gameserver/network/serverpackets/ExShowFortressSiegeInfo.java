@@ -21,16 +21,15 @@ import com.l2jserver.gameserver.instancemanager.FortSiegeManager.SiegeSpawn;
 import com.l2jserver.gameserver.model.entity.Fort;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class ExShowFortressSiegeInfo extends L2GameServerPacket
 {
-	private int _fortId;
-	private int _size;
-	private Fort _fort;
+	private final int _fortId;
+	private final int _size;
+	private final Fort _fort;
 	private int _csize;
-	private int _csize2;
+	private final int _csize2;
 	
 	/**
 	 * @param fortId
@@ -42,7 +41,9 @@ public class ExShowFortressSiegeInfo extends L2GameServerPacket
 		_size = fort.getFortSize();
 		FastList<SiegeSpawn> commanders = FortSiegeManager.getInstance().getCommanderSpawnList(_fortId);
 		if (commanders != null)
+		{
 			_csize = commanders.size();
+		}
 		_csize2 = _fort.getSiege().getCommanders().size();
 	}
 	
@@ -113,7 +114,9 @@ public class ExShowFortressSiegeInfo extends L2GameServerPacket
 		else
 		{
 			for (int i = 0; i < _size; i++)
+			{
 				writeD(0x00);
+			}
 		}
 	}
 	

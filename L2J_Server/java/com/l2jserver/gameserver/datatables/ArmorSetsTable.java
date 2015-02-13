@@ -31,17 +31,14 @@ import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.L2ArmorSet;
 
-
 /**
- *
- *
- * @author  Luno
+ * @author Luno
  */
 public class ArmorSetsTable
 {
 	private static Logger _log = Logger.getLogger(ArmorSetsTable.class.getName());
 	
-	private TIntObjectHashMap<L2ArmorSet> _armorSets;
+	private final TIntObjectHashMap<L2ArmorSet> _armorSets;
 	
 	public static ArmorSetsTable getInstance()
 	{

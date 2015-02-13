@@ -19,10 +19,8 @@ import java.io.IOException;
 import com.l2jserver.gameserver.LoginServerThread.SessionKey;
 import com.l2jserver.util.network.BaseSendablePacket;
 
-
 /**
  * @author -Wooden-
- *
  */
 public class PlayerAuthRequest extends BaseSendablePacket
 {
@@ -36,7 +34,8 @@ public class PlayerAuthRequest extends BaseSendablePacket
 		writeD(key.loginOkID2);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

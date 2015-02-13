@@ -28,9 +28,7 @@ import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
- * 
  * @author Nik
- *
  */
 public class hitConditionBonus
 {
@@ -42,33 +40,46 @@ public class hitConditionBonus
 	private static int highBonus = 0;
 	private static int lowBonus = 0;
 	private static int darkBonus = 0;
-	//private static int rainBonus = 0;
+	
+	// private static int rainBonus = 0;
 	
 	protected static double getConditionBonus(L2Character attacker, L2Character target)
 	{
 		double mod = 100;
 		// Get high or low bonus
-		if (attacker.getZ() - target.getZ() > 50)
+		if ((attacker.getZ() - target.getZ()) > 50)
+		{
 			mod += hitConditionBonus.highBonus;
-		else if (attacker.getZ() - target.getZ() < -50)
+		}
+		else if ((attacker.getZ() - target.getZ()) < -50)
+		{
 			mod += hitConditionBonus.lowBonus;
+		}
 		
 		// Get weather bonus
 		if (GameTimeController.getInstance().isNowNight())
+		{
 			mod += hitConditionBonus.darkBonus;
-		//else if () No rain support yet.
-			//chance += hitConditionBonus.rainBonus;
+			// else if () No rain support yet.
+			// chance += hitConditionBonus.rainBonus;
+		}
 		
 		// Get side bonus
-		if(attacker.isBehindTarget())
+		if (attacker.isBehindTarget())
+		{
 			mod += hitConditionBonus.backBonus;
-		else if(attacker.isInFrontOfTarget())
+		}
+		else if (attacker.isInFrontOfTarget())
+		{
 			mod += hitConditionBonus.frontBonus;
+		}
 		else
+		{
 			mod += hitConditionBonus.sideBonus;
+		}
 		
 		// If (mod / 10) is less than 0, return 0, because we cant lower more than 100%.
-		return Math.max(mod / 100, 0); 
+		return Math.max(mod / 100, 0);
 	}
 	
 	static
@@ -102,7 +113,9 @@ public class hitConditionBonus
 						try
 						{
 							if (cond.hasAttributes())
-								bonus = Integer.parseInt(cond.getAttributes().getNamedItem("val").getNodeValue());							
+							{
+								bonus = Integer.parseInt(cond.getAttributes().getNamedItem("val").getNodeValue());
+							}
 						}
 						catch (Exception e)
 						{
@@ -111,19 +124,31 @@ public class hitConditionBonus
 						finally
 						{
 							if ("front".equals(name))
+							{
 								frontBonus = bonus;
+							}
 							else if ("side".equals(name))
+							{
 								sideBonus = bonus;
+							}
 							else if ("back".equals(name))
+							{
 								backBonus = bonus;
+							}
 							else if ("high".equals(name))
+							{
 								highBonus = bonus;
+							}
 							else if ("low".equals(name))
+							{
 								lowBonus = bonus;
+							}
 							else if ("dark".equals(name))
+							{
 								darkBonus = bonus;
-							//else if ("rain".equals(name))
-								//rainBonus = bonus;
+								// else if ("rain".equals(name))
+								// rainBonus = bonus;
+							}
 						}
 						
 					}
@@ -132,7 +157,7 @@ public class hitConditionBonus
 		}
 		else
 		{
-			throw new Error("[hitConditionBonus] File not found: "+file.getName());
+			throw new Error("[hitConditionBonus] File not found: " + file.getName());
 		}
 	}
 }

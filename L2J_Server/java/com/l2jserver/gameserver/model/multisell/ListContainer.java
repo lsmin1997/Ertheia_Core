@@ -18,9 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * @author DS
- *
  */
 public class ListContainer
 {
@@ -36,8 +34,7 @@ public class ListContainer
 	}
 	
 	/**
-	 * This constructor used in PreparedListContainer only
-	 * ArrayList not created
+	 * This constructor used in PreparedListContainer only ArrayList not created
 	 */
 	protected ListContainer(int listId)
 	{

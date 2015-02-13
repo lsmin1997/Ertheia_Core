@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.templates.StatsSet;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 public class L2Henna

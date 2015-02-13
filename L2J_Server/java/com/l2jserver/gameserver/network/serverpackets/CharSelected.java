@@ -17,15 +17,14 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * This class ...
- * 
  * @version $Revision: 1.4.2.5.2.6 $ $Date: 2005/03/27 15:29:39 $
  */
 public class CharSelected extends L2GameServerPacket
 {
 	// SdSddddddddddffddddddddddddddddddddddddddddddddddddddddd d
 	private static final String _S__21_CHARSELECTED = "[S] 0b CharSelected";
-	private L2PcInstance _activeChar;
-	private int _sessionId;
+	private final L2PcInstance _activeChar;
+	private final int _sessionId;
 	
 	/**
 	 * @param _characters
@@ -86,7 +85,6 @@ public class CharSelected extends L2GameServerPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

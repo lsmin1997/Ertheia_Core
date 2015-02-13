@@ -17,11 +17,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * Format: (chd) ddd
- * d: Always -1
- * d: Origin Team
- * d: Destination Team
- * 
+ * Format: (chd) ddd d: Always -1 d: Origin Team d: Destination Team
  * @author mrTJO
  */
 public class ExCubeGameChangeTeam extends L2GameServerPacket
@@ -32,7 +28,6 @@ public class ExCubeGameChangeTeam extends L2GameServerPacket
 	
 	/**
 	 * Move Player from Team x to Team y
-	 * 
 	 * @param player Player Instance
 	 * @param fromRedTeam Is Player from Red Team?
 	 */
@@ -42,7 +37,8 @@ public class ExCubeGameChangeTeam extends L2GameServerPacket
 		_fromRedTeam = fromRedTeam;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -57,7 +53,8 @@ public class ExCubeGameChangeTeam extends L2GameServerPacket
 		writeD(_fromRedTeam ? 0x00 : 0x01);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

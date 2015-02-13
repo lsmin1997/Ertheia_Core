@@ -18,7 +18,7 @@ import com.l2jserver.util.Rnd;
 
 /**
  * Blowfish keygen for GameServer client connections
- * @author  KenM
+ * @author KenM
  */
 public class BlowFishKeygen
 {

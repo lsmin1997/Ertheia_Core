@@ -26,7 +26,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.templates.item.L2WeaponType;
 import com.l2jserver.util.Point3D;
 
-
 public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 {
 	private static final String _C__75_MOVETOLOCATIONINVEHICLE = "[C] 75 RequestMoveToLocationInVehicle";
@@ -39,12 +38,15 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 	private int _originY;
 	private int _originZ;
 	
-	public TaskPriority getPriority() { return TaskPriority.PR_HIGH; }
+	public TaskPriority getPriority()
+	{
+		return TaskPriority.PR_HIGH;
+	}
 	
 	@Override
 	protected void readImpl()
 	{
-		_boatId  = readD();   //objectId of boat
+		_boatId = readD(); // objectId of boat
 		_targetX = readD();
 		_targetY = readD();
 		_targetZ = readD();
@@ -53,26 +55,26 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 		_originZ = readD();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#runImpl()
 	 */
 	@Override
-	protected
-	void runImpl()
+	protected void runImpl()
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
-		if (_targetX == _originX && _targetY == _originY && _targetZ == _originZ)
+		if ((_targetX == _originX) && (_targetY == _originY) && (_targetZ == _originZ))
 		{
 			activeChar.sendPacket(new StopMoveInVehicle(activeChar, _boatId));
 			return;
 		}
-
-		if (activeChar.isAttackingNow()
-				&& activeChar.getActiveWeaponItem() != null
-				&& (activeChar.getActiveWeaponItem().getItemType() == L2WeaponType.BOW))
+		
+		if (activeChar.isAttackingNow() && (activeChar.getActiveWeaponItem() != null) && (activeChar.getActiveWeaponItem().getItemType() == L2WeaponType.BOW))
 		{
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
@@ -111,7 +113,7 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 		else
 		{
 			boat = BoatManager.getInstance().getBoat(_boatId);
-			if (boat == null || !boat.isInsideRadius(activeChar, 300, true, false))
+			if ((boat == null) || !boat.isInsideRadius(activeChar, 300, true, false))
 			{
 				activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 				return;
@@ -125,7 +127,8 @@ public final class RequestMoveToLocationInVehicle extends L2GameClientPacket
 		activeChar.broadcastPacket(new MoveToLocationInVehicle(activeChar, pos, originPos));
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

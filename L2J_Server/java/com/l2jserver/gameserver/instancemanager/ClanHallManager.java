@@ -31,16 +31,15 @@ import com.l2jserver.gameserver.model.entity.ClanHall;
 import com.l2jserver.gameserver.model.zone.type.L2ClanHallZone;
 
 /**
- *
- * @author  Steuf
+ * @author Steuf
  */
 public class ClanHallManager
 {
 	protected static final Logger _log = Logger.getLogger(ClanHallManager.class.getName());
 	
-	private Map<Integer, ClanHall> _clanHall;
-	private Map<Integer, ClanHall> _freeClanHall;
-	private Map<Integer, ClanHall> _allClanHalls;
+	private final Map<Integer, ClanHall> _clanHall;
+	private final Map<Integer, ClanHall> _freeClanHall;
+	private final Map<Integer, ClanHall> _allClanHalls;
 	private boolean _loaded = false;
 	
 	public static ClanHallManager getInstance()
@@ -63,12 +62,8 @@ public class ClanHallManager
 	}
 	
 	/** Reload All Clan Hall */
-	/*	public final void reload() Cant reload atm - would loose zone info
-		{
-			_clanHall.clear();
-			_freeClanHall.clear();
-			load();
-		}
+	/*
+	 * public final void reload() Cant reload atm - would loose zone info { _clanHall.clear(); _freeClanHall.clear(); load(); }
 	 */
 	
 	/** Load All Clan Hall */
@@ -109,13 +104,17 @@ public class ClanHallManager
 						continue;
 					}
 					else
+					{
 						ch.free();
+					}
 				}
 				_freeClanHall.put(id, ch);
 				
 				Auction auc = AuctionManager.getInstance().getAuction(id);
-				if (auc == null && lease > 0)
+				if ((auc == null) && (lease > 0))
+				{
 					AuctionManager.getInstance().initNPC(id);
+				}
 			}
 			
 			rs.close();
@@ -140,13 +139,13 @@ public class ClanHallManager
 		return _freeClanHall;
 	}
 	
-	/** Get Map with all ClanHalls that have owner*/
+	/** Get Map with all ClanHalls that have owner */
 	public final Map<Integer, ClanHall> getClanHalls()
 	{
 		return _clanHall;
 	}
 	
-	/** Get Map with all ClanHalls*/
+	/** Get Map with all ClanHalls */
 	public final Map<Integer, ClanHall> getAllClanHalls()
 	{
 		return _allClanHalls;
@@ -156,7 +155,9 @@ public class ClanHallManager
 	public final boolean isFree(int chId)
 	{
 		if (_freeClanHall.containsKey(chId))
+		{
 			return true;
+		}
 		return false;
 	}
 	
@@ -178,7 +179,9 @@ public class ClanHallManager
 			_freeClanHall.remove(chId);
 		}
 		else
+		{
 			_clanHall.get(chId).free();
+		}
 		ClanTable.getInstance().getClan(clan.getClanId()).setHasHideout(chId);
 		_clanHall.get(chId).setOwner(clan);
 	}
@@ -187,25 +190,22 @@ public class ClanHallManager
 	public final ClanHall getClanHallById(int clanHallId)
 	{
 		if (_clanHall.containsKey(clanHallId))
+		{
 			return _clanHall.get(clanHallId);
+		}
 		if (_freeClanHall.containsKey(clanHallId))
+		{
 			return _freeClanHall.get(clanHallId);
+		}
 		_log.warning("Clan hall id " + clanHallId + " not found in clanhall table!");
 		return null;
 	}
 	
 	/** Get Clan Hall by x,y,z */
 	/*
-		public final ClanHall getClanHall(int x, int y, int z)
-		{
-			for (Map.Entry<Integer, ClanHall> ch : _clanHall.entrySet())
-				if (ch.getValue().getZone().isInsideZone(x, y, z)) return ch.getValue();
-
-			for (Map.Entry<Integer, ClanHall> ch : _freeClanHall.entrySet())
-				if (ch.getValue().getZone().isInsideZone(x, y, z)) return ch.getValue();
-
-			return null;
-		}*/
+	 * public final ClanHall getClanHall(int x, int y, int z) { for (Map.Entry<Integer, ClanHall> ch : _clanHall.entrySet()) if (ch.getValue().getZone().isInsideZone(x, y, z)) return ch.getValue(); for (Map.Entry<Integer, ClanHall> ch : _freeClanHall.entrySet()) if
+	 * (ch.getValue().getZone().isInsideZone(x, y, z)) return ch.getValue(); return null; }
+	 */
 	
 	public final ClanHall getNearbyClanHall(int x, int y, int maxDist)
 	{
@@ -214,14 +214,18 @@ public class ClanHallManager
 		for (Map.Entry<Integer, ClanHall> ch : _clanHall.entrySet())
 		{
 			zone = ch.getValue().getZone();
-			if (zone != null && zone.getDistanceToZone(x, y) < maxDist)
+			if ((zone != null) && (zone.getDistanceToZone(x, y) < maxDist))
+			{
 				return ch.getValue();
+			}
 		}
 		for (Map.Entry<Integer, ClanHall> ch : _freeClanHall.entrySet())
 		{
 			zone = ch.getValue().getZone();
-			if (zone != null && zone.getDistanceToZone(x, y) < maxDist)
+			if ((zone != null) && (zone.getDistanceToZone(x, y) < maxDist))
+			{
 				return ch.getValue();
+			}
 		}
 		return null;
 	}
@@ -232,7 +236,9 @@ public class ClanHallManager
 		for (Map.Entry<Integer, ClanHall> ch : _clanHall.entrySet())
 		{
 			if (clan.getClanId() == ch.getValue().getOwnerId())
+			{
 				return ch.getValue();
+			}
 		}
 		return null;
 	}

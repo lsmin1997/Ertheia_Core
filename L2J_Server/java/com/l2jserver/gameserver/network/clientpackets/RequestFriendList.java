@@ -22,12 +22,11 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.3 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestFriendList extends L2GameClientPacket
 {
-	//private static Logger _log = Logger.getLogger(RequestFriendList.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestFriendList.class.getName());
 	private static final String _C__60_REQUESTFRIENDLIST = "[C] 60 RequestFriendList";
 	
 	@Override
@@ -42,7 +41,9 @@ public final class RequestFriendList extends L2GameClientPacket
 		L2PcInstance activeChar = getClient().getActiveChar();
 		
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		SystemMessage sm;
 		
@@ -56,11 +57,13 @@ public final class RequestFriendList extends L2GameClientPacket
 			String friendName = CharNameTable.getInstance().getNameById(id);
 			
 			if (friendName == null)
+			{
 				continue;
+			}
 			
 			friend = L2World.getInstance().getPlayer(friendName);
 			
-			if (friend == null || !friend.isOnline())
+			if ((friend == null) || !friend.isOnline())
 			{
 				// (Currently: Offline)
 				sm = SystemMessage.getSystemMessage(SystemMessageId.S1_OFFLINE);

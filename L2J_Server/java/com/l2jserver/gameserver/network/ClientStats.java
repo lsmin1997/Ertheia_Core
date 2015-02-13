@@ -63,22 +63,27 @@ public class ClientStats
 	{
 		final boolean result = _floodDetected || _queueOverflowDetected;
 		if (result)
+		{
 			droppedPackets++;
+		}
 		return result;
 	}
 	
 	/**
-	 * Returns true if flood detected first and ActionFailed packet need to be sent.
-	 * Later during flood returns true (and send ActionFailed) once per second.
+	 * Returns true if flood detected first and ActionFailed packet need to be sent. Later during flood returns true (and send ActionFailed) once per second.
 	 */
 	protected final boolean countPacket(int queueSize)
 	{
 		processedPackets++;
 		totalQueueSize += queueSize;
 		if (maxQueueSize < queueSize)
+		{
 			maxQueueSize = queueSize;
-		if (_queueOverflowDetected && queueSize < 2)
+		}
+		if (_queueOverflowDetected && (queueSize < 2))
+		{
 			_queueOverflowDetected = false;
+		}
 		
 		return countPacket();
 	}
@@ -91,7 +96,7 @@ public class ClientStats
 		unknownPackets++;
 		
 		final long tick = System.currentTimeMillis();
-		if (tick - _unknownPacketStartTick > 60000)
+		if ((tick - _unknownPacketStartTick) > 60000)
 		{
 			_unknownPacketStartTick = tick;
 			_unknownPacketsInMin = 1;
@@ -109,10 +114,14 @@ public class ClientStats
 	protected final boolean countBurst(int count)
 	{
 		if (count > maxBurstSize)
+		{
 			maxBurstSize = count;
+		}
 		
 		if (count < Config.CLIENT_PACKET_QUEUE_MAX_BURST_SIZE)
+		{
 			return false;
+		}
 		
 		totalBursts++;
 		return true;
@@ -127,7 +136,7 @@ public class ClientStats
 		totalQueueOverflows++;
 		
 		final long tick = System.currentTimeMillis();
-		if (tick - _overflowStartTick > 60000)
+		if ((tick - _overflowStartTick) > 60000)
 		{
 			_overflowStartTick = tick;
 			_overflowsInMin = 1;
@@ -146,7 +155,7 @@ public class ClientStats
 		totalUnderflowExceptions++;
 		
 		final long tick = System.currentTimeMillis();
-		if (tick - _underflowReadStartTick > 60000)
+		if ((tick - _underflowReadStartTick) > 60000)
 		{
 			_underflowReadStartTick = tick;
 			_underflowReadsInMin = 1;
@@ -171,26 +180,27 @@ public class ClientStats
 	}
 	
 	/**
-	 * Returns true if flood detected first and ActionFailed packet need to be sent.
-	 * Later during flood returns true (and send ActionFailed) once per second.
+	 * Returns true if flood detected first and ActionFailed packet need to be sent. Later during flood returns true (and send ActionFailed) once per second.
 	 */
 	private final synchronized boolean countPacket()
 	{
 		_totalCount++;
 		final long tick = System.currentTimeMillis();
-		if (tick - _packetCountStartTick > 1000)
+		if ((tick - _packetCountStartTick) > 1000)
 		{
 			_packetCountStartTick = tick;
 			
 			// clear flag if no more flooding during last seconds
-			if (_floodDetected
-					&& !longFloodDetected()
-					&& _packetsInSecond[_head] < Config.CLIENT_PACKET_QUEUE_MAX_PACKETS_PER_SECOND / 2)
+			if (_floodDetected && !longFloodDetected() && (_packetsInSecond[_head] < (Config.CLIENT_PACKET_QUEUE_MAX_PACKETS_PER_SECOND / 2)))
+			{
 				_floodDetected = false;
+			}
 			
 			// wrap head of the buffer around the tail
 			if (_head <= 0)
+			{
 				_head = BUFFER_SIZE;
+			}
 			_head--;
 			
 			_totalCount -= _packetsInSecond[_head];
@@ -202,20 +212,28 @@ public class ClientStats
 		if (!_floodDetected)
 		{
 			if (count > Config.CLIENT_PACKET_QUEUE_MAX_PACKETS_PER_SECOND)
+			{
 				shortFloods++;
+			}
 			else if (longFloodDetected())
+			{
 				longFloods++;
+			}
 			else
+			{
 				return false;
+			}
 			
 			_floodDetected = true;
-			if (tick - _floodStartTick > 60000)
+			if ((tick - _floodStartTick) > 60000)
 			{
 				_floodStartTick = tick;
 				_floodsInMin = 1;
 			}
 			else
+			{
 				_floodsInMin++;
+			}
 			
 			return true; // Return true only in the beginning of the flood
 		}

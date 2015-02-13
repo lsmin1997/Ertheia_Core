@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 /**
  * format: (ch) d
  * @author -Wooden-
- *
  */
 public final class RequestExAcceptJoinMPCC extends L2GameClientPacket
 {
@@ -39,24 +38,27 @@ public final class RequestExAcceptJoinMPCC extends L2GameClientPacket
 		_response = readD();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl()
 	{
 		L2PcInstance player = getClient().getActiveChar();
-		if(player != null)
+		if (player != null)
 		{
 			L2PcInstance requestor = player.getActiveRequester();
 			SystemMessage sm;
 			if (requestor == null)
+			{
 				return;
+			}
 			
 			if (_response == 1)
 			{
 				boolean newCc = false;
-				if(!requestor.getParty().isInCommandChannel())
+				if (!requestor.getParty().isInCommandChannel())
 				{
 					new L2CommandChannel(requestor); // Create new CC
 					sm = SystemMessage.getSystemMessage(SystemMessageId.COMMAND_CHANNEL_FORMED);
@@ -81,7 +83,8 @@ public final class RequestExAcceptJoinMPCC extends L2GameClientPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

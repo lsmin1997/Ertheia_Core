@@ -15,7 +15,8 @@
 package com.l2jserver.gameserver.model;
 
 /**
- * This class permit to pass (x, y, z, heading) position data to method.<BR><BR>
+ * This class permit to pass (x, y, z, heading) position data to method.<BR>
+ * <BR>
  */
 public final class L2CharPosition
 {
@@ -23,7 +24,8 @@ public final class L2CharPosition
 	public final int x, y, z, heading;
 	
 	/**
-	 * Constructor of L2CharPosition.<BR><BR>
+	 * Constructor of L2CharPosition.<BR>
+	 * <BR>
 	 */
 	public L2CharPosition(int pX, int pY, int pZ, int pHeading)
 	{

@@ -19,16 +19,15 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionPlayerFlyMounted.
- *
  * @author kerberos
  */
-public class ConditionPlayerFlyMounted extends Condition {
+public class ConditionPlayerFlyMounted extends Condition
+{
 	
-	private boolean _val;
+	private final boolean _val;
 	
 	/**
 	 * Instantiates a new condition player fly mounted.
-	 *
 	 * @param val the val
 	 */
 	public ConditionPlayerFlyMounted(boolean val)
@@ -36,11 +35,13 @@ public class ConditionPlayerFlyMounted extends Condition {
 		_val = val;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
-	public boolean testImpl(Env env) {
+	public boolean testImpl(Env env)
+	{
 		return (env.player instanceof L2PcInstance) ? ((L2PcInstance) env.player).isFlyingMounted() == _val : true;
 	}
 }

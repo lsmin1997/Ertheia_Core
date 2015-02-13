@@ -20,17 +20,15 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
- * 0x42 WarehouseWithdrawalList  dh (h dddhh dhhh d)
- *
+ * 0x42 WarehouseWithdrawalList dh (h dddhh dhhh d)
  * @version $Revision: 1.3.2.1.2.5 $ $Date: 2005/03/29 23:15:10 $
  */
 public final class WareHouseWithdrawalList extends L2GameServerPacket
 {
 	public static final int PRIVATE = 1;
 	public static final int CLAN = 4;
-	public static final int CASTLE = 3; //not sure
+	public static final int CASTLE = 3; // not sure
 	public static final int FREIGHT = 1;
 	private static Logger _log = Logger.getLogger(WareHouseWithdrawalList.class.getName());
 	private static final String _S__54_WAREHOUSEWITHDRAWALLIST = "[S] 42 WareHouseWithdrawalList";
@@ -52,21 +50,26 @@ public final class WareHouseWithdrawalList extends L2GameServerPacket
 			return;
 		}
 		else
+		{
 			_items = _activeChar.getActiveWarehouse().getItems();
+		}
 		
 		if (Config.DEBUG)
+		{
 			for (L2ItemInstance item : _items)
+			{
 				_log.fine("item:" + item.getItem().getName() + " type1:" + item.getItem().getType1() + " type2:" + item.getItem().getType2());
+			}
+		}
 	}
 	
 	@Override
 	protected final void writeImpl()
 	{
 		writeC(0x42);
-		/* 0x01-Private Warehouse
-		 * 0x02-Clan Warehouse
-		 * 0x03-Castle Warehouse
-		 * 0x04-Warehouse */
+		/*
+		 * 0x01-Private Warehouse 0x02-Clan Warehouse 0x03-Castle Warehouse 0x04-Warehouse
+		 */
 		writeH(_whType);
 		writeQ(_playerAdena);
 		writeH(_items.length);
@@ -84,9 +87,13 @@ public final class WareHouseWithdrawalList extends L2GameServerPacket
 			writeH(item.getEnchantLevel());
 			writeH(item.getCustomType2());
 			if (item.isAugmented())
+			{
 				writeD(item.getAugmentation().getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(item.getMana());
 			writeD(item.isTimeLimitedItem() ? (int) (item.getRemainingTime() / 1000) : -9999);
 			writeH(item.getAttackElementType());
@@ -103,7 +110,8 @@ public final class WareHouseWithdrawalList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

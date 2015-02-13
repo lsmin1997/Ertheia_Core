@@ -20,12 +20,7 @@ import javolution.util.FastList;
 import com.l2jserver.gameserver.model.L2Manor;
 
 /**
- * format(packet 0xFE) ch cd [ddddcdcd] c - id h - sub id
- * 
- * c d - size
- *  [ d - level d - seed price d - seed level d - crop price c d - reward 1 id c
- * d - reward 2 id ]
- * 
+ * format(packet 0xFE) ch cd [ddddcdcd] c - id h - sub id c d - size [ d - level d - seed price d - seed level d - crop price c d - reward 1 id c d - reward 2 id ]
  * @author l3x
  */
 public class ExShowManorDefaultInfo extends L2GameServerPacket

@@ -16,19 +16,17 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: ch S
- * @author  KenM
+ * @author KenM
  */
 public class ExAskJoinPartyRoom extends L2GameServerPacket
 {
 	private static final String _S__FE_34_EXASKJOINPARTYROOM = "[S] FE:35 ExAskJoinPartyRoom";
-	private String _charName;
-	
+	private final String _charName;
 	
 	public ExAskJoinPartyRoom(String charName)
 	{
 		_charName = charName;
 	}
-	
 	
 	@Override
 	protected void writeImpl()

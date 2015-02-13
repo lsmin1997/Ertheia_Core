@@ -26,12 +26,7 @@ import com.l2jserver.gameserver.model.L2Manor;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * format(packet 0xFE) ch dd [ddddcdcdddc] c - id h - sub id
- * 
- * d - manor id d - size
- *  [ d - Object id d - crop id d - seed level c d - reward 1 id c d - reward 2
- * id d - manor d - buy residual d - buy price d - reward ]
- * 
+ * format(packet 0xFE) ch dd [ddddcdcdddc] c - id h - sub id d - manor id d - size [ d - Object id d - crop id d - seed level c d - reward 1 id c d - reward 2 id d - manor d - buy residual d - buy price d - reward ]
  * @author l3x
  */
 
@@ -61,7 +56,7 @@ public class ExShowSellCropList extends L2GameServerPacket
 		
 		for (CropProcure crop : crops)
 		{
-			if (_cropsItems.containsKey(crop.getId()) && crop.getAmount() > 0)
+			if (_cropsItems.containsKey(crop.getId()) && (crop.getAmount() > 0))
 			{
 				_castleCrops.put(crop.getId(), crop);
 			}

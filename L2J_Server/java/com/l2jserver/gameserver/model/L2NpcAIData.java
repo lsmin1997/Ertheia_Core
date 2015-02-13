@@ -21,10 +21,7 @@ package com.l2jserver.gameserver.model;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate.AIType;
 
 /**
- * Author: ShanSoft
- * By L2JTW
- * 
- * 
+ * Author: ShanSoft By L2JTW
  */
 
 // This Data is for NPC Attributes and AI relate stuffs...
@@ -32,7 +29,7 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate.AIType;
 public class L2NpcAIData
 {
 	
-	//Basic AI
+	// Basic AI
 	private int _primary_attack;
 	private int _skill_chance;
 	private int _canMove;
@@ -45,8 +42,8 @@ public class L2NpcAIData
 	private int _clanRange;
 	private String _enemyClan = null;
 	private int _enemyRange;
-	//private int _baseShldRate;
-	//private int _baseShldDef;
+	// private int _baseShldRate;
+	// private int _baseShldDef;
 	private int _dodge;
 	private int _longrangeskill;
 	private int _shortrangeskill;
@@ -55,9 +52,9 @@ public class L2NpcAIData
 	private int _switchrangechance;
 	private AIType _aiType = AIType.FIGHTER;
 	
-	//--------------------------------------------------------------------------------------------------------------
-	//Setting....
-	//--------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------
+	// Setting....
+	// --------------------------------------------------------------------------------------------------------------
 	public void setPrimaryAttack(int primaryattack)
 	{
 		
@@ -150,8 +147,10 @@ public class L2NpcAIData
 	
 	public void setClan(String clan)
 	{
-		if (clan != null && !clan.equals("") && !clan.equalsIgnoreCase("null"))
+		if ((clan != null) && !clan.equals("") && !clan.equalsIgnoreCase("null"))
+		{
 			_clan = clan.intern();
+		}
 	}
 	
 	public void setClanRange(int clanRange)
@@ -161,8 +160,10 @@ public class L2NpcAIData
 	
 	public void setEnemyClan(String enemyClan)
 	{
-		if (enemyClan != null && !enemyClan.equals("") && !enemyClan.equalsIgnoreCase("null"))
+		if ((enemyClan != null) && !enemyClan.equals("") && !enemyClan.equalsIgnoreCase("null"))
+		{
 			_enemyClan = enemyClan.intern();
+		}
 	}
 	
 	public void setEnemyRange(int enemyRange)
@@ -180,39 +181,38 @@ public class L2NpcAIData
 	public void setAi(String ai)
 	{
 		if (ai.equalsIgnoreCase("archer"))
+		{
 			_aiType = AIType.ARCHER;
+		}
 		else if (ai.equalsIgnoreCase("balanced"))
+		{
 			_aiType = AIType.BALANCED;
+		}
 		else if (ai.equalsIgnoreCase("mage"))
+		{
 			_aiType = AIType.MAGE;
+		}
 		else if (ai.equalsIgnoreCase("healer"))
+		{
 			_aiType = AIType.HEALER;
+		}
 		else if (ai.equalsIgnoreCase("corpse"))
+		{
 			_aiType = AIType.CORPSE;
+		}
 		else
+		{
 			_aiType = AIType.FIGHTER;
+		}
 	}
 	
 	/*
-	
-	public void setBaseShldRate (int baseShldRate)
-	{
-		
-		_baseShldRate = baseShldRate;
-		
-	}
-	
-	public void setBaseShldDef (int baseShldDef)
-	{
-		
-		_baseShldDef = baseShldDef;
-		
-	}
+	 * public void setBaseShldRate (int baseShldRate) { _baseShldRate = baseShldRate; } public void setBaseShldDef (int baseShldDef) { _baseShldDef = baseShldDef; }
 	 */
 	
-	//--------------------------------------------------------------------------------------------------------------
-	//Data Recall....
-	//--------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------
+	// Data Recall....
+	// --------------------------------------------------------------------------------------------------------------
 	public int getPrimaryAttack()
 	{
 		
@@ -343,19 +343,6 @@ public class L2NpcAIData
 	}
 	
 	/*
-	
-	public int getBaseShldRate ()
-	{
-		
-		return _baseShldRate;
-		
-	}
-	
-	public int getBaseShldDef ()
-	{
-		
-		return _baseShldDef;
-		
-	}
+	 * public int getBaseShldRate () { return _baseShldRate; } public int getBaseShldDef () { return _baseShldDef; }
 	 */
 }

@@ -39,7 +39,7 @@ import com.l2jserver.gameserver.util.Util;
 public final class RequestSellItem extends L2GameClientPacket
 {
 	private static final String _C__1E_REQUESTSELLITEM = "[C] 1E RequestSellItem";
-	//private static Logger _log = Logger.getLogger(RequestSellItem.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestSellItem.class.getName());
 	
 	private static final int BATCH_LENGTH = 16; // length of the one item
 	
@@ -47,23 +47,7 @@ public final class RequestSellItem extends L2GameClientPacket
 	private Item[] _items = null;
 	
 	/**
-	 * packet type id 0x1e
-	 *
-	 * sample
-	 *
-	 * 1e
-	 * 00 00 00 00		// list id
-	 * 02 00 00 00		// number of items
-	 *
-	 * 71 72 00 10		// object id
-	 * ea 05 00 00		// item id
-	 * 01 00 00 00		// item count
-	 *
-	 * 76 4b 00 10		// object id
-	 * 2e 0a 00 00		// item id
-	 * 01 00 00 00		// item count
-	 *
-	 * format:		cdd (ddd)
+	 * packet type id 0x1e sample 1e 00 00 00 00 // list id 02 00 00 00 // number of items 71 72 00 10 // object id ea 05 00 00 // item id 01 00 00 00 // item count 76 4b 00 10 // object id 2e 0a 00 00 // item id 01 00 00 00 // item count format: cdd (ddd)
 	 * @param decrypt
 	 */
 	
@@ -72,7 +56,7 @@ public final class RequestSellItem extends L2GameClientPacket
 	{
 		_listId = readD();
 		int count = readD();
-		if (count <= 0 || count > Config.MAX_ITEM_IN_PACKET || count * BATCH_LENGTH != _buf.remaining())
+		if ((count <= 0) || (count > Config.MAX_ITEM_IN_PACKET) || ((count * BATCH_LENGTH) != _buf.remaining()))
 		{
 			return;
 		}
@@ -83,7 +67,7 @@ public final class RequestSellItem extends L2GameClientPacket
 			int objectId = readD();
 			int itemId = readD();
 			long cnt = readQ();
-			if (objectId < 1 || itemId < 1 || cnt < 1)
+			if ((objectId < 1) || (itemId < 1) || (cnt < 1))
 			{
 				_items = null;
 				return;
@@ -95,7 +79,7 @@ public final class RequestSellItem extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		this.processSell();
+		processSell();
 	}
 	
 	protected void processSell()
@@ -103,7 +87,9 @@ public final class RequestSellItem extends L2GameClientPacket
 		L2PcInstance player = getClient().getActiveChar();
 		
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("buy"))
 		{
@@ -118,7 +104,7 @@ public final class RequestSellItem extends L2GameClientPacket
 		}
 		
 		// Alt game - Karma punishment
-		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_SHOP && player.getKarma() > 0)
+		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_SHOP && (player.getKarma() > 0))
 		{
 			sendPacket(ActionFailed.STATIC_PACKET);
 			return;
@@ -128,15 +114,16 @@ public final class RequestSellItem extends L2GameClientPacket
 		L2Character merchant = null;
 		if (!player.isGM())
 		{
-			if(target == null 
-					|| (!player.isInsideRadius(target, INTERACTION_DISTANCE, true, false)) // Distance is too far)
-					|| (player.getInstanceId() != target.getInstanceId()))
+			if ((target == null) || (!player.isInsideRadius(target, INTERACTION_DISTANCE, true, false)) // Distance is too far)
+				|| (player.getInstanceId() != target.getInstanceId()))
 			{
 				sendPacket(ActionFailed.STATIC_PACKET);
 				return;
 			}
-			if((target instanceof L2MerchantInstance) || (target instanceof L2MerchantSummonInstance))
-				merchant = (L2Character)target;
+			if ((target instanceof L2MerchantInstance) || (target instanceof L2MerchantSummonInstance))
+			{
+				merchant = (L2Character) target;
+			}
 			else
 			{
 				sendPacket(ActionFailed.STATIC_PACKET);
@@ -171,14 +158,20 @@ public final class RequestSellItem extends L2GameClientPacket
 				for (L2TradeList tradeList : lists)
 				{
 					if (tradeList.getListId() == _listId)
+					{
 						list = tradeList;
+					}
 				}
 			}
 			else
+			{
 				list = TradeController.getInstance().getBuyList(_listId);
+			}
 		}
 		else
+		{
 			list = TradeController.getInstance().getBuyList(_listId);
+		}
 		
 		if (list == null)
 		{
@@ -191,21 +184,27 @@ public final class RequestSellItem extends L2GameClientPacket
 		for (Item i : _items)
 		{
 			L2ItemInstance item = player.checkItemManipulation(i.getObjectId(), i.getCount(), "sell");
-			if (item == null || (!item.isSellable()))
+			if ((item == null) || (!item.isSellable()))
+			{
 				continue;
+			}
 			
 			long price = item.getReferencePrice() / 2;
 			totalPrice += price * i.getCount();
-			if ((MAX_ADENA / i.getCount()) < price || totalPrice > MAX_ADENA)
+			if (((MAX_ADENA / i.getCount()) < price) || (totalPrice > MAX_ADENA))
 			{
 				Util.handleIllegalPlayerAction(player, "Warning!! Character " + player.getName() + " of account " + player.getAccountName() + " tried to purchase over " + MAX_ADENA + " adena worth of goods.", Config.DEFAULT_PUNISH);
 				return;
 			}
 			
 			if (Config.ALLOW_REFUND)
+			{
 				item = player.getInventory().transferItem("Sell", i.getObjectId(), i.getCount(), player.getRefund(), player, merchant);
+			}
 			else
+			{
 				item = player.getInventory().destroyItem("Sell", i.getObjectId(), i.getCount(), player, merchant);
+			}
 		}
 		player.addAdena("Sell", totalPrice, merchant, false);
 		
@@ -238,7 +237,8 @@ public final class RequestSellItem extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

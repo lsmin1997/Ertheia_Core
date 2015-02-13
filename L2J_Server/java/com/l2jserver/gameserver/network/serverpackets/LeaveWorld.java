@@ -29,7 +29,8 @@ public final class LeaveWorld extends L2GameServerPacket
 		writeC(0x84);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

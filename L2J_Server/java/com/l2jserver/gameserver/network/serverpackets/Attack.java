@@ -18,15 +18,8 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
- * sample
- * 06 8f19904b 2522d04b 00000000 80 950c0000 4af50000 08f2ffff 0000    - 0 damage (missed 0x80)
- * 06 85071048 bc0e504b 32000000 10 fc41ffff fd240200 a6f5ffff 0100 bc0e504b 33000000 10                                     3....
-
- * format
- * dddc dddh (ddc)
- *
+ * sample 06 8f19904b 2522d04b 00000000 80 950c0000 4af50000 08f2ffff 0000 - 0 damage (missed 0x80) 06 85071048 bc0e504b 32000000 10 fc41ffff fd240200 a6f5ffff 0100 bc0e504b 33000000 10 3.... format dddc dddh (ddc)
  * @version $Revision: 1.3.2.1.2.4 $ $Date: 2005/03/27 15:29:39 $
  */
 public class Attack extends L2GameServerPacket
@@ -52,14 +45,20 @@ public class Attack extends L2GameServerPacket
 				return;
 			}
 			if (soulshot)
-				_flags = HITFLAG_USESS | Attack.this._ssGrade;
+			{
+				_flags = HITFLAG_USESS | _ssGrade;
+			}
 			if (crit)
+			{
 				_flags |= HITFLAG_CRIT;
+			}
 			// dirty fix for lags on olympiad
-			if (shld > 0 && !(target instanceof L2PcInstance && ((L2PcInstance)target).isInOlympiadMode()))
+			if ((shld > 0) && !((target instanceof L2PcInstance) && ((L2PcInstance) target).isInOlympiadMode()))
+			{
 				_flags |= HITFLAG_SHLD;
-			//			if (shld > 0)
-			//				_flags |= HITFLAG_SHLD;
+				// if (shld > 0)
+				// _flags |= HITFLAG_SHLD;
+			}
 		}
 	}
 	
@@ -98,7 +97,7 @@ public class Attack extends L2GameServerPacket
 	
 	public Hit createHit(L2Object target, int damage, boolean miss, boolean crit, byte shld)
 	{
-		return new Hit( target, damage, miss, crit, shld );
+		return new Hit(target, damage, miss, crit, shld);
 	}
 	
 	public void hit(Hit... hits)
@@ -117,7 +116,8 @@ public class Attack extends L2GameServerPacket
 	}
 	
 	/**
-	 * Return True if the Server-Client packet Attack contains at least 1 hit.<BR><BR>
+	 * Return True if the Server-Client packet Attack contains at least 1 hit.<BR>
+	 * <BR>
 	 */
 	public boolean hasHits()
 	{
@@ -154,7 +154,8 @@ public class Attack extends L2GameServerPacket
 		writeD(_tz);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

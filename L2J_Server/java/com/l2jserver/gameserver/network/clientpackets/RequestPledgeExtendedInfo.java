@@ -15,10 +15,8 @@
 package com.l2jserver.gameserver.network.clientpackets;
 
 /**
- * Format: (c) S
- * S: pledge name?
- * @author  -Wooden-
- * 
+ * Format: (c) S S: pledge name?
+ * @author -Wooden-
  */
 public class RequestPledgeExtendedInfo extends L2GameClientPacket
 {

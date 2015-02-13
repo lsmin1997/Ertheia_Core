@@ -15,17 +15,15 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * Halloween rank list server packet.
- * 
- * Format: (ch)ddddd
+ * Halloween rank list server packet. Format: (ch)ddddd
  */
 public class ExBrLoadEventTopRankers extends L2GameServerPacket
 {
-	private int _eventId;
-	private int _day;
-	private int _count;
-	private int _bestScore;
-	private int _myScore;
+	private final int _eventId;
+	private final int _day;
+	private final int _count;
+	private final int _bestScore;
+	private final int _myScore;
 	
 	public ExBrLoadEventTopRankers(int eventId, int day, int count, int bestScore, int myScore)
 	{
@@ -36,7 +34,8 @@ public class ExBrLoadEventTopRankers extends L2GameServerPacket
 		_myScore = myScore;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -52,7 +51,8 @@ public class ExBrLoadEventTopRankers extends L2GameServerPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

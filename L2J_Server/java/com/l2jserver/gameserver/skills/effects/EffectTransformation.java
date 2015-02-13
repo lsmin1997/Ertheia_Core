@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- * 
  * @author nBd
  */
 public class EffectTransformation extends L2Effect
@@ -42,7 +41,6 @@ public class EffectTransformation extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -52,21 +50,26 @@ public class EffectTransformation extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
 	public boolean onStart()
 	{
 		if (!(getEffected() instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
 		L2PcInstance trg = (L2PcInstance) getEffected();
 		if (trg == null)
+		{
 			return false;
+		}
 		
 		if (trg.isAlikeDead() || trg.isCursedWeaponEquipped())
+		{
 			return false;
+		}
 		
 		if (trg.getTransformation() != null)
 		{
@@ -79,7 +82,6 @@ public class EffectTransformation extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

@@ -22,7 +22,7 @@ import com.l2jserver.gameserver.model.zone.type.L2TownZone;
 
 public class TownManager
 {
-	//private static final Logger _log = Logger.getLogger(TownManager.class.getName());
+	// private static final Logger _log = Logger.getLogger(TownManager.class.getName());
 	
 	// =========================================================
 	// Property - Public
@@ -68,41 +68,41 @@ public class TownManager
 			case 17:
 				return getTown(16); // Floran
 			case 18:
-				return getTown(19); //Primeval Isle
+				return getTown(19); // Primeval Isle
 			case 19:
-				return getTown(20); //Kamael Village
+				return getTown(20); // Kamael Village
 			case 20:
-				return getTown(21); //South of Wastelands Camp
+				return getTown(21); // South of Wastelands Camp
 			case 21:
-				return getTown(22); //Fantasy Island
+				return getTown(22); // Fantasy Island
 			case 22:
-				return getTown(23); //Neutral Zone
+				return getTown(23); // Neutral Zone
 			case 23:
-				return getTown(24);//Coliseum
+				return getTown(24);// Coliseum
 			case 24:
-				return getTown(25);//GM Consultation service
+				return getTown(25);// GM Consultation service
 			case 25:
-				return getTown(26);//Dimensional Gap
+				return getTown(26);// Dimensional Gap
 			case 26:
-				return getTown(27);//Cemetery of the Empire
+				return getTown(27);// Cemetery of the Empire
 			case 27:
-				return getTown(28);//inside the Steel Citadel
+				return getTown(28);// inside the Steel Citadel
 			case 28:
-				return getTown(29);//Steel Citadel Resistance
+				return getTown(29);// Steel Citadel Resistance
 			case 29:
-				return getTown(30);//Inside Kamaloka
+				return getTown(30);// Inside Kamaloka
 			case 30:
-				return getTown(31);//Inside Nia Kamaloka
+				return getTown(31);// Inside Nia Kamaloka
 			case 31:
-				return getTown(32);//Inside Rim Kamaloka
+				return getTown(32);// Inside Rim Kamaloka
 			case 32:
-				return getTown(33);//near the Keucereus clan association location
+				return getTown(33);// near the Keucereus clan association location
 			case 33:
-				return getTown(34);//inside the Seed of Infinity
+				return getTown(34);// inside the Seed of Infinity
 			case 34:
-				return getTown(35);//outside the Seed of Infinity
+				return getTown(35);// outside the Seed of Infinity
 			case 35:
-				return getTown(36);//inside Aerial Cleft
+				return getTown(36);// inside Aerial Cleft
 		}
 		
 		return getTown(16); // Default to floran
@@ -149,41 +149,41 @@ public class TownManager
 			case 17:
 				return getTown(16); // Floran
 			case 18:
-				return getTown(19); //Primeval Isle
+				return getTown(19); // Primeval Isle
 			case 19:
-				return getTown(20); //Kamael Village
+				return getTown(20); // Kamael Village
 			case 20:
-				return getTown(21); //South of Wastelands Camp
+				return getTown(21); // South of Wastelands Camp
 			case 21:
-				return getTown(22); //Fantasy Island
+				return getTown(22); // Fantasy Island
 			case 22:
-				return getTown(23); //Neutral Zone
+				return getTown(23); // Neutral Zone
 			case 23:
-				return getTown(24);//Coliseum
+				return getTown(24);// Coliseum
 			case 24:
-				return getTown(25);//GM Consultation service
+				return getTown(25);// GM Consultation service
 			case 25:
-				return getTown(26);//Dimensional Gap
+				return getTown(26);// Dimensional Gap
 			case 26:
-				return getTown(27);//Cemetery of the Empire
+				return getTown(27);// Cemetery of the Empire
 			case 27:
-				return getTown(28);//inside the Steel Citadel
+				return getTown(28);// inside the Steel Citadel
 			case 28:
-				return getTown(29);//Steel Citadel Resistance
+				return getTown(29);// Steel Citadel Resistance
 			case 29:
-				return getTown(30);//Inside Kamaloka
+				return getTown(30);// Inside Kamaloka
 			case 30:
-				return getTown(31);//Inside Nia Kamaloka
+				return getTown(31);// Inside Nia Kamaloka
 			case 31:
-				return getTown(32);//Inside Rim Kamaloka
+				return getTown(32);// Inside Rim Kamaloka
 			case 32:
-				return getTown(33);//near the Keucereus clan association location
+				return getTown(33);// near the Keucereus clan association location
 			case 33:
-				return getTown(34);//inside the Seed of Infinity
+				return getTown(34);// inside the Seed of Infinity
 			case 34:
-				return getTown(35);//outside the Seed of Infinity
+				return getTown(35);// outside the Seed of Infinity
 			case 35:
-				return getTown(36);//inside Aerial Cleft
+				return getTown(36);// inside Aerial Cleft
 		}
 		
 		return getTown(16); // Default to floran
@@ -228,44 +228,10 @@ public class TownManager
 			case 16:
 				return 9; // Schuttgart
 				/*
-			case 17:
-				return getTown(16); // Floran
-			case 18:
-				return getTown(19); //Primeval Isle
-            case 19:
-                return getTown(20); //Kamael Village
-            case 20:
-                return getTown(21); //South of Wastelands Camp
-            case 21:
-                return getTown(22); //Fantasy Island
-            case 22:
-                return 7; //Neutral Zone
-            case 23:
-                return getTown(24);//Coliseum
-            case 24:
-                return getTown(25);//GM Consultation service
-            case 25:
-                return getTown(26);//Dimensional Gap
-            case 26:
-                return getTown(27);//Cemetery of the Empire
-            case 27:
-                return getTown(28);//inside the Steel Citadel
-            case 28:
-                return getTown(29);//Steel Citadel Resistance
-            case 29:
-                return getTown(30);//Inside Kamaloka
-            case 30:
-                return getTown(31);//Inside Nia Kamaloka
-            case 31:
-                return getTown(32);//Inside Rim Kamaloka
-            case 32:
-                return getTown(33);//near the Keucereus clan association location
-            case 33:
-                return getTown(34);//inside the Seed of Infinity
-            case 34:
-                return getTown(35);//outside the Seed of Infinity
-            case 35:
-                return getTown(36);//inside Aerial Cleft
+				 * case 17: return getTown(16); // Floran case 18: return getTown(19); //Primeval Isle case 19: return getTown(20); //Kamael Village case 20: return getTown(21); //South of Wastelands Camp case 21: return getTown(22); //Fantasy Island case 22: return 7; //Neutral Zone case 23: return
+				 * getTown(24);//Coliseum case 24: return getTown(25);//GM Consultation service case 25: return getTown(26);//Dimensional Gap case 26: return getTown(27);//Cemetery of the Empire case 27: return getTown(28);//inside the Steel Citadel case 28: return getTown(29);//Steel Citadel
+				 * Resistance case 29: return getTown(30);//Inside Kamaloka case 30: return getTown(31);//Inside Nia Kamaloka case 31: return getTown(32);//Inside Rim Kamaloka case 32: return getTown(33);//near the Keucereus clan association location case 33: return getTown(34);//inside the Seed of
+				 * Infinity case 34: return getTown(35);//outside the Seed of Infinity case 35: return getTown(36);//inside Aerial Cleft
 				 */
 		}
 		return 0;
@@ -273,31 +239,111 @@ public class TownManager
 	
 	public final static boolean townHasCastleInSiege(int townId)
 	{
-		//int[] castleidarray = {0,0,0,0,0,0,0,1,2,3,4,0,5,0,0,6,0};
-		int[] castleidarray = {0,0,0,0,0,0,0,1,2,3,4,0,5,7,8,6,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		int castleIndex= castleidarray[townId] ;
+		// int[] castleidarray = {0,0,0,0,0,0,0,1,2,3,4,0,5,0,0,6,0};
+		int[] castleidarray =
+		{
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			2,
+			3,
+			4,
+			0,
+			5,
+			7,
+			8,
+			6,
+			0,
+			9,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		};
+		int castleIndex = castleidarray[townId];
 		
-		if ( castleIndex > 0 )
+		if (castleIndex > 0)
 		{
 			Castle castle = CastleManager.getInstance().getCastles().get(CastleManager.getInstance().getCastleIndex(castleIndex));
 			if (castle != null)
+			{
 				return castle.getSiege().getIsInProgress();
+			}
 		}
 		return false;
 	}
 	
 	public final static boolean townHasCastleInSiege(int x, int y)
 	{
-		int curtown= (MapRegionTable.getInstance().getMapRegion(x, y));
-		//int[] castleidarray = {0,0,0,0,0,1,0,2,3,4,5,0,0,6,0,0,0,0};
-		int[] castleidarray = {0,0,0,0,0,1,0,2,3,4,5,0,0,6,8,7,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		//find an instance of the castle for this town.
+		int curtown = (MapRegionTable.getInstance().getMapRegion(x, y));
+		// int[] castleidarray = {0,0,0,0,0,1,0,2,3,4,5,0,0,6,0,0,0,0};
+		int[] castleidarray =
+		{
+			0,
+			0,
+			0,
+			0,
+			0,
+			1,
+			0,
+			2,
+			3,
+			4,
+			5,
+			0,
+			0,
+			6,
+			8,
+			7,
+			9,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		};
+		// find an instance of the castle for this town.
 		int castleIndex = castleidarray[curtown];
-		if ( castleIndex > 0 )
+		if (castleIndex > 0)
 		{
 			Castle castle = CastleManager.getInstance().getCastles().get(CastleManager.getInstance().getCastleIndex(castleIndex));
 			if (castle != null)
+			{
 				return castle.getSiege().getIsInProgress();
+			}
 		}
 		return false;
 	}
@@ -307,7 +353,9 @@ public class TownManager
 		for (L2TownZone temp : ZoneManager.getInstance().getAllZones(L2TownZone.class))
 		{
 			if (temp.getTownId() == townId)
+			{
 				return temp;
+			}
 		}
 		return null;
 	}
@@ -324,7 +372,9 @@ public class TownManager
 		for (L2ZoneType temp : ZoneManager.getInstance().getZones(x, y, z))
 		{
 			if (temp instanceof L2TownZone)
+			{
 				return (L2TownZone) temp;
+			}
 		}
 		return null;
 	}

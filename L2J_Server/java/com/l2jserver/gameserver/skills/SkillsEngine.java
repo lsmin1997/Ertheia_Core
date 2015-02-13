@@ -35,8 +35,8 @@ public class SkillsEngine
 	
 	protected static final Logger _log = Logger.getLogger(SkillsEngine.class.getName());
 	
-	private List<File> _itemFiles = new FastList<File>();
-	private List<File> _skillFiles = new FastList<File>();
+	private final List<File> _itemFiles = new FastList<File>();
+	private final List<File> _skillFiles = new FastList<File>();
 	
 	public static SkillsEngine getInstance()
 	{
@@ -61,11 +61,15 @@ public class SkillsEngine
 		for (File f : files)
 		{
 			if (f.getName().endsWith(".xml") && !f.getName().startsWith("custom"))
+			{
 				hash.add(f);
+			}
 		}
 		File customfile = new File(Config.DATAPACK_ROOT, dirname + "/custom.xml");
 		if (customfile.exists())
+		{
 			hash.add(customfile);
+		}
 	}
 	
 	public List<L2Skill> loadSkills(File file)
@@ -87,7 +91,9 @@ public class SkillsEngine
 		{
 			List<L2Skill> s = loadSkills(file);
 			if (s == null)
+			{
 				continue;
+			}
 			for (L2Skill skill : s)
 			{
 				allSkills.put(SkillTable.getSkillHashCode(skill), skill);
@@ -113,45 +119,12 @@ public class SkillsEngine
 		return list;
 	}
 	
-	/*public List<L2Weapon> loadWeapons(Map<Integer, Item> weaponData)
-	{
-		List<L2Weapon> list = new FastList<L2Weapon>();
-		for (L2Item item : loadData(weaponData, _weaponFiles))
-		{
-			list.add((L2Weapon) item);
-		}
-		return list;
-	}
-	
-	public List<L2EtcItem> loadItems(Map<Integer, Item> itemData)
-	{
-		List<L2EtcItem> list = new FastList<L2EtcItem>();
-		List<Integer> xmlItem = new FastList<Integer>();
-		
-		for (L2Item item : loadData(itemData, _etcitemFiles))
-		{
-			list.add((L2EtcItem) item);
-			xmlItem.add(item.getItemId());
-		}
-		for (Item item : itemData.values())
-		{
-			if (!xmlItem.contains(item.id))
-				list.add(new L2EtcItem((L2EtcItemType) item.type, item.set));
-		}
-		return list;
-	}
-	
-	public List<L2Item> loadData(Map<Integer, ? extends Item> itemData, List<File> files)
-	{
-		List<L2Item> list = new FastList<L2Item>();
-		for (File f : files)
-		{
-			DocumentItem document = new DocumentItem(itemData, f);
-			document.parse();
-			list.addAll(document.getItemList());
-		}
-		return list;
-	}*/
+	/*
+	 * public List<L2Weapon> loadWeapons(Map<Integer, Item> weaponData) { List<L2Weapon> list = new FastList<L2Weapon>(); for (L2Item item : loadData(weaponData, _weaponFiles)) { list.add((L2Weapon) item); } return list; } public List<L2EtcItem> loadItems(Map<Integer, Item> itemData) {
+	 * List<L2EtcItem> list = new FastList<L2EtcItem>(); List<Integer> xmlItem = new FastList<Integer>(); for (L2Item item : loadData(itemData, _etcitemFiles)) { list.add((L2EtcItem) item); xmlItem.add(item.getItemId()); } for (Item item : itemData.values()) { if (!xmlItem.contains(item.id))
+	 * list.add(new L2EtcItem((L2EtcItemType) item.type, item.set)); } return list; } public List<L2Item> loadData(Map<Integer, ? extends Item> itemData, List<File> files) { List<L2Item> list = new FastList<L2Item>(); for (File f : files) { DocumentItem document = new DocumentItem(itemData, f);
+	 * document.parse(); list.addAll(document.getItemList()); } return list; }
+	 */
 	
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder

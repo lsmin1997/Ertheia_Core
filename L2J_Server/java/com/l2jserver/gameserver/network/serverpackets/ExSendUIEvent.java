@@ -19,12 +19,12 @@ import com.l2jserver.gameserver.model.L2Object;
 public class ExSendUIEvent extends L2GameServerPacket
 {
 	private static final String _S__FE_8E_EXSENDUIEVENT = "[S] FE:8E ExSendUIEvent";
-	private L2Object _player;
-	private boolean _isHide;
-	private boolean _isIncrease;
-	private int _startTime;
-	private int _endTime;
-	private String _text;
+	private final L2Object _player;
+	private final boolean _isHide;
+	private final boolean _isIncrease;
+	private final int _startTime;
+	private final int _endTime;
+	private final String _text;
 	
 	public ExSendUIEvent(L2Object player, boolean isHide, boolean isIncrease, int startTime, int endTime, String text)
 	{

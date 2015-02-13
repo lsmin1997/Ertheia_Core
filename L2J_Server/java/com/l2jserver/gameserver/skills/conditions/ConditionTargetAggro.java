@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionTargetAggro.
- *
  * @author mkizub
  */
 public class ConditionTargetAggro extends Condition
@@ -31,7 +30,6 @@ public class ConditionTargetAggro extends Condition
 	
 	/**
 	 * Instantiates a new condition target aggro.
-	 *
 	 * @param isAggro the is aggro
 	 */
 	public ConditionTargetAggro(boolean isAggro)
@@ -39,7 +37,8 @@ public class ConditionTargetAggro extends Condition
 		_isAggro = isAggro;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override

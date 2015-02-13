@@ -27,7 +27,6 @@ import java.util.regex.PatternSyntaxException;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 
-
 public class PetNameTable
 {
 	private static Logger _log = Logger.getLogger(PetNameTable.class.getName());
@@ -56,7 +55,9 @@ public class PetNameTable
 			for (int it : PetDataTable.getPetItemsByNpc(petNpcId))
 			{
 				if (!cond.isEmpty())
+				{
 					cond += ", ";
+				}
 				cond += it;
 			}
 			statement.setString(2, cond);
@@ -81,7 +82,9 @@ public class PetNameTable
 		boolean result = true;
 		
 		if (!isAlphaNumeric(name))
+		{
 			return result;
+		}
 		
 		Pattern pattern;
 		try

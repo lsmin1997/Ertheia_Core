@@ -17,11 +17,11 @@ package com.l2jserver.gameserver.network.serverpackets;
 public class Snoop extends L2GameServerPacket
 {
 	private static final String _S__D5_SNOOP = "[S] db Snoop";
-	private int _convoId;
-	private String _name;
-	private int _type;
-	private String _speaker;
-	private String _msg;
+	private final int _convoId;
+	private final String _name;
+	private final int _type;
+	private final String _speaker;
+	private final String _msg;
 	
 	public Snoop(int id, String name, int type, String speaker, String msg)
 	{
@@ -32,7 +32,8 @@ public class Snoop extends L2GameServerPacket
 		_msg = msg;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -42,14 +43,15 @@ public class Snoop extends L2GameServerPacket
 		
 		writeD(_convoId);
 		writeS(_name);
-		writeD(0x00); //??
+		writeD(0x00); // ??
 		writeD(_type);
 		writeS(_speaker);
 		writeS(_msg);
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

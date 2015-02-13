@@ -117,7 +117,7 @@ public final class L2TrainerHealersInstance extends L2TrainerInstance
 					}
 				}
 				
-				//Adena gets reduced once.
+				// Adena gets reduced once.
 				if (hasSkills)
 				{
 					player.reduceAdena("Cleanse", Config.FEE_DELETE_TRANSFER_SKILLS, this, true);
@@ -125,7 +125,7 @@ public final class L2TrainerHealersInstance extends L2TrainerInstance
 			}
 			else
 			{
-				//Come back when you have used all transfer skill items for this class.
+				// Come back when you have used all transfer skill items for this class.
 				html.setFile(player.getHtmlPrefix(), "data/html/trainer/skilltransfer/cleanse-no_skills.htm");
 				player.sendPacket(html);
 			}

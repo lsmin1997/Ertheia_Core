@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author -Nemesiss-
- * 
  */
 public class EffectRemoveTarget extends L2Effect
 {
@@ -32,7 +31,6 @@ public class EffectRemoveTarget extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +40,6 @@ public class EffectRemoveTarget extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -56,7 +53,6 @@ public class EffectRemoveTarget extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -66,7 +62,6 @@ public class EffectRemoveTarget extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

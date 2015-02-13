@@ -28,7 +28,6 @@ public class ConditionTargetActiveSkillId extends Condition
 	
 	/**
 	 * Instantiates a new condition target active skill id.
-	 *
 	 * @param skillId the skill id
 	 */
 	public ConditionTargetActiveSkillId(int skillId)
@@ -39,7 +38,6 @@ public class ConditionTargetActiveSkillId extends Condition
 	
 	/**
 	 * Instantiates a new condition target active skill id.
-	 *
 	 * @param skillId the skill id
 	 * @param skillLevel the skill level
 	 */
@@ -49,7 +47,8 @@ public class ConditionTargetActiveSkillId extends Condition
 		_skillLevel = skillLevel;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
@@ -61,8 +60,10 @@ public class ConditionTargetActiveSkillId extends Condition
 			{
 				if (sk.getId() == _skillId)
 				{
-					if (_skillLevel == -1 || _skillLevel <= sk.getLevel())
+					if ((_skillLevel == -1) || (_skillLevel <= sk.getLevel()))
+					{
 						return true;
+					}
 				}
 			}
 		}

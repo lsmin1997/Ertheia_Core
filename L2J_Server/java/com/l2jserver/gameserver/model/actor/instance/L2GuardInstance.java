@@ -34,11 +34,9 @@ import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.util.Rnd;
 
-
 /**
- * This class manages all Guards in the world.
- * It inherits all methods from L2Attackable and adds some more such as tracking PK and aggressive L2MonsterInstance.<BR><BR>
- *
+ * This class manages all Guards in the world. It inherits all methods from L2Attackable and adds some more such as tracking PK and aggressive L2MonsterInstance.<BR>
+ * <BR>
  * @version $Revision: 1.11.2.1.2.7 $ $Date: 2005/04/06 16:13:40 $
  */
 public final class L2GuardInstance extends L2Attackable
@@ -49,21 +47,24 @@ public final class L2GuardInstance extends L2Attackable
 	
 	public class ReturnTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
-			if(getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
+			if (getAI().getIntention() == CtrlIntention.AI_INTENTION_IDLE)
+			{
 				returnHome();
+			}
 		}
 	}
 	
 	/**
-	 * Constructor of L2GuardInstance (use L2Character and L2NpcInstance constructor).<BR><BR>
-	 *
-	 * <B><U> Actions</U> :</B><BR><BR>
-	 * <li>Call the L2Character constructor to set the _template of the L2GuardInstance (copy skills from template to object and link _calculators to NPC_STD_CALCULATOR) </li>
-	 * <li>Set the name of the L2GuardInstance</li>
-	 * <li>Create a RandomAnimation Task that will be launched after the calculated delay if the server allow it </li><BR><BR>
-	 *
+	 * Constructor of L2GuardInstance (use L2Character and L2NpcInstance constructor).<BR>
+	 * <BR>
+	 * <B><U> Actions</U> :</B><BR>
+	 * <BR>
+	 * <li>Call the L2Character constructor to set the _template of the L2GuardInstance (copy skills from template to object and link _calculators to NPC_STD_CALCULATOR)</li> <li>Set the name of the L2GuardInstance</li> <li>Create a RandomAnimation Task that will be launched after the calculated
+	 * delay if the server allow it</li><BR>
+	 * <BR>
 	 * @param objectId Identifier of the object to initialized
 	 * @param L2NpcTemplate Template to apply to the NPC
 	 */
@@ -72,13 +73,13 @@ public final class L2GuardInstance extends L2Attackable
 		super(objectId, template);
 		setInstanceType(InstanceType.L2GuardInstance);
 		
-		ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new ReturnTask(),RETURN_INTERVAL,RETURN_INTERVAL+Rnd.nextInt(60000));
+		ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new ReturnTask(), RETURN_INTERVAL, RETURN_INTERVAL + Rnd.nextInt(60000));
 	}
 	
 	@Override
 	public final GuardKnownList getKnownList()
 	{
-		return (GuardKnownList)super.getKnownList();
+		return (GuardKnownList) super.getKnownList();
 	}
 	
 	@Override
@@ -88,7 +89,8 @@ public final class L2GuardInstance extends L2Attackable
 	}
 	
 	/**
-	 * Return True if hte attacker is a L2MonsterInstance.<BR><BR>
+	 * Return True if hte attacker is a L2MonsterInstance.<BR>
+	 * <BR>
 	 */
 	@Override
 	public boolean isAutoAttackable(L2Character attacker)
@@ -96,9 +98,9 @@ public final class L2GuardInstance extends L2Attackable
 		return attacker instanceof L2MonsterInstance;
 	}
 	
-	
 	/**
-	 * Notify the L2GuardInstance to return to its home location (AI_INTENTION_MOVE_TO) and clear its _aggroList.<BR><BR>
+	 * Notify the L2GuardInstance to return to its home location (AI_INTENTION_MOVE_TO) and clear its _aggroList.<BR>
+	 * <BR>
 	 */
 	@Override
 	public void returnHome()
@@ -112,7 +114,8 @@ public final class L2GuardInstance extends L2Attackable
 	}
 	
 	/**
-	 * Set the home location of its L2GuardInstance.<BR><BR>
+	 * Set the home location of its L2GuardInstance.<BR>
+	 * <BR>
 	 */
 	@Override
 	public void onSpawn()
@@ -121,22 +124,22 @@ public final class L2GuardInstance extends L2Attackable
 		super.onSpawn();
 		
 		// check the region where this mob is, do not activate the AI if region is inactive.
-		L2WorldRegion region = L2World.getInstance().getRegion(getX(),getY());
-		if ((region !=null) && (!region.isActive()))
+		L2WorldRegion region = L2World.getInstance().getRegion(getX(), getY());
+		if ((region != null) && (!region.isActive()))
+		{
 			((L2AttackableAI) getAI()).stopAITask();
+		}
 	}
 	
-	
 	/**
-	 * Return the pathfile of the selected HTML file in function of the L2GuardInstance Identifier and of the page number.<BR><BR>
-	 *
-	 * <B><U> Format of the pathfile </U> :</B><BR><BR>
-	 * <li> if page number = 0 : <B>data/html/guard/12006.htm</B> (npcId-page number)</li>
-	 * <li> if page number > 0 : <B>data/html/guard/12006-1.htm</B> (npcId-page number)</li><BR><BR>
-	 *
+	 * Return the pathfile of the selected HTML file in function of the L2GuardInstance Identifier and of the page number.<BR>
+	 * <BR>
+	 * <B><U> Format of the pathfile </U> :</B><BR>
+	 * <BR>
+	 * <li>if page number = 0 : <B>data/html/guard/12006.htm</B> (npcId-page number)</li> <li>if page number > 0 : <B>data/html/guard/12006-1.htm</B> (npcId-page number)</li><BR>
+	 * <BR>
 	 * @param npcId The Identifier of the L2NpcInstance whose text must be display
 	 * @param val The number of the page to display
-	 *
 	 */
 	@Override
 	public String getHtmlPath(int npcId, int val)
@@ -153,35 +156,40 @@ public final class L2GuardInstance extends L2Attackable
 		return "data/html/guard/" + pom + ".htm";
 	}
 	
-	
 	/**
-	 * Manage actions when a player click on the L2GuardInstance.<BR><BR>
-	 *
-	 * <B><U> Actions on first click on the L2GuardInstance (Select it)</U> :</B><BR><BR>
-	 * <li>Set the L2GuardInstance as target of the L2PcInstance player (if necessary)</li>
-	 * <li>Send a Server->Client packet MyTargetSelected to the L2PcInstance player (display the select window)</li>
-	 * <li>Set the L2PcInstance Intention to AI_INTENTION_IDLE </li>
-	 * <li>Send a Server->Client packet ValidateLocation to correct the L2GuardInstance position and heading on the client </li><BR><BR>
-	 *
-	 * <B><U> Actions on second click on the L2GuardInstance (Attack it/Interact with it)</U> :</B><BR><BR>
-	 * <li>If L2PcInstance is in the _aggroList of the L2GuardInstance, set the L2PcInstance Intention to AI_INTENTION_ATTACK</li>
-	 * <li>If L2PcInstance is NOT in the _aggroList of the L2GuardInstance, set the L2PcInstance Intention to AI_INTENTION_INTERACT (after a distance verification) and show message</li><BR><BR>
-	 *
-	 * <B><U> Example of use </U> :</B><BR><BR>
-	 * <li> Client packet : Action, AttackRequest</li><BR><BR>
-	 *
+	 * Manage actions when a player click on the L2GuardInstance.<BR>
+	 * <BR>
+	 * <B><U> Actions on first click on the L2GuardInstance (Select it)</U> :</B><BR>
+	 * <BR>
+	 * <li>Set the L2GuardInstance as target of the L2PcInstance player (if necessary)</li> <li>Send a Server->Client packet MyTargetSelected to the L2PcInstance player (display the select window)</li> <li>Set the L2PcInstance Intention to AI_INTENTION_IDLE</li> <li>Send a Server->Client packet
+	 * ValidateLocation to correct the L2GuardInstance position and heading on the client</li><BR>
+	 * <BR>
+	 * <B><U> Actions on second click on the L2GuardInstance (Attack it/Interact with it)</U> :</B><BR>
+	 * <BR>
+	 * <li>If L2PcInstance is in the _aggroList of the L2GuardInstance, set the L2PcInstance Intention to AI_INTENTION_ATTACK</li> <li>If L2PcInstance is NOT in the _aggroList of the L2GuardInstance, set the L2PcInstance Intention to AI_INTENTION_INTERACT (after a distance verification) and show
+	 * message</li><BR>
+	 * <BR>
+	 * <B><U> Example of use </U> :</B><BR>
+	 * <BR>
+	 * <li>Client packet : Action, AttackRequest</li><BR>
+	 * <BR>
 	 * @param player The L2PcInstance that start an action on the L2GuardInstance
-	 *
 	 */
 	@Override
 	public void onAction(L2PcInstance player, boolean interact)
 	{
-		if (!canTarget(player)) return;
+		if (!canTarget(player))
+		{
+			return;
+		}
 		
 		// Check if the L2PcInstance already target the L2GuardInstance
 		if (getObjectId() != player.getTargetId())
 		{
-			if (Config.DEBUG) _log.fine(player.getObjectId()+": Targetted guard "+getObjectId());
+			if (Config.DEBUG)
+			{
+				_log.fine(player.getObjectId() + ": Targetted guard " + getObjectId());
+			}
 			
 			// Set the target of the L2PcInstance player
 			player.setTarget(this);
@@ -199,7 +207,10 @@ public final class L2GuardInstance extends L2Attackable
 			// Check if the L2PcInstance is in the _aggroList of the L2GuardInstance
 			if (containsTarget(player))
 			{
-				if (Config.DEBUG) _log.fine(player.getObjectId()+": Attacked guard "+getObjectId());
+				if (Config.DEBUG)
+				{
+					_log.fine(player.getObjectId() + ": Attacked guard " + getObjectId());
+				}
 				
 				// Set the L2PcInstance Intention to AI_INTENTION_ATTACK
 				player.getAI().setIntention(CtrlIntention.AI_INTENTION_ATTACK, this);
@@ -221,13 +232,19 @@ public final class L2GuardInstance extends L2Attackable
 					
 					// Open a chat window on client with the text of the L2GuardInstance
 					Quest[] qlsa = getTemplate().getEventQuests(Quest.QuestEventType.QUEST_START);
-					if ( (qlsa != null) && qlsa.length > 0)
+					if ((qlsa != null) && (qlsa.length > 0))
+					{
 						player.setLastQuestNpcObject(getObjectId());
+					}
 					Quest[] qlst = getTemplate().getEventQuests(Quest.QuestEventType.ON_FIRST_TALK);
-					if ( (qlst != null) && qlst.length == 1)
+					if ((qlst != null) && (qlst.length == 1))
+					{
 						qlst[0].notifyFirstTalk(this, player);
+					}
 					else
+					{
 						showChatWindow(player, 0);
+					}
 				}
 			}
 		}

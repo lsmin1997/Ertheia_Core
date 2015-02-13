@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.4 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestJoinPledge extends L2GameClientPacket
@@ -45,11 +44,15 @@ public final class RequestJoinPledge extends L2GameClientPacket
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		final L2Clan clan = activeChar.getClan();
 		if (clan == null)
+		{
 			return;
+		}
 		
 		final L2PcInstance target = L2World.getInstance().getPlayer(_target);
 		if (target == null)
@@ -59,10 +62,14 @@ public final class RequestJoinPledge extends L2GameClientPacket
 		}
 		
 		if (!clan.checkClanJoinCondition(activeChar, target, _pledgeType))
+		{
 			return;
+		}
 		
 		if (!activeChar.getRequest().setRequest(target, this))
+		{
 			return;
+		}
 		
 		final String pledgeName = activeChar.getClan().getName();
 		final String subPledgeName = (activeChar.getClan().getSubPledge(_pledgeType) != null ? activeChar.getClan().getSubPledge(_pledgeType).getName() : null);
@@ -74,7 +81,8 @@ public final class RequestJoinPledge extends L2GameClientPacket
 		return _pledgeType;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

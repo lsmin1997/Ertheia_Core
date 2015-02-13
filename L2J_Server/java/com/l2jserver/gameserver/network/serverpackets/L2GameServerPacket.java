@@ -23,8 +23,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.network.L2GameClient;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 {
@@ -33,7 +32,6 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 	protected boolean _invisible = false;
 	
 	/**
-	 * 
 	 * @return True if packet originated from invisible character.
 	 */
 	public boolean isInvisible()
@@ -42,8 +40,7 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 	}
 	
 	/**
-	 * Set "invisible" boolean flag in the packet.
-	 * Packets from invisible characters will not be broadcasted to players.
+	 * Set "invisible" boolean flag in the packet. Packets from invisible characters will not be broadcasted to players.
 	 * @param b
 	 */
 	public void setInvisible(boolean b)
@@ -59,7 +56,7 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 	{
 		try
 		{
-			//_log.info(this.getType());
+			// _log.info(this.getType());
 			writeImpl();
 		}
 		catch (Exception e)

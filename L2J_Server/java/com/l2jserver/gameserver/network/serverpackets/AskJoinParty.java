@@ -14,29 +14,21 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-
-
 /**
- *
  * sample
  * <p>
- * 4b
- * c1 b2 e0 4a
- * 00 00 00 00
+ * 4b c1 b2 e0 4a 00 00 00 00
  * <p>
- *
- * format
- * cdd
- *
+ * format cdd
  * @version $Revision: 1.1.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public class AskJoinParty extends L2GameServerPacket
 {
 	private static final String _S__4B_ASKJOINPARTY_0X4B = "[S] 39 AskJoinParty";
-	//private static Logger _log = Logger.getLogger(AskJoinParty.class.getName());
+	// private static Logger _log = Logger.getLogger(AskJoinParty.class.getName());
 	
-	private String _requestorName;
-	private int _itemDistribution;
+	private final String _requestorName;
+	private final int _itemDistribution;
 	
 	/**
 	 * @param int objectId of the target
@@ -56,7 +48,8 @@ public class AskJoinParty extends L2GameServerPacket
 		writeD(_itemDistribution);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

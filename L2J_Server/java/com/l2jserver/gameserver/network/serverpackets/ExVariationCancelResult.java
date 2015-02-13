@@ -16,13 +16,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (ch)ddd
- *
  */
 public class ExVariationCancelResult extends L2GameServerPacket
 {
 	private static final String _S__FE_57_EXVARIATIONCANCELRESULT = "[S] FE:58 ExVariationCancelResult";
 	
-	private int _result;
+	private final int _result;
 	
 	public ExVariationCancelResult(int result)
 	{

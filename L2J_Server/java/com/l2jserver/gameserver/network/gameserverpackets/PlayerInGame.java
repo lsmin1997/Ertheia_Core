@@ -22,26 +22,28 @@ import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class PlayerInGame extends BaseSendablePacket
 {
-	public PlayerInGame (String player)
+	public PlayerInGame(String player)
 	{
 		writeC(0x02);
 		writeH(1);
 		writeS(player);
 	}
 	
-	public PlayerInGame (FastList<String> players)
+	public PlayerInGame(FastList<String> players)
 	{
 		writeC(0x02);
 		writeH(players.size());
-		for(String pc : players)
+		for (String pc : players)
+		{
 			writeS(pc);
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

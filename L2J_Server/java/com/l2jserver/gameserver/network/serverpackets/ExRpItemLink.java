@@ -17,8 +17,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public final class ExRpItemLink extends L2GameServerPacket
 {
@@ -57,9 +56,13 @@ public final class ExRpItemLink extends L2GameServerPacket
 		writeH(_item.getEnchantLevel());
 		writeH(_item.getCustomType2());
 		if (_item.isAugmented())
+		{
 			writeD(_item.getAugmentation().getAugmentationId());
+		}
 		else
+		{
 			writeD(0x00);
+		}
 		writeD(_item.getMana());
 		writeD(_item.isTimeLimitedItem() ? (int) (_item.getRemainingTime() / 1000) : -9999);
 		writeH(_item.getAttackElementType());

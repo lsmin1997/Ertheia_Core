@@ -18,16 +18,15 @@ import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * @author mrTJO
- *
  */
 public class PlayerTracert extends BaseRecievePacket
 {
-	private String _account;
-	private String _pcIp;
-	private String _hop1;
-	private String _hop2;
-	private String _hop3;
-	private String _hop4;
+	private final String _account;
+	private final String _pcIp;
+	private final String _hop1;
+	private final String _hop2;
+	private final String _hop3;
+	private final String _hop4;
 	
 	/**
 	 * @param decrypt

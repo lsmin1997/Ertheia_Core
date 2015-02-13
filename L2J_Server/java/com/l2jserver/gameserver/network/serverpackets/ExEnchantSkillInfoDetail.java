@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.model.L2EnchantSkillLearn;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * 
  * @author KenM
  */
 public class ExEnchantSkillInfoDetail extends L2GameServerPacket
@@ -54,20 +53,30 @@ public class ExEnchantSkillInfoDetail extends L2GameServerPacket
 				esd = enchantLearn.getEnchantSkillDetail(skilllvl);
 			}
 			else
+			{
 				esd = enchantLearn.getFirstRouteGroup().getEnchantGroupDetails().get(0);
+			}
 		}
 		
 		if (esd == null)
-			throw new IllegalArgumentException("Skill "+skillid + " dont have enchant data for level "+skilllvl);
+		{
+			throw new IllegalArgumentException("Skill " + skillid + " dont have enchant data for level " + skilllvl);
+		}
 		
 		if (type == 0)
+		{
 			multi = EnchantGroupsTable.NORMAL_ENCHANT_COST_MULTIPLIER;
+		}
 		else if (type == 1)
+		{
 			multi = EnchantGroupsTable.SAFE_ENCHANT_COST_MULTIPLIER;
+		}
 		_chance = esd.getRate(ply);
 		_sp = esd.getSpCost();
 		if (type == TYPE_UNTRAIN_ENCHANT)
+		{
 			_sp = (int) (0.8 * _sp);
+		}
 		_adenacount = esd.getAdenaCost() * multi;
 		_type = type;
 		_skillid = skillid;
@@ -77,7 +86,7 @@ public class ExEnchantSkillInfoDetail extends L2GameServerPacket
 		{
 			case TYPE_NORMAL_ENCHANT:
 				bookId = EnchantGroupsTable.NORMAL_ENCHANT_BOOK;
-				reqCount = ((_skilllvl % 100 > 1) ? 0 : 1) ;
+				reqCount = (((_skilllvl % 100) > 1) ? 0 : 1);
 				break;
 			case TYPE_SAFE_ENCHANT:
 				bookId = EnchantGroupsTable.SAFE_ENCHANT_BOOK;
@@ -95,8 +104,10 @@ public class ExEnchantSkillInfoDetail extends L2GameServerPacket
 				return;
 		}
 		
-		if (type != TYPE_SAFE_ENCHANT && !Config.ES_SP_BOOK_NEEDED)
+		if ((type != TYPE_SAFE_ENCHANT) && !Config.ES_SP_BOOK_NEEDED)
+		{
 			reqCount = 0;
+		}
 	}
 	
 	/**

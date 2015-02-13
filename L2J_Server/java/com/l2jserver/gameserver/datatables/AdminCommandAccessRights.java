@@ -39,8 +39,8 @@ public class AdminCommandAccessRights
 	private Map<String, L2AdminCommandAccessRight> _adminCommandAccessRights;
 	
 	/**
-	 * Returns the one and only instance of this class<br><br>
-	 * 
+	 * Returns the one and only instance of this class<br>
+	 * <br>
 	 * @return AdminCommandAccessRights: the one and only instance of this class<br>
 	 */
 	public static AdminCommandAccessRights getInstance()
@@ -98,7 +98,9 @@ public class AdminCommandAccessRights
 	public boolean hasAccess(String adminCommand, L2AccessLevel accessLevel)
 	{
 		if (accessLevel.getLevel() == AccessLevels._masterAccessLevelNum)
+		{
 			return true;
+		}
 		
 		L2AdminCommandAccessRight acar = _adminCommandAccessRights.get(adminCommand);
 		

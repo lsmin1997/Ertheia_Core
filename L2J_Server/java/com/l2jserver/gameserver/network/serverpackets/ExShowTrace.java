@@ -21,8 +21,7 @@ import javolution.util.FastList;
 import com.l2jserver.gameserver.model.L2Object;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public final class ExShowTrace extends L2GameServerPacket
 {

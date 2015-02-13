@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import com.l2jserver.util.lib.Log;
 
-
 public class GMAudit
 {
 	static
@@ -50,7 +49,7 @@ public class GMAudit
 		}
 		catch (IOException e)
 		{
-			_log.log(Level.SEVERE, "GMAudit for GM " + gmName +" could not be saved: ", e);
+			_log.log(Level.SEVERE, "GMAudit for GM " + gmName + " could not be saved: ", e);
 		}
 		finally
 		{

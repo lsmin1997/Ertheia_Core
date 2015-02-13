@@ -32,11 +32,8 @@ import com.l2jserver.gameserver.pathfinding.AbstractNodeLoc;
 import com.l2jserver.gameserver.pathfinding.PathFinding;
 import com.l2jserver.util.StringUtil;
 
-
 /**
- *
- * @author Sami, DS
- * Credits to Diamond
+ * @author Sami, DS Credits to Diamond
  */
 public class CellPathFinding extends PathFinding
 {
@@ -50,7 +47,6 @@ public class CellPathFinding extends PathFinding
 	private long _postFilterElapsed = 0;
 	
 	private FastList<L2ItemInstance> _debugItems = null;
-	
 	
 	public static CellPathFinding getInstance()
 	{
@@ -72,7 +68,9 @@ public class CellPathFinding extends PathFinding
 				buf = array[i];
 				args = buf.split("x");
 				if (args.length != 2)
+				{
 					throw new Exception("Invalid buffer definition: " + buf);
+				}
 				
 				_allBuffers[i] = new BufferInfo(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 			}
@@ -102,29 +100,39 @@ public class CellPathFinding extends PathFinding
 		int gx = (x - L2World.MAP_MIN_X) >> 4;
 		int gy = (y - L2World.MAP_MIN_Y) >> 4;
 		if (!GeoData.getInstance().hasGeo(x, y))
+		{
 			return null;
+		}
 		short gz = GeoData.getInstance().getHeight(x, y, z);
 		int gtx = (tx - L2World.MAP_MIN_X) >> 4;
 		int gty = (ty - L2World.MAP_MIN_Y) >> 4;
 		if (!GeoData.getInstance().hasGeo(tx, ty))
+		{
 			return null;
+		}
 		short gtz = GeoData.getInstance().getHeight(tx, ty, tz);
-		CellNodeBuffer buffer = alloc(64 + 2 * Math.max(Math.abs(gx - gtx), Math.abs(gy - gty)), playable);
+		CellNodeBuffer buffer = alloc(64 + (2 * Math.max(Math.abs(gx - gtx), Math.abs(gy - gty))), playable);
 		if (buffer == null)
+		{
 			return null;
+		}
 		
 		boolean debug = playable && Config.DEBUG_PATH;
 		
 		if (debug)
 		{
 			if (_debugItems == null)
+			{
 				_debugItems = new FastList<L2ItemInstance>();
+			}
 			else
 			{
 				for (L2ItemInstance item : _debugItems)
 				{
 					if (item == null)
+					{
 						continue;
+					}
 					item.decayMe();
 				}
 				
@@ -141,11 +149,15 @@ public class CellPathFinding extends PathFinding
 			{
 				for (CellNode n : buffer.debugPath())
 				{
-					if (n.getCost() < 0) // calculated path
+					if (n.getCost() < 0)
+					{
 						dropDebugItem(1831, (int) (-n.getCost() * 10), n.getLoc());
+					}
 					else
+					{
 						// known nodes
 						dropDebugItem(57, (int) (n.getCost() * 10), n.getLoc());
+					}
 				}
 			}
 			
@@ -167,7 +179,7 @@ public class CellPathFinding extends PathFinding
 			buffer.free();
 		}
 		
-		if (path.size() < 3 || Config.MAX_POSTFILTER_PASSES <= 0)
+		if ((path.size() < 3) || (Config.MAX_POSTFILTER_PASSES <= 0))
 		{
 			_findSuccess++;
 			return path;
@@ -176,7 +188,9 @@ public class CellPathFinding extends PathFinding
 		long timeStamp = System.currentTimeMillis();
 		_postFilterUses++;
 		if (playable)
+		{
 			_postFilterPlayableUses++;
+		}
 		
 		int currentX, currentY, currentZ;
 		ListIterator<AbstractNodeLoc> middlePoint, endPoint;
@@ -205,7 +219,9 @@ public class CellPathFinding extends PathFinding
 					middlePoint.remove();
 					remove = true;
 					if (debug)
+					{
 						dropDebugItem(735, 1, locMiddle);
+					}
 				}
 				else
 				{
@@ -216,7 +232,7 @@ public class CellPathFinding extends PathFinding
 			}
 		}
 		// only one postfilter pass for AI
-		while (playable && remove && path.size() > 2 && pass < Config.MAX_POSTFILTER_PASSES);
+		while (playable && remove && (path.size() > 2) && (pass < Config.MAX_POSTFILTER_PASSES));
 		
 		if (debug)
 		{
@@ -242,7 +258,7 @@ public class CellPathFinding extends PathFinding
 		
 		while (node.getParent() != null)
 		{
-			if (!Config.ADVANCED_DIAGONAL_STRATEGY && node.getParent().getParent() != null)
+			if (!Config.ADVANCED_DIAGONAL_STRATEGY && (node.getParent().getParent() != null))
 			{
 				int tmpX = node.getLoc().getNodeX() - node.getParent().getParent().getLoc().getNodeX();
 				int tmpY = node.getLoc().getNodeY() - node.getParent().getParent().getLoc().getNodeY();
@@ -264,7 +280,7 @@ public class CellPathFinding extends PathFinding
 			}
 			
 			// only add a new route point if moving direction changes
-			if (directionX != previousDirectionX || directionY != previousDirectionY)
+			if ((directionX != previousDirectionX) || (directionY != previousDirectionY))
 			{
 				previousDirectionX = directionX;
 				previousDirectionY = directionY;
@@ -292,14 +308,18 @@ public class CellPathFinding extends PathFinding
 					{
 						i.uses++;
 						if (playable)
+						{
 							i.playableUses++;
+						}
 						i.elapsed += buf.getElapsedTime();
 						current = buf;
 						break;
 					}
 				}
 				if (current != null)
+				{
 					break;
+				}
 				
 				// not found, allocate temporary buffer
 				current = new CellNodeBuffer(i.mapSize);
@@ -309,15 +329,19 @@ public class CellPathFinding extends PathFinding
 					i.bufs.add(current);
 					i.uses++;
 					if (playable)
+					{
 						i.playableUses++;
+					}
 					break;
 				}
 				else
 				{
 					i.overflows++;
 					if (playable)
+					{
 						i.playableOverflows++;
-					//System.err.println("Overflow, size requested: " + size + " playable:"+playable);
+						// System.err.println("Overflow, size requested: " + size + " playable:"+playable);
+					}
 				}
 			}
 		}
@@ -355,16 +379,13 @@ public class CellPathFinding extends PathFinding
 		public String toString()
 		{
 			final StringBuilder stat = new StringBuilder(100);
-			StringUtil.append(stat,
-					String.valueOf(mapSize), "x", String.valueOf(mapSize),
-					" num:", String.valueOf(bufs.size()), "/" ,String.valueOf(count),
-					" uses:", String.valueOf(uses), "/", String.valueOf(playableUses));
+			StringUtil.append(stat, String.valueOf(mapSize), "x", String.valueOf(mapSize), " num:", String.valueOf(bufs.size()), "/", String.valueOf(count), " uses:", String.valueOf(uses), "/", String.valueOf(playableUses));
 			if (uses > 0)
-				StringUtil.append(stat, " total/avg(ms):",
-						String.valueOf(elapsed), "/", String.format("%1.2f", (double)elapsed/uses));
+			{
+				StringUtil.append(stat, " total/avg(ms):", String.valueOf(elapsed), "/", String.format("%1.2f", (double) elapsed / uses));
+			}
 			
-			StringUtil.append(stat, " ovf:", String.valueOf(overflows), "/",
-					String.valueOf(playableOverflows));
+			StringUtil.append(stat, " ovf:", String.valueOf(overflows), "/", String.valueOf(playableOverflows));
 			
 			return stat.toString();
 		}
@@ -375,20 +396,17 @@ public class CellPathFinding extends PathFinding
 	{
 		final String[] result = new String[_allBuffers.length + 1];
 		for (int i = 0; i < _allBuffers.length; i++)
+		{
 			result[i] = _allBuffers[i].toString();
+		}
 		
 		final StringBuilder stat = new StringBuilder(100);
-		StringUtil.append(stat,
-				"LOS postfilter uses:", String.valueOf(_postFilterUses),
-				"/", String.valueOf(_postFilterPlayableUses));
+		StringUtil.append(stat, "LOS postfilter uses:", String.valueOf(_postFilterUses), "/", String.valueOf(_postFilterPlayableUses));
 		if (_postFilterUses > 0)
-			StringUtil.append(stat, " total/avg(ms):",
-					String.valueOf(_postFilterElapsed), "/",
-					String.format("%1.2f", (double)_postFilterElapsed/_postFilterUses),
-					" passes total/avg:", String.valueOf(_postFilterPasses), "/",
-					String.format("%1.1f", (double)_postFilterPasses/_postFilterUses),"\r\n");
-		StringUtil.append(stat, "Pathfind success/fail:", String.valueOf(_findSuccess),
-				"/", String.valueOf(_findFails));
+		{
+			StringUtil.append(stat, " total/avg(ms):", String.valueOf(_postFilterElapsed), "/", String.format("%1.2f", (double) _postFilterElapsed / _postFilterUses), " passes total/avg:", String.valueOf(_postFilterPasses), "/", String.format("%1.1f", (double) _postFilterPasses / _postFilterUses), "\r\n");
+		}
+		StringUtil.append(stat, "Pathfind success/fail:", String.valueOf(_findSuccess), "/", String.valueOf(_findFails));
 		result[result.length - 1] = stat.toString();
 		
 		return result;

@@ -22,14 +22,13 @@ import com.l2jserver.Config;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.1.2.1.2.5 $ $Date: 2005/03/27 15:30:09 $
  */
 public class UserCommandHandler
 {
 	private static Logger _log = Logger.getLogger(UserCommandHandler.class.getName());
 	
-	private TIntObjectHashMap<IUserCommandHandler> _datatable;
+	private final TIntObjectHashMap<IUserCommandHandler> _datatable;
 	
 	public static UserCommandHandler getInstance()
 	{
@@ -44,18 +43,22 @@ public class UserCommandHandler
 	public void registerUserCommandHandler(IUserCommandHandler handler)
 	{
 		int[] ids = handler.getUserCommandList();
-		for (int i = 0; i < ids.length; i++)
+		for (int id : ids)
 		{
 			if (Config.DEBUG)
-				_log.fine("Adding handler for user command " + ids[i]);
-			_datatable.put(ids[i], handler);
+			{
+				_log.fine("Adding handler for user command " + id);
+			}
+			_datatable.put(id, handler);
 		}
 	}
 	
 	public IUserCommandHandler getUserCommandHandler(int userCommand)
 	{
 		if (Config.DEBUG)
+		{
 			_log.fine("getting handler for user command: " + userCommand);
+		}
 		return _datatable.get(userCommand);
 	}
 	

@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 /**
  * format (ch) d
  * @author -Wooden-
- *
  */
 public final class RequestOustFromPartyRoom extends L2GameClientPacket
 {
@@ -44,20 +43,28 @@ public final class RequestOustFromPartyRoom extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		L2PcInstance member = L2World.getInstance().getPlayer(_charid);
 		if (member == null)
+		{
 			return;
+		}
 		
 		PartyMatchRoom _room = PartyMatchRoomList.getInstance().getPlayerRoom(member);
 		if (_room == null)
+		{
 			return;
+		}
 		
 		if (_room.getOwner() != activeChar)
+		{
 			return;
+		}
 		
-		if (activeChar.isInParty() && member.isInParty() && activeChar.getParty().getPartyLeaderOID() == member.getParty().getPartyLeaderOID())
+		if (activeChar.isInParty() && member.isInParty() && (activeChar.getParty().getPartyLeaderOID() == member.getParty().getPartyLeaderOID()))
 		{
 			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_DISMISS_PARTY_MEMBER));
 		}

@@ -18,15 +18,13 @@ import gnu.trove.TIntObjectHashMap;
 
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.1.4.4 $ $Date: 2005/04/03 15:55:06 $
  */
 public class SkillHandler
 {
-	private TIntObjectHashMap<ISkillHandler> _datatable;
+	private final TIntObjectHashMap<ISkillHandler> _datatable;
 	
 	public static SkillHandler getInstance()
 	{

@@ -32,9 +32,7 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * @author Kerberos
- * JIV update 24.8.10
- * 
+ * @author Kerberos JIV update 24.8.10
  */
 
 public class RaidBossPointsManager
@@ -43,12 +41,7 @@ public class RaidBossPointsManager
 	
 	private FastMap<Integer, Map<Integer, Integer>> _list;
 	
-	private final Comparator<Map.Entry<Integer, Integer>> _comparator = new Comparator<Map.Entry<Integer, Integer>>(){
-		public int compare(Map.Entry<Integer, Integer> entry, Map.Entry<Integer, Integer> entry1)
-		{
-			return entry.getValue().equals(entry1.getValue()) ? 0 : entry.getValue() < entry1.getValue() ? 1 : -1;
-		}
-	};
+	private final Comparator<Map.Entry<Integer, Integer>> _comparator = (entry, entry1) -> entry.getValue().equals(entry1.getValue()) ? 0 : entry.getValue() < entry1.getValue() ? 1 : -1;
 	
 	public static final RaidBossPointsManager getInstance()
 	{
@@ -69,7 +62,7 @@ public class RaidBossPointsManager
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT `charId`,`boss_id`,`points` FROM `character_raid_points`");
 			ResultSet rset = statement.executeQuery();
-			while(rset.next())
+			while (rset.next())
 			{
 				int charId = rset.getInt("charId");
 				int bossId = rset.getInt("boss_id");
@@ -84,7 +77,7 @@ public class RaidBossPointsManager
 			}
 			rset.close();
 			statement.close();
-			_log.info(getClass().getSimpleName()+": Loaded "+_list.size()+" Characters Raid Points.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + _list.size() + " Characters Raid Points.");
 		}
 		catch (SQLException e)
 		{
@@ -124,7 +117,7 @@ public class RaidBossPointsManager
 	{
 		int ownerId = player.getObjectId();
 		Map<Integer, Integer> tmpPoint = _list.get(ownerId);
-		if(tmpPoint == null)
+		if (tmpPoint == null)
 		{
 			tmpPoint = new FastMap<Integer, Integer>();
 			tmpPoint.put(bossId, points);
@@ -146,10 +139,12 @@ public class RaidBossPointsManager
 		tmpPoint = _list.get(ownerId);
 		int totalPoints = 0;
 		
-		if (tmpPoint == null || tmpPoint.isEmpty())
+		if ((tmpPoint == null) || tmpPoint.isEmpty())
+		{
 			return 0;
+		}
 		
-		for(int points : tmpPoint.values())
+		for (int points : tmpPoint.values())
 		{
 			totalPoints += points;
 		}
@@ -187,7 +182,9 @@ public class RaidBossPointsManager
 	{
 		Map<Integer, Integer> rank = getRankList();
 		if (rank.containsKey(playerObjId))
+		{
 			return rank.get(playerObjId);
+		}
 		return 0;
 	}
 	
@@ -196,10 +193,10 @@ public class RaidBossPointsManager
 		Map<Integer, Integer> tmpRanking = new FastMap<Integer, Integer>();
 		Map<Integer, Integer> tmpPoints = new FastMap<Integer, Integer>();
 		
-		for(int ownerId : _list.keySet())
+		for (int ownerId : _list.keySet())
 		{
 			int totalPoints = getPointsByOwnerId(ownerId);
-			if(totalPoints != 0)
+			if (totalPoints != 0)
 			{
 				tmpPoints.put(ownerId, totalPoints);
 			}
@@ -209,8 +206,10 @@ public class RaidBossPointsManager
 		Collections.sort(list, _comparator);
 		
 		int ranking = 1;
-		for(Map.Entry<Integer, Integer> entry : list)
+		for (Map.Entry<Integer, Integer> entry : list)
+		{
 			tmpRanking.put(entry.getKey(), ranking++);
+		}
 		
 		return tmpRanking;
 	}

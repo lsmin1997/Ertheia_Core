@@ -16,13 +16,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * @author JIV
- *
  */
 public class ExAskCoupleAction extends L2GameServerPacket
 {
 	private static final String _S__3D_SOCIALACTION = "[S] FE:BB ExAskCoupleAction";
-	private int _charObjId;
-	private int _actionId;
+	private final int _charObjId;
+	private final int _actionId;
 	
 	public ExAskCoupleAction(int charObjId, int social)
 	{

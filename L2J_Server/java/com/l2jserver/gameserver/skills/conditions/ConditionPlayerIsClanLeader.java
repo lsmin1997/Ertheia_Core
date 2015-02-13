@@ -26,7 +26,6 @@ public class ConditionPlayerIsClanLeader extends Condition
 	
 	/**
 	 * Instantiates a new condition player is clan leader.
-	 *
 	 * @param val the val
 	 */
 	public ConditionPlayerIsClanLeader(boolean val)
@@ -34,14 +33,17 @@ public class ConditionPlayerIsClanLeader extends Condition
 		_val = val;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
-		return (((L2PcInstance)env.player).isClanLeader() == _val);
+		}
+		return (((L2PcInstance) env.player).isClanLeader() == _val);
 	}
 }

@@ -18,30 +18,20 @@ import java.util.logging.Logger;
 
 import com.l2jserver.util.network.BaseRecievePacket;
 
-
 /**
- * Format: cccddb
- * c desired ID
- * c accept alternative ID
- * c reserve Host
- * s ExternalHostName
- * s InetranlHostName
- * d max players
- * d hexid size
- * b hexid
+ * Format: cccddb c desired ID c accept alternative ID c reserve Host s ExternalHostName s InetranlHostName d max players d hexid size b hexid
  * @author -Wooden-
- *
  */
 public class GameServerAuth extends BaseRecievePacket
 {
 	protected static Logger _log = Logger.getLogger(GameServerAuth.class.getName());
-	private byte[] _hexId;
-	private int _desiredId;
-	private boolean _hostReserved;
-	private boolean _acceptAlternativeId;
-	private int _maxPlayers;
-	private int _port;
-	private String[] _hosts;
+	private final byte[] _hexId;
+	private final int _desiredId;
+	private final boolean _hostReserved;
+	private final boolean _acceptAlternativeId;
+	private final int _maxPlayers;
+	private final int _port;
+	private final String[] _hosts;
 	
 	/**
 	 * @param decrypt
@@ -59,7 +49,9 @@ public class GameServerAuth extends BaseRecievePacket
 		size = 2 * readD();
 		_hosts = new String[size];
 		for (int i = 0; i < size; i++)
+		{
 			_hosts[i] = readS();
+		}
 	}
 	
 	/**

@@ -24,8 +24,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * A jail zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2JailZone extends L2ZoneType
 {
@@ -47,7 +46,9 @@ public class L2JailZone extends L2ZoneType
 				((L2PcInstance) character).sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ENTERED_COMBAT_ZONE));
 			}
 			if (Config.JAIL_DISABLE_TRANSACTION)
+			{
 				character.setInsideZone(L2Character.ZONE_NOSTORE, true);
+			}
 		}
 	}
 	
@@ -70,7 +71,9 @@ public class L2JailZone extends L2ZoneType
 				character.sendMessage("You cannot cheat your way out of here. You must wait until your jail time is over.");
 			}
 			if (Config.JAIL_DISABLE_TRANSACTION)
+			{
 				character.setInsideZone(L2Character.ZONE_NOSTORE, false);
+			}
 		}
 	}
 	
@@ -86,13 +89,14 @@ public class L2JailZone extends L2ZoneType
 	
 	static class BackToJail implements Runnable
 	{
-		private L2PcInstance _activeChar;
+		private final L2PcInstance _activeChar;
 		
 		BackToJail(L2Character character)
 		{
 			_activeChar = (L2PcInstance) character;
 		}
 		
+		@Override
 		public void run()
 		{
 			_activeChar.teleToLocation(-114356, -249645, -2984); // Jail

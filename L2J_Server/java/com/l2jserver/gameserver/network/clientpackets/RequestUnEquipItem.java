@@ -25,10 +25,8 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.templates.item.L2EtcItem;
 import com.l2jserver.gameserver.templates.item.L2Item;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.8.2.3.2.7 $ $Date: 2005/03/27 15:29:30 $
  */
 public class RequestUnEquipItem extends L2GameClientPacket
@@ -40,8 +38,7 @@ public class RequestUnEquipItem extends L2GameClientPacket
 	private int _slot;
 	
 	/**
-	 * packet type id 0x11
-	 * format:		cd
+	 * packet type id 0x11 format: cd
 	 * @param decrypt
 	 */
 	@Override
@@ -54,12 +51,16 @@ public class RequestUnEquipItem extends L2GameClientPacket
 	protected void runImpl()
 	{
 		if (Config.DEBUG)
+		{
 			_log.fine("request unequip slot " + _slot);
+		}
 		
 		L2PcInstance activeChar = getClient().getActiveChar();
 		
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		L2ItemInstance item = activeChar.getInventory().getPaperdollItemByL2ItemId(_slot);
 		if (item == null)
@@ -68,28 +69,29 @@ public class RequestUnEquipItem extends L2GameClientPacket
 			return;
 		}
 		// Prevent of unequiping a cursed weapon
-		if (_slot == L2Item.SLOT_LR_HAND && (activeChar.isCursedWeaponEquipped() || activeChar.isCombatFlagEquipped()))
+		if ((_slot == L2Item.SLOT_LR_HAND) && (activeChar.isCursedWeaponEquipped() || activeChar.isCombatFlagEquipped()))
 		{
 			// Message ?
 			return;
 		}
 		
 		// arrows and bolts
-		if (_slot == L2Item.SLOT_L_HAND && item.getItem() instanceof L2EtcItem)
+		if ((_slot == L2Item.SLOT_L_HAND) && (item.getItem() instanceof L2EtcItem))
 		{
 			// Message ?
 			return;
 		}
 		
 		// Prevent player from unequipping items in special conditions
-		if (activeChar.isStunned() || activeChar.isSleeping()
-				|| activeChar.isParalyzed() || activeChar.isAlikeDead())
+		if (activeChar.isStunned() || activeChar.isSleeping() || activeChar.isParalyzed() || activeChar.isAlikeDead())
 		{
 			activeChar.sendMessage("Your status does not allow you to do that.");
 			return;
 		}
 		if (activeChar.isCastingNow() || activeChar.isCastingSimultaneouslyNow())
+		{
 			return;
+		}
 		
 		if (!activeChar.getInventory().canManipulateWithItemId(item.getItemId()))
 		{
@@ -97,13 +99,12 @@ public class RequestUnEquipItem extends L2GameClientPacket
 			return;
 		}
 		
-		L2ItemInstance[] unequiped =
-			activeChar.getInventory().unEquipItemInBodySlotAndRecord(_slot);
+		L2ItemInstance[] unequiped = activeChar.getInventory().unEquipItemInBodySlotAndRecord(_slot);
 		
 		// show the update in the inventory
 		InventoryUpdate iu = new InventoryUpdate();
 		
-		for (L2ItemInstance itm: unequiped)
+		for (L2ItemInstance itm : unequiped)
 		{
 			activeChar.checkSShotsMatch(null, itm);
 			
@@ -136,7 +137,8 @@ public class RequestUnEquipItem extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

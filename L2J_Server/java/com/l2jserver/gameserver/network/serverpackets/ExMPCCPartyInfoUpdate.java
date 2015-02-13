@@ -17,21 +17,17 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.L2Party;
 
 /**
- *
- * @author  chris_00
- * 
- * ch Sddd
+ * @author chris_00 ch Sddd
  */
 public class ExMPCCPartyInfoUpdate extends L2GameServerPacket
 {
 	
 	private static final String _S__FE_5B_EXMPCCPARTYINFOUPDATE = "[S] FE:5B ExMPCCPartyInfoUpdate";
-	private L2Party _party;
-	private int _mode, _LeaderOID, _memberCount;
-	private String _name;
+	private final L2Party _party;
+	private final int _mode, _LeaderOID, _memberCount;
+	private final String _name;
 	
 	/**
-	 * 
 	 * @param party
 	 * @param mode 0 = Remove, 1 = Add
 	 */
@@ -55,7 +51,7 @@ public class ExMPCCPartyInfoUpdate extends L2GameServerPacket
 		writeS(_name);
 		writeD(_LeaderOID);
 		writeD(_memberCount);
-		writeD(_mode); //mode 0 = Remove Party, 1 = AddParty, maybe more...
+		writeD(_mode); // mode 0 = Remove Party, 1 = AddParty, maybe more...
 	}
 	
 	/**

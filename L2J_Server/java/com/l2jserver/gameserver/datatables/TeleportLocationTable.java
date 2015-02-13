@@ -28,7 +28,6 @@ import com.l2jserver.gameserver.model.L2TeleportLocation;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.2.2.3 $ $Date: 2005/03/27 15:29:18 $
  */
 public class TeleportLocationTable
@@ -114,7 +113,9 @@ public class TeleportLocationTable
 				statement.close();
 				_cTeleCount = _teleports.size() - _cTeleCount;
 				if (_cTeleCount > 0)
+				{
 					_log.info("TeleportLocationTable: Loaded " + _cTeleCount + " Custom Teleport Location Templates.");
+				}
 			}
 			catch (Exception e)
 			{

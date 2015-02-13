@@ -30,7 +30,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 public class ForumsBBSManager extends BaseBBSManager
 {
 	private static Logger _log = Logger.getLogger(ForumsBBSManager.class.getName());
-	private List<Forum> _table;
+	private final List<Forum> _table;
 	private int _lastid = 1;
 	
 	/**
@@ -73,14 +73,18 @@ public class ForumsBBSManager extends BaseBBSManager
 	public void initRoot()
 	{
 		for (Forum f : _table)
+		{
 			f.vload();
+		}
 		_log.info("Loaded " + _table.size() + " forums. Last forum id used: " + _lastid);
 	}
 	
 	public void addForum(Forum ff)
 	{
 		if (ff == null)
+		{
 			return;
+		}
 		
 		_table.add(ff);
 		

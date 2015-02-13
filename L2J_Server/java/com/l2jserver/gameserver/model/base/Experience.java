@@ -32,7 +32,7 @@ public class Experience
 		11287L,
 		19423L,
 		31378L,
-		48229L, //level 10
+		48229L, // level 10
 		71201L,
 		101676L,
 		141192L,
@@ -42,7 +42,7 @@ public class Experience
 		426284L,
 		539995L,
 		675590L,
-		835854L, //level 20
+		835854L, // level 20
 		1023775L,
 		1242536L,
 		1495531L,
@@ -52,7 +52,7 @@ public class Experience
 		2925229L,
 		3407873L,
 		3949727L,
-		4555766L, //level 30
+		4555766L, // level 30
 		5231213L,
 		5981539L,
 		6812472L,
@@ -62,7 +62,7 @@ public class Experience
 		11066012L,
 		12395149L,
 		13844879L,
-		15422851L, //level 40
+		15422851L, // level 40
 		17137002L,
 		18995573L,
 		21007103L,
@@ -72,7 +72,7 @@ public class Experience
 		30764519L,
 		33679907L,
 		36806133L,
-		40153995L, //level 50
+		40153995L, // level 50
 		45524865L,
 		51262204L,
 		57383682L,
@@ -82,7 +82,7 @@ public class Experience
 		91162131L,
 		102265326L,
 		114038008L,
-		126509030L, //level 60
+		126509030L, // level 60
 		146307211L,
 		167243291L,
 		189363788L,
@@ -92,7 +92,7 @@ public class Experience
 		308441375L,
 		346825235L,
 		387197529L,
-		429632402L, //level 70
+		429632402L, // level 70
 		474205751L,
 		532692055L,
 		606319094L,
@@ -102,19 +102,21 @@ public class Experience
 		1151275834L,
 		1511275834L,
 		2099275834L,
-		4200000000L, //level 80
-		6300000000L, //level 81
-		8820000000L, //level 82
-		11844000000L, //level 83
-		15472800000L, //level 84
-		19827360000L, //level 85
-		25314105600L, //level 86
-		32211728640L  //level 87
+		4200000000L, // level 80
+		6300000000L, // level 81
+		8820000000L, // level 82
+		11844000000L, // level 83
+		15472800000L, // level 84
+		19827360000L, // level 85
+		25314105600L, // level 86
+		32211728640L
+	// level 87
 	};
 	
 	/**
 	 * This is the first UNREACHABLE level.<BR>
-	 *   ex: If you want a max at 85 & 100.00%, you have to put 86.<BR><BR>
+	 * ex: If you want a max at 85 & 100.00%, you have to put 86.<BR>
+	 * <BR>
 	 */
 	public final static byte MAX_LEVEL = 86;
 	public final static byte PET_MAX_LEVEL = 87;

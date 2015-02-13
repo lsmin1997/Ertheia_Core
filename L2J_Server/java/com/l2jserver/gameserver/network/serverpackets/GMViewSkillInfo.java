@@ -22,15 +22,17 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 public class GMViewSkillInfo extends L2GameServerPacket
 {
 	private static final String _S__91_GMViewSkillInfo = "[S] 97 GMViewSkillInfo";
-	private L2PcInstance _activeChar;
+	private final L2PcInstance _activeChar;
 	private L2Skill[] _skills;
 	
-	public GMViewSkillInfo (L2PcInstance cha)
+	public GMViewSkillInfo(L2PcInstance cha)
 	{
 		_activeChar = cha;
 		_skills = _activeChar.getAllSkills();
 		if (_skills.length == 0)
+		{
 			_skills = new L2Skill[0];
+		}
 	}
 	
 	@Override
@@ -42,9 +44,11 @@ public class GMViewSkillInfo extends L2GameServerPacket
 		
 		boolean isDisabled = false;
 		if (_activeChar.getClan() != null)
+		{
 			isDisabled = _activeChar.getClan().getReputationScore() < 0;
+		}
 		
-		for (L2Skill skill: _skills)
+		for (L2Skill skill : _skills)
 		{
 			writeD(skill.isPassive() ? 1 : 0);
 			writeD(skill.getLevel());
@@ -54,7 +58,8 @@ public class GMViewSkillInfo extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

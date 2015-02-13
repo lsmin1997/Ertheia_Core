@@ -59,7 +59,7 @@ public final class Ride extends L2GameServerPacket
 			case 16042: // White Fenrir Wolf
 				_rideType = 3;
 				break;
-			case 32:    //Jet Bike
+			case 32: // Jet Bike
 			case 13130: // Light Purple Maned Horse
 			case 13146: // Tawny-Maned Lion
 			case 13147: // Steam Sledge
@@ -94,7 +94,8 @@ public final class Ride extends L2GameServerPacket
 		writeD(_z);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

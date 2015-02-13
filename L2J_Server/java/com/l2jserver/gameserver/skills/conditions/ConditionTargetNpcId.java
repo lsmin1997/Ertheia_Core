@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2DoorInstance;
 import com.l2jserver.gameserver.skills.Env;
 
-
 /**
  * The Class ConditionTargetNpcId.
  */
@@ -30,7 +29,6 @@ public class ConditionTargetNpcId extends Condition
 	
 	/**
 	 * Instantiates a new condition target npc id.
-	 *
 	 * @param npcIds the npc ids
 	 */
 	public ConditionTargetNpcId(ArrayList<Integer> npcIds)
@@ -38,17 +36,22 @@ public class ConditionTargetNpcId extends Condition
 		_npcIds = npcIds;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (env.target instanceof L2Npc)
-			return _npcIds.contains(((L2Npc)env.target).getNpcId());
+		{
+			return _npcIds.contains(((L2Npc) env.target).getNpcId());
+		}
 		
 		if (env.target instanceof L2DoorInstance)
-			return _npcIds.contains(((L2DoorInstance)env.target).getDoorId());
+		{
+			return _npcIds.contains(((L2DoorInstance) env.target).getDoorId());
+		}
 		
 		return false;
 	}

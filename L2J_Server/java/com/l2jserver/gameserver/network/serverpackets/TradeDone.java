@@ -16,13 +16,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public class TradeDone extends L2GameServerPacket
 {
 	private static final String _S__32_SENDTRADEDONE = "[S] 1c SendTradeDone";
-	private int _num;
+	private final int _num;
 	
 	public TradeDone(int num)
 	{
@@ -36,7 +35,8 @@ public class TradeDone extends L2GameServerPacket
 		writeD(_num);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

@@ -15,8 +15,7 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * @author zabbix
- * Lets drink to code!
+ * @author zabbix Lets drink to code!
  */
 public class GameGuardQuery extends L2GameServerPacket
 {

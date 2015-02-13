@@ -19,7 +19,6 @@ import java.util.StringTokenizer;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
-
 public class L2CastleDoormenInstance extends L2DoormenInstance
 {
 	public L2CastleDoormenInstance(int objectID, L2NpcTemplate template)
@@ -55,12 +54,13 @@ public class L2CastleDoormenInstance extends L2DoormenInstance
 	@Override
 	protected final boolean isOwnerClan(L2PcInstance player)
 	{
-		if (player.getClan() != null && getCastle() != null)
+		if ((player.getClan() != null) && (getCastle() != null))
 		{
 			// player should have privileges to open doors
-			if (player.getClanId() == getCastle().getOwnerId()
-					&& (player.getClanPrivileges() & L2Clan.CP_CS_OPEN_DOOR) == L2Clan.CP_CS_OPEN_DOOR)
+			if ((player.getClanId() == getCastle().getOwnerId()) && ((player.getClanPrivileges() & L2Clan.CP_CS_OPEN_DOOR) == L2Clan.CP_CS_OPEN_DOOR))
+			{
 				return true;
+			}
 		}
 		return false;
 	}

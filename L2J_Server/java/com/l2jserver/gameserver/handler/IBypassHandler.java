@@ -18,10 +18,9 @@ import java.util.logging.Logger;
 
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
+
 /**
- * 
  * @author nBd
- *
  */
 public interface IBypassHandler
 {

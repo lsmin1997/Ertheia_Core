@@ -20,10 +20,8 @@ import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.instancemanager.ClanHallManager;
 import com.l2jserver.gameserver.model.entity.ClanHall;
 
-
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class ExShowAgitInfo extends L2GameServerPacket
 {
@@ -52,7 +50,7 @@ public class ExShowAgitInfo extends L2GameServerPacket
 			writeD(ch.getId());
 			writeS(ch.getOwnerId() <= 0 ? "" : ClanTable.getInstance().getClan(ch.getOwnerId()).getName()); // owner clan name
 			writeS(ch.getOwnerId() <= 0 ? "" : ClanTable.getInstance().getClan(ch.getOwnerId()).getLeaderName()); // leader name
-			writeD(ch.getGrade()> 0 ? 0x00 : 0x01); // 0 - auction  1 - war clanhall  2 - ETC (rainbow spring clanhall)
+			writeD(ch.getGrade() > 0 ? 0x00 : 0x01); // 0 - auction 1 - war clanhall 2 - ETC (rainbow spring clanhall)
 		}
 	}
 	

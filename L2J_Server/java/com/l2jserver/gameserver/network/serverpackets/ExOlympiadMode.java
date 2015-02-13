@@ -14,21 +14,16 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-
-
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
- *
  * @author godson
  */
 public class ExOlympiadMode extends L2GameServerPacket
 {
 	// chc
 	private static final String _S__FE_2B_OLYMPIADMODE = "[S] FE:7c ExOlympiadMode";
-	private int _mode;
-	
+	private final int _mode;
 	
 	/**
 	 * @param _mode (0 = return, 3 = spectate)
@@ -38,7 +33,6 @@ public class ExOlympiadMode extends L2GameServerPacket
 		_mode = mode;
 	}
 	
-	
 	@Override
 	protected final void writeImpl()
 	{
@@ -47,7 +41,8 @@ public class ExOlympiadMode extends L2GameServerPacket
 		writeC(_mode);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

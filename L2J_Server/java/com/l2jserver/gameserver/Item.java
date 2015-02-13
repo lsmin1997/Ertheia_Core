@@ -26,7 +26,6 @@ import com.l2jserver.gameserver.templates.item.L2Item;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 public class Item

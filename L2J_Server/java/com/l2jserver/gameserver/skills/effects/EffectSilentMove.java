@@ -37,7 +37,6 @@ public class EffectSilentMove extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#effectCanBeStolen()
 	 */
 	@Override
@@ -45,9 +44,8 @@ public class EffectSilentMove extends L2Effect
 	{
 		return true;
 	}
-
+	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -58,7 +56,6 @@ public class EffectSilentMove extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -68,7 +65,6 @@ public class EffectSilentMove extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -78,7 +74,6 @@ public class EffectSilentMove extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -86,10 +81,14 @@ public class EffectSilentMove extends L2Effect
 	{
 		// Only cont skills shouldn't end
 		if (getSkill().getSkillType() != L2SkillType.CONT)
+		{
 			return false;
+		}
 		
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		double manaDam = calc();
 		
@@ -103,7 +102,8 @@ public class EffectSilentMove extends L2Effect
 		return true;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

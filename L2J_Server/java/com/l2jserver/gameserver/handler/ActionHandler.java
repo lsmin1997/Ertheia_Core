@@ -22,8 +22,8 @@ import com.l2jserver.gameserver.model.L2Object.InstanceType;
 
 public class ActionHandler
 {
-	private Map<InstanceType, IActionHandler> _actions;
-	private Map<InstanceType, IActionHandler> _actionsShift;
+	private final Map<InstanceType, IActionHandler> _actions;
+	private final Map<InstanceType, IActionHandler> _actionsShift;
 	
 	public static ActionHandler getInstance()
 	{
@@ -53,7 +53,9 @@ public class ActionHandler
 		{
 			result = _actions.get(t);
 			if (result != null)
+			{
 				break;
+			}
 		}
 		return result;
 	}
@@ -65,7 +67,9 @@ public class ActionHandler
 		{
 			result = _actionsShift.get(t);
 			if (result != null)
+			{
 				break;
+			}
 		}
 		return result;
 	}

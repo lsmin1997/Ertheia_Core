@@ -23,13 +23,12 @@ import com.l2jserver.gameserver.network.serverpackets.TradeDone;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.5.4.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class AnswerTradeRequest extends L2GameClientPacket
 {
 	private static final String _C__40_ANSWERTRADEREQUEST = "[C] 40 AnswerTradeRequest";
-	//private static Logger _log = Logger.getLogger(AnswerTradeRequest.class.getName());
+	// private static Logger _log = Logger.getLogger(AnswerTradeRequest.class.getName());
 	
 	private int _response;
 	
@@ -44,7 +43,9 @@ public final class AnswerTradeRequest extends L2GameClientPacket
 	{
 		L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (!player.getAccessLevel().allowTransaction())
 		{
@@ -75,8 +76,10 @@ public final class AnswerTradeRequest extends L2GameClientPacket
 			return;
 		}
 		
-		if (_response == 1 && !partner.isRequestExpired())
+		if ((_response == 1) && !partner.isRequestExpired())
+		{
 			player.startTrade(partner);
+		}
 		else
 		{
 			SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.C1_DENIED_TRADE_REQUEST);
@@ -90,7 +93,8 @@ public final class AnswerTradeRequest extends L2GameClientPacket
 		partner.onTransactionResponse();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

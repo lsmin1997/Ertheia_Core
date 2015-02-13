@@ -34,7 +34,6 @@ import com.l2jserver.gameserver.network.serverpackets.AutoAttackStop;
 
 /**
  * This class ...
- * 
  * @version $Revision: $ $Date: $
  * @author Luca Baldi
  */
@@ -65,8 +64,12 @@ public class AttackStanceTaskManager
 		{
 			L2PcInstance player = (L2PcInstance) actor;
 			for (L2CubicInstance cubic : player.getCubics().values())
+			{
 				if (cubic.getId() != L2CubicInstance.LIFE_CUBIC)
+				{
 					cubic.doAction();
+				}
+			}
 		}
 		_attackStanceTasks.put(actor, System.currentTimeMillis());
 	}
@@ -98,12 +101,14 @@ public class AttackStanceTaskManager
 			// Do nothing
 		}
 		
+		@Override
 		public void run()
 		{
 			Long current = System.currentTimeMillis();
 			try
 			{
 				if (_attackStanceTasks != null)
+				{
 					synchronized (this)
 					{
 						for (L2Character actor : _attackStanceTasks.keySet())
@@ -111,13 +116,16 @@ public class AttackStanceTaskManager
 							if ((current - _attackStanceTasks.get(actor)) > 15000)
 							{
 								actor.broadcastPacket(new AutoAttackStop(actor.getObjectId()));
-								if (actor instanceof L2PcInstance && ((L2PcInstance) actor).getPet() != null)
+								if ((actor instanceof L2PcInstance) && (((L2PcInstance) actor).getPet() != null))
+								{
 									((L2PcInstance) actor).getPet().broadcastPacket(new AutoAttackStop(((L2PcInstance) actor).getPet().getObjectId()));
+								}
 								actor.getAI().setAutoAttacking(false);
 								_attackStanceTasks.remove(actor);
 							}
 						}
 					}
+				}
 			}
 			catch (Exception e)
 			{

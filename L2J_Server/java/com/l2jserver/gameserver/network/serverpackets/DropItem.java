@@ -17,26 +17,14 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 
 /**
- * 16
- * d6 6d c0 4b		player id who dropped it
- * ee cc 11 43 		object id
- * 39 00 00 00 		item id
- * 8f 14 00 00 		x
- * b7 f1 00 00 		y
- * 60 f2 ff ff 		z
- * 01 00 00 00 		show item-count 1=yes
- * 7a 00 00 00      count                                         .
- *
- * format  dddddddd    rev 377
- *         ddddddddd   rev 417
- *
+ * 16 d6 6d c0 4b player id who dropped it ee cc 11 43 object id 39 00 00 00 item id 8f 14 00 00 x b7 f1 00 00 y 60 f2 ff ff z 01 00 00 00 show item-count 1=yes 7a 00 00 00 count . format dddddddd rev 377 ddddddddd rev 417
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class DropItem extends L2GameServerPacket
 {
 	private static final String _S__16_DROPITEM = "[S] 16 DropItem";
-	private L2ItemInstance _item;
-	private int _charObjId;
+	private final L2ItemInstance _item;
+	private final int _charObjId;
 	
 	/**
 	 * Constructor of the DropItem server packet
@@ -45,7 +33,7 @@ public class DropItem extends L2GameServerPacket
 	 */
 	public DropItem(L2ItemInstance item, int playerObjId)
 	{
-		_item=item;
+		_item = item;
 		_charObjId = playerObjId;
 	}
 	
@@ -74,7 +62,8 @@ public class DropItem extends L2GameServerPacket
 		writeD(1); // unknown
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

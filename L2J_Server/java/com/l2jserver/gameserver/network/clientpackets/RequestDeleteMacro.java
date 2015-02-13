@@ -30,11 +30,14 @@ public final class RequestDeleteMacro extends L2GameClientPacket
 	protected void runImpl()
 	{
 		if (getClient().getActiveChar() == null)
+		{
 			return;
+		}
 		getClient().getActiveChar().deleteMacro(_id);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

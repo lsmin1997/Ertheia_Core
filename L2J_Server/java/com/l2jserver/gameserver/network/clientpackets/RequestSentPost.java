@@ -44,12 +44,16 @@ public final class RequestSentPost extends L2GameClientPacket
 	public void runImpl()
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
-		if (activeChar == null || !Config.ALLOW_MAIL)
+		if ((activeChar == null) || !Config.ALLOW_MAIL)
+		{
 			return;
+		}
 		
 		Message msg = MailManager.getInstance().getMessage(_msgId);
 		if (msg == null)
+		{
 			return;
+		}
 		
 		if (!activeChar.isInsideZone(ZONE_PEACE) && msg.hasAttachments())
 		{
@@ -59,13 +63,14 @@ public final class RequestSentPost extends L2GameClientPacket
 		
 		if (msg.getSenderId() != activeChar.getObjectId())
 		{
-			Util.handleIllegalPlayerAction(activeChar,
-					"Player "+activeChar.getName()+" tried to read not own post!", Config.DEFAULT_PUNISH);
+			Util.handleIllegalPlayerAction(activeChar, "Player " + activeChar.getName() + " tried to read not own post!", Config.DEFAULT_PUNISH);
 			return;
 		}
 		
 		if (msg.isDeletedBySender())
+		{
 			return;
+		}
 		
 		activeChar.sendPacket(new ExReplySentPost(msg));
 	}

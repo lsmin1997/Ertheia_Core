@@ -15,13 +15,9 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.gameserver.SevenSigns;
+
 /**
- * Changes the sky color depending on the outcome
- * of the Seven Signs competition.
- *
- * packet type id 0xf8
- * format: c h
- *
+ * Changes the sky color depending on the outcome of the Seven Signs competition. packet type id 0xf8 format: c h
  * @author Tempy
  */
 public class SSQInfo extends L2GameServerPacket
@@ -35,10 +31,16 @@ public class SSQInfo extends L2GameServerPacket
 		int compWinner = SevenSigns.getInstance().getCabalHighestScore();
 		
 		if (SevenSigns.getInstance().isSealValidationPeriod())
+		{
 			if (compWinner == SevenSigns.CABAL_DAWN)
+			{
 				_state = 2;
+			}
 			else if (compWinner == SevenSigns.CABAL_DUSK)
+			{
 				_state = 1;
+			}
+		}
 	}
 	
 	public SSQInfo(int state)
@@ -65,7 +67,8 @@ public class SSQInfo extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

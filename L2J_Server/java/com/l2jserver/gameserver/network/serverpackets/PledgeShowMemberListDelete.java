@@ -16,13 +16,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class PledgeShowMemberListDelete extends L2GameServerPacket
 {
 	private static final String _S__6B_PLEDGESHOWMEMBERLISTDELETE = "[S] 5d PledgeShowMemberListDelete";
-	private String _player;
+	private final String _player;
 	
 	public PledgeShowMemberListDelete(String playerName)
 	{
@@ -36,7 +35,8 @@ public class PledgeShowMemberListDelete extends L2GameServerPacket
 		writeS(_player);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

@@ -28,7 +28,6 @@ public class ConditionTargetActiveEffectId extends Condition
 	
 	/**
 	 * Instantiates a new condition target active effect id.
-	 *
 	 * @param effectId the effect id
 	 */
 	public ConditionTargetActiveEffectId(int effectId)
@@ -39,7 +38,6 @@ public class ConditionTargetActiveEffectId extends Condition
 	
 	/**
 	 * Instantiates a new condition target active effect id.
-	 *
 	 * @param effectId the effect id
 	 * @param effectLevel the effect level
 	 */
@@ -49,15 +47,18 @@ public class ConditionTargetActiveEffectId extends Condition
 		_effectLvl = effectLevel;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		final L2Effect e = env.target.getFirstEffect(_effectId);
-		if (e != null && (_effectLvl == -1 || _effectLvl <= e.getSkill().getLevel()))
+		if ((e != null) && ((_effectLvl == -1) || (_effectLvl <= e.getSkill().getLevel())))
+		{
 			return true;
+		}
 		
 		return false;
 	}

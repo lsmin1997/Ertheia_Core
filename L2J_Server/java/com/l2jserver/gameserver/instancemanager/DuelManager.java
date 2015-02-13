@@ -34,7 +34,7 @@ public class DuelManager
 	
 	// =========================================================
 	// Data Field
-	private FastList<Duel> _duels;
+	private final FastList<Duel> _duels;
 	private int _currentDuelId = 0x90;
 	
 	// =========================================================
@@ -52,7 +52,9 @@ public class DuelManager
 	{
 		// In case someone wants to run the server forever :)
 		if (++_currentDuelId >= 2147483640)
+		{
 			_currentDuelId = 1;
+		}
 		return _currentDuelId;
 	}
 	
@@ -64,15 +66,19 @@ public class DuelManager
 		for (FastList.Node<Duel> e = _duels.head(), end = _duels.tail(); (e = e.getNext()) != end;)
 		{
 			if (e.getValue().getId() == duelId)
+			{
 				return e.getValue();
+			}
 		}
 		return null;
 	}
 	
 	public void addDuel(L2PcInstance playerA, L2PcInstance playerB, int partyDuel)
 	{
-		if (playerA == null || playerB == null)
+		if ((playerA == null) || (playerB == null))
+		{
 			return;
+		}
 		
 		// return if a player has PvPFlag
 		String engagedInPvP = "The duel was canceled because a duelist engaged in PvP combat.";
@@ -114,7 +120,7 @@ public class DuelManager
 		}
 		else
 		{
-			if (playerA.getPvpFlag() != 0 || playerB.getPvpFlag() != 0)
+			if ((playerA.getPvpFlag() != 0) || (playerB.getPvpFlag() != 0))
 			{
 				playerA.sendMessage(engagedInPvP);
 				playerB.sendMessage(engagedInPvP);
@@ -133,8 +139,10 @@ public class DuelManager
 	
 	public void doSurrender(L2PcInstance player)
 	{
-		if (player == null || !player.isInDuel())
+		if ((player == null) || !player.isInDuel())
+		{
 			return;
+		}
 		Duel duel = getDuel(player.getDuelId());
 		duel.doSurrender(player);
 	}
@@ -145,11 +153,15 @@ public class DuelManager
 	 */
 	public void onPlayerDefeat(L2PcInstance player)
 	{
-		if (player == null || !player.isInDuel())
+		if ((player == null) || !player.isInDuel())
+		{
 			return;
+		}
 		Duel duel = getDuel(player.getDuelId());
 		if (duel != null)
+		{
 			duel.onPlayerDefeat(player);
+		}
 	}
 	
 	/**
@@ -159,11 +171,15 @@ public class DuelManager
 	 */
 	public void onBuff(L2PcInstance player, L2Effect buff)
 	{
-		if (player == null || !player.isInDuel() || buff == null)
+		if ((player == null) || !player.isInDuel() || (buff == null))
+		{
 			return;
+		}
 		Duel duel = getDuel(player.getDuelId());
 		if (duel != null)
+		{
 			duel.onBuff(player, buff);
+		}
 	}
 	
 	/**
@@ -172,11 +188,15 @@ public class DuelManager
 	 */
 	public void onRemoveFromParty(L2PcInstance player)
 	{
-		if (player == null || !player.isInDuel())
+		if ((player == null) || !player.isInDuel())
+		{
 			return;
+		}
 		Duel duel = getDuel(player.getDuelId());
 		if (duel != null)
+		{
 			duel.onRemoveFromParty(player);
+		}
 	}
 	
 	/**
@@ -186,13 +206,19 @@ public class DuelManager
 	 */
 	public void broadcastToOppositTeam(L2PcInstance player, L2GameServerPacket packet)
 	{
-		if (player == null || !player.isInDuel())
+		if ((player == null) || !player.isInDuel())
+		{
 			return;
+		}
 		Duel duel = getDuel(player.getDuelId());
 		if (duel == null)
+		{
 			return;
-		if (duel.getPlayerA() == null || duel.getPlayerB() == null)
+		}
+		if ((duel.getPlayerA() == null) || (duel.getPlayerB() == null))
+		{
 			return;
+		}
 		
 		if (duel.getPlayerA() == player)
 		{
@@ -204,11 +230,11 @@ public class DuelManager
 		}
 		else if (duel.isPartyDuel())
 		{
-			if (duel.getPlayerA().getParty() != null && duel.getPlayerA().getParty().getPartyMembers().contains(player))
+			if ((duel.getPlayerA().getParty() != null) && duel.getPlayerA().getParty().getPartyMembers().contains(player))
 			{
 				duel.broadcastToTeam2(packet);
 			}
-			else if (duel.getPlayerB().getParty() != null && duel.getPlayerB().getParty().getPartyMembers().contains(player))
+			else if ((duel.getPlayerB().getParty() != null) && duel.getPlayerB().getParty().getPartyMembers().contains(player))
 			{
 				duel.broadcastToTeam1(packet);
 			}

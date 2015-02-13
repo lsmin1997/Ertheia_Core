@@ -20,14 +20,12 @@ import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 
 /**
  * @author Layane
- * 
  */
 public final class TaskRestart extends Task
 {
 	public static final String NAME = "restart";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -37,7 +35,6 @@ public final class TaskRestart extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override

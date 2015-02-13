@@ -37,10 +37,8 @@ import com.l2jserver.gameserver.util.Broadcast;
 import com.l2jserver.util.EventData;
 import com.l2jserver.util.StringUtil;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.1 $ $Date: 2005/03/27 15:29:32 $
  */
 
@@ -50,7 +48,7 @@ public class L2Event
 	public static String eventName = "";
 	public static int teamsNumber = 0;
 	public static final HashMap<Integer, String> names = new HashMap<Integer, String>();
-	public static final LinkedList<String> participatingPlayers = new LinkedList<String>(); //TODO store by objid
+	public static final LinkedList<String> participatingPlayers = new LinkedList<String>(); // TODO store by objid
 	public static final HashMap<Integer, LinkedList<String>> players = new HashMap<Integer, LinkedList<String>>();
 	public static int id = 12760;
 	public static final LinkedList<String> npcs = new LinkedList<String>();
@@ -66,14 +64,16 @@ public class L2Event
 			while (it.hasNext())
 			{
 				if (it.next().equals(name))
+				{
 					return i;
+				}
 			}
 		}
 		return 0;
 	}
 	
 	public static String[] getTopNKillers(int N)
-	{ //this will return top N players sorted by kills, first element in the array will be the one with more kills
+	{ // this will return top N players sorted by kills, first element in the array will be the one with more kills
 		String[] killers = new String[N];
 		String playerTemp = "";
 		int kills = 0;
@@ -143,25 +143,15 @@ public class L2Event
 			BufferedReader inbr = new BufferedReader(new InputStreamReader(in));
 			
 			final StringBuilder replyMSG = new StringBuilder();
-			StringUtil.append(replyMSG,
-					"<html><body>" +
-					"<center><font color=\"LEVEL\">",
-					eventName,
-					"</font><font color=\"FF0000\"> bY ",
-					inbr.readLine(),
-					"</font></center><br>" +
-					"<br>",
-					inbr.readLine()
-			);
+			StringUtil.append(replyMSG, "<html><body>" + "<center><font color=\"LEVEL\">", eventName, "</font><font color=\"FF0000\"> bY ", inbr.readLine(), "</font></center><br>" + "<br>", inbr.readLine());
 			
-			if (L2Event.participatingPlayers.contains(player.getName())) {
+			if (L2Event.participatingPlayers.contains(player.getName()))
+			{
 				replyMSG.append("<br><center>You are already in the event players list !!</center></body></html>");
-			} else {
-				StringUtil.append(replyMSG,
-						"<br><center><button value=\"Participate !! \" action=\"bypass -h npc_",
-						String.valueOf(objectid),
-						"_event_participate\" width=90 height=15 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></center></body></html>"
-				);
+			}
+			else
+			{
+				StringUtil.append(replyMSG, "<br><center><button value=\"Participate !! \" action=\"bypass -h npc_", String.valueOf(objectid), "_event_participate\" width=90 height=15 back=\"L2UI_ct1.button_df\" fore=\"L2UI_ct1.button_df\"></center></body></html>");
 			}
 			
 			adminReply.setHtml(replyMSG.toString());
@@ -180,7 +170,7 @@ public class L2Event
 		
 		try
 		{
-			//L2MonsterInstance mob = new L2MonsterInstance(template1);
+			// L2MonsterInstance mob = new L2MonsterInstance(template1);
 			
 			L2Spawn spawn = new L2Spawn(template1);
 			
@@ -230,7 +220,9 @@ public class L2Event
 			{
 				temp = player.getName().equalsIgnoreCase(it.next());
 				if (temp)
+				{
 					return true;
+				}
 			}
 		}
 		return false;

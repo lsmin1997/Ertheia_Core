@@ -16,14 +16,13 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * @author JIV
- *
  */
 public class ExAskModifyPartyLooting extends L2GameServerPacket
 {
 	private static final String TYPE = "[S] FE:BE ExAskModifyPartyLooting";
 	
-	private String _requestor;
-	private byte _mode;
+	private final String _requestor;
+	private final byte _mode;
 	
 	public ExAskModifyPartyLooting(String name, byte mode)
 	{

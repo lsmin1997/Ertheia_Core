@@ -21,7 +21,7 @@ public class HennaRemoveList extends L2GameServerPacket
 {
 	private static final String _S__E2_HennaRemoveList = "[S] ee HennaRemoveList";
 	
-	private L2PcInstance _player;
+	private final L2PcInstance _player;
 	
 	public HennaRemoveList(L2PcInstance player)
 	{

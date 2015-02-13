@@ -22,8 +22,7 @@ import org.mmocore.network.ReceivablePacket;
 import com.l2jserver.loginserver.L2LoginClient;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public abstract class L2LoginClientPacket extends ReceivablePacket<L2LoginClient>
 {
@@ -41,7 +40,7 @@ public abstract class L2LoginClientPacket extends ReceivablePacket<L2LoginClient
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "ERROR READING: "+this.getClass().getSimpleName() + ": " + e.getMessage(), e);
+			_log.log(Level.SEVERE, "ERROR READING: " + this.getClass().getSimpleName() + ": " + e.getMessage(), e);
 			return false;
 		}
 	}

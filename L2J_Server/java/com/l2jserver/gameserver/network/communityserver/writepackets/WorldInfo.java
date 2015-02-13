@@ -26,15 +26,15 @@ import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * @authors  Forsaiken, Gigiikun
+ * @authors Forsaiken, Gigiikun
  */
 public final class WorldInfo extends BaseWritePacket
 {
-	public static final byte TYPE_INIT_PACKET			= 0;
-	public static final byte TYPE_UPDATE_PLAYER_DATA	= 1;
-	public static final byte TYPE_UPDATE_PLAYER_STATUS	= 2;
-	public static final byte TYPE_UPDATE_CLAN_DATA		= 3;
-	public static final byte TYPE_SEND_CLAN_NOTICE		= 4;
+	public static final byte TYPE_INIT_PACKET = 0;
+	public static final byte TYPE_UPDATE_PLAYER_DATA = 1;
+	public static final byte TYPE_UPDATE_PLAYER_STATUS = 2;
+	public static final byte TYPE_UPDATE_CLAN_DATA = 3;
+	public static final byte TYPE_SEND_CLAN_NOTICE = 4;
 	@SuppressWarnings("unused")
 	private static Logger _log = Logger.getLogger(WorldInfo.class.getName());
 	
@@ -64,7 +64,9 @@ public final class WorldInfo extends BaseWritePacket
 				List<Integer> list = player.getFriendList();
 				super.writeD(list.size());
 				for (int j : list)
+				{
 					super.writeD(j);
+				}
 				break;
 			}
 			
@@ -86,16 +88,24 @@ public final class WorldInfo extends BaseWritePacket
 				super.writeD(clan.getLeader().getObjectId());
 				super.writeS(clan.getLeader().getName());
 				super.writeD(clan.getMembersCount());
-				super.writeC((clan.isNoticeEnabled() ? 1:0));
+				super.writeC((clan.isNoticeEnabled() ? 1 : 0));
 				super.writeS(clan.getAllyName());
 				FastList<Integer> allyClanIdList = FastList.newInstance();
 				if (clan.getAllyId() != 0)
+				{
 					for (L2Clan c : ClanTable.getInstance().getClans())
-						if (clan.getAllyId() == c.getAllyId() && c != clan)
+					{
+						if ((clan.getAllyId() == c.getAllyId()) && (c != clan))
+						{
 							allyClanIdList.add(c.getClanId());
+						}
+					}
+				}
 				super.writeD(allyClanIdList.size());
 				for (int k : allyClanIdList)
+				{
 					super.writeD(k);
+				}
 				FastList.recycle(allyClanIdList);
 				break;
 			}

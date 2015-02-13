@@ -69,7 +69,9 @@ public final class ItemAuctionManager
 			ResultSet rset = statement.executeQuery();
 			
 			if (rset.next())
+			{
 				_auctionIds.set(rset.getInt(1) + 1);
+			}
 			
 			rset.close();
 			statement.close();
@@ -109,7 +111,9 @@ public final class ItemAuctionManager
 							final int instanceId = Integer.parseInt(nab.getNamedItem("id").getNodeValue());
 							
 							if (_managerInstances.containsKey(instanceId))
+							{
 								throw new Exception("Dublicated instanceId " + instanceId);
+							}
 							
 							final ItemAuctionInstance instance = new ItemAuctionInstance(instanceId, _auctionIds, nb);
 							_managerInstances.put(instanceId, instance);

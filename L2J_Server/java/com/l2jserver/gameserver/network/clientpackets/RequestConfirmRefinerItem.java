@@ -22,7 +22,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * Fromat(ch) dd
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public class RequestConfirmRefinerItem extends AbstractRefinePacket
 {
@@ -39,20 +39,25 @@ public class RequestConfirmRefinerItem extends AbstractRefinePacket
 	}
 	
 	@Override
-	protected
-	void runImpl()
+	protected void runImpl()
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		final L2ItemInstance targetItem = activeChar.getInventory().getItemByObjectId(_targetItemObjId);
 		if (targetItem == null)
+		{
 			return;
+		}
 		
 		final L2ItemInstance refinerItem = activeChar.getInventory().getItemByObjectId(_refinerItemObjId);
 		if (refinerItem == null)
+		{
 			return;
+		}
 		
 		if (!isValid(activeChar, targetItem, refinerItem))
 		{

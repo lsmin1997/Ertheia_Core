@@ -15,16 +15,13 @@
 package com.l2jserver.gameserver.model.base;
 
 /**
- * This class defines all classes (ex : human fighter, darkFighter...) that a player can chose.<BR><BR>
- *
- * Data :<BR><BR>
- * <li>id : The Identifier of the class</li>
- * <li>isMage : True if the class is a mage class</li>
- * <li>race : The race of this class</li>
- * <li>parent : The parent ClassId or null if this class is the root</li><BR><BR>
- *
+ * This class defines all classes (ex : human fighter, darkFighter...) that a player can chose.<BR>
+ * <BR>
+ * Data :<BR>
+ * <BR>
+ * <li>id : The Identifier of the class</li> <li>isMage : True if the class is a mage class</li> <li>race : The race of this class</li> <li>parent : The parent ClassId or null if this class is the root</li><BR>
+ * <BR>
  * @version $Revision: 1.4.4.4 $ $Date: 2005/03/27 15:29:33 $
- *
  */
 public enum ClassId
 {
@@ -97,10 +94,7 @@ public enum ClassId
 	warsmith(0x39, false, Race.Dwarf, artisan),
 	
 	/*
-	 * Dummy Entries (id's already in decimal format)
-	 * btw FU NCSoft for the amount of work you put me
-	 * through to do this!!
-	 * <START>
+	 * Dummy Entries (id's already in decimal format) btw FU NCSoft for the amount of work you put me through to do this!! <START>
 	 */
 	dummyEntry1(58, false, null, null),
 	dummyEntry2(59, false, null, null),
@@ -133,8 +127,7 @@ public enum ClassId
 	dummyEntry29(86, false, null, null),
 	dummyEntry30(87, false, null, null),
 	/*
-	 * <END>
-	 * Of Dummy entries
+	 * <END> Of Dummy entries
 	 */
 	
 	/*
@@ -193,7 +186,7 @@ public enum ClassId
 	maleSoulhound(0x84, false, Race.Kamael, maleSoulbreaker),
 	femaleSoulhound(0x85, false, Race.Kamael, femaleSoulbreaker),
 	trickster(0x86, false, Race.Kamael, arbalester),
-	inspector(0x87, false, Race.Kamael, warder), //DS: yes, both male/female inspectors use skills from warder
+	inspector(0x87, false, Race.Kamael, warder), // DS: yes, both male/female inspectors use skills from warder
 	judicator(0x88, false, Race.Kamael, inspector);
 	
 	/** The Identifier of the Class */
@@ -212,31 +205,34 @@ public enum ClassId
 	private final ClassId _parent;
 	
 	/**
-	 * Constructor of ClassId.<BR><BR>
+	 * Constructor of ClassId.<BR>
+	 * <BR>
 	 */
 	private ClassId(int pId, boolean pIsMage, Race pRace, ClassId pParent)
 	{
-		this._id = pId;
-		this._isMage = pIsMage;
-		this._isSummoner = false;
-		this._race = pRace;
-		this._parent = pParent;
+		_id = pId;
+		_isMage = pIsMage;
+		_isSummoner = false;
+		_race = pRace;
+		_parent = pParent;
 	}
 	
 	/**
-	 * Constructor of ClassId.<BR><BR>
+	 * Constructor of ClassId.<BR>
+	 * <BR>
 	 */
 	private ClassId(int pId, boolean pIsMage, boolean pIsSummoner, Race pRace, ClassId pParent)
 	{
-		this._id = pId;
-		this._isMage = pIsMage;
-		this._isSummoner = pIsSummoner;
-		this._race = pRace;
-		this._parent = pParent;
+		_id = pId;
+		_isMage = pIsMage;
+		_isSummoner = pIsSummoner;
+		_race = pRace;
+		_parent = pParent;
 	}
 	
 	/**
-	 * Return the Identifier of the Class.<BR><BR>
+	 * Return the Identifier of the Class.<BR>
+	 * <BR>
 	 */
 	public final int getId()
 	{
@@ -244,7 +240,8 @@ public enum ClassId
 	}
 	
 	/**
-	 * Return True if the class is a mage class.<BR><BR>
+	 * Return True if the class is a mage class.<BR>
+	 * <BR>
 	 */
 	public final boolean isMage()
 	{
@@ -252,7 +249,8 @@ public enum ClassId
 	}
 	
 	/**
-	 * Return True if the class is a summoner class.<BR><BR>
+	 * Return True if the class is a summoner class.<BR>
+	 * <BR>
 	 */
 	public final boolean isSummoner()
 	{
@@ -260,7 +258,8 @@ public enum ClassId
 	}
 	
 	/**
-	 * Return the Race object of the class.<BR><BR>
+	 * Return the Race object of the class.<BR>
+	 * <BR>
 	 */
 	public final Race getRace()
 	{
@@ -268,51 +267,54 @@ public enum ClassId
 	}
 	
 	/**
-	 * Return True if this Class is a child of the selected ClassId.<BR><BR>
-	 *
+	 * Return True if this Class is a child of the selected ClassId.<BR>
+	 * <BR>
 	 * @param cid The parent ClassId to check
-	 *
 	 */
 	public final boolean childOf(ClassId cid)
 	{
 		if (_parent == null)
+		{
 			return false;
+		}
 		
 		if (_parent == cid)
+		{
 			return true;
+		}
 		
 		return _parent.childOf(cid);
 		
 	}
 	
 	/**
-	 * Return True if this Class is equal to the selected ClassId or a child of the selected ClassId.<BR><BR>
-	 *
+	 * Return True if this Class is equal to the selected ClassId or a child of the selected ClassId.<BR>
+	 * <BR>
 	 * @param cid The parent ClassId to check
-	 *
 	 */
 	public final boolean equalsOrChildOf(ClassId cid)
 	{
-		return this == cid || childOf(cid);
+		return (this == cid) || childOf(cid);
 	}
 	
 	/**
-	 * Return the child level of this Class (0=root, 1=child leve 1...).<BR><BR>
-	 *
+	 * Return the child level of this Class (0=root, 1=child leve 1...).<BR>
+	 * <BR>
 	 * @param cid The parent ClassId to check
-	 *
 	 */
 	public final int level()
 	{
 		if (_parent == null)
+		{
 			return 0;
+		}
 		
 		return 1 + _parent.level();
 	}
 	
 	/**
-	 * Return its parent ClassId<BR><BR>
-	 *
+	 * Return its parent ClassId<BR>
+	 * <BR>
 	 */
 	public final ClassId getParent()
 	{

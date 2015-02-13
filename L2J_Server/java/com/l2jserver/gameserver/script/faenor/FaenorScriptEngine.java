@@ -38,7 +38,6 @@ import com.l2jserver.gameserver.scripting.L2ScriptEngineManager;
 
 /**
  * @author Luis Arias
- *
  */
 public class FaenorScriptEngine extends ScriptEngine
 {
@@ -69,18 +68,15 @@ public class FaenorScriptEngine extends ScriptEngine
 	
 	private void loadPackages()
 	{
-		File packDirectory = new File(Config.DATAPACK_ROOT, PACKAGE_DIRECTORY);//_log.sss(packDirectory.getAbsolutePath());
+		File packDirectory = new File(Config.DATAPACK_ROOT, PACKAGE_DIRECTORY);// _log.sss(packDirectory.getAbsolutePath());
 		
-		FileFilter fileFilter = new FileFilter() {
-			public boolean accept(File file)
-			{
-				return file.getName().endsWith(".zip");
-			}
-		};
+		FileFilter fileFilter = file -> file.getName().endsWith(".zip");
 		
 		File[] files = packDirectory.listFiles(fileFilter);
 		if (files == null)
+		{
 			return;
+		}
 		ZipFile zipPack;
 		
 		for (File file : files)
@@ -115,31 +111,24 @@ public class FaenorScriptEngine extends ScriptEngine
 			{
 			}
 		}
-		/*for (ScriptDocument script : scripts)
-		 {
-		 _log.sss("Script: "+script);
-		 }
-		 _log.sss("Sorting");
-		 orderScripts();
-		 for (ScriptDocument script : scripts)
-		 {
-		 _log.sss("Script: "+script);
-		 }*/
+		/*
+		 * for (ScriptDocument script : scripts) { _log.sss("Script: "+script); } _log.sss("Sorting"); orderScripts(); for (ScriptDocument script : scripts) { _log.sss("Script: "+script); }
+		 */
 	}
 	
 	public void orderScripts()
 	{
 		if (_scripts.size() > 1)
 		{
-			//ScriptDocument npcInfo = null;
+			// ScriptDocument npcInfo = null;
 			
 			for (int i = 0; i < _scripts.size();)
 			{
 				if (_scripts.get(i).getName().contains("NpcStatData"))
 				{
 					_scripts.addFirst(_scripts.remove(i));
-					//scripts.set(i, scripts.get(0));
-					//scripts.set(0, npcInfo);
+					// scripts.set(i, scripts.get(0));
+					// scripts.set(0, npcInfo);
 				}
 				else
 				{
@@ -210,7 +199,9 @@ public class FaenorScriptEngine extends ScriptEngine
 	public String toString()
 	{
 		if (_scripts.isEmpty())
+		{
 			return "No Packages Loaded.";
+		}
 		
 		String out = "Script Packages currently loaded:\n";
 		

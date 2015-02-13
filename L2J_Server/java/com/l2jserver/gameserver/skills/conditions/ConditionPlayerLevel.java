@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionPlayerLevel.
- *
  * @author mkizub
  */
 public class ConditionPlayerLevel extends Condition
@@ -27,7 +26,6 @@ public class ConditionPlayerLevel extends Condition
 	
 	/**
 	 * Instantiates a new condition player level.
-	 *
 	 * @param level the level
 	 */
 	public ConditionPlayerLevel(int level)
@@ -35,7 +33,8 @@ public class ConditionPlayerLevel extends Condition
 		_level = level;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override

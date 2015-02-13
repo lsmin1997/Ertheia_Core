@@ -18,8 +18,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * Interface for chat handlers
- *
- * @author  durgus
+ * @author durgus
  */
 public interface IChatHandler
 {

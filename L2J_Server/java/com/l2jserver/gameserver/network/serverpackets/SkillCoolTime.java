@@ -20,10 +20,8 @@ import java.util.Iterator;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance.TimeStamp;
 
-
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class SkillCoolTime extends L2GameServerPacket
 {
@@ -35,8 +33,10 @@ public class SkillCoolTime extends L2GameServerPacket
 		Iterator<TimeStamp> iter = _reuseTimeStamps.iterator();
 		while (iter.hasNext())
 		{
-			if (!iter.next().hasNotPassed()) // remove expired timestamps
+			if (!iter.next().hasNotPassed())
+			{
 				iter.remove();
+			}
 		}
 	}
 	

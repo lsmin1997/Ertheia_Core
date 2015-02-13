@@ -20,15 +20,15 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 public final class RequestReplySurrenderPledgeWar extends L2GameClientPacket
 {
 	private static final String _C__52_REQUESTREPLYSURRENDERPLEDGEWAR = "[C] 52 RequestReplySurrenderPledgeWar";
-	//private static Logger _log = Logger.getLogger(RequestReplySurrenderPledgeWar.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestReplySurrenderPledgeWar.class.getName());
 	
 	private int _answer;
 	
 	@Override
 	protected void readImpl()
 	{
-		@SuppressWarnings("unused") String _reqName = readS();
-		_answer  = readD();
+		readS();
+		_answer = readD();
 	}
 	
 	@Override
@@ -36,10 +36,14 @@ public final class RequestReplySurrenderPledgeWar extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		L2PcInstance requestor = activeChar.getActiveRequester();
 		if (requestor == null)
+		{
 			return;
+		}
 		
 		if (_answer == 1)
 		{

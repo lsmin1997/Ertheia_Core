@@ -16,15 +16,15 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * This class ...
- *
  * @version $Revision: $ $Date: $
- * @author  Luca Baldi
+ * @author Luca Baldi
  */
 public class ExShowQuestInfo extends L2GameServerPacket
 {
 	private static final String _S__FE_19_EXQUESTINFO = "[S] FE:20 EXQUESTINFO";
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -34,7 +34,8 @@ public class ExShowQuestInfo extends L2GameServerPacket
 		writeH(0x20);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

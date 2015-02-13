@@ -17,12 +17,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * Format: (chd) dddS
- * d: Always -1
- * d: Player Team
- * d: Player Object ID
- * S: Player Name
- * 
+ * Format: (chd) dddS d: Always -1 d: Player Team d: Player Object ID S: Player Name
  * @author mrTJO
  */
 public class ExCubeGameAddPlayer extends L2GameServerPacket
@@ -33,7 +28,6 @@ public class ExCubeGameAddPlayer extends L2GameServerPacket
 	
 	/**
 	 * Add Player To Minigame Waiting List
-	 * 
 	 * @param player Player Instance
 	 * @param isRedTeam Is Player from Red Team?
 	 */
@@ -43,7 +37,8 @@ public class ExCubeGameAddPlayer extends L2GameServerPacket
 		_isRedTeam = isRedTeam;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -60,7 +55,8 @@ public class ExCubeGameAddPlayer extends L2GameServerPacket
 		writeS(_player.getName());
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

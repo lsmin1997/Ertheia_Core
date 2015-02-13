@@ -23,8 +23,7 @@ import com.l2jserver.gameserver.model.zone.L2SpawnZone;
 
 /**
  * A castle zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2CastleZone extends L2SpawnZone
 {
@@ -44,7 +43,9 @@ public class L2CastleZone extends L2SpawnZone
 			_castleId = Integer.parseInt(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override
@@ -84,9 +85,13 @@ public class L2CastleZone extends L2SpawnZone
 		for (L2Character temp : _characterList.values())
 		{
 			if (!(temp instanceof L2PcInstance))
+			{
 				continue;
+			}
 			if (((L2PcInstance) temp).getClanId() == owningClanId)
+			{
 				continue;
+			}
 			
 			((L2PcInstance) temp).teleToLocation(MapRegionTable.TeleportWhereType.Town);
 		}
@@ -100,7 +105,9 @@ public class L2CastleZone extends L2SpawnZone
 	private final Castle getCastle()
 	{
 		if (_castle == null)
+		{
 			_castle = CastleManager.getInstance().getCastleById(_castleId);
+		}
 		return _castle;
 	}
 }

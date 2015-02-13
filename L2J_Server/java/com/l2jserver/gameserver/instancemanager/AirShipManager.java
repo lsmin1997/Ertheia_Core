@@ -33,7 +33,6 @@ import com.l2jserver.gameserver.network.serverpackets.ExAirShipTeleportList;
 import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 
-
 public class AirShipManager
 {
 	private static final Logger _log = Logger.getLogger(AirShipManager.class.getName());
@@ -43,9 +42,9 @@ public class AirShipManager
 	private static final String UPDATE_DB = "UPDATE airships SET fuel=? WHERE owner_id=?";
 	
 	private L2CharTemplate _airShipTemplate = null;
-	private TIntObjectHashMap<StatsSet> _airShipsInfo = new TIntObjectHashMap<StatsSet>();
-	private TIntObjectHashMap<L2AirShipInstance> _airShips = new TIntObjectHashMap<L2AirShipInstance>();
-	private TIntObjectHashMap<AirShipTeleportList> _teleports = new TIntObjectHashMap<AirShipTeleportList>();
+	private final TIntObjectHashMap<StatsSet> _airShipsInfo = new TIntObjectHashMap<StatsSet>();
+	private final TIntObjectHashMap<L2AirShipInstance> _airShips = new TIntObjectHashMap<L2AirShipInstance>();
+	private final TIntObjectHashMap<AirShipTeleportList> _teleports = new TIntObjectHashMap<AirShipTeleportList>();
 	
 	public static final AirShipManager getInstance()
 	{
@@ -104,7 +103,7 @@ public class AirShipManager
 	
 	public L2AirShipInstance getNewAirShip(int x, int y, int z, int heading)
 	{
-		final L2AirShipInstance	airShip = new L2AirShipInstance(IdFactory.getInstance().getNextId(), _airShipTemplate);
+		final L2AirShipInstance airShip = new L2AirShipInstance(IdFactory.getInstance().getNextId(), _airShipTemplate);
 		
 		airShip.setHeading(heading);
 		airShip.setXYZInvisible(x, y, z);
@@ -118,7 +117,9 @@ public class AirShipManager
 	{
 		final StatsSet info = _airShipsInfo.get(ownerId);
 		if (info == null)
+		{
 			return null;
+		}
 		
 		final L2AirShipInstance airShip;
 		if (_airShips.containsKey(ownerId))
@@ -150,7 +151,9 @@ public class AirShipManager
 			storeInDb(ship.getOwnerId());
 			final StatsSet info = _airShipsInfo.get(ship.getOwnerId());
 			if (info != null)
+			{
 				info.set("fuel", ship.getFuel());
+			}
 		}
 	}
 	
@@ -181,11 +184,11 @@ public class AirShipManager
 			}
 			catch (SQLException e)
 			{
-				_log.log(Level.WARNING, getClass().getSimpleName()+": Could not add new airship license: " + e.getMessage(), e);
+				_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not add new airship license: " + e.getMessage(), e);
 			}
 			catch (Exception e)
 			{
-				_log.log(Level.WARNING, getClass().getSimpleName()+": Error while initializing: " + e.getMessage(), e);
+				_log.log(Level.WARNING, getClass().getSimpleName() + ": Error while initializing: " + e.getMessage(), e);
 			}
 			finally
 			{
@@ -197,8 +200,10 @@ public class AirShipManager
 	public boolean hasAirShip(int ownerId)
 	{
 		final L2AirShipInstance ship = _airShips.get(ownerId);
-		if (ship == null || !(ship.isVisible() || ship.isTeleporting()))
+		if ((ship == null) || !(ship.isVisible() || ship.isTeleporting()))
+		{
 			return false;
+		}
 		
 		return true;
 	}
@@ -206,23 +211,31 @@ public class AirShipManager
 	public void registerAirShipTeleportList(int dockId, int locationId, VehiclePathPoint[][] tp, int[] fuelConsumption)
 	{
 		if (tp.length != fuelConsumption.length)
+		{
 			return;
+		}
 		
 		_teleports.put(dockId, new AirShipTeleportList(locationId, fuelConsumption, tp));
 	}
 	
 	public void sendAirShipTeleportList(L2PcInstance player)
 	{
-		if (player == null || !player.isInAirShip())
+		if ((player == null) || !player.isInAirShip())
+		{
 			return;
+		}
 		
 		final L2AirShipInstance ship = player.getAirShip();
 		if (!ship.isCaptain(player) || !ship.isInDock() || ship.isMoving())
+		{
 			return;
+		}
 		
 		int dockId = ship.getDockId();
 		if (!_teleports.contains(dockId))
+		{
 			return;
+		}
 		
 		final AirShipTeleportList all = _teleports.get(dockId);
 		player.sendPacket(new ExAirShipTeleportList(all.location, all.routes, all.fuel));
@@ -232,10 +245,14 @@ public class AirShipManager
 	{
 		final AirShipTeleportList all = _teleports.get(dockId);
 		if (all == null)
+		{
 			return null;
+		}
 		
-		if (index < -1 || index >= all.routes.length)
+		if ((index < -1) || (index >= all.routes.length))
+		{
 			return null;
+		}
 		
 		return all.routes[index + 1];
 	}
@@ -244,10 +261,14 @@ public class AirShipManager
 	{
 		final AirShipTeleportList all = _teleports.get(dockId);
 		if (all == null)
+		{
 			return 0;
+		}
 		
-		if (index < -1 || index >= all.fuel.length)
+		if ((index < -1) || (index >= all.fuel.length))
+		{
 			return 0;
+		}
 		
 		return all.fuel[index + 1];
 	}
@@ -276,25 +297,27 @@ public class AirShipManager
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName()+": Could not load airships table: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not load airships table: " + e.getMessage(), e);
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName()+": Error while initializing: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Error while initializing: " + e.getMessage(), e);
 		}
 		finally
 		{
 			L2DatabaseFactory.close(con);
 		}
 		
-		_log.info(getClass().getSimpleName()+": Loaded " + _airShipsInfo.size() + " private airships");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _airShipsInfo.size() + " private airships");
 	}
 	
 	private void storeInDb(int ownerId)
 	{
 		StatsSet info = _airShipsInfo.get(ownerId);
 		if (info == null)
+		{
 			return;
+		}
 		
 		Connection con = null;
 		try
@@ -309,11 +332,11 @@ public class AirShipManager
 		}
 		catch (SQLException e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName()+": Could not update airships table: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Could not update airships table: " + e.getMessage(), e);
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, getClass().getSimpleName()+": Error while save: " + e.getMessage(), e);
+			_log.log(Level.WARNING, getClass().getSimpleName() + ": Error while save: " + e.getMessage(), e);
 		}
 		finally
 		{

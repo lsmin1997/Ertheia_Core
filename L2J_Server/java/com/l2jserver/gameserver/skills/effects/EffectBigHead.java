@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- * 
  * @author LBaldi
  */
 public class EffectBigHead extends L2Effect
@@ -32,7 +31,6 @@ public class EffectBigHead extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +40,6 @@ public class EffectBigHead extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -53,7 +50,6 @@ public class EffectBigHead extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -63,7 +59,6 @@ public class EffectBigHead extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

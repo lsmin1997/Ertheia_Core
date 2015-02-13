@@ -16,12 +16,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: ch d
- * @author  KenM
+ * @author KenM
  */
 public class ExRedSky extends L2GameServerPacket
 {
 	private static final String _S__FE_40_EXREDSKYPACKET = "[S] FE:41 ExRedSkyPacket";
-	private int _duration;
+	private final int _duration;
 	
 	public ExRedSky(int duration)
 	{

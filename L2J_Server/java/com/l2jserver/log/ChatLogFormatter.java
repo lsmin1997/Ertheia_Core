@@ -23,7 +23,6 @@ import com.l2jserver.util.StringUtil;
 
 /**
  * This class ...
- * 
  * @version $Revision: 1.1.4.1 $ $Date: 2005/02/06 16:14:46 $
  */
 
@@ -31,14 +30,13 @@ public class ChatLogFormatter extends Formatter
 {
 	private static final String CRLF = "\r\n";
 	
-	private SimpleDateFormat dateFmt = new SimpleDateFormat("dd MMM H:mm:ss");
+	private final SimpleDateFormat dateFmt = new SimpleDateFormat("dd MMM H:mm:ss");
 	
 	@Override
 	public String format(LogRecord record)
 	{
 		Object[] params = record.getParameters();
-		final StringBuilder output = StringUtil.startAppend(30 + record.getMessage().length()
-				+ (params != null ? 10 * params.length : 0), "[", dateFmt.format(new Date(record.getMillis())), "] ");
+		final StringBuilder output = StringUtil.startAppend(30 + record.getMessage().length() + (params != null ? 10 * params.length : 0), "[", dateFmt.format(new Date(record.getMillis())), "] ");
 		
 		if (params != null)
 		{

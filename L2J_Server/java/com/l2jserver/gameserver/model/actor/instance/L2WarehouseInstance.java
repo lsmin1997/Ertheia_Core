@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.model.actor.instance;
 
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
-
 public class L2WarehouseInstance extends L2NpcInstance
 {
 	/**
@@ -40,9 +39,13 @@ public class L2WarehouseInstance extends L2NpcInstance
 		String pom = "";
 		
 		if (val == 0)
+		{
 			pom = "" + npcId;
+		}
 		else
+		{
 			pom = npcId + "-" + val;
+		}
 		
 		return "data/html/warehouse/" + pom + ".htm";
 	}

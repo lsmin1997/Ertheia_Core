@@ -48,15 +48,16 @@ import com.l2jserver.gameserver.taskmanager.tasks.TaskShutdown;
 
 /**
  * @author Layane
- * 
  */
 public final class TaskManager
 {
 	protected static final Logger _log = Logger.getLogger(TaskManager.class.getName());
 	
-	protected static final String[] SQL_STATEMENTS = {
+	protected static final String[] SQL_STATEMENTS =
+	{
 		"SELECT id,task,type,last_activation,param1,param2,param3 FROM global_tasks",
-		"UPDATE global_tasks SET last_activation=? WHERE id=?", "SELECT id FROM global_tasks WHERE task=?",
+		"UPDATE global_tasks SET last_activation=? WHERE id=?",
+		"SELECT id FROM global_tasks WHERE task=?",
 		"INSERT INTO global_tasks (task,type,last_activation,param1,param2,param3) VALUES(?,?,?,?,?,?)"
 	};
 	
@@ -78,9 +79,15 @@ public final class TaskManager
 			type = ptype;
 			id = rset.getInt("id");
 			lastActivation = rset.getLong("last_activation");
-			params = new String[] { rset.getString("param1"), rset.getString("param2"), rset.getString("param3") };
+			params = new String[]
+			{
+				rset.getString("param1"),
+				rset.getString("param2"),
+				rset.getString("param3")
+			};
 		}
 		
+		@Override
 		public void run()
 		{
 			task.onTimeElapsed(this);
@@ -106,7 +113,7 @@ public final class TaskManager
 				L2DatabaseFactory.close(con);
 			}
 			
-			if (type == TYPE_SHEDULED || type == TYPE_TIME)
+			if ((type == TYPE_SHEDULED) || (type == TYPE_TIME))
 			{
 				stopTask();
 			}
@@ -148,7 +155,9 @@ public final class TaskManager
 			task.onDestroy();
 			
 			if (scheduled != null)
+			{
 				scheduled.cancel(true);
+			}
 			
 			_currentTasks.remove(this);
 		}
@@ -205,7 +214,9 @@ public final class TaskManager
 				Task task = _tasks.get(rset.getString("task").trim().toLowerCase().hashCode());
 				
 				if (task == null)
+				{
 					continue;
+				}
 				
 				TaskTypes type = TaskTypes.valueOf(rset.getString("type"));
 				
@@ -213,7 +224,9 @@ public final class TaskManager
 				{
 					ExecutedTask current = new ExecutedTask(task, type, rset);
 					if (launchTask(current))
+					{
 						_currentTasks.add(current);
+					}
 				}
 				
 			}
@@ -244,7 +257,7 @@ public final class TaskManager
 		final TaskTypes type = task.getType();
 		long delay, interval;
 		
-		switch(type)
+		switch (type)
 		{
 			case TYPE_STARTUP:
 				task.run();
@@ -310,7 +323,7 @@ public final class TaskManager
 				
 				delay = min.getTimeInMillis() - System.currentTimeMillis();
 				
-				if (check.after(min) || delay < 0)
+				if (check.after(min) || (delay < 0))
 				{
 					delay += interval;
 				}

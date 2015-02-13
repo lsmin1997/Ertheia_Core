@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author Gnacik
- * 
  */
 public class RequestDismissPartyRoom extends L2GameClientPacket
 {
@@ -43,12 +42,16 @@ public class RequestDismissPartyRoom extends L2GameClientPacket
 		final L2PcInstance _activeChar = getClient().getActiveChar();
 		
 		if (_activeChar == null)
+		{
 			return;
+		}
 		
 		PartyMatchRoom _room = PartyMatchRoomList.getInstance().getRoom(_roomid);
 		
 		if (_room == null)
+		{
 			return;
+		}
 		
 		PartyMatchRoomList.getInstance().deleteRoom(_roomid);
 	}

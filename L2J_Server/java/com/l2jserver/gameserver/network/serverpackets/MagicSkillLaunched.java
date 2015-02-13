@@ -18,27 +18,18 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
- *
- * sample
- *
- * 0000: 8e  d8 a8 10 48  10 04 00 00  01 00 00 00  01 00 00    ....H...........
- * 0010: 00  d8 a8 10 48                                     ....H
- *
- *
- * format   ddddd d
- *
+ * sample 0000: 8e d8 a8 10 48 10 04 00 00 01 00 00 00 01 00 00 ....H........... 0010: 00 d8 a8 10 48 ....H format ddddd d
  * @version $Revision: 1.4.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public class MagicSkillLaunched extends L2GameServerPacket
 {
 	private static final String _S__8E_MAGICSKILLLAUNCHED = "[S] 54 MagicSkillLaunched";
-	private int _charObjId;
-	private int _skillId;
-	private int _skillLevel;
+	private final int _charObjId;
+	private final int _skillId;
+	private final int _skillLevel;
 	private int _numberOfTargets;
 	private L2Object[] _targets;
-	private int _singleTargetId;
-	
+	private final int _singleTargetId;
 	
 	public MagicSkillLaunched(L2Character cha, int skillId, int skillLevel, L2Object[] targets)
 	{
@@ -54,7 +45,10 @@ public class MagicSkillLaunched extends L2GameServerPacket
 		else
 		{
 			_numberOfTargets = 1;
-			L2Object[] objs = {cha};
+			L2Object[] objs =
+			{
+				cha
+			};
 			_targets = objs;
 		}
 		_singleTargetId = 0;
@@ -77,17 +71,21 @@ public class MagicSkillLaunched extends L2GameServerPacket
 		writeD(_skillId);
 		writeD(_skillLevel);
 		writeD(_numberOfTargets); // also failed or not?
-		if (_singleTargetId != 0 || _numberOfTargets == 0)
+		if ((_singleTargetId != 0) || (_numberOfTargets == 0))
 		{
 			writeD(_singleTargetId);
 		}
-		else for(L2Object target : _targets)
+		else
 		{
-			writeD(target.getObjectId());
+			for (L2Object target : _targets)
+			{
+				writeD(target.getObjectId());
+			}
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

@@ -20,14 +20,12 @@ import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 
 /**
  * @author Layane
- * 
  */
 public class TaskShutdown extends Task
 {
 	public static final String NAME = "shutdown";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -37,7 +35,6 @@ public class TaskShutdown extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override

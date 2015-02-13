@@ -36,7 +36,6 @@ public class EffectBuff extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#effectCanBeStolen()
 	 */
 	@Override
@@ -44,7 +43,7 @@ public class EffectBuff extends L2Effect
 	{
 		return true;
 	}
-
+	
 	@Override
 	public L2EffectType getEffectType()
 	{

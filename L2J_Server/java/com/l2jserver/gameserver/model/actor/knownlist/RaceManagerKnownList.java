@@ -22,10 +22,10 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2RaceManagerInstance;
 import com.l2jserver.gameserver.network.serverpackets.DeleteObject;
 
-
 public class RaceManagerKnownList extends NpcKnownList
 {
 	protected static final Logger _log = Logger.getLogger(RaceManagerKnownList.class.getName());
+	
 	// =========================================================
 	// Data Field
 	
@@ -41,13 +41,13 @@ public class RaceManagerKnownList extends NpcKnownList
 	@Override
 	public boolean addKnownObject(L2Object object)
 	{
-		if (!super.addKnownObject(object)) return false;
+		if (!super.addKnownObject(object))
+		{
+			return false;
+		}
 		
-		/* DONT KNOW WHY WE NEED THIS WHEN RACE MANAGER HAS A METHOD THAT BROADCAST TO ITS KNOW PLAYERS
-        if (object instanceof L2PcInstance) {
-            if (packet != null)
-                ((L2PcInstance) object).sendPacket(packet);
-        }
+		/*
+		 * DONT KNOW WHY WE NEED THIS WHEN RACE MANAGER HAS A METHOD THAT BROADCAST TO ITS KNOW PLAYERS if (object instanceof L2PcInstance) { if (packet != null) ((L2PcInstance) object).sendPacket(packet); }
 		 */
 		
 		return true;
@@ -56,16 +56,19 @@ public class RaceManagerKnownList extends NpcKnownList
 	@Override
 	protected boolean removeKnownObject(L2Object object, boolean forget)
 	{
-		if (!super.removeKnownObject(object, forget)) return false;
+		if (!super.removeKnownObject(object, forget))
+		{
+			return false;
+		}
 		
 		if (object instanceof L2PcInstance)
 		{
-			//_log.info("Sending delete monsrac info.");
+			// _log.info("Sending delete monsrac info.");
 			DeleteObject obj = null;
-			for (int i=0; i<8; i++)
+			for (int i = 0; i < 8; i++)
 			{
 				obj = new DeleteObject(MonsterRace.getInstance().getMonsters()[i]);
-				((L2PcInstance)object).sendPacket(obj);
+				((L2PcInstance) object).sendPacket(obj);
 			}
 		}
 		
@@ -78,5 +81,8 @@ public class RaceManagerKnownList extends NpcKnownList
 	// =========================================================
 	// Property - Public
 	@Override
-	public L2RaceManagerInstance getActiveChar() { return (L2RaceManagerInstance)super.getActiveChar(); }
+	public L2RaceManagerInstance getActiveChar()
+	{
+		return (L2RaceManagerInstance) super.getActiveChar();
+	}
 }

@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * Zone where store is not allowed.
- * 
  * @author fordfrog
  */
 public class L2NoStoreZone extends L2ZoneType

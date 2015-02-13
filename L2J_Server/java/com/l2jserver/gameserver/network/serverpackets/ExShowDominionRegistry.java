@@ -25,7 +25,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * format: dSSSdddddddd (dd(d))
- * @author  GodKratos
+ * @author GodKratos
  */
 public class ExShowDominionRegistry extends L2GameServerPacket
 {
@@ -36,7 +36,7 @@ public class ExShowDominionRegistry extends L2GameServerPacket
 	private int _isMercRegistered = 0x00;
 	private int _isClanRegistered = 0x00;
 	private int _warTime = (int) (Calendar.getInstance().getTimeInMillis() / 1000);
-	private int _currentTime = (int) (Calendar.getInstance().getTimeInMillis() / 1000);
+	private final int _currentTime = (int) (Calendar.getInstance().getTimeInMillis() / 1000);
 	
 	public ExShowDominionRegistry(int castleId, L2PcInstance player)
 	{
@@ -45,7 +45,9 @@ public class ExShowDominionRegistry extends L2GameServerPacket
 		{
 			_clanReq = TerritoryWarManager.getInstance().getRegisteredClans(castleId).size();
 			if (player.getClan() != null)
+			{
 				_isClanRegistered = (TerritoryWarManager.getInstance().getRegisteredClans(castleId).contains(player.getClan()) ? 0x01 : 0x00);
+			}
 		}
 		if (TerritoryWarManager.getInstance().getRegisteredMercenaries(castleId) != null)
 		{
@@ -72,7 +74,7 @@ public class ExShowDominionRegistry extends L2GameServerPacket
 	{
 		writeC(0xfe);
 		writeH(0x90);
-		writeD(MINID+_castleId); // Current Territory Id
+		writeD(MINID + _castleId); // Current Territory Id
 		if (TerritoryWarManager.getInstance().getTerritory(_castleId) == null)
 		{
 			// something is wrong
@@ -100,8 +102,10 @@ public class ExShowDominionRegistry extends L2GameServerPacket
 		{
 			writeD(t.getTerritoryId()); // Territory Id
 			writeD(t.getOwnedWardIds().size()); // Emblem Count
-			for(int i:t.getOwnedWardIds())
+			for (int i : t.getOwnedWardIds())
+			{
 				writeD(i); // Emblem ID - should be in for loop for emblem count
+			}
 		}
 	}
 }

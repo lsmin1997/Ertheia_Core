@@ -19,14 +19,13 @@ import com.l2jserver.util.Point3D;
 
 /**
  * @author Maktakien
- *
  */
-public class StopMoveInVehicle  extends L2GameServerPacket
+public class StopMoveInVehicle extends L2GameServerPacket
 {
-	private int _charObjId;
-	private int _boatId;
-	private Point3D _pos;
-	private int _heading;
+	private final int _charObjId;
+	private final int _boatId;
+	private final Point3D _pos;
+	private final int _heading;
 	
 	public StopMoveInVehicle(L2PcInstance player, int boatId)
 	{
@@ -36,7 +35,8 @@ public class StopMoveInVehicle  extends L2GameServerPacket
 		_heading = player.getHeading();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -51,7 +51,8 @@ public class StopMoveInVehicle  extends L2GameServerPacket
 		writeD(_heading);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

@@ -17,18 +17,22 @@ package com.l2jserver.gameserver.skills.funcs;
 import com.l2jserver.gameserver.skills.Env;
 import com.l2jserver.gameserver.skills.Stats;
 
-
-
-public class FuncSub extends Func {
+public class FuncSub extends Func
+{
 	private final Lambda _lambda;
-	public FuncSub(Stats pStat, int pOrder, Object owner, Lambda lambda) {
+	
+	public FuncSub(Stats pStat, int pOrder, Object owner, Lambda lambda)
+	{
 		super(pStat, pOrder, owner);
 		_lambda = lambda;
 	}
+	
 	@Override
 	public void calc(Env env)
 	{
-		if (cond == null || cond.test(env))
+		if ((cond == null) || cond.test(env))
+		{
 			env.value -= _lambda.calc(env);
+		}
 	}
 }

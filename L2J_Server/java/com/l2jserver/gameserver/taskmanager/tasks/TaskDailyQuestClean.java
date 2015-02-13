@@ -25,10 +25,8 @@ import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 import com.l2jserver.gameserver.taskmanager.TaskTypes;
 
-
 /**
  ** @author Gnacik
- ** 
  */
 public class TaskDailyQuestClean extends Task
 {
@@ -36,14 +34,15 @@ public class TaskDailyQuestClean extends Task
 	
 	private static final String NAME = "daily_quest_clean";
 	
-	private static final String[] _daily_names = {
+	private static final String[] _daily_names =
+	{
 		"463_IMustBeaGenius",
 		"464_Oath",
 		"458_PerfectForm",
 		"461_RumbleInTheBase"
 	};
+	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -53,7 +52,6 @@ public class TaskDailyQuestClean extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override
@@ -63,7 +61,7 @@ public class TaskDailyQuestClean extends Task
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			for(String name : _daily_names)
+			for (String name : _daily_names)
 			{
 				PreparedStatement statement = con.prepareStatement("DELETE FROM character_quests WHERE name=? AND var='<state>' AND value='Completed';");
 				statement.setString(1, name);
@@ -83,7 +81,6 @@ public class TaskDailyQuestClean extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#initializate()
 	 */
 	@Override

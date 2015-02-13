@@ -65,7 +65,7 @@ public class RecipeController
 {
 	protected static final Logger _log = Logger.getLogger(RecipeController.class.getName());
 	
-	private Map<Integer, L2RecipeList> _lists;
+	private final Map<Integer, L2RecipeList> _lists;
 	private static final Map<Integer, RecipeItemMaker> _activeMakers = new FastMap<Integer, RecipeItemMaker>();
 	private static final String RECIPES_FILE = "recipes.xml";
 	
@@ -143,7 +143,7 @@ public class RecipeController
 	
 	public synchronized void requestMakeItemAbort(L2PcInstance player)
 	{
-		_activeMakers.remove(player.getObjectId()); // TODO:  anything else here?
+		_activeMakers.remove(player.getObjectId()); // TODO: anything else here?
 	}
 	
 	public synchronized void requestManufactureItem(L2PcInstance manufacturer, int recipeListId, L2PcInstance player)
@@ -520,6 +520,7 @@ public class RecipeController
 			_isValid = true;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (!Config.IS_CRAFTING_ENABLED)
@@ -995,7 +996,7 @@ public class RecipeController
 				}
 				
 				// Added multiplication of Creation speed with XP/SP gain
-				// slower crafting -> more XP,  faster crafting -> less XP
+				// slower crafting -> more XP, faster crafting -> less XP
 				// you can use ALT_GAME_CREATION_XP_RATE/SP to
 				// modify XP/SP gained (default = 1)
 				

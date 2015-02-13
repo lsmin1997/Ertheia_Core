@@ -18,13 +18,12 @@ import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class ChangeAccessLevel extends BaseRecievePacket
 {
 	
-	private int _level;
-	private String _account;
+	private final int _level;
+	private final String _account;
 	
 	/**
 	 * @param decrypt

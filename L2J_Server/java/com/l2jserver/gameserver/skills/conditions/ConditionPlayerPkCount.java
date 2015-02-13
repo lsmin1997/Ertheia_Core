@@ -26,7 +26,6 @@ public class ConditionPlayerPkCount extends Condition
 	
 	/**
 	 * Instantiates a new condition player pk count.
-	 *
 	 * @param pk the pk
 	 */
 	public ConditionPlayerPkCount(int pk)
@@ -34,15 +33,18 @@ public class ConditionPlayerPkCount extends Condition
 		_pk = pk;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
-		return ((L2PcInstance)env.player).getPkKills() <= _pk;
+		return ((L2PcInstance) env.player).getPkKills() <= _pk;
 	}
 }

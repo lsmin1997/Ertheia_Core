@@ -18,16 +18,13 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * Format: (ch) dc
- * d: character object id
- * c: 1 if won 0 if failed
+ * Format: (ch) dc d: character object id c: 1 if won 0 if failed
  * @author -Wooden-
- *
  */
 public class ExFishingEnd extends L2GameServerPacket
 {
 	private static final String _S__FE_14_EXFISHINGEND = "[S] FE:1f ExFishingEnd";
-	private boolean _win;
+	private final boolean _win;
 	L2Character _activeChar;
 	
 	public ExFishingEnd(boolean win, L2PcInstance character)
@@ -36,7 +33,8 @@ public class ExFishingEnd extends L2GameServerPacket
 		_activeChar = character;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -49,7 +47,8 @@ public class ExFishingEnd extends L2GameServerPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

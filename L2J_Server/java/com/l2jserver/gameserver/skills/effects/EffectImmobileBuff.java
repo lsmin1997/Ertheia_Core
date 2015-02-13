@@ -36,7 +36,6 @@ public class EffectImmobileBuff extends EffectBuff
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -46,7 +45,6 @@ public class EffectImmobileBuff extends EffectBuff
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -57,7 +55,6 @@ public class EffectImmobileBuff extends EffectBuff
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -68,7 +65,6 @@ public class EffectImmobileBuff extends EffectBuff
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

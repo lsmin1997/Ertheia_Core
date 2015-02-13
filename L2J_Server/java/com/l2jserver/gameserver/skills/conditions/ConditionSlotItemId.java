@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionSlotItemId.
- *
  * @author mkizub
  */
 public final class ConditionSlotItemId extends ConditionInventory
@@ -32,7 +31,6 @@ public final class ConditionSlotItemId extends ConditionInventory
 	
 	/**
 	 * Instantiates a new condition slot item id.
-	 *
 	 * @param slot the slot
 	 * @param itemId the item id
 	 * @param enchantLevel the enchant level
@@ -44,18 +42,23 @@ public final class ConditionSlotItemId extends ConditionInventory
 		_enchantLevel = enchantLevel;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.ConditionInventory#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		Inventory inv = ((L2PcInstance) env.player).getInventory();
 		L2ItemInstance item = inv.getPaperdollItem(_slot);
 		if (item == null)
+		{
 			return _itemId == 0;
-		return item.getItemId() == _itemId && item.getEnchantLevel() >= _enchantLevel;
+		}
+		return (item.getItemId() == _itemId) && (item.getEnchantLevel() >= _enchantLevel);
 	}
 }

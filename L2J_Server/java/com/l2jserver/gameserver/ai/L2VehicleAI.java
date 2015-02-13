@@ -22,10 +22,7 @@ import com.l2jserver.gameserver.model.actor.L2Vehicle;
 public abstract class L2VehicleAI extends L2CharacterAI
 {
 	/**
-	 * 
-	 * @author DS
-	 * Simple AI for vehicles
-	 * 
+	 * @author DS Simple AI for vehicles
 	 */
 	public L2VehicleAI(L2Vehicle.AIAccessor accessor)
 	{

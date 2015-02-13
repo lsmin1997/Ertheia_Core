@@ -19,7 +19,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionPlayerPledgeClass.
- *
  * @author MrPoke
  */
 public final class ConditionPlayerPledgeClass extends Condition
@@ -29,7 +28,6 @@ public final class ConditionPlayerPledgeClass extends Condition
 	
 	/**
 	 * Instantiates a new condition player pledge class.
-	 *
 	 * @param pledgeClass the pledge class
 	 */
 	public ConditionPlayerPledgeClass(int pledgeClass)
@@ -39,7 +37,6 @@ public final class ConditionPlayerPledgeClass extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -48,14 +45,20 @@ public final class ConditionPlayerPledgeClass extends Condition
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
-		if (((L2PcInstance)env.player).getClan() == null)
+		if (((L2PcInstance) env.player).getClan() == null)
+		{
 			return false;
+		}
 		
 		if (_pledgeClass == -1)
-			return ((L2PcInstance)env.player).isClanLeader();
+		{
+			return ((L2PcInstance) env.player).isClanLeader();
+		}
 		
-		return (((L2PcInstance)env.player).getPledgeClass() >= _pledgeClass);
+		return (((L2PcInstance) env.player).getPledgeClass() >= _pledgeClass);
 	}
 }

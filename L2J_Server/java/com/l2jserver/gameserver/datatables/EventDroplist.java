@@ -22,19 +22,17 @@ import javolution.util.FastList;
 import com.l2jserver.gameserver.script.DateRange;
 
 /**
- * This class manage drop of Special Events created by GM for a defined period.
- * During a Special Event all L2Attackable can drop extra Items.
- * Those extra Items are defined in the table <B>allNpcDateDrops</B>.
- * Each Special Event has a start and end date to stop to drop extra Items automaticaly.<BR><BR>
+ * This class manage drop of Special Events created by GM for a defined period. During a Special Event all L2Attackable can drop extra Items. Those extra Items are defined in the table <B>allNpcDateDrops</B>. Each Special Event has a start and end date to stop to drop extra Items automaticaly.<BR>
+ * <BR>
  */
 
 public class EventDroplist
 {
 	
-	//private static Logger _log = Logger.getLogger(EventDroplist.class.getName());
+	// private static Logger _log = Logger.getLogger(EventDroplist.class.getName());
 	
 	/** The table containing all DataDrop object */
-	private List<DateDrop> _allNpcDateDrops;
+	private final List<DateDrop> _allNpcDateDrops;
 	
 	public static EventDroplist getInstance()
 	{
@@ -61,7 +59,8 @@ public class EventDroplist
 	}
 	
 	/**
-	 * Constructor of EventDroplist.<BR><BR>
+	 * Constructor of EventDroplist.<BR>
+	 * <BR>
 	 */
 	private EventDroplist()
 	{
@@ -69,13 +68,12 @@ public class EventDroplist
 	}
 	
 	/**
-	 * Create and Init a new DateDrop then add it to the allNpcDateDrops of EventDroplist .<BR><BR>
-	 *
+	 * Create and Init a new DateDrop then add it to the allNpcDateDrops of EventDroplist .<BR>
+	 * <BR>
 	 * @param items The table containing all item identifier of this DateDrop
 	 * @param count The table containing min and max value of this DateDrop
 	 * @param chance The chance to obtain this drop
 	 * @param range The DateRange object to add to this DateDrop
-	 *
 	 */
 	public void addGlobalDrop(int[] items, int[] count, int chance, DateRange range)
 	{
@@ -92,7 +90,8 @@ public class EventDroplist
 	}
 	
 	/**
-	 * Return all DateDrop of EventDroplist allNpcDateDrops within the date range.<BR><BR>
+	 * Return all DateDrop of EventDroplist allNpcDateDrops within the date range.<BR>
+	 * <BR>
 	 */
 	public List<DateDrop> getAllDrops()
 	{
@@ -101,7 +100,7 @@ public class EventDroplist
 		for (DateDrop drop : _allNpcDateDrops)
 		{
 			Date currentDate = new Date();
-			//_log.info("From: "+drop.from+" To: "+drop.to+" Now: "+ currentDate);
+			// _log.info("From: "+drop.from+" To: "+drop.to+" Now: "+ currentDate);
 			if (drop.dateRange.isWithinRange(currentDate))
 			{
 				list.add(drop);

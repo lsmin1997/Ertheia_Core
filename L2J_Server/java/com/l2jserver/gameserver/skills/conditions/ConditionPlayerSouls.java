@@ -27,7 +27,6 @@ public class ConditionPlayerSouls extends Condition
 	
 	/**
 	 * Instantiates a new condition player souls.
-	 *
 	 * @param souls the souls
 	 */
 	public ConditionPlayerSouls(int souls)
@@ -35,12 +34,13 @@ public class ConditionPlayerSouls extends Condition
 		_souls = souls;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		return ((L2PcInstance)env.player).getSouls() >= _souls;
+		return ((L2PcInstance) env.player).getSouls() >= _souls;
 	}
 }

@@ -23,19 +23,13 @@ import com.l2jserver.gameserver.network.communityserver.writepackets.WorldInfo;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
- *  sample
- *  5F
- *  01 00 00 00
- *
- *  format  cdd
- *
- *
+ * sample 5F 01 00 00 00 format cdd
  * @version $Revision: 1.7.4.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestAnswerJoinAlly extends L2GameClientPacket
 {
 	private static final String _C__83_REQUESTANSWERJOINALLY = "[C] 83 RequestAnswerJoinAlly";
-	//private static Logger _log = Logger.getLogger(RequestAnswerJoinAlly.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestAnswerJoinAlly.class.getName());
 	
 	private int _response;
 	
@@ -76,7 +70,7 @@ public final class RequestAnswerJoinAlly extends L2GameClientPacket
 			// we must double check this cause of hack
 			if (clan.checkAllyJoinCondition(requestor, activeChar))
 			{
-				//TODO: Need correct message id
+				// TODO: Need correct message id
 				requestor.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_SUCCEEDED_INVITING_FRIEND));
 				
 				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_ACCEPTED_ALLIANCE));
@@ -100,7 +94,8 @@ public final class RequestAnswerJoinAlly extends L2GameClientPacket
 		activeChar.getRequest().onRequestResponse();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

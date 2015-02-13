@@ -37,8 +37,8 @@ import com.l2jserver.loginserver.GameServerTable;
 public class GUserInterface extends BaseGameServerRegister implements ActionListener
 {
 	private final JFrame _frame;
-	private JTableModel _dtm;
-	private JProgressBar _progressBar;
+	private final JTableModel _dtm;
+	private final JProgressBar _progressBar;
 	
 	public JTable _gsTable;
 	
@@ -93,7 +93,12 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 		String name = getBundle().getString("gsName");
 		String action = getBundle().getString("gsAction");
 		
-		_dtm = new JTableModel(new Object[] { "ID", name, action });
+		_dtm = new JTableModel(new Object[]
+		{
+			"ID",
+			name,
+			action
+		});
 		_gsTable = new JTable(_dtm);
 		_gsTable.addMouseListener(new JTableButtonMouseListener(_gsTable));
 		
@@ -115,35 +120,20 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 		_progressBar.setIndeterminate(true);
 		_progressBar.setVisible(false);
 		layer.add(_progressBar, BorderLayout.CENTER, 1);
-		//layer.setV
+		// layer.setV
 		getFrame().add(layer, cons);
 		
-		
 		// maximize, doesn't seem really needed
-		//getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 		/*
-		// Work-around JVM maximize issue on linux
-		String osName = System.getProperty("os.name");
-		if (osName.equals("Linux"))
-		{
-		   Toolkit toolkit = Toolkit.getDefaultToolkit();
-		   Dimension screenSize = toolkit.getScreenSize();
-		   getFrame().setSize(screenSize);
-		}
+		 * // Work-around JVM maximize issue on linux String osName = System.getProperty("os.name"); if (osName.equals("Linux")) { Toolkit toolkit = Toolkit.getDefaultToolkit(); Dimension screenSize = toolkit.getScreenSize(); getFrame().setSize(screenSize); }
 		 */
-		this.refreshAsync();
+		refreshAsync();
 	}
 	
 	public void refreshAsync()
 	{
-		Runnable r = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				GUserInterface.this.refreshServers();
-			}
-		};
+		Runnable r = () -> GUserInterface.this.refreshServers();
 		Thread t = new Thread(r, "LoaderThread");
 		t.start();
 	}
@@ -152,33 +142,12 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 	public void load()
 	{
 		
-		SwingUtilities.invokeLater
-		(
-				new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						_progressBar.setVisible(true);
-					}
-				}
-		);
+		SwingUtilities.invokeLater(() -> _progressBar.setVisible(true));
 		
 		super.load();
 		
-		SwingUtilities.invokeLater
-		(
-				new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						_progressBar.setVisible(false);
-					}
-				}
-		);
+		SwingUtilities.invokeLater(() -> _progressBar.setVisible(false));
 	}
-	
 	
 	/**
 	 * @see com.l2jserver.gsregistering.BaseGameServerRegister#showError(java.lang.String, java.lang.String, java.lang.Throwable)
@@ -187,82 +156,73 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 	public void showError(String msg, Throwable t)
 	{
 		String title;
-		if (this.getBundle() != null)
+		if (getBundle() != null)
 		{
-			title = this.getBundle().getString("error");
-			msg += '\n'+this.getBundle().getString("reason")+' '+t.getLocalizedMessage();
+			title = getBundle().getString("error");
+			msg += '\n' + getBundle().getString("reason") + ' ' + t.getLocalizedMessage();
 		}
 		else
 		{
 			title = "Error";
-			msg += "\nCause: "+t.getLocalizedMessage();
+			msg += "\nCause: " + t.getLocalizedMessage();
 		}
-		JOptionPane.showMessageDialog(this.getFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(getFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	protected void refreshServers()
 	{
-		if (!this.isLoaded())
+		if (!isLoaded())
 		{
-			this.load();
+			load();
 		}
 		
 		// load succeeded?
-		if (this.isLoaded())
+		if (isLoaded())
 		{
-			SwingUtilities.invokeLater
-			(
-					new Runnable()
+			SwingUtilities.invokeLater(() ->
+			{
+				int size = GameServerTable.getInstance().getServerNames().size();
+				if (size == 0)
+				{
+					String title = getBundle().getString("error");
+					String msg = getBundle().getString("noServerNames");
+					JOptionPane.showMessageDialog(getFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+				// reset
+				_dtm.setRowCount(0);
+				
+				for (final int id : GameServerTable.getInstance().getRegisteredGameServers().keySet())
+				{
+					String name = GameServerTable.getInstance().getServerNameById(id);
+					JButton button = new JButton(getBundle().getString("btnRemove"), ImagesTable.getImage("cross.png"));
+					button.addActionListener(e ->
 					{
-						@Override
-						public void run()
+						String sid = String.valueOf(id);
+						String sname = GameServerTable.getInstance().getServerNameById(id);
+						
+						int choice = JOptionPane.showConfirmDialog(getFrame(), getBundle().getString("confirmRemoveText").replace("%d", sid).replace("%s", sname), getBundle().getString("confirmRemoveTitle"), JOptionPane.YES_NO_OPTION);
+						if (choice == JOptionPane.YES_OPTION)
 						{
-							int size = GameServerTable.getInstance().getServerNames().size();
-							if (size == 0)
+							try
 							{
-								String title = getBundle().getString("error");
-								String msg = getBundle().getString("noServerNames");
-								JOptionPane.showMessageDialog(getFrame(), msg, title, JOptionPane.ERROR_MESSAGE);
-								System.exit(1);
+								BaseGameServerRegister.unregisterGameServer(id);
+								GUserInterface.this.refreshAsync();
 							}
-							// reset
-							_dtm.setRowCount(0);
-							
-							for (final int id : GameServerTable.getInstance().getRegisteredGameServers().keySet())
+							catch (SQLException e1)
 							{
-								String name = GameServerTable.getInstance().getServerNameById(id);
-								JButton button = new JButton(getBundle().getString("btnRemove"), ImagesTable.getImage("cross.png"));
-								button.addActionListener
-								(
-										new ActionListener()
-										{
-											@Override
-											public void actionPerformed(ActionEvent e)
-											{
-												String sid = String.valueOf(id);
-												String sname = GameServerTable.getInstance().getServerNameById(id);
-												
-												int choice = JOptionPane.showConfirmDialog(getFrame(), getBundle().getString("confirmRemoveText").replace("%d", sid).replace("%s",sname), getBundle().getString("confirmRemoveTitle"), JOptionPane.YES_NO_OPTION);
-												if (choice == JOptionPane.YES_OPTION)
-												{
-													try
-													{
-														BaseGameServerRegister.unregisterGameServer(id);
-														GUserInterface.this.refreshAsync();
-													}
-													catch (SQLException e1)
-													{
-														GUserInterface.this.showError(getBundle().getString("errorUnregister"), e1);
-													}
-												}
-											}
-										}
-								);
-								_dtm.addRow(new Object[] { id, name, button });
+								GUserInterface.this.showError(getBundle().getString("errorUnregister"), e1);
 							}
 						}
-					}
-			);
+					});
+					_dtm.addRow(new Object[]
+					{
+						id,
+						name,
+						button
+					});
+				}
+			});
 		}
 	}
 	
@@ -282,7 +242,7 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 		}
 		else if (cmd.equals("about"))
 		{
-			JOptionPane.showMessageDialog(getFrame(), getBundle().getString("credits") + "\nhttp://www.l2jserver.com\n\n"+getBundle().getString("icons")+"\n\n"+getBundle().getString("language")+'\n'+getBundle().getString("translation"), getBundle().getString("aboutItem"), JOptionPane.INFORMATION_MESSAGE, ImagesTable.getImage("l2jserverlogo.png"));
+			JOptionPane.showMessageDialog(getFrame(), getBundle().getString("credits") + "\nhttp://www.l2jserver.com\n\n" + getBundle().getString("icons") + "\n\n" + getBundle().getString("language") + '\n' + getBundle().getString("translation"), getBundle().getString("aboutItem"), JOptionPane.INFORMATION_MESSAGE, ImagesTable.getImage("l2jserverlogo.png"));
 		}
 		else if (cmd.equals("removeAll"))
 		{
@@ -292,7 +252,7 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 				try
 				{
 					BaseGameServerRegister.unregisterAllGameServers();
-					this.refreshAsync();
+					refreshAsync();
 				}
 				catch (SQLException e1)
 				{
@@ -313,19 +273,15 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 	private class ButtonCellRenderer implements TableCellRenderer
 	{
 		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column)
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 		{
 			return (Component) value;
 		}
 	}
 	
 	/**
-	 * Forward mouse-events from table to buttons inside.
-	 * Buttons animate properly.
-	 *
-	 * @author  KenM
+	 * Forward mouse-events from table to buttons inside. Buttons animate properly.
+	 * @author KenM
 	 */
 	private class JTableButtonMouseListener implements MouseListener
 	{
@@ -340,10 +296,10 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 		{
 			TableColumnModel columnModel = _table.getColumnModel();
 			int column = columnModel.getColumnIndexAtX(e.getX());
-			int row    = e.getY() / _table.getRowHeight();
+			int row = e.getY() / _table.getRowHeight();
 			Object value;
 			
-			if (row >= _table.getRowCount() || row < 0 || column >= _table.getColumnCount() || column < 0)
+			if ((row >= _table.getRowCount()) || (row < 0) || (column >= _table.getColumnCount()) || (column < 0))
 			{
 				return;
 			}
@@ -366,26 +322,31 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 			}
 		}
 		
+		@Override
 		public void mouseEntered(MouseEvent e)
 		{
 			forwardEvent(e);
 		}
 		
+		@Override
 		public void mouseExited(MouseEvent e)
 		{
 			forwardEvent(e);
 		}
 		
+		@Override
 		public void mousePressed(MouseEvent e)
 		{
 			forwardEvent(e);
 		}
 		
+		@Override
 		public void mouseClicked(MouseEvent e)
 		{
 			forwardEvent(e);
 		}
 		
+		@Override
 		public void mouseReleased(MouseEvent e)
 		{
 			forwardEvent(e);
@@ -395,6 +356,11 @@ public class GUserInterface extends BaseGameServerRegister implements ActionList
 	@SuppressWarnings("serial")
 	private class JTableModel extends DefaultTableModel
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -1673664465505085018L;
+		
 		public JTableModel(Object[] columnNames)
 		{
 			super(columnNames, 0);

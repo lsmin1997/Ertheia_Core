@@ -23,7 +23,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 public final class RequestRecipeItemMakeSelf extends L2GameClientPacket
 {
 	private static final String _C__AF_REQUESTRECIPEITEMMAKESELF = "[C] AF RequestRecipeItemMakeSelf";
-	//private static Logger _log = Logger.getLogger(RequestSellItem.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestSellItem.class.getName());
 	
 	private int _id;
 	
@@ -38,10 +38,14 @@ public final class RequestRecipeItemMakeSelf extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getManufacture().tryPerformAction("RecipeMakeSelf"))
+		{
 			return;
+		}
 		
 		if (activeChar.getPrivateStoreType() != 0)
 		{

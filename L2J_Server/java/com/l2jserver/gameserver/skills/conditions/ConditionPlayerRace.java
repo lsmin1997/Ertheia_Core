@@ -40,7 +40,9 @@ public class ConditionPlayerRace extends Condition
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		return Util.contains(_races, env.player.getActingPlayer().getRace());
 	}
 }

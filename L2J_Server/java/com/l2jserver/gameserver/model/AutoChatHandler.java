@@ -39,11 +39,7 @@ import com.l2jserver.gameserver.network.serverpackets.CreatureSay;
 import com.l2jserver.util.Rnd;
 
 /**
- * Auto Chat Handler
- *
- * Allows NPCs to automatically send messages to nearby players
- * at a set time interval.
- *
+ * Auto Chat Handler Allows NPCs to automatically send messages to nearby players at a set time interval.
  * @author Tempy
  */
 public class AutoChatHandler implements SpawnListener
@@ -98,7 +94,9 @@ public class AutoChatHandler implements SpawnListener
 			statement.close();
 			
 			if (Config.DEBUG)
+			{
 				_log.info("AutoChatHandler: Loaded " + numLoaded + " chat group(s) from the database.");
+			}
 		}
 		catch (Exception e)
 		{
@@ -119,7 +117,9 @@ public class AutoChatHandler implements SpawnListener
 			{
 				// clear timer
 				if (aci._chatTask != null)
+				{
 					aci._chatTask.cancel(true);
+				}
 				this.removeChat(aci);
 			}
 		}
@@ -142,10 +142,8 @@ public class AutoChatHandler implements SpawnListener
 	}
 	
 	/**
-	 * Registers a globally active auto chat for ALL instances of the given NPC ID.
-	 * <BR>
+	 * Registers a globally active auto chat for ALL instances of the given NPC ID. <BR>
 	 * Returns the associated auto chat instance.
-	 *
 	 * @param int npcId
 	 * @param String[] chatTexts
 	 * @param int chatDelay (-1 = default delay)
@@ -157,12 +155,8 @@ public class AutoChatHandler implements SpawnListener
 	}
 	
 	/**
-	 * Registers a NON globally-active auto chat for the given NPC instance, and adds to the currently
-	 * assigned chat instance for this NPC ID, otherwise creates a new instance if
-	 * a previous one is not found.
-	 * <BR>
+	 * Registers a NON globally-active auto chat for the given NPC instance, and adds to the currently assigned chat instance for this NPC ID, otherwise creates a new instance if a previous one is not found. <BR>
 	 * Returns the associated auto chat instance.
-	 *
 	 * @param L2Npc npcInst
 	 * @param String[] chatTexts
 	 * @param int chatDelay (-1 = default delay)
@@ -178,15 +172,23 @@ public class AutoChatHandler implements SpawnListener
 		AutoChatInstance chatInst = null;
 		
 		if (chatDelay < 0)
+		{
 			chatDelay = DEFAULT_CHAT_DELAY + Rnd.nextInt(DEFAULT_CHAT_DELAY);
+		}
 		
 		if (_registeredChats.containsKey(npcId))
+		{
 			chatInst = _registeredChats.get(npcId);
+		}
 		else
+		{
 			chatInst = new AutoChatInstance(npcId, chatTexts, chatDelay, (npcInst == null));
+		}
 		
 		if (npcInst != null)
+		{
 			chatInst.addChatDefinition(npcInst);
+		}
 		
 		_registeredChats.put(npcId, chatInst);
 		
@@ -194,9 +196,7 @@ public class AutoChatHandler implements SpawnListener
 	}
 	
 	/**
-	 * Removes and cancels ALL auto chat definition for the given NPC ID,
-	 * and removes its chat instance if it exists.
-	 *
+	 * Removes and cancels ALL auto chat definition for the given NPC ID, and removes its chat instance if it exists.
 	 * @param int npcId
 	 * @return boolean removedSuccessfully
 	 */
@@ -208,28 +208,29 @@ public class AutoChatHandler implements SpawnListener
 	
 	/**
 	 * Removes and cancels ALL auto chats for the given chat instance.
-	 *
 	 * @param AutoChatInstance chatInst
 	 * @return boolean removedSuccessfully
 	 */
 	public boolean removeChat(AutoChatInstance chatInst)
 	{
 		if (chatInst == null)
+		{
 			return false;
+		}
 		
 		_registeredChats.remove(chatInst.getNPCId());
 		chatInst.setActive(false);
 		
 		if (Config.DEBUG)
+		{
 			_log.info("AutoChatHandler: Removed auto chat for NPC ID " + chatInst.getNPCId());
+		}
 		
 		return true;
 	}
 	
 	/**
-	 * Returns the associated auto chat instance either by the given NPC ID
-	 * or object ID.
-	 *
+	 * Returns the associated auto chat instance either by the given NPC ID or object ID.
 	 * @param int id
 	 * @param boolean byObjectId
 	 * @return AutoChatInstance chatInst
@@ -237,40 +238,49 @@ public class AutoChatHandler implements SpawnListener
 	public AutoChatInstance getAutoChatInstance(int id, boolean byObjectId)
 	{
 		if (!byObjectId)
+		{
 			return _registeredChats.get(id);
+		}
 		else
+		{
 			for (AutoChatInstance chatInst : _registeredChats.values())
+			{
 				if (chatInst.getChatDefinition(id) != null)
+				{
 					return chatInst;
+				}
+			}
+		}
 		
 		return null;
 	}
 	
 	/**
-	 * Sets the active state of all auto chat instances to that specified,
-	 * and cancels the scheduled chat task if necessary.
-	 *
+	 * Sets the active state of all auto chat instances to that specified, and cancels the scheduled chat task if necessary.
 	 * @param boolean isActive
 	 */
 	public void setAutoChatActive(boolean isActive)
 	{
 		for (AutoChatInstance chatInst : _registeredChats.values())
+		{
 			chatInst.setActive(isActive);
+		}
 	}
 	
 	/**
-	 * Used in conjunction with a SpawnListener, this method is called every time
-	 * an NPC is spawned in the world.
-	 * <BR><BR>
-	 * If an auto chat instance is set to be "global", all instances matching the registered
-	 * NPC ID will be added to that chat instance.
+	 * Used in conjunction with a SpawnListener, this method is called every time an NPC is spawned in the world. <BR>
+	 * <BR>
+	 * If an auto chat instance is set to be "global", all instances matching the registered NPC ID will be added to that chat instance.
 	 */
+	@Override
 	public void npcSpawned(L2Npc npc)
 	{
 		synchronized (_registeredChats)
 		{
 			if (npc == null)
+			{
 				return;
+			}
 			
 			int npcId = npc.getNpcId();
 			
@@ -278,17 +288,18 @@ public class AutoChatHandler implements SpawnListener
 			{
 				AutoChatInstance chatInst = _registeredChats.get(npcId);
 				
-				if (chatInst != null && chatInst.isGlobal())
+				if ((chatInst != null) && chatInst.isGlobal())
+				{
 					chatInst.addChatDefinition(npc);
+				}
 			}
 		}
 	}
 	
 	/**
-	 * Auto Chat Instance
-	 * <BR><BR>
+	 * Auto Chat Instance <BR>
+	 * <BR>
 	 * Manages the auto chat instances for a specific registered NPC ID.
-	 *
 	 * @author Tempy
 	 */
 	public class AutoChatInstance
@@ -301,7 +312,7 @@ public class AutoChatHandler implements SpawnListener
 		private boolean _globalChat = false;
 		private boolean _isActive;
 		
-		private Map<Integer, AutoChatDefinition> _chatDefinitions = new FastMap<Integer, AutoChatDefinition>();
+		private final Map<Integer, AutoChatDefinition> _chatDefinitions = new FastMap<Integer, AutoChatDefinition>();
 		protected ScheduledFuture<?> _chatTask;
 		
 		protected AutoChatInstance(int npcId, String[] chatTexts, long chatDelay, boolean isGlobal)
@@ -312,7 +323,9 @@ public class AutoChatHandler implements SpawnListener
 			_globalChat = isGlobal;
 			
 			if (Config.DEBUG)
+			{
 				_log.info("AutoChatHandler: Registered auto chat for NPC ID " + _npcId + " (Global Chat = " + _globalChat + ").");
+			}
 			
 			setActive(true);
 		}
@@ -328,14 +341,9 @@ public class AutoChatHandler implements SpawnListener
 		}
 		
 		/**
-		 * Defines an auto chat for an instance matching this auto chat instance's registered NPC ID,
-		 * and launches the scheduled chat task.
-		 * <BR>
-		 * Returns the object ID for the NPC instance, with which to refer
-		 * to the created chat definition.
-		 * <BR>
+		 * Defines an auto chat for an instance matching this auto chat instance's registered NPC ID, and launches the scheduled chat task. <BR>
+		 * Returns the object ID for the NPC instance, with which to refer to the created chat definition. <BR>
 		 * <B>Note</B>: Uses pre-defined default values for texts and chat delays from the chat instance.
-		 *
 		 * @param L2Npc npcInst
 		 * @return int objectId
 		 */
@@ -345,12 +353,8 @@ public class AutoChatHandler implements SpawnListener
 		}
 		
 		/**
-		 * Defines an auto chat for an instance matching this auto chat instance's registered NPC ID,
-		 * and launches the scheduled chat task.
-		 * <BR>
-		 * Returns the object ID for the NPC instance, with which to refer
-		 * to the created chat definition.
-		 *
+		 * Defines an auto chat for an instance matching this auto chat instance's registered NPC ID, and launches the scheduled chat task. <BR>
+		 * Returns the object ID for the NPC instance, with which to refer to the created chat definition.
 		 * @param L2Npc npcInst
 		 * @param String[] chatTexts
 		 * @param int chatDelay
@@ -361,21 +365,24 @@ public class AutoChatHandler implements SpawnListener
 			int objectId = npcInst.getObjectId();
 			AutoChatDefinition chatDef = new AutoChatDefinition(this, npcInst, chatTexts, chatDelay);
 			if (npcInst instanceof L2DefenderInstance)
+			{
 				chatDef.setRandomChat(true);
+			}
 			_chatDefinitions.put(objectId, chatDef);
 			return objectId;
 		}
 		
 		/**
 		 * Removes a chat definition specified by the given object ID.
-		 *
 		 * @param int objectId
 		 * @return boolean removedSuccessfully
 		 */
 		public boolean removeChatDefinition(int objectId)
 		{
 			if (!_chatDefinitions.containsKey(objectId))
+			{
 				return false;
+			}
 			
 			AutoChatDefinition chatDefinition = _chatDefinitions.get(objectId);
 			chatDefinition.setActive(false);
@@ -387,7 +394,6 @@ public class AutoChatHandler implements SpawnListener
 		
 		/**
 		 * Tests if this auto chat instance is active.
-		 *
 		 * @return boolean isActive
 		 */
 		public boolean isActive()
@@ -396,9 +402,7 @@ public class AutoChatHandler implements SpawnListener
 		}
 		
 		/**
-		 * Tests if this auto chat instance applies to
-		 * ALL currently spawned instances of the registered NPC ID.
-		 *
+		 * Tests if this auto chat instance applies to ALL currently spawned instances of the registered NPC ID.
 		 * @return boolean isGlobal
 		 */
 		public boolean isGlobal()
@@ -408,7 +412,6 @@ public class AutoChatHandler implements SpawnListener
 		
 		/**
 		 * Tests if random order is the DEFAULT for new chat definitions.
-		 *
 		 * @return boolean isRandom
 		 */
 		public boolean isDefaultRandom()
@@ -418,20 +421,20 @@ public class AutoChatHandler implements SpawnListener
 		
 		/**
 		 * Tests if the auto chat definition given by its object ID is set to be random.
-		 *
 		 * @return boolean isRandom
 		 */
 		public boolean isRandomChat(int objectId)
 		{
 			if (!_chatDefinitions.containsKey(objectId))
+			{
 				return false;
+			}
 			
 			return _chatDefinitions.get(objectId).isRandomChat();
 		}
 		
 		/**
 		 * Returns the ID of the NPC type managed by this auto chat instance.
-		 *
 		 * @return int npcId
 		 */
 		public int getNPCId()
@@ -441,7 +444,6 @@ public class AutoChatHandler implements SpawnListener
 		
 		/**
 		 * Returns the number of auto chat definitions stored for this instance.
-		 *
 		 * @return int definitionCount
 		 */
 		public int getDefinitionCount()
@@ -451,7 +453,6 @@ public class AutoChatHandler implements SpawnListener
 		
 		/**
 		 * Returns a list of all NPC instances handled by this auto chat instance.
-		 *
 		 * @return L2NpcInstance[] npcInsts
 		 */
 		public L2Npc[] getNPCInstanceList()
@@ -459,7 +460,9 @@ public class AutoChatHandler implements SpawnListener
 			List<L2Npc> npcInsts = new FastList<L2Npc>();
 			
 			for (AutoChatDefinition chatDefinition : _chatDefinitions.values())
+			{
 				npcInsts.add(chatDefinition._npcInstance);
+			}
 			
 			return npcInsts.toArray(new L2Npc[npcInsts.size()]);
 		}
@@ -494,7 +497,6 @@ public class AutoChatHandler implements SpawnListener
 		
 		/**
 		 * Sets a specific chat delay for the specified auto chat definition given by its object ID.
-		 *
 		 * @param int objectId
 		 * @param long delayValue
 		 */
@@ -503,12 +505,13 @@ public class AutoChatHandler implements SpawnListener
 			AutoChatDefinition chatDef = getChatDefinition(objectId);
 			
 			if (chatDef != null)
+			{
 				chatDef.setChatDelay(delayValue);
+			}
 		}
 		
 		/**
 		 * Sets a specific set of chat texts for the specified auto chat definition given by its object ID.
-		 *
 		 * @param int objectId
 		 * @param String[] textsValue
 		 */
@@ -517,12 +520,13 @@ public class AutoChatHandler implements SpawnListener
 			AutoChatDefinition chatDef = getChatDefinition(objectId);
 			
 			if (chatDef != null)
+			{
 				chatDef.setChatTexts(textsValue);
+			}
 		}
 		
 		/**
 		 * Sets specifically to use random chat order for the auto chat definition given by its object ID.
-		 *
 		 * @param int objectId
 		 * @param boolean randValue
 		 */
@@ -531,25 +535,30 @@ public class AutoChatHandler implements SpawnListener
 			AutoChatDefinition chatDef = getChatDefinition(objectId);
 			
 			if (chatDef != null)
+			{
 				chatDef.setRandomChat(randValue);
+			}
 		}
 		
 		/**
 		 * Sets the activity of ALL auto chat definitions handled by this chat instance.
-		 *
 		 * @param boolean isActive
 		 */
 		public void setActive(boolean activeValue)
 		{
 			if (_isActive == activeValue)
+			{
 				return;
+			}
 			
 			_isActive = activeValue;
 			
 			if (!isGlobal())
 			{
 				for (AutoChatDefinition chatDefinition : _chatDefinitions.values())
+				{
 					chatDefinition.setActive(activeValue);
+				}
 				
 				return;
 			}
@@ -566,13 +575,10 @@ public class AutoChatHandler implements SpawnListener
 		}
 		
 		/**
-		 * Auto Chat Definition
-		 * <BR><BR>
-		 * Stores information about specific chat data for an instance of the NPC ID
-		 * specified by the containing auto chat instance.
+		 * Auto Chat Definition <BR>
 		 * <BR>
+		 * Stores information about specific chat data for an instance of the NPC ID specified by the containing auto chat instance. <BR>
 		 * Each NPC instance of this type should be stored in a subsequent AutoChatDefinition class.
-		 *
 		 * @author Tempy
 		 */
 		private class AutoChatDefinition
@@ -598,29 +604,40 @@ public class AutoChatHandler implements SpawnListener
 				_chatTexts = chatTexts;
 				
 				if (Config.DEBUG)
-					_log.info("AutoChatHandler: Chat definition added for NPC ID " + _npcInstance.getNpcId() + " (Object ID = "
-							+ _npcInstance.getObjectId() + ").");
+				{
+					_log.info("AutoChatHandler: Chat definition added for NPC ID " + _npcInstance.getNpcId() + " (Object ID = " + _npcInstance.getObjectId() + ").");
+				}
 				
 				// If global chat isn't enabled for the parent instance,
 				// then handle the chat task locally.
 				if (!chatInst.isGlobal())
+				{
 					setActive(true);
+				}
 			}
 			
 			protected String[] getChatTexts()
 			{
 				if (_chatTexts != null)
+				{
 					return _chatTexts;
+				}
 				else
+				{
 					return _chatInstance.getDefaultTexts();
+				}
 			}
 			
 			private long getChatDelay()
 			{
 				if (_chatDelay > 0)
+				{
 					return _chatDelay;
+				}
 				else
+				{
 					return _chatInstance.getDefaultDelay();
+				}
 			}
 			
 			private boolean isActive()
@@ -651,17 +668,23 @@ public class AutoChatHandler implements SpawnListener
 			void setActive(boolean activeValue)
 			{
 				if (isActive() == activeValue)
+				{
 					return;
+				}
 				
 				if (activeValue)
 				{
 					AutoChatRunner acr = new AutoChatRunner(_npcId, _npcInstance.getObjectId());
 					if (getChatDelay() == 0)
+					{
 						// Schedule it set to 5Ms, isn't error, if use 0 sometine
 						// chatDefinition return null in AutoChatRunner
 						_chatTask = ThreadPoolManager.getInstance().scheduleGeneral(acr, 5);
+					}
 					else
+					{
 						_chatTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(acr, getChatDelay(), getChatDelay());
+					}
 				}
 				else
 				{
@@ -673,16 +696,15 @@ public class AutoChatHandler implements SpawnListener
 		}
 		
 		/**
-		 * Auto Chat Runner
-		 * <BR><BR>
+		 * Auto Chat Runner <BR>
+		 * <BR>
 		 * Represents the auto chat scheduled task for each chat instance.
-		 *
 		 * @author Tempy
 		 */
 		private class AutoChatRunner implements Runnable
 		{
-			private int _runnerNpcId;
-			private int _objectId;
+			private final int _runnerNpcId;
+			private final int _objectId;
 			
 			protected AutoChatRunner(int pNpcId, int pObjectId)
 			{
@@ -690,6 +712,7 @@ public class AutoChatHandler implements SpawnListener
 				_objectId = pObjectId;
 			}
 			
+			@Override
 			public synchronized void run()
 			{
 				AutoChatInstance chatInst = _registeredChats.get(_runnerNpcId);
@@ -709,12 +732,16 @@ public class AutoChatHandler implements SpawnListener
 						return;
 					}
 					
-					chatDefinitions = new AutoChatDefinition[] { chatDef };
+					chatDefinitions = new AutoChatDefinition[]
+					{
+						chatDef
+					};
 				}
 				
 				if (Config.DEBUG)
-					_log.info("AutoChatHandler: Running auto chat for " + chatDefinitions.length + " instances of NPC ID " + _npcId + "."
-							+ " (Global Chat = " + chatInst.isGlobal() + ")");
+				{
+					_log.info("AutoChatHandler: Running auto chat for " + chatDefinitions.length + " instances of NPC ID " + _npcId + "." + " (Global Chat = " + chatInst.isGlobal() + ")");
+				}
 				
 				for (AutoChatDefinition chatDef : chatDefinitions)
 				{
@@ -727,12 +754,18 @@ public class AutoChatHandler implements SpawnListener
 						for (L2Character player : chatNpc.getKnownList().getKnownCharactersInRadius(1500))
 						{
 							if (!(player instanceof L2PcInstance))
+							{
 								continue;
+							}
 							
 							if (((L2PcInstance) player).isGM())
+							{
 								nearbyGMs.add((L2PcInstance) player);
+							}
 							else
+							{
 								nearbyPlayers.add((L2PcInstance) player);
+							}
 						}
 						
 						int maxIndex = chatDef.getChatTexts().length;
@@ -746,7 +779,9 @@ public class AutoChatHandler implements SpawnListener
 							lastIndex = chatDef._chatIndex + 1;
 							
 							if (lastIndex == maxIndex)
+							{
 								lastIndex = 0;
+							}
 							
 							chatDef._chatIndex = lastIndex;
 						}
@@ -754,7 +789,9 @@ public class AutoChatHandler implements SpawnListener
 						text = chatDef.getChatTexts()[lastIndex];
 						
 						if (text == null)
+						{
 							return;
+						}
 						
 						if (!nearbyPlayers.isEmpty())
 						{
@@ -766,12 +803,18 @@ public class AutoChatHandler implements SpawnListener
 							int losingCabal = SevenSigns.CABAL_NULL;
 							
 							if (winningCabal == SevenSigns.CABAL_DAWN)
+							{
 								losingCabal = SevenSigns.CABAL_DUSK;
+							}
 							else if (winningCabal == SevenSigns.CABAL_DUSK)
+							{
 								losingCabal = SevenSigns.CABAL_DAWN;
+							}
 							
 							if (text.indexOf("%player_random%") > -1)
+							{
 								text = text.replaceAll("%player_random%", randomPlayer.getName());
+							}
 							
 							if (text.indexOf("%player_cabal_winner%") > -1)
 							{
@@ -799,21 +842,28 @@ public class AutoChatHandler implements SpawnListener
 						}
 						
 						if (text == null)
+						{
 							return;
+						}
 						
 						if (!text.contains("%player_"))
 						{
 							CreatureSay cs = new CreatureSay(chatNpc.getObjectId(), Say2.ALL, creatureName, text);
 							
 							for (L2PcInstance nearbyPlayer : nearbyPlayers)
+							{
 								nearbyPlayer.sendPacket(cs);
+							}
 							for (L2PcInstance nearbyGM : nearbyGMs)
+							{
 								nearbyGM.sendPacket(cs);
+							}
 						}
 						
 						if (Config.DEBUG)
-							_log.fine("AutoChatHandler: Chat propogation for object ID " + chatNpc.getObjectId() + " (" + creatureName
-									+ ") with text '" + text + "' sent to " + nearbyPlayers.size() + " nearby players.");
+						{
+							_log.fine("AutoChatHandler: Chat propogation for object ID " + chatNpc.getObjectId() + " (" + creatureName + ") with text '" + text + "' sent to " + nearbyPlayers.size() + " nearby players.");
+						}
 					}
 					catch (Exception e)
 					{

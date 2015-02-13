@@ -21,6 +21,7 @@ import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.model.L2Clan;
 import com.l2jserver.gameserver.model.L2SiegeClan;
 import com.l2jserver.gameserver.model.entity.Castle;
+
 /**
  * Populates the Siege Attacker List in the SiegeInfo Window<BR>
  * <BR>
@@ -44,14 +45,13 @@ import com.l2jserver.gameserver.model.entity.Castle;
  * S = AllyName<BR>
  * S = AllyLeaderName<BR>
  * d = AllyCrestID<BR>
- *
  * @author KenM
  */
 public final class SiegeAttackerList extends L2GameServerPacket
 {
 	private static final String _S__CA_SiegeAttackerList = "[S] ca SiegeAttackerList";
-	//private static Logger _log = Logger.getLogger(SiegeAttackerList.class.getName());
-	private Castle _castle;
+	// private static Logger _log = Logger.getLogger(SiegeAttackerList.class.getName());
+	private final Castle _castle;
 	
 	public SiegeAttackerList(Castle castle)
 	{
@@ -63,9 +63,9 @@ public final class SiegeAttackerList extends L2GameServerPacket
 	{
 		writeC(0xca);
 		writeD(_castle.getCastleId());
-		writeD(0x00); //0
-		writeD(0x01); //1
-		writeD(0x00); //0
+		writeD(0x00); // 0
+		writeD(0x01); // 1
+		writeD(0x00); // 0
 		int size = _castle.getSiege().getAttackerClans().size();
 		if (size > 0)
 		{
@@ -73,19 +73,22 @@ public final class SiegeAttackerList extends L2GameServerPacket
 			
 			writeD(size);
 			writeD(size);
-			for(L2SiegeClan siegeclan : _castle.getSiege().getAttackerClans())
+			for (L2SiegeClan siegeclan : _castle.getSiege().getAttackerClans())
 			{
 				clan = ClanTable.getInstance().getClan(siegeclan.getClanId());
-				if (clan == null) continue;
+				if (clan == null)
+				{
+					continue;
+				}
 				
 				writeD(clan.getClanId());
 				writeS(clan.getName());
 				writeS(clan.getLeaderName());
 				writeD(clan.getCrestId());
-				writeD(0x00); //signed time (seconds) (not storated by L2J)
+				writeD(0x00); // signed time (seconds) (not storated by L2J)
 				writeD(clan.getAllyId());
 				writeS(clan.getAllyName());
-				writeS(""); //AllyLeaderName
+				writeS(""); // AllyLeaderName
 				writeD(clan.getAllyCrestId());
 			}
 		}
@@ -96,7 +99,8 @@ public final class SiegeAttackerList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

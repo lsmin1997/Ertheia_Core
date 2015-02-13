@@ -35,17 +35,16 @@ import com.l2jserver.gameserver.model.L2Clan;
 
 /**
  * @author Layane
- *
  */
 public class CrestCache
 {
 	private static Logger _log = Logger.getLogger(CrestCache.class.getName());
 	
-	private FastMRUCache<Integer, byte[]> _cachePledge = new FastMRUCache<Integer, byte[]>();
+	private final FastMRUCache<Integer, byte[]> _cachePledge = new FastMRUCache<Integer, byte[]>();
 	
-	private FastMRUCache<Integer, byte[]> _cachePledgeLarge = new FastMRUCache<Integer, byte[]>();
+	private final FastMRUCache<Integer, byte[]> _cachePledgeLarge = new FastMRUCache<Integer, byte[]>();
 	
-	private FastMRUCache<Integer, byte[]> _cacheAlly = new FastMRUCache<Integer, byte[]>();
+	private final FastMRUCache<Integer, byte[]> _cacheAlly = new FastMRUCache<Integer, byte[]>();
 	
 	private int _loadedFiles;
 	
@@ -127,9 +126,7 @@ public class CrestCache
 			}
 		}
 		
-		_log.info("Cache[Crest]: " + String.format("%.3f", getMemoryUsage()) + "MB on " + getLoadedFiles()
-				+ " files loaded. (Forget Time: " + (_cachePledge.getForgetTime() / 1000) + "s , Capacity: " + _cachePledge.capacity()
-				+ ")");
+		_log.info("Cache[Crest]: " + String.format("%.3f", getMemoryUsage()) + "MB on " + getLoadedFiles() + " files loaded. (Forget Time: " + (_cachePledge.getForgetTime() / 1000) + "s , Capacity: " + _cachePledge.capacity() + ")");
 	}
 	
 	public void convertOldPedgeFiles()
@@ -347,6 +344,7 @@ public class CrestCache
 	
 	private static class BmpFilter implements FileFilter
 	{
+		@Override
 		public boolean accept(File file)
 		{
 			return (file.getName().endsWith(".bmp"));
@@ -355,6 +353,7 @@ public class CrestCache
 	
 	private static class OldPledgeFilter implements FileFilter
 	{
+		@Override
 		public boolean accept(File file)
 		{
 			return (file.getName().startsWith("Pledge_"));

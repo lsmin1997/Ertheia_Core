@@ -34,17 +34,14 @@ import com.l2jserver.loginserver.serverpackets.LoginFail.LoginFailReason;
 import com.l2jserver.loginserver.serverpackets.LoginOk;
 import com.l2jserver.loginserver.serverpackets.ServerList;
 
-
 /**
- * Format: x
- * 0 (a leading null)
- * x: the rsa encrypted block with the login an password
+ * Format: x 0 (a leading null) x: the rsa encrypted block with the login an password
  */
 public class RequestAuthLogin extends L2LoginClientPacket
 {
 	private static Logger _log = Logger.getLogger(RequestAuthLogin.class.getName());
 	
-	private byte[] _raw = new byte[128];
+	private final byte[] _raw = new byte[128];
 	
 	private String _user;
 	private String _password;
@@ -94,15 +91,15 @@ public class RequestAuthLogin extends L2LoginClientPacket
 		{
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
 			rsaCipher.init(Cipher.DECRYPT_MODE, client.getRSAPrivateKey());
-			decrypted = rsaCipher.doFinal(_raw, 0x00, 0x80 );
+			decrypted = rsaCipher.doFinal(_raw, 0x00, 0x80);
 		}
 		catch (GeneralSecurityException e)
 		{
-			_log.log(Level.INFO, "" , e);
+			_log.log(Level.INFO, "", e);
 			return;
 		}
 		
-		_user = new String(decrypted, 0x5E, 14 ).trim();
+		_user = new String(decrypted, 0x5E, 14).trim();
 		_user = _user.toLowerCase();
 		_password = new String(decrypted, 0x6C, 16).trim();
 		_ncotp = decrypted[0x7c];
@@ -165,8 +162,8 @@ public class RequestAuthLogin extends L2LoginClientPacket
 		catch (HackingException e)
 		{
 			InetAddress address = getClient().getConnection().getInetAddress();
-			lc.addBanForAddress(address, Config.LOGIN_BLOCK_AFTER_BAN*1000);
-			_log.info("Banned ("+address+") for "+Config.LOGIN_BLOCK_AFTER_BAN+" seconds, due to "+e.getConnects()+" incorrect login attempts.");
+			lc.addBanForAddress(address, Config.LOGIN_BLOCK_AFTER_BAN * 1000);
+			_log.info("Banned (" + address + ") for " + Config.LOGIN_BLOCK_AFTER_BAN + " seconds, due to " + e.getConnects() + " incorrect login attempts.");
 		}
 	}
 }

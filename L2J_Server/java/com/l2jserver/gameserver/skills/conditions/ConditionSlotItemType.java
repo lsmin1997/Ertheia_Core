@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionSlotItemType.
- *
  * @author mkizub
  */
 public final class ConditionSlotItemType extends ConditionInventory
@@ -31,7 +30,6 @@ public final class ConditionSlotItemType extends ConditionInventory
 	
 	/**
 	 * Instantiates a new condition slot item type.
-	 *
 	 * @param slot the slot
 	 * @param mask the mask
 	 */
@@ -41,18 +39,23 @@ public final class ConditionSlotItemType extends ConditionInventory
 		_mask = mask;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.ConditionInventory#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		Inventory inv = ((L2PcInstance) env.player).getInventory();
 		L2ItemInstance item = inv.getPaperdollItem(_slot);
 		if (item == null)
+		{
 			return false;
+		}
 		return (item.getItem().getItemMask() & _mask) != 0;
 	}
 }

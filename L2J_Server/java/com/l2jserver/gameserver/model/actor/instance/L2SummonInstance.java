@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.network.serverpackets.SetSummonRemainTime;
 import com.l2jserver.gameserver.skills.l2skills.L2SkillSummon;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
-
 public class L2SummonInstance extends L2Summon
 {
 	protected static final Logger log = Logger.getLogger(L2SummonInstance.class.getName());
@@ -55,7 +54,7 @@ public class L2SummonInstance extends L2Summon
 		
 		if (skill != null)
 		{
-			final L2SkillSummon summonSkill = (L2SkillSummon)skill;
+			final L2SkillSummon summonSkill = (L2SkillSummon) skill;
 			_itemConsumeId = summonSkill.getItemConsumeIdOT();
 			_itemConsumeCount = summonSkill.getItemConsumeOT();
 			_itemConsumeSteps = summonSkill.getItemConsumeSteps();
@@ -77,20 +76,30 @@ public class L2SummonInstance extends L2Summon
 		lastShowntimeRemaining = _totalLifeTime;
 		
 		if (_itemConsumeId == 0)
+		{
 			_nextItemConsumeTime = -1; // do not consume
+		}
 		else if (_itemConsumeSteps == 0)
+		{
 			_nextItemConsumeTime = -1; // do not consume
+		}
 		else
-			_nextItemConsumeTime = _totalLifeTime - _totalLifeTime / (_itemConsumeSteps + 1);
+		{
+			_nextItemConsumeTime = _totalLifeTime - (_totalLifeTime / (_itemConsumeSteps + 1));
+		}
 		
 		// When no item consume is defined task only need to check when summon life time has ended.
 		// Otherwise have to destroy items from owner's inventory in order to let summon live.
 		int delay = 1000;
 		
 		if (Config.DEBUG && (_itemConsumeCount != 0))
+		{
 			_log.warning("L2SummonInstance: Item Consume ID: " + _itemConsumeId + ", Count: " + _itemConsumeCount + ", Rate: " + _itemConsumeSteps + " times.");
+		}
 		if (Config.DEBUG)
+		{
 			_log.warning("L2SummonInstance: Task Delay " + (delay / 1000) + " seconds.");
+		}
 		
 		_summonLifeTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new SummonLifetime(getOwner(), this), delay, delay);
 	}
@@ -181,10 +190,14 @@ public class L2SummonInstance extends L2Summon
 	public boolean doDie(L2Character killer)
 	{
 		if (!super.doDie(killer))
+		{
 			return false;
+		}
 		
 		if (Config.DEBUG)
+		{
 			_log.warning("L2SummonInstance: " + getTemplate().name + " (" + getOwner().getName() + ") has been killed.");
+		}
 		
 		if (_summonLifeTask != null)
 		{
@@ -196,37 +209,41 @@ public class L2SummonInstance extends L2Summon
 	}
 	
 	/**
-	 * Servitors' skills automatically change their level based on the servitor's level.
-	 * Until level 70, the servitor gets 1 lv of skill per 10 levels. After that, it is 1
-	 * skill level per 5 servitor levels.  If the resulting skill level doesn't exist use
-	 * the max that does exist!
-	 *
+	 * Servitors' skills automatically change their level based on the servitor's level. Until level 70, the servitor gets 1 lv of skill per 10 levels. After that, it is 1 skill level per 5 servitor levels. If the resulting skill level doesn't exist use the max that does exist!
 	 * @see com.l2jserver.gameserver.model.actor.L2Character#doCast(com.l2jserver.gameserver.model.L2Skill)
 	 */
 	@Override
 	public void doCast(L2Skill skill)
 	{
 		final int petLevel = getLevel();
-		int skillLevel = petLevel/10;
-		if(petLevel >= 70)
-			skillLevel += (petLevel-65)/10;
+		int skillLevel = petLevel / 10;
+		if (petLevel >= 70)
+		{
+			skillLevel += (petLevel - 65) / 10;
+		}
 		
 		// adjust the level for servitors less than lv 10
 		if (skillLevel < 1)
+		{
 			skillLevel = 1;
+		}
 		
-		L2Skill skillToCast = SkillTable.getInstance().getInfo(skill.getId(),skillLevel);
+		L2Skill skillToCast = SkillTable.getInstance().getInfo(skill.getId(), skillLevel);
 		
 		if (skillToCast != null)
+		{
 			super.doCast(skillToCast);
+		}
 		else
+		{
 			super.doCast(skill);
+		}
 	}
 	
 	static class SummonLifetime implements Runnable
 	{
-		private L2PcInstance _activeChar;
-		private L2SummonInstance _summon;
+		private final L2PcInstance _activeChar;
+		private final L2SummonInstance _summon;
 		
 		SummonLifetime(L2PcInstance activeChar, L2SummonInstance newpet)
 		{
@@ -234,10 +251,13 @@ public class L2SummonInstance extends L2Summon
 			_summon = newpet;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (Config.DEBUG)
+			{
 				log.warning("L2SummonInstance: " + _summon.getTemplate().name + " (" + _activeChar.getName() + ") run task.");
+			}
 			
 			try
 			{
@@ -266,14 +286,14 @@ public class L2SummonInstance extends L2Summon
 					_summon.decNextItemConsumeTime(maxTime / (_summon.getItemConsumeSteps() + 1));
 					
 					// check if owner has enought itemConsume, if requested
-					if (_summon.getItemConsumeCount() > 0 && _summon.getItemConsumeId() != 0 && !_summon.isDead() && !_summon.destroyItemByItemId("Consume", _summon.getItemConsumeId(), _summon.getItemConsumeCount(), _activeChar, true))
+					if ((_summon.getItemConsumeCount() > 0) && (_summon.getItemConsumeId() != 0) && !_summon.isDead() && !_summon.destroyItemByItemId("Consume", _summon.getItemConsumeId(), _summon.getItemConsumeCount(), _activeChar, true))
 					{
 						_summon.unSummon(_activeChar);
 					}
 				}
 				
 				// prevent useless packet-sending when the difference isn't visible.
-				if ((_summon.lastShowntimeRemaining - newTimeRemaining) > maxTime / 352)
+				if ((_summon.lastShowntimeRemaining - newTimeRemaining) > (maxTime / 352))
 				{
 					_summon.getOwner().sendPacket(new SetSummonRemainTime(maxTime, (int) newTimeRemaining));
 					_summon.lastShowntimeRemaining = (int) newTimeRemaining;
@@ -291,7 +311,9 @@ public class L2SummonInstance extends L2Summon
 	public void unSummon(L2PcInstance owner)
 	{
 		if (Config.DEBUG)
+		{
 			_log.warning("L2SummonInstance: " + getTemplate().name + " (" + owner.getName() + ") unsummoned.");
+		}
 		
 		if (_summonLifeTask != null)
 		{
@@ -312,7 +334,9 @@ public class L2SummonInstance extends L2Summon
 	public boolean destroyItemByItemId(String process, int itemId, long count, L2Object reference, boolean sendMessage)
 	{
 		if (Config.DEBUG)
+		{
 			_log.warning("L2SummonInstance: " + getTemplate().name + " (" + getOwner().getName() + ") consume.");
+		}
 		
 		return getOwner().destroyItemByItemId(process, itemId, count, reference, sendMessage);
 	}
@@ -320,8 +344,10 @@ public class L2SummonInstance extends L2Summon
 	@Override
 	public byte getAttackElement()
 	{
-		if (getOwner() == null || !getOwner().getClassId().isSummoner())
+		if ((getOwner() == null) || !getOwner().getClassId().isSummoner())
+		{
 			return super.getAttackElement();
+		}
 		
 		return getOwner().getAttackElement();
 	}
@@ -329,8 +355,10 @@ public class L2SummonInstance extends L2Summon
 	@Override
 	public int getAttackElementValue(byte attribute)
 	{
-		if (getOwner() == null || !getOwner().getClassId().isSummoner() || getOwner().getExpertiseWeaponPenalty() > 0)
+		if ((getOwner() == null) || !getOwner().getClassId().isSummoner() || (getOwner().getExpertiseWeaponPenalty() > 0))
+		{
 			return super.getAttackElementValue(attribute);
+		}
 		
 		// 80% of the owner (onwer already has only 20%)
 		return 4 * getOwner().getAttackElementValue(attribute);
@@ -339,8 +367,10 @@ public class L2SummonInstance extends L2Summon
 	@Override
 	public int getDefenseElementValue(byte attribute)
 	{
-		if (getOwner() == null || !getOwner().getClassId().isSummoner())
+		if ((getOwner() == null) || !getOwner().getClassId().isSummoner())
+		{
 			return super.getDefenseElementValue(attribute);
+		}
 		
 		// bonus from owner
 		return super.getDefenseElementValue(attribute) + getOwner().getDefenseElementValue(attribute);

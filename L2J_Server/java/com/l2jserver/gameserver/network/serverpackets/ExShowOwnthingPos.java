@@ -21,8 +21,7 @@ import com.l2jserver.gameserver.model.TerritoryWard;
 
 /**
  * Format: (ch) d[dddd]
- *
- * @author  -Gigiikun-
+ * @author -Gigiikun-
  */
 public class ExShowOwnthingPos extends L2GameServerPacket
 {
@@ -45,7 +44,7 @@ public class ExShowOwnthingPos extends L2GameServerPacket
 		{
 			List<TerritoryWard> territoryWardList = TerritoryWarManager.getInstance().getAllTerritoryWards();
 			writeD(territoryWardList.size());
-			for(TerritoryWard ward : territoryWardList)
+			for (TerritoryWard ward : territoryWardList)
 			{
 				writeD(ward.getTerritoryId());
 				
@@ -72,7 +71,7 @@ public class ExShowOwnthingPos extends L2GameServerPacket
 		else
 		{
 			writeD(0);
-			//writeD(0);
+			// writeD(0);
 		}
 	}
 	

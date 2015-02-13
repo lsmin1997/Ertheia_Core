@@ -33,17 +33,14 @@ import com.l2jserver.gameserver.model.L2NpcWalkerNode;
 
 /**
  * Main Table to Load Npc Walkers Routes and Chat SQL Table.<br>
- * 
  * @author Rayan RPG for L2Emu Project, JIV
- * 
  * @since 927
- *
  */
 public class NpcWalkerRoutesTable
 {
 	private final static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 	
-	private TIntObjectHashMap<List<L2NpcWalkerNode>> _routes = new TIntObjectHashMap<List<L2NpcWalkerNode>>();
+	private final TIntObjectHashMap<List<L2NpcWalkerNode>> _routes = new TIntObjectHashMap<List<L2NpcWalkerNode>>();
 	
 	public static NpcWalkerRoutesTable getInstance()
 	{
@@ -106,7 +103,9 @@ public class NpcWalkerRoutesTable
 		}
 		
 		for (Object list : _routes.getValues())
-			((ArrayList<?>)list).trimToSize();
+		{
+			((ArrayList<?>) list).trimToSize();
+		}
 		
 		_log.info("WalkerRoutesTable: Loaded " + _routes.size() + " Npc Walker Routes.");
 	}

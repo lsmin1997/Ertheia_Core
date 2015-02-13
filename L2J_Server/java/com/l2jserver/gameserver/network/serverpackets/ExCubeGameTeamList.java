@@ -18,22 +18,8 @@ import java.util.List;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
- * Format: (chd) ddd[dS]d[dS]
- * d: unknown
- * d: always -1
- * d: blue players number
- * [
- * 		d: player object id
- * 		S: player name
- * ]
- * d: blue players number
- * [
- * 		d: player object id
- * 		S: player name
- * ]
- * 
+ * Format: (chd) ddd[dS]d[dS] d: unknown d: always -1 d: blue players number [ d: player object id S: player name ] d: blue players number [ d: player object id S: player name ]
  * @author mrTJO
  */
 public class ExCubeGameTeamList extends L2GameServerPacket
@@ -48,9 +34,7 @@ public class ExCubeGameTeamList extends L2GameServerPacket
 	int _roomNumber;
 	
 	/**
-	 * 
 	 * Show Minigame Waiting List to Player
-	 * 
 	 * @param redPlayers Red Players List
 	 * @param bluePlayers Blue Players List
 	 * @param roomNumber Arena/Room ID
@@ -62,7 +46,8 @@ public class ExCubeGameTeamList extends L2GameServerPacket
 		_roomNumber = roomNumber - 1;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -89,7 +74,8 @@ public class ExCubeGameTeamList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

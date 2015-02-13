@@ -29,7 +29,9 @@ public final class Elementals
 	static
 	{
 		for (ElementalItems item : ElementalItems.values())
+		{
 			TABLE.put(item._itemId, item);
+		}
 	}
 	
 	public final static byte NONE = -1;
@@ -46,9 +48,9 @@ public final class Elementals
 	
 	public final static int[] WEAPON_VALUES =
 	{
-		0,   // Level 1
-		25,  // Level 2
-		75,  // Level 3
+		0, // Level 1
+		25, // Level 2
+		75, // Level 3
 		150, // Level 4
 		175, // Level 5
 		225, // Level 6
@@ -59,12 +61,13 @@ public final class Elementals
 		475, // Level 11
 		525, // Level 12
 		600, // Level 13
-		Integer.MAX_VALUE  // TODO: Higher stones
+		Integer.MAX_VALUE
+	// TODO: Higher stones
 	};
 	
 	public final static int[] ARMOR_VALUES =
 	{
-		0,  // Level 1
+		0, // Level 1
 		12, // Level 2
 		30, // Level 3
 		60, // Level 4
@@ -77,12 +80,17 @@ public final class Elementals
 		192, // Level 11
 		210, // Level 12
 		240, // Level 13
-		Integer.MAX_VALUE  // TODO: Higher stones
+		Integer.MAX_VALUE
+	// TODO: Higher stones
 	};
 	
 	public static enum ElementalItemType
 	{
-		Stone(3), Roughore(3), Crystal(6), Jewel(9), Energy(12);
+		Stone(3),
+		Roughore(3),
+		Crystal(6),
+		Jewel(9),
+		Energy(12);
 		
 		public int _maxLevel;
 		
@@ -146,7 +154,9 @@ public final class Elementals
 	{
 		ElementalItems item = TABLE.get(itemId);
 		if (item != null)
+		{
 			return item._element;
+		}
 		return NONE;
 	}
 	
@@ -159,13 +169,15 @@ public final class Elementals
 	{
 		ElementalItems item = TABLE.get(itemId);
 		if (item != null)
+		{
 			return item._type._maxLevel;
+		}
 		return -1;
 	}
 	
 	public static String getElementName(byte element)
 	{
-		switch(element)
+		switch (element)
 		{
 			case FIRE:
 				return "Fire";
@@ -187,23 +199,35 @@ public final class Elementals
 	{
 		String tmp = name.toLowerCase();
 		if (tmp.equals("fire"))
+		{
 			return FIRE;
+		}
 		if (tmp.equals("water"))
+		{
 			return WATER;
+		}
 		if (tmp.equals("wind"))
+		{
 			return WIND;
+		}
 		if (tmp.equals("earth"))
+		{
 			return EARTH;
+		}
 		if (tmp.equals("dark"))
+		{
 			return DARK;
+		}
 		if (tmp.equals("holy"))
+		{
 			return HOLY;
+		}
 		return NONE;
 	}
 	
 	public static byte getOppositeElement(byte element)
 	{
-		return (byte)((element % 2 == 0) ? (element + 1) : (element - 1));
+		return (byte) (((element % 2) == 0) ? (element + 1) : (element - 1));
 	}
 	
 	public static class ElementalStatBoni
@@ -223,7 +247,9 @@ public final class Elementals
 		{
 			// make sure the bonuses are not applied twice..
 			if (_active)
+			{
 				return;
+			}
 			
 			switch (_elementalType)
 			{
@@ -254,7 +280,9 @@ public final class Elementals
 		{
 			// make sure the bonuses are not removed twice
 			if (!_active)
+			{
 				return;
+			}
 			
 			((L2Character) player).removeStatsOwner(this);
 			

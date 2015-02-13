@@ -19,7 +19,6 @@ import com.l2jserver.gameserver.network.serverpackets.ExShowSeedMapInfo;
 
 /**
  * RequestSeedPhase client packet
- *
  */
 public class RequestSeedPhase extends L2GameClientPacket
 {
@@ -31,7 +30,8 @@ public class RequestSeedPhase extends L2GameClientPacket
 		// trigger
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket#runImpl()
 	 */
 	@Override
@@ -39,11 +39,14 @@ public class RequestSeedPhase extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		activeChar.sendPacket(new ExShowSeedMapInfo());
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

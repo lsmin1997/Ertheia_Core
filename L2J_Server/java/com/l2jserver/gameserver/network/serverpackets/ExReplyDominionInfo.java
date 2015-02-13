@@ -21,8 +21,7 @@ import com.l2jserver.gameserver.instancemanager.TerritoryWarManager;
 import com.l2jserver.gameserver.instancemanager.TerritoryWarManager.Territory;
 
 /**
- *
- * @author  JIV
+ * @author JIV
  */
 public class ExReplyDominionInfo extends L2GameServerPacket
 {
@@ -30,7 +29,7 @@ public class ExReplyDominionInfo extends L2GameServerPacket
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#getType()
 	 */
 	// private static Logger _log = Logger.getLogger(ExReplyDominionInfo.class.getName());
-	private int _warTime = (int) (TerritoryWarManager.getInstance().getTWStartTimeInMillis() / 1000);
+	private final int _warTime = (int) (TerritoryWarManager.getInstance().getTWStartTimeInMillis() / 1000);
 	
 	/**
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#writeImpl()
@@ -48,8 +47,10 @@ public class ExReplyDominionInfo extends L2GameServerPacket
 			writeS(CastleManager.getInstance().getCastleById(t.getCastleId()).getName().toLowerCase() + "_dominion"); // territory name
 			writeS(t.getOwnerClan().getName());
 			writeD(t.getOwnedWardIds().size()); // Emblem Count
-			for(int i:t.getOwnedWardIds())
+			for (int i : t.getOwnedWardIds())
+			{
 				writeD(i); // Emblem ID - should be in for loop for emblem count
+			}
 			writeD(_warTime);
 		}
 	}

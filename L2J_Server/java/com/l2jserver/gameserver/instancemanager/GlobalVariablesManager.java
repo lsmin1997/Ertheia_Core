@@ -20,9 +20,9 @@ import java.sql.ResultSet;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.l2jserver.L2DatabaseFactory;
-
 import javolution.util.FastMap;
+
+import com.l2jserver.L2DatabaseFactory;
 
 public class GlobalVariablesManager
 {
@@ -79,8 +79,8 @@ public class GlobalVariablesManager
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
 			statement = con.prepareStatement(SAVE_VAR);
-
-			for(String var : _variablesMap.keySet())
+			
+			for (String var : _variablesMap.keySet())
 			{
 				statement.setString(1, var);
 				statement.setString(2, _variablesMap.get(var));

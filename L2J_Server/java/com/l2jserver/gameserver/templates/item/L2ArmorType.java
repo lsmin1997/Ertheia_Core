@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.templates.item;
 
 /**
  * Description of Armor Type
- *
  */
 
 public enum L2ArmorType implements L2ItemType
@@ -27,7 +26,7 @@ public enum L2ArmorType implements L2ItemType
 	MAGIC("Magic"),
 	SIGIL("Sigil"),
 	
-	//L2J CUSTOM
+	// L2J CUSTOM
 	SHIELD("Shield");
 	
 	final int _mask;
@@ -48,6 +47,7 @@ public enum L2ArmorType implements L2ItemType
 	 * Returns the ID of the ArmorType after applying a mask.
 	 * @return int : ID of the ArmorType after mask
 	 */
+	@Override
 	public int mask()
 	{
 		return _mask;

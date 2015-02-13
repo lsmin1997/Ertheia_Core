@@ -23,10 +23,8 @@ import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.5 $ $Date: 2005/03/29 23:15:33 $
  */
 public final class RequestGiveItemToPet extends L2GameClientPacket
@@ -50,8 +48,10 @@ public final class RequestGiveItemToPet extends L2GameClientPacket
 	protected void runImpl()
 	{
 		L2PcInstance player = getClient().getActiveChar();
-		if (player == null || !(player.getPet() instanceof L2PetInstance))
+		if ((player == null) || !(player.getPet() instanceof L2PetInstance))
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("giveitemtopet"))
 		{
@@ -60,10 +60,14 @@ public final class RequestGiveItemToPet extends L2GameClientPacket
 		}
 		
 		if (player.getActiveEnchantItem() != null)
+		{
 			return;
+		}
 		// Alt game - Karma punishment
-		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_TRADE && player.getKarma() > 0)
+		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_TRADE && (player.getKarma() > 0))
+		{
 			return;
+		}
 		
 		if (player.getPrivateStoreType() != 0)
 		{
@@ -76,7 +80,9 @@ public final class RequestGiveItemToPet extends L2GameClientPacket
 		L2ItemInstance item = player.getInventory().getItemByObjectId(_objectId);
 		
 		if (item == null)
+		{
 			return;
+		}
 		
 		if (item.isHeroItem())
 		{
@@ -85,7 +91,9 @@ public final class RequestGiveItemToPet extends L2GameClientPacket
 		}
 		
 		if (item.isAugmented())
+		{
 			return;
+		}
 		
 		if (!item.isDropable() || !item.isDestroyable() || !item.isTradeable())
 		{
@@ -109,7 +117,7 @@ public final class RequestGiveItemToPet extends L2GameClientPacket
 			pet.getOwner().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOUR_PET_CANNOT_CARRY_ANY_MORE_ITEMS));
 			return;
 		}
-		if (!pet.getInventory().validateWeight(item,_amount))
+		if (!pet.getInventory().validateWeight(item, _amount))
 		{
 			pet.getOwner().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.UNABLE_TO_PLACE_ITEM_YOUR_PET_IS_TOO_ENCUMBERED));
 			return;

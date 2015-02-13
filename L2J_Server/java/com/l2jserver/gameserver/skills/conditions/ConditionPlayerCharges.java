@@ -27,7 +27,6 @@ public class ConditionPlayerCharges extends Condition
 	
 	/**
 	 * Instantiates a new condition player charges.
-	 *
 	 * @param charges the charges
 	 */
 	public ConditionPlayerCharges(int charges)
@@ -35,12 +34,13 @@ public class ConditionPlayerCharges extends Condition
 		_charges = charges;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		return ((L2PcInstance)env.player).getCharges() >= _charges;
+		return ((L2PcInstance) env.player).getCharges() >= _charges;
 	}
 }

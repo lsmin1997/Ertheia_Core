@@ -36,8 +36,7 @@ import com.l2jserver.gameserver.skills.funcs.LambdaConst;
 import com.l2jserver.gameserver.templates.item.L2Item;
 
 /**
- *
- * @author  MrPoke
+ * @author MrPoke
  */
 public class EnchantHPBonusData
 {
@@ -126,7 +125,9 @@ public class EnchantHPBonusData
 				}
 			}
 			if (_armorHPBonus.isEmpty())
+			{
 				return;
+			}
 			
 			Collection<Integer> itemIds = ItemTable.getInstance().getAllArmorsId();
 			int count = 0;
@@ -134,7 +135,7 @@ public class EnchantHPBonusData
 			for (Integer itemId : itemIds)
 			{
 				L2Item item = ItemTable.getInstance().getTemplate(itemId);
-				if (item != null && item.getCrystalType() != L2Item.CRYSTAL_NONE)
+				if ((item != null) && (item.getCrystalType() != L2Item.CRYSTAL_NONE))
 				{
 					switch (item.getBodyPart())
 					{
@@ -160,7 +161,7 @@ public class EnchantHPBonusData
 			for (Integer itemId : itemIds)
 			{
 				L2Item item = ItemTable.getInstance().getTemplate(itemId);
-				if (item != null && item.getCrystalType() != L2Item.CRYSTAL_NONE)
+				if ((item != null) && (item.getCrystalType() != L2Item.CRYSTAL_NONE))
 				{
 					switch (item.getBodyPart())
 					{
@@ -180,13 +181,19 @@ public class EnchantHPBonusData
 	{
 		final Integer[] values = _armorHPBonus.get(item.getItem().getItemGradeSPlus());
 		
-		if (values == null || values.length == 0)
+		if ((values == null) || (values.length == 0))
+		{
 			return 0;
+		}
 		
 		if (item.getItem().getBodyPart() == L2Item.SLOT_FULL_ARMOR)
+		{
 			return (int) (values[Math.min(item.getEnchantLevel(), values.length) - 1] * fullArmorModifier);
+		}
 		else
+		{
 			return values[Math.min(item.getEnchantLevel(), values.length) - 1];
+		}
 	}
 	
 	@SuppressWarnings("synthetic-access")

@@ -53,7 +53,6 @@ import com.l2jserver.util.Rnd;
 
 /**
  * @author sandman
- * 
  */
 public class FourSepulchersManager
 {
@@ -78,43 +77,157 @@ public class FourSepulchersManager
 	protected ScheduledFuture<?> _changeAttackTimeTask = null;
 	protected ScheduledFuture<?> _onPartyAnnihilatedTask = null;
 	
-	private int[][] _startHallSpawn = {
-			{ 181632, -85587, -7218 },
-			{ 179963, -88978, -7218 },
-			{ 173217, -86132, -7218 },
-			{ 175608, -82296, -7218 }
+	private final int[][] _startHallSpawn =
+	{
+		{
+			181632,
+			-85587,
+			-7218
+		},
+		{
+			179963,
+			-88978,
+			-7218
+		},
+		{
+			173217,
+			-86132,
+			-7218
+		},
+		{
+			175608,
+			-82296,
+			-7218
+		}
 	};
 	
-	private int[][][] _shadowSpawnLoc = {
+	private final int[][][] _shadowSpawnLoc =
+	{
+		{
 			{
-				{ 25339, 191231, -85574, -7216, 33380 },
-				{ 25349, 189534, -88969, -7216, 32768 },
-				{ 25346, 173195, -76560, -7215, 49277 },
-				{ 25342, 175591, -72744, -7215, 49317 }
+				25339,
+				191231,
+				-85574,
+				-7216,
+				33380
 			},
 			{
-				{ 25342, 191231, -85574, -7216, 33380 },
-				{ 25339, 189534, -88969, -7216, 32768 },
-				{ 25349, 173195, -76560, -7215, 49277 },
-				{ 25346, 175591, -72744, -7215, 49317 }
+				25349,
+				189534,
+				-88969,
+				-7216,
+				32768
 			},
 			{
-				{ 25346, 191231, -85574, -7216, 33380 },
-				{ 25342, 189534, -88969, -7216, 32768 },
-				{ 25339, 173195, -76560, -7215, 49277 },
-				{ 25349, 175591, -72744, -7215, 49317 }
+				25346,
+				173195,
+				-76560,
+				-7215,
+				49277
 			},
 			{
-				{ 25349, 191231, -85574, -7216, 33380 },
-				{ 25346, 189534, -88969, -7216, 32768 },
-				{ 25342, 173195, -76560, -7215, 49277 },
-				{ 25339, 175591, -72744, -7215, 49317 }
+				25342,
+				175591,
+				-72744,
+				-7215,
+				49317
+			}
+		},
+		{
+			{
+				25342,
+				191231,
+				-85574,
+				-7216,
+				33380
 			},
+			{
+				25339,
+				189534,
+				-88969,
+				-7216,
+				32768
+			},
+			{
+				25349,
+				173195,
+				-76560,
+				-7215,
+				49277
+			},
+			{
+				25346,
+				175591,
+				-72744,
+				-7215,
+				49317
+			}
+		},
+		{
+			{
+				25346,
+				191231,
+				-85574,
+				-7216,
+				33380
+			},
+			{
+				25342,
+				189534,
+				-88969,
+				-7216,
+				32768
+			},
+			{
+				25339,
+				173195,
+				-76560,
+				-7215,
+				49277
+			},
+			{
+				25349,
+				175591,
+				-72744,
+				-7215,
+				49317
+			}
+		},
+		{
+			{
+				25349,
+				191231,
+				-85574,
+				-7216,
+				33380
+			},
+			{
+				25346,
+				189534,
+				-88969,
+				-7216,
+				32768
+			},
+			{
+				25342,
+				173195,
+				-76560,
+				-7215,
+				49277
+			},
+			{
+				25339,
+				175591,
+				-72744,
+				-7215,
+				49317
+			}
+		},
 	};
 	protected FastMap<Integer, Boolean> _archonSpawned = new FastMap<Integer, Boolean>();
 	protected FastMap<Integer, Boolean> _hallInUse = new FastMap<Integer, Boolean>();
 	protected FastMap<Integer, L2PcInstance> _challengers = new FastMap<Integer, L2PcInstance>();
-	protected TIntObjectHashMap<int []> _startHallSpawns = new TIntObjectHashMap<int []>();
+	protected TIntObjectHashMap<int[]> _startHallSpawns = new TIntObjectHashMap<int[]>();
 	protected TIntIntHashMap _hallGateKeepers = new TIntIntHashMap();
 	protected TIntIntHashMap _keyBoxNpc = new TIntIntHashMap();
 	protected TIntIntHashMap _victim = new TIntIntHashMap();
@@ -155,13 +268,21 @@ public class FourSepulchersManager
 	public void init()
 	{
 		if (_changeCoolDownTimeTask != null)
+		{
 			_changeCoolDownTimeTask.cancel(true);
+		}
 		if (_changeEntryTimeTask != null)
+		{
 			_changeEntryTimeTask.cancel(true);
+		}
 		if (_changeWarmUpTimeTask != null)
+		{
 			_changeWarmUpTimeTask.cancel(true);
+		}
 		if (_changeAttackTimeTask != null)
+		{
 			_changeAttackTimeTask.cancel(true);
+		}
 		
 		_changeCoolDownTimeTask = null;
 		_changeEntryTimeTask = null;
@@ -194,33 +315,33 @@ public class FourSepulchersManager
 		long currentTime = Calendar.getInstance().getTimeInMillis();
 		// if current time >= time of entry beginning and if current time < time
 		// of entry beginning + time of entry end
-		if (currentTime >= _coolDownTimeEnd && currentTime < _entryTimeEnd) // entry
-			// time
-			// check
+		if ((currentTime >= _coolDownTimeEnd) && (currentTime < _entryTimeEnd)) // entry
+		// time
+		// check
 		{
 			clean();
 			_changeEntryTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeEntryTime(), 0);
 			_log.info("FourSepulchersManager: Beginning in Entry time");
 		}
-		else if (currentTime >= _entryTimeEnd && currentTime < _warmUpTimeEnd) // warmup
-			// time
-			// check
+		else if ((currentTime >= _entryTimeEnd) && (currentTime < _warmUpTimeEnd)) // warmup
+		// time
+		// check
 		{
 			clean();
 			_changeWarmUpTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeWarmUpTime(), 0);
 			_log.info("FourSepulchersManager: Beginning in WarmUp time");
 		}
-		else if (currentTime >= _warmUpTimeEnd && currentTime < _attackTimeEnd) // attack
-			// time
-			// check
+		else if ((currentTime >= _warmUpTimeEnd) && (currentTime < _attackTimeEnd)) // attack
+		// time
+		// check
 		{
 			clean();
 			_changeAttackTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeAttackTime(), 0);
 			_log.info("FourSepulchersManager: Beginning in Attack time");
 		}
 		else
-			// else cooldown time and without cleanup because it's already
-			// implemented
+		// else cooldown time and without cleanup because it's already
+		// implemented
 		{
 			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), 0);
 			_log.info("FourSepulchersManager: Beginning in Cooldown time");
@@ -232,12 +353,14 @@ public class FourSepulchersManager
 	{
 		Calendar tmp = Calendar.getInstance();
 		if (tmp.get(Calendar.MINUTE) < _newCycleMin)
+		{
 			tmp.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) - 1);
+		}
 		tmp.set(Calendar.MINUTE, _newCycleMin);
 		_coolDownTimeEnd = tmp.getTimeInMillis();
-		_entryTimeEnd = _coolDownTimeEnd + Config.FS_TIME_ENTRY * 60000l;
-		_warmUpTimeEnd = _entryTimeEnd + Config.FS_TIME_WARMUP * 60000l;
-		_attackTimeEnd = _warmUpTimeEnd + Config.FS_TIME_ATTACK * 60000l;
+		_entryTimeEnd = _coolDownTimeEnd + (Config.FS_TIME_ENTRY * 60000l);
+		_warmUpTimeEnd = _entryTimeEnd + (Config.FS_TIME_WARMUP * 60000l);
+		_attackTimeEnd = _warmUpTimeEnd + (Config.FS_TIME_ATTACK * 60000l);
 	}
 	
 	public void clean()
@@ -276,11 +399,15 @@ public class FourSepulchersManager
 		int i = 31921;
 		for (L2Spawn spawnDat; i <= 31924; i++)
 		{
-			if (i < 31921 || i > 31924)
+			if ((i < 31921) || (i > 31924))
+			{
 				continue;
+			}
 			L2NpcTemplate template1 = NpcTable.getInstance().getTemplate(i);
 			if (template1 == null)
+			{
 				continue;
+			}
 			try
 			{
 				spawnDat = new L2Spawn(template1);
@@ -444,8 +571,7 @@ public class FourSepulchersManager
 				}
 				else
 				{
-					_log.warning("FourSepulchersManager.LoadMysteriousBox: Data missing in NPC table for ID: "
-							+ rset.getInt("npc_templateid") + ".");
+					_log.warning("FourSepulchersManager.LoadMysteriousBox: Data missing in NPC table for ID: " + rset.getInt("npc_templateid") + ".");
 				}
 			}
 			
@@ -488,8 +614,7 @@ public class FourSepulchersManager
 				}
 				else
 				{
-					_log.warning("FourSepulchersManager.InitKeyBoxSpawns: Data missing in NPC table for ID: " + _keyBoxNpc.get(keyNpcId)
-							+ ".");
+					_log.warning("FourSepulchersManager.InitKeyBoxSpawns: Data missing in NPC table for ID: " + _keyBoxNpc.get(keyNpcId) + ".");
 				}
 			}
 			catch (Exception e)
@@ -798,7 +923,13 @@ public class FourSepulchersManager
 	protected void initLocationShadowSpawns()
 	{
 		int locNo = Rnd.get(4);
-		final int[] gateKeeper = { 31929, 31934, 31939, 31944 };
+		final int[] gateKeeper =
+		{
+			31929,
+			31934,
+			31939,
+			31944
+		};
 		
 		L2Spawn spawnDat;
 		L2NpcTemplate template;
@@ -829,8 +960,7 @@ public class FourSepulchersManager
 			}
 			else
 			{
-				_log.warning("FourSepulchersManager.InitLocationShadowSpawns: Data missing in NPC table for ID: "
-						+ _shadowSpawnLoc[locNo][i][0] + ".");
+				_log.warning("FourSepulchersManager.InitLocationShadowSpawns: Data missing in NPC table for ID: " + _shadowSpawnLoc[locNo][i][0] + ".");
 			}
 		}
 	}
@@ -859,8 +989,7 @@ public class FourSepulchersManager
 				}
 				else
 				{
-					_log.warning("FourSepulchersManager.InitExecutionerSpawns: Data missing in NPC table for ID: " + _victim.get(keyNpcId)
-							+ ".");
+					_log.warning("FourSepulchersManager.InitExecutionerSpawns: Data missing in NPC table for ID: " + _victim.get(keyNpcId) + ".");
 				}
 			}
 			catch (Exception e)
@@ -885,19 +1014,18 @@ public class FourSepulchersManager
 		int npcId = npc.getNpcId();
 		switch (npcId)
 		{
-			// ID ok
+		// ID ok
 			case 31921:
 			case 31922:
 			case 31923:
 			case 31924:
 				break;
-				// ID not ok
+			// ID not ok
 			default:
 				if (!player.isGM())
 				{
 					_log.warning("Player " + player.getName() + "(" + player.getObjectId() + ") tried to cheat in four sepulchers.");
-					Util.handleIllegalPlayerAction(player, "Warning!! Character " + player.getName()
-							+ " tried to enter four sepulchers with invalid npc id.", Config.DEFAULT_PUNISH);
+					Util.handleIllegalPlayerAction(player, "Warning!! Character " + player.getName() + " tried to enter four sepulchers with invalid npc id.", Config.DEFAULT_PUNISH);
 				}
 				return;
 		}
@@ -910,7 +1038,7 @@ public class FourSepulchersManager
 		
 		if (Config.FS_PARTY_MEMBER_COUNT > 1)
 		{
-			if (!player.isInParty() || player.getParty().getMemberCount() < Config.FS_PARTY_MEMBER_COUNT)
+			if (!player.isInParty() || (player.getParty().getMemberCount() < Config.FS_PARTY_MEMBER_COUNT))
 			{
 				showHtmlFile(player, npcId + "-SP.htm", npc, null);
 				return;
@@ -925,7 +1053,7 @@ public class FourSepulchersManager
 			for (L2PcInstance mem : player.getParty().getPartyMembers())
 			{
 				QuestState qs = mem.getQuestState(QUEST_ID);
-				if (qs == null || (!qs.isStarted() && !qs.isCompleted()))
+				if ((qs == null) || (!qs.isStarted() && !qs.isCompleted()))
 				{
 					showHtmlFile(player, npcId + "-NS.htm", npc, mem);
 					return;
@@ -943,7 +1071,7 @@ public class FourSepulchersManager
 				}
 			}
 		}
-		else if (Config.FS_PARTY_MEMBER_COUNT <= 1 && player.isInParty())
+		else if ((Config.FS_PARTY_MEMBER_COUNT <= 1) && player.isInParty())
 		{
 			if (!player.getParty().isLeader(player))
 			{
@@ -953,7 +1081,7 @@ public class FourSepulchersManager
 			for (L2PcInstance mem : player.getParty().getPartyMembers())
 			{
 				QuestState qs = mem.getQuestState(QUEST_ID);
-				if (qs == null || (!qs.isStarted() && !qs.isCompleted()))
+				if ((qs == null) || (!qs.isStarted() && !qs.isCompleted()))
 				{
 					showHtmlFile(player, npcId + "-NS.htm", npc, mem);
 					return;
@@ -974,7 +1102,7 @@ public class FourSepulchersManager
 		else
 		{
 			QuestState qs = player.getQuestState(QUEST_ID);
-			if (qs == null || (!qs.isStarted() && !qs.isCompleted()))
+			if ((qs == null) || (!qs.isStarted() && !qs.isCompleted()))
 			{
 				showHtmlFile(player, npcId + "-NS.htm", npc, player);
 				return;
@@ -1045,7 +1173,7 @@ public class FourSepulchersManager
 			_hallInUse.remove(npcId);
 			_hallInUse.put(npcId, true);
 		}
-		if (Config.FS_PARTY_MEMBER_COUNT <= 1 && player.isInParty())
+		if ((Config.FS_PARTY_MEMBER_COUNT <= 1) && player.isInParty())
 		{
 			List<L2PcInstance> members = new FastList<L2PcInstance>();
 			for (L2PcInstance mem : player.getParty().getPartyMembers())
@@ -1110,7 +1238,9 @@ public class FourSepulchersManager
 	public void spawnMysteriousBox(int npcId)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		L2Spawn spawnDat = _mysteriousBoxSpawns.get(npcId);
 		if (spawnDat != null)
@@ -1123,7 +1253,9 @@ public class FourSepulchersManager
 	public void spawnMonster(int npcId)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		FastList<L2Spawn> monsterList;
 		FastList<L2SepulcherMonsterInstance> mobs = new FastList<L2SepulcherMonsterInstance>();
@@ -1234,7 +1366,7 @@ public class FourSepulchersManager
 				case 31484:
 					_viscountMobs.put(npcId, mobs);
 					break;
-					
+				
 				case 31472:
 				case 31477:
 				case 31482:
@@ -1250,12 +1382,16 @@ public class FourSepulchersManager
 		FastList<L2SepulcherMonsterInstance> mobs = _viscountMobs.get(npcId);
 		
 		if (mobs == null)
+		{
 			return true;
+		}
 		
 		for (L2SepulcherMonsterInstance mob : mobs)
 		{
 			if (!mob.isDead())
+			{
 				return false;
+			}
 		}
 		
 		return true;
@@ -1266,12 +1402,16 @@ public class FourSepulchersManager
 		FastList<L2SepulcherMonsterInstance> mobs = _dukeMobs.get(npcId);
 		
 		if (mobs == null)
+		{
 			return true;
+		}
 		
 		for (L2SepulcherMonsterInstance mob : mobs)
 		{
 			if (!mob.isDead())
+			{
 				return false;
+			}
 		}
 		
 		return true;
@@ -1280,7 +1420,9 @@ public class FourSepulchersManager
 	public void spawnKeyBox(L2Npc activeChar)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		L2Spawn spawnDat = _keyBoxSpawns.get(activeChar.getNpcId());
 		
@@ -1301,7 +1443,9 @@ public class FourSepulchersManager
 	public void spawnExecutionerOfHalisha(L2Npc activeChar)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		L2Spawn spawnDat = _executionerSpawns.get(activeChar.getNpcId());
 		
@@ -1321,10 +1465,14 @@ public class FourSepulchersManager
 	public void spawnArchonOfHalisha(int npcId)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		if (_archonSpawned.get(npcId))
+		{
 			return;
+		}
 		
 		FastList<L2Spawn> monsterList = _dukeFinalMobs.get(npcId);
 		
@@ -1348,7 +1496,9 @@ public class FourSepulchersManager
 	public void spawnEmperorsGraveNpc(int npcId)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		FastList<L2Spawn> monsterList = _emperorsGraveNpcs.get(npcId);
 		
@@ -1367,7 +1517,13 @@ public class FourSepulchersManager
 		int locNo = Rnd.get(4);
 		// _log.info("FourSepulchersManager.LocationShadowSpawns: Location index
 		// is " + locNo + ".");
-		final int[] gateKeeper = { 31929, 31934, 31939, 31944 };
+		final int[] gateKeeper =
+		{
+			31929,
+			31934,
+			31939,
+			31944
+		};
 		
 		L2Spawn spawnDat;
 		
@@ -1386,7 +1542,9 @@ public class FourSepulchersManager
 	public void spawnShadow(int npcId)
 	{
 		if (!isAttackTime())
+		{
 			return;
+		}
 		
 		L2Spawn spawnDat = _shadowSpawns.get(npcId);
 		if (spawnDat != null)
@@ -1407,12 +1565,16 @@ public class FourSepulchersManager
 		for (L2Npc mob : _allMobs)
 		{
 			if (mob == null)
+			{
 				continue;
+			}
 			
 			try
 			{
 				if (mob.getSpawn() != null)
+				{
 					mob.getSpawn().stopRespawn();
+				}
 				mob.deleteMe();
 			}
 			catch (Exception e)
@@ -1448,7 +1610,7 @@ public class FourSepulchersManager
 	
 	protected byte minuteSelect(byte min)
 	{
-		if ((double) min % 5 != 0)// if doesn't divides on 5 fully
+		if (((double) min % 5) != 0)// if doesn't divides on 5 fully
 		{
 			// mad table for selecting proper minutes...
 			// may be there is a better way to do this
@@ -1529,7 +1691,9 @@ public class FourSepulchersManager
 		if (_inAttackTime)
 		{
 			if (min < 5)
+			{
 				return; // do not shout when < 5 minutes
+			}
 			
 			min = minuteSelect(min);
 			
@@ -1537,7 +1701,9 @@ public class FourSepulchersManager
 			// proper message^^
 			
 			if (min == 90)
+			{
 				msg = "Game over. The teleport will appear momentarily";
+			}
 			
 			for (L2Spawn temp : _managers)
 			{
@@ -1555,7 +1721,9 @@ public class FourSepulchersManager
 				// anything :)
 				// if you don't need this - delete next two lines.
 				if (!_hallInUse.get(temp.getNpcid()).booleanValue())
+				{
 					continue;
+				}
 				
 				((L2SepulcherNpcInstance) temp.getLastSpawn()).sayInShout(msg);
 			}
@@ -1585,13 +1753,14 @@ public class FourSepulchersManager
 	
 	protected class ManagerSay implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			if (_inAttackTime)
 			{
 				Calendar tmp = Calendar.getInstance();
 				tmp.setTimeInMillis(Calendar.getInstance().getTimeInMillis() - _warmUpTimeEnd);
-				if (tmp.get(Calendar.MINUTE) + 5 < Config.FS_TIME_ATTACK)
+				if ((tmp.get(Calendar.MINUTE) + 5) < Config.FS_TIME_ATTACK)
 				{
 					managerSay((byte) tmp.get(Calendar.MINUTE)); // byte
 					// because
@@ -1602,18 +1771,21 @@ public class FourSepulchersManager
 					ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60000);
 				}
 				// attack time ending chat
-				else if (tmp.get(Calendar.MINUTE) + 5 >= Config.FS_TIME_ATTACK)
+				else if ((tmp.get(Calendar.MINUTE) + 5) >= Config.FS_TIME_ATTACK)
 				{
 					managerSay((byte) 90); // sending a unique id :D
 				}
 			}
 			else if (_inEntryTime)
+			{
 				managerSay((byte) 0);
+			}
 		}
 	}
 	
 	protected class ChangeEntryTime implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			// _log.info("FourSepulchersManager:In Entry Time");
@@ -1629,10 +1801,14 @@ public class FourSepulchersManager
 			// time
 			// and then launching change time task
 			if (_firstTimeRun)
+			{
 				interval = _entryTimeEnd - Calendar.getInstance().getTimeInMillis();
+			}
 			else
+			{
 				interval = Config.FS_TIME_ENTRY * 60000l; // else use stupid
-			// method
+				// method
+			}
 			
 			// launching saying process...
 			ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 0);
@@ -1648,6 +1824,7 @@ public class FourSepulchersManager
 	
 	protected class ChangeWarmUpTime implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			// _log.info("FourSepulchersManager:In Warm-Up Time");
@@ -1662,9 +1839,13 @@ public class FourSepulchersManager
 			// current time
 			// and then launching change time task
 			if (_firstTimeRun)
+			{
 				interval = _warmUpTimeEnd - Calendar.getInstance().getTimeInMillis();
+			}
 			else
+			{
 				interval = Config.FS_TIME_WARMUP * 60000l;
+			}
 			_changeAttackTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeAttackTime(), interval);
 			
 			if (_changeWarmUpTimeTask != null)
@@ -1677,6 +1858,7 @@ public class FourSepulchersManager
 	
 	protected class ChangeAttackTime implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			// _log.info("FourSepulchersManager:In Attack Time");
@@ -1704,27 +1886,32 @@ public class FourSepulchersManager
 				for (double min = Calendar.getInstance().get(Calendar.MINUTE); min < _newCycleMin; min++)
 				{
 					// looking for next shout time....
-					if (min % 5 == 0)// check if min can be divided by 5
+					if ((min % 5) == 0)// check if min can be divided by 5
 					{
 						_log.info(Calendar.getInstance().getTime() + " Atk announce scheduled to " + min + " minute of this hour.");
 						Calendar inter = Calendar.getInstance();
 						inter.set(Calendar.MINUTE, (int) min);
-						ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), inter.getTimeInMillis()
-								- Calendar.getInstance().getTimeInMillis());
+						ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), inter.getTimeInMillis() - Calendar.getInstance().getTimeInMillis());
 						break;
 					}
 				}
 			}
 			else
+			{
 				ThreadPoolManager.getInstance().scheduleGeneral(new ManagerSay(), 5 * 60400);
+			}
 			// searching time when attack time will be ended:
 			// counting difference between time when attack time ends and
 			// current time
 			// and then launching change time task
 			if (_firstTimeRun)
+			{
 				interval = _attackTimeEnd - Calendar.getInstance().getTimeInMillis();
+			}
 			else
+			{
 				interval = Config.FS_TIME_ATTACK * 60000l;
+			}
 			_changeCoolDownTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeCoolDownTime(), interval);
 			
 			if (_changeAttackTimeTask != null)
@@ -1737,6 +1924,7 @@ public class FourSepulchersManager
 	
 	protected class ChangeCoolDownTime implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			// _log.info("FourSepulchersManager:In Cool-Down Time");
@@ -1750,13 +1938,17 @@ public class FourSepulchersManager
 			Calendar time = Calendar.getInstance();
 			// one hour = 55th min to 55 min of next hour, so we check for this,
 			// also check for first launch
-			if (Calendar.getInstance().get(Calendar.MINUTE) > _newCycleMin && !_firstTimeRun)
+			if ((Calendar.getInstance().get(Calendar.MINUTE) > _newCycleMin) && !_firstTimeRun)
+			{
 				time.set(Calendar.HOUR, Calendar.getInstance().get(Calendar.HOUR) + 1);
+			}
 			time.set(Calendar.MINUTE, _newCycleMin);
 			_log.info("FourSepulchersManager: Entry time: " + time.getTime());
 			if (_firstTimeRun)
+			{
 				_firstTimeRun = false; // cooldown phase ends event hour, so it
-			// will be not first run
+				// will be not first run
+			}
 			
 			long interval = time.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
 			_changeEntryTimeTask = ThreadPoolManager.getInstance().scheduleGeneral(new ChangeEntryTime(), interval);
@@ -1779,7 +1971,9 @@ public class FourSepulchersManager
 		NpcHtmlMessage html = new NpcHtmlMessage(npc.getObjectId());
 		html.setFile(player.getHtmlPrefix(), "data/html/SepulcherNpc/" + file);
 		if (member != null)
+		{
 			html.replace("%member%", member.getName());
+		}
 		player.sendPacket(html);
 	}
 	

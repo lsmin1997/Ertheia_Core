@@ -30,10 +30,11 @@ public class ClientSetTime extends L2GameServerPacket
 	{
 		writeC(0xf2);
 		writeD(GameTimeController.getInstance().getGameTime()); // time in client minutes
-		writeD(6); //constant to match the server time( this determines the speed of the client clock)
+		writeD(6); // constant to match the server time( this determines the speed of the client clock)
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

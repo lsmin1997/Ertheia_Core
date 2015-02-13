@@ -25,10 +25,8 @@ import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 import com.l2jserver.gameserver.taskmanager.TaskTypes;
 
-
 /**
  * @author Layane
- * 
  */
 public class TaskRecom extends Task
 {
@@ -36,7 +34,6 @@ public class TaskRecom extends Task
 	private static final String NAME = "recommendations";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -46,7 +43,6 @@ public class TaskRecom extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override
@@ -58,12 +54,12 @@ public class TaskRecom extends Task
 			con = L2DatabaseFactory.getInstance().getConnection();
 			
 			PreparedStatement statement = con.prepareStatement("UPDATE character_reco_bonus SET rec_left=?, time_left=?, rec_have=0 WHERE rec_have <=  20");
-			statement.setInt(1, 0);	// Rec left = 0
+			statement.setInt(1, 0); // Rec left = 0
 			statement.setInt(2, 3600000); // Timer = 1 hour
 			statement.execute();
 			
 			statement = con.prepareStatement("UPDATE character_reco_bonus SET rec_left=?, time_left=?, rec_have=GREATEST(rec_have-20,0) WHERE rec_have > 20");
-			statement.setInt(1, 0);	// Rec left = 0
+			statement.setInt(1, 0); // Rec left = 0
 			statement.setInt(2, 3600000); // Timer = 1 hour
 			statement.execute();
 			statement.close();
@@ -80,7 +76,6 @@ public class TaskRecom extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#initializate()
 	 */
 	@Override

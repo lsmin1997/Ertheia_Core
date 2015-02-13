@@ -15,8 +15,8 @@
 package com.l2jserver.gameserver.templates.item;
 
 /**
- * @author mkizub
- * <BR>Description of Weapon Type
+ * @author mkizub <BR>
+ *         Description of Weapon Type
  */
 public enum L2WeaponType implements L2ItemType
 {
@@ -60,6 +60,7 @@ public enum L2WeaponType implements L2ItemType
 	 * Returns the ID of the item after applying the mask.
 	 * @return int : ID of the item
 	 */
+	@Override
 	public int mask()
 	{
 		return _mask;

@@ -15,16 +15,14 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * Eva's Inferno event packet.
- * Format: (ch)dddd // time info params: type (1 - %, 2 - npcId), value (depending on type: for type 1 - % value; for type 2 - 20573-20575), state (0-1), endtime (only when type 2)
- *
+ * Eva's Inferno event packet. Format: (ch)dddd // time info params: type (1 - %, 2 - npcId), value (depending on type: for type 1 - % value; for type 2 - 20573-20575), state (0-1), endtime (only when type 2)
  */
 public class ExBrBuffEventState extends L2GameServerPacket
 {
-	private int _type; // 1 - %, 2 - npcId
-	private int _value; // depending on type: for type 1 - % value; for type 2 - 20573-20575
-	private int _state; // 0-1
-	private int _endtime; // only when type 2 as unix time in seconds from 1970
+	private final int _type; // 1 - %, 2 - npcId
+	private final int _value; // depending on type: for type 1 - % value; for type 2 - 20573-20575
+	private final int _state; // 0-1
+	private final int _endtime; // only when type 2 as unix time in seconds from 1970
 	
 	public ExBrBuffEventState(int type, int value, int state, int endtime)
 	{
@@ -34,7 +32,8 @@ public class ExBrBuffEventState extends L2GameServerPacket
 		_endtime = endtime;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#getType()
 	 */
 	@Override
@@ -43,7 +42,8 @@ public class ExBrBuffEventState extends L2GameServerPacket
 		return "[S] FE:D0 ExBrBuffEventState";
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#writeImpl()
 	 */
 	@Override

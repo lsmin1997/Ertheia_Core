@@ -17,19 +17,15 @@ package com.l2jserver.gameserver.model;
 import com.l2jserver.gameserver.templates.item.L2Henna;
 
 /**
- * This class represents a Non-Player-Character in the world. it can be
- * a monster or a friendly character.
- * it also uses a template to fetch some static values.
- * the templates are hardcoded in the client, so we can rely on them.
- *
+ * This class represents a Non-Player-Character in the world. it can be a monster or a friendly character. it also uses a template to fetch some static values. the templates are hardcoded in the client, so we can rely on them.
  * @version $Revision$ $Date$
  */
 
 public class L2HennaInstance
 {
-	//private static Logger _log = Logger.getLogger(L2HennaInstance.class.getName());
+	// private static Logger _log = Logger.getLogger(L2HennaInstance.class.getName());
 	
-	private L2Henna _template;
+	private final L2Henna _template;
 	private int _symbolId;
 	private int _itemIdDye;
 	private int _price;
@@ -56,21 +52,58 @@ public class L2HennaInstance
 		_statWIT = _template.getStatWIT();
 	}
 	
-	public String getName(){
+	public String getName()
+	{
 		String res = "";
-		if (_statINT>0)res = res + "INT +"+_statINT;
-		else if (_statSTR>0)res = res + "STR +"+_statSTR;
-		else if (_statCON>0)res = res + "CON +"+_statCON;
-		else if (_statMEM>0)res = res + "MEN +"+_statMEM;
-		else if (_statDEX>0)res = res + "DEX +"+_statDEX;
-		else if (_statWIT>0)res = res + "WIT +"+_statWIT;
+		if (_statINT > 0)
+		{
+			res = res + "INT +" + _statINT;
+		}
+		else if (_statSTR > 0)
+		{
+			res = res + "STR +" + _statSTR;
+		}
+		else if (_statCON > 0)
+		{
+			res = res + "CON +" + _statCON;
+		}
+		else if (_statMEM > 0)
+		{
+			res = res + "MEN +" + _statMEM;
+		}
+		else if (_statDEX > 0)
+		{
+			res = res + "DEX +" + _statDEX;
+		}
+		else if (_statWIT > 0)
+		{
+			res = res + "WIT +" + _statWIT;
+		}
 		
-		if (_statINT<0)res = res + ", INT "+_statINT;
-		else if (_statSTR<0)res = res + ", STR "+_statSTR;
-		else if (_statCON<0)res = res + ", CON "+_statCON;
-		else if (_statMEM<0)res = res + ", MEN "+_statMEM;
-		else if (_statDEX<0)res = res + ", DEX "+_statDEX;
-		else if (_statWIT<0)res = res + ", WIT "+_statWIT;
+		if (_statINT < 0)
+		{
+			res = res + ", INT " + _statINT;
+		}
+		else if (_statSTR < 0)
+		{
+			res = res + ", STR " + _statSTR;
+		}
+		else if (_statCON < 0)
+		{
+			res = res + ", CON " + _statCON;
+		}
+		else if (_statMEM < 0)
+		{
+			res = res + ", MEN " + _statMEM;
+		}
+		else if (_statDEX < 0)
+		{
+			res = res + ", DEX " + _statDEX;
+		}
+		else if (_statWIT < 0)
+		{
+			res = res + ", WIT " + _statWIT;
+		}
 		
 		return res;
 	}
@@ -79,7 +112,6 @@ public class L2HennaInstance
 	{
 		return _template;
 	}
-	
 	
 	public int getSymbolId()
 	{
@@ -101,7 +133,6 @@ public class L2HennaInstance
 		_itemIdDye = ItemIdDye;
 	}
 	
-	
 	public int getAmountDyeRequire()
 	{
 		return _amountDyeRequire;
@@ -121,7 +152,6 @@ public class L2HennaInstance
 	{
 		_price = Price;
 	}
-	
 	
 	public int getStatINT()
 	{

@@ -74,7 +74,7 @@ public class L2DatabaseFactory
 			_source.setAutomaticTestTable("connection_test_table");
 			_source.setTestConnectionOnCheckin(false);
 			
-			// testing OnCheckin used with IdleConnectionTestPeriod is faster than  testing on checkout
+			// testing OnCheckin used with IdleConnectionTestPeriod is faster than testing on checkout
 			
 			_source.setIdleConnectionTestPeriod(3600); // test idle connection every 60 sec
 			_source.setMaxIdleTime(Config.DATABASE_MAX_IDLE_TIME); // 0 = idle connections never expire
@@ -82,7 +82,7 @@ public class L2DatabaseFactory
 			// but I prefer to disconnect all connections not used
 			// for more than 1 hour
 			
-			// enables statement caching,  there is a "semi-bug" in c3p0 0.9.0 but in 0.9.0.2 and later it's fixed
+			// enables statement caching, there is a "semi-bug" in c3p0 0.9.0 but in 0.9.0.2 and later it's fixed
 			_source.setMaxStatementsPerConnection(100);
 			
 			_source.setBreakAfterAcquireFailure(false); // never fail if any way possible
@@ -100,24 +100,34 @@ public class L2DatabaseFactory
 			_source.getConnection().close();
 			
 			if (Config.DEBUG)
+			{
 				_log.fine("Database Connection Working");
+			}
 			
 			if (Config.DATABASE_DRIVER.toLowerCase().contains("microsoft"))
+			{
 				_providerType = ProviderType.MsSql;
+			}
 			else
+			{
 				_providerType = ProviderType.MySql;
+			}
 		}
 		catch (SQLException x)
 		{
 			if (Config.DEBUG)
+			{
 				_log.fine("Database Connection FAILED");
+			}
 			// re-throw the exception
 			throw x;
 		}
 		catch (Exception e)
 		{
 			if (Config.DEBUG)
+			{
 				_log.fine("Database Connection FAILED");
+			}
 			throw new SQLException("Could not init DB connection:" + e.getMessage());
 		}
 	}
@@ -131,9 +141,13 @@ public class L2DatabaseFactory
 		if (returnOnlyTopRecord)
 		{
 			if (getProviderType() == ProviderType.MsSql)
+			{
 				msSqlTop1 = " Top 1 ";
+			}
 			if (getProviderType() == ProviderType.MySql)
+			{
 				mySqlTop1 = " Limit 1 ";
+			}
 		}
 		String query = "SELECT " + msSqlTop1 + safetyString(fields) + " FROM " + tableName + " WHERE " + whereClause + mySqlTop1;
 		return query;
@@ -214,7 +228,7 @@ public class L2DatabaseFactory
 		return _instance;
 	}
 	
-	public Connection getConnection() //throws SQLException
+	public Connection getConnection() // throws SQLException
 	{
 		Connection con = null;
 		
@@ -224,9 +238,13 @@ public class L2DatabaseFactory
 			{
 				con = _source.getConnection();
 				if (Server.serverMode == Server.MODE_GAMESERVER)
+				{
 					ThreadPoolManager.getInstance().scheduleGeneral(new ConnectionCloser(con, new RuntimeException()), Config.CONNECTION_CLOSE_TIME);
+				}
 				else
+				{
 					getExecutor().schedule(new ConnectionCloser(con, new RuntimeException()), 60, TimeUnit.SECONDS);
+				}
 			}
 			catch (SQLException e)
 			{
@@ -238,15 +256,17 @@ public class L2DatabaseFactory
 	
 	private static class ConnectionCloser implements Runnable
 	{
-		private Connection c ;
-		private RuntimeException exp;
+		private final Connection c;
+		private final RuntimeException exp;
 		
 		public ConnectionCloser(Connection con, RuntimeException e)
 		{
 			c = con;
 			exp = e;
 		}
-		/* (non-Javadoc)
+		
+		/*
+		 * (non-Javadoc)
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override
@@ -270,7 +290,9 @@ public class L2DatabaseFactory
 	public static void close(Connection con)
 	{
 		if (con == null)
+		{
 			return;
+		}
 		
 		try
 		{
@@ -289,7 +311,9 @@ public class L2DatabaseFactory
 			synchronized (L2DatabaseFactory.class)
 			{
 				if (_executor == null)
+				{
 					_executor = Executors.newSingleThreadScheduledExecutor();
+				}
 			}
 		}
 		return _executor;

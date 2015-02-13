@@ -26,13 +26,7 @@ import com.l2jserver.gameserver.network.serverpackets.FriendPacket;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
- *  sample
- *  5F
- *  01 00 00 00
- *
- *  format  cdd
- *
- *
+ * sample 5F 01 00 00 00 format cdd
  * @version $Revision: 1.7.4.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestAnswerFriendInvite extends L2GameClientPacket
@@ -52,11 +46,13 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket
 	protected void runImpl()
 	{
 		L2PcInstance player = getClient().getActiveChar();
-		if(player != null)
+		if (player != null)
 		{
 			L2PcInstance requestor = player.getActiveRequester();
 			if (requestor == null)
+			{
 				return;
+			}
 			
 			if (_response == 1)
 			{
@@ -74,31 +70,32 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket
 					SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.YOU_HAVE_SUCCEEDED_INVITING_FRIEND);
 					requestor.sendPacket(msg);
 					
-					//Player added to your friendlist
+					// Player added to your friendlist
 					msg = SystemMessage.getSystemMessage(SystemMessageId.S1_ADDED_TO_FRIENDS);
 					msg.addString(player.getName());
 					requestor.sendPacket(msg);
 					requestor.getFriendList().add(player.getObjectId());
 					
-					//has joined as friend.
+					// has joined as friend.
 					msg = SystemMessage.getSystemMessage(SystemMessageId.S1_JOINED_AS_FRIEND);
 					msg.addString(requestor.getName());
 					player.sendPacket(msg);
 					player.getFriendList().add(requestor.getObjectId());
 					
-					//Send notificacions for both player in order to show them online
+					// Send notificacions for both player in order to show them online
 					player.sendPacket(new FriendPacket(true, requestor.getObjectId()));
 					requestor.sendPacket(new FriendPacket(true, player.getObjectId()));
 				}
 				catch (Exception e)
 				{
-					_log.log(Level.WARNING, "Could not add friend objectid: "+ e.getMessage(), e);
+					_log.log(Level.WARNING, "Could not add friend objectid: " + e.getMessage(), e);
 				}
 				finally
 				{
 					L2DatabaseFactory.close(con);
 				}
-			} else
+			}
+			else
 			{
 				SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.FAILED_TO_INVITE_A_FRIEND);
 				requestor.sendPacket(msg);
@@ -109,7 +106,8 @@ public final class RequestAnswerFriendInvite extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

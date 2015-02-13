@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author Kerberos
- * 
  */
 public class EffectRecovery extends L2Effect
 {
@@ -32,7 +31,6 @@ public class EffectRecovery extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +40,6 @@ public class EffectRecovery extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -57,7 +54,6 @@ public class EffectRecovery extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -66,7 +62,6 @@ public class EffectRecovery extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

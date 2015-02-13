@@ -18,13 +18,12 @@ import com.l2jserver.gameserver.model.L2Clan;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class PledgeShowInfoUpdate extends L2GameServerPacket
 {
 	private static final String _S__A1_PLEDGESHOWINFOUPDATE = "[S] 8e PledgeShowInfoUpdate";
-	private L2Clan _clan;
+	private final L2Clan _clan;
 	
 	public PledgeShowInfoUpdate(L2Clan clan)
 	{
@@ -34,12 +33,12 @@ public class PledgeShowInfoUpdate extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		//dddddddddddSdd
+		// dddddddddddSdd
 		writeC(0x8e);
-		//sending empty data so client will ask all the info in response ;)
+		// sending empty data so client will ask all the info in response ;)
 		writeD(_clan.getClanId());
 		writeD(_clan.getCrestId());
-		writeD(_clan.getLevel()); //clan level
+		writeD(_clan.getLevel()); // clan level
 		writeD(_clan.getHasCastle());
 		writeD(_clan.getHasHideout());
 		writeD(_clan.getHasFort());
@@ -48,12 +47,13 @@ public class PledgeShowInfoUpdate extends L2GameServerPacket
 		writeD(0);
 		writeD(0);
 		writeD(_clan.getAllyId());
-		writeS(_clan.getAllyName()); //c5
-		writeD(_clan.getAllyCrestId()); //c5
-		writeD(_clan.isAtWar() ? 1 : 0); //c5
+		writeS(_clan.getAllyName()); // c5
+		writeD(_clan.getAllyCrestId()); // c5
+		writeD(_clan.isAtWar() ? 1 : 0); // c5
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

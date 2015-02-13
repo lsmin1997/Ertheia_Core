@@ -32,10 +32,8 @@ import java.util.logging.Logger;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.util.PrimeFinder;
 
-
 /**
  * This class ..
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
@@ -49,12 +47,15 @@ public class BitSetIDFactory extends IdFactory
 	
 	protected class BitSetCapacityCheck implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			synchronized (BitSetIDFactory.this)
 			{
 				if (reachingBitSetCapacity())
+				{
 					increaseBitSetCapacity();
+				}
 			}
 		}
 		
@@ -64,7 +65,7 @@ public class BitSetIDFactory extends IdFactory
 	{
 		super();
 		
-		synchronized(BitSetIDFactory.class)
+		synchronized (BitSetIDFactory.class)
 		{
 			ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new BitSetCapacityCheck(), 30000, 30000);
 			initialize();
@@ -103,7 +104,6 @@ public class BitSetIDFactory extends IdFactory
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.idfactory.IdFactory#releaseId(int)
 	 */
 	@Override
@@ -115,11 +115,12 @@ public class BitSetIDFactory extends IdFactory
 			_freeIdCount.incrementAndGet();
 		}
 		else
+		{
 			_log.warning("BitSet ID Factory: release objectID " + objectID + " failed (< " + FIRST_OID + ")");
+		}
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.idfactory.IdFactory#getNextId()
 	 */
 	@Override
@@ -153,7 +154,6 @@ public class BitSetIDFactory extends IdFactory
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.idfactory.IdFactory#size()
 	 */
 	@Override
@@ -163,7 +163,6 @@ public class BitSetIDFactory extends IdFactory
 	}
 	
 	/**
-	 * 
 	 * @return
 	 */
 	protected synchronized int usedIdCount()
@@ -172,17 +171,16 @@ public class BitSetIDFactory extends IdFactory
 	}
 	
 	/**
-	 * 
 	 * @return
 	 */
 	protected synchronized boolean reachingBitSetCapacity()
 	{
-		return PrimeFinder.nextPrime(usedIdCount() * 11 / 10) > _freeIds.size();
+		return PrimeFinder.nextPrime((usedIdCount() * 11) / 10) > _freeIds.size();
 	}
 	
 	protected synchronized void increaseBitSetCapacity()
 	{
-		BitSet newBitSet = new BitSet(PrimeFinder.nextPrime(usedIdCount() * 11 / 10));
+		BitSet newBitSet = new BitSet(PrimeFinder.nextPrime((usedIdCount() * 11) / 10));
 		newBitSet.or(_freeIds);
 		_freeIds = newBitSet;
 	}

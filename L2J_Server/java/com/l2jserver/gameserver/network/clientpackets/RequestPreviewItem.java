@@ -60,9 +60,9 @@ public final class RequestPreviewItem extends L2GameClientPacket
 	private int _count;
 	private int[] _items;
 	
-	
 	private class RemoveWearItemsTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
@@ -85,9 +85,13 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		_count = readD();
 		
 		if (_count < 0)
+		{
 			_count = 0;
+		}
 		if (_count > 100)
+		{
 			return; // prevent too long lists
+		}
 		
 		// Create _items table that will contain all ItemID to Wear
 		_items = new int[_count];
@@ -103,12 +107,16 @@ public final class RequestPreviewItem extends L2GameClientPacket
 	protected void runImpl()
 	{
 		if (_items == null)
+		{
 			return;
+		}
 		
 		// Get the current player and return if null
 		_activeChar = getClient().getActiveChar();
 		if (_activeChar == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("buy"))
 		{
@@ -117,18 +125,22 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		}
 		
 		// If Alternate rule Karma punishment is set to true, forbid Wear to player with Karma
-		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_SHOP && _activeChar.getKarma() > 0)
+		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_SHOP && (_activeChar.getKarma() > 0))
+		{
 			return;
+		}
 		
 		// Check current target of the player and the INTERACTION_DISTANCE
 		L2Object target = _activeChar.getTarget();
-		if (!_activeChar.isGM() && (target == null // No target (ie GM Shop)
-				|| !(target instanceof L2MerchantInstance || target instanceof L2MercManagerInstance) // Target not a merchant and not mercmanager
-				|| !_activeChar.isInsideRadius(target, L2Npc.INTERACTION_DISTANCE, false, false) // Distance is too far
+		if (!_activeChar.isGM() && ((target == null // No target (ie GM Shop)
+			) || !((target instanceof L2MerchantInstance) || (target instanceof L2MercManagerInstance)) // Target not a merchant and not mercmanager
+		|| !_activeChar.isInsideRadius(target, L2Npc.INTERACTION_DISTANCE, false, false) // Distance is too far
 		))
+		{
 			return;
+		}
 		
-		if (_count < 1 || _listId >= 4000000)
+		if ((_count < 1) || (_listId >= 4000000))
 		{
 			sendPacket(ActionFailed.STATIC_PACKET);
 			return;
@@ -162,7 +174,7 @@ public final class RequestPreviewItem extends L2GameClientPacket
 		}
 		
 		long totalPrice = 0;
-		_listId = list.getListId();		
+		_listId = list.getListId();
 		_item_list = new FastMap<Integer, Integer>();
 		
 		for (int i = 0; i < _count; i++)
@@ -177,25 +189,39 @@ public final class RequestPreviewItem extends L2GameClientPacket
 			
 			L2Item template = ItemTable.getInstance().getTemplate(itemId);
 			if (template == null)
+			{
 				continue;
+			}
 			
 			int slot = Inventory.getPaperdollIndex(template.getBodyPart());
 			if (slot < 0)
+			{
 				continue;
-						
+			}
+			
 			if (template instanceof L2Weapon)
 			{
 				if (_activeChar.getRace().ordinal() == 5)
-					if(template.getItemType() == L2WeaponType.NONE)
+				{
+					if (template.getItemType() == L2WeaponType.NONE)
+					{
 						continue;
-				else if (template.getItemType() == L2WeaponType.RAPIER || template.getItemType() == L2WeaponType.CROSSBOW || template.getItemType() == L2WeaponType.ANCIENTSWORD)
-					continue;
+					}
+					else if ((template.getItemType() == L2WeaponType.RAPIER) || (template.getItemType() == L2WeaponType.CROSSBOW) || (template.getItemType() == L2WeaponType.ANCIENTSWORD))
+					{
+						continue;
+					}
+				}
 			}
 			else if (template instanceof L2Armor)
 			{
-				if(_activeChar.getRace().ordinal() == 5)
-					if(template.getItemType() == L2ArmorType.HEAVY || template.getItemType() == L2ArmorType.MAGIC)
+				if (_activeChar.getRace().ordinal() == 5)
+				{
+					if ((template.getItemType() == L2ArmorType.HEAVY) || (template.getItemType() == L2ArmorType.MAGIC))
+					{
 						continue;
+					}
+				}
 			}
 			
 			if (_item_list.containsKey(slot))
@@ -204,7 +230,9 @@ public final class RequestPreviewItem extends L2GameClientPacket
 				return;
 			}
 			else
+			{
 				_item_list.put(slot, itemId);
+			}
 			
 			totalPrice += Config.WEAR_PRICE;
 			if (totalPrice > PcInventory.MAX_ADENA)
@@ -213,23 +241,24 @@ public final class RequestPreviewItem extends L2GameClientPacket
 				return;
 			}
 		}
-
+		
 		// Charge buyer and add tax to castle treasury if not owned by npc clan because a Try On is not Free
 		if ((totalPrice < 0) || !_activeChar.reduceAdena("Wear", totalPrice, _activeChar.getLastFolkNPC(), true))
 		{
 			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_NOT_ENOUGH_ADENA));
 			return;
 		}
-
+		
 		if (!_item_list.isEmpty())
 		{
-			_activeChar.sendPacket(new ShopPreviewInfo(_item_list));		
+			_activeChar.sendPacket(new ShopPreviewInfo(_item_list));
 			// Schedule task
 			ThreadPoolManager.getInstance().scheduleGeneral(new RemoveWearItemsTask(), Config.WEAR_DELAY * 1000);
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

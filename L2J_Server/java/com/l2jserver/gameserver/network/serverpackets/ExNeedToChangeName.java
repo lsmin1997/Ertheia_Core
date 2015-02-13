@@ -18,14 +18,12 @@ package com.l2jserver.gameserver.network.serverpackets;
  * Dialog with input field<br>
  * type 0 = char name (Selection screen)<br>
  * type 1 = clan name
- * 
  * @author JIV
- *
  */
 public class ExNeedToChangeName extends L2GameServerPacket
 {
-	private int type, subType;
-	private String name;
+	private final int type, subType;
+	private final String name;
 	
 	public ExNeedToChangeName(int type, int subType, String name)
 	{
@@ -35,7 +33,8 @@ public class ExNeedToChangeName extends L2GameServerPacket
 		this.name = name;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#writeImpl()
 	 */
 	@Override
@@ -48,7 +47,8 @@ public class ExNeedToChangeName extends L2GameServerPacket
 		writeS(name);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#getType()
 	 */
 	@Override

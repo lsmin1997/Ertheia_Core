@@ -27,8 +27,7 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
- * @author Drunkard Zabb0x
- * Lets drink2code!
+ * @author Drunkard Zabb0x Lets drink2code!
  */
 public class L2XmassTreeInstance extends L2Npc
 {
@@ -37,8 +36,8 @@ public class L2XmassTreeInstance extends L2Npc
 	
 	class XmassAI implements Runnable
 	{
-		private L2XmassTreeInstance _caster;
-		private L2Skill _skill;
+		private final L2XmassTreeInstance _caster;
+		private final L2Skill _skill;
 		
 		protected XmassAI(L2XmassTreeInstance caster, L2Skill skill)
 		{
@@ -46,9 +45,10 @@ public class L2XmassTreeInstance extends L2Npc
 			_skill = skill;
 		}
 		
+		@Override
 		public void run()
 		{
-			if (_skill == null || _caster.isInsideZone(ZONE_PEACE))
+			if ((_skill == null) || _caster.isInsideZone(ZONE_PEACE))
 			{
 				_caster._aiTask.cancel(false);
 				_caster._aiTask = null;
@@ -56,8 +56,12 @@ public class L2XmassTreeInstance extends L2Npc
 			}
 			Collection<L2PcInstance> plrs = getKnownList().getKnownPlayersInRadius(200);
 			for (L2PcInstance player : plrs)
+			{
 				if (player.getFirstEffect(_skill.getId()) == null)
+				{
 					_skill.getEffects(player, player);
+				}
+			}
 		}
 	}
 	
@@ -66,13 +70,18 @@ public class L2XmassTreeInstance extends L2Npc
 		super(objectId, template);
 		setInstanceType(InstanceType.L2XmassTreeInstance);
 		if (template.npcId == SPECIAL_TREE_ID)
-			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new XmassAI(this,SkillTable.getInstance().getInfo(2139, 1)), 3000, 3000);
+		{
+			_aiTask = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new XmassAI(this, SkillTable.getInstance().getInfo(2139, 1)), 3000, 3000);
+		}
 	}
 	
 	@Override
 	public void deleteMe()
 	{
-		if (_aiTask != null) _aiTask.cancel(true);
+		if (_aiTask != null)
+		{
+			_aiTask.cancel(true);
+		}
 		
 		super.deleteMe();
 	}
@@ -83,7 +92,8 @@ public class L2XmassTreeInstance extends L2Npc
 		return 900;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Object#isAttackable()
 	 */
 	@Override

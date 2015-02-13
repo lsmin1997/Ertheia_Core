@@ -26,7 +26,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 public class TvTEventTeam
 {
 	/** The name of the team<br> */
-	private String _name;
+	private final String _name;
 	/** The team spot coordinated<br> */
 	private int[] _coordinates = new int[3];
 	/** The points of the team<br> */
@@ -35,8 +35,8 @@ public class TvTEventTeam
 	private Map<Integer, L2PcInstance> _participatedPlayers = new FastMap<Integer, L2PcInstance>();
 	
 	/**
-	 * C'tor initialize the team<br><br>
-	 *
+	 * C'tor initialize the team<br>
+	 * <br>
 	 * @param name as String<br>
 	 * @param coordinates as int[]<br>
 	 */
@@ -48,8 +48,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Adds a player to the team<br><br>
-	 *
+	 * Adds a player to the team<br>
+	 * <br>
 	 * @param playerInstance as L2PcInstance<br>
 	 * @return boolean: true if success, otherwise false<br>
 	 */
@@ -69,8 +69,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Removes a player from the team<br><br>
-	 *
+	 * Removes a player from the team<br>
+	 * <br>
 	 * @param playerName as String<br>
 	 */
 	public void removePlayer(int playerObjectId)
@@ -100,8 +100,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Is given player in this team?<br><br>
-	 *
+	 * Is given player in this team?<br>
+	 * <br>
 	 * @param playerName as String<br>
 	 * @return boolean: true if player is in this team, otherwise false<br>
 	 */
@@ -118,8 +118,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Returns the name of the team<br><br>
-	 *
+	 * Returns the name of the team<br>
+	 * <br>
 	 * @return String: name of the team<br>
 	 */
 	public String getName()
@@ -128,8 +128,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Returns the coordinates of the team spot<br><br>
-	 *
+	 * Returns the coordinates of the team spot<br>
+	 * <br>
 	 * @return int[]: team coordinates<br>
 	 */
 	public int[] getCoordinates()
@@ -138,8 +138,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Returns the points of the team<br><br>
-	 *
+	 * Returns the points of the team<br>
+	 * <br>
 	 * @return short: team points<br>
 	 */
 	public short getPoints()
@@ -148,8 +148,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Returns name and instance of all participated players in FastMap<br><br>
-	 *
+	 * Returns name and instance of all participated players in FastMap<br>
+	 * <br>
 	 * @return Map<String, L2PcInstance>: map of players in this team<br>
 	 */
 	public Map<Integer, L2PcInstance> getParticipatedPlayers()
@@ -165,8 +165,8 @@ public class TvTEventTeam
 	}
 	
 	/**
-	 * Returns player count of this team<br><br>
-	 *
+	 * Returns player count of this team<br>
+	 * <br>
 	 * @return int: number of players in team<br>
 	 */
 	public int getParticipatedPlayerCount()

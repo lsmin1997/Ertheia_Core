@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  ** @author Gnacik
- **
  */
 public class L2EventMonsterInstance extends L2MonsterInstance
 {

@@ -44,12 +44,12 @@ public class L2SkillTeleport extends L2Skill
 		if (coords != null)
 		{
 			String[] valuesSplit = coords.split(",");
-			_loc = new Location(Integer.parseInt(valuesSplit[0]),
-					Integer.parseInt(valuesSplit[1]),
-					Integer.parseInt(valuesSplit[2]));
+			_loc = new Location(Integer.parseInt(valuesSplit[0]), Integer.parseInt(valuesSplit[1]), Integer.parseInt(valuesSplit[2]));
 		}
 		else
+		{
 			_loc = null;
+		}
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class L2SkillTeleport extends L2Skill
 				return;
 			}
 			
-			if (((L2PcInstance)activeChar).isCombatFlagEquipped())
+			if (((L2PcInstance) activeChar).isCombatFlagEquipped())
 			{
 				activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 				return;
@@ -82,7 +82,7 @@ public class L2SkillTeleport extends L2Skill
 				return;
 			}
 			
-			if (GrandBossManager.getInstance().getZone(activeChar) != null && !activeChar.isGM())
+			if ((GrandBossManager.getInstance().getZone(activeChar) != null) && !activeChar.isGM())
 			{
 				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_MAY_NOT_SUMMON_FROM_YOUR_CURRENT_LOCATION));
 				return;
@@ -91,7 +91,7 @@ public class L2SkillTeleport extends L2Skill
 		
 		try
 		{
-			for (L2Character target: (L2Character[]) targets)
+			for (L2Character target : (L2Character[]) targets)
 			{
 				if (target instanceof L2PcInstance)
 				{
@@ -121,16 +121,24 @@ public class L2SkillTeleport extends L2Skill
 					if (targetChar != activeChar)
 					{
 						if (!TvTEvent.onEscapeUse(targetChar.getObjectId()))
+						{
 							continue;
+						}
 						
 						if (targetChar.isInOlympiadMode())
+						{
 							continue;
+						}
 						
 						if (GrandBossManager.getInstance().getZone(targetChar) != null)
+						{
 							continue;
+						}
 						
 						if (targetChar.isCombatFlagEquipped())
+						{
 							continue;
+						}
 					}
 				}
 				Location loc = null;
@@ -140,27 +148,38 @@ public class L2SkillTeleport extends L2Skill
 					{
 						// target is not player OR player is not flying or flymounted
 						// TODO: add check for gracia continent coords
-						if (!(target instanceof L2PcInstance)
-								|| !(target.isFlying() || ((L2PcInstance)target).isFlyingMounted()))
+						if (!(target instanceof L2PcInstance) || !(target.isFlying() || ((L2PcInstance) target).isFlyingMounted()))
+						{
 							loc = _loc;
+						}
 					}
 				}
 				else
 				{
 					if (_recallType.equalsIgnoreCase("Castle"))
+					{
 						loc = MapRegionTable.getInstance().getTeleToLocation(target, MapRegionTable.TeleportWhereType.Castle);
+					}
 					else if (_recallType.equalsIgnoreCase("ClanHall"))
+					{
 						loc = MapRegionTable.getInstance().getTeleToLocation(target, MapRegionTable.TeleportWhereType.ClanHall);
+					}
 					else if (_recallType.equalsIgnoreCase("Fortress"))
+					{
 						loc = MapRegionTable.getInstance().getTeleToLocation(target, MapRegionTable.TeleportWhereType.Fortress);
+					}
 					else
+					{
 						loc = MapRegionTable.getInstance().getTeleToLocation(target, MapRegionTable.TeleportWhereType.Town);
+					}
 				}
 				if (loc != null)
 				{
 					target.setInstanceId(0);
 					if (target instanceof L2PcInstance)
-						((L2PcInstance)target).setIsIn7sDungeon(false);
+					{
+						((L2PcInstance) target).setIsIn7sDungeon(false);
+					}
 					target.teleToLocation(loc, true);
 				}
 			}

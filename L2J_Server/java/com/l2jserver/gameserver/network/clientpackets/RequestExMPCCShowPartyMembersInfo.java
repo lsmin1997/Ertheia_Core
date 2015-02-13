@@ -20,13 +20,12 @@ import com.l2jserver.gameserver.network.serverpackets.ExMPCCShowPartyMemberInfo;
 
 /**
  * Format:(ch) d
- * @author  chris_00
+ * @author chris_00
  */
 public final class RequestExMPCCShowPartyMembersInfo extends L2GameClientPacket
 {
 	private static final String _C__D0_2D_REQUESTMPCCSHOWPARTYMEMBERINFO = "[C] D0:2D RequestExMPCCShowPartyMembersInfo";
 	private int _partyLeaderId;
-	
 	
 	@Override
 	protected void readImpl()
@@ -41,7 +40,7 @@ public final class RequestExMPCCShowPartyMembersInfo extends L2GameClientPacket
 	protected void runImpl()
 	{
 		L2PcInstance player = L2World.getInstance().getPlayer(_partyLeaderId);
-		if (player != null && player.getParty() != null)
+		if ((player != null) && (player.getParty() != null))
 		{
 			getClient().getActiveChar().sendPacket(new ExMPCCShowPartyMemberInfo(player.getParty()));
 			

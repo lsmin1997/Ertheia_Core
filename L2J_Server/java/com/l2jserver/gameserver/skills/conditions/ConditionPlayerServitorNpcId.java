@@ -28,29 +28,37 @@ public class ConditionPlayerServitorNpcId extends Condition
 	
 	/**
 	 * Instantiates a new condition player servitor npc id.
-	 *
 	 * @param npcIds the npc ids
 	 */
 	public ConditionPlayerServitorNpcId(ArrayList<Integer> npcIds)
 	{
-		if (npcIds.size() == 1 && npcIds.get(0) == 0)
+		if ((npcIds.size() == 1) && (npcIds.get(0) == 0))
+		{
 			_npcIds = null;
+		}
 		else
+		{
 			_npcIds = npcIds;
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
 		if ((env.player.getPet() == null))
+		{
 			return false;
+		}
 		
-		return _npcIds == null || _npcIds.contains(env.player.getPet().getNpcId());
+		return (_npcIds == null) || _npcIds.contains(env.player.getPet().getNpcId());
 	}
 }

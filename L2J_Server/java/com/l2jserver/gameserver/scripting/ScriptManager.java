@@ -15,8 +15,7 @@
 package com.l2jserver.gameserver.scripting;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public abstract class ScriptManager<S extends ManagedScript>
 {

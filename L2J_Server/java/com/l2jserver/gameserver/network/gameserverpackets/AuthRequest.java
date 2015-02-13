@@ -21,16 +21,7 @@ import com.l2jserver.util.network.BaseSendablePacket;
 public class AuthRequest extends BaseSendablePacket
 {
 	/**
-	 * Format: cccSddb
-	 * c desired ID
-	 * c accept alternative ID
-	 * c reserve Host
-	 * s ExternalHostName
-	 * s InetranlHostName
-	 * d max players
-	 * d hexid size
-	 * b hexid
-	 *
+	 * Format: cccSddb c desired ID c accept alternative ID c reserve Host s ExternalHostName s InetranlHostName d max players d hexid size b hexid
 	 * @param id
 	 * @param acceptAlternate
 	 * @param hexid
@@ -41,8 +32,8 @@ public class AuthRequest extends BaseSendablePacket
 	{
 		writeC(0x01);
 		writeC(id);
-		writeC(acceptAlternate? 0x01 : 0x00);
-		writeC(reserveHost? 0x01 : 0x00);
+		writeC(acceptAlternate ? 0x01 : 0x00);
+		writeC(reserveHost ? 0x01 : 0x00);
 		writeH(port);
 		writeD(maxplayer);
 		writeD(hexid.length);
@@ -55,7 +46,8 @@ public class AuthRequest extends BaseSendablePacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

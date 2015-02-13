@@ -14,29 +14,26 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList.SkillType;
-
 import javolution.util.FastList;
 
+import com.l2jserver.gameserver.network.serverpackets.AcquireSkillList.SkillType;
+
 /**
- * Sample:
- * <code>
+ * Sample: <code>
  * a4
  * 4d000000 01000000 98030000 			Attack Aura, level 1, sp cost
  * 01000000 							number of requirements
  * 05000000 47040000 0100000 000000000	   1 x spellbook advanced ATTACK                                                 .
- * </code>
- * <br>
- * format   dddd d (ddQd)
- *
- * @version  1.5
+ * </code> <br>
+ * format dddd d (ddQd)
+ * @version 1.5
  */
 public class AcquireSkillInfo extends L2GameServerPacket
 {
 	private static final String _S__91_ACQUIRESKILLINFO = "[S] 91 AcquireSkillInfo";
-	private FastList<Req> _reqs;
-	private int _id, _level, _spCost;
-	private SkillType _type;
+	private final FastList<Req> _reqs;
+	private final int _id, _level, _spCost;
+	private final SkillType _type;
 	
 	/**
 	 * Private class containing learning skill requisites.

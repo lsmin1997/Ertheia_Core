@@ -18,13 +18,12 @@ import com.l2jserver.gameserver.model.actor.L2Playable;
 import com.l2jserver.gameserver.skills.Env;
 
 /**
- * 
  * @author DS
- *
  */
 public class ConditionTargetPlayable extends Condition
 {
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override

@@ -26,7 +26,7 @@ public class GmViewQuestInfo extends L2GameServerPacket
 {
 	private static final String _S__AC_GMVIEWQUESTLIST = "[S] 99 GMViewQuestList";
 	
-	private L2PcInstance _activeChar;
+	private final L2PcInstance _activeChar;
 	
 	public GmViewQuestInfo(L2PcInstance cha)
 	{
@@ -63,11 +63,12 @@ public class GmViewQuestInfo extends L2GameServerPacket
 				continue;
 			}
 			
-			writeD(qs.getInt("cond"));   // stage of quest progress
+			writeD(qs.getInt("cond")); // stage of quest progress
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

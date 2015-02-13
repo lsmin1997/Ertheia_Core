@@ -21,10 +21,10 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.communityserver.CommunityServerThread;
 import com.l2jserver.gameserver.network.communityserver.writepackets.RequestCommunityBoardWrite;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
+
 /**
  * Format SSSSSS
  * @author -Wooden-
- *
  */
 public final class RequestBBSwrite extends L2GameClientPacket
 {
@@ -55,13 +55,19 @@ public final class RequestBBSwrite extends L2GameClientPacket
 			L2PcInstance activeChar = getClient().getActiveChar();
 			
 			if (activeChar == null)
+			{
 				return;
+			}
 			
-			if (!CommunityServerThread.getInstance().sendPacket(new RequestCommunityBoardWrite(activeChar.getObjectId(), _url,_arg1,_arg2, _arg3, _arg4, _arg5)))
+			if (!CommunityServerThread.getInstance().sendPacket(new RequestCommunityBoardWrite(activeChar.getObjectId(), _url, _arg1, _arg2, _arg3, _arg4, _arg5)))
+			{
 				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CB_OFFLINE));
+			}
 		}
 		else
-			CommunityBoard.getInstance().handleWriteCommands(getClient(),_url,_arg1,_arg2, _arg3, _arg4, _arg5);
+		{
+			CommunityBoard.getInstance().handleWriteCommands(getClient(), _url, _arg1, _arg2, _arg3, _arg4, _arg5);
+		}
 	}
 	
 	@Override

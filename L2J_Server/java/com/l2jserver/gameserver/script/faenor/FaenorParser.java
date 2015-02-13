@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.script.Parser;
 
 /**
  * @author Luis Arias
- *
  */
 public abstract class FaenorParser extends Parser
 {
@@ -60,7 +59,9 @@ public abstract class FaenorParser extends Parser
 		catch (Exception e)
 		{
 			if (defaultValue != null)
+			{
 				return defaultValue;
+			}
 			throw new NullPointerException(e.getMessage());
 		}
 	}
@@ -70,9 +71,9 @@ public abstract class FaenorParser extends Parser
 		try
 		{
 			NodeList list = parentNode.getChildNodes();
-			for (int i=0; i<list.getLength(); i++)
+			for (int i = 0; i < list.getLength(); i++)
 			{
-				Node node   = list.item(i);
+				Node node = list.item(i);
 				if (node.getNodeName().equalsIgnoreCase(elementName))
 				{
 					return node.getTextContent();
@@ -80,9 +81,12 @@ public abstract class FaenorParser extends Parser
 			}
 		}
 		catch (Exception e)
-		{}
+		{
+		}
 		if (defaultValue != null)
+		{
 			return defaultValue;
+		}
 		throw new NullPointerException();
 		
 	}
@@ -119,7 +123,7 @@ public abstract class FaenorParser extends Parser
 	
 	protected static String getParserName(String name)
 	{
-		return "faenor.Faenor"+name+"Parser";
+		return "faenor.Faenor" + name + "Parser";
 	}
 	
 	/**

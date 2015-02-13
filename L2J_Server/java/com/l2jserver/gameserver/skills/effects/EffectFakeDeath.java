@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author mkizub
- * 
  */
 public class EffectFakeDeath extends L2Effect
 {
@@ -33,7 +32,6 @@ public class EffectFakeDeath extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -43,7 +41,6 @@ public class EffectFakeDeath extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -54,7 +51,6 @@ public class EffectFakeDeath extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -64,14 +60,15 @@ public class EffectFakeDeath extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		double manaDam = calc();
 		

@@ -22,17 +22,21 @@ public class HellboundManager
 	
 	private HellboundManager()
 	{
-		_log.info(getClass().getSimpleName()+": Initializing");
+		_log.info(getClass().getSimpleName() + ": Initializing");
 		init();
 	}
 	
 	private void init()
 	{
-		_log.info(getClass().getSimpleName()+": Mode: dummy");
+		_log.info(getClass().getSimpleName() + ": Mode: dummy");
 		if (isLocked())
-			_log.info(getClass().getSimpleName()+": State: locked");
+		{
+			_log.info(getClass().getSimpleName() + ": State: locked");
+		}
 		else
-			_log.info(getClass().getSimpleName()+": State: unlocked");
+		{
+			_log.info(getClass().getSimpleName() + ": State: unlocked");
+		}
 	}
 	
 	/**

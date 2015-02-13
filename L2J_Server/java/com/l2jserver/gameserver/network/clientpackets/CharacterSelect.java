@@ -32,7 +32,6 @@ import com.l2jserver.gameserver.network.serverpackets.ServerClose;
 
 /**
  * This class ...
- * 
  * @version $Revision: 1.5.2.1.2.5 $ $Date: 2005/03/27 15:29:30 $
  */
 public class CharacterSelect extends L2GameClientPacket
@@ -45,13 +44,13 @@ public class CharacterSelect extends L2GameClientPacket
 	private int _charSlot;
 	
 	@SuppressWarnings("unused")
-	private int _unk1; 	// new in C4
+	private int _unk1; // new in C4
 	@SuppressWarnings("unused")
-	private int _unk2;	// new in C4
+	private int _unk2; // new in C4
 	@SuppressWarnings("unused")
-	private int _unk3;	// new in C4
+	private int _unk3; // new in C4
 	@SuppressWarnings("unused")
-	private int _unk4;	// new in C4
+	private int _unk4; // new in C4
 	
 	@Override
 	protected void readImpl()
@@ -68,7 +67,9 @@ public class CharacterSelect extends L2GameClientPacket
 	{
 		final L2GameClient client = getClient();
 		if (!client.getFloodProtectors().getCharacterSelect().tryPerformAction("CharacterSelect"))
+		{
 			return;
+		}
 		
 		// We should always be able to acquire the lock
 		// But if we can't lock then nothing should be done (i.e. repeated packet)
@@ -82,9 +83,11 @@ public class CharacterSelect extends L2GameClientPacket
 				{
 					final CharSelectInfoPackage info = client.getCharSelection(_charSlot);
 					if (info == null)
+					{
 						return;
+					}
 					
-					//Selected character is banned.
+					// Selected character is banned.
 					if (info.getAccessLevel() < 0)
 					{
 						client.close(ServerClose.STATIC_PACKET);
@@ -98,17 +101,19 @@ public class CharacterSelect extends L2GameClientPacket
 						client.sendPacket(msg);
 						return;
 					}
-
+					
 					// The L2PcInstance must be created here, so that it can be attached to the L2GameClient
 					if (Config.DEBUG)
 					{
 						_log.fine("selected slot:" + _charSlot);
 					}
 					
-					//load up character from disk
+					// load up character from disk
 					final L2PcInstance cha = client.loadCharFromDisk(_charSlot);
 					if (cha == null)
+					{
 						return; // handled in L2GameClient
+					}
 					
 					CharNameTable.getInstance().addName(cha);
 					
@@ -129,7 +134,10 @@ public class CharacterSelect extends L2GameClientPacket
 			}
 			
 			LogRecord record = new LogRecord(Level.INFO, "Logged in");
-			record.setParameters(new Object[]{ client });
+			record.setParameters(new Object[]
+			{
+				client
+			});
 			_logAccounting.log(record);
 		}
 	}

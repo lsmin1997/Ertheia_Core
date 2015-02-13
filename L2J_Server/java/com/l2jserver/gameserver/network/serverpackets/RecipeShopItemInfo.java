@@ -20,13 +20,12 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
  * ddddd
  * @version $Revision: 1.1.2.3.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
-public class RecipeShopItemInfo  extends L2GameServerPacket
+public class RecipeShopItemInfo extends L2GameServerPacket
 {
 	
 	private static final String _S__DA_RecipeShopItemInfo = "[S] e0 RecipeShopItemInfo";
-	private L2PcInstance _player;
-	private int _recipeId;
-	
+	private final L2PcInstance _player;
+	private final int _recipeId;
 	
 	public RecipeShopItemInfo(L2PcInstance player, int recipeId)
 	{
@@ -40,12 +39,13 @@ public class RecipeShopItemInfo  extends L2GameServerPacket
 		writeC(0xe0);
 		writeD(_player.getObjectId());
 		writeD(_recipeId);
-		writeD((int)_player.getCurrentMp());
+		writeD((int) _player.getCurrentMp());
 		writeD(_player.getMaxMp());
 		writeD(0xffffffff);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

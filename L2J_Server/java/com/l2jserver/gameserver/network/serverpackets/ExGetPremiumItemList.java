@@ -21,17 +21,16 @@ import com.l2jserver.gameserver.model.L2PremiumItem;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * Structure:  "QdQdS"
- * 
+ * Structure: "QdQdS"
  * @author Gnacik
  */
 public class ExGetPremiumItemList extends L2GameServerPacket
 {
 	private static final String _S__FE_86_EXGETPREMIUMITEMLIST = "[S] FE:86 ExGetPremiumItemList";
 	
-	private L2PcInstance _activeChar;
+	private final L2PcInstance _activeChar;
 	
-	private Map<Integer, L2PremiumItem> _map;
+	private final Map<Integer, L2PremiumItem> _map;
 	
 	public ExGetPremiumItemList(L2PcInstance activeChar)
 	{
@@ -59,7 +58,9 @@ public class ExGetPremiumItemList extends L2GameServerPacket
 			}
 		}
 		else
+		{
 			writeD(0);
+		}
 	}
 	
 	@Override

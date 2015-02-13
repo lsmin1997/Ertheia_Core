@@ -17,10 +17,7 @@ package com.l2jserver.gameserver.network.clientpackets;
 import com.l2jserver.gameserver.network.serverpackets.ExBrLoadEventTopRankers;
 
 /**
- * Halloween rank list client packet.
- * 
- * Format: (ch)ddd
- *
+ * Halloween rank list client packet. Format: (ch)ddd
  */
 public class BrEventRankerList extends L2GameClientPacket
 {
@@ -29,7 +26,8 @@ public class BrEventRankerList extends L2GameClientPacket
 	@SuppressWarnings("unused")
 	private int _ranking;
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket#getType()
 	 */
 	@Override
@@ -38,7 +36,8 @@ public class BrEventRankerList extends L2GameClientPacket
 		return "[C] D0:7D BrEventRankerList";
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket#readImpl()
 	 */
 	@Override
@@ -49,7 +48,8 @@ public class BrEventRankerList extends L2GameClientPacket
 		_ranking = readD();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket#runImpl()
 	 */
 	@Override

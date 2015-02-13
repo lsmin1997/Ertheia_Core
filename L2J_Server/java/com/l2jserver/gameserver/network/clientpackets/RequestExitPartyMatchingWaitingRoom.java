@@ -18,9 +18,7 @@ import com.l2jserver.gameserver.model.PartyMatchWaitingList;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * 
  * @author Gnacik
- *
  */
 public final class RequestExitPartyMatchingWaitingRoom extends L2GameClientPacket
 {
@@ -37,7 +35,9 @@ public final class RequestExitPartyMatchingWaitingRoom extends L2GameClientPacke
 		L2PcInstance _activeChar = getClient().getActiveChar();
 		
 		if (_activeChar == null)
+		{
 			return;
+		}
 		
 		PartyMatchWaitingList.getInstance().removePlayer(_activeChar);
 	}

@@ -37,12 +37,9 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 import com.l2jserver.util.Rnd;
 
-
 /**
  * Format (ch) dd c: (id) 0xD0 h: (subid) 0x34 d: skill id d: skill lvl
- * 
  * @author -Wooden-
- * 
  */
 public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 {
@@ -61,18 +58,21 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl()
 	{
-		if (_skillId <= 0 || _skillLvl <= 0) // minimal sanity check
+		if ((_skillId <= 0) || (_skillLvl <= 0))
+		{
 			return;
-
+		}
+		
 		L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (player.getClassId().level() < 3) // requires to have 3rd class quest completed
 		{
@@ -115,7 +115,7 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 		
 		int currentEnchantLevel = currentLevel % 100;
 		// is the requested level valid?
-		if (currentEnchantLevel != _skillLvl % 100)
+		if (currentEnchantLevel != (_skillLvl % 100))
 		{
 			return;
 		}
@@ -160,7 +160,7 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 			
 			int levelPenalty = Rnd.get(Math.min(4, currentEnchantLevel));
 			_skillLvl -= levelPenalty;
-			if (_skillLvl % 100 == 0)
+			if ((_skillLvl % 100) == 0)
 			{
 				_skillLvl = s.getBaseLevel();
 			}
@@ -173,9 +173,11 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 				{
 					LogRecord record = new LogRecord(Level.INFO, "Route Change");
 					record.setParameters(new Object[]
-					                                {
-							player, skill, spb
-					                                });
+					{
+						player,
+						skill,
+						spb
+					});
 					record.setLoggerName("skill");
 					_logEnchant.log(record);
 				}
@@ -209,7 +211,7 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 			player.sendPacket(new ExEnchantSkillInfo(_skillId, player.getSkillLevel(_skillId)));
 			player.sendPacket(new ExEnchantSkillInfoDetail(3, _skillId, player.getSkillLevel(_skillId), player));
 			
-			this.updateSkillShortcuts(player);
+			updateSkillShortcuts(player);
 			
 		}
 		else
@@ -226,7 +228,7 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 		
 		for (L2ShortCut sc : allShortCuts)
 		{
-			if (sc.getId() == _skillId && sc.getType() == L2ShortCut.TYPE_SKILL)
+			if ((sc.getId() == _skillId) && (sc.getType() == L2ShortCut.TYPE_SKILL))
 			{
 				L2ShortCut newsc = new L2ShortCut(sc.getSlot(), sc.getPage(), sc.getType(), sc.getId(), player.getSkillLevel(_skillId), 1);
 				player.sendPacket(new ShortCutRegister(newsc));
@@ -237,7 +239,6 @@ public final class RequestExEnchantSkillRouteChange extends L2GameClientPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

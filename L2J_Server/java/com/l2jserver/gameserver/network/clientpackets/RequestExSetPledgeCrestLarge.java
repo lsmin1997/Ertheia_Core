@@ -25,13 +25,8 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
- * Format : chdb
- * c (id) 0xD0
- * h (subid) 0x11
- * d data size
- * b raw data (picture i think ;) )
+ * Format : chdb c (id) 0xD0 h (subid) 0x11 d data size b raw data (picture i think ;) )
  * @author -Wooden-
- *
  */
 public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 {
@@ -46,13 +41,16 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 	{
 		_length = readD();
 		if (_length > 2176)
+		{
 			return;
+		}
 		
 		_data = new byte[_length];
 		readB(_data);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#runImpl()
 	 */
 	@Override
@@ -60,11 +58,15 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		L2Clan clan = activeChar.getClan();
 		if (clan == null)
+		{
 			return;
+		}
 		
 		if (_length < 0)
 		{
@@ -81,10 +83,12 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 		int crestLargeId = -1;
 		if ((activeChar.getClanPrivileges() & L2Clan.CP_CL_REGISTER_CREST) == L2Clan.CP_CL_REGISTER_CREST)
 		{
-			if (_length == 0 || _data == null)
+			if ((_length == 0) || (_data == null))
 			{
 				if (clan.getCrestLargeId() == 0)
+				{
 					return;
+				}
 				
 				crestLargeId = 0;
 				activeChar.sendMessage("The insignia has been removed.");
@@ -92,9 +96,9 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 			}
 			else
 			{
-				if (clan.getHasCastle() == 0 && clan.getHasHideout() == 0)
+				if ((clan.getHasCastle() == 0) && (clan.getHasHideout() == 0))
 				{
-					activeChar.sendMessage("Only a clan that owns a clan hall or a castle can get their emblem displayed on clan related items"); //there is a system message for that but didnt found the id
+					activeChar.sendMessage("Only a clan that owns a clan hall or a castle can get their emblem displayed on clan related items"); // there is a system message for that but didnt found the id
 					return;
 				}
 				
@@ -110,13 +114,14 @@ public final class RequestExSetPledgeCrestLarge extends L2GameClientPacket
 			}
 		}
 		
-		if (updated && crestLargeId != -1)
+		if (updated && (crestLargeId != -1))
 		{
 			clan.changeLargeCrest(crestLargeId);
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

@@ -15,14 +15,12 @@
 package com.l2jserver.gameserver.model;
 
 import com.l2jserver.util.Rnd;
+
 /**
- * This class defines the spawn data of a Minion type
- * In a group mob, there are one master called RaidBoss and several slaves called Minions.
- *
- * <B><U> Data</U> :</B><BR><BR>
- * <li>_minionId : The Identifier of the L2Minion to spawn </li>
- * <li>_minionAmount :  The number of this Minion Type to spawn </li><BR><BR>
- *
+ * This class defines the spawn data of a Minion type In a group mob, there are one master called RaidBoss and several slaves called Minions. <B><U> Data</U> :</B><BR>
+ * <BR>
+ * <li>_minionId : The Identifier of the L2Minion to spawn</li> <li>_minionAmount : The number of this Minion Type to spawn</li><BR>
+ * <BR>
  */
 public class L2MinionData
 {
@@ -35,12 +33,10 @@ public class L2MinionData
 	private int _minionAmountMin;
 	private int _minionAmountMax;
 	
-	
 	/**
-	 * Set the Identifier of the Minion to spawn.<BR><BR>
-	 *
+	 * Set the Identifier of the Minion to spawn.<BR>
+	 * <BR>
 	 * @param if The L2Character Identifier to spawn
-	 *
 	 */
 	public void setMinionId(int id)
 	{
@@ -48,7 +44,8 @@ public class L2MinionData
 	}
 	
 	/**
-	 * Return the Identifier of the Minion to spawn.<BR><BR>
+	 * Return the Identifier of the Minion to spawn.<BR>
+	 * <BR>
 	 */
 	public int getMinionId()
 	{
@@ -56,10 +53,9 @@ public class L2MinionData
 	}
 	
 	/**
-	 * Set the minimum of minions to amount.<BR><BR>
-	 *
+	 * Set the minimum of minions to amount.<BR>
+	 * <BR>
 	 * @param amountMin The minimum quantity of this Minion type to spawn
-	 *
 	 */
 	public void setAmountMin(int amountMin)
 	{
@@ -67,10 +63,9 @@ public class L2MinionData
 	}
 	
 	/**
-	 * Set the maximum of minions to amount.<BR><BR>
-	 *
+	 * Set the maximum of minions to amount.<BR>
+	 * <BR>
 	 * @param amountMax The maximum quantity of this Minion type to spawn
-	 *
 	 */
 	public void setAmountMax(int amountMax)
 	{
@@ -78,10 +73,9 @@ public class L2MinionData
 	}
 	
 	/**
-	 * Set the amount of this Minion type to spawn.<BR><BR>
-	 *
+	 * Set the amount of this Minion type to spawn.<BR>
+	 * <BR>
 	 * @param amount The quantity of this Minion type to spawn
-	 *
 	 */
 	public void setAmount(int amount)
 	{
@@ -89,7 +83,8 @@ public class L2MinionData
 	}
 	
 	/**
-	 * Return the amount of this Minion type to spawn.<BR><BR>
+	 * Return the amount of this Minion type to spawn.<BR>
+	 * <BR>
 	 */
 	public int getAmount()
 	{

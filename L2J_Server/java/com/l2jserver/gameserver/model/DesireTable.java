@@ -33,17 +33,25 @@ import javolution.util.FastMap;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 
 public class DesireTable
 {
-	public static final DesireType[] DEFAULT_DESIRES = {DesireType.FEAR, DesireType.DISLIKE,
-		DesireType.HATE, DesireType.DAMAGE};
+	public static final DesireType[] DEFAULT_DESIRES =
+	{
+		DesireType.FEAR,
+		DesireType.DISLIKE,
+		DesireType.HATE,
+		DesireType.DAMAGE
+	};
 	
-	public enum DesireType {
-		FEAR, DISLIKE, HATE, DAMAGE;
+	public enum DesireType
+	{
+		FEAR,
+		DISLIKE,
+		HATE,
+		DAMAGE;
 	}
 	
 	static class DesireValue
@@ -73,7 +81,7 @@ public class DesireTable
 	
 	class Desires
 	{
-		private Map<DesireType, DesireValue> _desireTable;
+		private final Map<DesireType, DesireValue> _desireTable;
 		
 		public Desires(DesireType... desireList)
 		{
@@ -110,9 +118,9 @@ public class DesireTable
 		}
 	}
 	
-	private Map<L2Object, Desires> _objectDesireTable;
-	private Desires _generalDesires;
-	private DesireType[] _desireTypes;
+	private final Map<L2Object, Desires> _objectDesireTable;
+	private final Desires _generalDesires;
+	private final DesireType[] _desireTypes;
 	
 	public DesireTable(DesireType... desireList)
 	{
@@ -129,7 +137,10 @@ public class DesireTable
 	public float getDesireValue(L2Object object, DesireType type)
 	{
 		Desires desireList = _objectDesireTable.get(object);
-		if (desireList == null) return 0f;
+		if (desireList == null)
+		{
+			return 0f;
+		}
 		return desireList.getDesireValue(type).getValue();
 	}
 	
@@ -141,7 +152,10 @@ public class DesireTable
 	public void addDesireValue(L2Object object, DesireType type, float value)
 	{
 		Desires desireList = _objectDesireTable.get(object);
-		if (desireList != null) desireList.addValue(type, value);
+		if (desireList != null)
+		{
+			desireList.addValue(type, value);
+		}
 	}
 	
 	public void createDesire(DesireType type)
@@ -157,26 +171,34 @@ public class DesireTable
 	public void createDesire(L2Object object, DesireType type)
 	{
 		Desires desireList = _objectDesireTable.get(object);
-		if (desireList != null) desireList.createDesire(type);
+		if (desireList != null)
+		{
+			desireList.createDesire(type);
+		}
 	}
 	
 	public void deleteDesire(L2Object object, DesireType type)
 	{
 		Desires desireList = _objectDesireTable.get(object);
-		if (desireList != null) desireList.deleteDesire(type);
+		if (desireList != null)
+		{
+			desireList.deleteDesire(type);
+		}
 	}
 	
 	public void addKnownObject(L2Object object)
 	{
 		if (object != null)
 		{
-			addKnownObject(object, DesireType.DISLIKE, DesireType.FEAR, DesireType.DAMAGE,
-					DesireType.HATE);
+			addKnownObject(object, DesireType.DISLIKE, DesireType.FEAR, DesireType.DAMAGE, DesireType.HATE);
 		}
 	}
 	
 	public void addKnownObject(L2Object object, DesireType... desireList)
 	{
-		if (object != null) _objectDesireTable.put(object, new Desires(desireList));
+		if (object != null)
+		{
+			_objectDesireTable.put(object, new Desires(desireList));
+		}
 	}
 }

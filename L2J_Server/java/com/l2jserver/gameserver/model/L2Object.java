@@ -29,26 +29,22 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.ExSendUIEvent;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
-
 /**
- * Mother class of all objects in the world wich ones is it possible
- * to interact (PC, NPC, Item...)<BR><BR>
- *
- * L2Object :<BR><BR>
- * <li>L2Character</li>
- * <li>L2ItemInstance</li>
- * <li>L2Potion</li>
- *
+ * Mother class of all objects in the world wich ones is it possible to interact (PC, NPC, Item...)<BR>
+ * <BR>
+ * L2Object :<BR>
+ * <BR>
+ * <li>L2Character</li> <li>L2ItemInstance</li> <li>L2Potion</li>
  */
 
 public abstract class L2Object
 {
 	// =========================================================
 	// Data Field
-	private boolean _isVisible;                 // Object visibility
+	private boolean _isVisible; // Object visibility
 	private ObjectKnownList _knownList;
 	private String _name;
-	private int _objectId;                      // Object identifier
+	private int _objectId; // Object identifier
 	private ObjectPoly _poly;
 	private ObjectPosition _position;
 	private int _instanceId = 0;
@@ -194,10 +190,10 @@ public abstract class L2Object
 		{
 			_parent = parent;
 			
-			final int high = this.ordinal() - (Long.SIZE - 1);
+			final int high = ordinal() - (Long.SIZE - 1);
 			if (high < 0)
 			{
-				_typeL = 1L << this.ordinal();
+				_typeL = 1L << ordinal();
 				_typeH = 0;
 			}
 			else
@@ -206,8 +202,10 @@ public abstract class L2Object
 				_typeH = 1L << high;
 			}
 			
-			if (_typeL < 0 || _typeH < 0)
-				throw new Error("Too many instance types, failed to load " + this.name());
+			if ((_typeL < 0) || (_typeH < 0))
+			{
+				throw new Error("Too many instance types, failed to load " + name());
+			}
 			
 			if (parent != null)
 			{
@@ -228,7 +226,7 @@ public abstract class L2Object
 		
 		public final boolean isType(InstanceType it)
 		{
-			return (_maskL & it._typeL) > 0 || (_maskH & it._typeH) > 0;
+			return ((_maskL & it._typeL) > 0) || ((_maskH & it._typeH) > 0);
 		}
 		
 		public final boolean isTypes(InstanceType... it)
@@ -236,7 +234,9 @@ public abstract class L2Object
 			for (InstanceType i : it)
 			{
 				if (isType(i))
+				{
 					return true;
+				}
 			}
 			return false;
 		}
@@ -273,7 +273,9 @@ public abstract class L2Object
 	{
 		IActionHandler handler = ActionHandler.getInstance().getActionHandler(getInstanceType());
 		if (handler != null)
+		{
 			handler.action(player, this, interact);
+		}
 		
 		player.sendPacket(ActionFailed.STATIC_PACKET);
 	}
@@ -282,7 +284,9 @@ public abstract class L2Object
 	{
 		IActionHandler handler = ActionHandler.getInstance().getActionShiftHandler(getInstanceType());
 		if (handler != null)
+		{
 			handler.action(player, this, true);
+		}
 		
 		player.sendPacket(ActionFailed.STATIC_PACKET);
 	}
@@ -293,12 +297,12 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * Do Nothing.<BR><BR>
-	 *
-	 * <B><U> Overridden in </U> :</B><BR><BR>
-	 * <li> L2GuardInstance :  Set the home location of its L2GuardInstance </li>
-	 * <li> L2Attackable    :  Reset the Spoiled flag </li><BR><BR>
-	 *
+	 * Do Nothing.<BR>
+	 * <BR>
+	 * <B><U> Overridden in </U> :</B><BR>
+	 * <BR>
+	 * <li>L2GuardInstance : Set the home location of its L2GuardInstance</li> <li>L2Attackable : Reset the Spoiled flag</li><BR>
+	 * <BR>
 	 */
 	public void onSpawn()
 	{
@@ -318,12 +322,12 @@ public abstract class L2Object
 	
 	public final int getX()
 	{
-		assert getPosition().getWorldRegion() != null || _isVisible;
+		assert (getPosition().getWorldRegion() != null) || _isVisible;
 		return getPosition().getX();
 	}
+	
 	/**
-	 * @return The id of the instance zone the object is in - id 0 is global
-	 * since everything like dropped items, mobs, players can be in a instanciated area, it must be in l2object
+	 * @return The id of the instance zone the object is in - id 0 is global since everything like dropped items, mobs, players can be in a instanciated area, it must be in l2object
 	 */
 	public int getInstanceId()
 	{
@@ -336,17 +340,21 @@ public abstract class L2Object
 	public void setInstanceId(int instanceId)
 	{
 		if (_instanceId == instanceId)
+		{
 			return;
+		}
 		
 		Instance oldI = InstanceManager.getInstance().getInstance(_instanceId);
 		Instance newI = InstanceManager.getInstance().getInstance(instanceId);
 		
 		if (newI == null)
+		{
 			return;
+		}
 		
 		if (this instanceof L2PcInstance)
 		{
-			if (_instanceId > 0 && oldI != null)
+			if ((_instanceId > 0) && (oldI != null))
 			{
 				oldI.removePlayer(getObjectId());
 				if (oldI.isShowTimer())
@@ -354,9 +362,13 @@ public abstract class L2Object
 					int startTime = (int) ((System.currentTimeMillis() - oldI.getInstanceStartTime()) / 1000);
 					int endTime = (int) ((oldI.getInstanceEndTime() - oldI.getInstanceStartTime()) / 1000);
 					if (oldI.isTimerIncrease())
+					{
 						sendPacket(new ExSendUIEvent(this, true, true, startTime, endTime, oldI.getTimerText()));
+					}
 					else
+					{
 						sendPacket(new ExSendUIEvent(this, true, false, endTime - startTime, 0, oldI.getTimerText()));
+					}
 				}
 			}
 			if (instanceId > 0)
@@ -367,27 +379,37 @@ public abstract class L2Object
 					int startTime = (int) ((System.currentTimeMillis() - newI.getInstanceStartTime()) / 1000);
 					int endTime = (int) ((newI.getInstanceEndTime() - newI.getInstanceStartTime()) / 1000);
 					if (newI.isTimerIncrease())
+					{
 						sendPacket(new ExSendUIEvent(this, false, true, startTime, endTime, newI.getTimerText()));
+					}
 					else
+					{
 						sendPacket(new ExSendUIEvent(this, false, false, endTime - startTime, 0, newI.getTimerText()));
+					}
 				}
 			}
 			
-			if (((L2PcInstance)this).getPet() != null)
-				((L2PcInstance)this).getPet().setInstanceId(instanceId);
+			if (((L2PcInstance) this).getPet() != null)
+			{
+				((L2PcInstance) this).getPet().setInstanceId(instanceId);
+			}
 		}
 		else if (this instanceof L2Npc)
 		{
-			if (_instanceId > 0 && oldI != null)
-				oldI.removeNpc(((L2Npc)this));
+			if ((_instanceId > 0) && (oldI != null))
+			{
+				oldI.removeNpc(((L2Npc) this));
+			}
 			if (instanceId > 0)
-				newI.addNpc(((L2Npc)this));
+			{
+				newI.addNpc(((L2Npc) this));
+			}
 		}
 		
 		_instanceId = instanceId;
 		
 		// If we change it for visible objects, me must clear & revalidate knownlists
-		if (_isVisible && _knownList != null)
+		if (_isVisible && (_knownList != null))
 		{
 			if (this instanceof L2PcInstance)
 			{
@@ -406,33 +428,36 @@ public abstract class L2Object
 	
 	public final int getY()
 	{
-		assert getPosition().getWorldRegion() != null || _isVisible;
+		assert (getPosition().getWorldRegion() != null) || _isVisible;
 		return getPosition().getY();
 	}
 	
 	public final int getZ()
 	{
-		assert getPosition().getWorldRegion() != null || _isVisible;
+		assert (getPosition().getWorldRegion() != null) || _isVisible;
 		return getPosition().getZ();
 	}
 	
 	// =========================================================
 	// Method - Public
 	/**
-	 * Remove a L2Object from the world.<BR><BR>
-	 *
-	 * <B><U> Actions</U> :</B><BR><BR>
-	 * <li>Remove the L2Object from the world</li><BR><BR>
-	 *
+	 * Remove a L2Object from the world.<BR>
+	 * <BR>
+	 * <B><U> Actions</U> :</B><BR>
+	 * <BR>
+	 * <li>Remove the L2Object from the world</li><BR>
+	 * <BR>
 	 * <FONT COLOR=#FF0000><B> <U>Caution</U> : This method DOESN'T REMOVE the object from _allObjects of L2World </B></FONT><BR>
-	 * <FONT COLOR=#FF0000><B> <U>Caution</U> : This method DOESN'T SEND Server->Client packets to players</B></FONT><BR><BR>
-	 *
-	 * <B><U> Assert </U> :</B><BR><BR>
-	 * <li> _worldRegion != null <I>(L2Object is visible at the beginning)</I></li><BR><BR>
-	 *
-	 * <B><U> Example of use </U> :</B><BR><BR>
-	 * <li> Delete NPC/PC or Unsummon</li><BR><BR>
-	 *
+	 * <FONT COLOR=#FF0000><B> <U>Caution</U> : This method DOESN'T SEND Server->Client packets to players</B></FONT><BR>
+	 * <BR>
+	 * <B><U> Assert </U> :</B><BR>
+	 * <BR>
+	 * <li>_worldRegion != null <I>(L2Object is visible at the beginning)</I></li><BR>
+	 * <BR>
+	 * <B><U> Example of use </U> :</B><BR>
+	 * <BR>
+	 * <li>Delete NPC/PC or Unsummon</li><BR>
+	 * <BR>
 	 */
 	public void decayMe()
 	{
@@ -461,25 +486,23 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * Init the position of a L2Object spawn and add it in the world as a visible object.<BR><BR>
-	 *
-	 * <B><U> Actions</U> :</B><BR><BR>
-	 * <li>Set the x,y,z position of the L2Object spawn and update its _worldregion </li>
-	 * <li>Add the L2Object spawn in the _allobjects of L2World </li>
-	 * <li>Add the L2Object spawn to _visibleObjects of its L2WorldRegion</li>
-	 * <li>Add the L2Object spawn in the world as a <B>visible</B> object</li><BR><BR>
-	 *
-	 * <B><U> Assert </U> :</B><BR><BR>
-	 * <li> _worldRegion == null <I>(L2Object is invisible at the beginning)</I></li><BR><BR>
-	 *
-	 * <B><U> Example of use </U> :</B><BR><BR>
-	 * <li> Create Door</li>
-	 * <li> Spawn : Monster, Minion, CTs, Summon...</li><BR>
-	 *
+	 * Init the position of a L2Object spawn and add it in the world as a visible object.<BR>
+	 * <BR>
+	 * <B><U> Actions</U> :</B><BR>
+	 * <BR>
+	 * <li>Set the x,y,z position of the L2Object spawn and update its _worldregion</li> <li>Add the L2Object spawn in the _allobjects of L2World</li> <li>Add the L2Object spawn to _visibleObjects of its L2WorldRegion</li> <li>Add the L2Object spawn in the world as a <B>visible</B> object</li><BR>
+	 * <BR>
+	 * <B><U> Assert </U> :</B><BR>
+	 * <BR>
+	 * <li>_worldRegion == null <I>(L2Object is invisible at the beginning)</I></li><BR>
+	 * <BR>
+	 * <B><U> Example of use </U> :</B><BR>
+	 * <BR>
+	 * <li>Create Door</li> <li>Spawn : Monster, Minion, CTs, Summon...</li><BR>
 	 */
 	public final void spawnMe()
 	{
-		assert getPosition().getWorldRegion() == null && getPosition().getWorldPosition().getX() != 0 && getPosition().getWorldPosition().getY() != 0 && getPosition().getWorldPosition().getZ() != 0;
+		assert (getPosition().getWorldRegion() == null) && (getPosition().getWorldPosition().getX() != 0) && (getPosition().getWorldPosition().getY() != 0) && (getPosition().getWorldPosition().getZ() != 0);
 		
 		synchronized (this)
 		{
@@ -511,12 +534,24 @@ public abstract class L2Object
 			// Set the x,y,z position of the L2Object spawn and update its _worldregion
 			_isVisible = true;
 			
-			if (x > L2World.MAP_MAX_X) x = L2World.MAP_MAX_X - 5000;
-			if (x < L2World.MAP_MIN_X) x = L2World.MAP_MIN_X + 5000;
-			if (y > L2World.MAP_MAX_Y) y = L2World.MAP_MAX_Y - 5000;
-			if (y < L2World.MAP_MIN_Y) y = L2World.MAP_MIN_Y + 5000;
+			if (x > L2World.MAP_MAX_X)
+			{
+				x = L2World.MAP_MAX_X - 5000;
+			}
+			if (x < L2World.MAP_MIN_X)
+			{
+				x = L2World.MAP_MIN_X + 5000;
+			}
+			if (y > L2World.MAP_MAX_Y)
+			{
+				y = L2World.MAP_MAX_Y - 5000;
+			}
+			if (y < L2World.MAP_MIN_Y)
+			{
+				y = L2World.MAP_MIN_Y + 5000;
+			}
 			
-			getPosition().setWorldPosition(x, y ,z);
+			getPosition().setWorldPosition(x, y, z);
 			getPosition().setWorldRegion(L2World.getInstance().getRegion(getPosition().getWorldPosition()));
 			
 			// Add the L2Object spawn in the _allobjects of L2World
@@ -539,9 +574,13 @@ public abstract class L2Object
 	public void toggleVisible()
 	{
 		if (isVisible())
+		{
 			decayMe();
+		}
 		else
+		{
 			spawnMe();
+		}
 	}
 	
 	// =========================================================
@@ -562,20 +601,26 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * Return the visibilty state of the L2Object. <BR><BR>
-	 *
-	 * <B><U> Concept</U> :</B><BR><BR>
-	 * A L2Object is visble if <B>__IsVisible</B>=true and <B>_worldregion</B>!=null <BR><BR>
+	 * Return the visibilty state of the L2Object. <BR>
+	 * <BR>
+	 * <B><U> Concept</U> :</B><BR>
+	 * <BR>
+	 * A L2Object is visble if <B>__IsVisible</B>=true and <B>_worldregion</B>!=null <BR>
+	 * <BR>
 	 */
 	public final boolean isVisible()
 	{
-		//return getPosition().getWorldRegion() != null && _IsVisible;
+		// return getPosition().getWorldRegion() != null && _IsVisible;
 		return getPosition().getWorldRegion() != null;
 	}
+	
 	public final void setIsVisible(boolean value)
 	{
 		_isVisible = value;
-		if (!_isVisible) getPosition().setWorldRegion(null);
+		if (!_isVisible)
+		{
+			getPosition().setWorldRegion(null);
+		}
 	}
 	
 	public ObjectKnownList getKnownList()
@@ -584,10 +629,7 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * Initializes the KnownList of the L2Object,
-	 * is overwritten in classes that require a different knownlist Type.
-	 * 
-	 * Removes the need for instanceof checks.
+	 * Initializes the KnownList of the L2Object, is overwritten in classes that require a different knownlist Type. Removes the need for instanceof checks.
 	 */
 	public void initKnownList()
 	{
@@ -603,6 +645,7 @@ public abstract class L2Object
 	{
 		return _name;
 	}
+	
 	public void setName(String value)
 	{
 		_name = value;
@@ -615,7 +658,10 @@ public abstract class L2Object
 	
 	public final ObjectPoly getPoly()
 	{
-		if (_poly == null) _poly = new ObjectPoly(this);
+		if (_poly == null)
+		{
+			_poly = new ObjectPoly(this);
+		}
 		return _poly;
 	}
 	
@@ -625,15 +671,13 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * Initializes the Position class of the L2Object,
-	 * is overwritten in classes that require a different position Type.
-	 * 
-	 * Removes the need for instanceof checks.
+	 * Initializes the Position class of the L2Object, is overwritten in classes that require a different position Type. Removes the need for instanceof checks.
 	 */
 	public void initPosition()
 	{
 		_position = new ObjectPosition(this);
 	}
+	
 	public final void setObjectPosition(ObjectPosition value)
 	{
 		_position = value;
@@ -653,18 +697,9 @@ public abstract class L2Object
 	}
 	
 	/**
-	 * Sends the Server->Client info packet for the object.<br><br>
-	 * Is Overridden in:
-	 * <li>L2AirShipInstance</li>
-	 * <li>L2BoatInstance</li>
-	 * <li>L2DoorInstance</li>
-	 * <li>L2PcInstance</li>
-	 * <li>L2StaticObjectInstance</li>
-	 * <li>L2Decoy</li>
-	 * <li>L2Npc</li>
-	 * <li>L2Summon</li>
-	 * <li>L2Trap</li>
-	 * <li>L2ItemInstance</li>
+	 * Sends the Server->Client info packet for the object.<br>
+	 * <br>
+	 * Is Overridden in: <li>L2AirShipInstance</li> <li>L2BoatInstance</li> <li>L2DoorInstance</li> <li>L2PcInstance</li> <li>L2StaticObjectInstance</li> <li>L2Decoy</li> <li>L2Npc</li> <li>L2Summon</li> <li>L2Trap</li> <li>L2ItemInstance</li>
 	 */
 	public void sendInfo(L2PcInstance activeChar)
 	{
@@ -674,14 +709,16 @@ public abstract class L2Object
 	@Override
 	public String toString()
 	{
-		return (getClass().getSimpleName() + ":"+getName()+"[" + getObjectId() + "]");
+		return (getClass().getSimpleName() + ":" + getName() + "[" + getObjectId() + "]");
 	}
 	
 	/**
-	 * Not Implemented.<BR><BR>
-	 *
-	 * <B><U> Overridden in </U> :</B><BR><BR>
-	 * <li> L2PcInstance</li><BR><BR>
+	 * Not Implemented.<BR>
+	 * <BR>
+	 * <B><U> Overridden in </U> :</B><BR>
+	 * <BR>
+	 * <li>L2PcInstance</li><BR>
+	 * <BR>
 	 */
 	public void sendPacket(L2GameServerPacket mov)
 	{

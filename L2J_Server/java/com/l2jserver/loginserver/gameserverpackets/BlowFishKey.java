@@ -23,15 +23,14 @@ import javax.crypto.Cipher;
 
 import com.l2jserver.util.network.BaseRecievePacket;
 
-
 /**
  * @author -Wooden-
- *
  */
 public class BlowFishKey extends BaseRecievePacket
 {
 	byte[] _key;
 	protected static final Logger _log = Logger.getLogger(BlowFishKey.class.getName());
+	
 	/**
 	 * @param decrypt
 	 */
@@ -42,29 +41,30 @@ public class BlowFishKey extends BaseRecievePacket
 		byte[] tempKey = readB(size);
 		try
 		{
-			byte [] tempDecryptKey;
+			byte[] tempDecryptKey;
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
 			rsaCipher.init(Cipher.DECRYPT_MODE, privateKey);
 			tempDecryptKey = rsaCipher.doFinal(tempKey);
 			// there are nulls before the key we must remove them
 			int i = 0;
 			int len = tempDecryptKey.length;
-			for(; i < len; i++)
+			for (; i < len; i++)
 			{
-				if(tempDecryptKey[i] != 0)
+				if (tempDecryptKey[i] != 0)
+				{
 					break;
+				}
 			}
-			_key = new byte[len-i];
-			System.arraycopy(tempDecryptKey,i,_key,0,len-i);
+			_key = new byte[len - i];
+			System.arraycopy(tempDecryptKey, i, _key, 0, len - i);
 		}
-		catch(GeneralSecurityException e)
+		catch (GeneralSecurityException e)
 		{
 			_log.log(Level.SEVERE, "Error While decrypting blowfish key (RSA): " + e.getMessage(), e);
 		}
-		/*catch(IOException ioe)
-		{
-			//TODO: manage
-		}*/
+		/*
+		 * catch(IOException ioe) { //TODO: manage }
+		 */
 		
 	}
 	

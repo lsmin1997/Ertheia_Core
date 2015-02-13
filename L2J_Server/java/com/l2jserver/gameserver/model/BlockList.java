@@ -43,7 +43,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- * 
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
@@ -60,7 +59,9 @@ public class BlockList
 		_owner = owner;
 		_blockList = _offlineList.get(owner.getObjectId());
 		if (_blockList == null)
+		{
 			_blockList = loadList(_owner.getObjectId());
+		}
 	}
 	
 	private synchronized void addToBlockList(int target)
@@ -96,8 +97,10 @@ public class BlockList
 			while (rset.next())
 			{
 				friendId = rset.getInt("friendId");
-				if (friendId ==  ObjId)
+				if (friendId == ObjId)
+				{
 					continue;
+				}
 				list.add(friendId);
 			}
 			
@@ -122,13 +125,14 @@ public class BlockList
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement;
-			if (state) //add
+			if (state) // add
 			{
 				statement = con.prepareStatement("INSERT INTO character_friends (charId, friendId, relation) VALUES (?, ?, 1)");
 				statement.setInt(1, _owner.getObjectId());
 				statement.setInt(2, targetId);
 			}
-			else //remove
+			else
+			// remove
 			{
 				statement = con.prepareStatement("DELETE FROM character_friends WHERE charId=? AND friendId=? AND relation=1");
 				statement.setInt(1, _owner.getObjectId());
@@ -187,7 +191,9 @@ public class BlockList
 	public static void addToBlockList(L2PcInstance listOwner, int targetId)
 	{
 		if (listOwner == null)
+		{
 			return;
+		}
 		
 		String charName = CharNameTable.getInstance().getNameById(targetId);
 		
@@ -224,7 +230,9 @@ public class BlockList
 	public static void removeFromBlockList(L2PcInstance listOwner, int targetId)
 	{
 		if (listOwner == null)
+		{
 			return;
+		}
 		
 		SystemMessage sm;
 		
@@ -265,13 +273,12 @@ public class BlockList
 		listOwner.sendPacket(SystemMessageId.BLOCK_LIST_HEADER);
 		for (int playerId : listOwner.getBlockList().getBlockList())
 		{
-			listOwner.sendMessage((i++)+". "+CharNameTable.getInstance().getNameById(playerId));
+			listOwner.sendMessage((i++) + ". " + CharNameTable.getInstance().getNameById(playerId));
 		}
 		listOwner.sendPacket(SystemMessageId.FRIEND_LIST_FOOTER);
 	}
 	
 	/**
-	 * 
 	 * @param ownerId object id of owner block list
 	 * @param targetId object id of potential blocked player
 	 * @return true if blocked

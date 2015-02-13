@@ -30,10 +30,8 @@ import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.2.2.1 $ $Date: 2005/03/27 15:29:18 $
  */
 public class CharNameTable
@@ -48,7 +46,9 @@ public class CharNameTable
 		_chars = new FastMap<Integer, String>();
 		_accessLevels = new FastMap<Integer, Integer>();
 		if (Config.CACHE_CHAR_NAMES)
+		{
 			loadAll();
+		}
 	}
 	
 	public static CharNameTable getInstance()
@@ -70,7 +70,9 @@ public class CharNameTable
 		if (name != null)
 		{
 			if (!name.equals(_chars.get(objectId)))
+			{
 				_chars.put(objectId, name);
+			}
 		}
 	}
 	
@@ -82,8 +84,10 @@ public class CharNameTable
 	
 	public final int getIdByName(String name)
 	{
-		if (name == null || name.isEmpty())
+		if ((name == null) || name.isEmpty())
+		{
 			return -1;
+		}
 		
 		Iterator<Entry<Integer, String>> it = _chars.entrySet().iterator();
 		
@@ -92,11 +96,15 @@ public class CharNameTable
 		{
 			pair = it.next();
 			if (pair.getValue().equalsIgnoreCase(name))
+			{
 				return pair.getKey();
+			}
 		}
 		
 		if (Config.CACHE_CHAR_NAMES)
+		{
 			return -1;
+		}
 		
 		int id = -1;
 		int accessLevel = 0;
@@ -138,14 +146,20 @@ public class CharNameTable
 	public final String getNameById(int id)
 	{
 		if (id <= 0)
+		{
 			return null;
+		}
 		
 		String name = _chars.get(id);
 		if (name != null)
+		{
 			return name;
+		}
 		
 		if (Config.CACHE_CHAR_NAMES)
+		{
 			return null;
+		}
 		
 		int accessLevel = 0;
 		Connection con = null;
@@ -172,22 +186,26 @@ public class CharNameTable
 		{
 			L2DatabaseFactory.close(con);
 		}
-		if (name != null && !name.isEmpty())
+		if ((name != null) && !name.isEmpty())
 		{
 			_chars.put(id, name);
 			_accessLevels.put(id, accessLevel);
 			return name;
 		}
 		
-		return null; //not found
+		return null; // not found
 	}
 	
 	public final int getAccessLevelById(int objectId)
 	{
 		if (getNameById(objectId) != null)
+		{
 			return _accessLevels.get(objectId);
+		}
 		else
+		{
 			return 0;
+		}
 	}
 	
 	public synchronized boolean doesCharNameExist(String name)
@@ -277,7 +295,7 @@ public class CharNameTable
 		{
 			L2DatabaseFactory.close(con);
 		}
-		_log.info(getClass().getSimpleName()+": Loaded "+_chars.size()+" char names.");
+		_log.info(getClass().getSimpleName() + ": Loaded " + _chars.size() + " char names.");
 	}
 	
 	@SuppressWarnings("synthetic-access")

@@ -22,8 +22,7 @@ import com.l2jserver.gameserver.model.L2Transformation;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class TransformationManager
 {
@@ -34,7 +33,7 @@ public class TransformationManager
 		return SingletonHolder._instance;
 	}
 	
-	private TIntObjectHashMap<L2Transformation> _transformations;
+	private final TIntObjectHashMap<L2Transformation> _transformations;
 	
 	private TransformationManager()
 	{
@@ -48,7 +47,7 @@ public class TransformationManager
 	
 	public boolean transformPlayer(int id, L2PcInstance player)
 	{
-		L2Transformation template = this.getTransformationById(id);
+		L2Transformation template = getTransformationById(id);
 		if (template != null)
 		{
 			L2Transformation trans = template.createTransformationForPlayer(player);

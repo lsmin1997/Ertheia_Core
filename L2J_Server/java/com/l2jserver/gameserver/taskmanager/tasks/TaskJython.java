@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.taskmanager.tasks;
 
-
 import org.python.util.PythonInterpreter;
 
 import com.l2jserver.gameserver.taskmanager.Task;
@@ -22,7 +21,6 @@ import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 
 /**
  * @author Layane
- * 
  */
 public class TaskJython extends Task
 {
@@ -30,7 +28,6 @@ public class TaskJython extends Task
 	private final PythonInterpreter _python = new PythonInterpreter();
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -40,7 +37,6 @@ public class TaskJython extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override

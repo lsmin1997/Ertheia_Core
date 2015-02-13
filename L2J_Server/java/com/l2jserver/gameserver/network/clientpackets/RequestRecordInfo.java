@@ -24,13 +24,15 @@ import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.SpawnItem;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 
-
 public class RequestRecordInfo extends L2GameClientPacket
 {
 	private static final String _0__CF_REQUEST_RECORD_INFO = "[0] CF RequestRecordInfo";
 	
 	/** urgent messages, execute immediatly */
-	public TaskPriority getPriority() { return TaskPriority.PR_NORMAL; }
+	public TaskPriority getPriority()
+	{
+		return TaskPriority.PR_NORMAL;
+	}
 	
 	@Override
 	protected void readImpl()
@@ -44,19 +46,22 @@ public class RequestRecordInfo extends L2GameClientPacket
 		L2PcInstance _activeChar = getClient().getActiveChar();
 		
 		if (_activeChar == null)
+		{
 			return;
+		}
 		
 		_activeChar.sendPacket(new UserInfo(_activeChar));
 		_activeChar.sendPacket(new ExBrExtraUserInfo(_activeChar));
 		
 		Collection<L2Object> objs = _activeChar.getKnownList().getKnownObjects().values();
-		//synchronized (_activeChar.getKnownList().getKnownObjects())
+		// synchronized (_activeChar.getKnownList().getKnownObjects())
 		{
 			for (L2Object object : objs)
 			{
-				if (object.getPoly().isMorphed()
-						&& object.getPoly().getPolyType().equals("item"))
+				if (object.getPoly().isMorphed() && object.getPoly().getPolyType().equals("item"))
+				{
 					_activeChar.sendPacket(new SpawnItem(object));
+				}
 				else
 				{
 					object.sendInfo(_activeChar);
@@ -69,7 +74,9 @@ public class RequestRecordInfo extends L2GameClientPacket
 						// the L2PcInstance
 						L2Character obj = (L2Character) object;
 						if (obj.getAI() != null)
+						{
 							obj.getAI().describeStateToPlayer(_activeChar);
+						}
 					}
 				}
 			}

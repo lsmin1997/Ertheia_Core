@@ -33,20 +33,20 @@ import com.l2jserver.gameserver.model.L2Object;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
 public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 {
-	private Map<Integer, T> _objectMap;
+	private final Map<Integer, T> _objectMap;
 	
 	public WorldObjectSet()
 	{
 		_objectMap = new FastMap<Integer, T>().shared();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#size()
 	 */
 	@Override
@@ -55,7 +55,8 @@ public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 		return _objectMap.size();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#isEmpty()
 	 */
 	@Override
@@ -64,7 +65,8 @@ public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 		return _objectMap.isEmpty();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#clear()
 	 */
 	@Override
@@ -73,7 +75,8 @@ public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 		_objectMap.clear();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#put(T)
 	 */
 	@Override
@@ -82,7 +85,8 @@ public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 		_objectMap.put(obj.getObjectId(), obj);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#remove(T)
 	 */
 	@Override
@@ -91,7 +95,8 @@ public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 		_objectMap.remove(obj.getObjectId());
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#contains(T)
 	 */
 	@Override
@@ -100,7 +105,8 @@ public class WorldObjectSet<T extends L2Object> extends L2ObjectSet<T>
 		return _objectMap.containsKey(obj.getObjectId());
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectSet#iterator()
 	 */
 	@Override

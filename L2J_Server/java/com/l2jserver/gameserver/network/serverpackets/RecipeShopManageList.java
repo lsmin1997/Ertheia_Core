@@ -23,12 +23,12 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
  * dd d(dd) d(ddd)
  * @version $Revision: 1.1.2.2.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
-public class RecipeShopManageList  extends L2GameServerPacket
+public class RecipeShopManageList extends L2GameServerPacket
 {
 	
 	private static final String _S__D8_RecipeShopManageList = "[S] de RecipeShopManageList";
-	private L2PcInstance _seller;
-	private boolean _isDwarven;
+	private final L2PcInstance _seller;
+	private final boolean _isDwarven;
 	private L2RecipeList[] _recipes;
 	
 	public RecipeShopManageList(L2PcInstance seller, boolean isDwarven)
@@ -37,9 +37,13 @@ public class RecipeShopManageList  extends L2GameServerPacket
 		_isDwarven = isDwarven;
 		
 		if (_isDwarven && _seller.hasDwarvenCraft())
+		{
 			_recipes = _seller.getDwarvenRecipeBook();
+		}
 		else
+		{
 			_recipes = _seller.getCommonRecipeBook();
+		}
 		
 		// clean previous recipes
 		if (_seller.getCreateList() != null)
@@ -47,8 +51,10 @@ public class RecipeShopManageList  extends L2GameServerPacket
 			L2ManufactureList list = _seller.getCreateList();
 			for (L2ManufactureItem item : list.getList())
 			{
-				if (item.isDwarven() != _isDwarven || !seller.hasRecipeList(item.getRecipeId()))
+				if ((item.isDwarven() != _isDwarven) || !seller.hasRecipeList(item.getRecipeId()))
+				{
 					list.getList().remove(item);
+				}
 			}
 		}
 	}
@@ -58,7 +64,7 @@ public class RecipeShopManageList  extends L2GameServerPacket
 	{
 		writeC(0xde);
 		writeD(_seller.getObjectId());
-		writeD((int)_seller.getAdena());
+		writeD((int) _seller.getAdena());
 		writeD(_isDwarven ? 0x00 : 0x01);
 		
 		if (_recipes == null)
@@ -67,13 +73,13 @@ public class RecipeShopManageList  extends L2GameServerPacket
 		}
 		else
 		{
-			writeD(_recipes.length);//number of items in recipe book
+			writeD(_recipes.length);// number of items in recipe book
 			
 			for (int i = 0; i < _recipes.length; i++)
 			{
 				L2RecipeList temp = _recipes[i];
 				writeD(temp.getId());
-				writeD(i+1);
+				writeD(i + 1);
 			}
 		}
 		
@@ -95,7 +101,8 @@ public class RecipeShopManageList  extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

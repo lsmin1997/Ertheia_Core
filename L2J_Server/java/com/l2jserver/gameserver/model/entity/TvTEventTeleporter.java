@@ -30,8 +30,8 @@ public class TvTEventTeleporter implements Runnable
 	private boolean _adminRemove = false;
 	
 	/**
-	 * Initialize the teleporter and start the delayed task<br><br>
-	 *
+	 * Initialize the teleporter and start the delayed task<br>
+	 * <br>
 	 * @param playerInstance as L2PcInstance<br>
 	 * @param coordinates as int[]<br>
 	 * @param fastShedule as boolean<br>
@@ -54,26 +54,34 @@ public class TvTEventTeleporter implements Runnable
 	 * 2. Remove all effects<br>
 	 * 3. Revive and full heal the player<br>
 	 * 4. Teleport the player<br>
-	 * 5. Broadcast status and user info<br><br>
-	 *
+	 * 5. Broadcast status and user info<br>
+	 * <br>
 	 * @see java.lang.Runnable#run()<br>
 	 */
+	@Override
 	public void run()
 	{
 		if (_playerInstance == null)
+		{
 			return;
+		}
 		
 		L2Summon summon = _playerInstance.getPet();
 		
 		if (summon != null)
+		{
 			summon.unSummon(_playerInstance);
+		}
 		
-		if (Config.TVT_EVENT_EFFECTS_REMOVAL == 0
-				|| (Config.TVT_EVENT_EFFECTS_REMOVAL == 1 && (_playerInstance.getTeam() == 0 || (_playerInstance.isInDuel() && _playerInstance.getDuelState() != Duel.DUELSTATE_INTERRUPTED))))
+		if ((Config.TVT_EVENT_EFFECTS_REMOVAL == 0) || ((Config.TVT_EVENT_EFFECTS_REMOVAL == 1) && ((_playerInstance.getTeam() == 0) || (_playerInstance.isInDuel() && (_playerInstance.getDuelState() != Duel.DUELSTATE_INTERRUPTED)))))
+		{
 			_playerInstance.stopAllEffectsExceptThoseThatLastThroughDeath();
+		}
 		
 		if (_playerInstance.isInDuel())
+		{
 			_playerInstance.setDuelState(Duel.DUELSTATE_INTERRUPTED);
+		}
 		
 		int TvTInstance = TvTEvent.getTvTEventInstance();
 		if (TvTInstance != 0)
@@ -94,12 +102,16 @@ public class TvTEventTeleporter implements Runnable
 		
 		_playerInstance.doRevive();
 		
-		_playerInstance.teleToLocation( _coordinates[ 0 ] + Rnd.get(101)-50, _coordinates[ 1 ] + Rnd.get(101)-50, _coordinates[ 2 ], false );
+		_playerInstance.teleToLocation((_coordinates[0] + Rnd.get(101)) - 50, (_coordinates[1] + Rnd.get(101)) - 50, _coordinates[2], false);
 		
 		if (TvTEvent.isStarted() && !_adminRemove)
+		{
 			_playerInstance.setTeam(TvTEvent.getParticipantTeamId(_playerInstance.getObjectId()) + 1);
+		}
 		else
+		{
 			_playerInstance.setTeam(0);
+		}
 		
 		_playerInstance.setCurrentCp(_playerInstance.getMaxCp());
 		_playerInstance.setCurrentHp(_playerInstance.getMaxHp());

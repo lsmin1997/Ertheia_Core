@@ -21,21 +21,20 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.3 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestReplyStartPledgeWar extends L2GameClientPacket
 {
 	private static final String _C__4e_REQUESTREPLYSTARTPLEDGEWAR = "[C] 4e RequestReplyStartPledgeWar";
-	//private static Logger _log = Logger.getLogger(RequestReplyStartPledgeWar.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestReplyStartPledgeWar.class.getName());
 	
 	private int _answer;
 	
 	@Override
 	protected void readImpl()
 	{
-		@SuppressWarnings("unused") String _reqName = readS();
-		_answer  = readD();
+		readS();
+		_answer = readD();
 	}
 	
 	@Override
@@ -43,10 +42,14 @@ public final class RequestReplyStartPledgeWar extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		L2PcInstance requestor = activeChar.getActiveRequester();
 		if (requestor == null)
+		{
 			return;
+		}
 		
 		if (_answer == 1)
 		{
@@ -60,7 +63,8 @@ public final class RequestReplyStartPledgeWar extends L2GameClientPacket
 		requestor.onTransactionResponse();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

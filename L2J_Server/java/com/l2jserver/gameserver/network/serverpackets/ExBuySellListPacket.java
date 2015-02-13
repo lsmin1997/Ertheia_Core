@@ -24,30 +24,32 @@ import com.l2jserver.gameserver.model.L2TradeList.L2TradeItem;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * 
  * @author ShanSoft
- *
  */
 public class ExBuySellListPacket extends L2GameServerPacket
 {
 	private static final String _S__B7_ExBuySellListPacket = "[S] B7 ExBuySellListPacket";
 	
-	private List<L2TradeItem> _buyList = new FastList<L2TradeItem>();
+	private final List<L2TradeItem> _buyList = new FastList<L2TradeItem>();
 	private L2ItemInstance[] _sellList = null;
 	private L2ItemInstance[] _refundList = null;
-	private boolean _done;
+	private final boolean _done;
 	
 	public ExBuySellListPacket(L2PcInstance player, L2TradeList list, double taxRate, boolean done)
 	{
 		for (L2TradeItem item : list.getItems())
 		{
-			if (item.hasLimitedStock() && item.getCurrentCount() <= 0)
+			if (item.hasLimitedStock() && (item.getCurrentCount() <= 0))
+			{
 				continue;
+			}
 			_buyList.add(item);
 		}
 		_sellList = player.getInventory().getAvailableItems(false, false);
 		if (player.hasRefund())
+		{
 			_refundList = player.getRefund().getItems();
+		}
 		_done = done;
 	}
 	
@@ -58,7 +60,7 @@ public class ExBuySellListPacket extends L2GameServerPacket
 		writeH(0xB7);
 		writeD(0x01);
 		
-		if (_sellList != null && _sellList.length > 0)
+		if ((_sellList != null) && (_sellList.length > 0))
 		{
 			writeH(_sellList.length);
 			for (L2ItemInstance item : _sellList)
@@ -92,9 +94,11 @@ public class ExBuySellListPacket extends L2GameServerPacket
 			}
 		}
 		else
+		{
 			writeH(0x00);
+		}
 		
-		if (_refundList != null && _refundList.length > 0)
+		if ((_refundList != null) && (_refundList.length > 0))
 		{
 			writeH(_refundList.length);
 			int idx = 0;
@@ -125,11 +129,13 @@ public class ExBuySellListPacket extends L2GameServerPacket
 				writeH(0x00);
 				writeH(0x00);
 				writeD(idx++);
-				writeQ(item.getItem().getReferencePrice() / 2 * item.getCount());
+				writeQ((item.getItem().getReferencePrice() / 2) * item.getCount());
 			}
 		}
 		else
+		{
 			writeH(0x00);
+		}
 		
 		writeC(_done ? 0x01 : 0x00);
 		

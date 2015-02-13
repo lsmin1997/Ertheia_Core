@@ -18,15 +18,13 @@ import java.util.logging.Logger;
 
 /**
  * Format: (ch) S
- * @author  -Wooden-
- *
+ * @author -Wooden-
  */
 public class RequestAskJoinPartyRoom extends L2GameClientPacket
 {
 	protected static final Logger _log = Logger.getLogger(RequestAskJoinPartyRoom.class.getName());
 	private static final String _C__D0_14_REQUESTASKJOINPARTYROOM = "[C] D0:14 RequestAskJoinPartyRoom";
 	private String _player; // not tested, just guessed
-	
 	
 	@Override
 	protected void readImpl()
@@ -38,9 +36,8 @@ public class RequestAskJoinPartyRoom extends L2GameClientPacket
 	protected void runImpl()
 	{
 		// TODO
-		_log.info("C5:RequestAskJoinPartyRoom: S: "+_player);
+		_log.info("C5:RequestAskJoinPartyRoom: S: " + _player);
 	}
-	
 	
 	@Override
 	public String getType()

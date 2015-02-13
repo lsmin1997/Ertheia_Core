@@ -37,8 +37,7 @@ import com.l2jserver.Config;
 
 /**
  * Cache of Compiled Scripts
- * 
- * @author  KenM
+ * @author KenM
  */
 public class CompiledScriptCache implements Serializable
 {
@@ -49,7 +48,7 @@ public class CompiledScriptCache implements Serializable
 	
 	private static final Logger LOG = Logger.getLogger(CompiledScriptCache.class.getName());
 	
-	private Map<String, CompiledScriptHolder>  _compiledScriptCache = new FastMap<String, CompiledScriptHolder>();
+	private final Map<String, CompiledScriptHolder> _compiledScriptCache = new FastMap<String, CompiledScriptHolder>();
 	private transient boolean _modified = false;
 	
 	public CompiledScript loadCompiledScript(ScriptEngine engine, File file) throws FileNotFoundException, ScriptException
@@ -58,11 +57,11 @@ public class CompiledScriptCache implements Serializable
 		String relativeName = file.getPath().substring(len);
 		
 		CompiledScriptHolder csh = _compiledScriptCache.get(relativeName);
-		if (csh != null && csh.matches(file))
+		if ((csh != null) && csh.matches(file))
 		{
 			if (Config.DEBUG)
 			{
-				LOG.fine("Reusing cached compiled script: "+file);
+				LOG.fine("Reusing cached compiled script: " + file);
 			}
 			return csh.getCompiledScript();
 		}
@@ -70,7 +69,7 @@ public class CompiledScriptCache implements Serializable
 		{
 			if (Config.DEBUG)
 			{
-				LOG.info("Compiling script: "+file);
+				LOG.info("Compiling script: " + file);
 			}
 			Compilable eng = (Compilable) engine;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));

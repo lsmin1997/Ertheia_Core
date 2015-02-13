@@ -15,28 +15,27 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * Fromat: (ch)
- * (just a trigger)
+ * Fromat: (ch) (just a trigger)
  * @author -Wooden-
- *
  */
 public class ExMailArrived extends L2GameServerPacket
 {
 	private static final String _S__FE_2D_EXMAILARRIVED = "[S] FE:2e ExMailArrived";
 	public static final ExMailArrived STATIC_PACKET = new ExMailArrived();
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
-	protected
-	void writeImpl()
+	protected void writeImpl()
 	{
 		writeC(0xfe);
 		writeH(0x2e);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

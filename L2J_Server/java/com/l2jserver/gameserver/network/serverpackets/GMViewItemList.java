@@ -19,16 +19,15 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PetInstance;
 
 /**
- *
  * @version $Revision: 1.1.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public class GMViewItemList extends L2GameServerPacket
 {
-	//private static Logger _log = Logger.getLogger(GMViewItemList.class.getName());
+	// private static Logger _log = Logger.getLogger(GMViewItemList.class.getName());
 	private static final String _S__AD_GMVIEWITEMLIST = "[S] 9a GMViewItemList";
-	private L2ItemInstance[] _items;
-	private int _limit;
-	private String _playerName;
+	private final L2ItemInstance[] _items;
+	private final int _limit;
+	private final String _playerName;
 	
 	public GMViewItemList(L2PcInstance cha)
 	{
@@ -66,11 +65,15 @@ public class GMViewItemList extends L2GameServerPacket
 			writeH(temp.getEnchantLevel());
 			writeH(temp.getCustomType2());
 			if (temp.isAugmented())
+			{
 				writeD(temp.getAugmentation().getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(temp.getMana());
-			writeD(temp.isTimeLimitedItem() ? (int) (temp.getRemainingTime()/1000) : -9999);
+			writeD(temp.isTimeLimitedItem() ? (int) (temp.getRemainingTime() / 1000) : -9999);
 			writeH(temp.getAttackElementType());
 			writeH(temp.getAttackElementPower());
 			for (byte i = 0; i < 6; i++)
@@ -84,7 +87,8 @@ public class GMViewItemList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

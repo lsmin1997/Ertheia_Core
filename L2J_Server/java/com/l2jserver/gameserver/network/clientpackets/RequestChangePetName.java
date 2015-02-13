@@ -22,13 +22,12 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.4 $ $Date: 2005/04/06 16:13:48 $
  */
 public final class RequestChangePetName extends L2GameClientPacket
 {
 	private static final String REQUESTCHANGEPETNAME__C__89 = "[C] 89 RequestChangePetName";
-	//private static Logger _log = Logger.getLogger(RequestChangePetName.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestChangePetName.class.getName());
 	
 	private String _name;
 	
@@ -43,11 +42,15 @@ public final class RequestChangePetName extends L2GameClientPacket
 	{
 		L2Character activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		final L2Summon pet = activeChar.getPet();
 		if (pet == null)
+		{
 			return;
+		}
 		
 		if (pet.getName() != null)
 		{

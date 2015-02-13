@@ -34,11 +34,8 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 
-
 /**
- * This class ...
- * 18.8.2010 - JIV - Disabling until someone update it
- *
+ * This class ... 18.8.2010 - JIV - Disabling until someone update it
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
@@ -47,7 +44,7 @@ public class CompactionIDFactory extends IdFactory
 {
 	private static Logger _log = Logger.getLogger(CompactionIDFactory.class.getName());
 	private int _curOID;
-	private int _freeSize;
+	private final int _freeSize;
 	
 	protected CompactionIDFactory()
 	{
@@ -59,7 +56,7 @@ public class CompactionIDFactory extends IdFactory
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			//con.createStatement().execute("drop table if exists tmp_obj_id");
+			// con.createStatement().execute("drop table if exists tmp_obj_id");
 			
 			int[] tmp_obj_ids = extractUsedObjectIDTable();
 			
@@ -111,8 +108,10 @@ public class CompactionIDFactory extends IdFactory
 		}
 		
 		int hole = id - _curOID;
-		if (hole > N - idx)
+		if (hole > (N - idx))
+		{
 			hole = N - idx;
+		}
 		for (int i = 1; i <= hole; i++)
 		{
 			id = tmp_obj_ids[N - i];
@@ -127,35 +126,34 @@ public class CompactionIDFactory extends IdFactory
 			}
 			_curOID++;
 		}
-		if (hole < N - idx)
+		if (hole < (N - idx))
+		{
 			_curOID++;
+		}
 		return N - hole;
 	}
 	
 	@Override
 	public synchronized int getNextId()
 	{
-		/*if (_freeSize == 0)*/return _curOID++;
-		/* else
-		 	return _freeOIDs[--_freeSize];*/
+		/* if (_freeSize == 0) */return _curOID++;
+		/*
+		 * else return _freeOIDs[--_freeSize];
+		 */
 	}
 	
 	@Override
 	public synchronized void releaseId(int id)
 	{
-		//dont release ids until we are sure it isnt messing up
-		/* if (_freeSize >= _freeOIDs.length)
-		 {
-		     int[] tmp = new int[_freeSize + STACK_SIZE_INCREMENT];
-		     System.arraycopy(_freeOIDs, 0, tmp, 0, _freeSize);
-		     _freeOIDs = tmp;
-		 }
-		 _freeOIDs[_freeSize++] = id;*/
+		// dont release ids until we are sure it isnt messing up
+		/*
+		 * if (_freeSize >= _freeOIDs.length) { int[] tmp = new int[_freeSize + STACK_SIZE_INCREMENT]; System.arraycopy(_freeOIDs, 0, tmp, 0, _freeSize); _freeOIDs = tmp; } _freeOIDs[_freeSize++] = id;
+		 */
 	}
 	
 	@Override
 	public int size()
 	{
-		return _freeSize + LAST_OID - FIRST_OID;
+		return (_freeSize + LAST_OID) - FIRST_OID;
 	}
 }

@@ -28,7 +28,6 @@ import java.io.Serializable;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 public class Point3D implements Serializable
@@ -98,7 +97,7 @@ public class Point3D implements Serializable
 			boolean ret;
 			synchronized (point3D)
 			{
-				ret = point3D._x == _x && point3D._y == _y && point3D._z == _z;
+				ret = (point3D._x == _x) && (point3D._y == _y) && (point3D._z == _z);
 			}
 			return ret;
 		}
@@ -107,7 +106,7 @@ public class Point3D implements Serializable
 	
 	public synchronized boolean equals(int pX, int pY, int pZ)
 	{
-		return _x == pX && _y == pY && _z == pZ;
+		return (_x == pX) && (_y == pY) && (_z == pZ);
 	}
 	
 	public synchronized long distanceSquaredTo(Point3D point)
@@ -135,10 +134,9 @@ public class Point3D implements Serializable
 		return (dx * dx) + (dy * dy);
 	}
 	
-	public static boolean distanceLessThan(Point3D point1, Point3D point2,
-			double distance)
+	public static boolean distanceLessThan(Point3D point1, Point3D point2, double distance)
 	{
-		return distanceSquared(point1, point2) < distance * distance;
+		return distanceSquared(point1, point2) < (distance * distance);
 	}
 	
 	public int getX()

@@ -23,10 +23,8 @@ import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.util.Point3D;
 
-
 /**
- *
- * @author  -Nemesiss-
+ * @author -Nemesiss-
  */
 public class GeoData
 {
@@ -101,15 +99,15 @@ public class GeoData
 	 */
 	public boolean canSeeTarget(L2Object cha, L2Object target)
 	{
-		//If geo is off do simple check :]
-		//Don't allow casting on players on different dungeon lvls etc
+		// If geo is off do simple check :]
+		// Don't allow casting on players on different dungeon lvls etc
 		return (Math.abs(target.getZ() - cha.getZ()) < 1000);
 	}
 	
 	public boolean canSeeTarget(L2Object cha, Point3D worldPosition)
 	{
-		//If geo is off do simple check :]
-		//Don't allow casting on players on different dungeon lvls etc
+		// If geo is off do simple check :]
+		// Don't allow casting on players on different dungeon lvls etc
 		return Math.abs(worldPosition.getZ() - cha.getZ()) < 1000;
 	}
 	
@@ -143,7 +141,7 @@ public class GeoData
 	
 	public short getHeightAndNSWE(int x, int y, int z)
 	{
-		return (short)((z << 1) | 15);
+		return (short) ((z << 1) | 15);
 	}
 	
 	/**
@@ -172,7 +170,7 @@ public class GeoData
 	 */
 	public void addGeoDataBug(L2PcInstance gm, String comment)
 	{
-		//Do Nothing
+		// Do Nothing
 	}
 	
 	public static void unloadGeodata(byte rx, byte ry)

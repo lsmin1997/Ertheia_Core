@@ -17,7 +17,6 @@ package com.l2jserver.gameserver.model;
 /**
  * Stats definition for each pet level
  * @author JIV
- *
  */
 public class L2PetLevelData
 {
@@ -37,7 +36,7 @@ public class L2PetLevelData
 	private short _petSoulShot;
 	private short _petSpiritShot;
 	
-	//  Max Exp
+	// Max Exp
 	public long getPetMaxExp()
 	{
 		return _petMaxExp;
@@ -58,7 +57,7 @@ public class L2PetLevelData
 		_ownerExpTaken = pOwnerExpTaken;
 	}
 	
-	//  Max HP
+	// Max HP
 	public float getPetMaxHP()
 	{
 		return _petMaxHP;
@@ -69,7 +68,7 @@ public class L2PetLevelData
 		_petMaxHP = pPetMaxHP;
 	}
 	
-	//  Max Mp
+	// Max Mp
 	public float getPetMaxMP()
 	{
 		return _petMaxMP;
@@ -80,7 +79,7 @@ public class L2PetLevelData
 		_petMaxMP = pPetMaxMP;
 	}
 	
-	//  PAtk
+	// PAtk
 	public float getPetPAtk()
 	{
 		return _petPAtk;
@@ -91,7 +90,7 @@ public class L2PetLevelData
 		_petPAtk = pPetPAtk;
 	}
 	
-	//  PDef
+	// PDef
 	public float getPetPDef()
 	{
 		return _petPDef;
@@ -102,7 +101,7 @@ public class L2PetLevelData
 		_petPDef = pPetPDef;
 	}
 	
-	//  MAtk
+	// MAtk
 	public float getPetMAtk()
 	{
 		return _petMAtk;
@@ -113,7 +112,7 @@ public class L2PetLevelData
 		_petMAtk = pPetMAtk;
 	}
 	
-	//  MDef
+	// MDef
 	public float getPetMDef()
 	{
 		return _petMDef;
@@ -124,7 +123,7 @@ public class L2PetLevelData
 		_petMDef = pPetMDef;
 	}
 	
-	//  MaxFeed
+	// MaxFeed
 	public int getPetMaxFeed()
 	{
 		return _petMaxFeed;
@@ -135,7 +134,7 @@ public class L2PetLevelData
 		_petMaxFeed = pPetMaxFeed;
 	}
 	
-	//  Normal Feed
+	// Normal Feed
 	public int getPetFeedNormal()
 	{
 		return _petFeedNormal;
@@ -146,7 +145,7 @@ public class L2PetLevelData
 		_petFeedNormal = pPetFeedNormal;
 	}
 	
-	//  Battle Feed
+	// Battle Feed
 	public int getPetFeedBattle()
 	{
 		return _petFeedBattle;
@@ -157,7 +156,7 @@ public class L2PetLevelData
 		_petFeedBattle = pPetFeedBattle;
 	}
 	
-	//  Regen HP
+	// Regen HP
 	public float getPetRegenHP()
 	{
 		return _petRegenHP;
@@ -168,7 +167,7 @@ public class L2PetLevelData
 		_petRegenHP = pPetRegenHP;
 	}
 	
-	//  Regen MP
+	// Regen MP
 	public float getPetRegenMP()
 	{
 		return _petRegenMP;
@@ -186,6 +185,7 @@ public class L2PetLevelData
 	{
 		return _petSoulShot;
 	}
+	
 	/**
 	 * @param soulShot the _petSoulShot to set
 	 */
@@ -193,6 +193,7 @@ public class L2PetLevelData
 	{
 		_petSoulShot = soulShot;
 	}
+	
 	/**
 	 * @return the _petSpiritShot
 	 */
@@ -200,6 +201,7 @@ public class L2PetLevelData
 	{
 		return _petSpiritShot;
 	}
+	
 	/**
 	 * @param spiritShot the _petSpiritShot to set
 	 */

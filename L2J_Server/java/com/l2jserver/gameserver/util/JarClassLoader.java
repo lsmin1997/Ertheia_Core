@@ -26,9 +26,8 @@ import java.util.zip.ZipFile;
 
 /**
  * This is a class loader for the dynamic extensions used by DynamicExtension class.
- *
  * @version $Revision: $ $Date: $
- * @author  galun
+ * @author galun
  */
 public class JarClassLoader extends ClassLoader
 {
@@ -68,7 +67,9 @@ public class JarClassLoader extends ClassLoader
 				String fileName = name.replace('.', '/') + ".class";
 				ZipEntry entry = zipFile.getEntry(fileName);
 				if (entry == null)
+				{
 					continue;
+				}
 				classData = new byte[(int) entry.getSize()];
 				zipStream = new DataInputStream(zipFile.getInputStream(entry));
 				zipStream.readFully(classData, 0, (int) entry.getSize());
@@ -99,7 +100,9 @@ public class JarClassLoader extends ClassLoader
 			}
 		}
 		if (classData == null)
+		{
 			throw new IOException("class not found in " + _jars);
+		}
 		return classData;
 	}
 }

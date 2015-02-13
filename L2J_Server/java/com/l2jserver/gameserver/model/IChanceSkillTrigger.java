@@ -17,8 +17,7 @@ package com.l2jserver.gameserver.model;
 /**
  * This interface provides method to handle triggered skills from other objects.<br>
  * For example, other skill, an effect, etc...
- *
- * @author  DrHouse
+ * @author DrHouse
  */
 public interface IChanceSkillTrigger
 {

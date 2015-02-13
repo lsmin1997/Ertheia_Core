@@ -25,11 +25,10 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
-
 public final class RequestStartPledgeWar extends L2GameClientPacket
 {
 	private static final String _C__4D_REQUESTSTARTPLEDGEWAR = "[C] 4D RequestStartPledgewar";
-	//private static Logger _log = Logger.getLogger(RequestStartPledgeWar.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestStartPledgeWar.class.getName());
 	
 	private String _pledgeName;
 	private L2Clan _clan;
@@ -45,12 +44,18 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 	protected void runImpl()
 	{
 		player = getClient().getActiveChar();
-		if (player == null) return;
+		if (player == null)
+		{
+			return;
+		}
 		
 		_clan = getClient().getActiveChar().getClan();
-		if (_clan == null) return;
+		if (_clan == null)
+		{
+			return;
+		}
 		
-		if (_clan.getLevel() < 3 || _clan.getMembersCount() < Config.ALT_CLAN_MEMBERS_FOR_WAR)
+		if ((_clan.getLevel() < 3) || (_clan.getMembersCount() < Config.ALT_CLAN_MEMBERS_FOR_WAR))
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_WAR_DECLARED_IF_CLAN_LVL3_OR_15_MEMBER);
 			player.sendPacket(sm);
@@ -58,7 +63,7 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 			sm = null;
 			return;
 		}
-		else if ((player.getClanPrivileges() & L2Clan.CP_CL_PLEDGE_WAR) != L2Clan.CP_CL_PLEDGE_WAR )
+		else if ((player.getClanPrivileges() & L2Clan.CP_CL_PLEDGE_WAR) != L2Clan.CP_CL_PLEDGE_WAR)
 		{
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_ARE_NOT_AUTHORIZED_TO_DO_THAT));
 			player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -73,7 +78,7 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
-		else if (_clan.getAllyId() == clan.getAllyId() && _clan.getAllyId() != 0)
+		else if ((_clan.getAllyId() == clan.getAllyId()) && (_clan.getAllyId() != 0))
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_WAR_AGAINST_A_ALLIED_CLAN_NOT_WORK);
 			player.sendPacket(sm);
@@ -81,8 +86,8 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 			sm = null;
 			return;
 		}
-		//else if(clan.getLevel() < 3)
-		else if (clan.getLevel() < 3 || clan.getMembersCount() < Config.ALT_CLAN_MEMBERS_FOR_WAR)
+		// else if(clan.getLevel() < 3)
+		else if ((clan.getLevel() < 3) || (clan.getMembersCount() < Config.ALT_CLAN_MEMBERS_FOR_WAR))
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_WAR_DECLARED_IF_CLAN_LVL3_OR_15_MEMBER);
 			player.sendPacket(sm);
@@ -92,7 +97,7 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 		}
 		else if (_clan.isAtWarWith(clan.getClanId()))
 		{
-			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.ALREADY_AT_WAR_WITH_S1_WAIT_5_DAYS); //msg id 628
+			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.ALREADY_AT_WAR_WITH_S1_WAIT_5_DAYS); // msg id 628
 			sm.addString(clan.getName());
 			player.sendPacket(sm);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
@@ -100,47 +105,51 @@ public final class RequestStartPledgeWar extends L2GameClientPacket
 			return;
 		}
 		
-		//_log.warning("RequestStartPledgeWar, leader: " + clan.getLeaderName() + " clan: "+ _clan.getName());
+		// _log.warning("RequestStartPledgeWar, leader: " + clan.getLeaderName() + " clan: "+ _clan.getName());
 		
-		//        L2PcInstance leader = L2World.getInstance().getPlayer(clan.getLeaderName());
+		// L2PcInstance leader = L2World.getInstance().getPlayer(clan.getLeaderName());
 		
-		//        if(leader == null)
-		//            return;
+		// if(leader == null)
+		// return;
 		
-		//        if(leader != null && leader.isOnline() == 0)
-		//        {
-		//            player.sendMessage("Clan leader isn't online.");
-		//            player.sendPacket(ActionFailed.STATIC_PACKET);
-		//            return;
-		//        }
+		// if(leader != null && leader.isOnline() == 0)
+		// {
+		// player.sendMessage("Clan leader isn't online.");
+		// player.sendPacket(ActionFailed.STATIC_PACKET);
+		// return;
+		// }
 		
-		//        if (leader.isProcessingRequest())
-		//        {
-		//            SystemMessage sm = SystemMessage.getSystemMessage(SystemMessage.S1_IS_BUSY_TRY_LATER);
-		//            sm.addString(leader.getName());
-		//            player.sendPacket(sm);
-		//            return;
-		//        }
+		// if (leader.isProcessingRequest())
+		// {
+		// SystemMessage sm = SystemMessage.getSystemMessage(SystemMessage.S1_IS_BUSY_TRY_LATER);
+		// sm.addString(leader.getName());
+		// player.sendPacket(sm);
+		// return;
+		// }
 		
-		//        if (leader.isTransactionInProgress())
-		//        {
-		//            SystemMessage sm = SystemMessage.getSystemMessage(SystemMessage.S1_IS_BUSY_TRY_LATER);
-		//            sm.addString(leader.getName());
-		//            player.sendPacket(sm);
-		//            return;
-		//        }
+		// if (leader.isTransactionInProgress())
+		// {
+		// SystemMessage sm = SystemMessage.getSystemMessage(SystemMessage.S1_IS_BUSY_TRY_LATER);
+		// sm.addString(leader.getName());
+		// player.sendPacket(sm);
+		// return;
+		// }
 		
-		//        leader.setTransactionRequester(player);
-		//        player.setTransactionRequester(leader);
-		//        leader.sendPacket(new StartPledgeWar(_clan.getName(),player.getName()));
+		// leader.setTransactionRequester(player);
+		// player.setTransactionRequester(leader);
+		// leader.sendPacket(new StartPledgeWar(_clan.getName(),player.getName()));
 		
 		ClanTable.getInstance().storeclanswars(player.getClanId(), clan.getClanId());
 		Collection<L2PcInstance> pls = L2World.getInstance().getAllPlayers().values();
-		//synchronized (L2World.getInstance().getAllPlayers())
+		// synchronized (L2World.getInstance().getAllPlayers())
 		{
 			for (L2PcInstance cha : pls)
-				if (cha.getClan() == player.getClan() || cha.getClan() == clan)
+			{
+				if ((cha.getClan() == player.getClan()) || (cha.getClan() == clan))
+				{
 					cha.broadcastUserInfo();
+				}
+			}
 		}
 	}
 	

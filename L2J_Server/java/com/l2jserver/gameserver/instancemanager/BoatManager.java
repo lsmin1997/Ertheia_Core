@@ -31,8 +31,8 @@ import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 
 public class BoatManager
 {
-	private Map<Integer, L2BoatInstance> _boats = new FastMap<Integer, L2BoatInstance>();
-	private boolean[] _docksBusy = new boolean[3];
+	private final Map<Integer, L2BoatInstance> _boats = new FastMap<Integer, L2BoatInstance>();
+	private final boolean[] _docksBusy = new boolean[3];
 	
 	public static final int TALKING_ISLAND = 1;
 	public static final int GLUDIN_HARBOR = 2;
@@ -46,13 +46,17 @@ public class BoatManager
 	private BoatManager()
 	{
 		for (int i = 0; i < _docksBusy.length; i++)
+		{
 			_docksBusy[i] = false;
+		}
 	}
 	
 	public L2BoatInstance getNewBoat(int boatId, int x, int y, int z, int heading)
 	{
 		if (!Config.ALLOW_BOAT)
+		{
 			return null;
+		}
 		
 		StatsSet npcDat = new StatsSet();
 		npcDat.set("npcId", boatId);
@@ -127,7 +131,8 @@ public class BoatManager
 			_docksBusy[h] = value;
 		}
 		catch (ArrayIndexOutOfBoundsException e)
-		{}
+		{
+		}
 	}
 	
 	/**
@@ -157,18 +162,24 @@ public class BoatManager
 		for (L2PcInstance player : players)
 		{
 			if (player == null)
+			{
 				continue;
+			}
 			
-			dx = (double)player.getX() - point1.x;
-			dy = (double)player.getY() - point1.y;
-			if (Math.sqrt(dx*dx + dy*dy) < Config.BOAT_BROADCAST_RADIUS)
+			dx = (double) player.getX() - point1.x;
+			dy = (double) player.getY() - point1.y;
+			if (Math.sqrt((dx * dx) + (dy * dy)) < Config.BOAT_BROADCAST_RADIUS)
+			{
 				player.sendPacket(packet);
+			}
 			else
 			{
-				dx = (double)player.getX() - point2.x;
-				dy = (double)player.getY() - point2.y;
-				if (Math.sqrt(dx*dx + dy*dy) < Config.BOAT_BROADCAST_RADIUS)
+				dx = (double) player.getX() - point2.x;
+				dy = (double) player.getY() - point2.y;
+				if (Math.sqrt((dx * dx) + (dy * dy)) < Config.BOAT_BROADCAST_RADIUS)
+				{
 					player.sendPacket(packet);
+				}
 			}
 		}
 	}
@@ -183,21 +194,29 @@ public class BoatManager
 		for (L2PcInstance player : players)
 		{
 			if (player == null)
+			{
 				continue;
-			dx = (double)player.getX() - point1.x;
-			dy = (double)player.getY() - point1.y;
-			if (Math.sqrt(dx*dx + dy*dy) < Config.BOAT_BROADCAST_RADIUS)
+			}
+			dx = (double) player.getX() - point1.x;
+			dy = (double) player.getY() - point1.y;
+			if (Math.sqrt((dx * dx) + (dy * dy)) < Config.BOAT_BROADCAST_RADIUS)
 			{
 				for (L2GameServerPacket p : packets)
+				{
 					player.sendPacket(p);
+				}
 			}
 			else
 			{
-				dx = (double)player.getX() - point2.x;
-				dy = (double)player.getY() - point2.y;
-				if (Math.sqrt(dx*dx + dy*dy) < Config.BOAT_BROADCAST_RADIUS)
+				dx = (double) player.getX() - point2.x;
+				dy = (double) player.getY() - point2.y;
+				if (Math.sqrt((dx * dx) + (dy * dy)) < Config.BOAT_BROADCAST_RADIUS)
+				{
 					for (L2GameServerPacket p : packets)
+					{
 						player.sendPacket(p);
+					}
+				}
 			}
 		}
 	}

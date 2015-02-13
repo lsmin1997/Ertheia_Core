@@ -26,11 +26,9 @@ import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.model.zone.L2ZoneType;
 import com.l2jserver.gameserver.skills.Stats;
 
-
 /**
  * A damage zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2DamageZone extends L2ZoneType
 {
@@ -87,22 +85,30 @@ public class L2DamageZone extends L2ZoneType
 			_reuseTask = Integer.parseInt(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override
 	protected void onEnter(L2Character character)
 	{
-		if (_task == null && (_damageHPPerSec != 0 || _damageMPPerSec != 0))
+		if ((_task == null) && ((_damageHPPerSec != 0) || (_damageMPPerSec != 0)))
 		{
 			L2PcInstance player = character.getActingPlayer();
-			if (getCastle() != null) // Castle zone
-				if (!(getCastle().getSiege().getIsInProgress() && player != null && player.getSiegeState() != 2)) // Siege and no defender
+			if (getCastle() != null)
+			{
+				if (!(getCastle().getSiege().getIsInProgress() && (player != null) && (player.getSiegeState() != 2)))
+				{
 					return;
-			synchronized(this)
+				}
+			}
+			synchronized (this)
 			{
 				if (_task == null)
+				{
 					_task = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new ApplyDamage(this), _startTask, _reuseTask);
+				}
 			}
 		}
 	}
@@ -110,7 +116,7 @@ public class L2DamageZone extends L2ZoneType
 	@Override
 	protected void onExit(L2Character character)
 	{
-		if (_characterList.isEmpty() && _task != null)
+		if (_characterList.isEmpty() && (_task != null))
 		{
 			stopTask();
 		}
@@ -142,8 +148,10 @@ public class L2DamageZone extends L2ZoneType
 	
 	private Castle getCastle()
 	{
-		if (_castleId > 0 &&_castle == null)
+		if ((_castleId > 0) && (_castle == null))
+		{
 			_castle = CastleManager.getInstance().getCastleById(_castleId);
+		}
 		
 		return _castle;
 	}
@@ -159,6 +167,7 @@ public class L2DamageZone extends L2ZoneType
 			_castle = zone.getCastle();
 		}
 		
+		@Override
 		public void run()
 		{
 			boolean siege = false;
@@ -176,22 +185,28 @@ public class L2DamageZone extends L2ZoneType
 			
 			for (L2Character temp : _dmgZone.getCharacterList())
 			{
-				if (temp != null && !temp.isDead())
+				if ((temp != null) && !temp.isDead())
 				{
 					if (siege)
 					{
 						// during siege defenders not affected
 						final L2PcInstance player = temp.getActingPlayer();
-						if (player != null && player.isInSiege() && player.getSiegeState() == 2)
+						if ((player != null) && player.isInSiege() && (player.getSiegeState() == 2))
+						{
 							continue;
+						}
 					}
 					
-					double multiplier =  1 + (temp.calcStat(Stats.DAMAGE_ZONE_VULN, 0, null, null) / 100);
+					double multiplier = 1 + (temp.calcStat(Stats.DAMAGE_ZONE_VULN, 0, null, null) / 100);
 					
 					if (getHPDamagePerSecond() != 0)
+					{
 						temp.reduceCurrentHp(_dmgZone.getHPDamagePerSecond() * multiplier, null, null);
+					}
 					if (getMPDamagePerSecond() != 0)
+					{
 						temp.reduceCurrentMp(_dmgZone.getMPDamagePerSecond() * multiplier);
+					}
 				}
 			}
 		}

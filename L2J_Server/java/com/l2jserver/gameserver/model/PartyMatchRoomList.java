@@ -23,14 +23,13 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.ExClosePartyRoom;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
-
 /**
  * @author Gnacik
  */
 public class PartyMatchRoomList
 {
 	private int _maxid = 1;
-	private Map<Integer, PartyMatchRoom> _rooms;
+	private final Map<Integer, PartyMatchRoom> _rooms;
 	
 	private PartyMatchRoomList()
 	{
@@ -45,16 +44,18 @@ public class PartyMatchRoomList
 	
 	public void deleteRoom(int id)
 	{
-		for(L2PcInstance _member : getRoom(id).getPartyMembers())
+		for (L2PcInstance _member : getRoom(id).getPartyMembers())
 		{
-			if(_member == null)
+			if (_member == null)
+			{
 				continue;
+			}
 			
 			_member.sendPacket(new ExClosePartyRoom());
 			_member.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.PARTY_ROOM_DISBANDED));
 			
 			_member.setPartyRoom(0);
-			//_member.setPartyMatching(0);
+			// _member.setPartyMatching(0);
 			_member.broadcastUserInfo();
 		}
 		_rooms.remove(id);
@@ -82,19 +83,31 @@ public class PartyMatchRoomList
 	
 	public PartyMatchRoom getPlayerRoom(L2PcInstance player)
 	{
-		for(PartyMatchRoom _room : _rooms.values())
-			for(L2PcInstance member : _room.getPartyMembers())
-				if(member.equals(player))
+		for (PartyMatchRoom _room : _rooms.values())
+		{
+			for (L2PcInstance member : _room.getPartyMembers())
+			{
+				if (member.equals(player))
+				{
 					return _room;
+				}
+			}
+		}
 		return null;
 	}
 	
 	public int getPlayerRoomId(L2PcInstance player)
 	{
-		for(PartyMatchRoom _room : _rooms.values())
-			for(L2PcInstance member : _room.getPartyMembers())
-				if(member.equals(player))
+		for (PartyMatchRoom _room : _rooms.values())
+		{
+			for (L2PcInstance member : _room.getPartyMembers())
+			{
+				if (member.equals(player))
+				{
 					return _room.getId();
+				}
+			}
+		}
 		return -1;
 	}
 	

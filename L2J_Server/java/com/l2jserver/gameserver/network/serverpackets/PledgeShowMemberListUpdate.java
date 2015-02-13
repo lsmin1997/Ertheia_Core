@@ -20,20 +20,19 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author -Wooden-
- *
  */
 public final class PledgeShowMemberListUpdate extends L2GameServerPacket
 {
 	private static final String _S__54_PLEDGESHOWMEMBERLISTUPDATE = "[S] 5b PledgeShowMemberListUpdate";
-	private int _pledgeType;
+	private final int _pledgeType;
 	private int _hasSponsor;
-	private String _name;
-	private int _level;
-	private int _classId;
-	private int _objectId;
-	private boolean _isOnline;
-	private int _race;
-	private int _sex;
+	private final String _name;
+	private final int _level;
+	private final int _classId;
+	private final int _objectId;
+	private final boolean _isOnline;
+	private final int _race;
+	private final int _sex;
 	
 	public PledgeShowMemberListUpdate(L2PcInstance player)
 	{
@@ -75,7 +74,6 @@ public final class PledgeShowMemberListUpdate extends L2GameServerPacket
 		}
 	}
 	
-	
 	@Override
 	protected final void writeImpl()
 	{
@@ -99,7 +97,8 @@ public final class PledgeShowMemberListUpdate extends L2GameServerPacket
 		writeD(_hasSponsor);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

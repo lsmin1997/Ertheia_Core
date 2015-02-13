@@ -29,9 +29,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
- * 
  * @author DS
- *
  */
 public enum BaseStats
 {
@@ -69,7 +67,9 @@ public enum BaseStats
 	public final double calcBonus(L2Character actor)
 	{
 		if (actor != null)
+		{
 			return _stat.calcBonus(actor);
+		}
 		
 		return 1;
 	}
@@ -80,7 +80,9 @@ public enum BaseStats
 		for (BaseStats s : values())
 		{
 			if (s.getValue().equalsIgnoreCase(name))
+			{
 				return s;
+			}
 		}
 		
 		throw new NoSuchElementException("Unknown name '" + name + "' for enum BaseStats");
@@ -93,6 +95,7 @@ public enum BaseStats
 	
 	private static final class STR implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return STRbonus[actor.getSTR()];
@@ -101,6 +104,7 @@ public enum BaseStats
 	
 	private static final class INT implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return INTbonus[actor.getINT()];
@@ -109,6 +113,7 @@ public enum BaseStats
 	
 	private static final class DEX implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return DEXbonus[actor.getDEX()];
@@ -117,6 +122,7 @@ public enum BaseStats
 	
 	private static final class WIT implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return WITbonus[actor.getWIT()];
@@ -125,6 +131,7 @@ public enum BaseStats
 	
 	private static final class CON implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return CONbonus[actor.getCON()];
@@ -133,6 +140,7 @@ public enum BaseStats
 	
 	private static final class MEN implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return MENbonus[actor.getMEN()];
@@ -141,6 +149,7 @@ public enum BaseStats
 	
 	private static final class NULL implements BaseStat
 	{
+		@Override
 		public final double calcBonus(L2Character actor)
 		{
 			return 1f;
@@ -189,24 +198,38 @@ public enum BaseStats
 								}
 								catch (Exception e)
 								{
-									_log.severe("[BaseStats] Invalid stats value: "+value.getNodeValue()+", skipping");
+									_log.severe("[BaseStats] Invalid stats value: " + value.getNodeValue() + ", skipping");
 									continue;
 								}
 								
 								if ("STR".equalsIgnoreCase(statName))
+								{
 									STRbonus[val] = bonus;
+								}
 								else if ("INT".equalsIgnoreCase(statName))
+								{
 									INTbonus[val] = bonus;
+								}
 								else if ("DEX".equalsIgnoreCase(statName))
+								{
 									DEXbonus[val] = bonus;
+								}
 								else if ("WIT".equalsIgnoreCase(statName))
+								{
 									WITbonus[val] = bonus;
+								}
 								else if ("CON".equalsIgnoreCase(statName))
+								{
 									CONbonus[val] = bonus;
+								}
 								else if ("MEN".equalsIgnoreCase(statName))
+								{
 									MENbonus[val] = bonus;
+								}
 								else
-									_log.severe("[BaseStats] Invalid stats name: "+statName+", skipping");
+								{
+									_log.severe("[BaseStats] Invalid stats name: " + statName + ", skipping");
+								}
 							}
 						}
 					}
@@ -215,7 +238,7 @@ public enum BaseStats
 		}
 		else
 		{
-			throw new Error("[BaseStats] File not found: "+file.getName());
+			throw new Error("[BaseStats] File not found: " + file.getName());
 		}
 	}
 }

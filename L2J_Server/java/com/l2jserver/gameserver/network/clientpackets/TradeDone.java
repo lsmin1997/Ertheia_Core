@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.6.2.2.2.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class TradeDone extends L2GameClientPacket
@@ -46,7 +45,9 @@ public final class TradeDone extends L2GameClientPacket
 	{
 		final L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("trade"))
 		{
@@ -58,15 +59,19 @@ public final class TradeDone extends L2GameClientPacket
 		if (trade == null)
 		{
 			if (Config.DEBUG)
+			{
 				_log.warning("player.getTradeList == null in " + getType() + " for player " + player.getName());
+			}
 			return;
 		}
 		if (trade.isLocked())
+		{
 			return;
+		}
 		
 		if (_response == 1)
 		{
-			if (trade.getPartner() == null || L2World.getInstance().getPlayer(trade.getPartner().getObjectId()) == null)
+			if ((trade.getPartner() == null) || (L2World.getInstance().getPlayer(trade.getPartner().getObjectId()) == null))
 			{
 				// Trade partner not found, cancel trade
 				player.cancelActiveTrade();
@@ -74,8 +79,10 @@ public final class TradeDone extends L2GameClientPacket
 				return;
 			}
 			
-			if (trade.getOwner().getActiveEnchantItem() != null || trade.getPartner().getActiveEnchantItem() != null)
+			if ((trade.getOwner().getActiveEnchantItem() != null) || (trade.getPartner().getActiveEnchantItem() != null))
+			{
 				return;
+			}
 			
 			if (!player.getAccessLevel().allowTransaction())
 			{
@@ -84,7 +91,7 @@ public final class TradeDone extends L2GameClientPacket
 				return;
 			}
 			
-			if (player.getInstanceId() != trade.getPartner().getInstanceId() && player.getInstanceId() != -1)
+			if ((player.getInstanceId() != trade.getPartner().getInstanceId()) && (player.getInstanceId() != -1))
 			{
 				player.cancelActiveTrade();
 				return;
@@ -93,10 +100,13 @@ public final class TradeDone extends L2GameClientPacket
 			trade.confirm();
 		}
 		else
+		{
 			player.cancelActiveTrade();
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

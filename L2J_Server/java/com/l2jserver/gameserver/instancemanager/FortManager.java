@@ -64,7 +64,9 @@ public class FortManager implements InstanceListManager
 			{
 				fort = getForts().get(i);
 				if (fort == null)
+				{
 					continue;
+				}
 				distance = fort.getDistance(obj);
 				if (maxDistance > distance)
 				{
@@ -83,7 +85,9 @@ public class FortManager implements InstanceListManager
 		for (Fort f : getForts())
 		{
 			if (f.getFortId() == fortId)
+			{
 				return f;
+			}
 		}
 		return null;
 	}
@@ -93,7 +97,9 @@ public class FortManager implements InstanceListManager
 		for (Fort f : getForts())
 		{
 			if (f.getOwnerClan() == clan)
+			{
 				return f;
+			}
 		}
 		return null;
 	}
@@ -103,7 +109,9 @@ public class FortManager implements InstanceListManager
 		for (Fort f : getForts())
 		{
 			if (f.getName().equalsIgnoreCase(name.trim()))
+			{
 				return f;
+			}
 		}
 		return null;
 	}
@@ -113,7 +121,9 @@ public class FortManager implements InstanceListManager
 		for (Fort f : getForts())
 		{
 			if (f.checkIfInZone(x, y, z))
+			{
 				return f;
+			}
 		}
 		return null;
 	}
@@ -129,8 +139,10 @@ public class FortManager implements InstanceListManager
 		for (int i = 0; i < getForts().size(); i++)
 		{
 			fort = getForts().get(i);
-			if (fort != null && fort.getFortId() == fortId)
+			if ((fort != null) && (fort.getFortId() == fortId))
+			{
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -146,8 +158,10 @@ public class FortManager implements InstanceListManager
 		for (int i = 0; i < getForts().size(); i++)
 		{
 			fort = getForts().get(i);
-			if (fort != null && fort.checkIfInZone(x, y, z))
+			if ((fort != null) && fort.checkIfInZone(x, y, z))
+			{
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -155,10 +169,13 @@ public class FortManager implements InstanceListManager
 	public final List<Fort> getForts()
 	{
 		if (_forts == null)
+		{
 			_forts = new FastList<Fort>();
+		}
 		return _forts;
 	}
 	
+	@Override
 	public void loadInstances()
 	{
 		_log.info("Initializing FortManager");
@@ -194,10 +211,12 @@ public class FortManager implements InstanceListManager
 		}
 	}
 	
+	@Override
 	public void updateReferences()
 	{
 	}
 	
+	@Override
 	public void activateInstances()
 	{
 		for (final Fort fort : _forts)

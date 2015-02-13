@@ -33,14 +33,14 @@ import com.l2jserver.gameserver.model.entity.Castle;
 import com.l2jserver.gameserver.templates.StatsSet;
 
 /**
- * @authors  Forsaiken, Gigiikun
+ * @authors Forsaiken, Gigiikun
  */
 public final class InitWorldInfo extends BaseWritePacket
 {
-	public static final byte TYPE_INFO			= 0;
-	public static final byte TYPE_PLAYER		= 1;
-	public static final byte TYPE_CLAN			= 2;
-	public static final byte TYPE_CASTLE		= 3;
+	public static final byte TYPE_INFO = 0;
+	public static final byte TYPE_PLAYER = 1;
+	public static final byte TYPE_CLAN = 2;
+	public static final byte TYPE_CASTLE = 3;
 	private static Logger _log = Logger.getLogger(InitWorldInfo.class.getName());
 	
 	public InitWorldInfo(StatsSet[] players, L2Clan[] clans, final byte type, int info)
@@ -61,23 +61,33 @@ public final class InitWorldInfo extends BaseWritePacket
 				for (L2Clan c : clans)
 				{
 					if (i++ == info)
+					{
 						break;
+					}
 					super.writeD(c.getClanId());
 					super.writeS(c.getName());
 					super.writeD(c.getLevel());
 					super.writeD(c.getLeader().getObjectId());
 					super.writeS(c.getLeader().getName());
 					super.writeD(c.getMembersCount());
-					super.writeC((c.isNoticeEnabled() ? 1:0));
+					super.writeC((c.isNoticeEnabled() ? 1 : 0));
 					super.writeS(c.getAllyName());
 					FastList<Integer> allyClanIdList = FastList.newInstance();
 					if (c.getAllyId() != 0)
+					{
 						for (L2Clan clan : ClanTable.getInstance().getClans())
-							if (clan.getAllyId() == c.getAllyId() && c != clan)
+						{
+							if ((clan.getAllyId() == c.getAllyId()) && (c != clan))
+							{
 								allyClanIdList.add(clan.getClanId());
+							}
+						}
+					}
 					super.writeD(allyClanIdList.size());
 					for (int k : allyClanIdList)
+					{
 						super.writeD(k);
+					}
 					FastList.recycle(allyClanIdList);
 				}
 				break;
@@ -87,7 +97,9 @@ public final class InitWorldInfo extends BaseWritePacket
 				for (StatsSet p : players)
 				{
 					if (i++ == info)
+					{
 						break;
+					}
 					super.writeD(p.getInteger("charId"));
 					super.writeS(p.getString("char_name"));
 					super.writeS(p.getString("account_name"));
@@ -107,7 +119,9 @@ public final class InitWorldInfo extends BaseWritePacket
 						ResultSet rset = statement.executeQuery();
 						
 						while (rset.next())
+						{
 							list.add(rset.getInt("friendId"));
+						}
 						
 						rset.close();
 						statement.close();
@@ -122,7 +136,9 @@ public final class InitWorldInfo extends BaseWritePacket
 					}
 					super.writeD(list.size());
 					for (int j : list)
+					{
 						super.writeD(j);
+					}
 					FastList.recycle(list);
 				}
 				break;
@@ -136,7 +152,7 @@ public final class InitWorldInfo extends BaseWritePacket
 					writeS(castle.getName());
 					writeD(castle.getOwnerId());
 					writeD(castle.getTaxPercent());
-					writeD((int)(castle.getSiege().getSiegeDate().getTimeInMillis()/1000));
+					writeD((int) (castle.getSiege().getSiegeDate().getTimeInMillis() / 1000));
 				}
 				break;
 		}

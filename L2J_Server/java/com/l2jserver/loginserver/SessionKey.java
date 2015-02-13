@@ -17,11 +17,13 @@ package com.l2jserver.loginserver;
 import com.l2jserver.Config;
 
 /**
- * <p>This class is used to represent session keys used by the client to authenticate in the gameserver</p>
- * <p>A SessionKey is made up of two 8 bytes keys. One is send in the {@link com.l2jserver.loginserver.serverpacket.LoginOk LoginOk}
- * packet and the other is sent in {@link com.l2jserver.loginserver.serverpacket.PlayOk PlayOk}</p>
+ * <p>
+ * This class is used to represent session keys used by the client to authenticate in the gameserver
+ * </p>
+ * <p>
+ * A SessionKey is made up of two 8 bytes keys. One is send in the {@link com.l2jserver.loginserver.serverpacket.LoginOk LoginOk} packet and the other is sent in {@link com.l2jserver.loginserver.serverpacket.PlayOk PlayOk}
+ * </p>
  * @author -Wooden-
- *
  */
 public class SessionKey
 {
@@ -41,18 +43,21 @@ public class SessionKey
 	@Override
 	public String toString()
 	{
-		return "PlayOk: " + playOkID1 + " " + playOkID2 + " LoginOk:" + loginOkID1 + " "
-		+ loginOkID2;
+		return "PlayOk: " + playOkID1 + " " + playOkID2 + " LoginOk:" + loginOkID1 + " " + loginOkID2;
 	}
 	
 	public boolean checkLoginPair(int loginOk1, int loginOk2)
 	{
-		return loginOkID1 == loginOk1 && loginOkID2 == loginOk2;
+		return (loginOkID1 == loginOk1) && (loginOkID2 == loginOk2);
 	}
 	
 	/**
-	 * <p>Returns true if keys are equal.</p>
-	 * <p>Only checks the PlayOk part of the session key if server doesnt show the licence when player logs in.</p>
+	 * <p>
+	 * Returns true if keys are equal.
+	 * </p>
+	 * <p>
+	 * Only checks the PlayOk part of the session key if server doesnt show the licence when player logs in.
+	 * </p>
 	 * @param key
 	 */
 	public boolean equals(SessionKey key)
@@ -60,12 +65,11 @@ public class SessionKey
 		// when server doesnt show licence it deosnt send the LoginOk packet, client doesnt have this part of the key then.
 		if (Config.SHOW_LICENCE)
 		{
-			return (playOkID1 == key.playOkID1 && loginOkID1 == key.loginOkID1
-					&& playOkID2 == key.playOkID2 && loginOkID2 == key.loginOkID2);
+			return ((playOkID1 == key.playOkID1) && (loginOkID1 == key.loginOkID1) && (playOkID2 == key.playOkID2) && (loginOkID2 == key.loginOkID2));
 		}
 		else
 		{
-			return (playOkID1 == key.playOkID1 && playOkID2 == key.playOkID2);
+			return ((playOkID1 == key.playOkID1) && (playOkID2 == key.playOkID2));
 		}
 	}
 }

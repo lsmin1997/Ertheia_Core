@@ -17,13 +17,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 /**
  * Special event info packet.
  * @author Kerberos
- * @author mrTJO
- * Format: (ch)dddddddSS
+ * @author mrTJO Format: (ch)dddddddSS
  */
 public class ExBrBroadcastEventState extends L2GameServerPacket
 {
-	private int _eventId;
-	private int _eventState;
+	private final int _eventId;
+	private final int _eventState;
 	private int _param0;
 	private int _param1;
 	private int _param2;
@@ -73,7 +72,8 @@ public class ExBrBroadcastEventState extends L2GameServerPacket
 		writeS(_param6);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

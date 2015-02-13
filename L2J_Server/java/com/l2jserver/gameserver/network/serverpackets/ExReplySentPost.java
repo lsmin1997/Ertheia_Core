@@ -36,14 +36,19 @@ public class ExReplySentPost extends L2GameServerPacket
 		if (msg.hasAttachments())
 		{
 			final ItemContainer attachments = msg.getAttachments();
-			if (attachments != null && attachments.getSize() > 0)
+			if ((attachments != null) && (attachments.getSize() > 0))
+			{
 				_items = attachments.getItems();
+			}
 			else
-				_log.warning("Message "+msg.getId()+" has attachments but itemcontainer is empty.");
+			{
+				_log.warning("Message " + msg.getId() + " has attachments but itemcontainer is empty.");
+			}
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -57,7 +62,7 @@ public class ExReplySentPost extends L2GameServerPacket
 		writeS(_msg.getSubject());
 		writeS(_msg.getContent());
 		
-		if (_items != null && _items.length > 0)
+		if ((_items != null) && (_items.length > 0))
 		{
 			writeD(_items.length);
 			for (L2ItemInstance item : _items)
@@ -73,9 +78,13 @@ public class ExReplySentPost extends L2GameServerPacket
 				writeH(item.getEnchantLevel());
 				writeH(item.getCustomType2());
 				if (item.isAugmented())
+				{
 					writeD(item.getAugmentation().getAugmentationId());
+				}
 				else
+				{
 					writeD(0x00);
+				}
 				writeD(item.getMana());
 				writeD(item.isTimeLimitedItem() ? (int) (item.getRemainingTime() / 1000) : -9999);
 				writeH(item.getAttackElementType());
@@ -94,13 +103,16 @@ public class ExReplySentPost extends L2GameServerPacket
 			writeD(_msg.isFourStars() ? 1 : 0);
 		}
 		else
+		{
 			writeD(0x00);
+		}
 		
 		_items = null;
 		_msg = null;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

@@ -33,17 +33,18 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.network.serverpackets.ValidateLocation;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
-
 /**
  * @author Layane
- *
  */
 public class L2CabaleBufferInstance extends L2Npc
 {
 	@Override
 	public void onAction(L2PcInstance player, boolean interact)
 	{
-		if (!canTarget(player)) return;
+		if (!canTarget(player))
+		{
+			return;
+		}
 		
 		if (this != player.getTarget())
 		{
@@ -75,13 +76,14 @@ public class L2CabaleBufferInstance extends L2Npc
 	
 	private class CabalaAI implements Runnable
 	{
-		private L2CabaleBufferInstance _caster;
+		private final L2CabaleBufferInstance _caster;
 		
 		protected CabalaAI(L2CabaleBufferInstance caster)
 		{
 			_caster = caster;
 		}
 		
+		@Override
 		public void run()
 		{
 			boolean isBuffAWinner = false;
@@ -91,36 +93,39 @@ public class L2CabaleBufferInstance extends L2Npc
 			int losingCabal = SevenSigns.CABAL_NULL;
 			
 			if (winningCabal == SevenSigns.CABAL_DAWN)
+			{
 				losingCabal = SevenSigns.CABAL_DUSK;
+			}
 			else if (winningCabal == SevenSigns.CABAL_DUSK)
+			{
 				losingCabal = SevenSigns.CABAL_DAWN;
+			}
 			
 			/**
-			 * For each known player in range, cast either the positive or negative buff.
+			 * For each known player in range, cast either the positive or negative buff. <BR>
+			 * The stats affected depend on the player type, either a fighter or a mystic. <BR>
 			 * <BR>
-			 * The stats affected depend on the player type, either a fighter or a mystic.
-			 * <BR><BR>
 			 * Curse of Destruction (Loser)<BR>
-			 *  - Fighters: -25% Accuracy, -25% Effect Resistance<BR>
-			 *  - Mystics: -25% Casting Speed, -25% Effect Resistance<BR>
-			 * <BR><BR>
-			 * Blessing of Prophecy (Winner)
-			 *  - Fighters: +25% Max Load, +25% Effect Resistance<BR>
-			 *  - Mystics: +25% Magic Cancel Resist, +25% Effect Resistance<BR>
+			 * - Fighters: -25% Accuracy, -25% Effect Resistance<BR>
+			 * - Mystics: -25% Casting Speed, -25% Effect Resistance<BR>
+			 * <BR>
+			 * <BR>
+			 * Blessing of Prophecy (Winner) - Fighters: +25% Max Load, +25% Effect Resistance<BR>
+			 * - Mystics: +25% Magic Cancel Resist, +25% Effect Resistance<BR>
 			 */
 			Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
-			//synchronized (getKnownList().getKnownPlayers())
+			// synchronized (getKnownList().getKnownPlayers())
 			{
 				for (L2PcInstance player : plrs)
 				{
-					if (player == null || player.isInvul())
+					if ((player == null) || player.isInvul())
+					{
 						continue;
+					}
 					
 					final int playerCabal = SevenSigns.getInstance().getPlayerCabal(player.getObjectId());
 					
-					if (playerCabal == winningCabal
-							&& playerCabal != SevenSigns.CABAL_NULL
-							&& _caster.getNpcId() == SevenSigns.ORATOR_NPC_ID)
+					if ((playerCabal == winningCabal) && (playerCabal != SevenSigns.CABAL_NULL) && (_caster.getNpcId() == SevenSigns.ORATOR_NPC_ID))
 					{
 						if (!player.isMageClass())
 						{
@@ -139,9 +144,7 @@ public class L2CabaleBufferInstance extends L2Npc
 							}
 						}
 					}
-					else if (playerCabal == losingCabal
-							&& playerCabal != SevenSigns.CABAL_NULL
-							&& _caster.getNpcId() == SevenSigns.PREACHER_NPC_ID)
+					else if ((playerCabal == losingCabal) && (playerCabal != SevenSigns.CABAL_NULL) && (_caster.getNpcId() == SevenSigns.PREACHER_NPC_ID))
 					{
 						if (!player.isMageClass())
 						{
@@ -162,7 +165,9 @@ public class L2CabaleBufferInstance extends L2Npc
 					}
 					
 					if (isBuffAWinner && isBuffALoser)
+					{
 						break;
+					}
 				}
 			}
 		}
@@ -172,7 +177,9 @@ public class L2CabaleBufferInstance extends L2Npc
 			int skillLevel = (player.getLevel() > 40) ? 1 : 2;
 			
 			if (player.isDead() || !player.isVisible() || !isInsideRadius(player, getDistanceToWatchObject(player), false, false))
+			{
 				return false;
+			}
 			
 			L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
 			if (player.getFirstEffect(skill) == null)
@@ -189,14 +196,15 @@ public class L2CabaleBufferInstance extends L2Npc
 		}
 	}
 	
-	
 	public L2CabaleBufferInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2CabaleBufferInstance);
 		
 		if (_aiTask != null)
+		{
 			_aiTask.cancel(true);
+		}
 		
 		_aiTask = ThreadPoolManager.getInstance().scheduleAiAtFixedRate(new CabalaAI(this), 3000, 3000);
 	}

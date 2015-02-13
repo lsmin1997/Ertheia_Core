@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2BoatInstance;
 
 /**
  * @author Maktakien
- *
  */
 public class VehicleDeparture extends L2GameServerPacket
 {
@@ -34,13 +33,12 @@ public class VehicleDeparture extends L2GameServerPacket
 		_x = boat.getXdestination();
 		_y = boat.getYdestination();
 		_z = boat.getZdestination();
-		_moveSpeed = (int)boat.getStat().getMoveSpeed();
+		_moveSpeed = (int) boat.getStat().getMoveSpeed();
 		_rotationSpeed = boat.getStat().getRotationSpeed();
 	}
 	
 	@Override
-	protected
-	void writeImpl()
+	protected void writeImpl()
 	{
 		writeC(0x6c);
 		writeD(_objId);

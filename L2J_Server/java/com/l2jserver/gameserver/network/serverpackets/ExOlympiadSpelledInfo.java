@@ -20,21 +20,17 @@ import javolution.util.FastList;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
- *
  * @author godson
  */
 public class ExOlympiadSpelledInfo extends L2GameServerPacket
 {
 	// chdd(dhd)
 	private static final String _S__FE_2A_OLYMPIADSPELLEDINFO = "[S] FE:7b ExOlympiadSpelledInfo";
-	private int _playerID;
-	private List<Effect> _effects;
-	
+	private final int _playerID;
+	private final List<Effect> _effects;
 	
 	private static class Effect
 	{
@@ -72,11 +68,12 @@ public class ExOlympiadSpelledInfo extends L2GameServerPacket
 		{
 			writeD(temp._skillId);
 			writeH(temp._level);
-			writeD(temp._duration/1000);
+			writeD(temp._duration / 1000);
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

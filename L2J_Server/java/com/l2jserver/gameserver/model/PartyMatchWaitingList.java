@@ -22,11 +22,10 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author Gnacik
- *
  */
 public class PartyMatchWaitingList
 {
-	private List<L2PcInstance> _members;
+	private final List<L2PcInstance> _members;
 	
 	private PartyMatchWaitingList()
 	{
@@ -37,14 +36,18 @@ public class PartyMatchWaitingList
 	{
 		// player.setPartyWait(1);
 		if (!_members.contains(player))
+		{
 			_members.add(player);
+		}
 	}
 	
 	public void removePlayer(L2PcInstance player)
 	{
-		//player.setPartyWait(0);
+		// player.setPartyWait(0);
 		if (_members.contains(player))
+		{
 			_members.remove(player);
+		}
 	}
 	
 	public List<L2PcInstance> getPlayers()

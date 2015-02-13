@@ -34,11 +34,12 @@ public class QuestManager extends ScriptManager<Quest>
 	{
 		return SingletonHolder._instance;
 	}
+	
 	// =========================================================
 	
 	// =========================================================
 	// Data Field
-	private Map<String, Quest> _quests = new FastMap<String, Quest>();
+	private final Map<String, Quest> _quests = new FastMap<String, Quest>();
 	
 	// =========================================================
 	// Constructor
@@ -84,7 +85,9 @@ public class QuestManager extends ScriptManager<Quest>
 			for (Quest quest : _quests.values())
 			{
 				if (quest != null)
+				{
 					quest.unload(false);
+				}
 			}
 			
 			_quests.clear();
@@ -124,7 +127,9 @@ public class QuestManager extends ScriptManager<Quest>
 		for (Quest q : _quests.values())
 		{
 			if (q.getQuestIntId() == questId)
+			{
 				return q;
+			}
 		}
 		return null;
 	}
@@ -139,7 +144,7 @@ public class QuestManager extends ScriptManager<Quest>
 		
 		// FIXME: unloading the old quest at this point is a tad too late.
 		// the new quest has already initialized itself and read the data, starting
-		// an unpredictable number of tasks with that data.  The old quest will now
+		// an unpredictable number of tasks with that data. The old quest will now
 		// save data which will never be read.
 		// However, requesting the newQuest to re-read the data is not necessarily a
 		// good option, since the newQuest may have already started timers, spawned NPCs
@@ -176,7 +181,7 @@ public class QuestManager extends ScriptManager<Quest>
 	public boolean unload(Quest ms)
 	{
 		ms.saveGlobalData();
-		return this.removeQuest(ms);
+		return removeQuest(ms);
 	}
 	
 	/**

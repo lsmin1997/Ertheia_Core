@@ -15,19 +15,14 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * Format: (ch) ddd b
- * d: ?
- * d: crest ID
- * d: crest size
- * b: raw data
+ * Format: (ch) ddd b d: ? d: crest ID d: crest size b: raw data
  * @author -Wooden-
- *
  */
 public class ExPledgeCrestLarge extends L2GameServerPacket
 {
 	private static final String _S__FE_28_EXPLEDGECRESTLARGE = "[S] FE:1b ExPledgeCrestLarge";
-	private int _crestId;
-	private byte[] _data;
+	private final int _crestId;
+	private final byte[] _data;
 	
 	public ExPledgeCrestLarge(int crestId, byte[] data)
 	{
@@ -35,7 +30,8 @@ public class ExPledgeCrestLarge extends L2GameServerPacket
 		_data = data;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -44,7 +40,7 @@ public class ExPledgeCrestLarge extends L2GameServerPacket
 		writeC(0xfe);
 		writeH(0x1b);
 		
-		writeD(0x00); //???
+		writeD(0x00); // ???
 		writeD(_crestId);
 		writeD(_data.length);
 		
@@ -52,7 +48,8 @@ public class ExPledgeCrestLarge extends L2GameServerPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

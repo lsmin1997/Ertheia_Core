@@ -31,9 +31,7 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 import com.l2jserver.util.Rnd;
 
 /**
- * @author littlecrow
- * 
- *         Implementation of the Confusion Effect
+ * @author littlecrow Implementation of the Confusion Effect
  */
 public class EffectConfuseMob extends L2Effect
 {
@@ -43,7 +41,6 @@ public class EffectConfuseMob extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -53,7 +50,6 @@ public class EffectConfuseMob extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -65,7 +61,6 @@ public class EffectConfuseMob extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -75,7 +70,6 @@ public class EffectConfuseMob extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -91,12 +85,16 @@ public class EffectConfuseMob extends L2Effect
 			for (L2Object obj : objs)
 			{
 				if ((obj instanceof L2Attackable) && (obj != getEffected()))
+				{
 					targetList.add((L2Character) obj);
+				}
 			}
 		}
 		// if there is no target, exit function
 		if (targetList.isEmpty())
+		{
 			return true;
+		}
 		
 		// Choosing randomly a new target
 		int nextTargetIdx = Rnd.nextInt(targetList.size());
@@ -108,8 +106,9 @@ public class EffectConfuseMob extends L2Effect
 		
 		return true;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

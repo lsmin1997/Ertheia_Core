@@ -53,9 +53,9 @@ public final class Config
 {
 	protected static final Logger _log = Logger.getLogger(Config.class.getName());
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// L2J Property File Definitions
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static final String CHARACTER_CONFIG_FILE = "./config/Character.properties";
 	public static final String FEATURE_CONFIG_FILE = "./config/Feature.properties";
 	public static final String FORTSIEGE_CONFIGURATION_FILE = "./config/fortsiege.properties";
@@ -82,10 +82,9 @@ public final class Config
 	public static final String GRACIASEEDS_CONFIG_FILE = "./config/GraciaSeeds.properties";
 	public static final String CHAT_FILTER_FILE = "./config/chatfilter.txt";
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// L2J Variable Definitions
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static int MASTERACCESS_LEVEL;
 	public static int MASTERACCESS_NAME_COLOR;
 	public static int MASTERACCESS_TITLE_COLOR;
@@ -219,9 +218,9 @@ public final class Config
 	public static boolean STORE_UI_SETTINGS;
 	public static String[] FORBIDDEN_NAMES;
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// ClanHall Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static long CH_TELE_FEE_RATIO;
 	public static int CH_TELE1_FEE;
 	public static int CH_TELE2_FEE;
@@ -274,9 +273,9 @@ public final class Config
 	public static int CH_FRONT2_FEE;
 	public static boolean CH_BUFF_FREE;
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Castle Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static long CS_TELE_FEE_RATIO;
 	public static int CS_TELE1_FEE;
 	public static int CS_TELE2_FEE;
@@ -305,10 +304,9 @@ public final class Config
 	public static List<Integer> SIEGE_HOUR_LIST_MORNING;
 	public static List<Integer> SIEGE_HOUR_LIST_AFTERNOON;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Fortress Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static long FS_TELE_FEE_RATIO;
 	public static int FS_TELE1_FEE;
 	public static int FS_TELE2_FEE;
@@ -330,10 +328,9 @@ public final class Config
 	public static int FS_FEE_FOR_CASTLE;
 	public static int FS_MAX_OWN_TIME;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Feature Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static int TAKE_FORT_POINTS;
 	public static int LOOSE_FORT_POINTS;
 	public static int TAKE_CASTLE_POINTS;
@@ -377,10 +374,9 @@ public final class Config
 	public static int CLAN_LEVEL_11_REQUIREMENT;
 	public static boolean ALLOW_WYVERN_DURING_SIEGE;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// General Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static boolean EVERYBODY_HAS_ADMIN_RIGHTS;
 	public static boolean DISPLAY_SERVER_VERSION;
 	public static boolean SERVER_LIST_BRACKET;
@@ -603,10 +599,9 @@ public final class Config
 	public static int MIN_BLOCK_CHECKER_TEAM_MEMBERS;
 	public static boolean HBCE_FAIR_PLAY;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// FloodProtector Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static FloodProtectorConfig FLOOD_PROTECTOR_USE_ITEM;
 	public static FloodProtectorConfig FLOOD_PROTECTOR_ROLL_DICE;
 	public static FloodProtectorConfig FLOOD_PROTECTOR_FIREWORK;
@@ -624,10 +619,9 @@ public final class Config
 	public static FloodProtectorConfig FLOOD_PROTECTOR_CHARACTER_SELECT;
 	public static FloodProtectorConfig FLOOD_PROTECTOR_ITEM_AUCTION;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// L2JMods Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static boolean L2JMOD_CHAMPION_ENABLE;
 	public static boolean L2JMOD_CHAMPION_PASSIVE;
 	public static int L2JMOD_CHAMPION_FREQUENCY;
@@ -644,7 +638,7 @@ public final class Config
 	public static int L2JMOD_CHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE;
 	public static int L2JMOD_CHAMPION_REWARD_ID;
 	public static int L2JMOD_CHAMPION_REWARD_QTY;
-	public static boolean	L2JMOD_CHAMPION_ENABLE_VITALITY;
+	public static boolean L2JMOD_CHAMPION_ENABLE_VITALITY;
 	public static boolean L2JMOD_CHAMPION_ENABLE_IN_INSTANCES;
 	public static boolean TVT_EVENT_ENABLED;
 	public static boolean TVT_EVENT_IN_INSTANCE;
@@ -726,9 +720,9 @@ public final class Config
 	public static int L2JMOD_DUALBOX_CHECK_MAX_OLYMPIAD_PARTICIPANTS_PER_IP;
 	public static TIntIntHashMap L2JMOD_DUALBOX_CHECK_WHITELIST;
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// NPC Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static boolean ANNOUNCE_MAMMON_SPAWN;
 	public static boolean ALT_MOB_AGRO_IN_PEACEZONE;
 	public static boolean ALT_ATTACKABLE_NPCS;
@@ -766,10 +760,9 @@ public final class Config
 	public static double PET_MP_REGEN_MULTIPLIER;
 	public static TIntArrayList NON_TALKING_NPCS;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// PvP Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static int KARMA_MIN_KARMA;
 	public static int KARMA_MAX_KARMA;
 	public static int KARMA_XP_DIVIDER;
@@ -782,10 +775,9 @@ public final class Config
 	public static int[] KARMA_LIST_NONDROPPABLE_PET_ITEMS;
 	public static int[] KARMA_LIST_NONDROPPABLE_ITEMS;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Rate Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static float RATE_XP;
 	public static float RATE_SP;
 	public static float RATE_PARTY_XP;
@@ -828,10 +820,9 @@ public final class Config
 	public static int KARMA_RATE_DROP_EQUIP_WEAPON;
 	public static double[] PLAYER_XP_PERCENT_LOST;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Seven Signs Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static boolean ALT_GAME_CASTLE_DAWN;
 	public static boolean ALT_GAME_CASTLE_DUSK;
 	public static boolean ALT_GAME_REQUIRE_CLAN_CASTLE;
@@ -852,10 +843,9 @@ public final class Config
 	public static boolean ALT_STRICT_SEVENSIGNS;
 	public static boolean ALT_SEVENSIGNS_LAZY_UPDATE;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Server Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static int PORT_GAME;
 	public static int PORT_LOGIN;
 	public static String LOGIN_BIND_ADDRESS;
@@ -879,26 +869,26 @@ public final class Config
 	public static TIntArrayList PROTOCOL_LIST;
 	public static boolean LOG_LOGIN_CONTROLLER;
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// CommunityServer Settings
-	//--------------------------------------------------
-	public static boolean	ENABLE_COMMUNITY_BOARD;
-	public static String	COMMUNITY_SERVER_ADDRESS;
-	public static int		COMMUNITY_SERVER_PORT;
-	public static byte[]	COMMUNITY_SERVER_HEX_ID;
-	public static int		COMMUNITY_SERVER_SQL_DP_ID;
+	// --------------------------------------------------
+	public static boolean ENABLE_COMMUNITY_BOARD;
+	public static String COMMUNITY_SERVER_ADDRESS;
+	public static int COMMUNITY_SERVER_PORT;
+	public static byte[] COMMUNITY_SERVER_HEX_ID;
+	public static int COMMUNITY_SERVER_SQL_DP_ID;
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// MMO Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static int MMO_SELECTOR_SLEEP_TIME;
 	public static int MMO_MAX_SEND_PER_PASS;
 	public static int MMO_MAX_READ_PER_PASS;
 	public static int MMO_HELPER_BUFFER_COUNT;
 	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// Vitality Settings
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static boolean ENABLE_VITALITY;
 	public static boolean RECOVER_VITALITY_ON_RECONNECT;
 	public static boolean ENABLE_DROP_VITALITY_HERBS;
@@ -913,10 +903,9 @@ public final class Config
 	public static float RATE_RECOVERY_ON_RECONNECT;
 	public static int STARTING_VITALITY_POINTS;
 	
-	
-	//--------------------------------------------------
+	// --------------------------------------------------
 	// No classification assigned to the following yet
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public static int MAX_ITEM_IN_PACKET;
 	public static boolean CHECK_KNOWN;
 	public static int GAME_SERVER_LOGIN_PORT;
@@ -932,24 +921,29 @@ public final class Config
 	public static String DATAPACK_VERSION;
 	public static int PVP_NORMAL_TIME;
 	public static int PVP_PVP_TIME;
+	
 	public static enum IdFactoryType
 	{
 		Compaction,
 		BitSet,
 		Stack
 	}
+	
 	public static IdFactoryType IDFACTORY_TYPE;
 	public static boolean BAD_ID_CHECKING;
+	
 	public static enum ObjectMapType
 	{
 		L2ObjectHashMap,
 		WorldObjectMap
 	}
+	
 	public static enum ObjectSetType
 	{
 		L2ObjectHashSet,
 		WorldObjectSet
 	}
+	
 	public static ObjectMapType MAP_TYPE;
 	public static ObjectSetType SET_TYPE;
 	public static int ENCHANT_CHANCE_WEAPON;
@@ -1020,8 +1014,8 @@ public final class Config
 	public static int SOD_TIAT_KILL_COUNT;
 	public static long SOD_STAGE_2_LENGTH;
 	
-	//chatfilter
-	public static ArrayList<String>	FILTER_LIST;
+	// chatfilter
+	public static ArrayList<String> FILTER_LIST;
 	
 	/**
 	 * This class initializes all global variables for configuration.<br>
@@ -1030,40 +1024,24 @@ public final class Config
 	 */
 	public static void load()
 	{
-		if(Server.serverMode == Server.MODE_GAMESERVER)
+		if (Server.serverMode == Server.MODE_GAMESERVER)
 		{
-			FLOOD_PROTECTOR_USE_ITEM =
-				new FloodProtectorConfig("UseItemFloodProtector");
-			FLOOD_PROTECTOR_ROLL_DICE =
-				new FloodProtectorConfig("RollDiceFloodProtector");
-			FLOOD_PROTECTOR_FIREWORK =
-				new FloodProtectorConfig("FireworkFloodProtector");
-			FLOOD_PROTECTOR_ITEM_PET_SUMMON =
-				new FloodProtectorConfig("ItemPetSummonFloodProtector");
-			FLOOD_PROTECTOR_HERO_VOICE =
-				new FloodProtectorConfig("HeroVoiceFloodProtector");
-			FLOOD_PROTECTOR_GLOBAL_CHAT =
-				new FloodProtectorConfig("GlobalChatFloodProtector");
-			FLOOD_PROTECTOR_SUBCLASS =
-				new FloodProtectorConfig("SubclassFloodProtector");
-			FLOOD_PROTECTOR_DROP_ITEM =
-				new FloodProtectorConfig("DropItemFloodProtector");
-			FLOOD_PROTECTOR_SERVER_BYPASS =
-				new FloodProtectorConfig("ServerBypassFloodProtector");
-			FLOOD_PROTECTOR_MULTISELL =
-				new FloodProtectorConfig("MultiSellFloodProtector");
-			FLOOD_PROTECTOR_TRANSACTION =
-				new FloodProtectorConfig("TransactionFloodProtector");
-			FLOOD_PROTECTOR_MANUFACTURE =
-				new FloodProtectorConfig("ManufactureFloodProtector");
-			FLOOD_PROTECTOR_MANOR =
-				new FloodProtectorConfig("ManorFloodProtector");
-			FLOOD_PROTECTOR_SENDMAIL =
-				new FloodProtectorConfig("SendMailFloodProtector");
-			FLOOD_PROTECTOR_CHARACTER_SELECT =
-				new FloodProtectorConfig("CharacterSelectFloodProtector");
-			FLOOD_PROTECTOR_ITEM_AUCTION =
-				new FloodProtectorConfig("ItemAuctionFloodProtector");
+			FLOOD_PROTECTOR_USE_ITEM = new FloodProtectorConfig("UseItemFloodProtector");
+			FLOOD_PROTECTOR_ROLL_DICE = new FloodProtectorConfig("RollDiceFloodProtector");
+			FLOOD_PROTECTOR_FIREWORK = new FloodProtectorConfig("FireworkFloodProtector");
+			FLOOD_PROTECTOR_ITEM_PET_SUMMON = new FloodProtectorConfig("ItemPetSummonFloodProtector");
+			FLOOD_PROTECTOR_HERO_VOICE = new FloodProtectorConfig("HeroVoiceFloodProtector");
+			FLOOD_PROTECTOR_GLOBAL_CHAT = new FloodProtectorConfig("GlobalChatFloodProtector");
+			FLOOD_PROTECTOR_SUBCLASS = new FloodProtectorConfig("SubclassFloodProtector");
+			FLOOD_PROTECTOR_DROP_ITEM = new FloodProtectorConfig("DropItemFloodProtector");
+			FLOOD_PROTECTOR_SERVER_BYPASS = new FloodProtectorConfig("ServerBypassFloodProtector");
+			FLOOD_PROTECTOR_MULTISELL = new FloodProtectorConfig("MultiSellFloodProtector");
+			FLOOD_PROTECTOR_TRANSACTION = new FloodProtectorConfig("TransactionFloodProtector");
+			FLOOD_PROTECTOR_MANUFACTURE = new FloodProtectorConfig("ManufactureFloodProtector");
+			FLOOD_PROTECTOR_MANOR = new FloodProtectorConfig("ManorFloodProtector");
+			FLOOD_PROTECTOR_SENDMAIL = new FloodProtectorConfig("SendMailFloodProtector");
+			FLOOD_PROTECTOR_CHARACTER_SELECT = new FloodProtectorConfig("CharacterSelectFloodProtector");
+			FLOOD_PROTECTOR_ITEM_AUCTION = new FloodProtectorConfig("ItemAuctionFloodProtector");
 			
 			_log.info("Loading GameServer Configuration Files...");
 			InputStream is = null;
@@ -1078,11 +1056,11 @@ public final class Config
 					GAMESERVER_HOSTNAME = serverSettings.getProperty("GameserverHostname");
 					PORT_GAME = Integer.parseInt(serverSettings.getProperty("GameserverPort", "7777"));
 					
-					GAME_SERVER_LOGIN_PORT = Integer.parseInt(serverSettings.getProperty("LoginPort","9014"));
-					GAME_SERVER_LOGIN_HOST = serverSettings.getProperty("LoginHost","127.0.0.1");
+					GAME_SERVER_LOGIN_PORT = Integer.parseInt(serverSettings.getProperty("LoginPort", "9014"));
+					GAME_SERVER_LOGIN_HOST = serverSettings.getProperty("LoginHost", "127.0.0.1");
 					
-					REQUEST_ID = Integer.parseInt(serverSettings.getProperty("RequestServerID","0"));
-					ACCEPT_ALTERNATE_ID = Boolean.parseBoolean(serverSettings.getProperty("AcceptAlternateID","True"));
+					REQUEST_ID = Integer.parseInt(serverSettings.getProperty("RequestServerID", "0"));
+					ACCEPT_ALTERNATE_ID = Boolean.parseBoolean(serverSettings.getProperty("AcceptAlternateID", "True"));
 					
 					DATABASE_DRIVER = serverSettings.getProperty("Driver", "com.mysql.jdbc.Driver");
 					DATABASE_URL = serverSettings.getProperty("URL", "jdbc:mysql://localhost/l2jgs");
@@ -1107,9 +1085,9 @@ public final class Config
 						{
 							PROTOCOL_LIST.add(Integer.parseInt(protocol.trim()));
 						}
-						catch(NumberFormatException e)
+						catch (NumberFormatException e)
 						{
-							_log.info("Wrong config protocol version: "+protocol+". Skipped.");
+							_log.info("Wrong config protocol version: " + protocol + ". Skipped.");
 						}
 					}
 					
@@ -1117,13 +1095,13 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+CONFIGURATION_FILE+" File.");
+					throw new Error("Failed to Load " + CONFIGURATION_FILE + " File.");
 				}
 				
 				File file = new File(IP_CONFIG_FILE);
 				Document doc = null;
-				ArrayList <String> subnets = new ArrayList<String>(5);
-				ArrayList <String> hosts = new ArrayList<String>(5);
+				ArrayList<String> subnets = new ArrayList<String>(5);
+				ArrayList<String> hosts = new ArrayList<String>(5);
 				try
 				{
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -1146,18 +1124,24 @@ public final class Config
 									
 									att = attrs.getNamedItem("subnet");
 									if (att == null)
+									{
 										continue;
+									}
 									
 									subnets.add(att.getNodeValue());
 									
 									att = attrs.getNamedItem("address");
 									if (att == null)
+									{
 										continue;
+									}
 									
 									hosts.add(att.getNodeValue());
 									
 									if (hosts.size() != subnets.size())
-										throw new Error("Failed to Load "+IP_CONFIG_FILE+" File - subnets does not match server addresses.");
+									{
+										throw new Error("Failed to Load " + IP_CONFIG_FILE + " File - subnets does not match server addresses.");
+									}
 								}
 							}
 							
@@ -1165,7 +1149,9 @@ public final class Config
 							
 							att = attrs.getNamedItem("address");
 							if (att == null)
-								throw new Error("Failed to Load "+IP_CONFIG_FILE+" File - default server address is missing.");
+							{
+								throw new Error("Failed to Load " + IP_CONFIG_FILE + " File - default server address is missing.");
+							}
 							
 							subnets.add("0.0.0.0/0");
 							hosts.add(att.getNodeValue());
@@ -1177,13 +1163,13 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+IP_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + IP_CONFIG_FILE + " File.");
 				}
 				
 				// Load Community Properties file (if exists)
 				try
 				{
-					L2Properties communityServerSettings	= new L2Properties();
+					L2Properties communityServerSettings = new L2Properties();
 					is = new FileInputStream(new File(COMMUNITY_CONFIGURATION_FILE));
 					communityServerSettings.load(is);
 					ENABLE_COMMUNITY_BOARD = Boolean.parseBoolean(communityServerSettings.getProperty("EnableCommunityBoard", "False"));
@@ -1195,7 +1181,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+COMMUNITY_CONFIGURATION_FILE+" File.");
+					throw new Error("Failed to Load " + COMMUNITY_CONFIGURATION_FILE + " File.");
 				}
 				
 				// Load Feature L2Properties file (if exists)
@@ -1268,7 +1254,10 @@ public final class Config
 						{
 							if (st.equalsIgnoreCase("day") || st.equalsIgnoreCase("hour") || st.equalsIgnoreCase("minute"))
 							{
-								if (st.equalsIgnoreCase("hour")) isHour = true;
+								if (st.equalsIgnoreCase("hour"))
+								{
+									isHour = true;
+								}
 								CL_SET_SIEGE_TIME_LIST.add(st.toLowerCase());
 							}
 							else
@@ -1284,10 +1273,14 @@ public final class Config
 								if (!st.equalsIgnoreCase(""))
 								{
 									int val = Integer.parseInt(st);
-									if (val > 23 || val < 0)
+									if ((val > 23) || (val < 0))
+									{
 										_log.warning(StringUtil.concat("[SiegeHourList]: invalid config property -> SiegeHourList \"", st, "\""));
+									}
 									else if (val < 12)
+									{
 										SIEGE_HOUR_LIST_MORNING.add(val);
+									}
 									else
 									{
 										val -= 12;
@@ -1414,7 +1407,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+FEATURE_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + FEATURE_CONFIG_FILE + " File.");
 				}
 				
 				// Load Character L2Properties file (if exists)
@@ -1435,9 +1428,9 @@ public final class Config
 					RESPAWN_RESTORE_CP = Double.parseDouble(Character.getProperty("RespawnRestoreCP", "0")) / 100;
 					RESPAWN_RESTORE_HP = Double.parseDouble(Character.getProperty("RespawnRestoreHP", "65")) / 100;
 					RESPAWN_RESTORE_MP = Double.parseDouble(Character.getProperty("RespawnRestoreMP", "0")) / 100;
-					HP_REGEN_MULTIPLIER = Double.parseDouble(Character.getProperty("HpRegenMultiplier", "100")) /100;
-					MP_REGEN_MULTIPLIER = Double.parseDouble(Character.getProperty("MpRegenMultiplier", "100")) /100;
-					CP_REGEN_MULTIPLIER = Double.parseDouble(Character.getProperty("CpRegenMultiplier", "100")) /100;
+					HP_REGEN_MULTIPLIER = Double.parseDouble(Character.getProperty("HpRegenMultiplier", "100")) / 100;
+					MP_REGEN_MULTIPLIER = Double.parseDouble(Character.getProperty("MpRegenMultiplier", "100")) / 100;
+					CP_REGEN_MULTIPLIER = Double.parseDouble(Character.getProperty("CpRegenMultiplier", "100")) / 100;
 					ALT_GAME_TIREDNESS = Boolean.parseBoolean(Character.getProperty("AltGameTiredness", "false"));
 					ENABLE_MODIFY_SKILL_DURATION = Boolean.parseBoolean(Character.getProperty("EnableModifySkillDuration", "false"));
 					
@@ -1450,7 +1443,9 @@ public final class Config
 						{
 							String[] skillSplit = skill.split(",");
 							if (skillSplit.length != 2)
+							{
 								_log.warning(StringUtil.concat("[SkillDurationList]: invalid config property -> SkillDurationList \"", skill, "\""));
+							}
 							else
 							{
 								try
@@ -1477,7 +1472,9 @@ public final class Config
 						{
 							String[] skillSplit = skill.split(",");
 							if (skillSplit.length != 2)
+							{
 								_log.warning(StringUtil.concat("[SkillReuseList]: invalid config property -> SkillReuseList \"", skill, "\""));
+							}
 							else
 							{
 								try
@@ -1487,7 +1484,9 @@ public final class Config
 								catch (NumberFormatException nfe)
 								{
 									if (!skill.isEmpty())
+									{
 										_log.warning(StringUtil.concat("[SkillReuseList]: invalid config property -> SkillList \"", skillSplit[0], "\"", skillSplit[1]));
+									}
 								}
 							}
 						}
@@ -1496,8 +1495,8 @@ public final class Config
 					AUTO_LEARN_SKILLS = Boolean.parseBoolean(Character.getProperty("AutoLearnSkills", "False"));
 					AUTO_LEARN_FS_SKILLS = Boolean.parseBoolean(Character.getProperty("AutoLearnForgottenScrollSkills", "False"));
 					AUTO_LOOT_HERBS = Boolean.parseBoolean(Character.getProperty("AutoLootHerbs", "false"));
-					BUFFS_MAX_AMOUNT = Byte.parseByte(Character.getProperty("maxbuffamount","20"));
-					DANCES_MAX_AMOUNT = Byte.parseByte(Character.getProperty("maxdanceamount","12"));
+					BUFFS_MAX_AMOUNT = Byte.parseByte(Character.getProperty("maxbuffamount", "20"));
+					DANCES_MAX_AMOUNT = Byte.parseByte(Character.getProperty("maxdanceamount", "12"));
 					DANCE_CANCEL_BUFF = Boolean.parseBoolean(Character.getProperty("DanceCancelBuff", "false"));
 					DANCE_CONSUME_ADDITIONAL_MP = Boolean.parseBoolean(Character.getProperty("DanceConsumeAdditionalMP", "true"));
 					AUTO_LEARN_DIVINE_INSPIRATION = Boolean.parseBoolean(Character.getProperty("AutoLearnDivineInspiration", "false"));
@@ -1514,9 +1513,11 @@ public final class Config
 					ALLOW_ENTIRE_TREE = Boolean.parseBoolean(Character.getProperty("AllowEntireTree", "False"));
 					ALTERNATE_CLASS_MASTER = Boolean.parseBoolean(Character.getProperty("AlternateClassMaster", "False"));
 					if (ALLOW_CLASS_MASTERS || ALTERNATE_CLASS_MASTER)
+					{
 						CLASS_MASTER_SETTINGS = new ClassMasterSettings(Character.getProperty("ConfigClassMaster"));
+					}
 					LIFE_CRYSTAL_NEEDED = Boolean.parseBoolean(Character.getProperty("LifeCrystalNeeded", "true"));
-					ES_SP_BOOK_NEEDED = Boolean.parseBoolean(Character.getProperty("EnchantSkillSpBookNeeded","true"));
+					ES_SP_BOOK_NEEDED = Boolean.parseBoolean(Character.getProperty("EnchantSkillSpBookNeeded", "true"));
 					DIVINE_SP_BOOK_NEEDED = Boolean.parseBoolean(Character.getProperty("DivineInspirationSpBookNeeded", "true"));
 					ALT_GAME_SKILL_LEARN = Boolean.parseBoolean(Character.getProperty("AltGameSkillLearn", "false"));
 					ALT_GAME_SUBCLASS_WITHOUT_QUESTS = Boolean.parseBoolean(Character.getProperty("AltSubClassWithoutQuests", "False"));
@@ -1560,10 +1561,12 @@ public final class Config
 					ENCHANT_MAX_JEWELRY = Integer.parseInt(Character.getProperty("EnchantMaxJewelry", "0"));
 					ENCHANT_SAFE_MAX = Integer.parseInt(Character.getProperty("EnchantSafeMax", "3"));
 					ENCHANT_SAFE_MAX_FULL = Integer.parseInt(Character.getProperty("EnchantSafeMaxFull", "4"));
-					String[] notenchantable = Character.getProperty("EnchantBlackList","7816,7817,7818,7819,7820,7821,7822,7823,7824,7825,7826,7827,7828,7829,7830,7831,13293,13294,13296").split(",");
-					ENCHANT_BLACKLIST = new int[notenchantable.length];					
+					String[] notenchantable = Character.getProperty("EnchantBlackList", "7816,7817,7818,7819,7820,7821,7822,7823,7824,7825,7826,7827,7828,7829,7830,7831,13293,13294,13296").split(",");
+					ENCHANT_BLACKLIST = new int[notenchantable.length];
 					for (int i = 0; i < notenchantable.length; i++)
-						ENCHANT_BLACKLIST[i] = Integer.parseInt(notenchantable[i]);					
+					{
+						ENCHANT_BLACKLIST[i] = Integer.parseInt(notenchantable[i]);
+					}
 					Arrays.sort(ENCHANT_BLACKLIST);
 					
 					AUGMENTATION_NG_SKILL_CHANCE = Integer.parseInt(Character.getProperty("AugmentationNGSkillChance", "15"));
@@ -1583,7 +1586,9 @@ public final class Config
 					AUGMENTATION_BLACKLIST = new int[array.length];
 					
 					for (int i = 0; i < array.length; i++)
+					{
 						AUGMENTATION_BLACKLIST[i] = Integer.parseInt(array[i]);
+					}
 					
 					Arrays.sort(AUGMENTATION_BLACKLIST);
 					
@@ -1593,16 +1598,16 @@ public final class Config
 					ALT_GAME_KARMA_PLAYER_CAN_USE_GK = Boolean.parseBoolean(Character.getProperty("AltKarmaPlayerCanUseGK", "false"));
 					ALT_GAME_KARMA_PLAYER_CAN_TRADE = Boolean.parseBoolean(Character.getProperty("AltKarmaPlayerCanTrade", "true"));
 					ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE = Boolean.parseBoolean(Character.getProperty("AltKarmaPlayerCanUseWareHouse", "true"));
-					MAX_PERSONAL_FAME_POINTS = Integer.parseInt(Character.getProperty("MaxPersonalFamePoints","65535"));
-					FORTRESS_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(Character.getProperty("FortressZoneFameTaskFrequency","300"));
-					FORTRESS_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(Character.getProperty("FortressZoneFameAquirePoints","31"));
-					CASTLE_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(Character.getProperty("CastleZoneFameTaskFrequency","300"));
-					CASTLE_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(Character.getProperty("CastleZoneFameAquirePoints","125"));
+					MAX_PERSONAL_FAME_POINTS = Integer.parseInt(Character.getProperty("MaxPersonalFamePoints", "65535"));
+					FORTRESS_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(Character.getProperty("FortressZoneFameTaskFrequency", "300"));
+					FORTRESS_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(Character.getProperty("FortressZoneFameAquirePoints", "31"));
+					CASTLE_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(Character.getProperty("CastleZoneFameTaskFrequency", "300"));
+					CASTLE_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(Character.getProperty("CastleZoneFameAquirePoints", "125"));
 					FAME_FOR_DEAD_PLAYERS = Boolean.parseBoolean(Character.getProperty("FameForDeadPlayers", "true"));
 					IS_CRAFTING_ENABLED = Boolean.parseBoolean(Character.getProperty("CraftingEnabled", "true"));
 					CRAFT_MASTERWORK = Boolean.parseBoolean(Character.getProperty("CraftMasterwork", "True"));
-					DWARF_RECIPE_LIMIT = Integer.parseInt(Character.getProperty("DwarfRecipeLimit","50"));
-					COMMON_RECIPE_LIMIT = Integer.parseInt(Character.getProperty("CommonRecipeLimit","50"));
+					DWARF_RECIPE_LIMIT = Integer.parseInt(Character.getProperty("DwarfRecipeLimit", "50"));
+					COMMON_RECIPE_LIMIT = Integer.parseInt(Character.getProperty("CommonRecipeLimit", "50"));
 					ALT_GAME_CREATION = Boolean.parseBoolean(Character.getProperty("AltGameCreation", "false"));
 					ALT_GAME_CREATION_SPEED = Double.parseDouble(Character.getProperty("AltGameCreationSpeed", "1"));
 					ALT_GAME_CREATION_XP_RATE = Double.parseDouble(Character.getProperty("AltGameCreationXpRate", "1"));
@@ -1618,7 +1623,7 @@ public final class Config
 					ALT_CREATE_ALLY_DAYS_WHEN_DISSOLVED = Integer.parseInt(Character.getProperty("DaysBeforeCreateNewAllyWhenDissolved", "1"));
 					ALT_MAX_NUM_OF_CLANS_IN_ALLY = Integer.parseInt(Character.getProperty("AltMaxNumOfClansInAlly", "3"));
 					ALT_CLAN_MEMBERS_FOR_WAR = Integer.parseInt(Character.getProperty("AltClanMembersForWar", "15"));
-					ALT_MEMBERS_CAN_WITHDRAW_FROM_CLANWH= Boolean.parseBoolean(Character.getProperty("AltMembersCanWithdrawFromClanWH", "false"));
+					ALT_MEMBERS_CAN_WITHDRAW_FROM_CLANWH = Boolean.parseBoolean(Character.getProperty("AltMembersCanWithdrawFromClanWH", "false"));
 					REMOVE_CASTLE_CIRCLETS = Boolean.parseBoolean(Character.getProperty("RemoveCastleCirclets", "true"));
 					ALT_PARTY_RANGE = Integer.parseInt(Character.getProperty("AltPartyRange", "1600"));
 					ALT_PARTY_RANGE2 = Integer.parseInt(Character.getProperty("AltPartyRange2", "1400"));
@@ -1634,17 +1639,22 @@ public final class Config
 					PLAYER_SPAWN_PROTECTION = Integer.parseInt(Character.getProperty("PlayerSpawnProtection", "0"));
 					String[] items = Character.getProperty("PlayerSpawnProtectionAllowedItems", "0").split(",");
 					SPAWN_PROTECTION_ALLOWED_ITEMS = new ArrayList<Integer>(items.length);
-					for(String item : items)
+					for (String item : items)
 					{
 						Integer itm = 0;
-						try { itm = Integer.parseInt(item); }
-						catch(NumberFormatException nfe)
+						try
 						{
-							_log.warning("Player Spawn Protection: Wrong ItemId passed: "+item);
+							itm = Integer.parseInt(item);
+						}
+						catch (NumberFormatException nfe)
+						{
+							_log.warning("Player Spawn Protection: Wrong ItemId passed: " + item);
 							_log.warning(nfe.getMessage());
 						}
-						if(itm != 0)
+						if (itm != 0)
+						{
 							SPAWN_PROTECTION_ALLOWED_ITEMS.add(itm);
+						}
 					}
 					SPAWN_PROTECTION_ALLOWED_ITEMS.trimToSize();
 					PLAYER_TELEPORT_PROTECTION = Integer.parseInt(Character.getProperty("PlayerTeleportProtection", "0"));
@@ -1672,7 +1682,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+CHARACTER_CONFIG_FILE+" file.");
+					throw new Error("Failed to Load " + CHARACTER_CONFIG_FILE + " file.");
 				}
 				
 				// Load L2J Server Version L2Properties file (if exists)
@@ -1687,7 +1697,7 @@ public final class Config
 				}
 				catch (Exception e)
 				{
-					//Ignore L2Properties file if it doesnt exist
+					// Ignore L2Properties file if it doesnt exist
 					SERVER_VERSION = "Unsupported Custom Version.";
 					SERVER_BUILD_DATE = "Undefined Date.";
 				}
@@ -1703,7 +1713,7 @@ public final class Config
 				}
 				catch (Exception e)
 				{
-					//Ignore L2Properties file if it doesnt exist
+					// Ignore L2Properties file if it doesnt exist
 					DATAPACK_VERSION = "Unsupported Custom Version.";
 				}
 				
@@ -1719,13 +1729,13 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+TELNET_FILE+" File.");
+					throw new Error("Failed to Load " + TELNET_FILE + " File.");
 				}
 				
 				// MMO
 				try
 				{
-					//_log.info("Loading " + MMO_CONFIG_FILE.replaceAll("./config/", ""));
+					// _log.info("Loading " + MMO_CONFIG_FILE.replaceAll("./config/", ""));
 					L2Properties mmoSettings = new L2Properties();
 					is = new FileInputStream(new File(MMO_CONFIG_FILE));
 					mmoSettings.load(is);
@@ -1755,7 +1765,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+ID_CONFIG_FILE+" file.");
+					throw new Error("Failed to Load " + ID_CONFIG_FILE + " file.");
 				}
 				
 				// Load General L2Properties file (if exists)
@@ -1766,7 +1776,7 @@ public final class Config
 					General.load(is);
 					
 					EVERYBODY_HAS_ADMIN_RIGHTS = Boolean.parseBoolean(General.getProperty("EverybodyHasAdminRights", "false"));
-					DISPLAY_SERVER_VERSION = Boolean.parseBoolean(General.getProperty("DisplayServerRevision","True"));
+					DISPLAY_SERVER_VERSION = Boolean.parseBoolean(General.getProperty("DisplayServerRevision", "True"));
 					SERVER_LIST_BRACKET = Boolean.parseBoolean(General.getProperty("ServerListBrackets", "false"));
 					SERVER_LIST_TYPE = getServerTypeId(General.getProperty("ServerListType", "Normal").split(","));
 					SERVER_LIST_AGE = Integer.parseInt(General.getProperty("ServerListAge", "0"));
@@ -1814,10 +1824,14 @@ public final class Config
 					AI_MAX_THREAD = Integer.parseInt(General.getProperty("AiMaxThread", "6"));
 					CLIENT_PACKET_QUEUE_SIZE = Integer.parseInt(General.getProperty("ClientPacketQueueSize", "0"));
 					if (CLIENT_PACKET_QUEUE_SIZE == 0)
+					{
 						CLIENT_PACKET_QUEUE_SIZE = MMO_MAX_READ_PER_PASS + 2;
+					}
 					CLIENT_PACKET_QUEUE_MAX_BURST_SIZE = Integer.parseInt(General.getProperty("ClientPacketQueueMaxBurstSize", "0"));
 					if (CLIENT_PACKET_QUEUE_MAX_BURST_SIZE == 0)
+					{
 						CLIENT_PACKET_QUEUE_MAX_BURST_SIZE = MMO_MAX_READ_PER_PASS + 1;
+					}
 					CLIENT_PACKET_QUEUE_MAX_PACKETS_PER_SECOND = Integer.parseInt(General.getProperty("ClientPacketQueueMaxPacketsPerSecond", "80"));
 					CLIENT_PACKET_QUEUE_MEASURE_INTERVAL = Integer.parseInt(General.getProperty("ClientPacketQueueMeasureInterval", "5"));
 					CLIENT_PACKET_QUEUE_MAX_AVERAGE_PACKETS_PER_SECOND = Integer.parseInt(General.getProperty("ClientPacketQueueMaxAveragePacketsPerSecond", "40"));
@@ -1830,7 +1844,7 @@ public final class Config
 					RESTART_ON_DEADLOCK = Boolean.parseBoolean(General.getProperty("RestartOnDeadlock", "False"));
 					ALLOW_DISCARDITEM = Boolean.parseBoolean(General.getProperty("AllowDiscardItem", "True"));
 					AUTODESTROY_ITEM_AFTER = Integer.parseInt(General.getProperty("AutoDestroyDroppedItemAfter", "600"));
-					HERB_AUTO_DESTROY_TIME = Integer.parseInt(General.getProperty("AutoDestroyHerbTime","60"))*1000;
+					HERB_AUTO_DESTROY_TIME = Integer.parseInt(General.getProperty("AutoDestroyHerbTime", "60")) * 1000;
 					String[] split = General.getProperty("ListOfProtectedItems", "0").split(",");
 					LIST_PROTECTED_ITEMS = new TIntArrayList(split.length);
 					for (String id : split)
@@ -1846,7 +1860,7 @@ public final class Config
 					DESTROY_EQUIPABLE_PLAYER_ITEM = Boolean.parseBoolean(General.getProperty("DestroyEquipableItem", "false"));
 					SAVE_DROPPED_ITEM = Boolean.parseBoolean(General.getProperty("SaveDroppedItem", "false"));
 					EMPTY_DROPPED_ITEM_TABLE_AFTER_LOAD = Boolean.parseBoolean(General.getProperty("EmptyDroppedItemTableAfterLoad", "false"));
-					SAVE_DROPPED_ITEM_INTERVAL = Integer.parseInt(General.getProperty("SaveDroppedItemInterval", "60"))*60000;
+					SAVE_DROPPED_ITEM_INTERVAL = Integer.parseInt(General.getProperty("SaveDroppedItemInterval", "60")) * 60000;
 					CLEAR_DROPPED_ITEM_TABLE = Boolean.parseBoolean(General.getProperty("ClearDroppedItemTable", "false"));
 					AUTODELETE_INVALID_QUEST_DATA = Boolean.parseBoolean(General.getProperty("AutoDeleteInvalidQuestData", "False"));
 					PRECISE_DROP_CALCULATION = Boolean.parseBoolean(General.getProperty("PreciseDropCalculation", "True"));
@@ -1916,37 +1930,47 @@ public final class Config
 					NAME_PER_ROW_COMMUNITYBOARD = Integer.parseInt(General.getProperty("NamePerRowOnCommunityBoard", "5"));
 					USE_SAY_FILTER = Boolean.parseBoolean(General.getProperty("UseChatFilter", "false"));
 					CHAT_FILTER_CHARS = General.getProperty("ChatFilterChars", "^_^");
-					ALT_MANOR_REFRESH_TIME = Integer.parseInt(General.getProperty("AltManorRefreshTime","20"));
-					ALT_MANOR_REFRESH_MIN = Integer.parseInt(General.getProperty("AltManorRefreshMin","00"));
-					ALT_MANOR_APPROVE_TIME = Integer.parseInt(General.getProperty("AltManorApproveTime","6"));
-					ALT_MANOR_APPROVE_MIN = Integer.parseInt(General.getProperty("AltManorApproveMin","00"));
-					ALT_MANOR_MAINTENANCE_PERIOD = Integer.parseInt(General.getProperty("AltManorMaintenancePeriod","360000"));
-					ALT_MANOR_SAVE_ALL_ACTIONS = Boolean.parseBoolean(General.getProperty("AltManorSaveAllActions","false"));
-					ALT_MANOR_SAVE_PERIOD_RATE = Integer.parseInt(General.getProperty("AltManorSavePeriodRate","2"));
-					ALT_LOTTERY_PRIZE = Long.parseLong(General.getProperty("AltLotteryPrize","50000"));
-					ALT_LOTTERY_TICKET_PRICE = Long.parseLong(General.getProperty("AltLotteryTicketPrice","2000"));
-					ALT_LOTTERY_5_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery5NumberRate","0.6"));
-					ALT_LOTTERY_4_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery4NumberRate","0.2"));
-					ALT_LOTTERY_3_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery3NumberRate","0.2"));
-					ALT_LOTTERY_2_AND_1_NUMBER_PRIZE = Long.parseLong(General.getProperty("AltLottery2and1NumberPrize","200"));
+					ALT_MANOR_REFRESH_TIME = Integer.parseInt(General.getProperty("AltManorRefreshTime", "20"));
+					ALT_MANOR_REFRESH_MIN = Integer.parseInt(General.getProperty("AltManorRefreshMin", "00"));
+					ALT_MANOR_APPROVE_TIME = Integer.parseInt(General.getProperty("AltManorApproveTime", "6"));
+					ALT_MANOR_APPROVE_MIN = Integer.parseInt(General.getProperty("AltManorApproveMin", "00"));
+					ALT_MANOR_MAINTENANCE_PERIOD = Integer.parseInt(General.getProperty("AltManorMaintenancePeriod", "360000"));
+					ALT_MANOR_SAVE_ALL_ACTIONS = Boolean.parseBoolean(General.getProperty("AltManorSaveAllActions", "false"));
+					ALT_MANOR_SAVE_PERIOD_RATE = Integer.parseInt(General.getProperty("AltManorSavePeriodRate", "2"));
+					ALT_LOTTERY_PRIZE = Long.parseLong(General.getProperty("AltLotteryPrize", "50000"));
+					ALT_LOTTERY_TICKET_PRICE = Long.parseLong(General.getProperty("AltLotteryTicketPrice", "2000"));
+					ALT_LOTTERY_5_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery5NumberRate", "0.6"));
+					ALT_LOTTERY_4_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery4NumberRate", "0.2"));
+					ALT_LOTTERY_3_NUMBER_RATE = Float.parseFloat(General.getProperty("AltLottery3NumberRate", "0.2"));
+					ALT_LOTTERY_2_AND_1_NUMBER_PRIZE = Long.parseLong(General.getProperty("AltLottery2and1NumberPrize", "200"));
 					ALT_ITEM_AUCTION_ENABLED = Boolean.valueOf(General.getProperty("AltItemAuctionEnabled", "False"));
 					ALT_ITEM_AUCTION_EXPIRED_AFTER = Integer.valueOf(General.getProperty("AltItemAuctionExpiredAfter", "14"));
-					ALT_ITEM_AUCTION_TIME_EXTENDS_ON_BID = 1000 * (long)Integer.valueOf(General.getProperty("AltItemAuctionTimeExtendsOnBid", "0"));
+					ALT_ITEM_AUCTION_TIME_EXTENDS_ON_BID = 1000 * (long) Integer.valueOf(General.getProperty("AltItemAuctionTimeExtendsOnBid", "0"));
 					FS_TIME_ATTACK = Integer.parseInt(General.getProperty("TimeOfAttack", "50"));
 					FS_TIME_COOLDOWN = Integer.parseInt(General.getProperty("TimeOfCoolDown", "5"));
 					FS_TIME_ENTRY = Integer.parseInt(General.getProperty("TimeOfEntry", "3"));
 					FS_TIME_WARMUP = Integer.parseInt(General.getProperty("TimeOfWarmUp", "2"));
 					FS_PARTY_MEMBER_COUNT = Integer.parseInt(General.getProperty("NumberOfNecessaryPartyMembers", "4"));
 					if (FS_TIME_ATTACK <= 0)
+					{
 						FS_TIME_ATTACK = 50;
+					}
 					if (FS_TIME_COOLDOWN <= 0)
+					{
 						FS_TIME_COOLDOWN = 5;
+					}
 					if (FS_TIME_ENTRY <= 0)
+					{
 						FS_TIME_ENTRY = 3;
+					}
 					if (FS_TIME_ENTRY <= 0)
+					{
 						FS_TIME_ENTRY = 3;
+					}
 					if (FS_TIME_ENTRY <= 0)
+					{
 						FS_TIME_ENTRY = 3;
+					}
 					RIFT_MIN_PARTY_SIZE = Integer.parseInt(General.getProperty("RiftMinPartySize", "5"));
 					RIFT_MAX_JUMPS = Integer.parseInt(General.getProperty("MaxRiftJumps", "4"));
 					RIFT_SPAWN_DELAY = Integer.parseInt(General.getProperty("RiftSpawnDelay", "10000"));
@@ -1976,16 +2000,20 @@ public final class Config
 					CUSTOM_NPCBUFFER_TABLES = Boolean.valueOf(General.getProperty("CustomNpcBufferTables", "false"));
 					ENABLE_BLOCK_CHECKER_EVENT = Boolean.valueOf(General.getProperty("EnableBlockCheckerEvent", "false"));
 					MIN_BLOCK_CHECKER_TEAM_MEMBERS = Integer.valueOf(General.getProperty("BlockCheckerMinTeamMembers", "2"));
-					if(MIN_BLOCK_CHECKER_TEAM_MEMBERS < 1)
+					if (MIN_BLOCK_CHECKER_TEAM_MEMBERS < 1)
+					{
 						MIN_BLOCK_CHECKER_TEAM_MEMBERS = 1;
-					else if(MIN_BLOCK_CHECKER_TEAM_MEMBERS > 6)
+					}
+					else if (MIN_BLOCK_CHECKER_TEAM_MEMBERS > 6)
+					{
 						MIN_BLOCK_CHECKER_TEAM_MEMBERS = 6;
+					}
 					HBCE_FAIR_PLAY = Boolean.parseBoolean(General.getProperty("HBCEFairPlay", "false"));
 				}
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+GENERAL_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + GENERAL_CONFIG_FILE + " File.");
 				}
 				
 				// Load FloodProtector L2Properties file
@@ -2000,7 +2028,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+FLOOD_PROTECTOR_FILE);
+					throw new Error("Failed to Load " + FLOOD_PROTECTOR_FILE);
 				}
 				
 				// Load NPC L2Properties file (if exists)
@@ -2035,12 +2063,12 @@ public final class Config
 					{
 						LIST_PET_RENT_NPC.add(Integer.parseInt(id));
 					}
-					RAID_HP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidHpRegenMultiplier", "100")) /100;
-					RAID_MP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidMpRegenMultiplier", "100")) /100;
-					RAID_PDEFENCE_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidPDefenceMultiplier", "100")) /100;
-					RAID_MDEFENCE_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidMDefenceMultiplier", "100")) /100;
-					RAID_PATTACK_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidPAttackMultiplier", "100")) /100;
-					RAID_MATTACK_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidMAttackMultiplier", "100")) /100;
+					RAID_HP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidHpRegenMultiplier", "100")) / 100;
+					RAID_MP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidMpRegenMultiplier", "100")) / 100;
+					RAID_PDEFENCE_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidPDefenceMultiplier", "100")) / 100;
+					RAID_MDEFENCE_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidMDefenceMultiplier", "100")) / 100;
+					RAID_PATTACK_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidPAttackMultiplier", "100")) / 100;
+					RAID_MATTACK_MULTIPLIER = Double.parseDouble(NPC.getProperty("RaidMAttackMultiplier", "100")) / 100;
 					RAID_MIN_RESPAWN_MULTIPLIER = Float.parseFloat(NPC.getProperty("RaidMinRespawnMultiplier", "1.0"));
 					RAID_MAX_RESPAWN_MULTIPLIER = Float.parseFloat(NPC.getProperty("RaidMaxRespawnMultiplier", "1.0"));
 					RAID_MINION_RESPAWN_TIMER = Integer.parseInt(NPC.getProperty("RaidMinionRespawnTime", "300000"));
@@ -2049,8 +2077,8 @@ public final class Config
 					GRAND_CHAOS_TIME = Integer.parseInt(NPC.getProperty("GrandChaosTime", "10"));
 					MINION_CHAOS_TIME = Integer.parseInt(NPC.getProperty("MinionChaosTime", "10"));
 					INVENTORY_MAXIMUM_PET = Integer.parseInt(NPC.getProperty("MaximumSlotsForPet", "12"));
-					PET_HP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("PetHpRegenMultiplier", "100")) /100;
-					PET_MP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("PetMpRegenMultiplier", "100")) /100;
+					PET_HP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("PetHpRegenMultiplier", "100")) / 100;
+					PET_MP_REGEN_MULTIPLIER = Double.parseDouble(NPC.getProperty("PetMpRegenMultiplier", "100")) / 100;
 					split = NPC.getProperty("NonTalkingNpcs", "18684,18685,18686,18687,18688,18689,18690,19691,18692,31557,31606,31671,31672,31673,31674,32026,32030,32031,32032,32306,32619,32620,32621").split(",");
 					NON_TALKING_NPCS = new TIntArrayList(split.length);
 					for (String npcId : split)
@@ -2071,7 +2099,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+NPC_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + NPC_CONFIG_FILE + " File.");
 				}
 				
 				// Load Rates L2Properties file (if exists)
@@ -2132,11 +2160,13 @@ public final class Config
 					KARMA_RATE_DROP_EQUIP_WEAPON = Integer.parseInt(ratesSettings.getProperty("KarmaRateDropEquipWeapon", "10"));
 					
 					// Initializing table
-					PLAYER_XP_PERCENT_LOST = new double[Byte.MAX_VALUE+1];
+					PLAYER_XP_PERCENT_LOST = new double[Byte.MAX_VALUE + 1];
 					
 					// Default value
 					for (int i = 0; i <= Byte.MAX_VALUE; i++)
+					{
 						PLAYER_XP_PERCENT_LOST[i] = 1.;
+					}
 					
 					// Now loading into table parsed values
 					try
@@ -2157,7 +2187,9 @@ public final class Config
 							val = Double.parseDouble(vals[1]);
 							
 							for (int i = min; i <= max; i++)
+							{
 								PLAYER_XP_PERCENT_LOST[i] = val;
+							}
 						}
 					}
 					catch (Exception e)
@@ -2174,7 +2206,9 @@ public final class Config
 						{
 							String[] itemSplit = item.split(",");
 							if (itemSplit.length != 2)
+							{
 								_log.warning(StringUtil.concat("Config.load(): invalid config property -> RateDropItemsById \"", item, "\""));
+							}
 							else
 							{
 								try
@@ -2184,20 +2218,22 @@ public final class Config
 								catch (NumberFormatException nfe)
 								{
 									if (!item.isEmpty())
+									{
 										_log.warning(StringUtil.concat("Config.load(): invalid config property -> RateDropItemsById \"", item, "\""));
+									}
 								}
 							}
 						}
 					}
 					if (RATE_DROP_ITEMS_ID.get(57) == 0f)
 					{
-						RATE_DROP_ITEMS_ID.put(57, RATE_DROP_ITEMS); //for Adena rate if not defined
+						RATE_DROP_ITEMS_ID.put(57, RATE_DROP_ITEMS); // for Adena rate if not defined
 					}
 				}
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+RATES_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + RATES_CONFIG_FILE + " File.");
 				}
 				
 				// Load L2JMod L2Properties file (if exists)
@@ -2272,11 +2308,13 @@ public final class Config
 							TVT_EVENT_PARTICIPATION_NPC_COORDINATES[1] = Integer.parseInt(propertySplit[1]);
 							TVT_EVENT_PARTICIPATION_NPC_COORDINATES[2] = Integer.parseInt(propertySplit[2]);
 							if (propertySplit.length == 4)
+							{
 								TVT_EVENT_PARTICIPATION_NPC_COORDINATES[3] = Integer.parseInt(propertySplit[3]);
+							}
 							TVT_EVENT_MIN_PLAYERS_IN_TEAMS = Integer.parseInt(L2JModSettings.getProperty("TvTEventMinPlayersInTeams", "1"));
 							TVT_EVENT_MAX_PLAYERS_IN_TEAMS = Integer.parseInt(L2JModSettings.getProperty("TvTEventMaxPlayersInTeams", "20"));
-							TVT_EVENT_MIN_LVL = (byte)Integer.parseInt(L2JModSettings.getProperty("TvTEventMinPlayerLevel", "1"));
-							TVT_EVENT_MAX_LVL = (byte)Integer.parseInt(L2JModSettings.getProperty("TvTEventMaxPlayerLevel", "80"));
+							TVT_EVENT_MIN_LVL = (byte) Integer.parseInt(L2JModSettings.getProperty("TvTEventMinPlayerLevel", "1"));
+							TVT_EVENT_MAX_LVL = (byte) Integer.parseInt(L2JModSettings.getProperty("TvTEventMaxPlayerLevel", "80"));
 							TVT_EVENT_RESPAWN_TELEPORT_DELAY = Integer.parseInt(L2JModSettings.getProperty("TvTEventRespawnTeleportDelay", "20"));
 							TVT_EVENT_START_LEAVE_TELEPORT_DELAY = Integer.parseInt(L2JModSettings.getProperty("TvTEventStartLeaveTeleportDelay", "20"));
 							TVT_EVENT_EFFECTS_REMOVAL = Integer.parseInt(L2JModSettings.getProperty("TvTEventEffectsRemoval", "0"));
@@ -2298,7 +2336,7 @@ public final class Config
 								propertySplit = L2JModSettings.getProperty("TvTEventTeam2Coordinates", "0,0,0").split(",");
 								if (propertySplit.length < 3)
 								{
-									TVT_EVENT_ENABLED= false;
+									TVT_EVENT_ENABLED = false;
 									_log.warning("TvTEventEngine[Config.load()]: invalid config property -> TvTEventTeam2Coordinates");
 								}
 								else
@@ -2315,24 +2353,34 @@ public final class Config
 									catch (NumberFormatException nfe)
 									{
 										if (propertySplit.length > 0)
+										{
 											_log.warning("TvTEventEngine[Config.load()]: invalid config property -> TvTEventParticipationFee");
+										}
 									}
 									propertySplit = L2JModSettings.getProperty("TvTEventReward", "57,100000").split(";");
 									for (String reward : propertySplit)
 									{
 										String[] rewardSplit = reward.split(",");
 										if (rewardSplit.length != 2)
+										{
 											_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTEventReward \"", reward, "\""));
+										}
 										else
 										{
 											try
 											{
-												TVT_EVENT_REWARDS.add(new int[]{Integer.parseInt(rewardSplit[0]), Integer.parseInt(rewardSplit[1])});
+												TVT_EVENT_REWARDS.add(new int[]
+												{
+													Integer.parseInt(rewardSplit[0]),
+													Integer.parseInt(rewardSplit[1])
+												});
 											}
 											catch (NumberFormatException nfe)
 											{
 												if (!reward.isEmpty())
+												{
 													_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTEventReward \"", reward, "\""));
+												}
 											}
 										}
 									}
@@ -2352,7 +2400,9 @@ public final class Config
 										catch (NumberFormatException nfe)
 										{
 											if (!door.isEmpty())
+											{
 												_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTDoorsToOpen \"", door, "\""));
+											}
 										}
 									}
 									
@@ -2366,7 +2416,9 @@ public final class Config
 										catch (NumberFormatException nfe)
 										{
 											if (!door.isEmpty())
+											{
 												_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTDoorsToClose \"", door, "\""));
+											}
 										}
 									}
 									
@@ -2378,7 +2430,9 @@ public final class Config
 										{
 											String[] skillSplit = skill.split(",");
 											if (skillSplit.length != 2)
+											{
 												_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTEventFighterBuffs \"", skill, "\""));
+											}
 											else
 											{
 												try
@@ -2388,7 +2442,9 @@ public final class Config
 												catch (NumberFormatException nfe)
 												{
 													if (!skill.isEmpty())
+													{
 														_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTEventFighterBuffs \"", skill, "\""));
+													}
 												}
 											}
 										}
@@ -2402,7 +2458,9 @@ public final class Config
 										{
 											String[] skillSplit = skill.split(",");
 											if (skillSplit.length != 2)
+											{
 												_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTEventMageBuffs \"", skill, "\""));
+											}
 											else
 											{
 												try
@@ -2412,7 +2470,9 @@ public final class Config
 												catch (NumberFormatException nfe)
 												{
 													if (!skill.isEmpty())
+													{
 														_log.warning(StringUtil.concat("TvTEventEngine[Config.load()]: invalid config property -> TvTEventMageBuffs \"", skill, "\""));
+													}
 												}
 											}
 										}
@@ -2446,7 +2506,7 @@ public final class Config
 					L2JMOD_ANTIFEED_ENABLE = Boolean.parseBoolean(L2JModSettings.getProperty("AntiFeedEnable", "false"));
 					L2JMOD_ANTIFEED_DUALBOX = Boolean.parseBoolean(L2JModSettings.getProperty("AntiFeedDualbox", "true"));
 					L2JMOD_ANTIFEED_DISCONNECTED_AS_DUALBOX = Boolean.parseBoolean(L2JModSettings.getProperty("AntiFeedDisconnectedAsDualbox", "true"));
-					L2JMOD_ANTIFEED_INTERVAL = 1000*Integer.parseInt(L2JModSettings.getProperty("AntiFeedInterval", "120"));
+					L2JMOD_ANTIFEED_INTERVAL = 1000 * Integer.parseInt(L2JModSettings.getProperty("AntiFeedInterval", "120"));
 					ANNOUNCE_PK_PVP = Boolean.parseBoolean(L2JModSettings.getProperty("AnnouncePkPvP", "False"));
 					ANNOUNCE_PK_PVP_NORMAL_MESSAGE = Boolean.parseBoolean(L2JModSettings.getProperty("AnnouncePkPvPNormalMessage", "True"));
 					ANNOUNCE_PK_MSG = L2JModSettings.getProperty("AnnouncePkMsg", "$killer has slaughtered $target");
@@ -2458,10 +2518,14 @@ public final class Config
 					String[] allowed = L2JModSettings.getProperty("MultiLangAllowed", "en").split(";");
 					L2JMOD_MULTILANG_ALLOWED = new ArrayList<String>(allowed.length);
 					for (String lang : allowed)
+					{
 						L2JMOD_MULTILANG_ALLOWED.add(lang);
+					}
 					L2JMOD_MULTILANG_DEFAULT = L2JModSettings.getProperty("MultiLangDefault", "en");
 					if (!L2JMOD_MULTILANG_ALLOWED.contains(L2JMOD_MULTILANG_DEFAULT))
+					{
 						_log.warning("MultiLang[Config.load()]: default language: " + L2JMOD_MULTILANG_DEFAULT + " is not in allowed list !");
+					}
 					L2JMOD_MULTILANG_VOICED_ALLOW = Boolean.parseBoolean(L2JModSettings.getProperty("MultiLangVoiceCommand", "True"));
 					L2JMOD_MULTILANG_SM_ENABLE = Boolean.parseBoolean(L2JModSettings.getProperty("MultiLangSystemMessageEnable", "false"));
 					allowed = L2JModSettings.getProperty("MultiLangSystemMessageAllowed", "").split(";");
@@ -2469,12 +2533,14 @@ public final class Config
 					for (String lang : allowed)
 					{
 						if (!lang.isEmpty())
+						{
 							L2JMOD_MULTILANG_SM_ALLOWED.add(lang);
+						}
 					}
 					
 					L2WALKER_PROTECTION = Boolean.parseBoolean(L2JModSettings.getProperty("L2WalkerProtection", "False"));
 					L2JMOD_DEBUG_VOICE_COMMAND = Boolean.parseBoolean(L2JModSettings.getProperty("DebugVoiceCommand", "False"));
-
+					
 					L2JMOD_DUALBOX_CHECK_MAX_PLAYERS_PER_IP = Integer.parseInt(L2JModSettings.getProperty("DualboxCheckMaxPlayersPerIP", "0"));
 					L2JMOD_DUALBOX_CHECK_MAX_OLYMPIAD_PARTICIPANTS_PER_IP = Integer.parseInt(L2JModSettings.getProperty("DualboxCheckMaxOlympiadParticipantsPerIP", "0"));
 					String[] propertySplit = L2JModSettings.getProperty("DualboxCheckWhitelist", "127.0.0.1,0").split(";");
@@ -2483,7 +2549,9 @@ public final class Config
 					{
 						String[] entrySplit = entry.split(",");
 						if (entrySplit.length != 2)
+						{
 							_log.warning(StringUtil.concat("DualboxCheck[Config.load()]: invalid config property -> DualboxCheckWhitelist \"", entry, "\""));
+						}
 						else
 						{
 							try
@@ -2506,7 +2574,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+L2JMOD_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + L2JMOD_CONFIG_FILE + " File.");
 				}
 				
 				// Load PvP L2Properties file (if exists)
@@ -2515,7 +2583,6 @@ public final class Config
 					L2Properties pvpSettings = new L2Properties();
 					is = new FileInputStream(new File(PVP_CONFIG_FILE));
 					pvpSettings.load(is);
-					
 					
 					KARMA_MIN_KARMA = Integer.parseInt(pvpSettings.getProperty("MinKarma", "240"));
 					KARMA_MAX_KARMA = Integer.parseInt(pvpSettings.getProperty("MaxKarma", "10000"));
@@ -2531,13 +2598,17 @@ public final class Config
 					KARMA_LIST_NONDROPPABLE_PET_ITEMS = new int[array.length];
 					
 					for (int i = 0; i < array.length; i++)
+					{
 						KARMA_LIST_NONDROPPABLE_PET_ITEMS[i] = Integer.parseInt(array[i]);
+					}
 					
 					array = KARMA_NONDROPPABLE_ITEMS.split(",");
 					KARMA_LIST_NONDROPPABLE_ITEMS = new int[array.length];
 					
 					for (int i = 0; i < array.length; i++)
+					{
 						KARMA_LIST_NONDROPPABLE_ITEMS[i] = Integer.parseInt(array[i]);
+					}
 					
 					// sorting so binarySearch can be used later
 					Arrays.sort(KARMA_LIST_NONDROPPABLE_PET_ITEMS);
@@ -2549,7 +2620,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+PVP_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + PVP_CONFIG_FILE + " File.");
 				}
 				// Load Olympiad L2Properties file (if exists)
 				try
@@ -2559,46 +2630,46 @@ public final class Config
 					olympiad.load(is);
 					
 					ALT_OLY_START_TIME = Integer.parseInt(olympiad.getProperty("AltOlyStartTime", "18"));
-					ALT_OLY_MIN = Integer.parseInt(olympiad.getProperty("AltOlyMin","00"));
-					ALT_OLY_CPERIOD = Long.parseLong(olympiad.getProperty("AltOlyCPeriod","21600000"));
-					ALT_OLY_BATTLE = Long.parseLong(olympiad.getProperty("AltOlyBattle","360000"));
-					ALT_OLY_WPERIOD = Long.parseLong(olympiad.getProperty("AltOlyWPeriod","604800000"));
-					ALT_OLY_VPERIOD = Long.parseLong(olympiad.getProperty("AltOlyVPeriod","86400000"));
-					ALT_OLY_START_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyStartPoints","18"));
-					ALT_OLY_WEEKLY_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyWeeklyPoints","3"));
-					ALT_OLY_CLASSED = Integer.parseInt(olympiad.getProperty("AltOlyClassedParticipants","5"));
-					ALT_OLY_NONCLASSED = Integer.parseInt(olympiad.getProperty("AltOlyNonClassedParticipants","9"));
-					ALT_OLY_TEAMS = Integer.parseInt(olympiad.getProperty("AltOlyTeamsParticipants","9"));
-					ALT_OLY_REG_DISPLAY = Integer.parseInt(olympiad.getProperty("AltOlyRegistrationDisplayNumber","100"));
-					ALT_OLY_CLASSED_REWARD = parseItemsList(olympiad.getProperty("AltOlyClassedReward","13722,50"));
-					ALT_OLY_NONCLASSED_REWARD = parseItemsList(olympiad.getProperty("AltOlyNonClassedReward","13722,40"));
-					ALT_OLY_TEAM_REWARD = parseItemsList(olympiad.getProperty("AltOlyTeamReward","13722,85"));
-					ALT_OLY_COMP_RITEM = Integer.parseInt(olympiad.getProperty("AltOlyCompRewItem","13722"));
-					ALT_OLY_MIN_MATCHES = Integer.parseInt(olympiad.getProperty("AltOlyMinMatchesForPoints","9"));
-					ALT_OLY_GP_PER_POINT = Integer.parseInt(olympiad.getProperty("AltOlyGPPerPoint","1000"));
-					ALT_OLY_HERO_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyHeroPoints","180"));
-					ALT_OLY_RANK1_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank1Points","120"));
-					ALT_OLY_RANK2_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank2Points","80"));
-					ALT_OLY_RANK3_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank3Points","55"));
-					ALT_OLY_RANK4_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank4Points","35"));
-					ALT_OLY_RANK5_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank5Points","20"));
-					ALT_OLY_MAX_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyMaxPoints","10"));
-					ALT_OLY_LOG_FIGHTS = Boolean.parseBoolean(olympiad.getProperty("AltOlyLogFights","false"));
-					ALT_OLY_SHOW_MONTHLY_WINNERS = Boolean.parseBoolean(olympiad.getProperty("AltOlyShowMonthlyWinners","true"));
-					ALT_OLY_ANNOUNCE_GAMES = Boolean.parseBoolean(olympiad.getProperty("AltOlyAnnounceGames","true"));
-					String[] split = olympiad.getProperty("AltOlyRestrictedItems","6611,6612,6613,6614,6615,6616,6617,6618,6619,6620,6621,9388,9389,9390,17049,17050,17051,17052,17053,17054,17055,17056,17057,17058,17059,17060,17061,20759,20775,20776,20777,20778,14774").split(",");
+					ALT_OLY_MIN = Integer.parseInt(olympiad.getProperty("AltOlyMin", "00"));
+					ALT_OLY_CPERIOD = Long.parseLong(olympiad.getProperty("AltOlyCPeriod", "21600000"));
+					ALT_OLY_BATTLE = Long.parseLong(olympiad.getProperty("AltOlyBattle", "360000"));
+					ALT_OLY_WPERIOD = Long.parseLong(olympiad.getProperty("AltOlyWPeriod", "604800000"));
+					ALT_OLY_VPERIOD = Long.parseLong(olympiad.getProperty("AltOlyVPeriod", "86400000"));
+					ALT_OLY_START_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyStartPoints", "18"));
+					ALT_OLY_WEEKLY_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyWeeklyPoints", "3"));
+					ALT_OLY_CLASSED = Integer.parseInt(olympiad.getProperty("AltOlyClassedParticipants", "5"));
+					ALT_OLY_NONCLASSED = Integer.parseInt(olympiad.getProperty("AltOlyNonClassedParticipants", "9"));
+					ALT_OLY_TEAMS = Integer.parseInt(olympiad.getProperty("AltOlyTeamsParticipants", "9"));
+					ALT_OLY_REG_DISPLAY = Integer.parseInt(olympiad.getProperty("AltOlyRegistrationDisplayNumber", "100"));
+					ALT_OLY_CLASSED_REWARD = parseItemsList(olympiad.getProperty("AltOlyClassedReward", "13722,50"));
+					ALT_OLY_NONCLASSED_REWARD = parseItemsList(olympiad.getProperty("AltOlyNonClassedReward", "13722,40"));
+					ALT_OLY_TEAM_REWARD = parseItemsList(olympiad.getProperty("AltOlyTeamReward", "13722,85"));
+					ALT_OLY_COMP_RITEM = Integer.parseInt(olympiad.getProperty("AltOlyCompRewItem", "13722"));
+					ALT_OLY_MIN_MATCHES = Integer.parseInt(olympiad.getProperty("AltOlyMinMatchesForPoints", "9"));
+					ALT_OLY_GP_PER_POINT = Integer.parseInt(olympiad.getProperty("AltOlyGPPerPoint", "1000"));
+					ALT_OLY_HERO_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyHeroPoints", "180"));
+					ALT_OLY_RANK1_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank1Points", "120"));
+					ALT_OLY_RANK2_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank2Points", "80"));
+					ALT_OLY_RANK3_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank3Points", "55"));
+					ALT_OLY_RANK4_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank4Points", "35"));
+					ALT_OLY_RANK5_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyRank5Points", "20"));
+					ALT_OLY_MAX_POINTS = Integer.parseInt(olympiad.getProperty("AltOlyMaxPoints", "10"));
+					ALT_OLY_LOG_FIGHTS = Boolean.parseBoolean(olympiad.getProperty("AltOlyLogFights", "false"));
+					ALT_OLY_SHOW_MONTHLY_WINNERS = Boolean.parseBoolean(olympiad.getProperty("AltOlyShowMonthlyWinners", "true"));
+					ALT_OLY_ANNOUNCE_GAMES = Boolean.parseBoolean(olympiad.getProperty("AltOlyAnnounceGames", "true"));
+					String[] split = olympiad.getProperty("AltOlyRestrictedItems", "6611,6612,6613,6614,6615,6616,6617,6618,6619,6620,6621,9388,9389,9390,17049,17050,17051,17052,17053,17054,17055,17056,17057,17058,17059,17060,17061,20759,20775,20776,20777,20778,14774").split(",");
 					LIST_OLY_RESTRICTED_ITEMS = new TIntArrayList(split.length);
 					for (String id : split)
 					{
 						LIST_OLY_RESTRICTED_ITEMS.add(Integer.parseInt(id));
 					}
-					ALT_OLY_ENCHANT_LIMIT = Integer.parseInt(olympiad.getProperty("AltOlyEnchantLimit","-1"));
-					ALT_OLY_WAIT_TIME = Integer.parseInt(olympiad.getProperty("AltOlyWaitTime","120"));
+					ALT_OLY_ENCHANT_LIMIT = Integer.parseInt(olympiad.getProperty("AltOlyEnchantLimit", "-1"));
+					ALT_OLY_WAIT_TIME = Integer.parseInt(olympiad.getProperty("AltOlyWaitTime", "120"));
 				}
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+OLYMPIAD_CONFIG_FILE+" File.");
+					throw new Error("Failed to Load " + OLYMPIAD_CONFIG_FILE + " File.");
 				}
 				try
 				{
@@ -2610,7 +2681,7 @@ public final class Config
 				}
 				catch (Exception e)
 				{
-					_log.warning("Could not load HexID file ("+HEXID_FILE+"). Hopefully login will give us one.");
+					_log.warning("Could not load HexID file (" + HEXID_FILE + "). Hopefully login will give us one.");
 				}
 				
 				// Grandboss
@@ -2621,93 +2692,129 @@ public final class Config
 					grandbossSettings.load(is);
 					
 					Antharas_Wait_Time = Integer.parseInt(grandbossSettings.getProperty("AntharasWaitTime", "30"));
-					if (Antharas_Wait_Time < 3 || Antharas_Wait_Time > 60)
+					if ((Antharas_Wait_Time < 3) || (Antharas_Wait_Time > 60))
+					{
 						Antharas_Wait_Time = 30;
+					}
 					Antharas_Wait_Time = Antharas_Wait_Time * 60000;
 					
 					Valakas_Wait_Time = Integer.parseInt(grandbossSettings.getProperty("ValakasWaitTime", "30"));
-					if (Valakas_Wait_Time < 3 || Valakas_Wait_Time > 60)
+					if ((Valakas_Wait_Time < 3) || (Valakas_Wait_Time > 60))
+					{
 						Valakas_Wait_Time = 30;
+					}
 					Valakas_Wait_Time = Valakas_Wait_Time * 60000;
 					
 					Interval_Of_Antharas_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfAntharasSpawn", "264"));
-					if (Interval_Of_Antharas_Spawn < 1 || Interval_Of_Antharas_Spawn > 480)
+					if ((Interval_Of_Antharas_Spawn < 1) || (Interval_Of_Antharas_Spawn > 480))
+					{
 						Interval_Of_Antharas_Spawn = 192;
+					}
 					Interval_Of_Antharas_Spawn = Interval_Of_Antharas_Spawn * 3600000;
-
+					
 					Random_Of_Antharas_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfAntharasSpawn", "72"));
-					if (Random_Of_Antharas_Spawn < 1 || Random_Of_Antharas_Spawn > 192)
+					if ((Random_Of_Antharas_Spawn < 1) || (Random_Of_Antharas_Spawn > 192))
+					{
 						Random_Of_Antharas_Spawn = 145;
+					}
 					Random_Of_Antharas_Spawn = Random_Of_Antharas_Spawn * 3600000;
 					
 					Interval_Of_Valakas_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfValakasSpawn", "264"));
-					if (Interval_Of_Valakas_Spawn < 1 || Interval_Of_Valakas_Spawn > 480)
+					if ((Interval_Of_Valakas_Spawn < 1) || (Interval_Of_Valakas_Spawn > 480))
+					{
 						Interval_Of_Valakas_Spawn = 192;
+					}
 					Interval_Of_Valakas_Spawn = Interval_Of_Valakas_Spawn * 3600000;
 					
 					Random_Of_Valakas_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfValakasSpawn", "72"));
-					if (Random_Of_Valakas_Spawn < 1 || Random_Of_Valakas_Spawn > 192)
+					if ((Random_Of_Valakas_Spawn < 1) || (Random_Of_Valakas_Spawn > 192))
+					{
 						Random_Of_Valakas_Spawn = 145;
+					}
 					Random_Of_Valakas_Spawn = Random_Of_Valakas_Spawn * 3600000;
 					
 					Interval_Of_Baium_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfBaiumSpawn", "168"));
-					if (Interval_Of_Baium_Spawn < 1 || Interval_Of_Baium_Spawn > 480)
+					if ((Interval_Of_Baium_Spawn < 1) || (Interval_Of_Baium_Spawn > 480))
+					{
 						Interval_Of_Baium_Spawn = 121;
+					}
 					Interval_Of_Baium_Spawn = Interval_Of_Baium_Spawn * 3600000;
 					
 					Random_Of_Baium_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfBaiumSpawn", "48"));
-					if (Random_Of_Baium_Spawn < 1 || Random_Of_Baium_Spawn > 192)
+					if ((Random_Of_Baium_Spawn < 1) || (Random_Of_Baium_Spawn > 192))
+					{
 						Random_Of_Baium_Spawn = 8;
+					}
 					Random_Of_Baium_Spawn = Random_Of_Baium_Spawn * 3600000;
 					
 					Interval_Of_Core_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfCoreSpawn", "60"));
-					if (Interval_Of_Core_Spawn < 1 || Interval_Of_Core_Spawn > 480)
+					if ((Interval_Of_Core_Spawn < 1) || (Interval_Of_Core_Spawn > 480))
+					{
 						Interval_Of_Core_Spawn = 27;
+					}
 					Interval_Of_Core_Spawn = Interval_Of_Core_Spawn * 3600000;
 					
 					Random_Of_Core_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfCoreSpawn", "24"));
-					if (Random_Of_Core_Spawn < 1 || Random_Of_Core_Spawn > 192)
+					if ((Random_Of_Core_Spawn < 1) || (Random_Of_Core_Spawn > 192))
+					{
 						Random_Of_Core_Spawn = 47;
+					}
 					Random_Of_Core_Spawn = Random_Of_Core_Spawn * 3600000;
 					
 					Interval_Of_Orfen_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfOrfenSpawn", "48"));
-					if (Interval_Of_Orfen_Spawn < 1 || Interval_Of_Orfen_Spawn > 480)
+					if ((Interval_Of_Orfen_Spawn < 1) || (Interval_Of_Orfen_Spawn > 480))
+					{
 						Interval_Of_Orfen_Spawn = 28;
+					}
 					Interval_Of_Orfen_Spawn = Interval_Of_Orfen_Spawn * 3600000;
 					
 					Random_Of_Orfen_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfOrfenSpawn", "20"));
-					if (Random_Of_Orfen_Spawn < 1 || Random_Of_Orfen_Spawn > 192)
+					if ((Random_Of_Orfen_Spawn < 1) || (Random_Of_Orfen_Spawn > 192))
+					{
 						Random_Of_Orfen_Spawn = 41;
+					}
 					Random_Of_Orfen_Spawn = Random_Of_Orfen_Spawn * 3600000;
 					
 					Interval_Of_QueenAnt_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfQueenAntSpawn", "36"));
-					if (Interval_Of_QueenAnt_Spawn < 1 || Interval_Of_QueenAnt_Spawn > 480)
+					if ((Interval_Of_QueenAnt_Spawn < 1) || (Interval_Of_QueenAnt_Spawn > 480))
+					{
 						Interval_Of_QueenAnt_Spawn = 19;
+					}
 					Interval_Of_QueenAnt_Spawn = Interval_Of_QueenAnt_Spawn * 3600000;
 					
 					Random_Of_QueenAnt_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfQueenAntSpawn", "17"));
-					if (Random_Of_QueenAnt_Spawn < 1 || Random_Of_QueenAnt_Spawn > 192)
+					if ((Random_Of_QueenAnt_Spawn < 1) || (Random_Of_QueenAnt_Spawn > 192))
+					{
 						Random_Of_QueenAnt_Spawn = 35;
+					}
 					Random_Of_QueenAnt_Spawn = Random_Of_QueenAnt_Spawn * 3600000;
 					
 					Interval_Of_Zaken_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfZakenSpawn", "19"));
-					if (Interval_Of_Zaken_Spawn < 1 || Interval_Of_Zaken_Spawn > 480)
+					if ((Interval_Of_Zaken_Spawn < 1) || (Interval_Of_Zaken_Spawn > 480))
+					{
 						Interval_Of_Zaken_Spawn = 19;
+					}
 					Interval_Of_Zaken_Spawn = Interval_Of_Zaken_Spawn * 3600000;
 					
 					Random_Of_Zaken_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfZakenSpawn", "35"));
-					if (Random_Of_Zaken_Spawn < 1 || Random_Of_Zaken_Spawn > 192)
+					if ((Random_Of_Zaken_Spawn < 1) || (Random_Of_Zaken_Spawn > 192))
+					{
 						Random_Of_Zaken_Spawn = 35;
+					}
 					Random_Of_Zaken_Spawn = Random_Of_Zaken_Spawn * 3600000;
 					
 					Interval_Of_Frintezza_Spawn = Integer.parseInt(grandbossSettings.getProperty("IntervalOfFrintezzaSpawn", "48"));
-					if (Interval_Of_Frintezza_Spawn < 1 || Interval_Of_Frintezza_Spawn > 480)
+					if ((Interval_Of_Frintezza_Spawn < 1) || (Interval_Of_Frintezza_Spawn > 480))
+					{
 						Interval_Of_Frintezza_Spawn = 121;
+					}
 					Interval_Of_Frintezza_Spawn = Interval_Of_Frintezza_Spawn * 3600000;
 					
 					Random_Of_Frintezza_Spawn = Integer.parseInt(grandbossSettings.getProperty("RandomOfFrintezzaSpawn", "8"));
-					if (Random_Of_Frintezza_Spawn < 1 || Random_Of_Frintezza_Spawn > 192)
+					if ((Random_Of_Frintezza_Spawn < 1) || (Random_Of_Frintezza_Spawn > 192))
+					{
 						Random_Of_Frintezza_Spawn = 8;
+					}
 					Random_Of_Frintezza_Spawn = Random_Of_Frintezza_Spawn * 3600000;
 					
 				}
@@ -2723,11 +2830,11 @@ public final class Config
 					L2Properties graciaseedsSettings = new L2Properties();
 					is = new FileInputStream(new File(GRACIASEEDS_CONFIG_FILE));
 					graciaseedsSettings.load(is);
-
+					
 					// Seed of Destruction
 					SOD_TIAT_KILL_COUNT = Integer.parseInt(graciaseedsSettings.getProperty("TiatKillCountForNextState", "10"));
 					SOD_STAGE_2_LENGTH = Long.parseLong(graciaseedsSettings.getProperty("Stage2Length", "720")) * 60000;
-
+					
 				}
 				catch (Exception e)
 				{
@@ -2743,7 +2850,9 @@ public final class Config
 					while ((line = lnr.readLine()) != null)
 					{
 						if (line.trim().isEmpty() || line.startsWith("#"))
+						{
 							continue;
+						}
 						
 						FILTER_LIST.add(line.trim());
 					}
@@ -2762,10 +2871,11 @@ public final class Config
 					is.close();
 				}
 				catch (Exception e)
-				{}
+				{
+				}
 			}
 		}
-		else if(Server.serverMode == Server.MODE_LOGINSERVER)
+		else if (Server.serverMode == Server.MODE_LOGINSERVER)
 		{
 			_log.info("loading login config");
 			InputStream is = null;
@@ -2777,15 +2887,15 @@ public final class Config
 					is = new FileInputStream(new File(LOGIN_CONFIGURATION_FILE));
 					serverSettings.load(is);
 					
-					GAME_SERVER_LOGIN_HOST = serverSettings.getProperty("LoginHostname","*");
-					GAME_SERVER_LOGIN_PORT = Integer.parseInt(serverSettings.getProperty("LoginPort","9013"));
+					GAME_SERVER_LOGIN_HOST = serverSettings.getProperty("LoginHostname", "*");
+					GAME_SERVER_LOGIN_PORT = Integer.parseInt(serverSettings.getProperty("LoginPort", "9013"));
 					
 					LOGIN_BIND_ADDRESS = serverSettings.getProperty("LoginserverHostname", "*");
 					PORT_LOGIN = Integer.parseInt(serverSettings.getProperty("LoginserverPort", "2106"));
 					
 					DEBUG = Boolean.parseBoolean(serverSettings.getProperty("Debug", "false"));
 					
-					ACCEPT_NEW_GAMESERVER = Boolean.parseBoolean(serverSettings.getProperty("AcceptNewGameServer","True"));
+					ACCEPT_NEW_GAMESERVER = Boolean.parseBoolean(serverSettings.getProperty("AcceptNewGameServer", "True"));
 					
 					LOGIN_TRY_BEFORE_BAN = Integer.parseInt(serverSettings.getProperty("LoginTryBeforeBan", "10"));
 					LOGIN_BLOCK_AFTER_BAN = Integer.parseInt(serverSettings.getProperty("LoginBlockAfterBan", "600"));
@@ -2801,13 +2911,13 @@ public final class Config
 					
 					SHOW_LICENCE = Boolean.parseBoolean(serverSettings.getProperty("ShowLicence", "true"));
 					
-					AUTO_CREATE_ACCOUNTS = Boolean.parseBoolean(serverSettings.getProperty("AutoCreateAccounts","True"));
+					AUTO_CREATE_ACCOUNTS = Boolean.parseBoolean(serverSettings.getProperty("AutoCreateAccounts", "True"));
 					
-					FLOOD_PROTECTION = Boolean.parseBoolean(serverSettings.getProperty("EnableFloodProtection","True"));
-					FAST_CONNECTION_LIMIT = Integer.parseInt(serverSettings.getProperty("FastConnectionLimit","15"));
-					NORMAL_CONNECTION_TIME = Integer.parseInt(serverSettings.getProperty("NormalConnectionTime","700"));
-					FAST_CONNECTION_TIME = Integer.parseInt(serverSettings.getProperty("FastConnectionTime","350"));
-					MAX_CONNECTION_PER_IP = Integer.parseInt(serverSettings.getProperty("MaxConnectionPerIP","50"));
+					FLOOD_PROTECTION = Boolean.parseBoolean(serverSettings.getProperty("EnableFloodProtection", "True"));
+					FAST_CONNECTION_LIMIT = Integer.parseInt(serverSettings.getProperty("FastConnectionLimit", "15"));
+					NORMAL_CONNECTION_TIME = Integer.parseInt(serverSettings.getProperty("NormalConnectionTime", "700"));
+					FAST_CONNECTION_TIME = Integer.parseInt(serverSettings.getProperty("FastConnectionTime", "350"));
+					MAX_CONNECTION_PER_IP = Integer.parseInt(serverSettings.getProperty("MaxConnectionPerIP", "50"));
 				}
 				catch (Exception e)
 				{
@@ -2844,7 +2954,7 @@ public final class Config
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					throw new Error("Failed to Load "+TELNET_FILE+" File.");
+					throw new Error("Failed to Load " + TELNET_FILE + " File.");
 				}
 			}
 			finally
@@ -2853,7 +2963,9 @@ public final class Config
 				{
 					is.close();
 				}
-				catch(Exception e) { }
+				catch (Exception e)
+				{
+				}
 			}
 		}
 		else
@@ -2872,345 +2984,1120 @@ public final class Config
 	public static boolean setParameterValue(String pName, String pValue)
 	{
 		// rates.properties
-		if (pName.equalsIgnoreCase("RateXp")) RATE_XP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateSp")) RATE_SP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RatePartyXp")) RATE_PARTY_XP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RatePartySp")) RATE_PARTY_SP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateConsumableCost")) RATE_CONSUMABLE_COST = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateExtractFish")) RATE_EXTR_FISH = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateDropItems")) RATE_DROP_ITEMS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateDropAdena")) RATE_DROP_ITEMS_ID.put(57, Float.parseFloat(pValue));
-		else if (pName.equalsIgnoreCase("RateRaidDropItems")) RATE_DROP_ITEMS_BY_RAID = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateDropSpoil")) RATE_DROP_SPOIL = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateDropManor")) RATE_DROP_MANOR = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestDrop")) RATE_QUEST_DROP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestReward")) RATE_QUEST_REWARD = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardXP")) RATE_QUEST_REWARD_XP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardSP")) RATE_QUEST_REWARD_SP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardAdena")) RATE_QUEST_REWARD_ADENA = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("UseQuestRewardMultipliers")) RATE_QUEST_REWARD_USE_MULTIPLIERS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardPotion")) RATE_QUEST_REWARD_POTION = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardScroll")) RATE_QUEST_REWARD_SCROLL = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardRecipe")) RATE_QUEST_REWARD_RECIPE = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateQuestRewardMaterial")) RATE_QUEST_REWARD_MATERIAL = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityLevel1")) RATE_VITALITY_LEVEL_1 = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityLevel2")) RATE_VITALITY_LEVEL_2 = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityLevel3")) RATE_VITALITY_LEVEL_3 = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityLevel4")) RATE_VITALITY_LEVEL_4 = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateRecoveryPeaceZone")) RATE_RECOVERY_VITALITY_PEACE_ZONE = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityLost")) RATE_VITALITY_LOST = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityGain")) RATE_VITALITY_GAIN = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateRecoveryOnReconnect")) RATE_RECOVERY_ON_RECONNECT = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateKarmaExpLost")) RATE_KARMA_EXP_LOST = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateSiegeGuardsPrice")) RATE_SIEGE_GUARDS_PRICE = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateCommonHerbs")) RATE_DROP_COMMON_HERBS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateHpHerbs")) RATE_DROP_HP_HERBS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateMpHerbs")) RATE_DROP_MP_HERBS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateSpecialHerbs")) RATE_DROP_SPECIAL_HERBS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("RateVitalityHerbs")) RATE_DROP_VITALITY_HERBS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("PlayerDropLimit")) PLAYER_DROP_LIMIT = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PlayerRateDrop")) PLAYER_RATE_DROP = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PlayerRateDropItem")) PLAYER_RATE_DROP_ITEM = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PlayerRateDropEquip")) PLAYER_RATE_DROP_EQUIP = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PlayerRateDropEquipWeapon")) PLAYER_RATE_DROP_EQUIP_WEAPON = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PetXpRate")) PET_XP_RATE = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("PetFoodRate")) PET_FOOD_RATE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("SinEaterXpRate")) SINEATER_XP_RATE = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("KarmaDropLimit")) KARMA_DROP_LIMIT = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("KarmaRateDrop")) KARMA_RATE_DROP = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("KarmaRateDropItem")) KARMA_RATE_DROP_ITEM = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("KarmaRateDropEquip")) KARMA_RATE_DROP_EQUIP = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("KarmaRateDropEquipWeapon")) KARMA_RATE_DROP_EQUIP_WEAPON = Integer.parseInt(pValue);
-		
-		// general.properties
-		else if (pName.equalsIgnoreCase("AutoDestroyDroppedItemAfter")) AUTODESTROY_ITEM_AFTER = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("DestroyPlayerDroppedItem")) DESTROY_DROPPED_PLAYER_ITEM = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("DestroyEquipableItem")) DESTROY_EQUIPABLE_PLAYER_ITEM = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("SaveDroppedItem")) SAVE_DROPPED_ITEM = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("EmptyDroppedItemTableAfterLoad")) EMPTY_DROPPED_ITEM_TABLE_AFTER_LOAD = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("SaveDroppedItemInterval")) SAVE_DROPPED_ITEM_INTERVAL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClearDroppedItemTable")) CLEAR_DROPPED_ITEM_TABLE = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("PreciseDropCalculation")) PRECISE_DROP_CALCULATION = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("MultipleItemDrop")) MULTIPLE_ITEM_DROP = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("LowWeight")) LOW_WEIGHT = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("MediumWeight")) MEDIUM_WEIGHT = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("HighWeight")) HIGH_WEIGHT = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("AdvancedDiagonalStrategy")) ADVANCED_DIAGONAL_STRATEGY= Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("DiagonalWeight")) DIAGONAL_WEIGHT = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("MaxPostfilterPasses")) MAX_POSTFILTER_PASSES = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CoordSynchronize")) COORD_SYNCHRONIZE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("DeleteCharAfterDays")) DELETE_DAYS = Integer.parseInt(pValue);
-		
+		if (pName.equalsIgnoreCase("RateXp"))
+		{
+			RATE_XP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateSp"))
+		{
+			RATE_SP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RatePartyXp"))
+		{
+			RATE_PARTY_XP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RatePartySp"))
+		{
+			RATE_PARTY_SP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateConsumableCost"))
+		{
+			RATE_CONSUMABLE_COST = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateExtractFish"))
+		{
+			RATE_EXTR_FISH = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateDropItems"))
+		{
+			RATE_DROP_ITEMS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateDropAdena"))
+		{
+			RATE_DROP_ITEMS_ID.put(57, Float.parseFloat(pValue));
+		}
+		else if (pName.equalsIgnoreCase("RateRaidDropItems"))
+		{
+			RATE_DROP_ITEMS_BY_RAID = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateDropSpoil"))
+		{
+			RATE_DROP_SPOIL = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateDropManor"))
+		{
+			RATE_DROP_MANOR = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestDrop"))
+		{
+			RATE_QUEST_DROP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestReward"))
+		{
+			RATE_QUEST_REWARD = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardXP"))
+		{
+			RATE_QUEST_REWARD_XP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardSP"))
+		{
+			RATE_QUEST_REWARD_SP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardAdena"))
+		{
+			RATE_QUEST_REWARD_ADENA = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("UseQuestRewardMultipliers"))
+		{
+			RATE_QUEST_REWARD_USE_MULTIPLIERS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardPotion"))
+		{
+			RATE_QUEST_REWARD_POTION = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardScroll"))
+		{
+			RATE_QUEST_REWARD_SCROLL = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardRecipe"))
+		{
+			RATE_QUEST_REWARD_RECIPE = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateQuestRewardMaterial"))
+		{
+			RATE_QUEST_REWARD_MATERIAL = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityLevel1"))
+		{
+			RATE_VITALITY_LEVEL_1 = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityLevel2"))
+		{
+			RATE_VITALITY_LEVEL_2 = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityLevel3"))
+		{
+			RATE_VITALITY_LEVEL_3 = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityLevel4"))
+		{
+			RATE_VITALITY_LEVEL_4 = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateRecoveryPeaceZone"))
+		{
+			RATE_RECOVERY_VITALITY_PEACE_ZONE = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityLost"))
+		{
+			RATE_VITALITY_LOST = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityGain"))
+		{
+			RATE_VITALITY_GAIN = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateRecoveryOnReconnect"))
+		{
+			RATE_RECOVERY_ON_RECONNECT = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateKarmaExpLost"))
+		{
+			RATE_KARMA_EXP_LOST = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateSiegeGuardsPrice"))
+		{
+			RATE_SIEGE_GUARDS_PRICE = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateCommonHerbs"))
+		{
+			RATE_DROP_COMMON_HERBS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateHpHerbs"))
+		{
+			RATE_DROP_HP_HERBS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateMpHerbs"))
+		{
+			RATE_DROP_MP_HERBS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateSpecialHerbs"))
+		{
+			RATE_DROP_SPECIAL_HERBS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RateVitalityHerbs"))
+		{
+			RATE_DROP_VITALITY_HERBS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerDropLimit"))
+		{
+			PLAYER_DROP_LIMIT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerRateDrop"))
+		{
+			PLAYER_RATE_DROP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerRateDropItem"))
+		{
+			PLAYER_RATE_DROP_ITEM = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerRateDropEquip"))
+		{
+			PLAYER_RATE_DROP_EQUIP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerRateDropEquipWeapon"))
+		{
+			PLAYER_RATE_DROP_EQUIP_WEAPON = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PetXpRate"))
+		{
+			PET_XP_RATE = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PetFoodRate"))
+		{
+			PET_FOOD_RATE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("SinEaterXpRate"))
+		{
+			SINEATER_XP_RATE = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("KarmaDropLimit"))
+		{
+			KARMA_DROP_LIMIT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("KarmaRateDrop"))
+		{
+			KARMA_RATE_DROP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("KarmaRateDropItem"))
+		{
+			KARMA_RATE_DROP_ITEM = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("KarmaRateDropEquip"))
+		{
+			KARMA_RATE_DROP_EQUIP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("KarmaRateDropEquipWeapon"))
+		{
+			KARMA_RATE_DROP_EQUIP_WEAPON = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AutoDestroyDroppedItemAfter"))
+		{
+			AUTODESTROY_ITEM_AFTER = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("DestroyPlayerDroppedItem"))
+		{
+			DESTROY_DROPPED_PLAYER_ITEM = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("DestroyEquipableItem"))
+		{
+			DESTROY_EQUIPABLE_PLAYER_ITEM = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("SaveDroppedItem"))
+		{
+			SAVE_DROPPED_ITEM = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EmptyDroppedItemTableAfterLoad"))
+		{
+			EMPTY_DROPPED_ITEM_TABLE_AFTER_LOAD = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("SaveDroppedItemInterval"))
+		{
+			SAVE_DROPPED_ITEM_INTERVAL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClearDroppedItemTable"))
+		{
+			CLEAR_DROPPED_ITEM_TABLE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PreciseDropCalculation"))
+		{
+			PRECISE_DROP_CALCULATION = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MultipleItemDrop"))
+		{
+			MULTIPLE_ITEM_DROP = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("LowWeight"))
+		{
+			LOW_WEIGHT = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MediumWeight"))
+		{
+			MEDIUM_WEIGHT = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("HighWeight"))
+		{
+			HIGH_WEIGHT = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AdvancedDiagonalStrategy"))
+		{
+			ADVANCED_DIAGONAL_STRATEGY = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("DiagonalWeight"))
+		{
+			DIAGONAL_WEIGHT = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxPostfilterPasses"))
+		{
+			MAX_POSTFILTER_PASSES = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CoordSynchronize"))
+		{
+			COORD_SYNCHRONIZE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("DeleteCharAfterDays"))
+		{
+			DELETE_DAYS = Integer.parseInt(pValue);
+		}
 		else if (pName.equalsIgnoreCase("ClientPacketQueueSize"))
 		{
 			CLIENT_PACKET_QUEUE_SIZE = Integer.parseInt(pValue);
 			if (CLIENT_PACKET_QUEUE_SIZE == 0)
+			{
 				CLIENT_PACKET_QUEUE_SIZE = MMO_MAX_READ_PER_PASS + 1;
+			}
 		}
 		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxBurstSize"))
 		{
 			CLIENT_PACKET_QUEUE_MAX_BURST_SIZE = Integer.parseInt(pValue);
 			if (CLIENT_PACKET_QUEUE_MAX_BURST_SIZE == 0)
+			{
 				CLIENT_PACKET_QUEUE_MAX_BURST_SIZE = MMO_MAX_READ_PER_PASS;
+			}
 		}
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxPacketsPerSecond")) CLIENT_PACKET_QUEUE_MAX_PACKETS_PER_SECOND = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMeasureInterval")) CLIENT_PACKET_QUEUE_MEASURE_INTERVAL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxAveragePacketsPerSecond")) CLIENT_PACKET_QUEUE_MAX_AVERAGE_PACKETS_PER_SECOND = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxFloodsPerMin")) CLIENT_PACKET_QUEUE_MAX_FLOODS_PER_MIN = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxOverflowsPerMin")) CLIENT_PACKET_QUEUE_MAX_OVERFLOWS_PER_MIN = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxUnderflowsPerMin")) CLIENT_PACKET_QUEUE_MAX_UNDERFLOWS_PER_MIN = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxUnknownPerMin")) CLIENT_PACKET_QUEUE_MAX_UNKNOWN_PER_MIN = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("AllowDiscardItem")) ALLOW_DISCARDITEM = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowRefund")) ALLOW_REFUND = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowWarehouse")) ALLOW_WAREHOUSE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowWear")) ALLOW_WEAR = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("WearDelay")) WEAR_DELAY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("WearPrice")) WEAR_PRICE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AllowWater")) ALLOW_WATER = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowRentPet")) ALLOW_RENTPET = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("BoatBroadcastRadius")) BOAT_BROADCAST_RADIUS = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AllowCursedWeapons")) ALLOW_CURSED_WEAPONS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowManor")) ALLOW_MANOR = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowNpcWalkers")) ALLOW_NPC_WALKERS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowPetWalkers")) ALLOW_PET_WALKERS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("BypassValidation")) BYPASS_VALIDATION = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("CommunityType")) COMMUNITY_TYPE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("BBSShowPlayerList")) BBS_SHOW_PLAYERLIST = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("BBSDefault")) BBS_DEFAULT = pValue;
-		else if (pName.equalsIgnoreCase("ShowLevelOnCommunityBoard")) SHOW_LEVEL_COMMUNITYBOARD = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("ShowStatusOnCommunityBoard")) SHOW_STATUS_COMMUNITYBOARD = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("NamePageSizeOnCommunityBoard")) NAME_PAGE_SIZE_COMMUNITYBOARD = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("NamePerRowOnCommunityBoard")) NAME_PER_ROW_COMMUNITYBOARD = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("ShowServerNews")) SERVER_NEWS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("ShowNpcLevel")) SHOW_NPC_LVL = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("ShowCrestWithoutQuest")) SHOW_CREST_WITHOUT_QUEST = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("ForceInventoryUpdate")) FORCE_INVENTORY_UPDATE = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("AutoDeleteInvalidQuestData")) AUTODELETE_INVALID_QUEST_DATA = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("MaximumOnlineUsers")) MAXIMUM_ONLINE_USERS = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("ZoneTown")) ZONE_TOWN = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("CheckKnownList")) CHECK_KNOWN = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("MaxDriftRange")) MAX_DRIFT_RANGE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("UseDeepBlueDropRules")) DEEPBLUE_DROP_RULES = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("UseDeepBlueDropRulesRaid")) DEEPBLUE_DROP_RULES_RAID = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("GuardAttackAggroMob")) GUARD_ATTACK_AGGRO_MOB = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("CancelLesserEffect")) EFFECT_CANCELING = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("MaximumSlotsForNoDwarf")) INVENTORY_MAXIMUM_NO_DWARF = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaximumSlotsForDwarf")) INVENTORY_MAXIMUM_DWARF = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaximumSlotsForGMPlayer")) INVENTORY_MAXIMUM_GM = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaximumSlotsForQuestItems")) INVENTORY_MAXIMUM_QUEST_ITEMS = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("MaximumWarehouseSlotsForNoDwarf")) WAREHOUSE_SLOTS_NO_DWARF = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaximumWarehouseSlotsForDwarf")) WAREHOUSE_SLOTS_DWARF = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaximumWarehouseSlotsForClan")) WAREHOUSE_SLOTS_CLAN = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("EnchantChanceWeapon")) ENCHANT_CHANCE_WEAPON = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantChanceArmor")) ENCHANT_CHANCE_ARMOR = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantChanceJewelry")) ENCHANT_CHANCE_JEWELRY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantChanceElementStone")) ENCHANT_CHANCE_ELEMENT_STONE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantChanceElementCrystal")) ENCHANT_CHANCE_ELEMENT_CRYSTAL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantChanceElementJewel")) ENCHANT_CHANCE_ELEMENT_JEWEL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantChanceElementEnergy")) ENCHANT_CHANCE_ELEMENT_ENERGY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantMaxWeapon")) ENCHANT_MAX_WEAPON = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantMaxArmor")) ENCHANT_MAX_ARMOR = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantMaxJewelry")) ENCHANT_MAX_JEWELRY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantSafeMax")) ENCHANT_SAFE_MAX = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("EnchantSafeMaxFull")) ENCHANT_SAFE_MAX_FULL = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("AugmentationNGSkillChance")) AUGMENTATION_NG_SKILL_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationNGGlowChance")) AUGMENTATION_NG_GLOW_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationMidSkillChance")) AUGMENTATION_MID_SKILL_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationMidGlowChance")) AUGMENTATION_MID_GLOW_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationHighSkillChance")) AUGMENTATION_HIGH_SKILL_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationHighGlowChance")) AUGMENTATION_HIGH_GLOW_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationTopSkillChance")) AUGMENTATION_TOP_SKILL_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationTopGlowChance")) AUGMENTATION_TOP_GLOW_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AugmentationBaseStatChance")) AUGMENTATION_BASESTAT_CHANCE = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("HpRegenMultiplier")) HP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("MpRegenMultiplier")) MP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("CpRegenMultiplier")) CP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
-		
-		else if (pName.equalsIgnoreCase("RaidHpRegenMultiplier")) RAID_HP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("RaidMpRegenMultiplier")) RAID_MP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("RaidPDefenceMultiplier")) RAID_PDEFENCE_MULTIPLIER = Double.parseDouble(pValue) /100;
-		else if (pName.equalsIgnoreCase("RaidMDefenceMultiplier")) RAID_MDEFENCE_MULTIPLIER = Double.parseDouble(pValue) /100;
-		else if (pName.equalsIgnoreCase("RaidPAttackMultiplier")) RAID_PATTACK_MULTIPLIER = Double.parseDouble(pValue) /100;
-		else if (pName.equalsIgnoreCase("RaidMAttackMultiplier")) RAID_MATTACK_MULTIPLIER = Double.parseDouble(pValue) /100;
-		else if (pName.equalsIgnoreCase("RaidMinionRespawnTime")) RAID_MINION_RESPAWN_TIMER =Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("RaidChaosTime")) RAID_CHAOS_TIME =Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("GrandChaosTime")) GRAND_CHAOS_TIME =Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MinionChaosTime")) MINION_CHAOS_TIME =Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("StartingAdena")) STARTING_ADENA = Long.parseLong(pValue);
-		else if (pName.equalsIgnoreCase("StartingLevel")) STARTING_LEVEL = Byte.parseByte(pValue);
-		else if (pName.equalsIgnoreCase("StartingSP")) STARTING_SP = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("UnstuckInterval")) UNSTUCK_INTERVAL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("TeleportWatchdogTimeout")) TELEPORT_WATCHDOG_TIMEOUT = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("PlayerSpawnProtection")) PLAYER_SPAWN_PROTECTION = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PlayerFakeDeathUpProtection")) PLAYER_FAKEDEATH_UP_PROTECTION = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("RestorePlayerInstance")) RESTORE_PLAYER_INSTANCE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowSummonToInstance")) ALLOW_SUMMON_TO_INSTANCE = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("PartyXpCutoffMethod")) PARTY_XP_CUTOFF_METHOD = pValue;
-		else if (pName.equalsIgnoreCase("PartyXpCutoffPercent")) PARTY_XP_CUTOFF_PERCENT = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("PartyXpCutoffLevel")) PARTY_XP_CUTOFF_LEVEL = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("RespawnRestoreCP")) RESPAWN_RESTORE_CP = Double.parseDouble(pValue) / 100;
-		else if (pName.equalsIgnoreCase("RespawnRestoreHP")) RESPAWN_RESTORE_HP = Double.parseDouble(pValue) / 100;
-		else if (pName.equalsIgnoreCase("RespawnRestoreMP")) RESPAWN_RESTORE_MP = Double.parseDouble(pValue) / 100;
-		
-		else if (pName.equalsIgnoreCase("MaxPvtStoreSellSlotsDwarf")) MAX_PVTSTORESELL_SLOTS_DWARF = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaxPvtStoreSellSlotsOther")) MAX_PVTSTORESELL_SLOTS_OTHER = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaxPvtStoreBuySlotsDwarf")) MAX_PVTSTOREBUY_SLOTS_DWARF = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaxPvtStoreBuySlotsOther")) MAX_PVTSTOREBUY_SLOTS_OTHER = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("StoreSkillCooltime")) STORE_SKILL_COOLTIME = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("SubclassStoreSkillCooltime")) SUBCLASS_STORE_SKILL_COOLTIME = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AnnounceMammonSpawn")) ANNOUNCE_MAMMON_SPAWN = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("AltGameTiredness")) ALT_GAME_TIREDNESS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("EnableFallingDamage")) ENABLE_FALLING_DAMAGE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltGameCreation")) ALT_GAME_CREATION = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltGameCreationSpeed")) ALT_GAME_CREATION_SPEED = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("AltGameCreationXpRate")) ALT_GAME_CREATION_XP_RATE = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("AltGameCreationRareXpSpRate")) ALT_GAME_CREATION_RARE_XPSP_RATE = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("AltGameCreationSpRate")) ALT_GAME_CREATION_SP_RATE = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("AltWeightLimit")) ALT_WEIGHT_LIMIT = Double.parseDouble(pValue);
-		else if (pName.equalsIgnoreCase("AltBlacksmithUseRecipes")) ALT_BLACKSMITH_USE_RECIPES = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltGameSkillLearn")) ALT_GAME_SKILL_LEARN = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("RemoveCastleCirclets")) REMOVE_CASTLE_CIRCLETS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("ReputationScorePerKill")) REPUTATION_SCORE_PER_KILL = Integer.parseInt(pValue);
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxPacketsPerSecond"))
+		{
+			CLIENT_PACKET_QUEUE_MAX_PACKETS_PER_SECOND = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMeasureInterval"))
+		{
+			CLIENT_PACKET_QUEUE_MEASURE_INTERVAL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxAveragePacketsPerSecond"))
+		{
+			CLIENT_PACKET_QUEUE_MAX_AVERAGE_PACKETS_PER_SECOND = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxFloodsPerMin"))
+		{
+			CLIENT_PACKET_QUEUE_MAX_FLOODS_PER_MIN = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxOverflowsPerMin"))
+		{
+			CLIENT_PACKET_QUEUE_MAX_OVERFLOWS_PER_MIN = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxUnderflowsPerMin"))
+		{
+			CLIENT_PACKET_QUEUE_MAX_UNDERFLOWS_PER_MIN = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ClientPacketQueueMaxUnknownPerMin"))
+		{
+			CLIENT_PACKET_QUEUE_MAX_UNKNOWN_PER_MIN = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowDiscardItem"))
+		{
+			ALLOW_DISCARDITEM = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowRefund"))
+		{
+			ALLOW_REFUND = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowWarehouse"))
+		{
+			ALLOW_WAREHOUSE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowWear"))
+		{
+			ALLOW_WEAR = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WearDelay"))
+		{
+			WEAR_DELAY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WearPrice"))
+		{
+			WEAR_PRICE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowWater"))
+		{
+			ALLOW_WATER = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowRentPet"))
+		{
+			ALLOW_RENTPET = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BoatBroadcastRadius"))
+		{
+			BOAT_BROADCAST_RADIUS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowCursedWeapons"))
+		{
+			ALLOW_CURSED_WEAPONS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowManor"))
+		{
+			ALLOW_MANOR = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowNpcWalkers"))
+		{
+			ALLOW_NPC_WALKERS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowPetWalkers"))
+		{
+			ALLOW_PET_WALKERS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BypassValidation"))
+		{
+			BYPASS_VALIDATION = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CommunityType"))
+		{
+			COMMUNITY_TYPE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BBSShowPlayerList"))
+		{
+			BBS_SHOW_PLAYERLIST = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BBSDefault"))
+		{
+			BBS_DEFAULT = pValue;
+		}
+		else if (pName.equalsIgnoreCase("ShowLevelOnCommunityBoard"))
+		{
+			SHOW_LEVEL_COMMUNITYBOARD = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ShowStatusOnCommunityBoard"))
+		{
+			SHOW_STATUS_COMMUNITYBOARD = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("NamePageSizeOnCommunityBoard"))
+		{
+			NAME_PAGE_SIZE_COMMUNITYBOARD = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("NamePerRowOnCommunityBoard"))
+		{
+			NAME_PER_ROW_COMMUNITYBOARD = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ShowServerNews"))
+		{
+			SERVER_NEWS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ShowNpcLevel"))
+		{
+			SHOW_NPC_LVL = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ShowCrestWithoutQuest"))
+		{
+			SHOW_CREST_WITHOUT_QUEST = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ForceInventoryUpdate"))
+		{
+			FORCE_INVENTORY_UPDATE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AutoDeleteInvalidQuestData"))
+		{
+			AUTODELETE_INVALID_QUEST_DATA = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumOnlineUsers"))
+		{
+			MAXIMUM_ONLINE_USERS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ZoneTown"))
+		{
+			ZONE_TOWN = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CheckKnownList"))
+		{
+			CHECK_KNOWN = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxDriftRange"))
+		{
+			MAX_DRIFT_RANGE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("UseDeepBlueDropRules"))
+		{
+			DEEPBLUE_DROP_RULES = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("UseDeepBlueDropRulesRaid"))
+		{
+			DEEPBLUE_DROP_RULES_RAID = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("GuardAttackAggroMob"))
+		{
+			GUARD_ATTACK_AGGRO_MOB = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CancelLesserEffect"))
+		{
+			EFFECT_CANCELING = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumSlotsForNoDwarf"))
+		{
+			INVENTORY_MAXIMUM_NO_DWARF = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumSlotsForDwarf"))
+		{
+			INVENTORY_MAXIMUM_DWARF = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumSlotsForGMPlayer"))
+		{
+			INVENTORY_MAXIMUM_GM = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumSlotsForQuestItems"))
+		{
+			INVENTORY_MAXIMUM_QUEST_ITEMS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumWarehouseSlotsForNoDwarf"))
+		{
+			WAREHOUSE_SLOTS_NO_DWARF = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumWarehouseSlotsForDwarf"))
+		{
+			WAREHOUSE_SLOTS_DWARF = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaximumWarehouseSlotsForClan"))
+		{
+			WAREHOUSE_SLOTS_CLAN = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceWeapon"))
+		{
+			ENCHANT_CHANCE_WEAPON = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceArmor"))
+		{
+			ENCHANT_CHANCE_ARMOR = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceJewelry"))
+		{
+			ENCHANT_CHANCE_JEWELRY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceElementStone"))
+		{
+			ENCHANT_CHANCE_ELEMENT_STONE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceElementCrystal"))
+		{
+			ENCHANT_CHANCE_ELEMENT_CRYSTAL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceElementJewel"))
+		{
+			ENCHANT_CHANCE_ELEMENT_JEWEL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceElementEnergy"))
+		{
+			ENCHANT_CHANCE_ELEMENT_ENERGY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantMaxWeapon"))
+		{
+			ENCHANT_MAX_WEAPON = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantMaxArmor"))
+		{
+			ENCHANT_MAX_ARMOR = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantMaxJewelry"))
+		{
+			ENCHANT_MAX_JEWELRY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantSafeMax"))
+		{
+			ENCHANT_SAFE_MAX = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnchantSafeMaxFull"))
+		{
+			ENCHANT_SAFE_MAX_FULL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationNGSkillChance"))
+		{
+			AUGMENTATION_NG_SKILL_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationNGGlowChance"))
+		{
+			AUGMENTATION_NG_GLOW_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationMidSkillChance"))
+		{
+			AUGMENTATION_MID_SKILL_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationMidGlowChance"))
+		{
+			AUGMENTATION_MID_GLOW_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationHighSkillChance"))
+		{
+			AUGMENTATION_HIGH_SKILL_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationHighGlowChance"))
+		{
+			AUGMENTATION_HIGH_GLOW_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationTopSkillChance"))
+		{
+			AUGMENTATION_TOP_SKILL_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationTopGlowChance"))
+		{
+			AUGMENTATION_TOP_GLOW_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AugmentationBaseStatChance"))
+		{
+			AUGMENTATION_BASESTAT_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("HpRegenMultiplier"))
+		{
+			HP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MpRegenMultiplier"))
+		{
+			MP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CpRegenMultiplier"))
+		{
+			CP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RaidHpRegenMultiplier"))
+		{
+			RAID_HP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RaidMpRegenMultiplier"))
+		{
+			RAID_MP_REGEN_MULTIPLIER = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RaidPDefenceMultiplier"))
+		{
+			RAID_PDEFENCE_MULTIPLIER = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("RaidMDefenceMultiplier"))
+		{
+			RAID_MDEFENCE_MULTIPLIER = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("RaidPAttackMultiplier"))
+		{
+			RAID_PATTACK_MULTIPLIER = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("RaidMAttackMultiplier"))
+		{
+			RAID_MATTACK_MULTIPLIER = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("RaidMinionRespawnTime"))
+		{
+			RAID_MINION_RESPAWN_TIMER = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RaidChaosTime"))
+		{
+			RAID_CHAOS_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("GrandChaosTime"))
+		{
+			GRAND_CHAOS_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MinionChaosTime"))
+		{
+			MINION_CHAOS_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("StartingAdena"))
+		{
+			STARTING_ADENA = Long.parseLong(pValue);
+		}
+		else if (pName.equalsIgnoreCase("StartingLevel"))
+		{
+			STARTING_LEVEL = Byte.parseByte(pValue);
+		}
+		else if (pName.equalsIgnoreCase("StartingSP"))
+		{
+			STARTING_SP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("UnstuckInterval"))
+		{
+			UNSTUCK_INTERVAL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("TeleportWatchdogTimeout"))
+		{
+			TELEPORT_WATCHDOG_TIMEOUT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerSpawnProtection"))
+		{
+			PLAYER_SPAWN_PROTECTION = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PlayerFakeDeathUpProtection"))
+		{
+			PLAYER_FAKEDEATH_UP_PROTECTION = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RestorePlayerInstance"))
+		{
+			RESTORE_PLAYER_INSTANCE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowSummonToInstance"))
+		{
+			ALLOW_SUMMON_TO_INSTANCE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PartyXpCutoffMethod"))
+		{
+			PARTY_XP_CUTOFF_METHOD = pValue;
+		}
+		else if (pName.equalsIgnoreCase("PartyXpCutoffPercent"))
+		{
+			PARTY_XP_CUTOFF_PERCENT = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PartyXpCutoffLevel"))
+		{
+			PARTY_XP_CUTOFF_LEVEL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RespawnRestoreCP"))
+		{
+			RESPAWN_RESTORE_CP = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("RespawnRestoreHP"))
+		{
+			RESPAWN_RESTORE_HP = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("RespawnRestoreMP"))
+		{
+			RESPAWN_RESTORE_MP = Double.parseDouble(pValue) / 100;
+		}
+		else if (pName.equalsIgnoreCase("MaxPvtStoreSellSlotsDwarf"))
+		{
+			MAX_PVTSTORESELL_SLOTS_DWARF = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxPvtStoreSellSlotsOther"))
+		{
+			MAX_PVTSTORESELL_SLOTS_OTHER = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxPvtStoreBuySlotsDwarf"))
+		{
+			MAX_PVTSTOREBUY_SLOTS_DWARF = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxPvtStoreBuySlotsOther"))
+		{
+			MAX_PVTSTOREBUY_SLOTS_OTHER = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("StoreSkillCooltime"))
+		{
+			STORE_SKILL_COOLTIME = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("SubclassStoreSkillCooltime"))
+		{
+			SUBCLASS_STORE_SKILL_COOLTIME = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AnnounceMammonSpawn"))
+		{
+			ANNOUNCE_MAMMON_SPAWN = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameTiredness"))
+		{
+			ALT_GAME_TIREDNESS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnableFallingDamage"))
+		{
+			ENABLE_FALLING_DAMAGE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameCreation"))
+		{
+			ALT_GAME_CREATION = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameCreationSpeed"))
+		{
+			ALT_GAME_CREATION_SPEED = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameCreationXpRate"))
+		{
+			ALT_GAME_CREATION_XP_RATE = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameCreationRareXpSpRate"))
+		{
+			ALT_GAME_CREATION_RARE_XPSP_RATE = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameCreationSpRate"))
+		{
+			ALT_GAME_CREATION_SP_RATE = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltWeightLimit"))
+		{
+			ALT_WEIGHT_LIMIT = Double.parseDouble(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltBlacksmithUseRecipes"))
+		{
+			ALT_BLACKSMITH_USE_RECIPES = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameSkillLearn"))
+		{
+			ALT_GAME_SKILL_LEARN = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("RemoveCastleCirclets"))
+		{
+			REMOVE_CASTLE_CIRCLETS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ReputationScorePerKill"))
+		{
+			REPUTATION_SCORE_PER_KILL = Integer.parseInt(pValue);
+		}
 		else if (pName.equalsIgnoreCase("AltGameCancelByHit"))
 		{
 			ALT_GAME_CANCEL_BOW = pValue.equalsIgnoreCase("bow") || pValue.equalsIgnoreCase("all");
 			ALT_GAME_CANCEL_CAST = pValue.equalsIgnoreCase("cast") || pValue.equalsIgnoreCase("all");
 		}
 		
-		else if (pName.equalsIgnoreCase("AltShieldBlocks")) ALT_GAME_SHIELD_BLOCKS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltPerfectShieldBlockRate")) ALT_PERFECT_SHLD_BLOCK = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("Delevel")) ALT_GAME_DELEVEL = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("MagicFailures")) ALT_GAME_MAGICFAILURES = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltMobAgroInPeaceZone")) ALT_MOB_AGRO_IN_PEACEZONE = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("AltGameExponentXp")) ALT_GAME_EXPONENT_XP = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("AltGameExponentSp")) ALT_GAME_EXPONENT_SP = Float.parseFloat(pValue);
-		
-		else if (pName.equalsIgnoreCase("AllowClassMasters")) ALLOW_CLASS_MASTERS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AllowEntireTree")) ALLOW_ENTIRE_TREE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AlternateClassMaster")) ALTERNATE_CLASS_MASTER = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltPartyRange")) ALT_PARTY_RANGE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AltPartyRange2")) ALT_PARTY_RANGE2 = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("CraftingEnabled")) IS_CRAFTING_ENABLED = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("CraftMasterwork")) CRAFT_MASTERWORK = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("LifeCrystalNeeded")) LIFE_CRYSTAL_NEEDED = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AutoLoot")) AUTO_LOOT = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AutoLootRaids")) AUTO_LOOT_RAIDS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AutoLootHerbs")) AUTO_LOOT_HERBS = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanBeKilledInPeaceZone")) ALT_GAME_KARMA_PLAYER_CAN_BE_KILLED_IN_PEACEZONE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanShop")) ALT_GAME_KARMA_PLAYER_CAN_SHOP = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanUseGK")) ALT_GAME_KARMA_PLAYER_CAN_USE_GK = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanTeleport")) ALT_GAME_KARMA_PLAYER_CAN_TELEPORT = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanTrade")) ALT_GAME_KARMA_PLAYER_CAN_TRADE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanUseWareHouse")) ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("MaxPersonalFamePoints")) MAX_PERSONAL_FAME_POINTS = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("FortressZoneFameTaskFrequency")) FORTRESS_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("FortressZoneFameAquirePoints")) FORTRESS_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CastleZoneFameTaskFrequency")) CASTLE_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CastleZoneFameAquirePoints")) CASTLE_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("AltCastleForDawn")) ALT_GAME_CASTLE_DAWN = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltCastleForDusk")) ALT_GAME_CASTLE_DUSK = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltRequireClanCastle")) ALT_GAME_REQUIRE_CLAN_CASTLE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltFreeTeleporting")) ALT_GAME_FREE_TELEPORT = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltSubClassWithoutQuests")) ALT_GAME_SUBCLASS_WITHOUT_QUESTS = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltSubclassEverywhere")) ALT_GAME_SUBCLASS_EVERYWHERE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AltMembersCanWithdrawFromClanWH")) ALT_MEMBERS_CAN_WITHDRAW_FROM_CLANWH = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("DwarfRecipeLimit")) DWARF_RECIPE_LIMIT = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("CommonRecipeLimit")) COMMON_RECIPE_LIMIT = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("ChampionEnable")) L2JMOD_CHAMPION_ENABLE =	Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("ChampionFrequency")) L2JMOD_CHAMPION_FREQUENCY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionMinLevel")) L2JMOD_CHAMP_MIN_LVL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionMaxLevel")) L2JMOD_CHAMP_MAX_LVL = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionHp")) L2JMOD_CHAMPION_HP = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionHpRegen")) L2JMOD_CHAMPION_HP_REGEN = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("ChampionRewards")) L2JMOD_CHAMPION_REWARDS = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionAdenasRewards")) L2JMOD_CHAMPION_ADENAS_REWARDS = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("ChampionAtk")) L2JMOD_CHAMPION_ATK = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("ChampionSpdAtk")) L2JMOD_CHAMPION_SPD_ATK = Float.parseFloat(pValue);
-		else if (pName.equalsIgnoreCase("ChampionRewardLowerLvlItemChance")) L2JMOD_CHAMPION_REWARD_LOWER_LVL_ITEM_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionRewardHigherLvlItemChance")) L2JMOD_CHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionRewardItemID")) L2JMOD_CHAMPION_REWARD_ID = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionRewardItemQty")) L2JMOD_CHAMPION_REWARD_QTY = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("ChampionEnableInInstances")) L2JMOD_CHAMPION_ENABLE_IN_INSTANCES =	Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("AllowWedding")) L2JMOD_ALLOW_WEDDING = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("WeddingPrice")) L2JMOD_WEDDING_PRICE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("WeddingPunishInfidelity")) L2JMOD_WEDDING_PUNISH_INFIDELITY = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("WeddingTeleport")) L2JMOD_WEDDING_TELEPORT = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("WeddingTeleportPrice")) L2JMOD_WEDDING_TELEPORT_PRICE = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("WeddingTeleportDuration")) L2JMOD_WEDDING_TELEPORT_DURATION = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("WeddingAllowSameSex")) L2JMOD_WEDDING_SAMESEX = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("WeddingFormalWear")) L2JMOD_WEDDING_FORMALWEAR = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("WeddingDivorceCosts")) L2JMOD_WEDDING_DIVORCE_COSTS = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("TvTEventEnabled")) TVT_EVENT_ENABLED = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("TvTEventInterval")) TVT_EVENT_INTERVAL = pValue.split(",");
-		else if (pName.equalsIgnoreCase("TvTEventParticipationTime")) TVT_EVENT_PARTICIPATION_TIME = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("TvTEventRunningTime")) TVT_EVENT_RUNNING_TIME = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("TvTEventParticipationNpcId")) TVT_EVENT_PARTICIPATION_NPC_ID = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("EnableWarehouseSortingClan")) L2JMOD_ENABLE_WAREHOUSESORTING_CLAN = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("EnableWarehouseSortingPrivate")) L2JMOD_ENABLE_WAREHOUSESORTING_PRIVATE = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("EnableManaPotionSupport")) L2JMOD_ENABLE_MANA_POTIONS_SUPPORT = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("DisplayServerTime")) L2JMOD_DISPLAY_SERVER_TIME = Boolean.parseBoolean(pValue);
-		
-		else if (pName.equalsIgnoreCase("AntiFeedEnable")) L2JMOD_ANTIFEED_ENABLE = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AntiFeedDualbox")) L2JMOD_ANTIFEED_DUALBOX = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AntiFeedDisconnectedAsDualbox")) L2JMOD_ANTIFEED_DISCONNECTED_AS_DUALBOX = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AntiFeedInterval")) L2JMOD_ANTIFEED_INTERVAL = 1000*Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("MinKarma")) KARMA_MIN_KARMA = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("MaxKarma")) KARMA_MAX_KARMA = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("XPDivider")) KARMA_XP_DIVIDER = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("BaseKarmaLost")) KARMA_LOST_BASE = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("CanGMDropEquipment")) KARMA_DROP_GM = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("AwardPKKillPVPPoint")) KARMA_AWARD_PK_KILL = Boolean.parseBoolean(pValue);
-		else if (pName.equalsIgnoreCase("MinimumPKRequiredToDrop")) KARMA_PK_LIMIT = Integer.parseInt(pValue);
-		
-		else if (pName.equalsIgnoreCase("PvPVsNormalTime")) PVP_NORMAL_TIME = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("PvPVsPvPTime")) PVP_PVP_TIME = Integer.parseInt(pValue);
-		else if (pName.equalsIgnoreCase("GlobalChat")) DEFAULT_GLOBAL_CHAT = pValue;
-		else if (pName.equalsIgnoreCase("TradeChat")) DEFAULT_TRADE_CHAT = pValue;
-		else if (pName.equalsIgnoreCase("GMAdminMenuStyle")) GM_ADMIN_MENU_STYLE = pValue;
+		else if (pName.equalsIgnoreCase("AltShieldBlocks"))
+		{
+			ALT_GAME_SHIELD_BLOCKS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltPerfectShieldBlockRate"))
+		{
+			ALT_PERFECT_SHLD_BLOCK = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Delevel"))
+		{
+			ALT_GAME_DELEVEL = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MagicFailures"))
+		{
+			ALT_GAME_MAGICFAILURES = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltMobAgroInPeaceZone"))
+		{
+			ALT_MOB_AGRO_IN_PEACEZONE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameExponentXp"))
+		{
+			ALT_GAME_EXPONENT_XP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltGameExponentSp"))
+		{
+			ALT_GAME_EXPONENT_SP = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowClassMasters"))
+		{
+			ALLOW_CLASS_MASTERS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowEntireTree"))
+		{
+			ALLOW_ENTIRE_TREE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AlternateClassMaster"))
+		{
+			ALTERNATE_CLASS_MASTER = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltPartyRange"))
+		{
+			ALT_PARTY_RANGE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltPartyRange2"))
+		{
+			ALT_PARTY_RANGE2 = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CraftingEnabled"))
+		{
+			IS_CRAFTING_ENABLED = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CraftMasterwork"))
+		{
+			CRAFT_MASTERWORK = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("LifeCrystalNeeded"))
+		{
+			LIFE_CRYSTAL_NEEDED = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AutoLoot"))
+		{
+			AUTO_LOOT = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AutoLootRaids"))
+		{
+			AUTO_LOOT_RAIDS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AutoLootHerbs"))
+		{
+			AUTO_LOOT_HERBS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanBeKilledInPeaceZone"))
+		{
+			ALT_GAME_KARMA_PLAYER_CAN_BE_KILLED_IN_PEACEZONE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanShop"))
+		{
+			ALT_GAME_KARMA_PLAYER_CAN_SHOP = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanUseGK"))
+		{
+			ALT_GAME_KARMA_PLAYER_CAN_USE_GK = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanTeleport"))
+		{
+			ALT_GAME_KARMA_PLAYER_CAN_TELEPORT = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanTrade"))
+		{
+			ALT_GAME_KARMA_PLAYER_CAN_TRADE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltKarmaPlayerCanUseWareHouse"))
+		{
+			ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxPersonalFamePoints"))
+		{
+			MAX_PERSONAL_FAME_POINTS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("FortressZoneFameTaskFrequency"))
+		{
+			FORTRESS_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("FortressZoneFameAquirePoints"))
+		{
+			FORTRESS_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CastleZoneFameTaskFrequency"))
+		{
+			CASTLE_ZONE_FAME_TASK_FREQUENCY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CastleZoneFameAquirePoints"))
+		{
+			CASTLE_ZONE_FAME_AQUIRE_POINTS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltCastleForDawn"))
+		{
+			ALT_GAME_CASTLE_DAWN = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltCastleForDusk"))
+		{
+			ALT_GAME_CASTLE_DUSK = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltRequireClanCastle"))
+		{
+			ALT_GAME_REQUIRE_CLAN_CASTLE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltFreeTeleporting"))
+		{
+			ALT_GAME_FREE_TELEPORT = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltSubClassWithoutQuests"))
+		{
+			ALT_GAME_SUBCLASS_WITHOUT_QUESTS = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltSubclassEverywhere"))
+		{
+			ALT_GAME_SUBCLASS_EVERYWHERE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AltMembersCanWithdrawFromClanWH"))
+		{
+			ALT_MEMBERS_CAN_WITHDRAW_FROM_CLANWH = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("DwarfRecipeLimit"))
+		{
+			DWARF_RECIPE_LIMIT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CommonRecipeLimit"))
+		{
+			COMMON_RECIPE_LIMIT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionEnable"))
+		{
+			L2JMOD_CHAMPION_ENABLE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionFrequency"))
+		{
+			L2JMOD_CHAMPION_FREQUENCY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionMinLevel"))
+		{
+			L2JMOD_CHAMP_MIN_LVL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionMaxLevel"))
+		{
+			L2JMOD_CHAMP_MAX_LVL = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionHp"))
+		{
+			L2JMOD_CHAMPION_HP = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionHpRegen"))
+		{
+			L2JMOD_CHAMPION_HP_REGEN = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionRewards"))
+		{
+			L2JMOD_CHAMPION_REWARDS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionAdenasRewards"))
+		{
+			L2JMOD_CHAMPION_ADENAS_REWARDS = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionAtk"))
+		{
+			L2JMOD_CHAMPION_ATK = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionSpdAtk"))
+		{
+			L2JMOD_CHAMPION_SPD_ATK = Float.parseFloat(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionRewardLowerLvlItemChance"))
+		{
+			L2JMOD_CHAMPION_REWARD_LOWER_LVL_ITEM_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionRewardHigherLvlItemChance"))
+		{
+			L2JMOD_CHAMPION_REWARD_HIGHER_LVL_ITEM_CHANCE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionRewardItemID"))
+		{
+			L2JMOD_CHAMPION_REWARD_ID = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionRewardItemQty"))
+		{
+			L2JMOD_CHAMPION_REWARD_QTY = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("ChampionEnableInInstances"))
+		{
+			L2JMOD_CHAMPION_ENABLE_IN_INSTANCES = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AllowWedding"))
+		{
+			L2JMOD_ALLOW_WEDDING = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingPrice"))
+		{
+			L2JMOD_WEDDING_PRICE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingPunishInfidelity"))
+		{
+			L2JMOD_WEDDING_PUNISH_INFIDELITY = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingTeleport"))
+		{
+			L2JMOD_WEDDING_TELEPORT = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingTeleportPrice"))
+		{
+			L2JMOD_WEDDING_TELEPORT_PRICE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingTeleportDuration"))
+		{
+			L2JMOD_WEDDING_TELEPORT_DURATION = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingAllowSameSex"))
+		{
+			L2JMOD_WEDDING_SAMESEX = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingFormalWear"))
+		{
+			L2JMOD_WEDDING_FORMALWEAR = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("WeddingDivorceCosts"))
+		{
+			L2JMOD_WEDDING_DIVORCE_COSTS = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("TvTEventEnabled"))
+		{
+			TVT_EVENT_ENABLED = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("TvTEventInterval"))
+		{
+			TVT_EVENT_INTERVAL = pValue.split(",");
+		}
+		else if (pName.equalsIgnoreCase("TvTEventParticipationTime"))
+		{
+			TVT_EVENT_PARTICIPATION_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("TvTEventRunningTime"))
+		{
+			TVT_EVENT_RUNNING_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("TvTEventParticipationNpcId"))
+		{
+			TVT_EVENT_PARTICIPATION_NPC_ID = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnableWarehouseSortingClan"))
+		{
+			L2JMOD_ENABLE_WAREHOUSESORTING_CLAN = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnableWarehouseSortingPrivate"))
+		{
+			L2JMOD_ENABLE_WAREHOUSESORTING_PRIVATE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("EnableManaPotionSupport"))
+		{
+			L2JMOD_ENABLE_MANA_POTIONS_SUPPORT = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("DisplayServerTime"))
+		{
+			L2JMOD_DISPLAY_SERVER_TIME = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AntiFeedEnable"))
+		{
+			L2JMOD_ANTIFEED_ENABLE = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AntiFeedDualbox"))
+		{
+			L2JMOD_ANTIFEED_DUALBOX = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AntiFeedDisconnectedAsDualbox"))
+		{
+			L2JMOD_ANTIFEED_DISCONNECTED_AS_DUALBOX = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AntiFeedInterval"))
+		{
+			L2JMOD_ANTIFEED_INTERVAL = 1000 * Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MinKarma"))
+		{
+			KARMA_MIN_KARMA = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MaxKarma"))
+		{
+			KARMA_MAX_KARMA = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("XPDivider"))
+		{
+			KARMA_XP_DIVIDER = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("BaseKarmaLost"))
+		{
+			KARMA_LOST_BASE = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("CanGMDropEquipment"))
+		{
+			KARMA_DROP_GM = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AwardPKKillPVPPoint"))
+		{
+			KARMA_AWARD_PK_KILL = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("MinimumPKRequiredToDrop"))
+		{
+			KARMA_PK_LIMIT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PvPVsNormalTime"))
+		{
+			PVP_NORMAL_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("PvPVsPvPTime"))
+		{
+			PVP_PVP_TIME = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("GlobalChat"))
+		{
+			DEFAULT_GLOBAL_CHAT = pValue;
+		}
+		else if (pName.equalsIgnoreCase("TradeChat"))
+		{
+			DEFAULT_TRADE_CHAT = pValue;
+		}
+		else if (pName.equalsIgnoreCase("GMAdminMenuStyle"))
+		{
+			GM_ADMIN_MENU_STYLE = pValue;
+		}
 		else
 		{
 			try
 			{
-				//TODO: stupid GB configs...
+				// TODO: stupid GB configs...
 				if (!pName.startsWith("Interval_") && !pName.startsWith("Random_"))
+				{
 					pName = pName.toUpperCase();
+				}
 				Field clazField = Config.class.getField(pName);
 				int modifiers = clazField.getModifiers();
 				// just in case :)
 				if (!Modifier.isStatic(modifiers) || !Modifier.isPublic(modifiers))
+				{
 					throw new SecurityException("Cannot modify non public or non static config!");
+				}
 				
 				if (clazField.getType() == int.class)
 				{
@@ -3245,7 +4132,9 @@ public final class Config
 					clazField.set(clazField, pValue);
 				}
 				else
+				{
 					return false;
+				}
 			}
 			catch (NoSuchFieldException e)
 			{
@@ -3260,7 +4149,9 @@ public final class Config
 		return true;
 	}
 	
-	private Config() { }
+	private Config()
+	{
+	}
 	
 	/**
 	 * Save hexadecimal ID of the server in the L2Properties file.
@@ -3285,12 +4176,12 @@ public final class Config
 		{
 			L2Properties hexSetting = new L2Properties();
 			File file = new File(fileName);
-			//Create a new empty file only if it doesn't exist
+			// Create a new empty file only if it doesn't exist
 			file.createNewFile();
 			OutputStream out = new FileOutputStream(file);
-			hexSetting.setProperty("ServerID",String.valueOf(serverId));
-			hexSetting.setProperty("HexID",hexId);
-			hexSetting.store(out,"the hexID to auth into login");
+			hexSetting.setProperty("ServerID", String.valueOf(serverId));
+			hexSetting.setProperty("HexID", hexId);
+			hexSetting.store(out, "the hexID to auth into login");
 			out.close();
 		}
 		catch (Exception e)
@@ -3325,16 +4216,10 @@ public final class Config
 	
 	/**
 	 * Loads single flood protector configuration.
-	 * 
-	 * @param properties
-	 *            L2Properties file reader
-	 * @param config
-	 *            flood protector configuration instance
-	 * @param configString
-	 *            flood protector configuration string that determines for which flood protector
-	 *            configuration should be read
-	 * @param defaultInterval
-	 *            default flood protector interval
+	 * @param properties L2Properties file reader
+	 * @param config flood protector configuration instance
+	 * @param configString flood protector configuration string that determines for which flood protector configuration should be read
+	 * @param defaultInterval default flood protector interval
 	 */
 	private static void loadFloodProtectorConfig(final L2Properties properties, final FloodProtectorConfig config, final String configString, final String defaultInterval)
 	{
@@ -3352,28 +4237,42 @@ public final class Config
 		{
 			cType = cType.trim();
 			if (cType.equalsIgnoreCase("Normal"))
+			{
 				tType |= 0x01;
+			}
 			else if (cType.equalsIgnoreCase("Relax"))
+			{
 				tType |= 0x02;
+			}
 			else if (cType.equalsIgnoreCase("Test"))
+			{
 				tType |= 0x04;
+			}
 			else if (cType.equalsIgnoreCase("NoLabel"))
+			{
 				tType |= 0x08;
+			}
 			else if (cType.equalsIgnoreCase("Restricted"))
+			{
 				tType |= 0x10;
+			}
 			else if (cType.equalsIgnoreCase("Event"))
+			{
 				tType |= 0x20;
+			}
 			else if (cType.equalsIgnoreCase("Free"))
+			{
 				tType |= 0x40;
+			}
 		}
 		return tType;
 	}
 	
 	public static class ClassMasterSettings
 	{
-		private TIntObjectHashMap<TIntIntHashMap> _claimItems;
-		private TIntObjectHashMap<TIntIntHashMap> _rewardItems;
-		private TIntObjectHashMap<Boolean> _allowedClassChange;
+		private final TIntObjectHashMap<TIntIntHashMap> _claimItems;
+		private final TIntObjectHashMap<TIntIntHashMap> _rewardItems;
+		private final TIntObjectHashMap<Boolean> _allowedClassChange;
 		
 		public ClassMasterSettings(String _configLine)
 		{
@@ -3381,7 +4280,9 @@ public final class Config
 			_rewardItems = new TIntObjectHashMap<TIntIntHashMap>(3);
 			_allowedClassChange = new TIntObjectHashMap<Boolean>(3);
 			if (_configLine != null)
+			{
 				parseConfigLine(_configLine.trim());
+			}
 		}
 		
 		private void parseConfigLine(String _configLine)
@@ -3434,9 +4335,13 @@ public final class Config
 		public boolean isAllowed(int job)
 		{
 			if (_allowedClassChange == null)
+			{
 				return false;
+			}
 			if (_allowedClassChange.containsKey(job))
+			{
 				return _allowedClassChange.get(job);
+			}
 			
 			return false;
 		}
@@ -3444,7 +4349,9 @@ public final class Config
 		public TIntIntHashMap getRewardItems(int job)
 		{
 			if (_rewardItems.containsKey(job))
+			{
 				return _rewardItems.get(job);
+			}
 			
 			return null;
 		}
@@ -3452,7 +4359,9 @@ public final class Config
 		public TIntIntHashMap getRequireItems(int job)
 		{
 			if (_claimItems.containsKey(job))
+			{
 				return _claimItems.get(job);
+			}
 			
 			return null;
 		}
@@ -3464,20 +4373,23 @@ public final class Config
 		TIntFloatHashMap ret = new TIntFloatHashMap(propertySplit.length);
 		int i = 1;
 		for (String value : propertySplit)
+		{
 			ret.put(i++, Float.parseFloat(value));
+		}
 		return ret;
 	}
-
+	
 	/**
-	 * itemId1,itemNumber1;itemId2,itemNumber2...
-	 * to the int[n][2] = [itemId1][itemNumber1],[itemId2][itemNumber2]...
+	 * itemId1,itemNumber1;itemId2,itemNumber2... to the int[n][2] = [itemId1][itemNumber1],[itemId2][itemNumber2]...
 	 */
 	private static int[][] parseItemsList(String line)
 	{
 		final String[] propertySplit = line.split(";");
 		if (propertySplit.length == 0)
+		{
 			return null;
-
+		}
+		
 		int i = 0;
 		String[] valueSplit;
 		final int[][] result = new int[propertySplit.length][];
@@ -3489,7 +4401,7 @@ public final class Config
 				_log.warning(StringUtil.concat("parseItemsList[Config.load()]: invalid entry -> \"", valueSplit[0], "\", should be itemId,itemNumber"));
 				return null;
 			}
-
+			
 			result[i] = new int[2];
 			try
 			{

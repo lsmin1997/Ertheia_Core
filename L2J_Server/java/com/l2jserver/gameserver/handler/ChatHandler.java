@@ -22,14 +22,13 @@ import com.l2jserver.Config;
 
 /**
  * This class handles all chat handlers
- *
- * @author  durgus
+ * @author durgus
  */
 public class ChatHandler
 {
 	private static Logger _log = Logger.getLogger(ChatHandler.class.getName());
 	
-	private TIntObjectHashMap<IChatHandler> _datatable;
+	private final TIntObjectHashMap<IChatHandler> _datatable;
 	
 	public static ChatHandler getInstance()
 	{
@@ -51,11 +50,13 @@ public class ChatHandler
 	public void registerChatHandler(IChatHandler handler)
 	{
 		int[] ids = handler.getChatTypeList();
-		for (int i = 0; i < ids.length; i++)
+		for (int id : ids)
 		{
 			if (Config.DEBUG)
-				_log.fine("Adding handler for chat type " + ids[i]);
-			_datatable.put(ids[i], handler);
+			{
+				_log.fine("Adding handler for chat type " + id);
+			}
+			_datatable.put(id, handler);
 		}
 	}
 	

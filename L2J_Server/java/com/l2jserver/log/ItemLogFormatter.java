@@ -22,27 +22,26 @@ import java.util.logging.LogRecord;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.util.StringUtil;
 
-
 /**
  * @author Advi
- * 
  */
 public class ItemLogFormatter extends Formatter
 {
 	private static final String CRLF = "\r\n";
-	private SimpleDateFormat dateFmt = new SimpleDateFormat("dd MMM H:mm:ss");
+	private final SimpleDateFormat dateFmt = new SimpleDateFormat("dd MMM H:mm:ss");
 	
 	@Override
 	public String format(LogRecord record)
 	{
 		final Object[] params = record.getParameters();
-		final StringBuilder output = StringUtil.startAppend(30 + record.getMessage().length()
-				+ params.length * 50, "[", dateFmt.format(new Date(record.getMillis())), "] ", record.getMessage());
+		final StringBuilder output = StringUtil.startAppend(30 + record.getMessage().length() + (params.length * 50), "[", dateFmt.format(new Date(record.getMillis())), "] ", record.getMessage());
 		
 		for (Object p : record.getParameters())
 		{
 			if (p == null)
+			{
 				continue;
+			}
 			output.append(", ");
 			if (p instanceof L2ItemInstance)
 			{
@@ -58,7 +57,9 @@ public class ItemLogFormatter extends Formatter
 			// else if (p instanceof L2PcInstance)
 			// output.append(((L2PcInstance)p).getName());
 			else
+			{
 				output.append(p.toString()/* + ":" + ((L2Object)p).getObjectId() */);
+			}
 		}
 		output.append(CRLF);
 		

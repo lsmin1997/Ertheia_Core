@@ -22,8 +22,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * An arena
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2ArenaZone extends L2SpawnZone
 {
@@ -42,7 +41,9 @@ public class L2ArenaZone extends L2SpawnZone
 		if (character instanceof L2PcInstance)
 		{
 			if (!character.isInsideZone(L2Character.ZONE_PVP))
+			{
 				((L2PcInstance) character).sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ENTERED_COMBAT_ZONE));
+			}
 		}
 	}
 	
@@ -55,7 +56,9 @@ public class L2ArenaZone extends L2SpawnZone
 		if (character instanceof L2PcInstance)
 		{
 			if (!character.isInsideZone(L2Character.ZONE_PVP))
+			{
 				((L2PcInstance) character).sendPacket(SystemMessage.getSystemMessage(SystemMessageId.LEFT_COMBAT_ZONE));
+			}
 		}
 	}
 	

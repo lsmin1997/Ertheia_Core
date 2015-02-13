@@ -18,13 +18,12 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.5 $ $Date: 2005/03/27 15:29:39 $
  */
 public final class PartySmallWindowUpdate extends L2GameServerPacket
 {
 	private static final String _S__67_PARTYSMALLWINDOWUPDATE = "[S] 52 PartySmallWindowUpdate";
-	private L2PcInstance _member;
+	private final L2PcInstance _member;
 	
 	public PartySmallWindowUpdate(L2PcInstance member)
 	{
@@ -38,8 +37,8 @@ public final class PartySmallWindowUpdate extends L2GameServerPacket
 		writeD(_member.getObjectId());
 		writeS(_member.getName());
 		
-		writeD((int) _member.getCurrentCp()); //c4
-		writeD(_member.getMaxCp()); //c4
+		writeD((int) _member.getCurrentCp()); // c4
+		writeD(_member.getMaxCp()); // c4
 		
 		writeD((int) _member.getCurrentHp());
 		writeD(_member.getMaxVisibleHp());
@@ -50,7 +49,8 @@ public final class PartySmallWindowUpdate extends L2GameServerPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

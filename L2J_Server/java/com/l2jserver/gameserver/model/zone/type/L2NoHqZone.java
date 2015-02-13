@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * Zone where 'Build Headquarters' is not allowed.
- * 
  * @author Gnat
  */
 public class L2NoHqZone extends L2ZoneType
@@ -34,14 +33,18 @@ public class L2NoHqZone extends L2ZoneType
 	protected void onEnter(final L2Character character)
 	{
 		if (character instanceof L2PcInstance)
+		{
 			character.setInsideZone(L2Character.ZONE_NOHQ, true);
+		}
 	}
 	
 	@Override
 	protected void onExit(final L2Character character)
 	{
 		if (character instanceof L2PcInstance)
+		{
 			character.setInsideZone(L2Character.ZONE_NOHQ, false);
+		}
 	}
 	
 	@Override

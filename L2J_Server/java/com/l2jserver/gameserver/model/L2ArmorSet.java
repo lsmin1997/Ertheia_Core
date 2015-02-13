@@ -17,7 +17,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 
 /**
- * 
  * @author Luno
  */
 public final class L2ArmorSet
@@ -62,9 +61,7 @@ public final class L2ArmorSet
 	
 	/**
 	 * Checks if player have equiped all items from set (not checking shield)
-	 * 
-	 * @param player
-	 *            whose inventory is being checked
+	 * @param player whose inventory is being checked
 	 * @return True if player equips whole set
 	 */
 	public boolean containAll(L2PcInstance player)
@@ -82,29 +79,47 @@ public final class L2ArmorSet
 		int feet = 0;
 		
 		if (legsItem != null)
+		{
 			legs = legsItem.getItemId();
+		}
 		if (headItem != null)
+		{
 			head = headItem.getItemId();
+		}
 		if (glovesItem != null)
+		{
 			gloves = glovesItem.getItemId();
+		}
 		if (feetItem != null)
+		{
 			feet = feetItem.getItemId();
+		}
 		
 		return containAll(_chest, legs, head, gloves, feet);
 	}
 	
 	public boolean containAll(int chest, int legs, int head, int gloves, int feet)
 	{
-		if (_chest != 0 && _chest != chest)
+		if ((_chest != 0) && (_chest != chest))
+		{
 			return false;
-		if (_legs != 0 && _legs != legs && (_mw_legs == 0 || _mw_legs != legs))
+		}
+		if ((_legs != 0) && (_legs != legs) && ((_mw_legs == 0) || (_mw_legs != legs)))
+		{
 			return false;
-		if (_head != 0 && _head != head && (_mw_head == 0 || _mw_head != head))
+		}
+		if ((_head != 0) && (_head != head) && ((_mw_head == 0) || (_mw_head != head)))
+		{
 			return false;
-		if (_gloves != 0 && _gloves != gloves && (_mw_gloves == 0 || _mw_gloves != gloves))
+		}
+		if ((_gloves != 0) && (_gloves != gloves) && ((_mw_gloves == 0) || (_mw_gloves != gloves)))
+		{
 			return false;
-		if (_feet != 0 && _feet != feet && (_mw_feet == 0 || _mw_feet != feet))
+		}
+		if ((_feet != 0) && (_feet != feet) && ((_mw_feet == 0) || (_mw_feet != feet)))
+		{
 			return false;
+		}
 		
 		return true;
 	}
@@ -116,13 +131,13 @@ public final class L2ArmorSet
 			case Inventory.PAPERDOLL_CHEST:
 				return _chest == itemId;
 			case Inventory.PAPERDOLL_LEGS:
-				return (_legs == itemId || _mw_legs == itemId);
+				return ((_legs == itemId) || (_mw_legs == itemId));
 			case Inventory.PAPERDOLL_HEAD:
-				return (_head == itemId || _mw_head == itemId);
+				return ((_head == itemId) || (_mw_head == itemId));
 			case Inventory.PAPERDOLL_GLOVES:
-				return (_gloves == itemId || _mw_gloves == itemId);
+				return ((_gloves == itemId) || (_mw_gloves == itemId));
 			case Inventory.PAPERDOLL_FEET:
-				return (_feet == itemId || _mw_feet == itemId);
+				return ((_feet == itemId) || (_mw_feet == itemId));
 			default:
 				return false;
 		}
@@ -138,8 +153,10 @@ public final class L2ArmorSet
 		Inventory inv = player.getInventory();
 		
 		L2ItemInstance shieldItem = inv.getPaperdollItem(Inventory.PAPERDOLL_LHAND);
-		if (shieldItem != null && (shieldItem.getItemId() == _shield || shieldItem.getItemId() == _mw_shield))
+		if ((shieldItem != null) && ((shieldItem.getItemId() == _shield) || (shieldItem.getItemId() == _mw_shield)))
+		{
 			return true;
+		}
 		
 		return false;
 	}
@@ -147,9 +164,11 @@ public final class L2ArmorSet
 	public boolean containShield(int shield_id)
 	{
 		if (_shield == 0)
+		{
 			return false;
+		}
 		
-		return (_shield == shield_id || _mw_shield == shield_id);
+		return ((_shield == shield_id) || (_mw_shield == shield_id));
 	}
 	
 	public int getShieldSkillId()
@@ -164,7 +183,6 @@ public final class L2ArmorSet
 	
 	/**
 	 * Checks if all parts of set are enchanted to +6 or more
-	 * 
 	 * @param player
 	 * @return
 	 */
@@ -172,7 +190,9 @@ public final class L2ArmorSet
 	{
 		// Player don't have full set
 		if (!containAll(player))
+		{
 			return false;
+		}
 		
 		Inventory inv = player.getInventory();
 		
@@ -182,16 +202,26 @@ public final class L2ArmorSet
 		L2ItemInstance glovesItem = inv.getPaperdollItem(Inventory.PAPERDOLL_GLOVES);
 		L2ItemInstance feetItem = inv.getPaperdollItem(Inventory.PAPERDOLL_FEET);
 		
-		if (chestItem == null || chestItem.getEnchantLevel() < 6)
+		if ((chestItem == null) || (chestItem.getEnchantLevel() < 6))
+		{
 			return false;
-		if (_legs != 0 && (legsItem == null || legsItem.getEnchantLevel() < 6))
+		}
+		if ((_legs != 0) && ((legsItem == null) || (legsItem.getEnchantLevel() < 6)))
+		{
 			return false;
-		if (_gloves != 0 && (glovesItem == null || glovesItem.getEnchantLevel() < 6))
+		}
+		if ((_gloves != 0) && ((glovesItem == null) || (glovesItem.getEnchantLevel() < 6)))
+		{
 			return false;
-		if (_head != 0 && (headItem == null || headItem.getEnchantLevel() < 6))
+		}
+		if ((_head != 0) && ((headItem == null) || (headItem.getEnchantLevel() < 6)))
+		{
 			return false;
-		if (_feet != 0 && (feetItem == null || feetItem.getEnchantLevel() < 6))
+		}
+		if ((_feet != 0) && ((feetItem == null) || (feetItem.getEnchantLevel() < 6)))
+		{
 			return false;
+		}
 		
 		return true;
 	}

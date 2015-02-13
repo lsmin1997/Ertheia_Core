@@ -26,7 +26,6 @@ public class ConditionPlayerCloakStatus extends Condition
 	
 	/**
 	 * Instantiates a new condition player cloak status.
-	 *
 	 * @param val the val
 	 */
 	public ConditionPlayerCloakStatus(int val)
@@ -34,15 +33,18 @@ public class ConditionPlayerCloakStatus extends Condition
 		_val = val;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
-		return ((L2PcInstance)env.player).getInventory().getCloakStatus() >= _val;
+		return ((L2PcInstance) env.player).getInventory().getCloakStatus() >= _val;
 	}
 }

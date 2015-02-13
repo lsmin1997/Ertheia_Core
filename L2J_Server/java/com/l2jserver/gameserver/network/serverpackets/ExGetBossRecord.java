@@ -18,14 +18,14 @@ import java.util.Map;
 
 /**
  * Format: ch ddd [ddd]
- * @author  KenM
+ * @author KenM
  */
 public class ExGetBossRecord extends L2GameServerPacket
 {
 	private static final String _S__FE_33_EXGETBOSSRECORD = "[S] FE:34 ExGetBossRecord";
-	private Map<Integer, Integer> _bossRecordInfo;
-	private int _ranking;
-	private int _totalPoints;
+	private final Map<Integer, Integer> _bossRecordInfo;
+	private final int _ranking;
+	private final int _totalPoints;
 	
 	public ExGetBossRecord(int ranking, int totalScore, Map<Integer, Integer> list)
 	{
@@ -53,12 +53,12 @@ public class ExGetBossRecord extends L2GameServerPacket
 		}
 		else
 		{
-			writeD(_bossRecordInfo.size()); //list size
+			writeD(_bossRecordInfo.size()); // list size
 			for (int bossId : _bossRecordInfo.keySet())
 			{
 				writeD(bossId);
 				writeD(_bossRecordInfo.get(bossId));
-				writeD(0x00); //??
+				writeD(0x00); // ??
 			}
 		}
 	}

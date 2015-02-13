@@ -33,14 +33,18 @@ public class FuncEnchant extends Func
 	@Override
 	public void calc(Env env)
 	{
-		if (cond != null && !cond.test(env))
+		if ((cond != null) && !cond.test(env))
+		{
 			return;
+		}
 		L2ItemInstance item = (L2ItemInstance) funcOwner;
 		
 		int enchant = item.getEnchantLevel();
 		
 		if (enchant <= 0)
+		{
 			return;
+		}
 		
 		int overenchant = 0;
 		
@@ -50,11 +54,10 @@ public class FuncEnchant extends Func
 			enchant = 3;
 		}
 		
-		if (env.player != null && env.player instanceof L2PcInstance)
+		if ((env.player != null) && (env.player instanceof L2PcInstance))
 		{
-			L2PcInstance player = (L2PcInstance)env.player;
-			if (player.isInOlympiadMode() && Config.ALT_OLY_ENCHANT_LIMIT >= 0 &&
-					(enchant + overenchant) > Config.ALT_OLY_ENCHANT_LIMIT)
+			L2PcInstance player = (L2PcInstance) env.player;
+			if (player.isInOlympiadMode() && (Config.ALT_OLY_ENCHANT_LIMIT >= 0) && ((enchant + overenchant) > Config.ALT_OLY_ENCHANT_LIMIT))
 			{
 				if (Config.ALT_OLY_ENCHANT_LIMIT > 3)
 				{
@@ -68,9 +71,9 @@ public class FuncEnchant extends Func
 			}
 		}
 		
-		if (stat == Stats.MAGIC_DEFENCE || stat == Stats.POWER_DEFENCE)
+		if ((stat == Stats.MAGIC_DEFENCE) || (stat == Stats.POWER_DEFENCE))
 		{
-			env.value += enchant + 3 * overenchant;
+			env.value += enchant + (3 * overenchant);
 			return;
 		}
 		
@@ -79,24 +82,23 @@ public class FuncEnchant extends Func
 			switch (item.getItem().getItemGradeSPlus())
 			{
 				case L2Item.CRYSTAL_S:
-					env.value += 4 * enchant + 8 * overenchant;
+					env.value += (4 * enchant) + (8 * overenchant);
 					break;
 				case L2Item.CRYSTAL_A:
-					env.value += 3 * enchant + 6 * overenchant;
+					env.value += (3 * enchant) + (6 * overenchant);
 					break;
 				case L2Item.CRYSTAL_B:
-					env.value += 3 * enchant + 6 * overenchant;
+					env.value += (3 * enchant) + (6 * overenchant);
 					break;
 				case L2Item.CRYSTAL_C:
-					env.value += 3 * enchant + 6 * overenchant;
+					env.value += (3 * enchant) + (6 * overenchant);
 					break;
 				case L2Item.CRYSTAL_D:
-					env.value += 2 * enchant + 4 * overenchant;
+					env.value += (2 * enchant) + (4 * overenchant);
 					break;
 			}
 			return;
 		}
-		
 		
 		if (item.isWeapon())
 		{
@@ -105,65 +107,65 @@ public class FuncEnchant extends Func
 			switch (item.getItem().getItemGradeSPlus())
 			{
 				case L2Item.CRYSTAL_S:
-					switch(type)
+					switch (type)
 					{
 						case BOW:
 						case CROSSBOW:
-							env.value += 10 * enchant + 20 * overenchant;
+							env.value += (10 * enchant) + (20 * overenchant);
 							break;
 						default:
-							env.value += 5 * enchant + 10 * overenchant;
+							env.value += (5 * enchant) + (10 * overenchant);
 							break;
 					}
 					break;
 				case L2Item.CRYSTAL_A:
-					switch(type)
+					switch (type)
 					{
 						case BOW:
 						case CROSSBOW:
-							env.value += 8 * enchant + 16 * overenchant;
+							env.value += (8 * enchant) + (16 * overenchant);
 							break;
 						default:
-							env.value += 4 * enchant + 8 * overenchant;
+							env.value += (4 * enchant) + (8 * overenchant);
 							break;
 					}
 					break;
 				case L2Item.CRYSTAL_B:
-					switch(type)
+					switch (type)
 					{
 						case BOW:
 						case CROSSBOW:
-							env.value += 6 * enchant + 12 * overenchant;
+							env.value += (6 * enchant) + (12 * overenchant);
 							break;
 						default:
-							env.value += 3 * enchant + 6 * overenchant;
+							env.value += (3 * enchant) + (6 * overenchant);
 							break;
 					}
 					break;
 				case L2Item.CRYSTAL_C:
-					switch(type)
+					switch (type)
 					{
 						case BOW:
 						case CROSSBOW:
-							env.value += 6 * enchant + 12 * overenchant;
+							env.value += (6 * enchant) + (12 * overenchant);
 							break;
 						default:
-							env.value += 3 * enchant + 6 * overenchant;
+							env.value += (3 * enchant) + (6 * overenchant);
 							break;
 					}
 					break;
 				case L2Item.CRYSTAL_D:
 				case L2Item.CRYSTAL_NONE:
-					switch(type)
+					switch (type)
 					{
 						case BOW:
 						case CROSSBOW:
 						{
-							env.value += 4 * enchant + 8 * overenchant;
+							env.value += (4 * enchant) + (8 * overenchant);
 							break;
 						}
 						default:
-							env.value += 2 * enchant + 4 * overenchant;
+							env.value += (2 * enchant) + (4 * overenchant);
 							break;
 					}
 					break;

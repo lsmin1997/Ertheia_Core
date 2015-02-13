@@ -30,10 +30,8 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.16.2.12.2.7 $ $Date: 2005/04/11 10:06:11 $
  */
 public final class Say2 extends L2GameClientPacket
@@ -43,22 +41,22 @@ public final class Say2 extends L2GameClientPacket
 	private static Logger _logChat = Logger.getLogger("chat");
 	
 	public final static int ALL = 0;
-	public final static int SHOUT = 1; //!
+	public final static int SHOUT = 1; // !
 	public final static int TELL = 2;
-	public final static int PARTY = 3; //#
-	public final static int CLAN = 4;  //@
+	public final static int PARTY = 3; // #
+	public final static int CLAN = 4; // @
 	public final static int GM = 5;
 	public final static int PETITION_PLAYER = 6; // used for petition
-	public final static int PETITION_GM = 7; //* used for petition
-	public final static int TRADE = 8; //+
-	public final static int ALLIANCE = 9; //$
+	public final static int PETITION_GM = 7; // * used for petition
+	public final static int TRADE = 8; // +
+	public final static int ALLIANCE = 9; // $
 	public final static int ANNOUNCEMENT = 10;
 	public final static int BOAT = 11;
 	public final static int L2FRIEND = 12;
 	public final static int MSNCHAT = 13;
 	public final static int PARTYMATCH_ROOM = 14;
-	public final static int PARTYROOM_COMMANDER = 15; //(Yellow)
-	public final static int PARTYROOM_ALL = 16; //(Red)
+	public final static int PARTYROOM_COMMANDER = 15; // (Yellow)
+	public final static int PARTYROOM_ALL = 16; // (Red)
 	public final static int HERO_VOICE = 17;
 	public final static int CRITICAL_ANNOUNCE = 18;
 	public final static int SCREEN_ANNOUNCE = 19;
@@ -77,7 +75,7 @@ public final class Say2 extends L2GameClientPacket
 		"PETITION_GM",
 		"TRADE",
 		"ALLIANCE",
-		"ANNOUNCEMENT", //10
+		"ANNOUNCEMENT", // 10
 		"BOAT",
 		"L2FRIEND",
 		"MSNCHAT",
@@ -91,9 +89,44 @@ public final class Say2 extends L2GameClientPacket
 		"MPCC_ROOM"
 	};
 	
-	private static final String[] WALKER_COMMAND_LIST = { "USESKILL", "USEITEM", "BUYITEM", "SELLITEM", "SAVEITEM", "LOADITEM", "MSG", "DELAY", "LABEL", "JMP", "CALL",
-		"RETURN", "MOVETO", "NPCSEL", "NPCDLG", "DLGSEL", "CHARSTATUS", "POSOUTRANGE", "POSINRANGE", "GOHOME", "SAY", "EXIT", "PAUSE", "STRINDLG", "STRNOTINDLG", "CHANGEWAITTYPE",
-		"FORCEATTACK", "ISMEMBER", "REQUESTJOINPARTY", "REQUESTOUTPARTY", "QUITPARTY", "MEMBERSTATUS", "CHARBUFFS", "ITEMCOUNT", "FOLLOWTELEPORT" };
+	private static final String[] WALKER_COMMAND_LIST =
+	{
+		"USESKILL",
+		"USEITEM",
+		"BUYITEM",
+		"SELLITEM",
+		"SAVEITEM",
+		"LOADITEM",
+		"MSG",
+		"DELAY",
+		"LABEL",
+		"JMP",
+		"CALL",
+		"RETURN",
+		"MOVETO",
+		"NPCSEL",
+		"NPCDLG",
+		"DLGSEL",
+		"CHARSTATUS",
+		"POSOUTRANGE",
+		"POSINRANGE",
+		"GOHOME",
+		"SAY",
+		"EXIT",
+		"PAUSE",
+		"STRINDLG",
+		"STRNOTINDLG",
+		"CHANGEWAITTYPE",
+		"FORCEATTACK",
+		"ISMEMBER",
+		"REQUESTJOINPARTY",
+		"REQUESTOUTPARTY",
+		"QUITPARTY",
+		"MEMBERSTATUS",
+		"CHARBUFFS",
+		"ITEMCOUNT",
+		"FOLLOWTELEPORT"
+	};
 	
 	private String _text;
 	private int _type;
@@ -111,15 +144,19 @@ public final class Say2 extends L2GameClientPacket
 	protected void runImpl()
 	{
 		if (Config.DEBUG)
+		{
 			_log.info("Say2: Msg Type = '" + _type + "' Text = '" + _text + "'.");
+		}
 		
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
-			return;
-		
-		if (_type < 0 || _type >= CHAT_NAMES.length)
 		{
-			_log.warning("Say2: Invalid type: " +_type + " Player : " + activeChar.getName() + " text: " + String.valueOf(_text));
+			return;
+		}
+		
+		if ((_type < 0) || (_type >= CHAT_NAMES.length))
+		{
+			_log.warning("Say2: Invalid type: " + _type + " Player : " + activeChar.getName() + " text: " + String.valueOf(_text));
 			activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 			activeChar.logout();
 			return;
@@ -136,19 +173,19 @@ public final class Say2 extends L2GameClientPacket
 		// Even though the client can handle more characters than it's current limit allows, an overflow (critical error) happens if you pass a huge (1000+) message.
 		// April 27, 2009 - Verified on Gracia P2 & Final official client as 105
 		// Allow higher limit if player shift some item (text is longer then)
-		if (!activeChar.isGM() && ((_text.indexOf(8) >= 0 && _text.length() > 500) || (_text.indexOf(8) < 0 && _text.length() > 105)))
+		if (!activeChar.isGM() && (((_text.indexOf(8) >= 0) && (_text.length() > 500)) || ((_text.indexOf(8) < 0) && (_text.length() > 105))))
 		{
 			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.DONT_SPAM));
 			return;
 		}
 		
-		if (Config.L2WALKER_PROTECTION && _type == TELL && checkBot(_text))
+		if (Config.L2WALKER_PROTECTION && (_type == TELL) && checkBot(_text))
 		{
 			Util.handleIllegalPlayerAction(activeChar, "Client Emulator Detect: Player " + activeChar.getName() + " using l2walker.", Config.DEFAULT_PUNISH);
 			return;
 		}
 		
-		if (activeChar.isCursedWeaponEquipped() && (_type == TRADE || _type == SHOUT))
+		if (activeChar.isCursedWeaponEquipped() && ((_type == TRADE) || (_type == SHOUT)))
 		{
 			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.SHOUT_AND_TRADE_CHAT_CANNOT_BE_USED_WHILE_POSSESSING_CURSED_WEAPON));
 			return;
@@ -156,7 +193,7 @@ public final class Say2 extends L2GameClientPacket
 		
 		if (activeChar.isChatBanned())
 		{
-			if (_type == ALL || _type == SHOUT || _type == TRADE || _type == HERO_VOICE)
+			if ((_type == ALL) || (_type == SHOUT) || (_type == TRADE) || (_type == HERO_VOICE))
 			{
 				activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CHATTING_IS_CURRENTLY_PROHIBITED));
 				return;
@@ -165,15 +202,17 @@ public final class Say2 extends L2GameClientPacket
 		
 		if (activeChar.isInJail() && Config.JAIL_DISABLE_CHAT)
 		{
-			if (_type == TELL || _type == SHOUT || _type == TRADE || _type == HERO_VOICE)
+			if ((_type == TELL) || (_type == SHOUT) || (_type == TRADE) || (_type == HERO_VOICE))
 			{
 				activeChar.sendMessage("You can not chat with players outside of the jail.");
 				return;
 			}
 		}
 		
-		if (_type == PETITION_PLAYER && activeChar.isGM())
+		if ((_type == PETITION_PLAYER) && activeChar.isGM())
+		{
 			_type = PETITION_GM;
+		}
 		
 		if (Config.LOG_CHAT)
 		{
@@ -181,27 +220,48 @@ public final class Say2 extends L2GameClientPacket
 			record.setLoggerName("chat");
 			
 			if (_type == TELL)
-				record.setParameters(new Object[]{CHAT_NAMES[_type], "[" + activeChar.getName() + " to "+_target+"]"});
+			{
+				record.setParameters(new Object[]
+				{
+					CHAT_NAMES[_type],
+					"[" + activeChar.getName() + " to " + _target + "]"
+				});
+			}
 			else
-				record.setParameters(new Object[]{CHAT_NAMES[_type], "[" + activeChar.getName() + "]"});
+			{
+				record.setParameters(new Object[]
+				{
+					CHAT_NAMES[_type],
+					"[" + activeChar.getName() + "]"
+				});
+			}
 			
 			_logChat.log(record);
 		}
 		
-		
 		if (_text.indexOf(8) >= 0)
+		{
 			if (!parseAndPublishItem(activeChar))
+			{
 				return;
+			}
+		}
 		
 		// Say Filter implementation
 		if (Config.USE_SAY_FILTER)
+		{
 			checkText();
+		}
 		
 		IChatHandler handler = ChatHandler.getInstance().getChatHandler(_type);
 		if (handler != null)
+		{
 			handler.handleChat(_type, activeChar, _target, _text);
+		}
 		else
-			_log.info("No handler registered for ChatType: "+_type+ " Player: "+getClient());
+		{
+			_log.info("No handler registered for ChatType: " + _type + " Player: " + getClient());
+		}
 	}
 	
 	private boolean checkBot(String text)
@@ -209,7 +269,9 @@ public final class Say2 extends L2GameClientPacket
 		for (String botCommand : WALKER_COMMAND_LIST)
 		{
 			if (text.startsWith(botCommand))
+			{
 				return true;
+			}
 		}
 		return false;
 	}
@@ -218,7 +280,9 @@ public final class Say2 extends L2GameClientPacket
 	{
 		String filteredText = _text;
 		for (String pattern : Config.FILTER_LIST)
+		{
 			filteredText = filteredText.replaceAll("(?i)" + pattern, Config.CHAT_FILTER_CHARS);
+		}
 		_text = filteredText;
 	}
 	
@@ -229,11 +293,15 @@ public final class Say2 extends L2GameClientPacket
 		{
 			int pos = _text.indexOf("ID=", pos1);
 			if (pos == -1)
+			{
 				return false;
+			}
 			StringBuilder result = new StringBuilder(9);
 			pos += 3;
 			while (Character.isDigit(_text.charAt(pos)))
+			{
 				result.append(_text.charAt(pos++));
+			}
 			int id = Integer.parseInt(result.toString());
 			L2Object item = L2World.getInstance().findObject(id);
 			if (item instanceof L2ItemInstance)
@@ -260,7 +328,8 @@ public final class Say2 extends L2GameClientPacket
 		return true;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

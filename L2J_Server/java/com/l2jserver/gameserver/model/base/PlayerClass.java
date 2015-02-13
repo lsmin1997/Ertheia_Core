@@ -45,10 +45,8 @@ import java.util.Set;
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 public enum PlayerClass
@@ -283,7 +281,9 @@ public enum PlayerClass
 				Set<PlayerClass> unavailableClasses = subclassSetMap.get(this);
 				
 				if (unavailableClasses != null)
+				{
 					subclasses.removeAll(unavailableClasses);
+				}
 				
 			}
 			else
@@ -296,12 +296,18 @@ public enum PlayerClass
 				if (Config.MAX_SUBCLASS <= 3)
 				{
 					if (player.getAppearance().getSex())
+					{
 						subclasses.removeAll(EnumSet.of(femaleSoulbreaker));
+					}
 					else
+					{
 						subclasses.removeAll(EnumSet.of(maleSoulbreaker));
+					}
 				}
-				if (!player.getSubClasses().containsKey(2) || player.getSubClasses().get(2).getLevel() < 75)
+				if (!player.getSubClasses().containsKey(2) || (player.getSubClasses().get(2).getLevel() < 75))
+				{
 					subclasses.removeAll(EnumSet.of(inspector));
+				}
 			}
 		}
 		return subclasses;
@@ -313,9 +319,9 @@ public enum PlayerClass
 		
 		for (PlayerClass playerClass : EnumSet.allOf(PlayerClass.class))
 		{
-			if (race == null || playerClass.isOfRace(race))
+			if ((race == null) || playerClass.isOfRace(race))
 			{
-				if (level == null || playerClass.isOfLevel(level))
+				if ((level == null) || playerClass.isOfLevel(level))
 				{
 					allOf.add(playerClass);
 				}

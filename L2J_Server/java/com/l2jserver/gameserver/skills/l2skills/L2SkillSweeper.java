@@ -21,12 +21,11 @@ import com.l2jserver.gameserver.templates.StatsSet;
 
 /**
  * @author JIV
- *
  */
 public class L2SkillSweeper extends L2Skill
 {
-	private boolean _absorbHp;
-	private int   _absorbAbs;
+	private final boolean _absorbHp;
+	private final int _absorbAbs;
 	
 	/**
 	 * @param set
@@ -34,8 +33,8 @@ public class L2SkillSweeper extends L2Skill
 	public L2SkillSweeper(StatsSet set)
 	{
 		super(set);
-		_absorbHp = set.getBool ("absorbHp", true);
-		_absorbAbs  = set.getInteger("absorbAbs", -1);
+		_absorbHp = set.getBool("absorbHp", true);
+		_absorbAbs = set.getInteger("absorbAbs", -1);
 	}
 	
 	@Override

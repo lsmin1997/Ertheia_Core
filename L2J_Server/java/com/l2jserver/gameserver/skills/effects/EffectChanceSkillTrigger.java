@@ -51,7 +51,7 @@ public class EffectChanceSkillTrigger extends L2Effect implements IChanceSkillTr
 	{
 		return true;
 	}
-
+	
 	@Override
 	public L2EffectType getEffectType()
 	{
@@ -77,8 +77,10 @@ public class EffectChanceSkillTrigger extends L2Effect implements IChanceSkillTr
 	public void onExit()
 	{
 		// trigger only if effect in use and successfully ticked to the end
-		if (getInUse() && getCount() == 0)
+		if (getInUse() && (getCount() == 0))
+		{
 			getEffected().onExitChanceEffect(getSkill().getElement());
+		}
 		getEffected().removeChanceEffect(this);
 		super.onExit();
 	}

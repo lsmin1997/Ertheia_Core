@@ -16,17 +16,16 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (ch)ddddd
- *
  */
 public class ExPutIntensiveResultForVariationMake extends L2GameServerPacket
 {
 	private static final String _S__FE_53_EXCONFIRMVARIATIONREFINER = "[S] FE:54 ExPutIntensiveResultForVariationMake";
 	
-	private int _refinerItemObjId;
-	private int _lifestoneItemId;
-	private int _gemstoneItemId;
-	private int _gemstoneCount;
-	private int _unk2;
+	private final int _refinerItemObjId;
+	private final int _lifestoneItemId;
+	private final int _gemstoneItemId;
+	private final int _gemstoneCount;
+	private final int _unk2;
 	
 	public ExPutIntensiveResultForVariationMake(int refinerItemObjId, int lifeStoneId, int gemstoneItemId, int gemstoneCount)
 	{

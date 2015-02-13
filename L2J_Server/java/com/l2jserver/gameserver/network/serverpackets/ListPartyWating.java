@@ -22,14 +22,13 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author Gnacik
- * 
  */
 public class ListPartyWating extends L2GameServerPacket
 {
-	private L2PcInstance _cha;
-	private int _loc;
-	private int _lim;
-	private FastList<PartyMatchRoom> _rooms;
+	private final L2PcInstance _cha;
+	private final int _loc;
+	private final int _lim;
+	private final FastList<PartyMatchRoom> _rooms;
 	
 	public ListPartyWating(L2PcInstance player, int auto, int location, int limit)
 	{
@@ -42,17 +41,21 @@ public class ListPartyWating extends L2GameServerPacket
 	@Override
 	protected final void writeImpl()
 	{
-		for(PartyMatchRoom room : PartyMatchRoomList.getInstance().getRooms())
+		for (PartyMatchRoom room : PartyMatchRoomList.getInstance().getRooms())
 		{
-			if (room.getMembers() < 1 || room.getOwner() == null || !room.getOwner().isOnline() || room.getOwner().getPartyRoom() != room.getId())
+			if ((room.getMembers() < 1) || (room.getOwner() == null) || !room.getOwner().isOnline() || (room.getOwner().getPartyRoom() != room.getId()))
 			{
 				PartyMatchRoomList.getInstance().deleteRoom(room.getId());
 				continue;
 			}
-			if (_loc > 0 && _loc != room.getLocation())
+			if ((_loc > 0) && (_loc != room.getLocation()))
+			{
 				continue;
-			if (_lim == 0 && ((_cha.getLevel() < room.getMinLvl()) || (_cha.getLevel() > room.getMaxLvl())))
+			}
+			if ((_lim == 0) && ((_cha.getLevel() < room.getMinLvl()) || (_cha.getLevel() > room.getMaxLvl())))
+			{
 				continue;
+			}
 			_rooms.add(room);
 		}
 		int count = 0;
@@ -60,12 +63,16 @@ public class ListPartyWating extends L2GameServerPacket
 		
 		writeC(0x9c);
 		if (size > 0)
+		{
 			writeD(1);
+		}
 		else
+		{
 			writeD(0);
+		}
 		
 		writeD(_rooms.size());
-		while(size > count)
+		while (size > count)
 		{
 			writeD(_rooms.get(count).getId());
 			writeS(_rooms.get(count).getTitle());

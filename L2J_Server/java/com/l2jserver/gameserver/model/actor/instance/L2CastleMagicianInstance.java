@@ -43,7 +43,7 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 	protected static final int COND_ALL_FALSE = 0;
 	protected static final int COND_BUSY_BECAUSE_OF_SIEGE = 1;
 	protected static final int COND_OWNER = 2;
-
+	
 	/**
 	 * @param objectId
 	 * @param template
@@ -122,7 +122,7 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 				{
 					item = 9932;
 				}
-				else if( i1 <= 75 )
+				else if (i1 <= 75)
 				{
 					item = 10416;
 				}
@@ -134,19 +134,19 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 			else if (i0 <= 15)
 			{
 				i1 = Rnd.get(100);
-				if( i1 <= 20 )
+				if (i1 <= 20)
 				{
 					item = 9917;
 				}
-				else if( i1 <= 40 )
+				else if (i1 <= 40)
 				{
 					item = 9918;
 				}
-				else if( i1 <= 60 )
+				else if (i1 <= 60)
 				{
 					item = 9928;
 				}
-				else if( i1 <= 80 )
+				else if (i1 <= 80)
 				{
 					item = 9929;
 				}
@@ -155,34 +155,34 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 					item = 9920;
 				}
 			}
-			else if( i0 <= 30 )
+			else if (i0 <= 30)
 			{
 				i1 = Rnd.get(100);
-				if( i1 <= 12 )
+				if (i1 <= 12)
 				{
 					item = 9916;
 				}
-				else if( i1 <= 25 )
+				else if (i1 <= 25)
 				{
 					item = 9916;
 				}
-				else if( i1 <= 37 )
+				else if (i1 <= 37)
 				{
 					item = 9924;
 				}
-				else if( i1 <= 50 )
+				else if (i1 <= 50)
 				{
 					item = 9925;
 				}
-				else if( i1 <= 62 )
+				else if (i1 <= 62)
 				{
 					item = 9926;
 				}
-				else if( i1 <= 75 )
+				else if (i1 <= 75)
 				{
 					item = 9927;
 				}
-				else if( i1 <= 87 )
+				else if (i1 <= 87)
 				{
 					item = 10518;
 				}
@@ -194,179 +194,179 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 			else
 			{
 				i1 = Rnd.get(46);
-				if( i1 == 0 )
+				if (i1 == 0)
 				{
 					item = 9914;
 				}
-				else if( i1 == 1 )
+				else if (i1 == 1)
 				{
 					item = 9915;
 				}
-				else if( i1 == 2 )
+				else if (i1 == 2)
 				{
 					item = 9920;
 				}
-				else if( i1 == 3 )
+				else if (i1 == 3)
 				{
 					item = 9920;
 				}
-				else if( i1 == 4 )
+				else if (i1 == 4)
 				{
 					item = 9921;
 				}
-				else if( i1 == 5 )
+				else if (i1 == 5)
 				{
 					item = 9922;
 				}
-				else if( i1 == 6 )
+				else if (i1 == 6)
 				{
 					item = 9933;
 				}
-				else if( i1 == 7 )
+				else if (i1 == 7)
 				{
 					item = 9934;
 				}
-				else if( i1 == 8 )
+				else if (i1 == 8)
 				{
 					item = 9935;
 				}
-				else if( i1 == 9 )
+				else if (i1 == 9)
 				{
 					item = 9936;
 				}
-				else if( i1 == 10 )
+				else if (i1 == 10)
 				{
 					item = 9937;
 				}
-				else if( i1 == 11 )
+				else if (i1 == 11)
 				{
 					item = 9938;
 				}
-				else if( i1 == 12 )
+				else if (i1 == 12)
 				{
 					item = 9939;
 				}
-				else if( i1 == 13 )
+				else if (i1 == 13)
 				{
 					item = 9940;
 				}
-				else if( i1 == 14 )
+				else if (i1 == 14)
 				{
 					item = 9941;
 				}
-				else if( i1 == 15 )
+				else if (i1 == 15)
 				{
 					item = 9942;
 				}
-				else if( i1 == 16 )
+				else if (i1 == 16)
 				{
 					item = 9943;
 				}
-				else if( i1 == 17 )
+				else if (i1 == 17)
 				{
 					item = 9944;
 				}
-				else if( i1 == 18 )
+				else if (i1 == 18)
 				{
 					item = 9945;
 				}
-				else if( i1 == 19 )
+				else if (i1 == 19)
 				{
 					item = 9946;
 				}
-				else if( i1 == 20 )
+				else if (i1 == 20)
 				{
 					item = 9947;
 				}
-				else if( i1 == 21 )
+				else if (i1 == 21)
 				{
 					item = 9948;
 				}
-				else if( i1 == 22 )
+				else if (i1 == 22)
 				{
 					item = 9949;
 				}
-				else if( i1 == 23 )
+				else if (i1 == 23)
 				{
 					item = 9950;
 				}
-				else if( i1 == 25 )
+				else if (i1 == 25)
 				{
 					item = 9952;
 				}
-				else if( i1 == 26 )
+				else if (i1 == 26)
 				{
 					item = 9953;
 				}
-				else if( i1 == 27 )
+				else if (i1 == 27)
 				{
 					item = 9954;
 				}
-				else if( i1 == 28 )
+				else if (i1 == 28)
 				{
 					item = 9955;
 				}
-				else if( i1 == 29 )
+				else if (i1 == 29)
 				{
 					item = 9956;
 				}
-				else if( i1 == 30 )
+				else if (i1 == 30)
 				{
 					item = 9957;
 				}
-				else if( i1 == 31 )
+				else if (i1 == 31)
 				{
 					item = 9958;
 				}
-				else if( i1 == 32 )
+				else if (i1 == 32)
 				{
 					item = 9959;
 				}
-				else if( i1 == 33 )
+				else if (i1 == 33)
 				{
 					item = 9960;
 				}
-				else if( i1 == 34 )
+				else if (i1 == 34)
 				{
 					item = 9961;
 				}
-				else if( i1 == 35 )
+				else if (i1 == 35)
 				{
 					item = 9962;
 				}
-				else if( i1 == 36 )
+				else if (i1 == 36)
 				{
 					item = 9963;
 				}
-				else if( i1 == 37 )
+				else if (i1 == 37)
 				{
 					item = 9964;
 				}
-				else if( i1 == 24 )
+				else if (i1 == 24)
 				{
 					item = 9965;
 				}
-				else if( i1 == 38 )
+				else if (i1 == 38)
 				{
 					item = 10418;
 				}
-				else if( i1 == 39 )
+				else if (i1 == 39)
 				{
 					item = 10420;
 				}
-				else if( i1 == 40 )
+				else if (i1 == 40)
 				{
 					item = 10519;
 				}
-				else if( i1 == 41 )
+				else if (i1 == 41)
 				{
 					item = 10422;
 				}
-				else if( i1 == 42 )
+				else if (i1 == 42)
 				{
 					item = 10423;
 				}
-				else if( i1 == 43 )
+				else if (i1 == 43)
 				{
 					item = 10419;
 				}
@@ -481,49 +481,49 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 	{
 		if (clanLeader.isAlikeDead())
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
 		
 		if (clanLeader.isInStoreMode())
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
 		
 		if (clanLeader.isRooted() || clanLeader.isInCombat())
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
 		
 		if (clanLeader.isInOlympiadMode())
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
 		
 		if (clanLeader.isFestivalParticipant())
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
 		
 		if (clanLeader.inObserverMode())
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
 		
 		if (clanLeader.isInsideZone(L2Character.ZONE_NOSUMMONFRIEND))
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}
@@ -532,7 +532,7 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 		{
 			if (!Config.ALLOW_SUMMON_TO_INSTANCE || InstanceManager.getInstance().getInstance(player.getInstanceId()).isSummonAllowed())
 			{
-				//TODO: Need retail message if there's one.
+				// TODO: Need retail message if there's one.
 				player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 				return false;
 			}
@@ -545,7 +545,7 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 			{
 				if (targetCabal != SevenSigns.getInstance().getCabalHighestScore())
 				{
-					//TODO: Need retail message if there's one.
+					// TODO: Need retail message if there's one.
 					player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 					return false;
 				}
@@ -554,7 +554,7 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 			{
 				if (targetCabal == SevenSigns.CABAL_NULL)
 				{
-					//TODO: Need retail message if there's one.
+					// TODO: Need retail message if there's one.
 					player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 					return false;
 				}
@@ -569,7 +569,7 @@ public class L2CastleMagicianInstance extends L2NpcInstance implements L2SquadTr
 		
 		if (!TvTEvent.onEscapeUse(clanLeader.getObjectId()))
 		{
-			//TODO: Need retail message if there's one.
+			// TODO: Need retail message if there's one.
 			player.sendMessage("Couldn't teleport to clan leader. The requirements was not meet.");
 			return false;
 		}

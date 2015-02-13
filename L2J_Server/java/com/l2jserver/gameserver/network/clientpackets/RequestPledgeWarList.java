@@ -19,11 +19,9 @@ import java.util.logging.Logger;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.PledgeReceiveWarList;
 
-
 /**
  * Format: (ch) dd
- * @author  -Wooden-
- *
+ * @author -Wooden-
  */
 public final class RequestPledgeWarList extends L2GameClientPacket
 {
@@ -32,7 +30,6 @@ public final class RequestPledgeWarList extends L2GameClientPacket
 	@SuppressWarnings("unused")
 	private int _unk1;
 	private int _tab;
-	
 	
 	@Override
 	protected void readImpl()
@@ -47,15 +44,20 @@ public final class RequestPledgeWarList extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		//_log.info("C5: RequestPledgeWarList d:"+_unk1);
-		//_log.info("C5: RequestPledgeWarList d:"+_tab);
+		// _log.info("C5: RequestPledgeWarList d:"+_unk1);
+		// _log.info("C5: RequestPledgeWarList d:"+_tab);
 		L2PcInstance activeChar = getClient().getActiveChar();
-		if(activeChar == null)
+		if (activeChar == null)
+		{
 			return;
-		if (activeChar.getClan() == null) return;
+		}
+		if (activeChar.getClan() == null)
+		{
+			return;
+		}
 		
-		//do we need powers to do that??
-		activeChar.sendPacket(new PledgeReceiveWarList(activeChar.getClan(),_tab));
+		// do we need powers to do that??
+		activeChar.sendPacket(new PledgeReceiveWarList(activeChar.getClan(), _tab));
 	}
 	
 	/**

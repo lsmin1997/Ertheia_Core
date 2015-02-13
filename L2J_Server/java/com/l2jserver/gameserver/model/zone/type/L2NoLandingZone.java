@@ -22,8 +22,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * A no landing zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2NoLandingZone extends L2ZoneType
 {
@@ -71,7 +70,8 @@ public class L2NoLandingZone extends L2ZoneType
 	{
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.zone.L2ZoneType#setParameter(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -82,6 +82,8 @@ public class L2NoLandingZone extends L2ZoneType
 			dismountDelay = Integer.parseInt(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 }

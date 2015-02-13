@@ -20,12 +20,11 @@ import com.l2jserver.gameserver.templates.item.L2EtcItem;
 
 /**
  * This class manages handlers of items
- *
  * @version $Revision: 1.1.4.3 $ $Date: 2005/03/27 15:30:09 $
  */
 public class ItemHandler
 {
-	private TIntObjectHashMap<IItemHandler> _datatable;
+	private final TIntObjectHashMap<IItemHandler> _datatable;
 	
 	/**
 	 * Create ItemHandler if doesn't exist and returns ItemHandler
@@ -54,10 +53,10 @@ public class ItemHandler
 	}
 	
 	/**
-	 * Adds handler of item type in <I>datatable</I>.<BR><BR>
+	 * Adds handler of item type in <I>datatable</I>.<BR>
+	 * <BR>
 	 * <B><I>Concept :</I></U><BR>
-	 * This handler is put in <I>datatable</I> Map &lt;String ; IItemHandler &gt; for each ID corresponding to an item type
-	 * (existing in classes of package itemhandlers) sets as key of the Map.
+	 * This handler is put in <I>datatable</I> Map &lt;String ; IItemHandler &gt; for each ID corresponding to an item type (existing in classes of package itemhandlers) sets as key of the Map.
 	 * @param handler (IItemHandler)
 	 */
 	public void registerItemHandler(IItemHandler handler)
@@ -72,8 +71,10 @@ public class ItemHandler
 	 */
 	public IItemHandler getItemHandler(L2EtcItem item)
 	{
-		if (item == null || item.getHandlerName() == null)
+		if ((item == null) || (item.getHandlerName() == null))
+		{
 			return null;
+		}
 		return _datatable.get(item.getHandlerName().hashCode());
 	}
 	

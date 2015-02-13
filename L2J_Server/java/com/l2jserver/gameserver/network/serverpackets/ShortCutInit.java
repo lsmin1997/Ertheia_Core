@@ -18,10 +18,7 @@ import com.l2jserver.gameserver.model.L2ShortCut;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- *
- * ShortCutInit
- * format   d *(1dddd)/(2ddddd)/(3dddd)
- *
+ * ShortCutInit format d *(1dddd)/(2ddddd)/(3dddd)
  * @version $Revision: 1.3.2.1.2.4 $ $Date: 2005/03/27 15:29:39 $
  */
 public final class ShortCutInit extends L2GameServerPacket
@@ -36,7 +33,9 @@ public final class ShortCutInit extends L2GameServerPacket
 		_activeChar = activeChar;
 		
 		if (_activeChar == null)
+		{
 			return;
+		}
 		
 		_shortCuts = _activeChar.getAllShortCuts();
 	}
@@ -47,14 +46,14 @@ public final class ShortCutInit extends L2GameServerPacket
 		writeC(0x45);
 		writeD(_shortCuts.length);
 		
-		for (L2ShortCut sc: _shortCuts)
+		for (L2ShortCut sc : _shortCuts)
 		{
 			writeD(sc.getType());
-			writeD(sc.getSlot() + sc.getPage() * 12);
+			writeD(sc.getSlot() + (sc.getPage() * 12));
 			
-			switch(sc.getType())
+			switch (sc.getType())
 			{
-				case L2ShortCut.TYPE_ITEM: //1
+				case L2ShortCut.TYPE_ITEM: // 1
 					writeD(sc.getId());
 					writeD(0x01);
 					writeD(sc.getSharedReuseGroup());
@@ -63,21 +62,21 @@ public final class ShortCutInit extends L2GameServerPacket
 					writeH(0x00);
 					writeH(0x00);
 					break;
-				case L2ShortCut.TYPE_SKILL: //2
+				case L2ShortCut.TYPE_SKILL: // 2
 					writeD(sc.getId());
 					writeD(sc.getLevel());
 					writeC(0x00); // C5
 					writeD(0x01); // C6
 					break;
-				case L2ShortCut.TYPE_ACTION: //3
+				case L2ShortCut.TYPE_ACTION: // 3
 					writeD(sc.getId());
 					writeD(0x01); // C6
 					break;
-				case L2ShortCut.TYPE_MACRO: //4
+				case L2ShortCut.TYPE_MACRO: // 4
 					writeD(sc.getId());
 					writeD(0x01); // C6
 					break;
-				case L2ShortCut.TYPE_RECIPE: //5
+				case L2ShortCut.TYPE_RECIPE: // 5
 					writeD(sc.getId());
 					writeD(0x01); // C6
 					break;
@@ -88,7 +87,8 @@ public final class ShortCutInit extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

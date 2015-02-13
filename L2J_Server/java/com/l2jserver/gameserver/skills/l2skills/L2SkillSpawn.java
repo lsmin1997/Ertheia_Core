@@ -46,18 +46,20 @@ public class L2SkillSpawn extends L2Skill
 	public void useSkill(L2Character caster, L2Object[] targets)
 	{
 		if (caster.isAlikeDead())
+		{
 			return;
+		}
 		
 		if (_npcId == 0)
 		{
-			_log.warning("NPC ID not defined for skill ID:"+this.getId());
+			_log.warning("NPC ID not defined for skill ID:" + getId());
 			return;
 		}
 		
 		final L2NpcTemplate template = NpcTable.getInstance().getTemplate(_npcId);
 		if (template == null)
 		{
-			_log.warning("Spawn of the nonexisting NPC ID:"+_npcId+", skill ID:"+this.getId());
+			_log.warning("Spawn of the nonexisting NPC ID:" + _npcId + ", skill ID:" + getId());
 			return;
 		}
 		
@@ -82,11 +84,13 @@ public class L2SkillSpawn extends L2Skill
 			spawn.stopRespawn();
 			L2Npc npc = spawn.spawnOne(_summonSpawn);
 			if (_despawnDelay > 0)
+			{
 				npc.scheduleDespawn(_despawnDelay);
+			}
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Exception while spawning NPC ID: " + _npcId + ", skill ID: " + this.getId() + ", exception: " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Exception while spawning NPC ID: " + _npcId + ", skill ID: " + getId() + ", exception: " + e.getMessage(), e);
 		}
 	}
 }

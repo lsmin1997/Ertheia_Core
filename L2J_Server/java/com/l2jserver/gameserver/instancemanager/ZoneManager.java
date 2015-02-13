@@ -49,14 +49,13 @@ import com.l2jserver.gameserver.model.zone.type.L2OlympiadStadiumZone;
 
 /**
  * This class manages the zones
- * 
  * @author durgus
  */
 public class ZoneManager
 {
 	private static final Logger _log = Logger.getLogger(ZoneManager.class.getName());
 	
-	//private final FastMap<Integer, L2ZoneType> _zones = new FastMap<Integer, L2ZoneType>();
+	// private final FastMap<Integer, L2ZoneType> _zones = new FastMap<Integer, L2ZoneType>();
 	private final Map<Class<? extends L2ZoneType>, Map<Integer, ? extends L2ZoneType>> _classZones = new FastMap<Class<? extends L2ZoneType>, Map<Integer, ? extends L2ZoneType>>();
 	private int _lastDynamicId = 300000;
 	private List<L2ItemInstance> _debugItems;
@@ -84,11 +83,11 @@ public class ZoneManager
 		// Get the world regions
 		int count = 0;
 		L2WorldRegion[][] worldRegions = L2World.getInstance().getAllWorldRegions();
-		for (int x = 0; x < worldRegions.length; x++)
+		for (L2WorldRegion[] worldRegion : worldRegions)
 		{
-			for (int y = 0; y < worldRegions[x].length; y++)
+			for (int y = 0; y < worldRegion.length; y++)
 			{
-				worldRegions[x][y].getZones().clear();
+				worldRegion[y].getZones().clear();
 				count++;
 			}
 		}
@@ -98,9 +97,11 @@ public class ZoneManager
 		load();
 		
 		for (L2Object o : L2World.getInstance().getAllVisibleObjects().values())
-		{ 
+		{
 			if (o instanceof L2Character)
+			{
 				((L2Character) o).revalidateZone(true);
+			}
 		}
 	}
 	
@@ -135,9 +136,13 @@ public class ZoneManager
 			{
 				// default file first
 				if ("zone.xml".equalsIgnoreCase(f.getName()))
+				{
 					hash.addFirst(f);
+				}
 				else if (f.getName().endsWith(".xml"))
+				{
 					hash.add(f);
+				}
 			}
 			
 			Document doc;
@@ -157,8 +162,10 @@ public class ZoneManager
 					{
 						attrs = n.getAttributes();
 						attribute = attrs.getNamedItem("enabled");
-						if (attribute != null && !Boolean.parseBoolean(attribute.getNodeValue()))
+						if ((attribute != null) && !Boolean.parseBoolean(attribute.getNodeValue()))
+						{
 							continue;
+						}
 						
 						for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 						{
@@ -168,19 +175,29 @@ public class ZoneManager
 								
 								attribute = attrs.getNamedItem("id");
 								if (attribute != null)
+								{
 									zoneId = Integer.parseInt(attribute.getNodeValue());
+								}
 								else
+								{
 									zoneId = _lastDynamicId++;
+								}
 								
 								attribute = attrs.getNamedItem("name");
 								if (attribute != null)
+								{
 									zoneName = attribute.getNodeValue();
+								}
 								else
+								{
 									zoneName = null;
-
+								}
+								
 								attribute = attrs.getNamedItem("minZ");
 								if (attribute != null)
+								{
 									minZ = Integer.parseInt(attribute.getNodeValue());
+								}
 								else
 								{
 									_log.warning("ZoneData: Missing minZ for zone: " + zoneId + " in file: " + f.getName());
@@ -189,7 +206,9 @@ public class ZoneManager
 								
 								attribute = attrs.getNamedItem("maxZ");
 								if (attribute != null)
+								{
 									maxZ = Integer.parseInt(attribute.getNodeValue());
+								}
 								else
 								{
 									_log.warning("ZoneData: Missing maxZ for zone: " + zoneId + " in file: " + f.getName());
@@ -198,7 +217,9 @@ public class ZoneManager
 								
 								attribute = attrs.getNamedItem("type");
 								if (attribute != null)
+								{
 									zoneType = attribute.getNodeValue();
+								}
 								else
 								{
 									_log.warning("ZoneData: Missing type for zone: " + zoneId + " in file: " + f.getName());
@@ -207,7 +228,9 @@ public class ZoneManager
 								
 								attribute = attrs.getNamedItem("shape");
 								if (attribute != null)
+								{
 									zoneShape = attribute.getNodeValue();
+								}
 								else
 								{
 									_log.warning("ZoneData: Missing shape for zone: " + zoneId + " in file: " + f.getName());
@@ -257,9 +280,9 @@ public class ZoneManager
 										FastList.recycle(rs);
 									}
 									
-									if (coords == null || coords.length == 0)
+									if ((coords == null) || (coords.length == 0))
 									{
-										_log.warning("ZoneData: missing data for zone: " + zoneId +" in both XML and SQL, file: " + f.getName());
+										_log.warning("ZoneData: missing data for zone: " + zoneId + " in both XML and SQL, file: " + f.getName());
 										continue;
 									}
 									
@@ -271,7 +294,9 @@ public class ZoneManager
 									if (zoneShape.equalsIgnoreCase("Cuboid"))
 									{
 										if (coords.length == 2)
+										{
 											temp.setZone(new ZoneCuboid(coords[0][0], coords[1][0], coords[0][1], coords[1][1], minZ, maxZ));
+										}
 										else
 										{
 											_log.warning("ZoneData: Missing cuboid vertex in sql data for zone: " + zoneId + " in file: " + f.getName());
@@ -304,8 +329,10 @@ public class ZoneManager
 										// at x,y and a radius
 										attrs = d.getAttributes();
 										final int zoneRad = Integer.parseInt(attrs.getNamedItem("rad").getNodeValue());
-										if (coords.length == 1 && zoneRad > 0)
+										if ((coords.length == 1) && (zoneRad > 0))
+										{
 											temp.setZone(new ZoneCylinder(coords[0][0], coords[0][1], minZ, maxZ, zoneRad));
+										}
 										else
 										{
 											_log.warning("ZoneData: Bad data for zone: " + zoneId + " in file: " + f.getName());
@@ -334,7 +361,7 @@ public class ZoneManager
 										
 										temp.setParameter(name, val);
 									}
-									else if ("spawn".equalsIgnoreCase(cd.getNodeName()) && temp instanceof L2SpawnZone)
+									else if ("spawn".equalsIgnoreCase(cd.getNodeName()) && (temp instanceof L2SpawnZone))
 									{
 										attrs = cd.getAttributes();
 										int spawnX = Integer.parseInt(attrs.getNamedItem("X").getNodeValue());
@@ -342,17 +369,25 @@ public class ZoneManager
 										int spawnZ = Integer.parseInt(attrs.getNamedItem("Z").getNodeValue());
 										
 										Node val = attrs.getNamedItem("isChaotic");
-										if (val != null && Boolean.parseBoolean(val.getNodeValue()))
+										if ((val != null) && Boolean.parseBoolean(val.getNodeValue()))
+										{
 											((L2SpawnZone) temp).addChaoticSpawn(spawnX, spawnY, spawnZ);
+										}
 										else
+										{
 											((L2SpawnZone) temp).addSpawn(spawnX, spawnY, spawnZ);
+										}
 									}
 								}
 								if (checkId(zoneId))
+								{
 									_log.config("Caution: Zone (" + zoneId + ") from file: " + f.getName() + " overrides previos definition.");
+								}
 								
-								if (zoneName != null && !zoneName.isEmpty())
+								if ((zoneName != null) && !zoneName.isEmpty())
+								{
 									temp.setName(zoneName);
+								}
 								
 								addZone(zoneId, temp);
 								
@@ -391,7 +426,7 @@ public class ZoneManager
 			return;
 		}
 		
-		_log.info("Done: loaded " + _classZones.size() + " zone classes and "+getSize()+" zones.");
+		_log.info("Done: loaded " + _classZones.size() + " zone classes and " + getSize() + " zones.");
 	}
 	
 	public int getSize()
@@ -409,20 +444,21 @@ public class ZoneManager
 		for (Map<Integer, ? extends L2ZoneType> map : _classZones.values())
 		{
 			if (map.containsKey(id))
+			{
 				return true;
+			}
 		}
 		return false;
 	}
 	
 	/**
 	 * Add new zone
-	 *
 	 * @param zone
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends L2ZoneType> void addZone(Integer id, T zone)
 	{
-		//_zones.put(id, zone);
+		// _zones.put(id, zone);
 		Map<Integer, T> map = (Map<Integer, T>) _classZones.get(zone.getClass());
 		if (map == null)
 		{
@@ -431,12 +467,13 @@ public class ZoneManager
 			_classZones.put(zone.getClass(), map);
 		}
 		else
+		{
 			map.put(id, zone);
+		}
 	}
 	
 	/**
-	 * Returns all zones registered with the ZoneManager.
-	 * To minimise iteration processing retrieve zones from L2WorldRegion for a specific location instead.
+	 * Returns all zones registered with the ZoneManager. To minimise iteration processing retrieve zones from L2WorldRegion for a specific location instead.
 	 * @return zones
 	 * @see #getAllZones(Class)
 	 */
@@ -474,7 +511,9 @@ public class ZoneManager
 		for (Map<Integer, ? extends L2ZoneType> map : _classZones.values())
 		{
 			if (map.containsKey(id))
+			{
 				return map.get(id);
+			}
 		}
 		return null;
 	}
@@ -493,7 +532,6 @@ public class ZoneManager
 	
 	/**
 	 * Returns all zones from where the object is located
-	 *
 	 * @param object
 	 * @return zones
 	 */
@@ -504,7 +542,6 @@ public class ZoneManager
 	
 	/**
 	 * Returns zone from where the object is located by type
-	 *
 	 * @param object
 	 * @param type
 	 * @return zone
@@ -512,13 +549,14 @@ public class ZoneManager
 	public <T extends L2ZoneType> T getZone(L2Object object, Class<T> type)
 	{
 		if (object == null)
+		{
 			return null;
+		}
 		return getZone(object.getX(), object.getY(), object.getZ(), type);
 	}
 	
 	/**
 	 * Returns all zones from given coordinates (plane)
-	 * 
 	 * @param x
 	 * @param y
 	 * @return zones
@@ -530,14 +568,15 @@ public class ZoneManager
 		for (L2ZoneType zone : region.getZones())
 		{
 			if (zone.isInsideZone(x, y))
+			{
 				temp.add(zone);
+			}
 		}
 		return temp;
 	}
 	
 	/**
 	 * Returns all zones from given coordinates
-	 *
 	 * @param x
 	 * @param y
 	 * @param z
@@ -550,14 +589,15 @@ public class ZoneManager
 		for (L2ZoneType zone : region.getZones())
 		{
 			if (zone.isInsideZone(x, y, z))
+			{
 				temp.add(zone);
+			}
 		}
 		return temp;
 	}
 	
 	/**
 	 * Returns zone from given coordinates
-	 * 
 	 * @param x
 	 * @param y
 	 * @param z
@@ -571,7 +611,9 @@ public class ZoneManager
 		for (L2ZoneType zone : region.getZones())
 		{
 			if (zone.isInsideZone(x, y, z) && type.isInstance(zone))
+			{
 				return (T) zone;
+			}
 		}
 		return null;
 	}
@@ -579,12 +621,16 @@ public class ZoneManager
 	public final L2ArenaZone getArena(L2Character character)
 	{
 		if (character == null)
+		{
 			return null;
+		}
 		
 		for (L2ZoneType temp : ZoneManager.getInstance().getZones(character.getX(), character.getY(), character.getZ()))
 		{
-			if (temp instanceof L2ArenaZone && temp.isCharacterInZone(character))
+			if ((temp instanceof L2ArenaZone) && temp.isCharacterInZone(character))
+			{
 				return ((L2ArenaZone) temp);
+			}
 		}
 		
 		return null;
@@ -593,12 +639,16 @@ public class ZoneManager
 	public final L2OlympiadStadiumZone getOlympiadStadium(L2Character character)
 	{
 		if (character == null)
+		{
 			return null;
+		}
 		
 		for (L2ZoneType temp : ZoneManager.getInstance().getZones(character.getX(), character.getY(), character.getZ()))
 		{
-			if (temp instanceof L2OlympiadStadiumZone && temp.isCharacterInZone(character))
+			if ((temp instanceof L2OlympiadStadiumZone) && temp.isCharacterInZone(character))
+			{
 				return ((L2OlympiadStadiumZone) temp);
+			}
 		}
 		return null;
 	}
@@ -619,7 +669,7 @@ public class ZoneManager
 			double closestdis = Double.MAX_VALUE;
 			for (T temp : (Collection<T>) _classZones.get(type).values())
 			{
-				double distance =  temp.getDistanceToZone(obj);
+				double distance = temp.getDistanceToZone(obj);
 				if (distance < closestdis)
 				{
 					closestdis = distance;
@@ -629,7 +679,9 @@ public class ZoneManager
 			return zone;
 		}
 		else
+		{
 			return zone;
+		}
 	}
 	
 	/**
@@ -639,7 +691,9 @@ public class ZoneManager
 	public List<L2ItemInstance> getDebugItems()
 	{
 		if (_debugItems == null)
+		{
 			_debugItems = new FastList<L2ItemInstance>();
+		}
 		return _debugItems;
 	}
 	
@@ -655,7 +709,9 @@ public class ZoneManager
 			{
 				L2ItemInstance item = it.next();
 				if (item != null)
+				{
 					item.decayMe();
+				}
 				it.remove();
 			}
 		}

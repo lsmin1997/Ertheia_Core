@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.templates.StatsSet;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2.4.6 $ $Date: 2005/04/02 15:57:51 $
  */
 public class L2CharTemplate
@@ -85,22 +84,20 @@ public class L2CharTemplate
 	public double baseHolyRes;
 	public double baseDarkRes;
 	public final double baseCritVuln;
-		
-	//C4 Stats
+	
+	// C4 Stats
 	public final int baseMpConsumeRate;
 	public final int baseHpConsumeRate;
 	
 	/**
-	 * <FONT COLOR=#FF0000><B> <U>Caution</U> :
-	 * For client info use {@link fCollisionRadius}
-	 * </B></FONT><BR><BR>
+	 * <FONT COLOR=#FF0000><B> <U>Caution</U> : For client info use {@link fCollisionRadius} </B></FONT><BR>
+	 * <BR>
 	 */
 	public final int collisionRadius;
 	
 	/**
-	 * <FONT COLOR=#FF0000><B> <U>Caution</U> :
-	 * For client info use {@link fCollisionHeight}
-	 * </B></FONT><BR><BR>
+	 * <FONT COLOR=#FF0000><B> <U>Caution</U> : For client info use {@link fCollisionHeight} </B></FONT><BR>
+	 * <BR>
 	 */
 	public final int collisionHeight;
 	
@@ -167,7 +164,7 @@ public class L2CharTemplate
 		baseDarkRes = set.getInteger("baseDarkRes", 0);
 		baseCritVuln = set.getInteger("baseCritVuln", 1);
 		
-		//C4 Stats
+		// C4 Stats
 		baseMpConsumeRate = set.getInteger("baseMpConsumeRate", 0);
 		baseHpConsumeRate = set.getInteger("baseHpConsumeRate", 0);
 		

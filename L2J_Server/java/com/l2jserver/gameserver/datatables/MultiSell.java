@@ -72,25 +72,11 @@ public class MultiSell
 	}
 	
 	/**
-	 * This will generate the multisell list for the items.  There exist various
-	 * parameters in multisells that affect the way they will appear:
-	 * 1) inventory only:
-	 * 		* if true, only show items of the multisell for which the
-	 * 		  "primary" ingredients are already in the player's inventory.  By "primary"
-	 * 		  ingredients we mean weapon and armor.
-	 * 		* if false, show the entire list.
-	 * 2) maintain enchantment: presumably, only lists with "inventory only" set to true
-	 * 		should sometimes have this as true.  This makes no sense otherwise...
-	 * 		* If true, then the product will match the enchantment level of the ingredient.
-	 * 		  if the player has multiple items that match the ingredient list but the enchantment
-	 * 		  levels differ, then the entries need to be duplicated to show the products and
-	 * 		  ingredients for each enchantment level.
-	 * 		  For example: If the player has a crystal staff +1 and a crystal staff +3 and goes
-	 * 		  to exchange it at the mammon, the list should have all exchange possibilities for
-	 * 		  the +1 staff, followed by all possibilities for the +3 staff.
-	 * 		* If false, then any level ingredient will be considered equal and product will always
-	 * 		  be at +0
-	 * 3) apply taxes: Uses the "taxIngredient" entry in order to add a certain amount of adena to the ingredients
+	 * This will generate the multisell list for the items. There exist various parameters in multisells that affect the way they will appear: 1) inventory only: * if true, only show items of the multisell for which the "primary" ingredients are already in the player's inventory. By "primary"
+	 * ingredients we mean weapon and armor. * if false, show the entire list. 2) maintain enchantment: presumably, only lists with "inventory only" set to true should sometimes have this as true. This makes no sense otherwise... * If true, then the product will match the enchantment level of the
+	 * ingredient. if the player has multiple items that match the ingredient list but the enchantment levels differ, then the entries need to be duplicated to show the products and ingredients for each enchantment level. For example: If the player has a crystal staff +1 and a crystal staff +3 and
+	 * goes to exchange it at the mammon, the list should have all exchange possibilities for the +1 staff, followed by all possibilities for the +3 staff. * If false, then any level ingredient will be considered equal and product will always be at +0 3) apply taxes: Uses the "taxIngredient" entry
+	 * in order to add a certain amount of adena to the ingredients
 	 */
 	public final void separateAndSend(int listId, L2PcInstance player, L2Npc npc, boolean inventoryOnly)
 	{
@@ -151,13 +137,13 @@ public class MultiSell
 		switch (id)
 		{
 			case CLAN_REPUTATION:
-				player.getClan().takeReputationScore((int)amount, true);
+				player.getClan().takeReputationScore((int) amount, true);
 				SystemMessage smsg = SystemMessage.getSystemMessage(SystemMessageId.S1_DEDUCTED_FROM_CLAN_REP);
 				smsg.addItemNumber(amount);
 				player.sendPacket(smsg);
 				return true;
 			case FAME:
-				player.setFame(player.getFame() - (int)amount);
+				player.setFame(player.getFame() - (int) amount);
 				player.sendPacket(new UserInfo(player));
 				player.sendPacket(new ExBrExtraUserInfo(player));
 				return true;
@@ -170,10 +156,10 @@ public class MultiSell
 		switch (id)
 		{
 			case CLAN_REPUTATION:
-				player.getClan().addReputationScore((int)amount, true);
+				player.getClan().addReputationScore((int) amount, true);
 				break;
 			case FAME:
-				player.setFame((int)(player.getFame() + amount));
+				player.setFame((int) (player.getFame() + amount));
 				player.sendPacket(new UserInfo(player));
 				player.sendPacket(new ExBrExtraUserInfo(player));
 				break;
@@ -230,15 +216,23 @@ public class MultiSell
 			{
 				attribute = n.getAttributes().getNamedItem("applyTaxes");
 				if (attribute == null)
+				{
 					list.setApplyTaxes(false);
+				}
 				else
+				{
 					list.setApplyTaxes(Boolean.parseBoolean(attribute.getNodeValue()));
+				}
 				
 				attribute = n.getAttributes().getNamedItem("maintainEnchantment");
 				if (attribute == null)
+				{
 					list.setMaintainEnchantment(false);
+				}
 				else
+				{
 					list.setMaintainEnchantment(Boolean.parseBoolean(attribute.getNodeValue()));
+				}
 				
 				for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 				{
@@ -275,15 +269,23 @@ public class MultiSell
 				
 				attribute = n.getAttributes().getNamedItem("isTaxIngredient");
 				if (attribute != null)
+				{
 					isTaxIngredient = Boolean.parseBoolean(attribute.getNodeValue());
+				}
 				else
+				{
 					isTaxIngredient = false;
+				}
 				
 				attribute = n.getAttributes().getNamedItem("maintainIngredient");
 				if (attribute != null)
+				{
 					mantainIngredient = Boolean.parseBoolean(attribute.getNodeValue());
+				}
 				else
+				{
 					mantainIngredient = false;
+				}
 				
 				entry.addIngredient(new Ingredient(id, count, isTaxIngredient, mantainIngredient));
 			}
@@ -312,7 +314,9 @@ public class MultiSell
 		for (File f : files)
 		{
 			if (f.getName().endsWith(".xml"))
+			{
 				hash.add(f);
+			}
 		}
 	}
 	
@@ -330,14 +334,16 @@ public class MultiSell
 				for (Ingredient ing : ent.getIngredients())
 				{
 					if (!verifyIngredient(ing))
-						_log.warning("[MultiSell] can't find ingredient with itemId: "
-								+ ing.getItemId() + " in list: " + list.getListId());
+					{
+						_log.warning("[MultiSell] can't find ingredient with itemId: " + ing.getItemId() + " in list: " + list.getListId());
+					}
 				}
 				for (Ingredient ing : ent.getProducts())
 				{
 					if (!verifyIngredient(ing))
-						_log.warning("[MultiSell] can't find product with itemId: "
-								+ ing.getItemId() + " in list: " + list.getListId());
+					{
+						_log.warning("[MultiSell] can't find product with itemId: " + ing.getItemId() + " in list: " + list.getListId());
+					}
 				}
 			}
 		}
@@ -352,7 +358,9 @@ public class MultiSell
 				return true;
 			default:
 				if (ing.getTemplate() != null)
+				{
 					return true;
+				}
 		}
 		
 		return false;

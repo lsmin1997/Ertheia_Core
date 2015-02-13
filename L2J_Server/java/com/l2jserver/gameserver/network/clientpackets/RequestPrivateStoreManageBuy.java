@@ -18,14 +18,13 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2.2.1.2.4 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestPrivateStoreManageBuy extends L2GameClientPacket
 {
 	private static final String _C__90_REQUESTPRIVATESTOREMANAGEBUY = "[C] 90 RequestPrivateStoreManageBuy";
 	
-	//private static Logger _log = Logger.getLogger(RequestPrivateStoreBuyManage.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestPrivateStoreBuyManage.class.getName());
 	
 	@Override
 	protected void readImpl()
@@ -42,7 +41,8 @@ public final class RequestPrivateStoreManageBuy extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

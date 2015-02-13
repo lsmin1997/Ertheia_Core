@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * @author Kerberos
- *
  */
 public final class L2CastleTeleporterInstance extends L2Npc
 {
@@ -57,13 +56,17 @@ public final class L2CastleTeleporterInstance extends L2Npc
 			int delay;
 			if (!getTask())
 			{
-				if (getCastle().getSiege().getIsInProgress() && getCastle().getSiege().getControlTowerCount() == 0)
+				if (getCastle().getSiege().getIsInProgress() && (getCastle().getSiege().getControlTowerCount() == 0))
+				{
 					delay = 480000;
+				}
 				else
+				{
 					delay = 30000;
+				}
 				
 				setTask(true);
-				ThreadPoolManager.getInstance().scheduleGeneral(new oustAllPlayers(), delay );
+				ThreadPoolManager.getInstance().scheduleGeneral(new oustAllPlayers(), delay);
 			}
 			
 			String filename = "data/html/castleteleporter/MassGK-1.htm";
@@ -73,7 +76,9 @@ public final class L2CastleTeleporterInstance extends L2Npc
 			return;
 		}
 		else
+		{
 			super.onBypassFeedback(player, command);
+		}
 	}
 	
 	@Override
@@ -82,13 +87,19 @@ public final class L2CastleTeleporterInstance extends L2Npc
 		String filename;
 		if (!getTask())
 		{
-			if (getCastle().getSiege().getIsInProgress() && getCastle().getSiege().getControlTowerCount() == 0)
+			if (getCastle().getSiege().getIsInProgress() && (getCastle().getSiege().getControlTowerCount() == 0))
+			{
 				filename = "data/html/castleteleporter/MassGK-2.htm";
+			}
 			else
+			{
 				filename = "data/html/castleteleporter/MassGK.htm";
+			}
 		}
 		else
+		{
 			filename = "data/html/castleteleporter/MassGK-1.htm";
+		}
 		
 		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		html.setFile(player.getHtmlPrefix(), filename);
@@ -103,6 +114,7 @@ public final class L2CastleTeleporterInstance extends L2Npc
 	
 	class oustAllPlayers implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
@@ -111,12 +123,14 @@ public final class L2CastleTeleporterInstance extends L2Npc
 				cs.addStringParameter(getCastle().getName());
 				int region = MapRegionTable.getInstance().getMapRegion(getX(), getY());
 				Collection<L2PcInstance> pls = L2World.getInstance().getAllPlayers().values();
-				//synchronized (L2World.getInstance().getAllPlayers())
+				// synchronized (L2World.getInstance().getAllPlayers())
 				{
 					for (L2PcInstance player : pls)
 					{
-						if (region == MapRegionTable.getInstance().getMapRegion(player.getX(),player.getY()))
+						if (region == MapRegionTable.getInstance().getMapRegion(player.getX(), player.getY()))
+						{
 							player.sendPacket(cs);
+						}
 					}
 				}
 				oustAllPlayers();

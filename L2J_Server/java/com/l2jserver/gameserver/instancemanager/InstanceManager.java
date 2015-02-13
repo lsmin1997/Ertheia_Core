@@ -36,21 +36,19 @@ import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.entity.Instance;
 
-
 /**
  * @author evill33t, GodKratos
- * 
  */
 public class InstanceManager
 {
 	private final static Logger _log = Logger.getLogger(InstanceManager.class.getName());
-	private FastMap<Integer, Instance> _instanceList = new FastMap<Integer, Instance>();
-	private FastMap<Integer, InstanceWorld> _instanceWorlds = new FastMap<Integer, InstanceWorld>();
+	private final FastMap<Integer, Instance> _instanceList = new FastMap<Integer, Instance>();
+	private final FastMap<Integer, InstanceWorld> _instanceWorlds = new FastMap<Integer, InstanceWorld>();
 	private int _dynamic = 300000;
 	
 	// InstanceId Names
 	private final static Map<Integer, String> _instanceIdNames = new FastMap<Integer, String>();
-	private Map<Integer,Map<Integer,Long>> _playerInstanceTimes = new FastMap<Integer, Map<Integer,Long>>();
+	private final Map<Integer, Map<Integer, Long>> _playerInstanceTimes = new FastMap<Integer, Map<Integer, Long>>();
 	
 	private static final String ADD_INSTANCE_TIME = "INSERT INTO character_instance_time (charId,instanceId,time) values (?,?,?) ON DUPLICATE KEY UPDATE time=?";
 	private static final String RESTORE_INSTANCE_TIMES = "SELECT instanceId,time FROM character_instance_time WHERE charId=?";
@@ -59,23 +57,31 @@ public class InstanceManager
 	public long getInstanceTime(int playerObjId, int id)
 	{
 		if (!_playerInstanceTimes.containsKey(playerObjId))
+		{
 			restoreInstanceTimes(playerObjId);
+		}
 		if (_playerInstanceTimes.get(playerObjId).containsKey(id))
+		{
 			return _playerInstanceTimes.get(playerObjId).get(id);
+		}
 		return -1;
 	}
 	
-	public Map<Integer,Long> getAllInstanceTimes(int playerObjId)
+	public Map<Integer, Long> getAllInstanceTimes(int playerObjId)
 	{
 		if (!_playerInstanceTimes.containsKey(playerObjId))
+		{
 			restoreInstanceTimes(playerObjId);
+		}
 		return _playerInstanceTimes.get(playerObjId);
 	}
 	
 	public void setInstanceTime(int playerObjId, int id, long time)
 	{
 		if (!_playerInstanceTimes.containsKey(playerObjId))
+		{
 			restoreInstanceTimes(playerObjId);
+		}
 		Connection con = null;
 		try
 		{
@@ -91,7 +97,7 @@ public class InstanceManager
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Could not insert character instance time data: "+ e.getMessage(), e); 
+			_log.log(Level.WARNING, "Could not insert character instance time data: " + e.getMessage(), e);
 		}
 		finally
 		{
@@ -114,7 +120,7 @@ public class InstanceManager
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Could not delete character instance time data: "+ e.getMessage(), e);
+			_log.log(Level.WARNING, "Could not delete character instance time data: " + e.getMessage(), e);
 		}
 		finally
 		{
@@ -125,7 +131,9 @@ public class InstanceManager
 	public void restoreInstanceTimes(int playerObjId)
 	{
 		if (_playerInstanceTimes.containsKey(playerObjId))
+		{
 			return; // already restored
+		}
 		_playerInstanceTimes.put(playerObjId, new FastMap<Integer, Long>());
 		Connection con = null;
 		try
@@ -140,9 +148,13 @@ public class InstanceManager
 				int id = rset.getInt("instanceId");
 				long time = rset.getLong("time");
 				if (time < System.currentTimeMillis())
+				{
 					deleteInstanceTime(playerObjId, id);
+				}
 				else
+				{
 					_playerInstanceTimes.get(playerObjId).put(id, time);
+				}
 			}
 			
 			rset.close();
@@ -150,7 +162,7 @@ public class InstanceManager
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Could not delete character instance time data: "+ e.getMessage(), e);
+			_log.log(Level.WARNING, "Could not delete character instance time data: " + e.getMessage(), e);
 		}
 		finally
 		{
@@ -161,7 +173,9 @@ public class InstanceManager
 	public String getInstanceIdName(int id)
 	{
 		if (_instanceIdNames.containsKey(id))
+		{
 			return _instanceIdNames.get(id);
+		}
 		return ("UnknownInstance");
 	}
 	
@@ -229,10 +243,14 @@ public class InstanceManager
 		for (InstanceWorld temp : _instanceWorlds.values())
 		{
 			if (temp == null)
+			{
 				continue;
+			}
 			// check if the player have a World Instance where he/she is allowed to enter
 			if (temp.allowed.contains(player.getObjectId()))
+			{
 				return temp;
+			}
 		}
 		return null;
 	}
@@ -266,7 +284,9 @@ public class InstanceManager
 	public void destroyInstance(int instanceid)
 	{
 		if (instanceid <= 0)
+		{
 			return;
+		}
 		Instance temp = _instanceList.get(instanceid);
 		if (temp != null)
 		{
@@ -276,7 +296,9 @@ public class InstanceManager
 			temp.cancelTimer();
 			_instanceList.remove(instanceid);
 			if (_instanceWorlds.containsKey(instanceid))
+			{
 				_instanceWorlds.remove(instanceid);
+			}
 		}
 	}
 	
@@ -295,10 +317,14 @@ public class InstanceManager
 		for (Instance temp : _instanceList.values())
 		{
 			if (temp == null)
+			{
 				continue;
+			}
 			// check if the player is in any active instance
 			if (temp.containsPlayer(objectId))
+			{
 				return temp.getId();
+			}
 		}
 		// 0 is default instance aka the world
 		return 0;
@@ -307,7 +333,9 @@ public class InstanceManager
 	public boolean createInstance(int id)
 	{
 		if (getInstance(id) != null)
+		{
 			return false;
+		}
 		
 		Instance instance = new Instance(id);
 		_instanceList.put(id, instance);
@@ -317,7 +345,9 @@ public class InstanceManager
 	public boolean createInstanceFromTemplate(int id, String template) throws FileNotFoundException
 	{
 		if (getInstance(id) != null)
+		{
 			return false;
+		}
 		
 		Instance instance = new Instance(id);
 		_instanceList.put(id, instance);

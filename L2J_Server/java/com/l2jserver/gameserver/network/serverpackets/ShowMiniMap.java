@@ -17,17 +17,13 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.SevenSigns;
 
 /**
- * sample
-
- * format
- * d
- *
+ * sample format d
  * @version $Revision: 1.1.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class ShowMiniMap extends L2GameServerPacket
 {
 	private static final String _S__A3_SHOWMINIMAP = "[S] a3 ShowMiniMap";
-	private int _mapId;
+	private final int _mapId;
 	
 	/**
 	 */
@@ -44,7 +40,8 @@ public class ShowMiniMap extends L2GameServerPacket
 		writeC(SevenSigns.getInstance().getCurrentPeriod());
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

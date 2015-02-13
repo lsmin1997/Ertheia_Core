@@ -34,13 +34,12 @@ import com.l2jserver.gameserver.templates.item.L2Item;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.5 $ $Date: 2005/03/27 15:29:33 $
  */
 public class L2TradeList
 {
-	private Map<Integer, L2TradeItem> _items;
-	private int _listId;
+	private final Map<Integer, L2TradeItem> _items;
+	private final int _listId;
 	private String _buystorename, _sellstorename;
 	private boolean _hasLimitedStockItem;
 	private String _npcId;
@@ -66,7 +65,7 @@ public class L2TradeList
 		_items.put(item.getItemId(), item);
 		if (item.hasLimitedStock())
 		{
-			this.setHasLimitedStockItem(true);
+			setHasLimitedStockItem(true);
 		}
 	}
 	
@@ -159,15 +158,8 @@ public class L2TradeList
 	}
 	
 	/*
-	public boolean countDecrease(int itemId)
-	{
-	    L2TradeItem item = _items.get(itemId);
-	    if (item != null)
-	    {
-	        return item.hasLimitedStock();
-	    }
-		return false;
-	}*/
+	 * public boolean countDecrease(int itemId) { L2TradeItem item = _items.get(itemId); if (item != null) { return item.hasLimitedStock(); } return false; }
+	 */
 	
 	public boolean containsItemId(int itemId)
 	{
@@ -176,8 +168,7 @@ public class L2TradeList
 	
 	/**
 	 * Itens representation for trade lists
-	 *
-	 * @author  KenM
+	 * @author KenM
 	 */
 	public static class L2TradeItem
 	{
@@ -189,7 +180,7 @@ public class L2TradeList
 		private long _price;
 		
 		// count related
-		private AtomicLong _currentCount = new AtomicLong();
+		private final AtomicLong _currentCount = new AtomicLong();
 		private long _maxCount = -1;
 		private long _restoreDelay;
 		private long _nextRestoreTime;
@@ -248,9 +239,9 @@ public class L2TradeList
 		 */
 		public long getCurrentCount()
 		{
-			if (this.hasLimitedStock() && this.isPendingStockUpdate())
+			if (hasLimitedStock() && isPendingStockUpdate())
 			{
-				this.restoreInitialCount();
+				restoreInitialCount();
 			}
 			long ret = _currentCount.get();
 			return ret > 0 ? ret : 0;
@@ -263,13 +254,13 @@ public class L2TradeList
 		
 		public void restoreInitialCount()
 		{
-			this.setCurrentCount(this.getMaxCount());
-			_nextRestoreTime = _nextRestoreTime + this.getRestoreDelay();
+			setCurrentCount(getMaxCount());
+			_nextRestoreTime = _nextRestoreTime + getRestoreDelay();
 			
 			// consume until next update is on future
-			if (this.isPendingStockUpdate() && this.getRestoreDelay() > 0)
+			if (isPendingStockUpdate() && (getRestoreDelay() > 0))
 			{
-				_nextRestoreTime = System.currentTimeMillis() + this.getRestoreDelay();
+				_nextRestoreTime = System.currentTimeMillis() + getRestoreDelay();
 			}
 			
 			// exec asynchronously
@@ -302,7 +293,7 @@ public class L2TradeList
 		
 		public boolean hasLimitedStock()
 		{
-			return this.getMaxCount() > -1;
+			return getMaxCount() > -1;
 		}
 		
 		/**
@@ -343,9 +334,10 @@ public class L2TradeList
 			/**
 			 * @see java.lang.Runnable#run()
 			 */
+			@Override
 			public void run()
 			{
-				L2TradeItem.this.saveDataTimer();
+				saveDataTimer();
 			}
 		}
 		

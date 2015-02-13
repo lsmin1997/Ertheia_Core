@@ -19,7 +19,6 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * A simple no summon zone
- *
  * @author JIV
  */
 public class L2NoSummonFriendZone extends L2ZoneType

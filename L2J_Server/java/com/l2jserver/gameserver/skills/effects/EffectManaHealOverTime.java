@@ -32,9 +32,8 @@ public class EffectManaHealOverTime extends L2Effect
 	{
 		super(env, effect);
 	}
-
+	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#effectCanBeStolen()
 	 */
 	@Override
@@ -42,9 +41,8 @@ public class EffectManaHealOverTime extends L2Effect
 	{
 		return true;
 	}
-
+	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -54,20 +52,23 @@ public class EffectManaHealOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		double mp = getEffected().getCurrentMp();
 		double maxmp = getEffected().getMaxMp();
 		mp += calc();
 		if (mp > maxmp)
+		{
 			mp = maxmp;
+		}
 		
 		getEffected().setCurrentMp(mp);
 		StatusUpdate sump = new StatusUpdate(getEffected());

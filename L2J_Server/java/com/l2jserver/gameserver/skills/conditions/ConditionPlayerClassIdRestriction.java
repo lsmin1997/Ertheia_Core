@@ -28,7 +28,6 @@ public class ConditionPlayerClassIdRestriction extends Condition
 	
 	/**
 	 * Instantiates a new condition player class id restriction.
-	 *
 	 * @param classId the class id
 	 */
 	public ConditionPlayerClassIdRestriction(ArrayList<Integer> classId)
@@ -36,14 +35,17 @@ public class ConditionPlayerClassIdRestriction extends Condition
 		_classIds = classId;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
-		return (_classIds.contains(((L2PcInstance)env.player).getClassId().getId()));
+		}
+		return (_classIds.contains(((L2PcInstance) env.player).getClassId().getId()));
 	}
 }

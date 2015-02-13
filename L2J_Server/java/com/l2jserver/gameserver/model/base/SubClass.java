@@ -17,10 +17,8 @@ package com.l2jserver.gameserver.model.base;
 import com.l2jserver.Config;
 
 /**
- * Character Sub-Class Definition
- * <BR>
+ * Character Sub-Class Definition <BR>
  * Used to store key information about a character's sub-class.
- *
  * @author Tempy
  */
 public final class SubClass
@@ -97,7 +95,9 @@ public final class SubClass
 	public void setExp(long expValue)
 	{
 		if (expValue > (Experience.LEVEL[_maxLevel + 1] - 1))
+		{
 			expValue = (Experience.LEVEL[_maxLevel + 1] - 1);
+		}
 		
 		_exp = expValue;
 	}
@@ -115,9 +115,13 @@ public final class SubClass
 	public void setLevel(byte levelValue)
 	{
 		if (levelValue > _maxLevel)
+		{
 			levelValue = _maxLevel;
+		}
 		else if (levelValue < 40)
+		{
 			levelValue = 40;
+		}
 		
 		_level = levelValue;
 	}
@@ -125,7 +129,9 @@ public final class SubClass
 	public void incLevel()
 	{
 		if (getLevel() == _maxLevel)
+		{
 			return;
+		}
 		
 		_level++;
 		setExp(Experience.LEVEL[getLevel()]);
@@ -134,7 +140,9 @@ public final class SubClass
 	public void decLevel()
 	{
 		if (getLevel() == 40)
+		{
 			return;
+		}
 		
 		_level--;
 		setExp(Experience.LEVEL[getLevel()]);

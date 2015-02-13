@@ -17,21 +17,14 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.instancemanager.GraciaSeedsManager;
 
 /**
- * format: 0xfe cd(dddd)
- * FE - packet id
- * A1 00 - packet subid
- * d - seed count
- * d - x pos
- * d - y pos
- * d - z pos
- * d - sys msg no
- *
+ * format: 0xfe cd(dddd) FE - packet id A1 00 - packet subid d - seed count d - x pos d - y pos d - z pos d - sys msg no
  */
 public class ExShowSeedMapInfo extends L2GameServerPacket
 {
 	private static final String _S__FE_A1_EXSHOWSEEDMAPINFO = "[S] FE:A1 ExShowSeedMapInfo";
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#writeImpl()
 	 */
 	@Override

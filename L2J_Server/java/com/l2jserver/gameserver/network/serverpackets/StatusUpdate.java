@@ -22,17 +22,14 @@ import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
- *
- * 01                // Packet Identifier <BR>
- * c6 37 50 40       // ObjectId <BR><BR>
- *
- * 01 00             // Number of Attribute Trame of the Packet <BR><BR>
- *
- * c6 37 50 40       // Attribute Identifier : 01-Level, 02-Experience, 03-STR, 04-DEX, 05-CON, 06-INT, 07-WIT, 08-MEN, 09-Current HP, 0a, Max HP...<BR>
- * cd 09 00 00       // Attribute Value <BR>
- *
- * format   d d(dd)
- *
+ * 01 // Packet Identifier <BR>
+ * c6 37 50 40 // ObjectId <BR>
+ * <BR>
+ * 01 00 // Number of Attribute Trame of the Packet <BR>
+ * <BR>
+ * c6 37 50 40 // Attribute Identifier : 01-Level, 02-Experience, 03-STR, 04-DEX, 05-CON, 06-INT, 07-WIT, 08-MEN, 09-Current HP, 0a, Max HP...<BR>
+ * cd 09 00 00 // Attribute Value <BR>
+ * format d d(dd)
  * @version $Revision: 1.3.2.1.2.5 $ $Date: 2005/03/27 15:29:39 $
  */
 public final class StatusUpdate extends L2GameServerPacket
@@ -73,18 +70,14 @@ public final class StatusUpdate extends L2GameServerPacket
 	public static final int CUR_CP = 0x21;
 	public static final int MAX_CP = 0x22;
 	
-	private int _objectId;
+	private final int _objectId;
 	private int _maxHp = -1;
-	private ArrayList<Attribute> _attributes;
+	private final ArrayList<Attribute> _attributes;
 	
 	static class Attribute
 	{
-		/** id values
-		 * 09 - current health
-		 * 0a - max health
-		 * 0b - current mana
-		 * 0c - max mana
-		 *
+		/**
+		 * id values 09 - current health 0a - max health 0b - current mana 0c - max mana
 		 */
 		public int id;
 		public int value;
@@ -105,7 +98,7 @@ public final class StatusUpdate extends L2GameServerPacket
 		_attributes = new ArrayList<Attribute>();
 		_objectId = objectId;
 		L2Object obj = L2World.getInstance().findObject(objectId);
-		if (obj != null && obj instanceof L2Attackable)
+		if ((obj != null) && (obj instanceof L2Attackable))
 		{
 			_maxHp = ((L2Character) obj).getMaxVisibleHp();
 		}
@@ -120,7 +113,9 @@ public final class StatusUpdate extends L2GameServerPacket
 		_attributes = new ArrayList<Attribute>();
 		_objectId = object.getObjectId();
 		if (object instanceof L2Attackable)
+		{
 			_maxHp = ((L2Character) object).getMaxVisibleHp();
+		}
 	}
 	
 	public void addAttribute(int id, int level)
@@ -128,10 +123,12 @@ public final class StatusUpdate extends L2GameServerPacket
 		if (_maxHp != -1)
 		{
 			if (id == MAX_HP)
+			{
 				level = HP_MOD;
+			}
 			else if (id == CUR_HP)
 			{
-				level = (int) ((level / (float)_maxHp) * HP_MOD);
+				level = (int) ((level / (float) _maxHp) * HP_MOD);
 			}
 		}
 		_attributes.add(new Attribute(id, level));
@@ -144,14 +141,15 @@ public final class StatusUpdate extends L2GameServerPacket
 		writeD(_objectId);
 		writeD(_attributes.size());
 		
-		for (Attribute temp: _attributes)
+		for (Attribute temp : _attributes)
 		{
 			writeD(temp.id);
 			writeD(temp.value);
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

@@ -21,8 +21,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExPutEnchantTargetItemResu
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class RequestExTryToPutEnchantTargetItem extends AbstractEnchantPacket
 {
@@ -56,18 +55,24 @@ public class RequestExTryToPutEnchantTargetItem extends AbstractEnchantPacket
 		L2PcInstance activeChar = getClient().getActiveChar();
 		
 		if (_objectId == 0)
+		{
 			return;
+		}
 		
 		if (activeChar != null)
 		{
 			if (activeChar.isEnchanting())
+			{
 				return;
+			}
 			
 			L2ItemInstance item = activeChar.getInventory().getItemByObjectId(_objectId);
 			L2ItemInstance scroll = activeChar.getActiveEnchantItem();
 			
-			if (item == null || scroll == null)
+			if ((item == null) || (scroll == null))
+			{
 				return;
+			}
 			
 			// template for scroll
 			EnchantScroll scrollTemplate = getEnchantScroll(scroll);

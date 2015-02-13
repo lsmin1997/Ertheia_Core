@@ -31,11 +31,9 @@ import com.l2jserver.gameserver.network.serverpackets.EtcStatusUpdate;
 import com.l2jserver.util.Rnd;
 import com.l2jserver.util.StringUtil;
 
-
 /**
  * another type of damage zone with skills
- *
- * @author  kerberos
+ * @author kerberos
  */
 public class L2EffectZone extends L2ZoneType
 {
@@ -47,8 +45,6 @@ public class L2EffectZone extends L2ZoneType
 	private boolean _isShowDangerIcon;
 	private Future<?> _task;
 	private FastMap<Integer, Integer> _skills;
-	
-	
 	
 	public L2EffectZone(int id)
 	{
@@ -97,7 +93,9 @@ public class L2EffectZone extends L2ZoneType
 			{
 				String[] skillSplit = skill.split("-");
 				if (skillSplit.length != 2)
-					_log.warning(StringUtil.concat(getClass().getSimpleName()+": invalid config property -> skillsIdLvl \"", skill, "\""));
+				{
+					_log.warning(StringUtil.concat(getClass().getSimpleName() + ": invalid config property -> skillsIdLvl \"", skill, "\""));
+				}
 				else
 				{
 					try
@@ -108,7 +106,7 @@ public class L2EffectZone extends L2ZoneType
 					{
 						if (!skill.isEmpty())
 						{
-							_log.warning(StringUtil.concat(getClass().getSimpleName()+": invalid config property -> skillsIdLvl \"", skillSplit[0], "\"", skillSplit[1]));
+							_log.warning(StringUtil.concat(getClass().getSimpleName() + ": invalid config property -> skillsIdLvl \"", skillSplit[0], "\"", skillSplit[1]));
 						}
 					}
 				}
@@ -119,7 +117,9 @@ public class L2EffectZone extends L2ZoneType
 			_isShowDangerIcon = Boolean.parseBoolean(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override
@@ -129,10 +129,12 @@ public class L2EffectZone extends L2ZoneType
 		{
 			if (_task == null)
 			{
-				synchronized(this)
+				synchronized (this)
 				{
 					if (_task == null)
+					{
 						_task = ThreadPoolManager.getInstance().scheduleGeneralAtFixedRate(new ApplySkill(), _initialDelay, _reuse);
+					}
 				}
 			}
 		}
@@ -157,10 +159,12 @@ public class L2EffectZone extends L2ZoneType
 			{
 				character.setInsideZone(L2Character.ZONE_DANGERAREA, false);
 				if (!character.isInsideZone(L2Character.ZONE_DANGERAREA))
+				{
 					character.sendPacket(new EtcStatusUpdate((L2PcInstance) character));
+				}
 			}
 		}
-		if (_characterList.isEmpty() && _task != null)
+		if (_characterList.isEmpty() && (_task != null))
 		{
 			_task.cancel(true);
 			_task = null;
@@ -191,26 +195,32 @@ public class L2EffectZone extends L2ZoneType
 		}
 		if (_skills == null)
 		{
-			synchronized(this)
+			synchronized (this)
 			{
 				if (_skills == null)
+				{
 					_skills = new FastMap<Integer, Integer>(3).shared();
+				}
 			}
 		}
 		_skills.put(skillId, skillLvL);
-		//_log.info("Zone: "+this+" adding skill: "+skillId+" lvl: "+skillLvL);
+		// _log.info("Zone: "+this+" adding skill: "+skillId+" lvl: "+skillLvL);
 	}
 	
 	public void removeSkill(int skillId)
 	{
 		if (_skills != null)
+		{
 			_skills.remove(skillId);
+		}
 	}
 	
 	public void clearSkills()
 	{
 		if (_skills != null)
+		{
 			_skills.clear();
+		}
 	}
 	
 	public void setZoneEnabled(boolean val)
@@ -220,10 +230,14 @@ public class L2EffectZone extends L2ZoneType
 	
 	public int getSkillLevel(int skillId)
 	{
-		if (_skills == null || !_skills.containsKey(skillId))
+		if ((_skills == null) || !_skills.containsKey(skillId))
+		{
 			return 0;
+		}
 		else
+		{
 			return _skills.get(skillId);
+		}
 	}
 	
 	protected Collection<L2Character> getCharacterList()
@@ -236,7 +250,9 @@ public class L2EffectZone extends L2ZoneType
 		ApplySkill()
 		{
 			if (_skills == null)
+			{
 				throw new IllegalStateException("No skills defined.");
+			}
 		}
 		
 		@Override
@@ -244,18 +260,22 @@ public class L2EffectZone extends L2ZoneType
 		{
 			if (isEnabled())
 			{
-				for (L2Character temp : L2EffectZone.this.getCharacterList())
+				for (L2Character temp : getCharacterList())
 				{
-					if (temp != null && !temp.isDead())
+					if ((temp != null) && !temp.isDead())
 					{
 						if (Rnd.get(100) < getChance())
 						{
 							for (Entry<Integer, Integer> e : _skills.entrySet())
 							{
 								L2Skill skill = getSkill(e.getKey(), e.getValue());
-								if (_bypassConditions || skill != null && skill.checkCondition(temp, temp, false))
+								if (_bypassConditions || ((skill != null) && skill.checkCondition(temp, temp, false)))
+								{
 									if (temp.getFirstEffect(e.getKey()) == null)
+									{
 										skill.getEffects(temp, temp);
+									}
+								}
 							}
 						}
 					}

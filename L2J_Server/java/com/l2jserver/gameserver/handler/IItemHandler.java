@@ -19,11 +19,10 @@ import java.util.logging.Logger;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.actor.L2Playable;
 
-
 /**
- * Mother class of all itemHandlers.<BR><BR>
+ * Mother class of all itemHandlers.<BR>
+ * <BR>
  * an IItemHandler implementation has to be stateless
- *
  * @version $Revision: 1.1.4.3 $ $Date: 2005/03/27 15:30:09 $
  */
 

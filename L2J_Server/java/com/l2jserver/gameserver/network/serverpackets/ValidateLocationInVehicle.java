@@ -16,22 +16,22 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.util.Point3D;
+
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class ValidateLocationInVehicle extends L2GameServerPacket
 {
 	private static final String _S__80_ValidateLocationInVehicle = "[S] 80 ValidateLocationInVehicle";
 	
-	private int _charObjId;
-	private int _boatObjId;
-	private int _heading;
-	private Point3D _pos;
+	private final int _charObjId;
+	private final int _boatObjId;
+	private final int _heading;
+	private final Point3D _pos;
 	
 	/**
-	 * 0x80 ValidateLocationInVehicle         hdd
+	 * 0x80 ValidateLocationInVehicle hdd
 	 * @param _characters
 	 */
 	public ValidateLocationInVehicle(L2PcInstance player)
@@ -54,7 +54,8 @@ public class ValidateLocationInVehicle extends L2GameServerPacket
 		writeD(_heading);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

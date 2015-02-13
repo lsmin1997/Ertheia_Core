@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Author: VISTALL
- *
  */
 public class ExSubPledgeSkillAdd extends L2GameServerPacket
 {
@@ -41,7 +40,8 @@ public class ExSubPledgeSkillAdd extends L2GameServerPacket
 		writeD(_skillLevel);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#getType()
 	 */
 	@Override

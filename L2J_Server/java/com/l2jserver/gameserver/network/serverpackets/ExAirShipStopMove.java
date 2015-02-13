@@ -24,7 +24,7 @@ public class ExAirShipStopMove extends L2GameServerPacket
 	
 	private final int _playerId, _airShipId, _x, _y, _z;
 	
-	public ExAirShipStopMove (L2PcInstance player, L2AirShipInstance ship, int x, int y, int z)
+	public ExAirShipStopMove(L2PcInstance player, L2AirShipInstance ship, int x, int y, int z)
 	{
 		_playerId = player.getObjectId();
 		_airShipId = ship.getObjectId();

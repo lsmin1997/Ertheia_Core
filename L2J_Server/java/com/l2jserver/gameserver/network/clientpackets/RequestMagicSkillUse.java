@@ -23,10 +23,8 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.7.2.1.2.3 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestMagicSkillUse extends L2GameClientPacket
@@ -41,9 +39,9 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 	@Override
 	protected void readImpl()
 	{
-		_magicId      = readD();              // Identifier of the used skill
-		_ctrlPressed  = readD() != 0;         // True if it's a ForceAttack : Ctrl pressed
-		_shiftPressed = readC() != 0;         // True if Shift pressed
+		_magicId = readD(); // Identifier of the used skill
+		_ctrlPressed = readD() != 0; // True if it's a ForceAttack : Ctrl pressed
+		_shiftPressed = readC() != 0; // True if Shift pressed
 	}
 	
 	@Override
@@ -53,7 +51,9 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 		L2PcInstance activeChar = getClient().getActiveChar();
 		
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		// Get the level of the used skill
 		int level = activeChar.getSkillLevel(_magicId);
@@ -69,8 +69,7 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 		// Check the validity of the skill
 		if (skill != null)
 		{
-			if ((activeChar.isTransformed() || activeChar.isInStance())
-					&& !activeChar.containsAllowedTransformSkill(skill.getId()))
+			if ((activeChar.isTransformed() || activeChar.isInStance()) && !activeChar.containsAllowedTransformSkill(skill.getId()))
 			{
 				activeChar.sendPacket(ActionFailed.STATIC_PACKET);
 				return;
@@ -78,15 +77,19 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 			// _log.fine("	skill:"+skill.getName() + " level:"+skill.getLevel() + " passive:"+skill.isPassive());
 			// _log.fine("	range:"+skill.getCastRange()+" targettype:"+skill.getTargetType()+" optype:"+skill.getOperateType()+" power:"+skill.getPower());
 			// _log.fine("	reusedelay:"+skill.getReuseDelay()+" hittime:"+skill.getHitTime());
-			// _log.fine("	currentState:"+activeChar.getCurrentState());	//for debug
+			// _log.fine("	currentState:"+activeChar.getCurrentState()); //for debug
 			
 			// If Alternate rule Karma punishment is set to true, forbid skill Return to player with Karma
-			if (skill.getSkillType() == L2SkillType.RECALL && !Config.ALT_GAME_KARMA_PLAYER_CAN_TELEPORT && activeChar.getKarma() > 0)
+			if ((skill.getSkillType() == L2SkillType.RECALL) && !Config.ALT_GAME_KARMA_PLAYER_CAN_TELEPORT && (activeChar.getKarma() > 0))
+			{
 				return;
+			}
 			
 			// players mounted on pets cannot use any toggle skills
 			if (skill.isToggle() && activeChar.isMounted())
+			{
 				return;
+			}
 			// activeChar.stopMove();
 			activeChar.useMagic(skill, _ctrlPressed, _shiftPressed);
 		}
@@ -97,7 +100,8 @@ public final class RequestMagicSkillUse extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

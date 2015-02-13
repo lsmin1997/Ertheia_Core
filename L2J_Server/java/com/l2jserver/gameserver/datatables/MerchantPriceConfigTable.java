@@ -36,8 +36,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2MerchantInstance;
 import com.l2jserver.gameserver.model.entity.Castle;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class MerchantPriceConfigTable implements InstanceListManager
 {
@@ -50,7 +49,7 @@ public class MerchantPriceConfigTable implements InstanceListManager
 	
 	private static final String MPCS_FILE = "MerchantPriceConfig.xml";
 	
-	private Map<Integer, MerchantPriceConfig> _mpcs = new FastMap<Integer, MerchantPriceConfig>();
+	private final Map<Integer, MerchantPriceConfig> _mpcs = new FastMap<Integer, MerchantPriceConfig>();
 	private MerchantPriceConfig _defaultMpc;
 	
 	private MerchantPriceConfigTable()
@@ -98,7 +97,7 @@ public class MerchantPriceConfigTable implements InstanceListManager
 			MerchantPriceConfig mpc;
 			for (n = n.getFirstChild(); n != null; n = n.getNextSibling())
 			{
-				mpc = this.parseMerchantPriceConfig(n);
+				mpc = parseMerchantPriceConfig(n);
 				if (mpc != null)
 				{
 					_mpcs.put(mpc.getId(), mpc);
@@ -171,11 +170,12 @@ public class MerchantPriceConfigTable implements InstanceListManager
 		return null;
 	}
 	
+	@Override
 	public void loadInstances()
 	{
 		try
 		{
-			this.loadXML();
+			loadXML();
 			_log.info("MerchantPriceConfigTable: Loaded " + _mpcs.size() + " merchant price configs.");
 		}
 		catch (Exception e)
@@ -184,6 +184,7 @@ public class MerchantPriceConfigTable implements InstanceListManager
 		}
 	}
 	
+	@Override
 	public void updateReferences()
 	{
 		for (final MerchantPriceConfig mpc : _mpcs.values())
@@ -192,14 +193,13 @@ public class MerchantPriceConfigTable implements InstanceListManager
 		}
 	}
 	
+	@Override
 	public void activateInstances()
 	{
 	}
 	
 	/**
-	 * 
-	 *
-	 * @author  KenM
+	 * @author KenM
 	 */
 	public static final class MerchantPriceConfig
 	{
@@ -274,17 +274,17 @@ public class MerchantPriceConfigTable implements InstanceListManager
 		
 		public double getCastleTaxRate()
 		{
-			return this.hasCastle() ? this.getCastle().getTaxRate() : 0.0;
+			return hasCastle() ? getCastle().getTaxRate() : 0.0;
 		}
 		
 		public int getTotalTax()
 		{
-			return this.hasCastle() ? (getCastle().getTaxPercent() + getBaseTax()) : getBaseTax();
+			return hasCastle() ? (getCastle().getTaxPercent() + getBaseTax()) : getBaseTax();
 		}
 		
 		public double getTotalTaxRate()
 		{
-			return this.getTotalTax() / 100.0;
+			return getTotalTax() / 100.0;
 		}
 		
 		public void updateReferences()

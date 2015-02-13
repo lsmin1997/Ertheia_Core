@@ -20,7 +20,6 @@ import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class PlayerLogout extends BaseSendablePacket
 {
@@ -30,7 +29,8 @@ public class PlayerLogout extends BaseSendablePacket
 		writeS(player);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

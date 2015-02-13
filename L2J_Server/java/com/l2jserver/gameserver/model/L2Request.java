@@ -22,12 +22,11 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class manages requests (transactions) between two L2PcInstance.
- *
- * @author  kriau
+ * @author kriau
  */
 public class L2Request
 {
-	private static final int REQUEST_TIMEOUT = 15; //in secs
+	private static final int REQUEST_TIMEOUT = 15; // in secs
 	
 	protected L2PcInstance _player;
 	protected L2PcInstance _partner;
@@ -49,7 +48,8 @@ public class L2Request
 	}
 	
 	/**
-	 * Set the L2PcInstance member of a transaction (ex : FriendInvite, JoinAlly, JoinParty...).<BR><BR>
+	 * Set the L2PcInstance member of a transaction (ex : FriendInvite, JoinAlly, JoinParty...).<BR>
+	 * <BR>
 	 */
 	private synchronized void setPartner(L2PcInstance partner)
 	{
@@ -57,7 +57,8 @@ public class L2Request
 	}
 	
 	/**
-	 * Return the L2PcInstance member of a transaction (ex : FriendInvite, JoinAlly, JoinParty...).<BR><BR>
+	 * Return the L2PcInstance member of a transaction (ex : FriendInvite, JoinAlly, JoinParty...).<BR>
+	 * <BR>
 	 */
 	public L2PcInstance getPartner()
 	{
@@ -65,7 +66,8 @@ public class L2Request
 	}
 	
 	/**
-	 * Set the packet incomed from requestor.<BR><BR>
+	 * Set the packet incomed from requestor.<BR>
+	 * <BR>
 	 */
 	private synchronized void setRequestPacket(L2GameClientPacket packet)
 	{
@@ -73,7 +75,8 @@ public class L2Request
 	}
 	
 	/**
-	 * Return the packet originally incomed from requestor.<BR><BR>
+	 * Return the packet originally incomed from requestor.<BR>
+	 * <BR>
 	 */
 	public L2GameClientPacket getRequestPacket()
 	{
@@ -81,7 +84,8 @@ public class L2Request
 	}
 	
 	/**
-	 * Checks if request can be made and in success case puts both PC on request state.<BR><BR>
+	 * Checks if request can be made and in success case puts both PC on request state.<BR>
+	 * <BR>
 	 */
 	public synchronized boolean setRequest(L2PcInstance partner, L2GameClientPacket packet)
 	{
@@ -117,18 +121,13 @@ public class L2Request
 	{
 		_isRequestor = isRequestor ? true : false;
 		_isAnswerer = isRequestor ? false : true;
-		ThreadPoolManager.getInstance().scheduleGeneral(new Runnable()
-		{
-			public void run()
-			{
-				clear();
-			}
-		}, REQUEST_TIMEOUT * 1000);
+		ThreadPoolManager.getInstance().scheduleGeneral(() -> clear(), REQUEST_TIMEOUT * 1000);
 		
 	}
 	
 	/**
-	 * Clears PC request state. Should be called after answer packet receive.<BR><BR>
+	 * Clears PC request state. Should be called after answer packet receive.<BR>
+	 * <BR>
 	 */
 	public void onRequestResponse()
 	{
@@ -140,7 +139,8 @@ public class L2Request
 	}
 	
 	/**
-	 * Return True if a transaction is in progress.<BR><BR>
+	 * Return True if a transaction is in progress.<BR>
+	 * <BR>
 	 */
 	public boolean isProcessingRequest()
 	{

@@ -34,7 +34,6 @@ import com.l2jserver.gameserver.network.L2GameClient;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.8.2.4.2.6 $ $Date: 2005/04/06 16:13:46 $
  */
 public class CharSelectionInfo extends L2GameServerPacket
@@ -42,10 +41,11 @@ public class CharSelectionInfo extends L2GameServerPacket
 	// d SdSddddddddddffddddddddddddddddddddddddddddddddddddddddddddddffd
 	private static final String _S__09_CHARSELECTINFO = "[S] 09 CharSelectInfo";
 	private static Logger _log = Logger.getLogger(CharSelectionInfo.class.getName());
-	private String _loginName;
-	private int _sessionId, _activeId;
-	private CharSelectInfoPackage[] _characterPackages;
-
+	private final String _loginName;
+	private final int _sessionId;
+	private int _activeId;
+	private final CharSelectInfoPackage[] _characterPackages;
+	
 	/**
 	 * Constructor for CharSelectionInfo.
 	 * @param loginName
@@ -112,9 +112,13 @@ public class CharSelectionInfo extends L2GameServerPacket
 			writeD(charInfoPackage.getRace());
 			
 			if (charInfoPackage.getClassId() == charInfoPackage.getBaseClassId())
+			{
 				writeD(charInfoPackage.getClassId());
+			}
 			else
+			{
 				writeD(charInfoPackage.getBaseClassId());
+			}
 			
 			writeD(0x01); // active ??
 			
@@ -178,25 +182,31 @@ public class CharSelectionInfo extends L2GameServerPacket
 			long deleteTime = charInfoPackage.getDeleteTimer();
 			int deletedays = 0;
 			if (deleteTime > 0)
-				deletedays = (int)((deleteTime-System.currentTimeMillis())/1000);
+			{
+				deletedays = (int) ((deleteTime - System.currentTimeMillis()) / 1000);
+			}
 			writeD(deletedays); // days left before
 			// delete .. if != 0
 			// then char is inactive
 			writeD(charInfoPackage.getClassId());
 			if (i == _activeId)
+			{
 				writeD(0x01);
+			}
 			else
-				writeD(0x00); //c3 auto-select char
+			{
+				writeD(0x00); // c3 auto-select char
+			}
 			
 			writeC(charInfoPackage.getEnchantEffect() > 127 ? 127 : charInfoPackage.getEnchantEffect());
 			
 			writeD(charInfoPackage.getAugmentationId());
 			
-			//writeD(charInfoPackage.getTransformId()); // Used to display Transformations
+			// writeD(charInfoPackage.getTransformId()); // Used to display Transformations
 			writeD(0x00); // Currently on retail when you are on character select you don't see your transformation.
 			
 			// Freya by Vistall:
-			writeD(0); // npdid - 16024    Tame Tiny Baby Kookaburra        A9E89C
+			writeD(0); // npdid - 16024 Tame Tiny Baby Kookaburra A9E89C
 			writeD(0); // level
 			writeD(0); // ?
 			writeD(0); // food? - 1200
@@ -204,7 +214,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 			writeF(0); // cur Hp
 			
 			// High Five by Vistall:
-			//writeD(charInfoPackage.getVitalityPoints());
+			// writeD(charInfoPackage.getVitalityPoints());
 		}
 	}
 	
@@ -224,8 +234,10 @@ public class CharSelectionInfo extends L2GameServerPacket
 			while (charList.next())// fills the package
 			{
 				charInfopackage = restoreChar(charList);
-				if ( charInfopackage != null )
+				if (charInfopackage != null)
+				{
 					characterList.add(charInfopackage);
+				}
 			}
 			
 			charList.close();
@@ -272,7 +284,13 @@ public class CharSelectionInfo extends L2GameServerPacket
 		}
 		finally
 		{
-			try { L2DatabaseFactory.close(con); } catch (Exception e) {}
+			try
+			{
+				L2DatabaseFactory.close(con);
+			}
+			catch (Exception e)
+			{
+			}
 		}
 	}
 	
@@ -288,8 +306,10 @@ public class CharSelectionInfo extends L2GameServerPacket
 			if (System.currentTimeMillis() > deletetime)
 			{
 				L2Clan clan = ClanTable.getInstance().getClan(chardata.getInt("clanid"));
-				if(clan != null)
+				if (clan != null)
+				{
 					clan.removeClanMember(objectId, 0);
+				}
 				
 				L2GameClient.deleteCharByObjId(objectId);
 				return null;
@@ -323,44 +343,58 @@ public class CharSelectionInfo extends L2GameServerPacket
 		charInfopackage.setX(chardata.getInt("x"));
 		charInfopackage.setY(chardata.getInt("y"));
 		charInfopackage.setZ(chardata.getInt("z"));
-
+		
 		if (Config.L2JMOD_MULTILANG_ENABLE)
 		{
 			String lang = chardata.getString("language");
 			if (!Config.L2JMOD_MULTILANG_ALLOWED.contains(lang))
+			{
 				lang = Config.L2JMOD_MULTILANG_DEFAULT;
+			}
 			charInfopackage.setHtmlPrefix("data/lang/" + lang + "/");
 		}
-
+		
 		// if is in subclass, load subclass exp, sp, lvl info
-		if(baseClassId != activeClassId)
+		if (baseClassId != activeClassId)
+		{
 			loadCharacterSubclassInfo(charInfopackage, objectId, activeClassId);
+		}
 		
 		charInfopackage.setClassId(activeClassId);
 		
 		// Get the augmentation id for equipped weapon
 		int weaponObjId = charInfopackage.getPaperdollObjectId(Inventory.PAPERDOLL_RHAND);
 		if (weaponObjId < 1)
+		{
 			weaponObjId = charInfopackage.getPaperdollObjectId(Inventory.PAPERDOLL_RHAND);
+		}
 		
 		// Check Transformation
 		int cursedWeaponId = CursedWeaponsManager.getInstance().checkOwnsWeaponId(objectId);
 		if (cursedWeaponId > 0)
 		{
 			// cursed weapon transformations
-			if(cursedWeaponId == 8190)
+			if (cursedWeaponId == 8190)
+			{
 				charInfopackage.setTransformId(301);
-			else if(cursedWeaponId == 8689)
+			}
+			else if (cursedWeaponId == 8689)
+			{
 				charInfopackage.setTransformId(302);
+			}
 			else
+			{
 				charInfopackage.setTransformId(0);
+			}
 		}
 		else if (chardata.getInt("transform_id") > 0)
 		{
 			charInfopackage.setTransformId(chardata.getInt("transform_id"));
 		}
 		else
+		{
 			charInfopackage.setTransformId(0);
+		}
 		
 		if (weaponObjId > 0)
 		{
@@ -384,20 +418,29 @@ public class CharSelectionInfo extends L2GameServerPacket
 			{
 				_log.log(Level.WARNING, "Could not restore augmentation info: " + e.getMessage(), e);
 			}
-			finally { try { L2DatabaseFactory.close(con); } catch (Exception e) {} }
+			finally
+			{
+				try
+				{
+					L2DatabaseFactory.close(con);
+				}
+				catch (Exception e)
+				{
+				}
+			}
 		}
 		
 		/*
-		 * Check if the base class is set to zero and alse doesn't match
-		 * with the current active class, otherwise send the base class ID.
-		 *
-		 * This prevents chars created before base class was introduced
-		 * from being displayed incorrectly.
+		 * Check if the base class is set to zero and alse doesn't match with the current active class, otherwise send the base class ID. This prevents chars created before base class was introduced from being displayed incorrectly.
 		 */
-		if (baseClassId == 0 && activeClassId > 0)
+		if ((baseClassId == 0) && (activeClassId > 0))
+		{
 			charInfopackage.setBaseClassId(activeClassId);
+		}
 		else
+		{
 			charInfopackage.setBaseClassId(baseClassId);
+		}
 		
 		charInfopackage.setDeleteTimer(deletetime);
 		charInfopackage.setLastAccess(chardata.getLong("lastAccess"));

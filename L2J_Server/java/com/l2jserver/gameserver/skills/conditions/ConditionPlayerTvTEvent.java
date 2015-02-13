@@ -27,7 +27,6 @@ public class ConditionPlayerTvTEvent extends Condition
 	
 	/**
 	 * Instantiates a new condition player tv t event.
-	 *
 	 * @param val the val
 	 */
 	public ConditionPlayerTvTEvent(boolean val)
@@ -35,15 +34,18 @@ public class ConditionPlayerTvTEvent extends Condition
 		_val = val;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		final L2PcInstance player = env.player.getActingPlayer();
-		if (player == null || !TvTEvent.isStarted())
+		if ((player == null) || !TvTEvent.isStarted())
+		{
 			return !_val;
+		}
 		
 		return (TvTEvent.isPlayerParticipant(player.getObjectId()) == _val);
 	}

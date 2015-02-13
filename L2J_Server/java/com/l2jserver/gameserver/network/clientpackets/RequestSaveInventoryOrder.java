@@ -22,10 +22,8 @@ import com.l2jserver.gameserver.model.L2ItemInstance.ItemLocation;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.itemcontainer.Inventory;
 
-
 /**
  * Format:(ch) d[dd]
- * 
  * @author -Wooden-
  */
 public final class RequestSaveInventoryOrder extends L2GameClientPacket
@@ -33,7 +31,7 @@ public final class RequestSaveInventoryOrder extends L2GameClientPacket
 	private List<InventoryOrder> _order;
 	
 	/** client limit */
-	private static final int LIMIT  = 125;
+	private static final int LIMIT = 125;
 	
 	/**
 	 * @see com.l2jserver.gameserver.network.clientpackets.L2GameClientPacket#readImpl()
@@ -58,14 +56,14 @@ public final class RequestSaveInventoryOrder extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		L2PcInstance player = this.getClient().getActiveChar();
+		L2PcInstance player = getClient().getActiveChar();
 		if (player != null)
 		{
 			Inventory inventory = player.getInventory();
 			for (InventoryOrder order : _order)
 			{
 				L2ItemInstance item = inventory.getItemByObjectId(order.objectID);
-				if (item != null && item.getLocation() == ItemLocation.INVENTORY)
+				if ((item != null) && (item.getLocation() == ItemLocation.INVENTORY))
 				{
 					item.setLocation(ItemLocation.INVENTORY, order.order);
 				}

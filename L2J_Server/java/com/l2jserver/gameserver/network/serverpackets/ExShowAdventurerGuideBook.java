@@ -16,7 +16,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: ch (trigger)
- * @author  KenM
+ * @author KenM
  */
 public class ExShowAdventurerGuideBook extends L2GameServerPacket
 {

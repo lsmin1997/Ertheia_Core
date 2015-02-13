@@ -24,10 +24,9 @@ import com.l2jserver.util.StringUtil;
 
 /**
  * This class is dedicated to the management of EtcItem.
- *
  * @version $Revision: 1.2.2.1.2.3 $ $Date: 2005/03/27 15:30:10 $
  */
-public final class L2EtcItem  extends L2Item
+public final class L2EtcItem extends L2Item
 {
 	// private final String[] _skill;
 	private String _handler;
@@ -61,21 +60,27 @@ public final class L2EtcItem  extends L2Item
 		}
 		
 		if (is_ex_immediate_effect())
+		{
 			_type = L2EtcItemType.HERB;
+		}
 		
 		_type1 = L2Item.TYPE1_ITEM_QUESTITEM_ADENA;
 		_type2 = L2Item.TYPE2_OTHER; // default is other
 		
 		if (isQuestItem())
+		{
 			_type2 = L2Item.TYPE2_QUEST;
-		else if (getItemId() == PcInventory.ADENA_ID || getItemId() == PcInventory.ANCIENT_ADENA_ID)
+		}
+		else if ((getItemId() == PcInventory.ADENA_ID) || (getItemId() == PcInventory.ANCIENT_ADENA_ID))
+		{
 			_type2 = L2Item.TYPE2_MONEY;
+		}
 		
-		_handler = set.getString("handler", null);  // ! null !
+		_handler = set.getString("handler", null); // ! null !
 		_sharedReuseGroup = set.getInteger("shared_reuse_group", -1);
 		_isBlessed = set.getBool("blessed", false);
 		
-		//extractable
+		// extractable
 		String capsuled_items = set.getString("capsuled_items", null);
 		if (capsuled_items != null)
 		{
@@ -84,11 +89,13 @@ public final class L2EtcItem  extends L2Item
 			for (String part : split)
 			{
 				if (part.trim().isEmpty())
+				{
 					continue;
-				String[] data =  part.split(",");
+				}
+				String[] data = part.split(",");
 				if (data.length != 4)
 				{
-					_log.info(StringUtil.concat("> Couldnt parse ", part, " in capsuled_items! item ", this.toString()));
+					_log.info(StringUtil.concat("> Couldnt parse ", part, " in capsuled_items! item ", toString()));
 					continue;
 				}
 				int itemId = Integer.parseInt(data[0]);
@@ -97,7 +104,7 @@ public final class L2EtcItem  extends L2Item
 				double chance = Double.parseDouble(data[3]);
 				if (max < min)
 				{
-					_log.info(StringUtil.concat("> Max amount < Min amount in ", part, ", item ",this.toString()));
+					_log.info(StringUtil.concat("> Max amount < Min amount in ", part, ", item ", toString()));
 					continue;
 				}
 				L2ExtractableProduct product = new L2ExtractableProduct(itemId, min, max, chance);
@@ -105,13 +112,17 @@ public final class L2EtcItem  extends L2Item
 			}
 			((ArrayList<?>) _extractableItems).trimToSize();
 			
-			//check for handler
+			// check for handler
 			if (_handler == null)
-				//_log.warning("Item "+this+ " define capsuled_items but missing handler.");
+			{
+				// _log.warning("Item "+this+ " define capsuled_items but missing handler.");
 				_handler = "ExtractableItems";
+			}
 		}
-		else 
+		else
+		{
 			_extractableItems = null;
+		}
 	}
 	
 	/**
@@ -154,7 +165,6 @@ public final class L2EtcItem  extends L2Item
 	}
 	
 	/**
-	 * 
 	 * @return
 	 */
 	public int getSharedReuseGroup()
@@ -163,14 +173,13 @@ public final class L2EtcItem  extends L2Item
 	}
 	
 	/**
-	 * 
 	 * @return
 	 */
 	public final boolean isBlessed()
 	{
 		return _isBlessed;
 	}
-
+	
 	/**
 	 * @return the _extractable_items
 	 */

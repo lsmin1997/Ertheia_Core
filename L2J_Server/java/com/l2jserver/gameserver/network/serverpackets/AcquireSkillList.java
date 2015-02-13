@@ -29,17 +29,17 @@ public final class AcquireSkillList extends L2GameServerPacket
 	 */
 	public enum SkillType
 	{
-		ClassTransform, //0
-		Fishing, //1
-		Pledge, //2
-		SubPledge, //3
-		Transfer, //4
-		SubClass, //5
-		Collect, //6
+		ClassTransform, // 0
+		Fishing, // 1
+		Pledge, // 2
+		SubPledge, // 3
+		Transfer, // 4
+		SubClass, // 5
+		Collect, // 6
 	}
 	
 	private FastList<Skill> _skills;
-	private SkillType _skillType;
+	private final SkillType _skillType;
 	
 	/**
 	 * Private class containing learning skill information.
@@ -80,7 +80,9 @@ public final class AcquireSkillList extends L2GameServerPacket
 	protected void writeImpl()
 	{
 		if (_skills == null)
+		{
 			return;
+		}
 		
 		writeC(0x90);
 		writeD(_skillType.ordinal());
@@ -95,7 +97,7 @@ public final class AcquireSkillList extends L2GameServerPacket
 			writeD(temp.requirements);
 			if (_skillType == SkillType.SubPledge)
 			{
-				writeD(0); //TODO: ?
+				writeD(0); // TODO: ?
 			}
 		}
 	}

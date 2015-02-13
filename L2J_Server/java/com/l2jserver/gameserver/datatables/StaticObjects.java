@@ -35,7 +35,7 @@ public class StaticObjects
 {
 	private static Logger _log = Logger.getLogger(StaticObjects.class.getName());
 	
-	private TIntObjectHashMap<L2StaticObjectInstance> _staticObjects;
+	private final TIntObjectHashMap<L2StaticObjectInstance> _staticObjects;
 	
 	public static StaticObjects getInstance()
 	{
@@ -60,8 +60,10 @@ public class StaticObjects
 			String line = null;
 			while ((line = lnr.readLine()) != null)
 			{
-				if (line.trim().length() == 0 || line.startsWith("#"))
+				if ((line.trim().length() == 0) || line.startsWith("#"))
+				{
 					continue;
+				}
 				
 				L2StaticObjectInstance obj = parse(line);
 				_staticObjects.put(obj.getStaticObjectId(), obj);
@@ -91,7 +93,7 @@ public class StaticObjects
 	{
 		StringTokenizer st = new StringTokenizer(line, ";");
 		
-		st.nextToken(); //Pass over static object name (not used in server)
+		st.nextToken(); // Pass over static object name (not used in server)
 		
 		int id = Integer.parseInt(st.nextToken());
 		int x = Integer.parseInt(st.nextToken());
@@ -120,7 +122,7 @@ public class StaticObjects
 		npcDat.set("baseEvasRate", 38);
 		npcDat.set("baseCritRate", 38);
 		
-		//npcDat.set("name", "");
+		// npcDat.set("name", "");
 		npcDat.set("collision_radius", 10);
 		npcDat.set("collision_height", 10);
 		npcDat.set("sex", "male");

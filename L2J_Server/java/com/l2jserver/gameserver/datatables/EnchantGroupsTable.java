@@ -31,7 +31,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.13.2.2.2.8 $ $Date: 2005/04/06 16:13:25 $
  */
 public class EnchantGroupsTable
@@ -46,14 +45,13 @@ public class EnchantGroupsTable
 	
 	private static Logger _log = Logger.getLogger(EnchantGroupsTable.class.getName());
 	
-	private TIntObjectHashMap<L2EnchantSkillGroup> _enchantSkillGroups; //enchant skill group
-	private TIntObjectHashMap<L2EnchantSkillLearn> _enchantSkillTrees; //enchant skill list
+	private TIntObjectHashMap<L2EnchantSkillGroup> _enchantSkillGroups; // enchant skill group
+	private TIntObjectHashMap<L2EnchantSkillLearn> _enchantSkillTrees; // enchant skill list
 	
 	public static EnchantGroupsTable getInstance()
 	{
 		return SingletonHolder._instance;
 	}
-	
 	
 	private EnchantGroupsTable()
 	{
@@ -98,7 +96,9 @@ public class EnchantGroupsTable
 					byte rate85 = enchantGroups.getByte("success_rate85");
 					
 					if (prevGroupId != id)
+					{
 						prevGroupId = id;
+					}
 					
 					L2EnchantSkillGroup group = _enchantSkillGroups.get(id);
 					if (group == null)
@@ -151,9 +151,9 @@ public class EnchantGroupsTable
 	
 	public L2EnchantSkillLearn getSkillEnchantmentForSkill(L2Skill skill)
 	{
-		L2EnchantSkillLearn esl = this.getSkillEnchantmentBySkillId(skill.getId());
+		L2EnchantSkillLearn esl = getSkillEnchantmentBySkillId(skill.getId());
 		// there is enchantment for this skill and we have the required level of it
-		if (esl != null && skill.getLevel() >= esl.getBaseLevel())
+		if ((esl != null) && (skill.getLevel() >= esl.getBaseLevel()))
 		{
 			return esl;
 		}

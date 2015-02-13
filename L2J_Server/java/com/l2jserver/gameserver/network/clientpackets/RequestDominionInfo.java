@@ -18,8 +18,7 @@ import com.l2jserver.gameserver.network.serverpackets.ExReplyDominionInfo;
 import com.l2jserver.gameserver.network.serverpackets.ExShowOwnthingPos;
 
 /**
- *
- * @author  JIV
+ * @author JIV
  */
 public class RequestDominionInfo extends L2GameClientPacket
 {

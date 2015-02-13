@@ -17,8 +17,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class ExPrivateStoreSetWholeMsg extends L2GameServerPacket
 {

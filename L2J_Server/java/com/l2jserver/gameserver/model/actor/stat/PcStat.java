@@ -36,7 +36,7 @@ import com.l2jserver.gameserver.skills.Stats;
 
 public class PcStat extends PlayableStat
 {
-	//private static Logger _log = Logger.getLogger(PcStat.class.getName());
+	// private static Logger _log = Logger.getLogger(PcStat.class.getName());
 	
 	// =========================================================
 	// Data Field
@@ -47,7 +47,14 @@ public class PcStat extends PlayableStat
 	private float _vitalityPoints = 1;
 	private byte _vitalityLevel = 0;
 	
-	public static final int VITALITY_LEVELS[] = { 240, 2000, 13000, 17000, 20000 };
+	public static final int VITALITY_LEVELS[] =
+	{
+		240,
+		2000,
+		13000,
+		17000,
+		20000
+	};
 	public static final int MAX_VITALITY_POINTS = VITALITY_LEVELS[4];
 	public static final int MIN_VITALITY_POINTS = 1;
 	
@@ -67,17 +74,23 @@ public class PcStat extends PlayableStat
 		
 		// Allowed to gain exp?
 		if (!getActiveChar().getAccessLevel().canGainExp())
+		{
 			return false;
+		}
 		
 		if (!super.addExp(value))
+		{
 			return false;
+		}
 		
 		// Set new karma
-		if (!activeChar.isCursedWeaponEquipped() && activeChar.getKarma() > 0 && (activeChar.isGM() || !activeChar.isInsideZone(L2Character.ZONE_PVP)))
+		if (!activeChar.isCursedWeaponEquipped() && (activeChar.getKarma() > 0) && (activeChar.isGM() || !activeChar.isInsideZone(L2Character.ZONE_PVP)))
 		{
 			int karmaLost = activeChar.calculateKarmaLost(value);
 			if (karmaLost > 0)
+			{
 				activeChar.setKarma(activeChar.getKarma() - karmaLost);
+			}
 		}
 		
 		// EXP status update currently not used in retail
@@ -87,16 +100,13 @@ public class PcStat extends PlayableStat
 	}
 	
 	/**
-	 * Add Experience and SP rewards to the L2PcInstance, remove its Karma (if necessary) and Launch increase level task.<BR><BR>
-	 *
-	 * <B><U> Actions </U> :</B><BR><BR>
-	 * <li>Remove Karma when the player kills L2MonsterInstance</li>
-	 * <li>Send a Server->Client packet StatusUpdate to the L2PcInstance</li>
-	 * <li>Send a Server->Client System Message to the L2PcInstance </li>
-	 * <li>If the L2PcInstance increases it's level, send a Server->Client packet SocialAction (broadcast) </li>
-	 * <li>If the L2PcInstance increases it's level, manage the increase level task (Max MP, Max MP, Recommandation, Expertise and beginner skills...) </li>
-	 * <li>If the L2PcInstance increases it's level, send a Server->Client packet UserInfo to the L2PcInstance </li><BR><BR>
-	 *
+	 * Add Experience and SP rewards to the L2PcInstance, remove its Karma (if necessary) and Launch increase level task.<BR>
+	 * <BR>
+	 * <B><U> Actions </U> :</B><BR>
+	 * <BR>
+	 * <li>Remove Karma when the player kills L2MonsterInstance</li> <li>Send a Server->Client packet StatusUpdate to the L2PcInstance</li> <li>Send a Server->Client System Message to the L2PcInstance</li> <li>If the L2PcInstance increases it's level, send a Server->Client packet SocialAction
+	 * (broadcast)</li> <li>If the L2PcInstance increases it's level, manage the increase level task (Max MP, Max MP, Recommandation, Expertise and beginner skills...)</li> <li>If the L2PcInstance increases it's level, send a Server->Client packet UserInfo to the L2PcInstance</li><BR>
+	 * <BR>
 	 * @param addToExp The Experience value to add
 	 * @param addToSp The SP value to add
 	 */
@@ -107,7 +117,9 @@ public class PcStat extends PlayableStat
 		// Allowed to gain exp/sp?
 		L2PcInstance activeChar = getActiveChar();
 		if (!activeChar.getAccessLevel().canGainExp())
+		{
 			return false;
+		}
 		
 		// if this player has a pet that takes from the owner's Exp, give the pet Exp now
 		
@@ -119,25 +131,31 @@ public class PcStat extends PlayableStat
 			// only give exp/sp to the pet by taking from the owner if the pet has a non-zero, positive ratio
 			// allow possible customizations that would have the pet earning more than 100% of the owner's exp/sp
 			if (ratioTakenByPlayer > 1)
+			{
 				ratioTakenByPlayer = 1;
+			}
 			if (!pet.isDead())
+			{
 				pet.addExpAndSp((long) (addToExp * (1 - ratioTakenByPlayer)), (int) (addToSp * (1 - ratioTakenByPlayer)));
+			}
 			// now adjust the max ratio to avoid the owner earning negative exp/sp
 			addToExp = (long) (addToExp * ratioTakenByPlayer);
 			addToSp = (int) (addToSp * ratioTakenByPlayer);
 		}
 		
 		if (!super.addExpAndSp(addToExp, addToSp))
+		{
 			return false;
+		}
 		
 		// Send a Server->Client System Message to the L2PcInstance
-		if (addToExp == 0 && addToSp != 0)
+		if ((addToExp == 0) && (addToSp != 0))
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.ACQUIRED_S1_SP);
 			sm.addNumber(addToSp);
 			activeChar.sendPacket(sm);
 		}
-		else if (addToSp == 0 && addToExp != 0)
+		else if ((addToSp == 0) && (addToExp != 0))
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.EARNED_S1_EXPERIENCE);
 			sm.addNumber((int) addToExp);
@@ -181,7 +199,7 @@ public class PcStat extends PlayableStat
 			}
 			// Apply recommendation bonus
 			addToExp *= RecoBonus.getRecoMultiplier(getActiveChar());
-			addToSp  *= RecoBonus.getRecoMultiplier(getActiveChar());
+			addToSp *= RecoBonus.getRecoMultiplier(getActiveChar());
 		}
 		return addExpAndSp(addToExp, addToSp);
 	}
@@ -196,7 +214,9 @@ public class PcStat extends PlayableStat
 	{
 		int level = getLevel();
 		if (!super.removeExpAndSp(addToExp, addToSp))
+		{
 			return false;
+		}
 		
 		if (sendMessage)
 		{
@@ -207,8 +227,10 @@ public class PcStat extends PlayableStat
 			sm = SystemMessage.getSystemMessage(SystemMessageId.SP_DECREASED_S1);
 			sm.addNumber(addToSp);
 			getActiveChar().sendPacket(sm);
-			if (getLevel()<level)
+			if (getLevel() < level)
+			{
 				getActiveChar().broadcastStatusUpdate();
+			}
 		}
 		return true;
 	}
@@ -216,8 +238,10 @@ public class PcStat extends PlayableStat
 	@Override
 	public final boolean addLevel(byte value)
 	{
-		if (getLevel() + value > Experience.MAX_LEVEL - 1)
+		if ((getLevel() + value) > (Experience.MAX_LEVEL - 1))
+		{
 			return false;
+		}
 		
 		boolean levelIncreased = super.addLevel(value);
 		
@@ -227,7 +251,9 @@ public class PcStat extends PlayableStat
 			{
 				QuestState qs = getActiveChar().getQuestState("255_Tutorial");
 				if (qs != null)
+				{
 					qs.getQuest().notifyEvent("CE40", null, getActiveChar());
+				}
 			}
 			
 			getActiveChar().setCurrentCp(getMaxCp());
@@ -237,7 +263,7 @@ public class PcStat extends PlayableStat
 			L2ClassMasterInstance.showQuestionMark(getActiveChar());
 		}
 		
-		//Give AutoGet skills and all normal skills if Auto-Learn is activated.
+		// Give AutoGet skills and all normal skills if Auto-Learn is activated.
 		getActiveChar().rewardSkills();
 		
 		if (getActiveChar().getClan() != null)
@@ -246,10 +272,14 @@ public class PcStat extends PlayableStat
 			getActiveChar().getClan().broadcastToOnlineMembers(new PledgeShowMemberListUpdate(getActiveChar()));
 		}
 		if (getActiveChar().isInParty())
+		{
 			getActiveChar().getParty().recalculatePartyLevel(); // Recalculate the party level
+		}
 		
 		if (getActiveChar().isTransformed() || getActiveChar().isInStance())
+		{
 			getActiveChar().getTransformation().onLevelUp();
+		}
 		
 		StatusUpdate su = new StatusUpdate(getActiveChar());
 		su.addAttribute(StatusUpdate.LEVEL, getLevel());
@@ -274,7 +304,9 @@ public class PcStat extends PlayableStat
 	public boolean addSp(int value)
 	{
 		if (!super.addSp(value))
+		{
 			return false;
+		}
 		
 		StatusUpdate su = new StatusUpdate(getActiveChar());
 		su.addAttribute(StatusUpdate.SP, getSp());
@@ -304,7 +336,9 @@ public class PcStat extends PlayableStat
 	public final long getExp()
 	{
 		if (getActiveChar().isSubClassActive())
+		{
 			return getActiveChar().getSubClasses().get(getActiveChar().getClassIndex()).getExp();
+		}
 		
 		return super.getExp();
 	}
@@ -313,16 +347,22 @@ public class PcStat extends PlayableStat
 	public final void setExp(long value)
 	{
 		if (getActiveChar().isSubClassActive())
+		{
 			getActiveChar().getSubClasses().get(getActiveChar().getClassIndex()).setExp(value);
+		}
 		else
+		{
 			super.setExp(value);
+		}
 	}
 	
 	@Override
 	public final byte getLevel()
 	{
 		if (getActiveChar().isSubClassActive())
+		{
 			return getActiveChar().getSubClasses().get(getActiveChar().getClassIndex()).getLevel();
+		}
 		
 		return super.getLevel();
 	}
@@ -330,13 +370,19 @@ public class PcStat extends PlayableStat
 	@Override
 	public final void setLevel(byte value)
 	{
-		if (value > Experience.MAX_LEVEL - 1)
+		if (value > (Experience.MAX_LEVEL - 1))
+		{
 			value = Experience.MAX_LEVEL - 1;
+		}
 		
 		if (getActiveChar().isSubClassActive())
+		{
 			getActiveChar().getSubClasses().get(getActiveChar().getClassIndex()).setLevel(value);
+		}
 		else
+		{
 			super.setLevel(value);
+		}
 	}
 	
 	@Override
@@ -350,7 +396,9 @@ public class PcStat extends PlayableStat
 			
 			// Launch a regen task if the new Max CP is higher than the old one
 			if (getActiveChar().getStatus().getCurrentCp() != val)
+			{
 				getActiveChar().getStatus().setCurrentCp(getActiveChar().getStatus().getCurrentCp()); // trigger start of regeneration
+			}
 		}
 		return val;
 	}
@@ -366,7 +414,9 @@ public class PcStat extends PlayableStat
 			
 			// Launch a regen task if the new Max HP is higher than the old one
 			if (getActiveChar().getStatus().getCurrentHp() != val)
+			{
 				getActiveChar().getStatus().setCurrentHp(getActiveChar().getStatus().getCurrentHp()); // trigger start of regeneration
+			}
 		}
 		
 		return val;
@@ -384,7 +434,9 @@ public class PcStat extends PlayableStat
 			
 			// Launch a regen task if the new Max MP is higher than the old one
 			if (getActiveChar().getStatus().getCurrentMp() != val)
+			{
 				getActiveChar().getStatus().setCurrentMp(getActiveChar().getStatus().getCurrentMp()); // trigger start of regeneration
+			}
 		}
 		
 		return val;
@@ -394,7 +446,9 @@ public class PcStat extends PlayableStat
 	public final int getSp()
 	{
 		if (getActiveChar().isSubClassActive())
+		{
 			return getActiveChar().getSubClasses().get(getActiveChar().getClassIndex()).getSp();
+		}
 		
 		return super.getSp();
 	}
@@ -403,16 +457,22 @@ public class PcStat extends PlayableStat
 	public final void setSp(int value)
 	{
 		if (getActiveChar().isSubClassActive())
+		{
 			getActiveChar().getSubClasses().get(getActiveChar().getClassIndex()).setSp(value);
+		}
 		else
+		{
 			super.setSp(value);
+		}
 	}
 	
 	@Override
 	public int getRunSpeed()
 	{
 		if (getActiveChar() == null)
+		{
 			return 1;
+		}
 		
 		int val;
 		
@@ -423,13 +483,17 @@ public class PcStat extends PlayableStat
 			val = (int) Math.round(calcStat(Stats.RUN_SPEED, baseRunSpd, null, null));
 		}
 		else
+		{
 			val = super.getRunSpeed();
+		}
 		
 		val += Config.RUN_SPD_BOOST;
 		
 		// Apply max run speed cap.
-		if (val > Config.MAX_RUN_SPEED && !getActiveChar().isGM())
+		if ((val > Config.MAX_RUN_SPEED) && !getActiveChar().isGM())
+		{
 			return Config.MAX_RUN_SPEED;
+		}
 		
 		return val;
 	}
@@ -439,8 +503,10 @@ public class PcStat extends PlayableStat
 	{
 		int val = super.getPAtkSpd();
 		
-		if (val > Config.MAX_PATK_SPEED && !getActiveChar().isGM())
+		if ((val > Config.MAX_PATK_SPEED) && !getActiveChar().isGM())
+		{
 			return Config.MAX_PATK_SPEED;
+		}
 		
 		return val;
 	}
@@ -450,8 +516,10 @@ public class PcStat extends PlayableStat
 	{
 		int val = super.getEvasionRate(target);
 		
-		if (val > Config.MAX_EVASION && !getActiveChar().isGM())
+		if ((val > Config.MAX_EVASION) && !getActiveChar().isGM())
+		{
 			return Config.MAX_EVASION;
+		}
 		
 		return val;
 	}
@@ -461,8 +529,10 @@ public class PcStat extends PlayableStat
 	{
 		int val = super.getMAtkSpd();
 		
-		if (val > Config.MAX_MATK_SPEED && !getActiveChar().isGM())
+		if ((val > Config.MAX_MATK_SPEED) && !getActiveChar().isGM())
+		{
 			return Config.MAX_MATK_SPEED;
+		}
 		
 		return val;
 	}
@@ -471,10 +541,14 @@ public class PcStat extends PlayableStat
 	public float getMovementSpeedMultiplier()
 	{
 		if (getActiveChar() == null)
+		{
 			return 1;
+		}
 		
 		if (getActiveChar().isMounted())
-			return getRunSpeed() * 1f / NpcTable.getInstance().getTemplate(getActiveChar().getMountNpcId()).baseRunSpd;
+		{
+			return (getRunSpeed() * 1f) / NpcTable.getInstance().getTemplate(getActiveChar().getMountNpcId()).baseRunSpd;
+		}
 		
 		return super.getMovementSpeedMultiplier();
 	}
@@ -483,7 +557,9 @@ public class PcStat extends PlayableStat
 	public int getWalkSpeed()
 	{
 		if (getActiveChar() == null)
+		{
 			return 1;
+		}
 		
 		return (getRunSpeed() * 70) / 100;
 	}
@@ -493,26 +569,44 @@ public class PcStat extends PlayableStat
 		final byte level;
 		
 		if (_vitalityPoints <= VITALITY_LEVELS[0])
+		{
 			level = 0;
+		}
 		else if (_vitalityPoints <= VITALITY_LEVELS[1])
+		{
 			level = 1;
+		}
 		else if (_vitalityPoints <= VITALITY_LEVELS[2])
+		{
 			level = 2;
+		}
 		else if (_vitalityPoints <= VITALITY_LEVELS[3])
+		{
 			level = 3;
+		}
 		else
+		{
 			level = 4;
+		}
 		
-		if (!quiet && level != _vitalityLevel)
+		if (!quiet && (level != _vitalityLevel))
 		{
 			if (level < _vitalityLevel)
+			{
 				getActiveChar().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.VITALITY_HAS_DECREASED));
+			}
 			else
+			{
 				getActiveChar().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.VITALITY_HAS_INCREASED));
+			}
 			if (level == 0)
+			{
 				getActiveChar().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.VITALITY_IS_EXHAUSTED));
+			}
 			else if (level == 4)
+			{
 				getActiveChar().sendPacket(SystemMessage.getSystemMessage(SystemMessageId.VITALITY_IS_AT_MAXIMUM));
+			}
 		}
 		
 		_vitalityLevel = level;
@@ -527,15 +621,15 @@ public class PcStat extends PlayableStat
 	}
 	
 	/*
-	 * Set current vitality points to this value
-	 * 
-	 * if quiet = true - does not send system messages
+	 * Set current vitality points to this value if quiet = true - does not send system messages
 	 */
 	public void setVitalityPoints(int points, boolean quiet)
 	{
 		points = Math.min(Math.max(points, MIN_VITALITY_POINTS), MAX_VITALITY_POINTS);
 		if (points == _vitalityPoints)
+		{
 			return;
+		}
 		
 		_vitalityPoints = points;
 		updateVitalityLevel(quiet);
@@ -544,22 +638,30 @@ public class PcStat extends PlayableStat
 	
 	public synchronized void updateVitalityPoints(float points, boolean useRates, boolean quiet)
 	{
-		if (points == 0 || !Config.ENABLE_VITALITY)
+		if ((points == 0) || !Config.ENABLE_VITALITY)
+		{
 			return;
+		}
 		
 		if (useRates)
 		{
 			if (getActiveChar().isLucky())
+			{
 				return;
+			}
 			
 			if (points < 0) // vitality consumed
 			{
 				int stat = (int) calcStat(Stats.VITALITY_CONSUME_RATE, 1, getActiveChar(), null);
 				
-				if (stat == 0) // is vitality consumption stopped ?
+				if (stat == 0)
+				{
 					return;
-				if (stat < 0) // is vitality gained ?
+				}
+				if (stat < 0)
+				{
 					points = -points;
+				}
 			}
 			
 			if (points > 0)
@@ -584,7 +686,9 @@ public class PcStat extends PlayableStat
 		}
 		
 		if (points == _vitalityPoints)
+		{
 			return;
+		}
 		
 		_vitalityPoints = points;
 		updateVitalityLevel(quiet);

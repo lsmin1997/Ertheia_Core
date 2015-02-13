@@ -19,17 +19,16 @@ import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * Sdh(h dddhh [dhhh] d)
- * Sdh ddddd ddddd ddddd ddddd
+ * Sdh(h dddhh [dhhh] d) Sdh ddddd ddddd ddddd ddddd
  * @version $Revision: 1.1.2.1.2.5 $ $Date: 2007/11/26 16:10:05 $
  */
 public class GMViewWarehouseWithdrawList extends L2GameServerPacket
 {
 	private static final String _S__95_GMViewWarehouseWithdrawList = "[S] 9b GMViewWarehouseWithdrawList";
-	private L2ItemInstance[] _items;
-	private String _playerName;
+	private final L2ItemInstance[] _items;
+	private final String _playerName;
 	private L2PcInstance _activeChar;
-	private long _money;
+	private final long _money;
 	
 	public GMViewWarehouseWithdrawList(L2PcInstance cha)
 	{
@@ -67,9 +66,13 @@ public class GMViewWarehouseWithdrawList extends L2GameServerPacket
 			writeH(item.getEnchantLevel());
 			writeH(item.getCustomType2());
 			if (item.isAugmented())
+			{
 				writeD(item.getAugmentation().getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(item.getMana());
 			writeD(item.isTimeLimitedItem() ? (int) (item.getRemainingTime() / 1000) : -9999);
 			writeH(item.getAttackElementType());

@@ -36,15 +36,17 @@ public class SummonStatus extends PlayableStatus
 	public void reduceHp(double value, L2Character attacker, boolean awake, boolean isDOT, boolean isHPConsumption)
 	{
 		if (getActiveChar().isDead())
+		{
 			return;
+		}
 		
 		if (attacker != null)
 		{
 			final L2PcInstance attackerPlayer = attacker.getActingPlayer();
-			if (attackerPlayer != null
-					&& (getActiveChar().getOwner() == null
-							|| getActiveChar().getOwner().getDuelId() != attackerPlayer.getDuelId()))
+			if ((attackerPlayer != null) && ((getActiveChar().getOwner() == null) || (getActiveChar().getOwner().getDuelId() != attackerPlayer.getDuelId())))
+			{
 				attackerPlayer.setDuelState(Duel.DUELSTATE_INTERRUPTED);
+			}
 		}
 		super.reduceHp(value, attacker, awake, isDOT, isHPConsumption);
 	}
@@ -52,6 +54,6 @@ public class SummonStatus extends PlayableStatus
 	@Override
 	public L2Summon getActiveChar()
 	{
-		return (L2Summon)super.getActiveChar();
+		return (L2Summon) super.getActiveChar();
 	}
 }

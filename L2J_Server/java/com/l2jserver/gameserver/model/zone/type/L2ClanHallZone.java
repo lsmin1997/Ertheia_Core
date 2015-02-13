@@ -24,8 +24,7 @@ import com.l2jserver.gameserver.network.serverpackets.AgitDecoInfo;
 
 /**
  * A clan hall zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2ClanHallZone extends L2SpawnZone
 {
@@ -46,7 +45,9 @@ public class L2ClanHallZone extends L2SpawnZone
 			ClanHallManager.getInstance().getClanHallById(_clanHallId).setZone(this);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override
@@ -59,7 +60,9 @@ public class L2ClanHallZone extends L2SpawnZone
 			
 			ClanHall clanHall = ClanHallManager.getInstance().getClanHallById(_clanHallId);
 			if (clanHall == null)
+			{
 				return;
+			}
 			
 			// Send decoration packet
 			AgitDecoInfo deco = new AgitDecoInfo(clanHall);
@@ -98,9 +101,13 @@ public class L2ClanHallZone extends L2SpawnZone
 		for (L2Character temp : _characterList.values())
 		{
 			if (!(temp instanceof L2PcInstance))
+			{
 				continue;
+			}
 			if (((L2PcInstance) temp).getClanId() == owningClanId)
+			{
 				continue;
+			}
 			
 			((L2PcInstance) temp).teleToLocation(MapRegionTable.TeleportWhereType.Town);
 		}

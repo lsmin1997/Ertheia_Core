@@ -21,7 +21,7 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 public class L2WyvernManagerInstance extends L2Npc
 {
-	public L2WyvernManagerInstance (int objectId, L2NpcTemplate template)
+	public L2WyvernManagerInstance(int objectId, L2NpcTemplate template)
 	{
 		super(objectId, template);
 		setInstanceType(InstanceType.L2WyvernManagerInstance);
@@ -30,11 +30,13 @@ public class L2WyvernManagerInstance extends L2Npc
 	@Override
 	public void showChatWindow(L2PcInstance player)
 	{
-		player.sendPacket( ActionFailed.STATIC_PACKET );
+		player.sendPacket(ActionFailed.STATIC_PACKET);
 		String filename = "data/html/wyvernmanager/wyvernmanager-no.htm";
 		
 		if (isOwnerClan(player))
-			filename = "data/html/wyvernmanager/wyvernmanager.htm";      // Owner message window
+		{
+			filename = "data/html/wyvernmanager/wyvernmanager.htm"; // Owner message window
+		}
 		
 		NpcHtmlMessage html = new NpcHtmlMessage(1);
 		html.setFile(player.getHtmlPrefix(), filename);

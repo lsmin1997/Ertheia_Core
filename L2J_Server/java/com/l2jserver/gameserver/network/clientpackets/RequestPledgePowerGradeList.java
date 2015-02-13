@@ -21,13 +21,11 @@ import com.l2jserver.gameserver.network.serverpackets.PledgePowerGradeList;
 
 /**
  * Format: (ch)
- * @author  -Wooden-
- *
+ * @author -Wooden-
  */
 public final class RequestPledgePowerGradeList extends L2GameClientPacket
 {
 	private static final String _C__D0_13_REQUESTPLEDGEPOWERGRADELIST = "[C] D0:13 RequestPledgePowerGradeList";
-	
 	
 	@Override
 	protected void readImpl()
@@ -47,7 +45,7 @@ public final class RequestPledgePowerGradeList extends L2GameClientPacket
 		{
 			RankPrivs[] privs = clan.getAllRankPrivs();
 			player.sendPacket(new PledgePowerGradeList(privs));
-			//_log.warning("plegdepowergradelist send, privs length: "+privs.length);
+			// _log.warning("plegdepowergradelist send, privs length: "+privs.length);
 		}
 	}
 	

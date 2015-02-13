@@ -21,10 +21,8 @@ import com.l2jserver.gameserver.datatables.ClanTable;
 import com.l2jserver.gameserver.instancemanager.CastleManager;
 import com.l2jserver.gameserver.model.entity.Castle;
 
-
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class ExShowCastleInfo extends L2GameServerPacket
 {
@@ -56,7 +54,9 @@ public class ExShowCastleInfo extends L2GameServerPacket
 			if (castle.getOwnerId() > 0)
 			{
 				if (ClanTable.getInstance().getClan(castle.getOwnerId()) != null)
+				{
 					writeS(ClanTable.getInstance().getClan(castle.getOwnerId()).getName());
+				}
 				else
 				{
 					_log.warning("Castle owner with no name! Castle: " + castle.getName() + " has an OwnerId = " + castle.getOwnerId() + " who does not have a  name!");
@@ -64,9 +64,11 @@ public class ExShowCastleInfo extends L2GameServerPacket
 				}
 			}
 			else
+			{
 				writeS("");
+			}
 			writeD(castle.getTaxPercent());
-			writeD((int)(castle.getSiege().getSiegeDate().getTimeInMillis()/1000));
+			writeD((int) (castle.getSiege().getSiegeDate().getTimeInMillis() / 1000));
 		}
 	}
 	

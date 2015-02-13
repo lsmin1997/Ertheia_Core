@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.templates.item.L2Weapon;
 
 /**
  * The Class ConditionChangeWeapon.
- *
  * @author nBd
  */
 public class ConditionChangeWeapon extends Condition
@@ -29,7 +28,6 @@ public class ConditionChangeWeapon extends Condition
 	
 	/**
 	 * Instantiates a new condition change weapon.
-	 *
 	 * @param required the required
 	 */
 	public ConditionChangeWeapon(boolean required)
@@ -39,7 +37,6 @@ public class ConditionChangeWeapon extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -48,20 +45,28 @@ public class ConditionChangeWeapon extends Condition
 	boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
 		if (_required)
 		{
 			L2Weapon weaponItem = env.player.getActiveWeaponItem();
 			
 			if (weaponItem == null)
+			{
 				return false;
+			}
 			
 			if (weaponItem.getChangeWeaponId() == 0)
+			{
 				return false;
+			}
 			
-			if (((L2PcInstance)env.player).isEnchanting())
+			if (((L2PcInstance) env.player).isEnchanting())
+			{
 				return false;
+			}
 		}
 		return true;
 	}

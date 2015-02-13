@@ -19,21 +19,20 @@ import com.l2jserver.gameserver.network.serverpackets.ActionFailed;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2.2.1.2.4 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestPrivateStoreManageSell extends L2GameClientPacket
 {
 	private static final String _C__73_REQUESTPRIVATESTOREMANAGESELL = "[C] 73 RequestPrivateStoreManageSell";
 	
-	//private static Logger _log = Logger.getLogger(RequestPrivateStoreManage.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestPrivateStoreManage.class.getName());
 	
 	@Override
 	protected void readImpl()
 	{
 		// TODO: implement me properly
-		//readD();
-		//readQ();
+		// readD();
+		// readQ();
 	}
 	
 	@Override
@@ -41,7 +40,9 @@ public final class RequestPrivateStoreManageSell extends L2GameClientPacket
 	{
 		L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		// Player shouldn't be able to set stores if he/she is alike dead (dead or fake death)
 		if (player.isAlikeDead())
@@ -62,7 +63,8 @@ public final class RequestPrivateStoreManageSell extends L2GameClientPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

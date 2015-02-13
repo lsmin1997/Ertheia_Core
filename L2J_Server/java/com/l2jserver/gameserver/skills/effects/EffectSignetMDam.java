@@ -53,7 +53,6 @@ public class EffectSignetMDam extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -63,7 +62,6 @@ public class EffectSignetMDam extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -71,21 +69,24 @@ public class EffectSignetMDam extends L2Effect
 	{
 		L2NpcTemplate template;
 		if (getSkill() instanceof L2SkillSignetCasttime)
+		{
 			template = NpcTable.getInstance().getTemplate(((L2SkillSignetCasttime) getSkill())._effectNpcId);
+		}
 		else
+		{
 			return false;
+		}
 		
 		L2EffectPointInstance effectPoint = new L2EffectPointInstance(IdFactory.getInstance().getNextId(), template, getEffector());
 		effectPoint.setCurrentHp(effectPoint.getMaxHp());
 		effectPoint.setCurrentMp(effectPoint.getMaxMp());
-		//L2World.getInstance().storeObject(effectPoint);
+		// L2World.getInstance().storeObject(effectPoint);
 		
 		int x = getEffector().getX();
 		int y = getEffector().getY();
 		int z = getEffector().getZ();
 		
-		if (getEffector() instanceof L2PcInstance
-				&& getSkill().getTargetType() == L2Skill.SkillTargetType.TARGET_GROUND)
+		if ((getEffector() instanceof L2PcInstance) && (getSkill().getTargetType() == L2Skill.SkillTargetType.TARGET_GROUND))
 		{
 			Point3D wordPosition = ((L2PcInstance) getEffector()).getCurrentSkillWorldPosition();
 			
@@ -105,14 +106,15 @@ public class EffectSignetMDam extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
-		if (getCount() >= getTotalCount() - 2)
+		if (getCount() >= (getTotalCount() - 2))
+		{
 			return true; // do nothing first 2 times
+		}
 		int mpConsume = getSkill().getMpConsume();
 		
 		L2PcInstance caster = (L2PcInstance) getEffector();
@@ -140,13 +142,17 @@ public class EffectSignetMDam extends L2Effect
 		
 		for (L2Character cha : _actor.getKnownList().getKnownCharactersInRadius(getSkill().getSkillRadius()))
 		{
-			if (cha == null || cha == caster)
+			if ((cha == null) || (cha == caster))
+			{
 				continue;
+			}
 			
-			if (cha instanceof L2Attackable || cha instanceof L2Playable)
+			if ((cha instanceof L2Attackable) || (cha instanceof L2Playable))
 			{
 				if (cha.isAlikeDead())
+				{
 					continue;
+				}
 				
 				if (mpConsume > caster.getCurrentMp())
 				{
@@ -154,7 +160,9 @@ public class EffectSignetMDam extends L2Effect
 					return false;
 				}
 				else
+				{
 					caster.reduceCurrentMp(mpConsume);
+				}
 				
 				if (cha instanceof L2Playable)
 				{
@@ -165,7 +173,9 @@ public class EffectSignetMDam extends L2Effect
 					}
 				}
 				else
+				{
 					targets.add(cha);
+				}
 			}
 		}
 		
@@ -179,12 +189,13 @@ public class EffectSignetMDam extends L2Effect
 				int mdam = (int) Formulas.calcMagicDam(caster, target, getSkill(), shld, ss, bss, mcrit);
 				
 				if (target instanceof L2Summon)
+				{
 					target.broadcastStatusUpdate();
+				}
 				
 				if (mdam > 0)
 				{
-					if (!target.isRaid()
-							&& Formulas.calcAtkBreak(target, mdam))
+					if (!target.isRaid() && Formulas.calcAtkBreak(target, mdam))
 					{
 						target.breakAttack();
 						target.breakCast();
@@ -199,13 +210,14 @@ public class EffectSignetMDam extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
 	public void onExit()
 	{
 		if (_actor != null)
+		{
 			_actor.deleteMe();
+		}
 	}
 }

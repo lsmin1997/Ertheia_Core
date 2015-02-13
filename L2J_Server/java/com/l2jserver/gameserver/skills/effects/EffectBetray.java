@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author decad
- * 
  */
 public class EffectBetray extends L2Effect
 {
@@ -35,7 +34,6 @@ public class EffectBetray extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -45,14 +43,12 @@ public class EffectBetray extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
 	public boolean onStart()
 	{
-		if (getEffector() instanceof L2PcInstance &&
-				getEffected() instanceof L2Summon)
+		if ((getEffector() instanceof L2PcInstance) && (getEffected() instanceof L2Summon))
 		{
 			L2PcInstance targetOwner = getEffected().getActingPlayer();
 			getEffected().getAI().setIntention(CtrlIntention.AI_INTENTION_ATTACK, targetOwner);
@@ -62,7 +58,6 @@ public class EffectBetray extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -72,7 +67,6 @@ public class EffectBetray extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -80,8 +74,9 @@ public class EffectBetray extends L2Effect
 	{
 		return false;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

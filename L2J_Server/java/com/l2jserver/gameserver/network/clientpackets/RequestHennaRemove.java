@@ -21,18 +21,17 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 public final class RequestHennaRemove extends L2GameClientPacket
 {
 	private static final String _C__BC_RequestHennaRemove = "[C] bc RequestHennaRemove";
 	private int _symbolId;
-	// format  cd
+	
+	// format cd
 	
 	/**
-	 * packet type id 0xbb
-	 * format:		cd
+	 * packet type id 0xbb format: cd
 	 * @param decrypt
 	 */
 	@Override
@@ -46,15 +45,19 @@ public final class RequestHennaRemove extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("HennaRemove"))
+		{
 			return;
+		}
 		
 		for (int i = 1; i <= 3; i++)
 		{
 			L2HennaInstance henna = activeChar.getHenna(i);
-			if (henna != null && henna.getSymbolId() == _symbolId)
+			if ((henna != null) && (henna.getSymbolId() == _symbolId))
 			{
 				if (activeChar.getAdena() >= (henna.getPrice() / 5))
 				{
@@ -62,12 +65,15 @@ public final class RequestHennaRemove extends L2GameClientPacket
 					break;
 				}
 				else
+				{
 					activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_NOT_ENOUGH_ADENA));
+				}
 			}
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

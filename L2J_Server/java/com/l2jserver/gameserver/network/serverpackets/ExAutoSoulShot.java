@@ -16,17 +16,16 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class ExAutoSoulShot extends L2GameServerPacket
 {
 	private static final String _S__FE_12_EXAUTOSOULSHOT = "[S] FE:0c ExAutoSoulShot";
-	private int _itemId;
-	private int _type;
+	private final int _itemId;
+	private final int _type;
 	
 	/**
-	 * 0xfe:0x12 ExAutoSoulShot         (ch)dd
+	 * 0xfe:0x12 ExAutoSoulShot (ch)dd
 	 * @param _characters
 	 */
 	public ExAutoSoulShot(int itemId, int type)
@@ -39,12 +38,13 @@ public class ExAutoSoulShot extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0xFE);
-		writeH(0x0c);     // sub id
+		writeH(0x0c); // sub id
 		writeD(_itemId);
 		writeD(_type);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

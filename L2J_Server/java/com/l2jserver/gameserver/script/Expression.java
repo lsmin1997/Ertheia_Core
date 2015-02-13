@@ -21,15 +21,10 @@ import javax.script.ScriptContext;
 
 import com.l2jserver.gameserver.scripting.L2ScriptEngineManager;
 
-
 public class Expression
 {
 	protected static final Logger _log = Logger.getLogger(Expression.class.getName());
 	private final ScriptContext _context;
-	@SuppressWarnings("unused")
-	private final String _lang;
-	@SuppressWarnings("unused")
-	private final String _code;
 	
 	public static Object eval(String lang, String code)
 	{
@@ -73,8 +68,6 @@ public class Expression
 	private Expression(ScriptContext pContext, String pLang, String pCode)
 	{
 		_context = pContext;
-		_lang = pLang;
-		_code = pCode;
 	}
 	
 	public <T> void addDynamicVariable(String name, T value)

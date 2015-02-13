@@ -18,17 +18,15 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.1.4.1 $ $Date: 2005/03/27 15:29:33 $
  */
 
 public final class Location
 {
-	private int _x;
-	private int _y;
-	private int _z;
+	private final int _x;
+	private final int _y;
+	private final int _z;
 	private int _heading;
-	
 	
 	public Location(int x, int y, int z)
 	{
@@ -51,7 +49,6 @@ public final class Location
 		_z = obj.getZ();
 		_heading = obj.getHeading();
 	}
-	
 	
 	public Location(int x, int y, int z, int heading)
 	{

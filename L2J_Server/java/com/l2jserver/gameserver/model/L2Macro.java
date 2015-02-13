@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.model;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3 $ $Date: 2004/10/23 22:12:44 $
  */
 public class L2Macro

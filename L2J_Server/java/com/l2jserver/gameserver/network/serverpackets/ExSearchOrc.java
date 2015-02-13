@@ -16,8 +16,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (ch)
- *
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public class ExSearchOrc extends L2GameServerPacket
 {

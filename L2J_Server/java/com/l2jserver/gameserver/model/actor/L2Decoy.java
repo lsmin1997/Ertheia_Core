@@ -25,10 +25,9 @@ import com.l2jserver.gameserver.templates.chars.L2CharTemplate;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.templates.item.L2Weapon;
 
-
 public abstract class L2Decoy extends L2Character
 {
-	private L2PcInstance _owner;
+	private final L2PcInstance _owner;
 	
 	public L2Decoy(int objectId, L2CharTemplate template, L2PcInstance owner)
 	{
@@ -43,19 +42,21 @@ public abstract class L2Decoy extends L2Character
 	public void onSpawn()
 	{
 		super.onSpawn();
-		this.getOwner().sendPacket(new CharInfo(this));
+		getOwner().sendPacket(new CharInfo(this));
 	}
 	
 	@Override
 	public void updateAbnormalEffect()
 	{
 		Collection<L2PcInstance> plrs = getKnownList().getKnownPlayers().values();
-		//synchronized (getKnownList().getKnownPlayers())
+		// synchronized (getKnownList().getKnownPlayers())
 		{
 			for (L2PcInstance player : plrs)
 			{
 				if (player != null)
+				{
 					player.sendPacket(new CharInfo(this));
+				}
 			}
 		}
 	}
@@ -125,7 +126,9 @@ public abstract class L2Decoy extends L2Character
 		if (isVisible() && !isDead())
 		{
 			if (getWorldRegion() != null)
+			{
 				getWorldRegion().removeFromZones(this);
+			}
 			owner.setDecoy(null);
 			decayMe();
 			getKnownList().removeAllKnownObjects();

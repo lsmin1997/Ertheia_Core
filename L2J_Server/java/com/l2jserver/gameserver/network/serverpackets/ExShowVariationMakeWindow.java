@@ -15,9 +15,8 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- * Format: ch
- * Trigger packet
- * @author  KenM
+ * Format: ch Trigger packet
+ * @author KenM
  */
 public class ExShowVariationMakeWindow extends L2GameServerPacket
 {

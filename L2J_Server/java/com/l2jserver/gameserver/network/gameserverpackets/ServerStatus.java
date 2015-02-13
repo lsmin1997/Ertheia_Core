@@ -21,13 +21,20 @@ import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class ServerStatus extends BaseSendablePacket
 {
-	private ArrayList<Attribute> _attributes;
+	private final ArrayList<Attribute> _attributes;
 	
-	public static final String[] STATUS_STRING = {"Auto", "Good", "Normal", "Full", "Down", "Gm Only"};
+	public static final String[] STATUS_STRING =
+	{
+		"Auto",
+		"Good",
+		"Normal",
+		"Full",
+		"Down",
+		"Gm Only"
+	};
 	
 	public static final int SERVER_LIST_STATUS = 0x01;
 	public static final int SERVER_TYPE = 0x02;
@@ -82,7 +89,8 @@ public class ServerStatus extends BaseSendablePacket
 		_attributes.add(new Attribute(id, value));
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override
@@ -90,7 +98,7 @@ public class ServerStatus extends BaseSendablePacket
 	{
 		writeC(0x06);
 		writeD(_attributes.size());
-		for (Attribute temp: _attributes)
+		for (Attribute temp : _attributes)
 		{
 			writeD(temp.id);
 			writeD(temp.value);

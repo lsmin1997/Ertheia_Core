@@ -28,7 +28,6 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
  * Removed TimerThread watcher [DrHouse]
- *
  * @version $Date: 2010/02/02 22:43:00 $
  */
 public class GameTimeController
@@ -83,33 +82,36 @@ public class GameTimeController
 	}
 	
 	/**
-	 * Add a L2Character to movingObjects of GameTimeController.<BR><BR>
-	 *
-	 * <B><U> Concept</U> :</B><BR><BR>
-	 * All L2Character in movement are identified in <B>movingObjects</B> of GameTimeController.<BR><BR>
-	 *
+	 * Add a L2Character to movingObjects of GameTimeController.<BR>
+	 * <BR>
+	 * <B><U> Concept</U> :</B><BR>
+	 * <BR>
+	 * All L2Character in movement are identified in <B>movingObjects</B> of GameTimeController.<BR>
+	 * <BR>
 	 * @param cha The L2Character to add to movingObjects of GameTimeController
-	 *
 	 */
 	public void registerMovingObject(L2Character cha)
 	{
 		if (cha == null)
+		{
 			return;
+		}
 		
 		_movingObjects.putIfAbsent(cha.getObjectId(), cha);
 	}
 	
 	/**
-	 * Move all L2Characters contained in movingObjects of GameTimeController.<BR><BR>
-	 *
-	 * <B><U> Concept</U> :</B><BR><BR>
-	 * All L2Character in movement are identified in <B>movingObjects</B> of GameTimeController.<BR><BR>
-	 *
-	 * <B><U> Actions</U> :</B><BR><BR>
-	 * <li>Update the position of each L2Character </li>
-	 * <li>If movement is finished, the L2Character is removed from movingObjects </li>
-	 * <li>Create a task to update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with EVT_ARRIVED </li><BR><BR>
-	 *
+	 * Move all L2Characters contained in movingObjects of GameTimeController.<BR>
+	 * <BR>
+	 * <B><U> Concept</U> :</B><BR>
+	 * <BR>
+	 * All L2Character in movement are identified in <B>movingObjects</B> of GameTimeController.<BR>
+	 * <BR>
+	 * <B><U> Actions</U> :</B><BR>
+	 * <BR>
+	 * <li>Update the position of each L2Character</li> <li>If movement is finished, the L2Character is removed from movingObjects</li> <li>Create a task to update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with
+	 * EVT_ARRIVED</li><BR>
+	 * <BR>
 	 */
 	protected void moveObjects()
 	{
@@ -150,7 +152,7 @@ public class GameTimeController
 			long runtime;
 			int sleepTime;
 			
-			for(;;)
+			for (;;)
 			{
 				try
 				{
@@ -160,22 +162,28 @@ public class GameTimeController
 					_gameTicks = (int) (runtime / MILLIS_IN_TICK); // new ticks value (ticks now)
 					
 					if (oldTicks != _gameTicks)
+					{
 						moveObjects(); // Runs possibly too often
+					}
 					
 					runtime = (System.currentTimeMillis() - _gameStartTime) - runtime;
 					
 					// calculate sleep time... time needed to next tick minus time it takes to call moveObjects()
-					sleepTime = 1 + MILLIS_IN_TICK - ((int) runtime) % MILLIS_IN_TICK;
+					sleepTime = (1 + MILLIS_IN_TICK) - (((int) runtime) % MILLIS_IN_TICK);
 					
-					//_log.finest("TICK: "+_gameTicks);
+					// _log.finest("TICK: "+_gameTicks);
 					
 					if (sleepTime > 0)
+					{
 						Thread.sleep(sleepTime);
+					}
 				}
 				catch (InterruptedException ie)
 				{
 					if (_interruptRequest)
+					{
 						return;
+					}
 					
 					_log.log(Level.WARNING, "", ie);
 				}
@@ -188,7 +196,8 @@ public class GameTimeController
 	}
 	
 	/**
-	 * Update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with EVT_ARRIVED.<BR><BR>
+	 * Update the _knownObject and _knowPlayers of each L2Character that finished its movement and of their already known L2Object then notify AI with EVT_ARRIVED.<BR>
+	 * <BR>
 	 */
 	private static class MovingObjectArrived implements Runnable
 	{
@@ -199,6 +208,7 @@ public class GameTimeController
 			_ended = ended;
 		}
 		
+		@Override
 		public void run()
 		{
 			try
@@ -206,7 +216,9 @@ public class GameTimeController
 				if (_ended.hasAI()) // AI could be just disabled due to region turn off
 				{
 					if (Config.MOVE_BASED_KNOWNLIST)
+					{
 						_ended.getKnownList().findObjects();
+					}
 					_ended.getAI().notifyEvent(CtrlEvent.EVT_ARRIVED);
 				}
 			}
@@ -225,6 +237,7 @@ public class GameTimeController
 		int h;
 		boolean tempIsNight;
 		
+		@Override
 		public void run()
 		{
 			h = ((getGameTime() + 29) / 60) % 24; // Time in hour (+ 29 is to round 60)

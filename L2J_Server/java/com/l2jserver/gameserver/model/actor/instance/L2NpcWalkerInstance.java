@@ -24,18 +24,18 @@ import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.util.Broadcast;
 
-
 /**
  * This class manages some npcs can walk in the city. <br>
- * It inherits all methods from L2NpcInstance. <br><br>
- *
+ * It inherits all methods from L2NpcInstance. <br>
+ * <br>
  * @original author Rayan RPG for L2Emu Project
  * @since 819
  */
 public class L2NpcWalkerInstance extends L2Npc
 {
 	/**
-	 * Constructor of L2NpcWalkerInstance (use L2Character and L2NpcInstance constructor).<BR><BR>
+	 * Constructor of L2NpcWalkerInstance (use L2Character and L2NpcInstance constructor).<BR>
+	 * <BR>
 	 * @param objectId given object id
 	 * @param template L2NpcTemplateForThisAi
 	 */
@@ -53,8 +53,10 @@ public class L2NpcWalkerInstance extends L2Npc
 	@Override
 	public void setAI(L2CharacterAI newAI)
 	{
-		if(!(_ai instanceof L2NpcWalkerAI))
+		if (!(_ai instanceof L2NpcWalkerAI))
+		{
 			_ai = newAI;
+		}
 	}
 	
 	@Override
@@ -73,21 +75,26 @@ public class L2NpcWalkerInstance extends L2Npc
 	{
 		NpcSay cs;
 		if (id == 0)
+		{
 			cs = new NpcSay(getObjectId(), Say2.ALL, getNpcId(), chat);
+		}
 		else
+		{
 			cs = new NpcSay(getObjectId(), Say2.ALL, getNpcId(), id);
+		}
 		Broadcast.toKnownPlayers(this, cs);
 	}
 	
 	/**
 	 * NPCs are immortal
 	 * @param i ignore it
-	 * @param attacker  ignore it
-	 * @param awake  ignore it
+	 * @param attacker ignore it
+	 * @param awake ignore it
 	 */
 	@Override
 	public void reduceCurrentHp(double i, L2Character attacker, boolean awake, boolean isDOT, L2Skill skill)
-	{}
+	{
+	}
 	
 	/**
 	 * NPCs are immortal
@@ -103,7 +110,7 @@ public class L2NpcWalkerInstance extends L2Npc
 	@Override
 	public L2NpcWalkerAI getAI()
 	{
-		return (L2NpcWalkerAI)_ai;
+		return (L2NpcWalkerAI) _ai;
 	}
 	
 	protected class L2NpcWalkerAIAccessor extends L2Character.AIAccessor
@@ -113,6 +120,7 @@ public class L2NpcWalkerInstance extends L2Npc
 		 */
 		@Override
 		public void detachAI()
-		{}
+		{
+		}
 	}
 }

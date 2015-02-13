@@ -14,27 +14,19 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-
-
 /**
- *
  * sample
  * <p>
- * 7d
- * c1 b2 e0 4a
- * 00 00 00 00
+ * 7d c1 b2 e0 4a 00 00 00 00
  * <p>
- *
- * format
- * cdd
- *
+ * format cdd
  * @version $Revision: 1.1.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public class FriendAddRequest extends L2GameServerPacket
 {
 	private static final String _S__7d_ASKJoinFriend_0X7d = "[S] 83 FriendAddRequest";
 	
-	private String _requestorName;
+	private final String _requestorName;
 	
 	/**
 	 * @param int objectId of the target
@@ -53,7 +45,8 @@ public class FriendAddRequest extends L2GameServerPacket
 		writeD(0);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

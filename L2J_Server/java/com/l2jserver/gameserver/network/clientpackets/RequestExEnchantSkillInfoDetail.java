@@ -21,12 +21,9 @@ import com.l2jserver.gameserver.model.L2EnchantSkillLearn;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.ExEnchantSkillInfoDetail;
 
-
 /**
  * Format (ch) ddd c: (id) 0xD0 h: (subid) 0x31 d: type d: skill id d: skill lvl
- * 
  * @author -Wooden-
- * 
  */
 public final class RequestExEnchantSkillInfoDetail extends L2GameClientPacket
 {
@@ -46,34 +43,45 @@ public final class RequestExEnchantSkillInfoDetail extends L2GameClientPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#runImpl()
 	 */
 	@Override
 	protected void runImpl()
 	{
-		if (_skillId <= 0 || _skillLvl <= 0) // minimal sanity check
+		if ((_skillId <= 0) || (_skillLvl <= 0))
+		{
 			return;
-
+		}
+		
 		L2PcInstance activeChar = getClient().getActiveChar();
 		
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		int reqSkillLvl = -2;
 		
-		if (_type == 0 || _type == 1)
+		if ((_type == 0) || (_type == 1))
+		{
 			reqSkillLvl = _skillLvl - 1; // enchant
+		}
 		else if (_type == 2)
+		{
 			reqSkillLvl = _skillLvl + 1; // untrain
+		}
 		else if (_type == 3)
+		{
 			reqSkillLvl = _skillLvl; // change route
+		}
 		
 		int playerSkillLvl = activeChar.getSkillLevel(_skillId);
 		
 		// dont have such skill
 		if (playerSkillLvl == -1)
+		{
 			return;
+		}
 		
 		// if reqlvl is 100,200,.. check base skill lvl enchant
 		if ((reqSkillLvl % 100) == 0)
@@ -83,17 +91,23 @@ public final class RequestExEnchantSkillInfoDetail extends L2GameClientPacket
 			{
 				// if player dont have min level to enchant
 				if (playerSkillLvl != esl.getBaseLevel())
+				{
 					return;
+				}
 			}
 			// enchant data dont exist?
 			else
+			{
 				return;
+			}
 		}
 		else if (playerSkillLvl != reqSkillLvl)
 		{
 			// change route is different skill lvl but same enchant
-			if (_type == 3 && ((playerSkillLvl % 100) != (_skillLvl % 100)))
+			if ((_type == 3) && ((playerSkillLvl % 100) != (_skillLvl % 100)))
+			{
 				return;
+			}
 		}
 		
 		// send skill enchantment detail
@@ -103,7 +117,6 @@ public final class RequestExEnchantSkillInfoDetail extends L2GameClientPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

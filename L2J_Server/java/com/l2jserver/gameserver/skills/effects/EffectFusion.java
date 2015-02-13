@@ -36,7 +36,6 @@ public class EffectFusion extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -46,7 +45,6 @@ public class EffectFusion extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -68,9 +66,13 @@ public class EffectFusion extends L2Effect
 	{
 		_effect--;
 		if (_effect < 1)
+		{
 			exit();
+		}
 		else
+		{
 			updateBuff();
+		}
 	}
 	
 	private void updateBuff()

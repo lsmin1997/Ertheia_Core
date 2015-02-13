@@ -32,7 +32,6 @@ public class EffectPhoenixBless extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +41,6 @@ public class EffectPhoenixBless extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -52,18 +50,18 @@ public class EffectPhoenixBless extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
 	public void onExit()
 	{
 		if (getEffected() instanceof L2Playable)
+		{
 			((L2Playable) getEffected()).stopPhoenixBlessing(this);
+		}
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -72,8 +70,9 @@ public class EffectPhoenixBless extends L2Effect
 		// just stop this effect
 		return false;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

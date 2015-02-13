@@ -55,21 +55,21 @@ public class L2SkillChargeDmg extends L2Skill
 		if (caster instanceof L2PcInstance)
 		{
 			// thanks Diego Vargas of L2Guru: 70*((0.8+0.201*No.Charges) * (PATK+POWER)) / PDEF
-			modifier = 0.8+0.201*(getNumCharges()+((L2PcInstance)caster).getCharges());
+			modifier = 0.8 + (0.201 * (getNumCharges() + ((L2PcInstance) caster).getCharges()));
 		}
 		L2ItemInstance weapon = caster.getActiveWeaponInstance();
-		boolean soul = (weapon != null
-				&& weapon.getChargedSoulshot() == L2ItemInstance.CHARGED_SOULSHOT
-				&& weapon.getItemType() != L2WeaponType.DAGGER );
+		boolean soul = ((weapon != null) && (weapon.getChargedSoulshot() == L2ItemInstance.CHARGED_SOULSHOT) && (weapon.getItemType() != L2WeaponType.DAGGER));
 		
-		for (L2Character target: (L2Character[]) targets)
+		for (L2Character target : (L2Character[]) targets)
 		{
 			if (target.isAlikeDead())
+			{
 				continue;
+			}
 			
-			//	Calculate skill evasion
+			// Calculate skill evasion
 			boolean skillIsEvaded = Formulas.calcPhysicalSkillEvasion(target, this);
-			if(skillIsEvaded)
+			if (skillIsEvaded)
 			{
 				if (caster instanceof L2PcInstance)
 				{
@@ -84,22 +84,26 @@ public class L2SkillChargeDmg extends L2Skill
 					((L2PcInstance) target).sendPacket(sm);
 				}
 				
-				//no futher calculations needed.
+				// no futher calculations needed.
 				continue;
 			}
 			
 			// TODO: should we use dual or not?
 			// because if so, damage are lowered but we don't do anything special with dual then
 			// like in doAttackHitByDual which in fact does the calcPhysDam call twice
-			//boolean dual  = caster.isUsingDualWeapon();
+			// boolean dual = caster.isUsingDualWeapon();
 			byte shld = Formulas.calcShldUse(caster, target, this);
 			boolean crit = false;
-			if (this.getBaseCritRate() > 0)
-				crit = Formulas.calcCrit(this.getBaseCritRate() * 10 * BaseStats.STR.calcBonus(caster), target);
+			if (getBaseCritRate() > 0)
+			{
+				crit = Formulas.calcCrit(getBaseCritRate() * 10 * BaseStats.STR.calcBonus(caster), target);
+			}
 			// damage calculation, crit is static 2x
 			double damage = Formulas.calcPhysDam(caster, target, this, shld, false, false, soul);
 			if (crit)
+			{
 				damage *= 2;
+			}
 			
 			if (damage > 0)
 			{
@@ -136,20 +140,26 @@ public class L2SkillChargeDmg extends L2Skill
 					}
 				}
 				
-				double finalDamage = damage*modifier;
+				double finalDamage = damage * modifier;
 				
-				if (Config.LOG_GAME_DAMAGE
-						&& caster instanceof L2Playable
-						&& damage > Config.LOG_GAME_DAMAGE_THRESHOLD)
+				if (Config.LOG_GAME_DAMAGE && (caster instanceof L2Playable) && (damage > Config.LOG_GAME_DAMAGE_THRESHOLD))
 				{
 					LogRecord record = new LogRecord(Level.INFO, "");
-					record.setParameters(new Object[]{caster, " did damage ", (int)damage, this, " to ", target});
+					record.setParameters(new Object[]
+					{
+						caster,
+						" did damage ",
+						(int) damage,
+						this,
+						" to ",
+						target
+					});
 					record.setLoggerName("pdam");
 					_logDamage.log(record);
 				}
 				
 				target.reduceCurrentHp(finalDamage, caster, this);
-
+				
 				// vengeance reflected damage
 				if ((reflect & Formulas.SKILL_REFLECT_VENGEANCE) != 0)
 				{
@@ -166,11 +176,11 @@ public class L2SkillChargeDmg extends L2Skill
 						caster.sendPacket(sm);
 					}
 					// Formula from Diego post, 700 from rpg tests
-					double vegdamage = (700 * target.getPAtk(caster) / caster.getPDef(target));
+					double vegdamage = ((700 * target.getPAtk(caster)) / caster.getPDef(target));
 					caster.reduceCurrentHp(vegdamage, target, this);
 				}
 				
-				caster.sendDamageMessage(target, (int)finalDamage, false, crit, false);
+				caster.sendDamageMessage(target, (int) finalDamage, false, crit, false);
 				
 			}
 			else
@@ -178,16 +188,18 @@ public class L2SkillChargeDmg extends L2Skill
 				caster.sendDamageMessage(target, 0, false, false, true);
 			}
 		}
-		if (soul && weapon!= null)
+		if (soul && (weapon != null))
+		{
 			weapon.setChargedSoulshot(L2ItemInstance.CHARGED_NONE);
+		}
 		
 		// effect self :]
 		if (hasSelfEffects())
 		{
 			L2Effect effect = caster.getFirstEffect(getId());
-			if (effect != null && effect.isSelfEffect())
+			if ((effect != null) && effect.isSelfEffect())
 			{
-				//Replace old effect with new one.
+				// Replace old effect with new one.
 				effect.exit();
 			}
 			// cast self effect if any

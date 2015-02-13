@@ -84,40 +84,56 @@ public class FortSiegeManager
 	}
 	
 	/**
-	 * Return true if character summon<BR><BR>
+	 * Return true if character summon<BR>
+	 * <BR>
 	 * @param activeChar The L2Character of the character can summon
 	 */
 	public final boolean checkIfOkToSummon(L2Character activeChar, boolean isCheckOnly)
 	{
 		if (!(activeChar instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
 		String text = "";
 		L2PcInstance player = (L2PcInstance) activeChar;
 		Fort fort = FortManager.getInstance().getFort(player);
 		
-		if (fort == null || fort.getFortId() <= 0)
+		if ((fort == null) || (fort.getFortId() <= 0))
+		{
 			text = "You must be on fort ground to summon this";
+		}
 		else if (!fort.getSiege().getIsInProgress())
+		{
 			text = "You can only summon this during a siege.";
-		else if (player.getClanId() != 0 && fort.getSiege().getAttackerClan(player.getClanId()) == null)
+		}
+		else if ((player.getClanId() != 0) && (fort.getSiege().getAttackerClan(player.getClanId()) == null))
+		{
 			text = "You can only summon this as a registered attacker.";
+		}
 		else
+		{
 			return true;
+		}
 		
 		if (!isCheckOnly)
+		{
 			player.sendMessage(text);
+		}
 		return false;
 	}
 	
 	/**
-	 * Return true if the clan is registered or owner of a fort<BR><BR>
+	 * Return true if the clan is registered or owner of a fort<BR>
+	 * <BR>
 	 * @param clan The L2Clan of the player
 	 */
 	public final boolean checkIsRegistered(L2Clan clan, int fortid)
 	{
 		if (clan == null)
+		{
 			return false;
+		}
 		
 		Connection con = null;
 		boolean register = false;
@@ -186,7 +202,9 @@ public class FortSiegeManager
 				{
 					String _spawnParams = siegeSettings.getProperty(fort.getName().replace(" ", "") + "Commander" + i, "");
 					if (_spawnParams.length() == 0)
+					{
 						break;
+					}
 					StringTokenizer st = new StringTokenizer(_spawnParams.trim(), ",");
 					
 					try
@@ -211,7 +229,9 @@ public class FortSiegeManager
 				{
 					String _spawnParams = siegeSettings.getProperty(fort.getName().replace(" ", "") + "Flag" + i, "");
 					if (_spawnParams.length() == 0)
+					{
 						break;
+					}
 					StringTokenizer st = new StringTokenizer(_spawnParams.trim(), ",");
 					
 					try
@@ -234,7 +254,7 @@ public class FortSiegeManager
 		}
 		catch (Exception e)
 		{
-			//_initialized = false;
+			// _initialized = false;
 			_log.log(Level.WARNING, "Error while loading fortsiege data." + e.getMessage(), e);
 		}
 		finally
@@ -266,9 +286,13 @@ public class FortSiegeManager
 	public final FastList<CombatFlag> getFlagList(int _fortId)
 	{
 		if (_flagList.containsKey(_fortId))
+		{
 			return _flagList.get(_fortId);
+		}
 		else
+		{
 			return null;
+		}
 	}
 	
 	public final int getAttackerMaxClans()
@@ -294,8 +318,12 @@ public class FortSiegeManager
 	public final FortSiege getSiege(int x, int y, int z)
 	{
 		for (Fort fort : FortManager.getInstance().getForts())
+		{
 			if (fort.getSiege().checkIfInZone(x, y, z))
+			{
 				return fort.getSiege();
+			}
+		}
 		return null;
 	}
 	
@@ -317,14 +345,18 @@ public class FortSiegeManager
 	public final List<FortSiege> getSieges()
 	{
 		if (_sieges == null)
+		{
 			_sieges = new FastList<FortSiege>();
+		}
 		return _sieges;
 	}
 	
 	public final void addSiege(FortSiege fortSiege)
 	{
 		if (_sieges == null)
+		{
 			_sieges = new FastList<FortSiege>();
+		}
 		_sieges.add(fortSiege);
 	}
 	
@@ -336,7 +368,9 @@ public class FortSiegeManager
 	public boolean activateCombatFlag(L2PcInstance player, L2ItemInstance item)
 	{
 		if (!checkIfCanPickup(player))
+		{
 			return false;
+		}
 		
 		Fort fort = FortManager.getInstance().getFort(player);
 		
@@ -367,7 +401,7 @@ public class FortSiegeManager
 		// here check if is siege is attacker
 		Fort fort = FortManager.getInstance().getFort(player);
 		
-		if (fort == null || fort.getFortId() <= 0)
+		if ((fort == null) || (fort.getFortId() <= 0))
 		{
 			player.sendPacket(sm);
 			return false;
@@ -397,7 +431,9 @@ public class FortSiegeManager
 			{
 				cf.dropIt();
 				if (fort.getSiege().getIsInProgress())
+				{
 					cf.spawnMe();
+				}
 			}
 		}
 	}
@@ -405,10 +441,10 @@ public class FortSiegeManager
 	public static class SiegeSpawn
 	{
 		Location _location;
-		private int _npcId;
-		private int _heading;
-		private int _fortId;
-		private int _id;
+		private final int _npcId;
+		private final int _heading;
+		private final int _fortId;
+		private final int _id;
 		
 		public SiegeSpawn(int fort_id, int x, int y, int z, int heading, int npc_id, int id)
 		{

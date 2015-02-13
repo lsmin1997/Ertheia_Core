@@ -19,11 +19,12 @@ import com.l2jserver.gameserver.network.serverpackets.ExBrExtraUserInfo;
 import com.l2jserver.gameserver.network.serverpackets.UserInfo;
 
 /**
- * Appearing Packet Handler<p>
+ * Appearing Packet Handler
  * <p>
- * 0000: 30 <p>
  * <p>
- *
+ * 0000: 30
+ * <p>
+ * <p>
  * @version $Revision: 1.3.4.4 $ $Date: 2005/03/29 23:15:33 $
  */
 public final class Appearing extends L2GameClientPacket
@@ -40,14 +41,21 @@ public final class Appearing extends L2GameClientPacket
 	protected void runImpl()
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
-		if(activeChar == null) return;
-		if (activeChar.isTeleporting()) activeChar.onTeleported();
+		if (activeChar == null)
+		{
+			return;
+		}
+		if (activeChar.isTeleporting())
+		{
+			activeChar.onTeleported();
+		}
 		
 		sendPacket(new UserInfo(activeChar));
 		sendPacket(new ExBrExtraUserInfo(activeChar));
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

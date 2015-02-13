@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionPlayerBaseStats.
- *
  * @author mkizub
  */
 public class ConditionPlayerBaseStats extends Condition
@@ -31,7 +30,6 @@ public class ConditionPlayerBaseStats extends Condition
 	
 	/**
 	 * Instantiates a new condition player base stats.
-	 *
 	 * @param player the player
 	 * @param stat the stat
 	 * @param value the value
@@ -45,7 +43,6 @@ public class ConditionPlayerBaseStats extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -54,7 +51,9 @@ public class ConditionPlayerBaseStats extends Condition
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		L2PcInstance player = (L2PcInstance) env.player;
 		switch (_stat)
 		{

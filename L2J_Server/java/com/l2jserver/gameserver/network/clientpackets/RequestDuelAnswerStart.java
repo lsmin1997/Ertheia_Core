@@ -21,7 +21,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * Format:(ch) ddd
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public final class RequestDuelAnswerStart extends L2GameClientPacket
 {
@@ -46,10 +46,16 @@ public final class RequestDuelAnswerStart extends L2GameClientPacket
 	protected void runImpl()
 	{
 		L2PcInstance player = getClient().getActiveChar();
-		if (player == null) return;
+		if (player == null)
+		{
+			return;
+		}
 		
 		L2PcInstance requestor = player.getActiveRequester();
-		if (requestor == null) return;
+		if (requestor == null)
+		{
+			return;
+		}
 		
 		if (_response == 1)
 		{
@@ -98,7 +104,10 @@ public final class RequestDuelAnswerStart extends L2GameClientPacket
 		else
 		{
 			SystemMessage msg = null;
-			if (_partyDuel == 1) msg = SystemMessage.getSystemMessage(SystemMessageId.THE_OPPOSING_PARTY_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL);
+			if (_partyDuel == 1)
+			{
+				msg = SystemMessage.getSystemMessage(SystemMessageId.THE_OPPOSING_PARTY_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL);
+			}
 			else
 			{
 				msg = SystemMessage.getSystemMessage(SystemMessageId.C1_HAS_DECLINED_YOUR_CHALLENGE_TO_A_DUEL);

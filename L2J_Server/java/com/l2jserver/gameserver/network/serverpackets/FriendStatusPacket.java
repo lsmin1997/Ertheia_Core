@@ -16,24 +16,20 @@ import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.model.L2World;
 
 /**
- * Support for "Chat with Friends" dialog.
- * <BR>
- * Inform player about friend online status change
- * <BR>
+ * Support for "Chat with Friends" dialog. <BR>
+ * Inform player about friend online status change <BR>
  * Format: cdSd<BR>
  * d: Online/Offline<BR>
- * S: Friend Name  <BR>
+ * S: Friend Name <BR>
  * d: Player Object ID <BR>
- * 
  * @author JIV
- * 
  */
 public class FriendStatusPacket extends L2GameServerPacket
 {
 	private static final String _S__FA_FRIENDLIST = "[S] 77 FriendStatusPacket";
-	private boolean  _online;
-	private int _objid;
-	private String _name;
+	private final boolean _online;
+	private final int _objid;
+	private final String _name;
 	
 	public FriendStatusPacket(int objId)
 	{
@@ -53,7 +49,6 @@ public class FriendStatusPacket extends L2GameServerPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

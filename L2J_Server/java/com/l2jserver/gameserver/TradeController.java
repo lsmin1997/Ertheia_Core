@@ -34,7 +34,6 @@ import com.l2jserver.gameserver.model.L2TradeList.L2TradeItem;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.5.4.13 $ $Date: 2005/04/06 16:13:38 $
  */
 public class TradeController
@@ -42,25 +41,12 @@ public class TradeController
 	private static Logger _log = Logger.getLogger(TradeController.class.getName());
 	
 	private int _nextListId;
-	private Map<Integer, L2TradeList> _lists = new FastMap<Integer, L2TradeList>();
+	private final Map<Integer, L2TradeList> _lists = new FastMap<Integer, L2TradeList>();
 	
 	/** Task launching the function for restore count of Item (Clan Hall) */
-	/*public class RestoreCount implements Runnable
-	{
-		private int _timer;
-		
-		public RestoreCount(int time)
-		{
-			_timer = time;
-		}
-		
-		public void run()
-		{
-			restoreCount(_timer);
-			dataTimerSave(_timer);
-			ThreadPoolManager.getInstance().scheduleGeneral(new RestoreCount(_timer), (long)_timer*60*60*1000);
-		}
-	}*/
+	/*
+	 * public class RestoreCount implements Runnable { private int _timer; public RestoreCount(int time) { _timer = time; } public void run() { restoreCount(_timer); dataTimerSave(_timer); ThreadPoolManager.getInstance().scheduleGeneral(new RestoreCount(_timer), (long)_timer*60*60*1000); } }
+	 */
 	
 	public static TradeController getInstance()
 	{
@@ -83,10 +69,7 @@ public class TradeController
 			
 			int itemId, price, maxCount, currentCount, time;
 			long saveTimer;
-			PreparedStatement statement = con.prepareStatement("SELECT item_id, price, shop_id, "
-					+ L2DatabaseFactory.getInstance().safetyString("order")
-					+ ", count, currentCount, time, savetimer FROM merchant_buylists WHERE shop_id=? ORDER BY "
-					+ L2DatabaseFactory.getInstance().safetyString("order") + " ASC");
+			PreparedStatement statement = con.prepareStatement("SELECT item_id, price, shop_id, " + L2DatabaseFactory.getInstance().safetyString("order") + ", count, currentCount, time, savetimer FROM merchant_buylists WHERE shop_id=? ORDER BY " + L2DatabaseFactory.getInstance().safetyString("order") + " ASC");
 			while (rset1.next())
 			{
 				statement.setString(1, String.valueOf(rset1.getInt("shop_id")));
@@ -121,11 +104,9 @@ public class TradeController
 					{
 						// debug
 						double diff = ((double) (price)) / ItemTable.getInstance().getTemplate(itemId).getReferencePrice();
-						if (diff < 0.8 || diff > 1.2)
+						if ((diff < 0.8) || (diff > 1.2))
 						{
-							_log.severe("PRICING DEBUG: TradeListId: " + buy1.getListId() + " -  ItemId: " + itemId + " ("
-									+ ItemTable.getInstance().getTemplate(itemId).getName() + ") diff: " + diff + " - Price: " + price
-									+ " - Reference: " + ItemTable.getInstance().getTemplate(itemId).getReferencePrice());
+							_log.severe("PRICING DEBUG: TradeListId: " + buy1.getListId() + " -  ItemId: " + itemId + " (" + ItemTable.getInstance().getTemplate(itemId).getName() + ") diff: " + diff + " - Price: " + price + " - Reference: " + ItemTable.getInstance().getTemplate(itemId).getReferencePrice());
 						}
 					}
 					
@@ -183,10 +164,7 @@ public class TradeController
 				
 				int itemId, price, maxCount, currentCount, time;
 				long saveTimer;
-				PreparedStatement statement = con.prepareStatement("SELECT item_id, price, shop_id, "
-						+ L2DatabaseFactory.getInstance().safetyString("order")
-						+ ", count, currentCount, time, savetimer FROM custom_merchant_buylists WHERE shop_id=? ORDER BY "
-						+ L2DatabaseFactory.getInstance().safetyString("order") + " ASC");
+				PreparedStatement statement = con.prepareStatement("SELECT item_id, price, shop_id, " + L2DatabaseFactory.getInstance().safetyString("order") + ", count, currentCount, time, savetimer FROM custom_merchant_buylists WHERE shop_id=? ORDER BY " + L2DatabaseFactory.getInstance().safetyString("order") + " ASC");
 				while (rset1.next())
 				{
 					statement.setString(1, String.valueOf(rset1.getInt("shop_id")));
@@ -208,8 +186,7 @@ public class TradeController
 						L2TradeItem item = new L2TradeItem(shopId, itemId);
 						if (ItemTable.getInstance().getTemplate(itemId) == null)
 						{
-							_log.warning("Skipping itemId: " + itemId + " on buylistId: " + buy1.getListId()
-									+ ", missing data for that item.");
+							_log.warning("Skipping itemId: " + itemId + " on buylistId: " + buy1.getListId() + ", missing data for that item.");
 							continue;
 						}
 						
@@ -222,11 +199,9 @@ public class TradeController
 						{
 							// debug
 							double diff = ((double) (price)) / ItemTable.getInstance().getTemplate(itemId).getReferencePrice();
-							if (diff < 0.8 || diff > 1.2)
+							if ((diff < 0.8) || (diff > 1.2))
 							{
-								_log.severe("PRICING DEBUG: TradeListId: " + buy1.getListId() + " -  ItemId: " + itemId + " ("
-										+ ItemTable.getInstance().getTemplate(itemId).getName() + ") diff: " + diff + " - Price: " + price
-										+ " - Reference: " + ItemTable.getInstance().getTemplate(itemId).getReferencePrice());
+								_log.severe("PRICING DEBUG: TradeListId: " + buy1.getListId() + " -  ItemId: " + itemId + " (" + ItemTable.getInstance().getTemplate(itemId).getName() + ") diff: " + diff + " - Price: " + price + " - Reference: " + ItemTable.getInstance().getTemplate(itemId).getReferencePrice());
 							}
 						}
 						
@@ -287,9 +262,13 @@ public class TradeController
 		{
 			String tradeNpcId = list.getNpcId();
 			if (tradeNpcId.startsWith("gm"))
+			{
 				continue;
+			}
 			if (npcId == Integer.parseInt(tradeNpcId))
+			{
 				lists.add(list);
+			}
 		}
 		return lists;
 	}
@@ -312,7 +291,7 @@ public class TradeController
 					for (L2TradeItem item : list.getItems())
 					{
 						long currentCount;
-						if (item.hasLimitedStock() && (currentCount = item.getCurrentCount()) < item.getMaxCount())
+						if (item.hasLimitedStock() && ((currentCount = item.getCurrentCount()) < item.getMaxCount()))
 						{
 							statement.setLong(1, currentCount);
 							statement.setInt(2, item.getItemId());

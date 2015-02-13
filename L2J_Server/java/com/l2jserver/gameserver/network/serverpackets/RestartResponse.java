@@ -14,10 +14,8 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public final class RestartResponse extends L2GameServerPacket
@@ -31,7 +29,7 @@ public final class RestartResponse extends L2GameServerPacket
 		return result ? STATIC_PACKET_TRUE : STATIC_PACKET_FALSE;
 	}
 	
-	private boolean _result;
+	private final boolean _result;
 	
 	public RestartResponse(boolean result)
 	{
@@ -45,7 +43,8 @@ public final class RestartResponse extends L2GameServerPacket
 		writeD(_result ? 1 : 0);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

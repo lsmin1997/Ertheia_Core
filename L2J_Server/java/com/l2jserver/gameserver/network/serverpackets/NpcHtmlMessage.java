@@ -21,110 +21,10 @@ import com.l2jserver.gameserver.cache.HtmCache;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.clientpackets.RequestBypassToServer;
 
-
-
 /**
- *
- * the HTML parser in the client knowns these standard and non-standard tags and attributes
- * VOLUMN
- * UNKNOWN
- * UL
- * U
- * TT
- * TR
- * TITLE
- * TEXTCODE
- * TEXTAREA
- * TD
- * TABLE
- * SUP
- * SUB
- * STRIKE
- * SPIN
- * SELECT
- * RIGHT
- * PRE
- * P
- * OPTION
- * OL
- * MULTIEDIT
- * LI
- * LEFT
- * INPUT
- * IMG
- * I
- * HTML
- * H7
- * H6
- * H5
- * H4
- * H3
- * H2
- * H1
- * FONT
- * EXTEND
- * EDIT
- * COMMENT
- * COMBOBOX
- * CENTER
- * BUTTON
- * BR
- * BR1
- * BODY
- * BAR
- * ADDRESS
- * A
- * SEL
- * LIST
- * VAR
- * FORE
- * READONL
- * ROWS
- * VALIGN
- * FIXWIDTH
- * BORDERCOLORLI
- * BORDERCOLORDA
- * BORDERCOLOR
- * BORDER
- * BGCOLOR
- * BACKGROUND
- * ALIGN
- * VALU
- * READONLY
- * MULTIPLE
- * SELECTED
- * TYP
- * TYPE
- * MAXLENGTH
- * CHECKED
- * SRC
- * Y
- * X
- * QUERYDELAY
- * NOSCROLLBAR
- * IMGSRC
- * B
- * FG
- * SIZE
- * FACE
- * COLOR
- * DEFFON
- * DEFFIXEDFONT
- * WIDTH
- * VALUE
- * TOOLTIP
- * NAME
- * MIN
- * MAX
- * HEIGHT
- * DISABLED
- * ALIGN
- * MSG
- * LINK
- * HREF
- * ACTION
- *
- *
+ * the HTML parser in the client knowns these standard and non-standard tags and attributes VOLUMN UNKNOWN UL U TT TR TITLE TEXTCODE TEXTAREA TD TABLE SUP SUB STRIKE SPIN SELECT RIGHT PRE P OPTION OL MULTIEDIT LI LEFT INPUT IMG I HTML H7 H6 H5 H4 H3 H2 H1 FONT EXTEND EDIT COMMENT COMBOBOX CENTER
+ * BUTTON BR BR1 BODY BAR ADDRESS A SEL LIST VAR FORE READONL ROWS VALIGN FIXWIDTH BORDERCOLORLI BORDERCOLORDA BORDERCOLOR BORDER BGCOLOR BACKGROUND ALIGN VALU READONLY MULTIPLE SELECTED TYP TYPE MAXLENGTH CHECKED SRC Y X QUERYDELAY NOSCROLLBAR IMGSRC B FG SIZE FACE COLOR DEFFON DEFFIXEDFONT WIDTH
+ * VALUE TOOLTIP NAME MIN MAX HEIGHT DISABLED ALIGN MSG LINK HREF ACTION
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public final class NpcHtmlMessage extends L2GameServerPacket
@@ -134,13 +34,12 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 	//
 	private static final String _S__1B_NPCHTMLMESSAGE = "[S] 19 NpcHtmlMessage";
 	private static Logger _log = Logger.getLogger(RequestBypassToServer.class.getName());
-	private int _npcObjId;
+	private final int _npcObjId;
 	private String _html;
 	private int _itemId = 0;
 	private boolean _validate = true;
 	
 	/**
-	 * 
 	 * @param npcObjId
 	 * @param text
 	 * @param itemId
@@ -177,14 +76,18 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 	public void runImpl()
 	{
 		if (Config.BYPASS_VALIDATION && _validate)
+		{
 			buildBypassCache(getClient().getActiveChar());
+		}
 	}
 	
 	public void setHtml(String text)
 	{
-		if(!text.contains("<html>"))
+		if (!text.contains("<html>"))
+		{
 			text = "<html><body>" + text + "</body></html>";
-
+		}
+		
 		_html = text;
 	}
 	
@@ -194,8 +97,8 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 		
 		if (content == null)
 		{
-			setHtml("<html><body>My Text is missing:<br>"+path+"</body></html>");
-			_log.warning("missing html page "+path);
+			setHtml("<html><body>My Text is missing:<br>" + path + "</body></html>");
+			_log.warning("missing html page " + path);
 			return false;
 		}
 		
@@ -211,7 +114,9 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 	private final void buildBypassCache(L2PcInstance activeChar)
 	{
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		activeChar.clearBypass();
 		int len = _html.length();
@@ -219,20 +124,30 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 		{
 			int start = _html.indexOf("\"bypass ", i);
 			int finish = _html.indexOf("\"", start + 1);
-			if (start < 0 || finish < 0)
+			if ((start < 0) || (finish < 0))
+			{
 				break;
+			}
 			
-			if (_html.substring(start+8, start+10).equals("-h"))
+			if (_html.substring(start + 8, start + 10).equals("-h"))
+			{
 				start += 11;
+			}
 			else
+			{
 				start += 8;
+			}
 			
 			i = finish;
 			int finish2 = _html.indexOf("$", start);
-			if (finish2 < finish && finish2 > 0)
+			if ((finish2 < finish) && (finish2 > 0))
+			{
 				activeChar.addBypass2(_html.substring(start, finish2).trim());
+			}
 			else
+			{
 				activeChar.addBypass(_html.substring(start, finish).trim());
+			}
 		}
 	}
 	
@@ -246,7 +161,8 @@ public final class NpcHtmlMessage extends L2GameServerPacket
 		writeD(_itemId);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

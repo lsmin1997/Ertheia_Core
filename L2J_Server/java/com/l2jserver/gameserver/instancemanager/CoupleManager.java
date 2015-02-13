@@ -29,7 +29,6 @@ import com.l2jserver.gameserver.model.entity.Couple;
 
 /**
  * @author evill33t
- *
  */
 public class CoupleManager
 {
@@ -45,6 +44,7 @@ public class CoupleManager
 	{
 		return SingletonHolder._instance;
 	}
+	
 	// =========================================================
 	
 	// =========================================================
@@ -98,15 +98,17 @@ public class CoupleManager
 	{
 		int index = getCoupleIndex(coupleId);
 		if (index >= 0)
+		{
 			return getCouples().get(index);
+		}
 		return null;
 	}
 	
 	public void createCouple(L2PcInstance player1, L2PcInstance player2)
 	{
-		if (player1 != null && player2 != null)
+		if ((player1 != null) && (player2 != null))
 		{
-			if (player1.getPartnerId() == 0 && player2.getPartnerId() == 0)
+			if ((player1.getPartnerId() == 0) && (player2.getPartnerId() == 0))
 			{
 				int _player1id = player1.getObjectId();
 				int _player2id = player2.getObjectId();
@@ -153,8 +155,10 @@ public class CoupleManager
 		int i = 0;
 		for (Couple temp : getCouples())
 		{
-			if (temp != null && temp.getId() == coupleId)
+			if ((temp != null) && (temp.getId() == coupleId))
+			{
 				return i;
+			}
 			i++;
 		}
 		return -1;
@@ -163,7 +167,9 @@ public class CoupleManager
 	public final FastList<Couple> getCouples()
 	{
 		if (_couples == null)
+		{
 			_couples = new FastList<Couple>();
+		}
 		return _couples;
 	}
 	

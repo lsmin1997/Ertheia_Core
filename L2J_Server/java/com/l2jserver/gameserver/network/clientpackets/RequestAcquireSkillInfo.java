@@ -86,7 +86,7 @@ public final class RequestAcquireSkillInfo extends L2GameClientPacket
 		
 		final SkillType skillType = SkillType.values()[_skillType];
 		
-		//Doesn't apply to all Skill Types
+		// Doesn't apply to all Skill Types
 		if (((skillType != SkillType.Transfer) && ((_level > 1) && (activeChar.getKnownSkill(_id) == null))) || ((activeChar.getKnownSkill(_id) != null) && (activeChar.getKnownSkill(_id).getLevel() != (_level - 1))))
 		{
 			_log.warning(RequestAcquireSkillInfo.class.getSimpleName() + ": Player " + activeChar.getName() + " is requesting info for skill Id: " + _id + " level " + _level + " without knowing it's previous level!");

@@ -22,10 +22,8 @@ import com.l2jserver.gameserver.LoginServerThread.SessionKey;
 import com.l2jserver.gameserver.network.L2GameClient;
 import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.9.2.3.2.4 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class AuthLogin extends L2GameClientPacket
@@ -35,10 +33,9 @@ public final class AuthLogin extends L2GameClientPacket
 	
 	// loginName + keys must match what the loginserver used.
 	private String _loginName;
-	/*private final long _key1;
-	private final long _key2;
-	private final long _key3;
-	private final long _key4;*/
+	/*
+	 * private final long _key1; private final long _key2; private final long _key3; private final long _key4;
+	 */
 	private int _playKey1;
 	private int _playKey2;
 	private int _loginKey1;
@@ -60,10 +57,10 @@ public final class AuthLogin extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		final L2GameClient client = getClient();		
-		if (_loginName.length() == 0 || !client.isProtocolOk())
+		final L2GameClient client = getClient();
+		if ((_loginName.length() == 0) || !client.isProtocolOk())
 		{
-			client.close((L2GameServerPacket)null);
+			client.close((L2GameServerPacket) null);
 			return;
 		}
 		SessionKey key = new SessionKey(_loginKey1, _loginKey2, _playKey1, _playKey2);
@@ -82,8 +79,8 @@ public final class AuthLogin extends L2GameClientPacket
 		}
 	}
 	
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

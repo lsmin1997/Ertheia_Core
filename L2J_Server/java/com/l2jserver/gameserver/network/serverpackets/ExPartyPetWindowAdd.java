@@ -17,8 +17,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.actor.L2Summon;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public final class ExPartyPetWindowAdd extends L2GameServerPacket
 {
@@ -28,7 +27,6 @@ public final class ExPartyPetWindowAdd extends L2GameServerPacket
 	{
 		_summon = summon;
 	}
-	
 	
 	/**
 	 * @see com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket#getType()

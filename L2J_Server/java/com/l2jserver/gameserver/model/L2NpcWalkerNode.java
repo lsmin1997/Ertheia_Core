@@ -14,40 +14,39 @@
  */
 package com.l2jserver.gameserver.model;
 
-
 /**
- * 
  * @author Rayan RPG, JIV
  * @since 927
- *
  */
 public class L2NpcWalkerNode
 {
-	private int _routeId;
+	private final int _routeId;
 	private String _chatText;
 	private int _chatId = 0;
-	private int _moveX;
-	private int _moveY;
-	private int _moveZ;
-	private int _delay;
-	private boolean _running;
+	private final int _moveX;
+	private final int _moveY;
+	private final int _moveZ;
+	private final int _delay;
+	private final boolean _running;
 	
 	public L2NpcWalkerNode(int routeId, String chatText, int moveX, int moveY, int moveZ, int delay, boolean running)
 	{
 		super();
-		this._routeId = routeId;
-		this._chatText = chatText;
+		_routeId = routeId;
+		_chatText = chatText;
 		if (_chatText.startsWith("#"))
 		{
 			_chatId = Integer.parseInt(_chatText.substring(1));
 		}
 		else if (_chatText.trim().isEmpty())
+		{
 			_chatText = null;
-		this._moveX = moveX;
-		this._moveY = moveY;
-		this._moveZ = moveZ;
-		this._delay = delay;
-		this._running = running;
+		}
+		_moveX = moveX;
+		_moveY = moveY;
+		_moveZ = moveZ;
+		_delay = delay;
+		_running = running;
 	}
 	
 	public int getRouteId()
@@ -58,7 +57,9 @@ public class L2NpcWalkerNode
 	public String getChatText()
 	{
 		if (_chatId != 0)
+		{
 			throw new IllegalStateException("Chat id is defined for walker route!");
+		}
 		return _chatText;
 	}
 	
@@ -86,7 +87,7 @@ public class L2NpcWalkerNode
 	{
 		return _running;
 	}
-
+	
 	public int getChatId()
 	{
 		return _chatId;

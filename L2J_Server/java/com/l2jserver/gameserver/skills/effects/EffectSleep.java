@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author mkizub
- * 
  */
 public class EffectSleep extends L2Effect
 {
@@ -32,7 +31,6 @@ public class EffectSleep extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +40,6 @@ public class EffectSleep extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -53,7 +50,6 @@ public class EffectSleep extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -63,7 +59,6 @@ public class EffectSleep extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -72,8 +67,9 @@ public class EffectSleep extends L2Effect
 		// just stop this effect
 		return false;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

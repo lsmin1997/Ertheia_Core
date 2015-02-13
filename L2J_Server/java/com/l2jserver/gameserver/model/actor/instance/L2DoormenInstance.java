@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 public class L2DoormenInstance extends L2NpcInstance
@@ -52,9 +51,13 @@ public class L2DoormenInstance extends L2NpcInstance
 			if (isOwnerClan(player))
 			{
 				if (isUnderSiege())
+				{
 					cannotManageDoors(player);
+				}
 				else
+				{
 					openDoors(player, command);
+				}
 			}
 			return;
 		}
@@ -63,16 +66,22 @@ public class L2DoormenInstance extends L2NpcInstance
 			if (isOwnerClan(player))
 			{
 				if (isUnderSiege())
+				{
 					cannotManageDoors(player);
+				}
 				else
+				{
 					closeDoors(player, command);
+				}
 			}
 			return;
 		}
 		else if (command.startsWith("tele"))
 		{
 			if (isOwnerClan(player))
+			{
 				doTeleport(player, command);
+			}
 			return;
 		}
 		super.onBypassFeedback(player, command);
@@ -86,9 +95,13 @@ public class L2DoormenInstance extends L2NpcInstance
 		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 		
 		if (!isOwnerClan(player))
-			html.setFile(player.getHtmlPrefix(), "data/html/doormen/"+ getTemplate().npcId + "-no.htm");
+		{
+			html.setFile(player.getHtmlPrefix(), "data/html/doormen/" + getTemplate().npcId + "-no.htm");
+		}
 		else
-			html.setFile(player.getHtmlPrefix(), "data/html/doormen/"+ getTemplate().npcId + ".htm");
+		{
+			html.setFile(player.getHtmlPrefix(), "data/html/doormen/" + getTemplate().npcId + ".htm");
+		}
 		
 		html.replace("%objectId%", String.valueOf(getObjectId()));
 		player.sendPacket(html);
@@ -121,7 +134,7 @@ public class L2DoormenInstance extends L2NpcInstance
 		player.sendPacket(ActionFailed.STATIC_PACKET);
 		
 		NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
-		html.setFile(player.getHtmlPrefix(), "data/html/doormen/"+ getTemplate().npcId + "-busy.htm");
+		html.setFile(player.getHtmlPrefix(), "data/html/doormen/" + getTemplate().npcId + "-busy.htm");
 		player.sendPacket(html);
 	}
 	
@@ -132,10 +145,14 @@ public class L2DoormenInstance extends L2NpcInstance
 		if (list != null)
 		{
 			if (!player.isAlikeDead())
+			{
 				player.teleToLocation(list.getLocX(), list.getLocY(), list.getLocZ(), false);
+			}
 		}
 		else
+		{
 			_log.warning("No teleport destination with id:" + whereTo);
+		}
 		
 		player.sendPacket(ActionFailed.STATIC_PACKET);
 	}

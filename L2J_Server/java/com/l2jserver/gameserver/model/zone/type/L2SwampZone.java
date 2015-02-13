@@ -22,8 +22,7 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * another type of zone where your speed is changed
- *
- * @author  kerberos
+ * @author kerberos
  */
 public class L2SwampZone extends L2ZoneType
 {
@@ -56,13 +55,17 @@ public class L2SwampZone extends L2ZoneType
 			_castleId = Integer.parseInt(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	private Castle getCastle()
 	{
-		if (_castleId > 0 && _castle == null)
+		if ((_castleId > 0) && (_castle == null))
+		{
 			_castle = CastleManager.getInstance().getCastleById(_castleId);
+		}
 		
 		return _castle;
 	}
@@ -74,12 +77,16 @@ public class L2SwampZone extends L2ZoneType
 		{
 			// castle zones active only during siege
 			if (!getCastle().getSiege().getIsInProgress() || !getCastle().getSiege().isTrapsActive())
+			{
 				return;
+			}
 			
 			// defenders not affected
 			final L2PcInstance player = character.getActingPlayer();
-			if (player != null && player.isInSiege() && player.getSiegeState() == 2)
+			if ((player != null) && player.isInSiege() && (player.getSiegeState() == 2))
+			{
 				return;
+			}
 		}
 		
 		character.setInsideZone(L2Character.ZONE_SWAMP, true);

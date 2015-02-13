@@ -24,26 +24,24 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
 
-
 public class NpcBufferTable
 {
 	protected static Logger _log = Logger.getLogger(NpcBufferTable.class.getName());
 	
-	private TIntObjectHashMap<NpcBufferSkills> _buffers = new TIntObjectHashMap<NpcBufferSkills>();
+	private final TIntObjectHashMap<NpcBufferSkills> _buffers = new TIntObjectHashMap<NpcBufferSkills>();
 	
 	private static class NpcBufferSkills
 	{
-		private TIntIntHashMap _skillId = new TIntIntHashMap();
-		private TIntIntHashMap _skillLevels = new TIntIntHashMap();
-		private TIntIntHashMap _skillFeeIds = new TIntIntHashMap();
-		private TIntIntHashMap _skillFeeAmounts = new TIntIntHashMap();
+		private final TIntIntHashMap _skillId = new TIntIntHashMap();
+		private final TIntIntHashMap _skillLevels = new TIntIntHashMap();
+		private final TIntIntHashMap _skillFeeIds = new TIntIntHashMap();
+		private final TIntIntHashMap _skillFeeAmounts = new TIntIntHashMap();
 		
 		public NpcBufferSkills(int npcId)
 		{
 		}
 		
-		public void addSkill(int skillId, int skillLevel, int skillFeeId, int skillFeeAmount,
-				int buffGroup)
+		public void addSkill(int skillId, int skillLevel, int skillFeeId, int skillFeeAmount, int buffGroup)
 		{
 			_skillId.put(buffGroup, skillId);
 			_skillLevels.put(buffGroup, skillLevel);
@@ -58,11 +56,18 @@ public class NpcBufferTable
 			Integer skillFeeId = _skillFeeIds.get(buffGroup);
 			Integer skillFeeAmount = _skillFeeAmounts.get(buffGroup);
 			
-			if (skillId == null || skillLevel == null || skillFeeId == null
-					|| skillFeeAmount == null)
+			if ((skillId == null) || (skillLevel == null) || (skillFeeId == null) || (skillFeeAmount == null))
+			{
 				return null;
+			}
 			
-			return new int[] { skillId, skillLevel, skillFeeId, skillFeeAmount };
+			return new int[]
+			{
+				skillId,
+				skillLevel,
+				skillFeeId,
+				skillFeeAmount
+			};
 		}
 	}
 	
@@ -95,20 +100,26 @@ public class NpcBufferTable
 					if (npcId != lastNpcId)
 					{
 						if (lastNpcId != 0)
+						{
 							_buffers.put(lastNpcId, skills);
+						}
 						
 						skills = new NpcBufferSkills(npcId);
 						skills.addSkill(skillId, skillLevel, skillFeeId, skillFeeAmount, buffGroup);
 					}
 					else
+					{
 						skills.addSkill(skillId, skillLevel, skillFeeId, skillFeeAmount, buffGroup);
+					}
 					
 					lastNpcId = npcId;
 					skillCount++;
 				}
 				
 				if (lastNpcId != 0)
+				{
 					_buffers.put(lastNpcId, skills);
+				}
 				rset.close();
 				statement.close();
 			}
@@ -139,20 +150,26 @@ public class NpcBufferTable
 						if (npcId != lastNpcId)
 						{
 							if (lastNpcId != 0)
+							{
 								_buffers.put(lastNpcId, skills);
+							}
 							
 							skills = new NpcBufferSkills(npcId);
 							skills.addSkill(skillId, skillLevel, skillFeeId, skillFeeAmount, buffGroup);
 						}
 						else
+						{
 							skills.addSkill(skillId, skillLevel, skillFeeId, skillFeeAmount, buffGroup);
+						}
 						
 						lastNpcId = npcId;
 						skillCount++;
 					}
 					
 					if (lastNpcId != 0)
+					{
 						_buffers.put(lastNpcId, skills);
+					}
 					rset.close();
 					statement.close();
 				}
@@ -180,7 +197,9 @@ public class NpcBufferTable
 		NpcBufferSkills skills = _buffers.get(npcId);
 		
 		if (skills == null)
+		{
 			return null;
+		}
 		
 		return skills.getSkillGroupInfo(buffGroup);
 	}

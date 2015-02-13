@@ -27,9 +27,9 @@ import javolution.util.FastList;
  */
 public class ScriptPackage
 {
-	private List<ScriptDocument> _scriptFiles;
-	private List<String> _otherFiles;
-	private String _name;
+	private final List<ScriptDocument> _scriptFiles;
+	private final List<String> _otherFiles;
+	private final String _name;
 	
 	public ScriptPackage(ZipFile pack)
 	{
@@ -81,6 +81,7 @@ public class ScriptPackage
 			}
 		}
 	}
+	
 	/**
 	 * @return Returns the name.
 	 */
@@ -93,16 +94,18 @@ public class ScriptPackage
 	public String toString()
 	{
 		if (getScriptFiles().isEmpty() && getOtherFiles().isEmpty())
+		{
 			return "Empty Package.";
+		}
 		
-		String out = "Package Name: "+getName()+"\n";
+		String out = "Package Name: " + getName() + "\n";
 		
 		if (!getScriptFiles().isEmpty())
 		{
 			out += "Xml Script Files...\n";
 			for (ScriptDocument script : getScriptFiles())
 			{
-				out += script.getName()+"\n";
+				out += script.getName() + "\n";
 			}
 		}
 		
@@ -111,7 +114,7 @@ public class ScriptPackage
 			out += "Other Files...\n";
 			for (String fileName : getOtherFiles())
 			{
-				out += fileName+"\n";
+				out += fileName + "\n";
 			}
 		}
 		return out;

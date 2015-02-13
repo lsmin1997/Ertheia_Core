@@ -21,11 +21,9 @@ import com.l2jserver.gameserver.model.L2ClanMember;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.PledgeReceiveMemberInfo;
 
-
 /**
  * Format: (ch) dS
- * @author  -Wooden-
- *
+ * @author -Wooden-
  */
 public final class RequestPledgeMemberInfo extends L2GameClientPacket
 {
@@ -48,18 +46,24 @@ public final class RequestPledgeMemberInfo extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		//_log.info("C5: RequestPledgeMemberInfo d:"+_unk1);
-		//_log.info("C5: RequestPledgeMemberInfo S:"+_player);
+		// _log.info("C5: RequestPledgeMemberInfo d:"+_unk1);
+		// _log.info("C5: RequestPledgeMemberInfo S:"+_player);
 		L2PcInstance activeChar = getClient().getActiveChar();
-		if(activeChar == null)
+		if (activeChar == null)
+		{
 			return;
-		//do we need powers to do that??
+		}
+		// do we need powers to do that??
 		L2Clan clan = activeChar.getClan();
-		if(clan == null)
+		if (clan == null)
+		{
 			return;
+		}
 		L2ClanMember member = clan.getClanMember(_player);
-		if(member == null)
+		if (member == null)
+		{
 			return;
+		}
 		activeChar.sendPacket(new PledgeReceiveMemberInfo(member));
 	}
 	

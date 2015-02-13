@@ -34,7 +34,9 @@ public final class L2Properties extends Properties
 	
 	private static Logger _log = Logger.getLogger(L2Properties.class.getName());
 	
-	public L2Properties() { }
+	public L2Properties()
+	{
+	}
 	
 	public L2Properties(String name) throws IOException
 	{
@@ -79,7 +81,9 @@ public final class L2Properties extends Properties
 		{
 			inStream.close();
 			if (reader != null)
+			{
 				reader.close();
+			}
 		}
 	}
 	

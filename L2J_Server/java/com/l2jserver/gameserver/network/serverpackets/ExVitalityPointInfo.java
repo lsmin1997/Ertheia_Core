@@ -16,19 +16,20 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * format: d
- * @author  GodKratos
+ * @author GodKratos
  */
 public class ExVitalityPointInfo extends L2GameServerPacket
 {
 	private static final String _S__FE_A0_EXVITALITYPOINTINFO = "[S] FE:A0 ExVitalityPointInfo";
-	private int _vitalityPoints;
+	private final int _vitalityPoints;
 	
 	public ExVitalityPointInfo(int vitPoints)
 	{
 		_vitalityPoints = vitPoints;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -39,7 +40,8 @@ public class ExVitalityPointInfo extends L2GameServerPacket
 		writeD(_vitalityPoints);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

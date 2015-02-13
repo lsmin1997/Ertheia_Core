@@ -20,7 +20,6 @@ import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class ChangeAccessLevel extends BaseSendablePacket
 {
@@ -31,7 +30,8 @@ public class ChangeAccessLevel extends BaseSendablePacket
 		writeS(player);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

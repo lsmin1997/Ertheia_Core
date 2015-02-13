@@ -19,13 +19,13 @@ import com.l2jserver.gameserver.model.L2Skill;
 
 /**
  * Format: (ch) dd[dd][ddd]
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public class PledgeSkillList extends L2GameServerPacket
 {
 	private static final String _S__FE_39_PLEDGESKILLLIST = "[S] FE:3A PledgeSkillList";
-	private L2Skill[] _skills;
-	private SubPledgeSkill[] _subSkills;
+	private final L2Skill[] _skills;
+	private final SubPledgeSkill[] _subSkills;
 	
 	public static class SubPledgeSkill
 	{
@@ -54,7 +54,7 @@ public class PledgeSkillList extends L2GameServerPacket
 		writeC(0xfE);
 		writeH(0x3A);
 		writeD(_skills.length);
-		writeD(_subSkills.length); //Squad skill length
+		writeD(_subSkills.length); // Squad skill length
 		for (L2Skill sk : _skills)
 		{
 			writeD(sk.getId());
@@ -62,7 +62,7 @@ public class PledgeSkillList extends L2GameServerPacket
 		}
 		for (SubPledgeSkill sk : _subSkills)
 		{
-			writeD(sk._subType); //Clan Sub-unit types
+			writeD(sk._subType); // Clan Sub-unit types
 			writeD(sk._skillId);
 			writeD(sk._skillLvl);
 		}

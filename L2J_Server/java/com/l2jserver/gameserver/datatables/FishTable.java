@@ -28,7 +28,6 @@ import com.l2jserver.gameserver.model.FishData;
 
 /**
  * @author -Nemesiss-
- *
  */
 public class FishTable
 {
@@ -45,7 +44,7 @@ public class FishTable
 	
 	private FishTable()
 	{
-		//Create table that contains all fish datas
+		// Create table that contains all fish datas
 		int count = 0;
 		Connection con = null;
 		try
@@ -129,14 +128,20 @@ public class FishTable
 		for (FishData f : _Fishs)
 		{
 			if (f.getLevel() != lvl)
+			{
 				continue;
+			}
 			if (f.getType() != type)
+			{
 				continue;
+			}
 			
 			result.add(f);
 		}
 		if (result.isEmpty())
+		{
 			_log.warning("Cant Find Any Fish!? - Lvl: " + lvl + " Type: " + type);
+		}
 		return result;
 	}
 	

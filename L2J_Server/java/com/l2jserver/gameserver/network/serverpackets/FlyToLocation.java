@@ -18,8 +18,7 @@ import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public final class FlyToLocation extends L2GameServerPacket
 {

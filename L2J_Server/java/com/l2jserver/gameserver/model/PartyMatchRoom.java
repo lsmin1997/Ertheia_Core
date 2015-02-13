@@ -26,11 +26,10 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * @author Gnacik
- *
  */
 public class PartyMatchRoom
 {
-	private int _id;
+	private final int _id;
 	private String _title;
 	private int _loot;
 	private int _location;
@@ -81,7 +80,7 @@ public class PartyMatchRoom
 	
 	public void notifyMembersAboutExit(L2PcInstance player)
 	{
-		for(L2PcInstance _member : getPartyMembers())
+		for (L2PcInstance _member : getPartyMembers())
 		{
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_LEFT_PARTY_ROOM);
 			sm.addCharName(player);
@@ -97,11 +96,11 @@ public class PartyMatchRoom
 		// Remove new leader
 		_members.remove(newLeader);
 		// Move him to first position
-		_members.set(0,newLeader);
+		_members.set(0, newLeader);
 		// Add old leader as normal member
 		_members.add(oldLeader);
 		// Broadcast change
-		for(L2PcInstance member : getPartyMembers())
+		for (L2PcInstance member : getPartyMembers())
 		{
 			member.sendPacket(new ExManagePartyRoomMember(newLeader, this, 1));
 			member.sendPacket(new ExManagePartyRoomMember(oldLeader, this, 1));
@@ -154,7 +153,7 @@ public class PartyMatchRoom
 		return _members.get(0);
 	}
 	
-	/* SET  */
+	/* SET */
 	
 	public void setMinLvl(int minlvl)
 	{

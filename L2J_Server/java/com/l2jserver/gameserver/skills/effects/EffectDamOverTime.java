@@ -29,7 +29,6 @@ public class EffectDamOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -39,17 +38,18 @@ public class EffectDamOverTime extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		double damage = calc();
-		if (damage >= getEffected().getCurrentHp() - 1)
+		if (damage >= (getEffected().getCurrentHp() - 1))
 		{
 			if (getSkill().isToggle())
 			{
@@ -62,7 +62,9 @@ public class EffectDamOverTime extends L2Effect
 			{
 				// Fix for players dying by DOTs if HP < 1 since reduceCurrentHP method will kill them
 				if (getEffected().getCurrentHp() <= 1)
+				{
 					return true;
+				}
 				
 				damage = getEffected().getCurrentHp() - 1;
 			}

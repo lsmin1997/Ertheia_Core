@@ -19,7 +19,6 @@ import com.l2jserver.gameserver.skills.Stats;
 
 /**
  * The Class ConditionSkillStats.
- *
  * @author mkizub
  */
 public class ConditionSkillStats extends Condition
@@ -29,7 +28,6 @@ public class ConditionSkillStats extends Condition
 	
 	/**
 	 * Instantiates a new condition skill stats.
-	 *
 	 * @param stat the stat
 	 */
 	public ConditionSkillStats(Stats stat)
@@ -38,14 +36,17 @@ public class ConditionSkillStats extends Condition
 		_stat = stat;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (env.skill == null)
+		{
 			return false;
+		}
 		return env.skill.getStat() == _stat;
 	}
 }

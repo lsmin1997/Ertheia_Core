@@ -25,36 +25,39 @@ import com.l2jserver.gameserver.network.clientpackets.Say2;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 
 /**
- * 
  * @author DS
- *
  */
 public final class OlympiadAnnouncer implements Runnable
 {
 	private static final int OLY_MANAGER = 31688;
-
-	private List<L2Spawn> _managers = new FastList<L2Spawn>();
+	
+	private final List<L2Spawn> _managers = new FastList<L2Spawn>();
 	private int _currentStadium = 0;
-
+	
 	public OlympiadAnnouncer()
 	{
 		for (L2Spawn spawn : SpawnTable.getInstance().getSpawnTable())
 		{
-			if (spawn != null && spawn.getNpcid() == OLY_MANAGER)
+			if ((spawn != null) && (spawn.getNpcid() == OLY_MANAGER))
+			{
 				_managers.add(spawn);
+			}
 		}
 	}
-
+	
+	@Override
 	public void run()
 	{
 		OlympiadGameTask task;
 		for (int i = OlympiadGameManager.getInstance().getNumberOfStadiums(); --i >= 0; _currentStadium++)
 		{
 			if (_currentStadium >= OlympiadGameManager.getInstance().getNumberOfStadiums())
+			{
 				_currentStadium = 0;
-
+			}
+			
 			task = OlympiadGameManager.getInstance().getOlympiadTask(_currentStadium);
-			if (task != null && task.getGame() != null && task.needAnnounce())
+			if ((task != null) && (task.getGame() != null) && task.needAnnounce())
 			{
 				int msg;
 				final String arenaId = String.valueOf(task.getGame().getStadiumId() + 1);
@@ -75,7 +78,7 @@ public final class OlympiadAnnouncer implements Runnable
 					default:
 						continue;
 				}
-
+				
 				L2Npc manager;
 				NpcSay packet;
 				for (L2Spawn spawn : _managers)

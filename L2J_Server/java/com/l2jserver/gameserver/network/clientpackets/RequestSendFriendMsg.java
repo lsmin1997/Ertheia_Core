@@ -25,17 +25,9 @@ import com.l2jserver.gameserver.network.SystemMessageId;
 import com.l2jserver.gameserver.network.serverpackets.L2FriendSay;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
-
 /**
- * Recieve Private (Friend) Message - 0xCC
- *
- * Format: c SS
- *
- * S: Message
- * S: Receiving Player
- *
+ * Recieve Private (Friend) Message - 0xCC Format: c SS S: Message S: Receiving Player
  * @author Tempy
- *
  */
 public final class RequestSendFriendMsg extends L2GameClientPacket
 {
@@ -57,16 +49,17 @@ public final class RequestSendFriendMsg extends L2GameClientPacket
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
-		if (_message == null
-				|| _message.isEmpty()
-				|| _message.length() > 300)
+		if ((_message == null) || _message.isEmpty() || (_message.length() > 300))
+		{
 			return;
+		}
 		
 		final L2PcInstance targetPlayer = L2World.getInstance().getPlayer(_reciever);
-		if (targetPlayer == null
-				|| !targetPlayer.getFriendList().contains(activeChar.getObjectId()))
+		if ((targetPlayer == null) || !targetPlayer.getFriendList().contains(activeChar.getObjectId()))
 		{
 			activeChar.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME));
 			return;
@@ -76,7 +69,11 @@ public final class RequestSendFriendMsg extends L2GameClientPacket
 		{
 			LogRecord record = new LogRecord(Level.INFO, _message);
 			record.setLoggerName("chat");
-			record.setParameters(new Object[]{"PRIV_MSG", "[" + activeChar.getName() + " to "+ _reciever +"]"});
+			record.setParameters(new Object[]
+			{
+				"PRIV_MSG",
+				"[" + activeChar.getName() + " to " + _reciever + "]"
+			});
 			
 			_logChat.log(record);
 		}

@@ -18,8 +18,7 @@ import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class ExSpawnEmitter extends L2GameServerPacket
 {

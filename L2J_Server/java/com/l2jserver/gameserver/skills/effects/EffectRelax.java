@@ -32,7 +32,6 @@ public class EffectRelax extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +41,6 @@ public class EffectRelax extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -53,12 +51,13 @@ public class EffectRelax extends L2Effect
 			((L2PcInstance) getEffected()).sitDown(false);
 		}
 		else
+		{
 			getEffected().getAI().setIntention(CtrlIntention.AI_INTENTION_REST);
+		}
 		return super.onStart();
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -68,22 +67,25 @@ public class EffectRelax extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		if (getEffected() instanceof L2PcInstance)
 		{
 			if (!((L2PcInstance) getEffected()).isSitting())
+			{
 				return false;
+			}
 		}
 		
-		if (getEffected().getCurrentHp() + 1 > getEffected().getMaxHp())
+		if ((getEffected().getCurrentHp() + 1) > getEffected().getMaxHp())
 		{
 			if (getSkill().isToggle())
 			{
@@ -106,8 +108,9 @@ public class EffectRelax extends L2Effect
 		getEffected().reduceCurrentMp(manaDam);
 		return true;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

@@ -22,10 +22,8 @@ import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 import com.l2jserver.gameserver.taskmanager.TaskTypes;
 
-
 /**
  * Updates all data of Olympiad nobles in db
- * 
  * @author godson
  */
 public class TaskOlympiadSave extends Task
@@ -34,7 +32,6 @@ public class TaskOlympiadSave extends Task
 	public static final String NAME = "olympiad_save";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -44,7 +41,6 @@ public class TaskOlympiadSave extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override
@@ -58,7 +54,6 @@ public class TaskOlympiadSave extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#initializate()
 	 */
 	@Override

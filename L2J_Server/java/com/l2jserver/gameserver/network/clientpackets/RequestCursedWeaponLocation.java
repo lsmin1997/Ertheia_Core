@@ -27,7 +27,7 @@ import com.l2jserver.util.Point3D;
 
 /**
  * Format: (ch)
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public final class RequestCursedWeaponLocation extends L2GameClientPacket
 {
@@ -36,7 +36,7 @@ public final class RequestCursedWeaponLocation extends L2GameClientPacket
 	@Override
 	protected void readImpl()
 	{
-		//nothing to read it's just a trigger
+		// nothing to read it's just a trigger
 	}
 	
 	/**
@@ -47,22 +47,30 @@ public final class RequestCursedWeaponLocation extends L2GameClientPacket
 	{
 		L2Character activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		List<CursedWeaponInfo> list = new FastList<CursedWeaponInfo>();
 		for (CursedWeapon cw : CursedWeaponsManager.getInstance().getCursedWeapons())
 		{
 			if (!cw.isActive())
+			{
 				continue;
+			}
 			
 			Point3D pos = cw.getWorldPosition();
 			if (pos != null)
+			{
 				list.add(new CursedWeaponInfo(pos, cw.getItemId(), cw.isActivated() ? 1 : 0));
+			}
 		}
 		
-		//send the ExCursedWeaponLocation
+		// send the ExCursedWeaponLocation
 		if (!list.isEmpty())
+		{
 			activeChar.sendPacket(new ExCursedWeaponLocation(list));
+		}
 	}
 	
 	/**

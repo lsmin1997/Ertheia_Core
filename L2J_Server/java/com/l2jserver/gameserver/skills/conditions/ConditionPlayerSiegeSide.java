@@ -27,7 +27,6 @@ public class ConditionPlayerSiegeSide extends Condition
 	
 	/**
 	 * Instantiates a new condition player siege side.
-	 *
 	 * @param side the side
 	 */
 	public ConditionPlayerSiegeSide(int side)
@@ -35,12 +34,13 @@ public class ConditionPlayerSiegeSide extends Condition
 		_siegeSide = side;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		return ((L2PcInstance)env.player).getSiegeSide() == _siegeSide;
+		return ((L2PcInstance) env.player).getSiegeSide() == _siegeSide;
 	}
 }

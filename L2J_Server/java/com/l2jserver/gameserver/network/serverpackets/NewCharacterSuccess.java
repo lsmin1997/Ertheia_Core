@@ -22,14 +22,13 @@ import com.l2jserver.gameserver.templates.chars.L2PcTemplate;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.7 $ $Date: 2005/03/27 15:29:39 $
  */
 public class NewCharacterSuccess extends L2GameServerPacket
 {
 	// dddddddddddddddddddd
 	private static final String _S__23_CHARTEMPLATES = "[S] 0d CharTemplates";
-	private List<L2PcTemplate> _chars = new FastList<L2PcTemplate>();
+	private final List<L2PcTemplate> _chars = new FastList<L2PcTemplate>();
 	
 	public NewCharacterSuccess()
 	{
@@ -50,7 +49,9 @@ public class NewCharacterSuccess extends L2GameServerPacket
 		for (L2PcTemplate temp : _chars)
 		{
 			if (temp == null)
+			{
 				continue;
+			}
 			
 			writeD(temp.race.ordinal());
 			writeD(temp.classId.getId());
@@ -75,7 +76,8 @@ public class NewCharacterSuccess extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

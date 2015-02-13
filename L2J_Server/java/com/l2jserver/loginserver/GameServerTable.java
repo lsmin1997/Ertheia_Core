@@ -50,8 +50,7 @@ import com.l2jserver.util.IPSubnet;
 import com.l2jserver.util.Rnd;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class GameServerTable
 {
@@ -62,7 +61,7 @@ public class GameServerTable
 	private static Map<Integer, String> _serverNames = new FastMap<Integer, String>();
 	
 	// Game Server Table
-	private Map<Integer, GameServerInfo> _gameServerTable = new FastMap<Integer, GameServerInfo>().shared();
+	private final Map<Integer, GameServerInfo> _gameServerTable = new FastMap<Integer, GameServerInfo>().shared();
 	
 	// RSA Config
 	private static final int KEYS_SIZE = 10;
@@ -242,7 +241,7 @@ public class GameServerTable
 			statement.executeUpdate();
 			statement.close();
 			
-			this.register(id, new GameServerInfo(id, hexId));
+			register(id, new GameServerInfo(id, hexId));
 		}
 		catch (SQLException e)
 		{
@@ -287,7 +286,7 @@ public class GameServerTable
 	{
 		// auth
 		private int _id;
-		private byte[] _hexId;
+		private final byte[] _hexId;
 		private boolean _isAuthed;
 		
 		// status
@@ -295,11 +294,11 @@ public class GameServerTable
 		private int _status;
 		
 		// network
-		private ArrayList<GameServerAddress> _addrs = new ArrayList<GameServerAddress>(5);
+		private final ArrayList<GameServerAddress> _addrs = new ArrayList<GameServerAddress>(5);
 		private int _port;
 		
 		// config
-		private boolean _isPvp = true;
+		private final boolean _isPvp = true;
 		private int _serverType;
 		private int _ageLimit;
 		private boolean _isShowingBrackets;
@@ -366,7 +365,9 @@ public class GameServerTable
 		public int getCurrentPlayerCount()
 		{
 			if (_gst == null)
+			{
 				return 0;
+			}
 			return _gst.getPlayerCount();
 		}
 		
@@ -456,7 +457,9 @@ public class GameServerTable
 			for (GameServerAddress a : _addrs)
 			{
 				if (a.equals(addr))
+				{
 					return a.getServerAddress();
+				}
 			}
 			return null; // should not happens
 		}
@@ -465,7 +468,9 @@ public class GameServerTable
 		{
 			String[] result = new String[_addrs.size()];
 			for (int i = 0; i < result.length; i++)
+			{
 				result[i] = _addrs.get(i).toString();
+			}
 			
 			return result;
 		}
@@ -477,7 +482,7 @@ public class GameServerTable
 		
 		private class GameServerAddress extends IPSubnet
 		{
-			private String _serverAddress;
+			private final String _serverAddress;
 			
 			public GameServerAddress(String subnet, String address) throws UnknownHostException
 			{

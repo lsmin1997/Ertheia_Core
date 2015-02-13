@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author -Rnn-
- * 
  */
 public class EffectPhysicalAttackMute extends L2Effect
 {
@@ -32,7 +31,6 @@ public class EffectPhysicalAttackMute extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -42,7 +40,6 @@ public class EffectPhysicalAttackMute extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -53,7 +50,6 @@ public class EffectPhysicalAttackMute extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -64,7 +60,6 @@ public class EffectPhysicalAttackMute extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -72,8 +67,9 @@ public class EffectPhysicalAttackMute extends L2Effect
 	{
 		getEffected().stopPhysicalAttackMuted(this);
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

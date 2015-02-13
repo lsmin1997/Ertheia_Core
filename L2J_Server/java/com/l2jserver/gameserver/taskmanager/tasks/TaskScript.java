@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 
 /**
  * @author janiii
- *
  */
 public class TaskScript extends Task
 {
@@ -33,7 +32,6 @@ public class TaskScript extends Task
 	public static final String NAME = "script";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -43,7 +41,6 @@ public class TaskScript extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override

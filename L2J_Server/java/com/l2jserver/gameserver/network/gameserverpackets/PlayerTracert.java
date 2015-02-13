@@ -20,12 +20,10 @@ import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * @author mrTJO
- *
  */
 public class PlayerTracert extends BaseSendablePacket
 {
-	public PlayerTracert(String account, String pcIp,
-			String hop1, String hop2, String hop3, String hop4)
+	public PlayerTracert(String account, String pcIp, String hop1, String hop2, String hop3, String hop4)
 	{
 		writeC(0x07);
 		writeS(account);
@@ -36,7 +34,8 @@ public class PlayerTracert extends BaseSendablePacket
 		writeS(hop4);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

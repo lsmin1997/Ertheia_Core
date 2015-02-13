@@ -29,8 +29,8 @@ import com.l2jserver.gameserver.taskmanager.TaskTypes;
 
 public class TaskRaidPointsReset extends Task
 {
-	private static final Logger _log	= Logger.getLogger(TaskRaidPointsReset.class.getName());
-	public static final	String	NAME	= "raid_points_reset";
+	private static final Logger _log = Logger.getLogger(TaskRaidPointsReset.class.getName());
+	public static final String NAME = "raid_points_reset";
 	
 	@Override
 	public String getName()
@@ -51,7 +51,7 @@ public class TaskRaidPointsReset extends Task
 			{
 				for (Map.Entry<Integer, Integer> entry : rankList.entrySet())
 				{
-					if (entry.getValue() <= 100 && c.isMember(entry.getKey()))
+					if ((entry.getValue() <= 100) && c.isMember(entry.getKey()))
 					{
 						int reputation = 0;
 						switch (entry.getValue())
@@ -88,9 +88,13 @@ public class TaskRaidPointsReset extends Task
 								break;
 							default:
 								if (entry.getValue() <= 50)
+								{
 									reputation = Config.RAID_RANKING_UP_TO_50TH;
+								}
 								else
+								{
 									reputation = Config.RAID_RANKING_UP_TO_100TH;
+								}
 								break;
 						}
 						c.addReputationScore(reputation, true);

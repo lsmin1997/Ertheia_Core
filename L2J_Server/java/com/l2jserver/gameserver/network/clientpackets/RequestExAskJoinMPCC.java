@@ -24,14 +24,11 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * Format: (ch) S
- * @author chris_00
- *
- * D0 0D 00 5A 00 77 00 65 00 72 00 67 00 00 00
- *
+ * @author chris_00 D0 0D 00 5A 00 77 00 65 00 72 00 67 00 00 00
  */
 public final class RequestExAskJoinMPCC extends L2GameClientPacket
 {
-	//private static Logger _log = Logger.getLogger(RequestExAskJoinMPCC.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestExAskJoinMPCC.class.getName());
 	private static final String _C__D0_0D_REQUESTEXASKJOINMPCC = "[C] D0:0D RequestExAskJoinMPCC";
 	private String _name;
 	
@@ -45,32 +42,38 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 	protected void runImpl()
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
-		if(activeChar == null)
+		if (activeChar == null)
+		{
 			return;
+		}
 		
 		L2PcInstance player = L2World.getInstance().getPlayer(_name);
-		if(player == null)
+		if (player == null)
+		{
 			return;
+		}
 		// invite yourself? ;)
-		if(activeChar.isInParty() && player.isInParty() && activeChar.getParty().equals(player.getParty()))
+		if (activeChar.isInParty() && player.isInParty() && activeChar.getParty().equals(player.getParty()))
+		{
 			return;
+		}
 		
 		SystemMessage sm;
-		//activeChar is in a Party?
+		// activeChar is in a Party?
 		if (activeChar.isInParty())
 		{
 			L2Party activeParty = activeChar.getParty();
-			//activeChar is PartyLeader? && activeChars Party is already in a CommandChannel?
+			// activeChar is PartyLeader? && activeChars Party is already in a CommandChannel?
 			if (activeParty.getLeader().equals(activeChar))
 			{
 				// if activeChars Party is in CC, is activeChar CCLeader?
 				if (activeParty.isInCommandChannel() && activeParty.getCommandChannel().getChannelLeader().equals(activeChar))
 				{
-					//in CC and the CCLeader
-					//target in a party?
+					// in CC and the CCLeader
+					// target in a party?
 					if (player.isInParty())
 					{
-						//targets party already in a CChannel?
+						// targets party already in a CChannel?
 						if (player.getParty().isInCommandChannel())
 						{
 							sm = SystemMessage.getSystemMessage(SystemMessageId.C1_ALREADY_MEMBER_OF_COMMAND_CHANNEL);
@@ -79,8 +82,8 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 						}
 						else
 						{
-							//ready to open a new CC
-							//send request to targets Party's PartyLeader
+							// ready to open a new CC
+							// send request to targets Party's PartyLeader
 							askJoinMPCC(activeChar, player);
 						}
 					}
@@ -92,16 +95,16 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 				}
 				else if (activeParty.isInCommandChannel() && !activeParty.getCommandChannel().getChannelLeader().equals(activeChar))
 				{
-					//in CC, but not the CCLeader
+					// in CC, but not the CCLeader
 					sm = SystemMessage.getSystemMessage(SystemMessageId.CANNOT_INVITE_TO_COMMAND_CHANNEL);
 					activeChar.sendPacket(sm);
 				}
 				else
 				{
-					//target in a party?
+					// target in a party?
 					if (player.isInParty())
 					{
-						//targets party already in a CChannel?
+						// targets party already in a CChannel?
 						if (player.getParty().isInCommandChannel())
 						{
 							sm = SystemMessage.getSystemMessage(SystemMessageId.C1_ALREADY_MEMBER_OF_COMMAND_CHANNEL);
@@ -110,8 +113,8 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 						}
 						else
 						{
-							//ready to open a new CC
-							//send request to targets Party's PartyLeader
+							// ready to open a new CC
+							// send request to targets Party's PartyLeader
 							askJoinMPCC(activeChar, player);
 						}
 					}
@@ -128,18 +131,20 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 			}
 		}
 		
-		
 	}
 	
 	private void askJoinMPCC(L2PcInstance requestor, L2PcInstance target)
 	{
 		boolean hasRight = false;
-		if (requestor.getClan() != null && requestor.getClan().getLeaderId() == requestor.getObjectId()
-				&& requestor.getClan().getLevel() >= 5) // Clanleader of lvl5 Clan or higher
+		if ((requestor.getClan() != null) && (requestor.getClan().getLeaderId() == requestor.getObjectId()) && (requestor.getClan().getLevel() >= 5))
+		{
 			hasRight = true;
-		else if (requestor.getInventory().getItemByItemId(8871) != null) // 8871 Strategy Guide. Should destroyed after sucessfull invite?
+		}
+		else if (requestor.getInventory().getItemByItemId(8871) != null)
+		{
 			hasRight = true;
-		else if(requestor.getPledgeClass() >= 5) // At least Baron or higher and the skill Clan Imperium
+		}
+		else if (requestor.getPledgeClass() >= 5) // At least Baron or higher and the skill Clan Imperium
 		{
 			for (L2Skill skill : requestor.getAllSkills())
 			{
@@ -165,7 +170,7 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 			target.getParty().getLeader().sendPacket(sm);
 			target.getParty().getLeader().sendPacket(new ExAskJoinMPCC(requestor.getName()));
 			
-			requestor.sendMessage("You invited "+target.getName()+" to your Command Channel.");
+			requestor.sendMessage("You invited " + target.getName() + " to your Command Channel.");
 		}
 		else
 		{
@@ -176,7 +181,8 @@ public final class RequestExAskJoinMPCC extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

@@ -22,14 +22,13 @@ import com.l2jserver.Config;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.1.4.5 $ $Date: 2005/03/27 15:30:09 $
  */
 public class VoicedCommandHandler
 {
 	private static Logger _log = Logger.getLogger(ItemHandler.class.getName());
 	
-	private TIntObjectHashMap<IVoicedCommandHandler> _datatable;
+	private final TIntObjectHashMap<IVoicedCommandHandler> _datatable;
 	
 	public static VoicedCommandHandler getInstance()
 	{
@@ -44,11 +43,13 @@ public class VoicedCommandHandler
 	public void registerVoicedCommandHandler(IVoicedCommandHandler handler)
 	{
 		String[] ids = handler.getVoicedCommandList();
-		for (int i = 0; i < ids.length; i++)
+		for (String id : ids)
 		{
 			if (Config.DEBUG)
-				_log.fine("Adding handler for command " + ids[i]);
-			_datatable.put(ids[i].hashCode(), handler);
+			{
+				_log.fine("Adding handler for command " + id);
+			}
+			_datatable.put(id.hashCode(), handler);
 		}
 	}
 	
@@ -60,7 +61,9 @@ public class VoicedCommandHandler
 			command = voicedCommand.substring(0, voicedCommand.indexOf(" "));
 		}
 		if (Config.DEBUG)
+		{
 			_log.fine("getting handler for command: " + command + " -> " + (_datatable.get(command.hashCode()) != null));
+		}
 		return _datatable.get(command.hashCode());
 	}
 	

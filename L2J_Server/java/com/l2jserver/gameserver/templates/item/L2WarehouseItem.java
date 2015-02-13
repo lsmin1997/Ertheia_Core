@@ -18,34 +18,36 @@ import com.l2jserver.gameserver.model.L2ItemInstance;
 
 /**
  * This class contains L2ItemInstance<BR>
- * Use to sort L2ItemInstance of :
- * <LI>L2Armor</LI>
- * <LI>L2EtcItem</LI>
- * <LI>L2Weapon</LI>
+ * Use to sort L2ItemInstance of : <LI>L2Armor</LI> <LI>L2EtcItem</LI> <LI>L2Weapon</LI>
  * @version $Revision: 1.7.2.2.2.5 $ $Date: 2005/04/06 18:25:18 $
  */
 public class L2WarehouseItem
 {
-	private L2Item _item;
-	private int _object;
-	private long _count;
-	private int _owner;
-	private int _locationSlot;
-	private int _enchant;
-	private int _grade;
+	private final L2Item _item;
+	private final int _object;
+	private final long _count;
+	private final int _owner;
+	private final int _locationSlot;
+	private final int _enchant;
+	private final int _grade;
 	private boolean _isAugmented;
 	private int _augmentationId;
-	private int _customType1;
-	private int _customType2;
-	private int _mana;
+	private final int _customType1;
+	private final int _customType2;
+	private final int _mana;
 	
 	private int _elemAtkType = -2;
 	private int _elemAtkPower = 0;
-	private int[] _elemDefAttr =
+	private final int[] _elemDefAttr =
 	{
-			0, 0, 0, 0, 0, 0
+		0,
+		0,
+		0,
+		0,
+		0,
+		0
 	};
-	private int _time;
+	private final int _time;
 	
 	public L2WarehouseItem(L2ItemInstance item)
 	{
@@ -64,14 +66,18 @@ public class L2WarehouseItem
 			_augmentationId = item.getAugmentation().getAugmentationId();
 		}
 		else
+		{
 			_isAugmented = false;
+		}
 		_mana = item.getMana();
-		_time = item.isTimeLimitedItem() ? (int) (item.getRemainingTime()/1000) : -1;
+		_time = item.isTimeLimitedItem() ? (int) (item.getRemainingTime() / 1000) : -1;
 		
 		_elemAtkType = item.getAttackElementType();
 		_elemAtkPower = item.getAttackElementPower();
 		for (byte i = 0; i < 6; i++)
+		{
 			_elemDefAttr[i] = item.getElementDefAttr(i);
+		}
 	}
 	
 	/**
@@ -233,6 +239,7 @@ public class L2WarehouseItem
 	 * @return String
 	 * @deprecated beware to use getItemName() instead because getName() is final in L2Object and could not be overridden! Allover L2Object.getName() may return null!
 	 */
+	@Deprecated
 	public String getName()
 	{
 		return _item.getName();
@@ -272,6 +279,7 @@ public class L2WarehouseItem
 	{
 		return _time;
 	}
+	
 	/**
 	 * Returns the name of the item
 	 * @return String

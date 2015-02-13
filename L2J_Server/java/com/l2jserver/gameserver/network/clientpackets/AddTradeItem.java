@@ -26,7 +26,6 @@ import com.l2jserver.gameserver.network.serverpackets.TradeOwnAdd;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.5.2.2.2.5 $ $Date: 2005/03/27 15:29:29 $
  */
 public final class AddTradeItem extends L2GameClientPacket
@@ -55,7 +54,9 @@ public final class AddTradeItem extends L2GameClientPacket
 	{
 		final L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		final TradeList trade = player.getActiveTradeList();
 		if (trade == null)
@@ -65,11 +66,13 @@ public final class AddTradeItem extends L2GameClientPacket
 		}
 		
 		final L2PcInstance partner = trade.getPartner();
-		if (partner == null || L2World.getInstance().getPlayer(partner.getObjectId()) == null || partner.getActiveTradeList() == null)
+		if ((partner == null) || (L2World.getInstance().getPlayer(partner.getObjectId()) == null) || (partner.getActiveTradeList() == null))
 		{
 			// Trade partner not found, cancel trade
 			if (partner != null)
+			{
 				_log.warning("Character:" + player.getName() + " requested invalid trade object: " + _objectId);
+			}
 			SystemMessage msg = SystemMessage.getSystemMessage(SystemMessageId.TARGET_IS_NOT_FOUND_IN_THE_GAME);
 			player.sendPacket(msg);
 			player.cancelActiveTrade();
@@ -103,7 +106,8 @@ public final class AddTradeItem extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

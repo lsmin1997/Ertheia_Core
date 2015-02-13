@@ -30,35 +30,47 @@ public class ConditionPlayerHasPet extends Condition
 	
 	/**
 	 * Instantiates a new condition player has pet.
-	 *
 	 * @param itemIds the item ids
 	 */
 	public ConditionPlayerHasPet(ArrayList<Integer> itemIds)
 	{
-		if (itemIds.size() == 1 && itemIds.get(0) == 0)
+		if ((itemIds.size() == 1) && (itemIds.get(0) == 0))
+		{
 			_controlItemIds = null;
+		}
 		else
+		{
 			_controlItemIds = itemIds;
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
 		if (!(env.player.getPet() instanceof L2PetInstance))
+		{
 			return false;
+		}
 		
 		if (_controlItemIds == null)
+		{
 			return true;
+		}
 		
-		final L2ItemInstance controlItem = ((L2PetInstance)env.player.getPet()).getControlItem();
+		final L2ItemInstance controlItem = ((L2PetInstance) env.player.getPet()).getControlItem();
 		if (controlItem == null)
+		{
 			return false;
+		}
 		
 		return _controlItemIds.contains(controlItem.getItemId());
 	}

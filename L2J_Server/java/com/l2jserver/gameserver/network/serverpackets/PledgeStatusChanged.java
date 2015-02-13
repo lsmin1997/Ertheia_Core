@@ -17,19 +17,12 @@ package com.l2jserver.gameserver.network.serverpackets;
 import com.l2jserver.gameserver.model.L2Clan;
 
 /**
- *
- *
- * sample
- * 0000: cd b0 98 a0 48 1e 01 00 00 00 00 00 00 00 00 00    ....H...........
- * 0010: 00 00 00 00 00                                     .....
- *
- * format   ddddd
- *
+ * sample 0000: cd b0 98 a0 48 1e 01 00 00 00 00 00 00 00 00 00 ....H........... 0010: 00 00 00 00 00 ..... format ddddd
  * @version $Revision: 1.1.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public final class PledgeStatusChanged extends L2GameServerPacket
 {
-	private L2Clan _clan;
+	private final L2Clan _clan;
 	
 	public PledgeStatusChanged(L2Clan clan)
 	{
@@ -49,7 +42,8 @@ public final class PledgeStatusChanged extends L2GameServerPacket
 		writeD(0);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

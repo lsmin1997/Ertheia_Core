@@ -25,7 +25,7 @@ import com.l2jserver.gameserver.util.Util;
 public final class RequestRecipeShopMakeItem extends L2GameClientPacket
 {
 	private static final String _C__AF_REQUESTRECIPESHOPMAKEITEM = "[C] B6 RequestRecipeShopMakeItem";
-	//private static Logger _log = Logger.getLogger(RequestSellItem.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestSellItem.class.getName());
 	
 	private int _id;
 	private int _recipeId;
@@ -45,17 +45,25 @@ public final class RequestRecipeShopMakeItem extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getManufacture().tryPerformAction("RecipeShopMake"))
+		{
 			return;
+		}
 		
 		L2PcInstance manufacturer = L2World.getInstance().getPlayer(_id);
 		if (manufacturer == null)
+		{
 			return;
+		}
 		
-		if (manufacturer.getInstanceId() != activeChar.getInstanceId() && activeChar.getInstanceId() != -1)
+		if ((manufacturer.getInstanceId() != activeChar.getInstanceId()) && (activeChar.getInstanceId() != -1))
+		{
 			return;
+		}
 		
 		if (activeChar.getPrivateStoreType() != 0)
 		{
@@ -64,7 +72,7 @@ public final class RequestRecipeShopMakeItem extends L2GameClientPacket
 		}
 		if (manufacturer.getPrivateStoreType() != 5)
 		{
-			//activeChar.sendMessage("Cannot make items while trading");
+			// activeChar.sendMessage("Cannot make items while trading");
 			return;
 		}
 		
@@ -74,7 +82,9 @@ public final class RequestRecipeShopMakeItem extends L2GameClientPacket
 			return;
 		}
 		if (Util.checkIfInRange(150, activeChar, manufacturer, true))
+		{
 			RecipeController.getInstance().requestManufactureItem(manufacturer, _recipeId, activeChar);
+		}
 	}
 	
 	@Override

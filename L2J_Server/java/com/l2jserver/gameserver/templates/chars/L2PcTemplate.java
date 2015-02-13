@@ -48,7 +48,7 @@ public class L2PcTemplate extends L2CharTemplate
 	public final double fCollisionHeight_female;
 	public final double fCollisionRadius_female;
 	
-	private List<PcTemplateItem> _items = new FastList<PcTemplateItem>();
+	private final List<PcTemplateItem> _items = new FastList<PcTemplateItem>();
 	
 	public L2PcTemplate(StatsSet set)
 	{
@@ -83,7 +83,6 @@ public class L2PcTemplate extends L2CharTemplate
 	}
 	
 	/**
-	 *
 	 * @return itemIds of all the starter equipment
 	 */
 	public List<PcTemplateItem> getItems()

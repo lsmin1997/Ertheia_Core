@@ -20,7 +20,7 @@ import com.l2jserver.gameserver.model.quest.QuestState;
 
 public class RequestTutorialQuestionMark extends L2GameClientPacket
 {
-	//     private static Logger _log = Logger.getLogger(RequestTutorialQuestionMark.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestTutorialQuestionMark.class.getName());
 	int _number = 0;
 	
 	@Override
@@ -28,19 +28,24 @@ public class RequestTutorialQuestionMark extends L2GameClientPacket
 	{
 		_number = readD();
 	}
+	
 	@Override
 	protected void runImpl()
 	{
 		L2PcInstance player = getClient().getActiveChar();
 		
-		if(player == null)
+		if (player == null)
+		{
 			return;
+		}
 		
 		L2ClassMasterInstance.onTutorialQuestionMark(player, _number);
 		
 		QuestState qs = player.getQuestState("255_Tutorial");
-		if(qs != null)
-			qs.getQuest().notifyEvent("QM" + _number + "",null,player);
+		if (qs != null)
+		{
+			qs.getQuest().notifyEvent("QM" + _number + "", null, player);
+		}
 	}
 	
 	@Override

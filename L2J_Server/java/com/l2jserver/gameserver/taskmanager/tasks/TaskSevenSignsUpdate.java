@@ -24,11 +24,8 @@ import com.l2jserver.gameserver.taskmanager.TaskManager;
 import com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask;
 import com.l2jserver.gameserver.taskmanager.TaskTypes;
 
-
 /**
- * Updates all data for the Seven Signs and Festival of Darkness engines, when
- * time is elapsed.
- * 
+ * Updates all data for the Seven Signs and Festival of Darkness engines, when time is elapsed.
  * @author Tempy
  */
 public class TaskSevenSignsUpdate extends Task
@@ -37,7 +34,6 @@ public class TaskSevenSignsUpdate extends Task
 	public static final String NAME = "seven_signs_update";
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#getName()
 	 */
 	@Override
@@ -47,7 +43,6 @@ public class TaskSevenSignsUpdate extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#onTimeElapsed(com.l2jserver.gameserver.taskmanager.TaskManager.ExecutedTask)
 	 */
 	@Override
@@ -58,7 +53,9 @@ public class TaskSevenSignsUpdate extends Task
 			SevenSigns.getInstance().saveSevenSignsStatus();
 			
 			if (!SevenSigns.getInstance().isSealValidationPeriod())
+			{
 				SevenSignsFestival.getInstance().saveFestivalData(false);
+			}
 			
 			_log.info("SevenSigns: Data updated successfully.");
 		}
@@ -69,7 +66,6 @@ public class TaskSevenSignsUpdate extends Task
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.taskmanager.Task#initializate()
 	 */
 	@Override

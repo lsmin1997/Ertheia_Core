@@ -21,8 +21,7 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * A peaceful zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2PeaceZone extends L2ZoneType
 {
@@ -35,9 +34,10 @@ public class L2PeaceZone extends L2ZoneType
 	protected void onEnter(L2Character character)
 	{
 		character.setInsideZone(L2Character.ZONE_PEACE, true);
-		if (character instanceof L2PcInstance && ((L2PcInstance)character).isCombatFlagEquipped()
-				&& TerritoryWarManager.getInstance().isTWInProgress())
-			TerritoryWarManager.getInstance().dropCombatFlag(((L2PcInstance)character), false, true);
+		if ((character instanceof L2PcInstance) && ((L2PcInstance) character).isCombatFlagEquipped() && TerritoryWarManager.getInstance().isTWInProgress())
+		{
+			TerritoryWarManager.getInstance().dropCombatFlag(((L2PcInstance) character), false, true);
+		}
 	}
 	
 	@Override

@@ -58,7 +58,7 @@ public class L2Manor
 		
 		for (SeedData seed : _seeds.values())
 		{
-			if (!crops.contains(seed.getCrop()) && seed.getCrop() != 0 && !crops.contains(seed.getCrop()))
+			if (!crops.contains(seed.getCrop()) && (seed.getCrop() != 0) && !crops.contains(seed.getCrop()))
 			{
 				crops.add(seed.getCrop());
 			}
@@ -86,7 +86,9 @@ public class L2Manor
 		for (SeedData seed : _seeds.values())
 		{
 			if (seed.getCrop() == cropId)
+			{
 				return getSeedBasicPrice(seed.getId());
+			}
 		}
 		return 0;
 	}
@@ -96,9 +98,13 @@ public class L2Manor
 		L2Item cropItem = ItemTable.getInstance().getTemplate(cropId);
 		
 		if (cropItem != null)
+		{
 			return cropItem.getReferencePrice();
+		}
 		else
+		{
 			return 0;
+		}
 	}
 	
 	public int getMatureCrop(int cropId)
@@ -106,7 +112,9 @@ public class L2Manor
 		for (SeedData seed : _seeds.values())
 		{
 			if (seed.getCrop() == cropId)
+			{
 				return seed.getMature();
+			}
 		}
 		return 0;
 	}
@@ -127,7 +135,9 @@ public class L2Manor
 		SeedData seed = _seeds.get(seedId);
 		
 		if (seed != null)
+		{
 			return seed.getLevel() - 5;
+		}
 		return -1;
 	}
 	
@@ -136,7 +146,9 @@ public class L2Manor
 		SeedData seed = _seeds.get(seedId);
 		
 		if (seed != null)
+		{
 			return seed.getLevel() + 5;
+		}
 		return -1;
 	}
 	
@@ -180,7 +192,9 @@ public class L2Manor
 		SeedData seed = _seeds.get(seedId);
 		
 		if (seed != null)
+		{
 			return seed.getCrop();
+		}
 		return -1;
 	}
 	
@@ -212,7 +226,6 @@ public class L2Manor
 	
 	/**
 	 * Return all crops which can be purchased by given castle
-	 *
 	 * @param castleId
 	 * @return
 	 */
@@ -222,7 +235,7 @@ public class L2Manor
 		
 		for (SeedData seed : _seeds.values())
 		{
-			if (seed.getManorId() == castleId && !crops.contains(seed.getCrop()))
+			if ((seed.getManorId() == castleId) && !crops.contains(seed.getCrop()))
 			{
 				crops.add(seed.getCrop());
 			}
@@ -242,7 +255,7 @@ public class L2Manor
 		
 		for (SeedData seed : _seeds.values())
 		{
-			if (seed.getManorId() == castleId && !seedsID.contains(seed.getId()))
+			if ((seed.getManorId() == castleId) && !seedsID.contains(seed.getId()))
 			{
 				seedsID.add(seed.getId());
 			}
@@ -293,9 +306,9 @@ public class L2Manor
 	private static class SeedData
 	{
 		private int _id;
-		private int _level; // seed level
-		private int _crop; // crop type
-		private int _mature; // mature crop type
+		private final int _level; // seed level
+		private final int _crop; // crop type
+		private final int _mature; // mature crop type
 		private int _type1;
 		private int _type2;
 		private int _manorId; // id of manor (castle id) where seed can be farmed
@@ -305,14 +318,14 @@ public class L2Manor
 		
 		public SeedData(int level, int crop, int mature)
 		{
-			this._level = level;
-			this._crop = crop;
-			this._mature = mature;
+			_level = level;
+			_crop = crop;
+			_mature = mature;
 		}
 		
 		public void setData(int id, int t1, int t2, int manorId, boolean isAlt, int lim1, int lim2)
 		{
-			this._id = id;
+			_id = id;
 			_type1 = t1;
 			_type2 = t2;
 			_manorId = manorId;
@@ -365,7 +378,7 @@ public class L2Manor
 		{
 			return _limitCrops * Config.RATE_DROP_MANOR;
 		}
-
+		
 		@Override
 		public String toString()
 		{
@@ -392,18 +405,18 @@ public class L2Manor
 		
 		doc.getDocumentElement().normalize();
 		
-		//list
+		// list
 		for (Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
 		{
 			if ("list".equalsIgnoreCase(n.getNodeName()))
 			{
-				//castle
+				// castle
 				for (Node d = n.getFirstChild(); d != null; d = d.getNextSibling())
 				{
 					if ("castle".equalsIgnoreCase(d.getNodeName()))
 					{
 						int castleId = Integer.parseInt(d.getAttributes().getNamedItem("id").getNodeValue());
-						//crop
+						// crop
 						for (Node c = d.getFirstChild(); c != null; c = c.getNextSibling())
 						{
 							if ("crop".equalsIgnoreCase(c.getNodeName()))
@@ -418,25 +431,41 @@ public class L2Manor
 								int limitSeeds = 0;
 								int limitCrops = 0;
 								
-								//attrib
+								// attrib
 								for (Node a = c.getFirstChild(); a != null; a = a.getNextSibling())
 								{
 									if (a.getNodeName().equalsIgnoreCase("seed_id"))
+									{
 										seedId = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 									else if (a.getNodeName().equalsIgnoreCase("mature_id"))
+									{
 										matureId = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 									else if (a.getNodeName().equalsIgnoreCase("reward1"))
+									{
 										type1R = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 									else if (a.getNodeName().equalsIgnoreCase("reward2"))
+									{
 										type2R = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 									else if (a.getNodeName().equalsIgnoreCase("alternative"))
+									{
 										isAlt = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue()) == 1;
+									}
 									else if (a.getNodeName().equalsIgnoreCase("level"))
+									{
 										level = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 									else if (a.getNodeName().equalsIgnoreCase("limit_seed"))
+									{
 										limitSeeds = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 									else if (a.getNodeName().equalsIgnoreCase("limit_crops"))
+									{
 										limitCrops = Integer.parseInt(a.getAttributes().getNamedItem("val").getNodeValue());
+									}
 								}
 								
 								SeedData seed = new SeedData(level, cropId, matureId);
@@ -447,13 +476,10 @@ public class L2Manor
 					}
 				}
 			}
-			_log.info(getClass().getSimpleName()+": Loaded "+_seeds.size()+ " Seeds.");
+			_log.info(getClass().getSimpleName() + ": Loaded " + _seeds.size() + " Seeds.");
 		}
-
-
+		
 	}
-
-	
 	
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder

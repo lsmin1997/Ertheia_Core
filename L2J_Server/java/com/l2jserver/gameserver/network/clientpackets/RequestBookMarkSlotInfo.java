@@ -17,10 +17,8 @@ package com.l2jserver.gameserver.network.clientpackets;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.ExGetBookMarkInfoPacket;
 
-
 /**
- *  @author ShanSoft
- *  Packets Structure: chddd
+ * @author ShanSoft Packets Structure: chddd
  */
 public final class RequestBookMarkSlotInfo extends L2GameClientPacket
 {
@@ -29,7 +27,7 @@ public final class RequestBookMarkSlotInfo extends L2GameClientPacket
 	@Override
 	protected void readImpl()
 	{
-		//There is nothing to read.
+		// There is nothing to read.
 	}
 	
 	@Override
@@ -38,7 +36,6 @@ public final class RequestBookMarkSlotInfo extends L2GameClientPacket
 		L2PcInstance player = getClient().getActiveChar();
 		player.sendPacket(new ExGetBookMarkInfoPacket(player));
 	}
-	
 	
 	@Override
 	public String getType()

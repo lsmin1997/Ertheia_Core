@@ -19,8 +19,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.ExUISetting;
 
 /**
- *
- * @author  KenM / mrTJO
+ * @author KenM / mrTJO
  */
 public class RequestKeyMapping extends L2GameClientPacket
 {
@@ -51,10 +50,14 @@ public class RequestKeyMapping extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (Config.STORE_UI_SETTINGS)
+		{
 			activeChar.sendPacket(new ExUISetting(activeChar));
+		}
 	}
 	
 	@Override

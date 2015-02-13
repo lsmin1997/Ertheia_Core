@@ -19,14 +19,13 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.network.serverpackets.RecipeShopItemInfo;
 
 /**
- * This class ...
- * cdd
+ * This class ... cdd
  * @version $Revision: 1.1.2.1.2.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestRecipeShopMakeInfo extends L2GameClientPacket
 {
 	private static final String _C__B5_RequestRecipeShopMakeInfo = "[C] b5 RequestRecipeShopMakeInfo";
-	//private static Logger _log = Logger.getLogger(RequestRecipeShopMakeInfo.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestRecipeShopMakeInfo.class.getName());
 	
 	private int _playerObjectId;
 	private int _recipeId;
@@ -43,22 +42,24 @@ public final class RequestRecipeShopMakeInfo extends L2GameClientPacket
 	{
 		final L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		final L2PcInstance shop = L2World.getInstance().getPlayer(_playerObjectId);
-		if (shop == null || shop.getPrivateStoreType() != 5)
+		if ((shop == null) || (shop.getPrivateStoreType() != 5))
+		{
 			return;
+		}
 		
-		player.sendPacket(new RecipeShopItemInfo(shop,_recipeId));
+		player.sendPacket(new RecipeShopItemInfo(shop, _recipeId));
 		
 	}
-	
 	
 	@Override
 	public String getType()
 	{
 		return _C__B5_RequestRecipeShopMakeInfo;
 	}
-	
 	
 }

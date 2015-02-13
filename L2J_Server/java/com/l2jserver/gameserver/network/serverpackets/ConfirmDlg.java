@@ -28,13 +28,12 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 import com.l2jserver.gameserver.templates.item.L2Item;
 
 /**
- * @author kombat
- * Format: cd d[d s/d/dd/ddd]
+ * @author kombat Format: cd d[d s/d/dd/ddd]
  */
 public class ConfirmDlg extends L2GameServerPacket
 {
 	private static final String _S__ED_CONFIRMDLG = "[S] f3 ConfirmDlg";
-	private int _messageId;
+	private final int _messageId;
 	
 	private int _skillLvL = 1;
 	
@@ -87,11 +86,17 @@ public class ConfirmDlg extends L2GameServerPacket
 	public ConfirmDlg addCharName(L2Character cha)
 	{
 		if (cha instanceof L2Npc)
-			return addNpcName((L2Npc)cha);
+		{
+			return addNpcName((L2Npc) cha);
+		}
 		if (cha instanceof L2PcInstance)
-			return addPcName((L2PcInstance)cha);
+		{
+			return addPcName((L2PcInstance) cha);
+		}
 		if (cha instanceof L2Summon)
-			return addNpcName((L2Summon)cha);
+		{
+			return addNpcName((L2Summon) cha);
+		}
 		return addString(cha.getName());
 	}
 	
@@ -113,7 +118,9 @@ public class ConfirmDlg extends L2GameServerPacket
 	public ConfirmDlg addNpcName(L2NpcTemplate tpl)
 	{
 		if (tpl.isCustom())
+		{
 			return addString(tpl.name);
+		}
 		return addNpcName(tpl.npcId);
 	}
 	
@@ -142,7 +149,12 @@ public class ConfirmDlg extends L2GameServerPacket
 	
 	public ConfirmDlg addZoneName(int x, int y, int z)
 	{
-		Integer[] coord = {x, y, z};
+		Integer[] coord =
+		{
+			x,
+			y,
+			z
+		};
 		_info.add(new CnfDlgData(TYPE_ZONE_NAME, coord));
 		return this;
 	}
@@ -154,8 +166,10 @@ public class ConfirmDlg extends L2GameServerPacket
 	
 	public ConfirmDlg addSkillName(L2Skill skill)
 	{
-		if (skill.getId() != skill.getDisplayId()) //custom skill -  need nameId or smth like this.
+		if (skill.getId() != skill.getDisplayId())
+		{
 			return addString(skill.getName());
+		}
 		return addSkillName(skill.getId(), skill.getLevel());
 	}
 	
@@ -206,19 +220,19 @@ public class ConfirmDlg extends L2GameServerPacket
 				switch (data.type)
 				{
 					case TYPE_TEXT:
-						writeS((String)data.value);
+						writeS((String) data.value);
 						break;
 					case TYPE_NUMBER:
 					case TYPE_NPC_NAME:
 					case TYPE_ITEM_NAME:
-						writeD((Integer)data.value);
+						writeD((Integer) data.value);
 						break;
 					case TYPE_SKILL_NAME:
-						writeD((Integer)data.value); // Skill Id
+						writeD((Integer) data.value); // Skill Id
 						writeD(_skillLvL); // Skill lvl
 						break;
 					case TYPE_ZONE_NAME:
-						Integer[] array = (Integer[])data.value;
+						Integer[] array = (Integer[]) data.value;
 						writeD(array[0]);
 						writeD(array[1]);
 						writeD(array[2]);
@@ -226,13 +240,18 @@ public class ConfirmDlg extends L2GameServerPacket
 				}
 			}
 			if (_time != 0)
+			{
 				writeD(_time);
+			}
 			if (_requesterId != 0)
+			{
 				writeD(_requesterId);
+			}
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

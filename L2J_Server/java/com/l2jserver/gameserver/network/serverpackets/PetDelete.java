@@ -19,13 +19,13 @@ package com.l2jserver.gameserver.network.serverpackets;
 public class PetDelete extends L2GameServerPacket
 {
 	private static final String _S__B7_PETDELETE = "[S] b7 PetDelete";
-	private int _petType;
-	private int _petObjId;
+	private final int _petType;
+	private final int _petObjId;
 	
 	public PetDelete(int petType, int petObjId)
 	{
-		_petType = petType;     // Summon Type
-		_petObjId= petObjId;    // objectId
+		_petType = petType; // Summon Type
+		_petObjId = petObjId; // objectId
 	}
 	
 	@Override

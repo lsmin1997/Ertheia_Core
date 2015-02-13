@@ -21,19 +21,18 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.model.actor.instance.L2CubicInstance;
 
 /**
- *
  * An Env object is just a class to pass parameters to a calculator such as L2PcInstance, L2ItemInstance, Initial value.
- *
  */
 
-public final class Env {
+public final class Env
+{
 	
-	public L2Character    player;
+	public L2Character player;
 	public L2CubicInstance cubic;
-	public L2Character    target;
+	public L2Character target;
 	public L2ItemInstance item;
-	public L2Skill        skill;
-	public L2Effect       effect;
+	public L2Skill skill;
+	public L2Effect effect;
 	public double value;
 	public double baseValue;
 	public boolean skillMastery = false;

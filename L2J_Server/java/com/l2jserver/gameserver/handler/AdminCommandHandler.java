@@ -22,14 +22,13 @@ import com.l2jserver.Config;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.1.4.5 $ $Date: 2005/03/27 15:30:09 $
  */
 public class AdminCommandHandler
 {
 	private static Logger _log = Logger.getLogger(AdminCommandHandler.class.getName());
 	
-	private TIntObjectHashMap<IAdminCommandHandler> _datatable;
+	private final TIntObjectHashMap<IAdminCommandHandler> _datatable;
 	
 	public static AdminCommandHandler getInstance()
 	{
@@ -44,11 +43,13 @@ public class AdminCommandHandler
 	public void registerAdminCommandHandler(IAdminCommandHandler handler)
 	{
 		String[] ids = handler.getAdminCommandList();
-		for (int i = 0; i < ids.length; i++)
+		for (String id : ids)
 		{
 			if (Config.DEBUG)
-				_log.fine("Adding handler for command " + ids[i]);
-			_datatable.put(ids[i].hashCode(), handler);
+			{
+				_log.fine("Adding handler for command " + id);
+			}
+			_datatable.put(id.hashCode(), handler);
 		}
 	}
 	
@@ -60,7 +61,9 @@ public class AdminCommandHandler
 			command = adminCommand.substring(0, adminCommand.indexOf(" "));
 		}
 		if (Config.DEBUG)
+		{
 			_log.fine("getting handler for command: " + command + " -> " + (_datatable.get(command.hashCode()) != null));
+		}
 		return _datatable.get(command.hashCode());
 	}
 	

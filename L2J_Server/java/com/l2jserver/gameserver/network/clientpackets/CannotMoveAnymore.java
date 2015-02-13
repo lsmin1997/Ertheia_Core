@@ -21,10 +21,8 @@ import com.l2jserver.gameserver.ai.CtrlEvent;
 import com.l2jserver.gameserver.model.L2CharPosition;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
-
 /**
  * This class ...
- *
  * @version $Revision: 1.1.2.1.2.4 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class CannotMoveAnymore extends L2GameClientPacket
@@ -52,21 +50,21 @@ public final class CannotMoveAnymore extends L2GameClientPacket
 	{
 		L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (Config.DEBUG)
-			_log.fine("client: x:" + _x + " y:" + _y + " z:" + _z
-					+ " server x:" + player.getX() + " y:" + player.getY()
-					+ " z:" + player.getZ());
+		{
+			_log.fine("client: x:" + _x + " y:" + _y + " z:" + _z + " server x:" + player.getX() + " y:" + player.getY() + " z:" + player.getZ());
+		}
 		if (player.getAI() != null)
 		{
-			player.getAI().notifyEvent(CtrlEvent.EVT_ARRIVED_BLOCKED,
-					new L2CharPosition(_x, _y, _z, _heading));
+			player.getAI().notifyEvent(CtrlEvent.EVT_ARRIVED_BLOCKED, new L2CharPosition(_x, _y, _z, _heading));
 		}
-		/*if (player.getParty() != null)
-		{
-			player.getParty().broadcastToPartyMembers(player, new PartyMemberPosition(player));
-		}*/
+		/*
+		 * if (player.getParty() != null) { player.getParty().broadcastToPartyMembers(player, new PartyMemberPosition(player)); }
+		 */
 		
 		// player.stopMove();
 		//
@@ -85,7 +83,6 @@ public final class CannotMoveAnymore extends L2GameClientPacket
 	
 	/*
 	 * (non-Javadoc)
-	 *
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

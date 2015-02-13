@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- *
  * @author -Nemesiss-
  */
 public class WarehouseCacheManager
@@ -53,12 +52,13 @@ public class WarehouseCacheManager
 	
 	public class CacheScheduler implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			long cTime = System.currentTimeMillis();
 			for (L2PcInstance pc : _cachedWh.keySet())
 			{
-				if (cTime - _cachedWh.get(pc) > _cacheTime)
+				if ((cTime - _cachedWh.get(pc)) > _cacheTime)
 				{
 					pc.clearWarehouse();
 					_cachedWh.remove(pc);

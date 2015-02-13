@@ -18,9 +18,7 @@ import com.l2jserver.gameserver.model.Elementals;
 import com.l2jserver.gameserver.model.L2ItemInstance;
 
 /**
- * 
  * @author DS
- *
  */
 public class ItemInfo
 {

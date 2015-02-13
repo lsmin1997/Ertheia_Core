@@ -19,7 +19,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionGameTime.
- *
  * @author mkizub
  */
 public class ConditionGameTime extends Condition
@@ -38,7 +37,6 @@ public class ConditionGameTime extends Condition
 	
 	/**
 	 * Instantiates a new condition game time.
-	 *
 	 * @param check the check
 	 * @param required the required
 	 */
@@ -50,7 +48,6 @@ public class ConditionGameTime extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)

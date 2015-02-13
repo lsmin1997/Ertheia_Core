@@ -35,11 +35,17 @@ public class L2ConditionZone extends L2SpawnZone
 	public void setParameter(String name, String value)
 	{
 		if (name.equalsIgnoreCase("NoBookmark"))
+		{
 			NO_BOOKMARK = Boolean.parseBoolean(value);
+		}
 		else if (name.equalsIgnoreCase("NoItemDrop"))
+		{
 			NO_ITEM_DROP = Boolean.parseBoolean(value);
+		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override

@@ -21,12 +21,7 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- * 
- * @author DS
- * 
- * Effect will generate charges for L2PcInstance targets
- * Number of charges in "value", maximum number in "count" effect variables
- *
+ * @author DS Effect will generate charges for L2PcInstance targets Number of charges in "value", maximum number in "count" effect variables
  */
 public class EffectIncreaseCharges extends L2Effect
 {
@@ -36,7 +31,6 @@ public class EffectIncreaseCharges extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -46,24 +40,26 @@ public class EffectIncreaseCharges extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
 	public boolean onStart()
 	{
 		if (getEffected() == null)
+		{
 			return false;
+		}
 		
 		if (!(getEffected() instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
-		((L2PcInstance)getEffected()).increaseCharges((int)calc(), getCount());
+		((L2PcInstance) getEffected()).increaseCharges((int) calc(), getCount());
 		return true;
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

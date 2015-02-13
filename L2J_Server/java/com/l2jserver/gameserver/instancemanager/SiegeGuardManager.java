@@ -37,8 +37,8 @@ public class SiegeGuardManager
 	
 	// =========================================================
 	// Data Field
-	private Castle _castle;
-	private List<L2Spawn> _siegeGuardSpawn = new FastList<L2Spawn>();
+	private final Castle _castle;
+	private final List<L2Spawn> _siegeGuardSpawn = new FastList<L2Spawn>();
 	
 	// =========================================================
 	// Constructor
@@ -50,17 +50,21 @@ public class SiegeGuardManager
 	// =========================================================
 	// Method - Public
 	/**
-	 * Add guard.<BR><BR>
+	 * Add guard.<BR>
+	 * <BR>
 	 */
 	public void addSiegeGuard(L2PcInstance activeChar, int npcId)
 	{
 		if (activeChar == null)
+		{
 			return;
+		}
 		addSiegeGuard(activeChar.getX(), activeChar.getY(), activeChar.getZ(), activeChar.getHeading(), npcId);
 	}
 	
 	/**
-	 * Add guard.<BR><BR>
+	 * Add guard.<BR>
+	 * <BR>
 	 */
 	public void addSiegeGuard(int x, int y, int z, int heading, int npcId)
 	{
@@ -68,17 +72,21 @@ public class SiegeGuardManager
 	}
 	
 	/**
-	 * Hire merc.<BR><BR>
+	 * Hire merc.<BR>
+	 * <BR>
 	 */
 	public void hireMerc(L2PcInstance activeChar, int npcId)
 	{
 		if (activeChar == null)
+		{
 			return;
+		}
 		hireMerc(activeChar.getX(), activeChar.getY(), activeChar.getZ(), activeChar.getHeading(), npcId);
 	}
 	
 	/**
-	 * Hire merc.<BR><BR>
+	 * Hire merc.<BR>
+	 * <BR>
 	 */
 	public void hireMerc(int x, int y, int z, int heading, int npcId)
 	{
@@ -86,8 +94,7 @@ public class SiegeGuardManager
 	}
 	
 	/**
-	 * Remove a single mercenary, identified by the npcId and location.
-	 * Presumably, this is used when a castle lord picks up a previously dropped ticket
+	 * Remove a single mercenary, identified by the npcId and location. Presumably, this is used when a castle lord picks up a previously dropped ticket
 	 */
 	public void removeMerc(int npcId, int x, int y, int z)
 	{
@@ -114,7 +121,8 @@ public class SiegeGuardManager
 	}
 	
 	/**
-	 * Remove mercs.<BR><BR>
+	 * Remove mercs.<BR>
+	 * <BR>
 	 */
 	public void removeMercs()
 	{
@@ -138,7 +146,8 @@ public class SiegeGuardManager
 	}
 	
 	/**
-	 * Spawn guards.<BR><BR>
+	 * Spawn guards.<BR>
+	 * <BR>
 	 */
 	public void spawnSiegeGuard()
 	{
@@ -156,7 +165,9 @@ public class SiegeGuardManager
 					{
 						spawn.stopRespawn();
 						if (++hiredCount > hiredMax)
+						{
 							return;
+						}
 					}
 				}
 			}
@@ -168,14 +179,17 @@ public class SiegeGuardManager
 	}
 	
 	/**
-	 * Unspawn guards.<BR><BR>
+	 * Unspawn guards.<BR>
+	 * <BR>
 	 */
 	public void unspawnSiegeGuard()
 	{
 		for (L2Spawn spawn : getSiegeGuardSpawn())
 		{
 			if (spawn == null)
+			{
 				continue;
+			}
 			
 			spawn.stopRespawn();
 			spawn.getLastSpawn().doDie(spawn.getLastSpawn());
@@ -187,7 +201,8 @@ public class SiegeGuardManager
 	// =========================================================
 	// Method - Private
 	/**
-	 * Load guards.<BR><BR>
+	 * Load guards.<BR>
+	 * <BR>
 	 */
 	private void loadSiegeGuard()
 	{
@@ -197,10 +212,14 @@ public class SiegeGuardManager
 			con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM castle_siege_guards Where castleId = ? And isHired = ?");
 			statement.setInt(1, getCastle().getCastleId());
-			if (getCastle().getOwnerId() > 0) // If castle is owned by a clan, then don't spawn default guards
+			if (getCastle().getOwnerId() > 0)
+			{
 				statement.setInt(2, 1);
+			}
 			else
+			{
 				statement.setInt(2, 0);
+			}
 			ResultSet rs = statement.executeQuery();
 			
 			L2Spawn spawn1;
@@ -241,7 +260,8 @@ public class SiegeGuardManager
 	}
 	
 	/**
-	 * Save guards.<BR><BR>
+	 * Save guards.<BR>
+	 * <BR>
 	 */
 	private void saveSiegeGuard(int x, int y, int z, int heading, int npcId, int isHire)
 	{

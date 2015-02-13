@@ -22,10 +22,7 @@ import com.l2jserver.loginserver.serverpackets.PlayFail.PlayFailReason;
 import com.l2jserver.loginserver.serverpackets.PlayOk;
 
 /**
- * Fromat is ddc
- * d: first part of session id
- * d: second part of session id
- * c: server ID
+ * Fromat is ddc d: first part of session id d: second part of session id c: server ID
  */
 public class RequestServerLogin extends L2LoginClientPacket
 {

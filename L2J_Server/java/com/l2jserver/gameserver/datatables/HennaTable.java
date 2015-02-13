@@ -28,14 +28,13 @@ import com.l2jserver.gameserver.templates.item.L2Henna;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 public class HennaTable
 {
 	private static Logger _log = Logger.getLogger(HennaTable.class.getName());
 	
-	private TIntObjectHashMap<L2Henna> _henna;
+	private final TIntObjectHashMap<L2Henna> _henna;
 	
 	public static HennaTable getInstance()
 	{
@@ -84,7 +83,7 @@ public class HennaTable
 			hennaDat.set("symbol_id", id);
 			hennaDat.set("dye", HennaData.getInt("dye_id"));
 			hennaDat.set("price", HennaData.getInt("price"));
-			//amount of dye required
+			// amount of dye required
 			hennaDat.set("amount", HennaData.getInt("dye_amount"));
 			hennaDat.set("stat_INT", HennaData.getInt("stat_INT"));
 			hennaDat.set("stat_STR", HennaData.getInt("stat_STR"));

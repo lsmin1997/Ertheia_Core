@@ -24,7 +24,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author JIV
- *
  */
 public interface Siegable
 {
@@ -55,6 +54,8 @@ public interface Siegable
 	public Calendar getSiegeDate();
 	
 	public boolean giveFame();
+	
 	public int getFameFrequency();
+	
 	public int getFameAmount();
 }

@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionUsingSkill.
- *
  * @author mkizub
  */
 public final class ConditionUsingSkill extends Condition
@@ -27,7 +26,6 @@ public final class ConditionUsingSkill extends Condition
 	
 	/**
 	 * Instantiates a new condition using skill.
-	 *
 	 * @param skillId the skill id
 	 */
 	public ConditionUsingSkill(int skillId)
@@ -35,14 +33,17 @@ public final class ConditionUsingSkill extends Condition
 		_skillId = skillId;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
 		if (env.skill == null)
+		{
 			return false;
+		}
 		return env.skill.getId() == _skillId;
 	}
 }

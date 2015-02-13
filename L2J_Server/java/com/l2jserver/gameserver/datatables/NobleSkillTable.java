@@ -17,7 +17,6 @@ package com.l2jserver.gameserver.datatables;
 import com.l2jserver.gameserver.model.L2Skill;
 
 /**
- *
  * @author -Nemesiss-
  */
 public class NobleSkillTable

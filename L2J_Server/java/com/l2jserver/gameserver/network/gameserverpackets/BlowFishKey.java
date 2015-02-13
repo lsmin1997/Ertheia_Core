@@ -26,11 +26,11 @@ import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class BlowFishKey extends BaseSendablePacket
 {
 	private static Logger _log = Logger.getLogger(BlowFishKey.class.getName());
+	
 	/**
 	 * @param blowfishKey
 	 * @param publicKey
@@ -38,14 +38,14 @@ public class BlowFishKey extends BaseSendablePacket
 	public BlowFishKey(byte[] blowfishKey, RSAPublicKey publicKey)
 	{
 		writeC(0x00);
-		byte[] encrypted =null;
+		byte[] encrypted = null;
 		try
 		{
 			Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
 			rsaCipher.init(Cipher.ENCRYPT_MODE, publicKey);
 			encrypted = rsaCipher.doFinal(blowfishKey);
 		}
-		catch(GeneralSecurityException e)
+		catch (GeneralSecurityException e)
 		{
 			_log.log(Level.SEVERE, "Error While encrypting blowfish key for transmision (Crypt error): " + e.getMessage(), e);
 		}
@@ -53,7 +53,8 @@ public class BlowFishKey extends BaseSendablePacket
 		writeB(encrypted);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.gameserverpackets.GameServerBasePacket#getContent()
 	 */
 	@Override

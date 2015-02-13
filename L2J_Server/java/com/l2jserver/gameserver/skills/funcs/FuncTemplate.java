@@ -55,14 +55,14 @@ public final class FuncTemplate
 		}
 		try
 		{
-			constructor = func.getConstructor(
-					new Class[]
-					          {
-							Stats.class, // stats to update
-							Integer.TYPE, // order of execution
-							Object.class, // owner
-							Lambda.class // value for function
-					          });
+			constructor = func.getConstructor(new Class[]
+			{
+				Stats.class, // stats to update
+				Integer.TYPE, // order of execution
+				Object.class, // owner
+				Lambda.class
+			// value for function
+			});
 		}
 		catch (NoSuchMethodException e)
 		{
@@ -72,13 +72,17 @@ public final class FuncTemplate
 	
 	public Func getFunc(Env env, Object owner)
 	{
-		if (attachCond != null && !attachCond.test(env))
+		if ((attachCond != null) && !attachCond.test(env))
+		{
 			return null;
+		}
 		try
 		{
 			Func f = (Func) constructor.newInstance(stat, order, owner, lambda);
 			if (applayCond != null)
+			{
 				f.setCondition(applayCond);
+			}
 			return f;
 		}
 		catch (IllegalAccessException e)

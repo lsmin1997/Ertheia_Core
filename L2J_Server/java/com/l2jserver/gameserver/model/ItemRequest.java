@@ -39,13 +39,33 @@ public class ItemRequest
 		_price = price;
 	}
 	
-	public int getObjectId(){return _objectId;}
-	public int getItemId(){return _itemId;}
-	public void setCount(long count){_count = count;}
-	public long getCount(){return _count;}
-	public long getPrice(){return _price;}
+	public int getObjectId()
+	{
+		return _objectId;
+	}
 	
-	/* (non-Javadoc)
+	public int getItemId()
+	{
+		return _itemId;
+	}
+	
+	public void setCount(long count)
+	{
+		_count = count;
+	}
+	
+	public long getCount()
+	{
+		return _count;
+	}
+	
+	public long getPrice()
+	{
+		return _price;
+	}
+	
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -54,7 +74,8 @@ public class ItemRequest
 		return _objectId;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

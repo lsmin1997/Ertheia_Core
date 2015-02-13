@@ -28,7 +28,6 @@ import com.l2jserver.util.StringUtil;
 
 /**
  * This class is dedicated to the management of armors.
- *
  * @version $Revision: 1.2.2.1.2.6 $ $Date: 2005/03/27 15:30:10 $
  */
 public final class L2Armor extends L2Item
@@ -38,12 +37,10 @@ public final class L2Armor extends L2Item
 	private L2ArmorType _type;
 	
 	/**
-	 * Constructor for Armor.<BR><BR>
+	 * Constructor for Armor.<BR>
+	 * <BR>
 	 * <U><I>Variables filled :</I></U><BR>
-	 * <LI>_avoidModifier</LI>
-	 * <LI>_pDef & _mDef</LI>
-	 * <LI>_mpBonus & _hpBonus</LI>
-	 * <LI>enchant4Skill</LI>
+	 * <LI>_avoidModifier</LI> <LI>_pDef & _mDef</LI> <LI>_mpBonus & _hpBonus</LI> <LI>enchant4Skill</LI>
 	 * @param type : L2ArmorType designating the type of armor
 	 * @param set : StatsSet designating the set of couples (key,value) caracterizing the armor
 	 * @see L2Item constructor
@@ -54,18 +51,17 @@ public final class L2Armor extends L2Item
 		_type = L2ArmorType.valueOf(set.getString("armor_type", "none").toUpperCase());
 		
 		int _bodyPart = getBodyPart();
-		if (_bodyPart == L2Item.SLOT_NECK || _bodyPart == L2Item.SLOT_HAIR || _bodyPart == L2Item.SLOT_HAIR2
-				|| _bodyPart == L2Item.SLOT_HAIRALL || (_bodyPart & L2Item.SLOT_L_EAR) != 0 || (_bodyPart & L2Item.SLOT_L_FINGER) != 0
-				|| (_bodyPart & L2Item.SLOT_R_BRACELET) != 0 || (_bodyPart & L2Item.SLOT_L_BRACELET) != 0
-				|| (_bodyPart & L2Item.SLOT_BACK) != 0 )
+		if ((_bodyPart == L2Item.SLOT_NECK) || (_bodyPart == L2Item.SLOT_HAIR) || (_bodyPart == L2Item.SLOT_HAIR2) || (_bodyPart == L2Item.SLOT_HAIRALL) || ((_bodyPart & L2Item.SLOT_L_EAR) != 0) || ((_bodyPart & L2Item.SLOT_L_FINGER) != 0) || ((_bodyPart & L2Item.SLOT_R_BRACELET) != 0) || ((_bodyPart & L2Item.SLOT_L_BRACELET) != 0) || ((_bodyPart & L2Item.SLOT_BACK) != 0))
 		{
 			_type1 = L2Item.TYPE1_WEAPON_RING_EARRING_NECKLACE;
 			_type2 = L2Item.TYPE2_ACCESSORY;
 		}
 		else
 		{
-			if (_type == L2ArmorType.NONE && getBodyPart() == L2Item.SLOT_L_HAND) // retail define shield as NONE
+			if ((_type == L2ArmorType.NONE) && (getBodyPart() == L2Item.SLOT_L_HAND))
+			{
 				_type = L2ArmorType.SHIELD;
+			}
 			_type1 = L2Item.TYPE1_SHIELD_ARMOR;
 			_type2 = L2Item.TYPE2_SHIELD_ARMOR;
 		}
@@ -75,7 +71,7 @@ public final class L2Armor extends L2Item
 		{
 			String[] info = skill.split("-");
 			
-			if (info != null && info.length == 2)
+			if ((info != null) && (info.length == 2))
 			{
 				int id = 0;
 				int level = 0;
@@ -87,12 +83,14 @@ public final class L2Armor extends L2Item
 				catch (Exception nfe)
 				{
 					// Incorrect syntax, dont add new skill
-					_log.info(StringUtil.concat("> Couldnt parse ", skill, " in armor enchant skills! item ",this.toString()));
+					_log.info(StringUtil.concat("> Couldnt parse ", skill, " in armor enchant skills! item ", toString()));
 				}
-				if (id > 0 && level > 0)
+				if ((id > 0) && (level > 0))
+				{
 					_enchant4Skill = new SkillHolder(id, level);
+				}
 			}
-		}	
+		}
 	}
 	
 	/**
@@ -116,13 +114,15 @@ public final class L2Armor extends L2Item
 	}
 	
 	/**
-	 * Returns skill that player get when has equiped armor +4  or more
+	 * Returns skill that player get when has equiped armor +4 or more
 	 * @return
 	 */
 	public L2Skill getEnchant4Skill()
 	{
 		if (_enchant4Skill == null)
+		{
 			return null;
+		}
 		return _enchant4Skill.getSkill();
 	}
 	
@@ -135,8 +135,10 @@ public final class L2Armor extends L2Item
 	@Override
 	public Func[] getStatFuncs(L2ItemInstance instance, L2Character player)
 	{
-		if (_funcTemplates == null || _funcTemplates.length == 0)
+		if ((_funcTemplates == null) || (_funcTemplates.length == 0))
+		{
 			return _emptyFunctionSet;
+		}
 		
 		ArrayList<Func> funcs = new ArrayList<Func>(_funcTemplates.length);
 		
@@ -146,11 +148,14 @@ public final class L2Armor extends L2Item
 		
 		Func f;
 		
-		for (FuncTemplate t : _funcTemplates) {
+		for (FuncTemplate t : _funcTemplates)
+		{
 			
 			f = t.getFunc(env, instance);
 			if (f != null)
+			{
 				funcs.add(f);
+			}
 		}
 		
 		return funcs.toArray(new Func[funcs.size()]);

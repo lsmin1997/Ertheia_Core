@@ -34,7 +34,6 @@ import com.l2jserver.util.StringUtil;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.7 $ $Date: 2005/03/27 15:29:32 $
  */
 public final class L2ClassMasterInstance extends L2MerchantInstance
@@ -54,9 +53,13 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		String pom = "";
 		
 		if (val == 0)
+		{
 			pom = "" + npcId;
+		}
 		else
+		{
 			pom = npcId + "-" + val;
+		}
 		
 		return "data/html/classmaster/" + pom + ".htm";
 	}
@@ -64,19 +67,19 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	@Override
 	public void onBypassFeedback(L2PcInstance player, String command)
 	{
-		if(command.startsWith("1stClass"))
+		if (command.startsWith("1stClass"))
 		{
 			showHtmlMenu(player, getObjectId(), 1);
 		}
-		else if(command.startsWith("2ndClass"))
+		else if (command.startsWith("2ndClass"))
 		{
 			showHtmlMenu(player, getObjectId(), 2);
 		}
-		else if(command.startsWith("3rdClass"))
+		else if (command.startsWith("3rdClass"))
 		{
 			showHtmlMenu(player, getObjectId(), 3);
 		}
-		else if(command.startsWith("change_class"))
+		else if (command.startsWith("change_class"))
 		{
 			int val = Integer.parseInt(command.substring(13));
 			
@@ -88,7 +91,7 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 				player.sendPacket(html);
 			}
 		}
-		else if(command.startsWith("become_noble"))
+		else if (command.startsWith("become_noble"))
 		{
 			if (!player.isNoble())
 			{
@@ -100,11 +103,11 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 				player.sendPacket(html);
 			}
 		}
-		else if(command.startsWith("learn_skills"))
+		else if (command.startsWith("learn_skills"))
 		{
 			player.giveAvailableSkills(Config.AUTO_LEARN_FS_SKILLS, true);
 		}
-		else if(command.startsWith("increase_clan_level"))
+		else if (command.startsWith("increase_clan_level"))
 		{
 			if (!player.isClanLeader())
 			{
@@ -131,13 +134,15 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	
 	public static final void onTutorialLink(L2PcInstance player, String request)
 	{
-		if (!Config.ALTERNATE_CLASS_MASTER
-				|| request == null
-				|| !request.startsWith("CO"))
+		if (!Config.ALTERNATE_CLASS_MASTER || (request == null) || !request.startsWith("CO"))
+		{
 			return;
+		}
 		
 		if (!player.getFloodProtectors().getServerBypass().tryPerformAction("changeclass"))
+		{
 			return;
+		}
 		
 		try
 		{
@@ -152,8 +157,10 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	
 	public static final void onTutorialQuestionMark(L2PcInstance player, int number)
 	{
-		if (!Config.ALTERNATE_CLASS_MASTER || number != 1001)
+		if (!Config.ALTERNATE_CLASS_MASTER || (number != 1001))
+		{
 			return;
+		}
 		
 		showTutorialHtml(player);
 	}
@@ -161,14 +168,20 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	public static final void showQuestionMark(L2PcInstance player)
 	{
 		if (!Config.ALTERNATE_CLASS_MASTER)
+		{
 			return;
+		}
 		
 		final ClassId classId = player.getClassId();
 		if (getMinLevel(classId.level()) > player.getLevel())
+		{
 			return;
+		}
 		
-		if (!Config.CLASS_MASTER_SETTINGS.isAllowed(classId.level()+1))
+		if (!Config.CLASS_MASTER_SETTINGS.isAllowed(classId.level() + 1))
+		{
 			return;
+		}
 		
 		player.sendPacket(new TutorialShowQuestionMark(1001));
 	}
@@ -190,27 +203,45 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			{
 				case 0:
 					if (Config.CLASS_MASTER_SETTINGS.isAllowed(1))
+					{
 						sb.append("Come back here when you reached level 20 to change your class.<br>");
+					}
 					else if (Config.CLASS_MASTER_SETTINGS.isAllowed(2))
+					{
 						sb.append("Come back after your first occupation change.<br>");
+					}
 					else if (Config.CLASS_MASTER_SETTINGS.isAllowed(3))
+					{
 						sb.append("Come back after your second occupation change.<br>");
+					}
 					else
+					{
 						sb.append("I can't change your occupation.<br>");
+					}
 					break;
 				case 1:
 					if (Config.CLASS_MASTER_SETTINGS.isAllowed(2))
+					{
 						sb.append("Come back here when you reached level 40 to change your class.<br>");
+					}
 					else if (Config.CLASS_MASTER_SETTINGS.isAllowed(3))
+					{
 						sb.append("Come back after your second occupation change.<br>");
+					}
 					else
+					{
 						sb.append("I can't change your occupation.<br>");
+					}
 					break;
 				case 2:
 					if (Config.CLASS_MASTER_SETTINGS.isAllowed(3))
+					{
 						sb.append("Come back here when you reached level 76 to change your class.<br>");
+					}
 					else
+					{
 						sb.append("I can't change your occupation.<br>");
+					}
 					break;
 				case 3:
 					sb.append("There is no class change available for you anymore.<br>");
@@ -229,22 +260,18 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 			else
 			{
 				final int minLevel = getMinLevel(currentClassId.level());
-				if (player.getLevel() >= minLevel || Config.ALLOW_ENTIRE_TREE)
+				if ((player.getLevel() >= minLevel) || Config.ALLOW_ENTIRE_TREE)
 				{
 					final StringBuilder menu = new StringBuilder(100);
 					for (ClassId cid : ClassId.values())
 					{
-						if (cid == ClassId.inspector && player.getTotalSubClasses() < 2)
-							continue;
-						if (validateClassId(currentClassId, cid) && cid.level() == level)
+						if ((cid == ClassId.inspector) && (player.getTotalSubClasses() < 2))
 						{
-							StringUtil.append(menu,
-									"<a action=\"bypass -h npc_%objectId%_change_class ",
-									String.valueOf(cid.getId()),
-									"\">",
-									CharTemplateTable.getInstance().getClassNameById(cid.getId()),
-									"</a><br>"
-							);
+							continue;
+						}
+						if (validateClassId(currentClassId, cid) && (cid.level() == level))
+						{
+							StringUtil.append(menu, "<a action=\"bypass -h npc_%objectId%_change_class ", String.valueOf(cid.getId()), "\">", CharTemplateTable.getInstance().getClassNameById(cid.getId()), "</a><br>");
 						}
 					}
 					
@@ -268,7 +295,9 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 						html.replace("%level%", String.valueOf(minLevel));
 					}
 					else
+					{
 						html.setFile(player.getHtmlPrefix(), "data/html/classmaster/nomore.htm");
+					}
 				}
 			}
 		}
@@ -281,9 +310,10 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	private static final void showTutorialHtml(L2PcInstance player)
 	{
 		final ClassId currentClassId = player.getClassId();
-		if (getMinLevel(currentClassId.level()) > player.getLevel()
-				&& !Config.ALLOW_ENTIRE_TREE)
+		if ((getMinLevel(currentClassId.level()) > player.getLevel()) && !Config.ALLOW_ENTIRE_TREE)
+		{
 			return;
+		}
 		
 		String msg = HtmCache.getInstance().getHtm(player.getHtmlPrefix(), "data/html/classmaster/tutorialtemplate.htm");
 		
@@ -292,41 +322,40 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		final StringBuilder menu = new StringBuilder(100);
 		for (ClassId cid : ClassId.values())
 		{
-			if (cid == ClassId.inspector && player.getTotalSubClasses() < 2)
-				continue;			
+			if ((cid == ClassId.inspector) && (player.getTotalSubClasses() < 2))
+			{
+				continue;
+			}
 			if (validateClassId(currentClassId, cid))
 			{
-				StringUtil.append(menu,
-						"<a action=\"link CO",
-						String.valueOf(cid.getId()),
-						"\">",
-						CharTemplateTable.getInstance().getClassNameById(cid.getId()),
-						"</a><br>"
-				);
+				StringUtil.append(menu, "<a action=\"link CO", String.valueOf(cid.getId()), "\">", CharTemplateTable.getInstance().getClassNameById(cid.getId()), "</a><br>");
 			}
 		}
 		
 		msg = msg.replaceAll("%menu%", menu.toString());
-		msg = msg.replace("%req_items%", getRequiredItems(currentClassId.level()+1));
+		msg = msg.replace("%req_items%", getRequiredItems(currentClassId.level() + 1));
 		player.sendPacket(new TutorialShowHtml(msg));
 	}
 	
 	private static final boolean checkAndChangeClass(L2PcInstance player, int val)
 	{
 		final ClassId currentClassId = player.getClassId();
-		if (getMinLevel(currentClassId.level()) > player.getLevel()
-				&& !Config.ALLOW_ENTIRE_TREE)
+		if ((getMinLevel(currentClassId.level()) > player.getLevel()) && !Config.ALLOW_ENTIRE_TREE)
+		{
 			return false;
+		}
 		
 		if (!validateClassId(currentClassId, val))
+		{
 			return false;
+		}
 		
 		int newJobLevel = currentClassId.level() + 1;
 		
 		// Weight/Inventory check
-		if(!Config.CLASS_MASTER_SETTINGS.getRewardItems(newJobLevel).isEmpty())
+		if (!Config.CLASS_MASTER_SETTINGS.getRewardItems(newJobLevel).isEmpty())
 		{
-			if (player.getWeightPenalty() >= 3 || (player.getInventoryLimit() * 0.8 <= player.getInventory().getSize(false)))
+			if ((player.getWeightPenalty() >= 3) || ((player.getInventoryLimit() * 0.8) <= player.getInventory().getSize(false)))
 			{
 				player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INVENTORY_LESS_THAN_80_PERCENT));
 				return false;
@@ -349,7 +378,9 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		{
 			int _count = Config.CLASS_MASTER_SETTINGS.getRequireItems(newJobLevel).get(_itemId);
 			if (!player.destroyItemByItemId("ClassMaster", _itemId, _count, player, true))
+			{
 				return false;
+			}
 		}
 		
 		// reward player with items
@@ -362,18 +393,26 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 		player.setClassId(val);
 		
 		if (player.isSubClassActive())
+		{
 			player.getSubClasses().get(player.getClassIndex()).setClassId(player.getActiveClass());
+		}
 		else
+		{
 			player.setBaseClass(player.getActiveClass());
+		}
 		
 		Quest q = QuestManager.getInstance().getQuest("SkillTransfer");
 		if (q != null)
+		{
 			q.startQuestTimer("givePormanders", 1, null, player);
+		}
 		
 		player.broadcastUserInfo();
 		
-		if(Config.CLASS_MASTER_SETTINGS.isAllowed(player.getClassId().level() + 1) && Config.ALTERNATE_CLASS_MASTER && ((player.getClassId().level() == 1 && player.getLevel() >= 40) || (player.getClassId().level() == 2 && player.getLevel() >= 76)))
+		if (Config.CLASS_MASTER_SETTINGS.isAllowed(player.getClassId().level() + 1) && Config.ALTERNATE_CLASS_MASTER && (((player.getClassId().level() == 1) && (player.getLevel() >= 40)) || ((player.getClassId().level() == 2) && (player.getLevel() >= 76))))
+		{
 			showQuestionMark(player);
+		}
 		
 		return true;
 	}
@@ -424,23 +463,30 @@ public final class L2ClassMasterInstance extends L2MerchantInstance
 	 */
 	private static final boolean validateClassId(ClassId oldCID, ClassId newCID)
 	{
-		if (newCID == null || newCID.getRace() == null)
+		if ((newCID == null) || (newCID.getRace() == null))
+		{
 			return false;
+		}
 		
 		if (oldCID.equals(newCID.getParent()))
+		{
 			return true;
+		}
 		
-		if (Config.ALLOW_ENTIRE_TREE
-				&& newCID.childOf(oldCID))
+		if (Config.ALLOW_ENTIRE_TREE && newCID.childOf(oldCID))
+		{
 			return true;
+		}
 		
 		return false;
 	}
 	
 	private static String getRequiredItems(int level)
 	{
-		if (Config.CLASS_MASTER_SETTINGS.getRequireItems(level) == null || Config.CLASS_MASTER_SETTINGS.getRequireItems(level).isEmpty())
+		if ((Config.CLASS_MASTER_SETTINGS.getRequireItems(level) == null) || Config.CLASS_MASTER_SETTINGS.getRequireItems(level).isEmpty())
+		{
 			return "<tr><td>none</td></r>";
+		}
 		StringBuilder sb = new StringBuilder();
 		for (int _itemId : Config.CLASS_MASTER_SETTINGS.getRequireItems(level).keys())
 		{

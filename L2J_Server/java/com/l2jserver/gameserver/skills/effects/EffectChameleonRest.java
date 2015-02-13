@@ -33,7 +33,6 @@ public class EffectChameleonRest extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -43,7 +42,6 @@ public class EffectChameleonRest extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -54,12 +52,13 @@ public class EffectChameleonRest extends L2Effect
 			((L2PcInstance) getEffected()).sitDown(false);
 		}
 		else
+		{
 			getEffected().getAI().setIntention(CtrlIntention.AI_INTENTION_REST);
+		}
 		return super.onStart();
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -69,23 +68,28 @@ public class EffectChameleonRest extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		// Only cont skills shouldn't end
 		if (getSkill().getSkillType() != L2SkillType.CONT)
+		{
 			return false;
+		}
 		
 		if (getEffected() instanceof L2PcInstance)
 		{
 			if (!((L2PcInstance) getEffected()).isSitting())
+			{
 				return false;
+			}
 		}
 		
 		double manaDam = calc();
@@ -100,7 +104,8 @@ public class EffectChameleonRest extends L2Effect
 		return true;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

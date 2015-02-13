@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.pathfinding.cellnodes.CellPathFinding;
 import com.l2jserver.gameserver.pathfinding.geonodes.GeoPathFinding;
 
 /**
- *
  * @author -Nemesiss-
  */
 public abstract class PathFinding
@@ -31,11 +30,11 @@ public abstract class PathFinding
 	{
 		if (!Config.GEODATA_CELLFINDING)
 		{
-			//Higher Memory Usage, Smaller Cpu Usage
+			// Higher Memory Usage, Smaller Cpu Usage
 			return GeoPathFinding.getInstance();
 		}
 		else
-			// Cell pathfinding, calculated directly from geodata files
+		// Cell pathfinding, calculated directly from geodata files
 		{
 			return CellPathFinding.getInstance();
 		}
@@ -46,106 +45,16 @@ public abstract class PathFinding
 	public abstract List<AbstractNodeLoc> findPath(int x, int y, int z, int tx, int ty, int tz, int instanceId, boolean playable);
 	
 	/*
-	public List<AbstractNodeLoc> search(AbstractNode start, AbstractNode end, int instanceId)
-	{
-		// The simplest grid-based pathfinding.
-		// Drawback is not having higher cost for diagonal movement (means funny routes)
-		// Could be optimized e.g. not to calculate backwards as far as forwards.
-		
-		// List of Visited Nodes
-		LinkedList<AbstractNode> visited = new LinkedList<AbstractNode>();
-		
-		// List of Nodes to Visit
-		LinkedList<AbstractNode> to_visit = new LinkedList<AbstractNode>();
-		to_visit.add(start);
-		
-		int i = 0;
-		while (i < 800)
-		{
-			AbstractNode node;
-			try
-			{
-				node = to_visit.removeFirst();
-			}
-			catch (Exception e)
-			{
-				// No Path found
-				return null;
-			}
-			if (node.equals(end)) //path found!
-				return constructPath(node, instanceId);
-			else
-			{
-				i++;
-				visited.add(node);
-				node.attachNeighbors();
-				Node[] neighbors = node.getNeighbors();
-				if (neighbors == null)
-					continue;
-				for (Node n : neighbors)
-				{
-					if (!visited.contains(n) && !to_visit.contains(n))
-					{
-						n.setParent(node);
-						to_visit.add(n);
-					}
-				}
-			}
-		}
-		//No Path found
-		return null;
-	}
+	 * public List<AbstractNodeLoc> search(AbstractNode start, AbstractNode end, int instanceId) { // The simplest grid-based pathfinding. // Drawback is not having higher cost for diagonal movement (means funny routes) // Could be optimized e.g. not to calculate backwards as far as forwards. //
+	 * List of Visited Nodes LinkedList<AbstractNode> visited = new LinkedList<AbstractNode>(); // List of Nodes to Visit LinkedList<AbstractNode> to_visit = new LinkedList<AbstractNode>(); to_visit.add(start); int i = 0; while (i < 800) { AbstractNode node; try { node = to_visit.removeFirst(); }
+	 * catch (Exception e) { // No Path found return null; } if (node.equals(end)) //path found! return constructPath(node, instanceId); else { i++; visited.add(node); node.attachNeighbors(); Node[] neighbors = node.getNeighbors(); if (neighbors == null) continue; for (Node n : neighbors) { if
+	 * (!visited.contains(n) && !to_visit.contains(n)) { n.setParent(node); to_visit.add(n); } } } } //No Path found return null; }
 	 */
 	/*
-	public List<AbstractNodeLoc> searchAStar(Node start, Node end, int instanceId)
-	{
-		// Not operational yet?
-		int start_x = start.getLoc().getX();
-		int start_y = start.getLoc().getY();
-		int end_x = end.getLoc().getX();
-		int end_y = end.getLoc().getY();
-		//List of Visited Nodes
-		FastNodeList visited = new FastNodeList(800);//TODO! Add limit to cfg
-		
-		// List of Nodes to Visit
-		BinaryNodeHeap to_visit = new BinaryNodeHeap(800);
-		to_visit.add(start);
-		
-		int i = 0;
-		while (i < 800)//TODO! Add limit to cfg
-		{
-			AbstractNode node;
-			try
-			{
-				node = to_visit.removeFirst();
-			}
-			catch (Exception e)
-			{
-				// No Path found
-				return null;
-			}
-			if (node.equals(end)) //path found!
-				return constructPath(node, instanceId);
-			else
-			{
-				visited.add(node);
-				node.attachNeighbors();
-				for (Node n : node.getNeighbors())
-				{
-					if (!visited.contains(n) && !to_visit.contains(n))
-					{
-						i++;
-						n.setParent(node);
-						n.setCost(Math.abs(start_x - n.getLoc().getNodeX()) + Math.abs(start_y - n.getLoc().getNodeY())
-								+ Math.abs(end_x - n.getLoc().getNodeX()) + Math.abs(end_y - n.getLoc().getNodeY()));
-						to_visit.add(n);
-					}
-				}
-			}
-		}
-		//No Path found
-		return null;
-	}
+	 * public List<AbstractNodeLoc> searchAStar(Node start, Node end, int instanceId) { // Not operational yet? int start_x = start.getLoc().getX(); int start_y = start.getLoc().getY(); int end_x = end.getLoc().getX(); int end_y = end.getLoc().getY(); //List of Visited Nodes FastNodeList visited =
+	 * new FastNodeList(800);//TODO! Add limit to cfg // List of Nodes to Visit BinaryNodeHeap to_visit = new BinaryNodeHeap(800); to_visit.add(start); int i = 0; while (i < 800)//TODO! Add limit to cfg { AbstractNode node; try { node = to_visit.removeFirst(); } catch (Exception e) { // No Path
+	 * found return null; } if (node.equals(end)) //path found! return constructPath(node, instanceId); else { visited.add(node); node.attachNeighbors(); for (Node n : node.getNeighbors()) { if (!visited.contains(n) && !to_visit.contains(n)) { i++; n.setParent(node); n.setCost(Math.abs(start_x -
+	 * n.getLoc().getNodeX()) + Math.abs(start_y - n.getLoc().getNodeY()) + Math.abs(end_x - n.getLoc().getNodeX()) + Math.abs(end_y - n.getLoc().getNodeY())); to_visit.add(n); } } } } //No Path found return null; }
 	 */
 	/**
 	 * Convert geodata position to pathnode position
@@ -154,7 +63,7 @@ public abstract class PathFinding
 	 */
 	public short getNodePos(int geo_pos)
 	{
-		return (short) (geo_pos >> 3); //OK?
+		return (short) (geo_pos >> 3); // OK?
 	}
 	
 	/**
@@ -189,7 +98,7 @@ public abstract class PathFinding
 	 */
 	public int calculateWorldX(short node_x)
 	{
-		return L2World.MAP_MIN_X + node_x * 128 + 48;
+		return L2World.MAP_MIN_X + (node_x * 128) + 48;
 	}
 	
 	/**
@@ -199,7 +108,7 @@ public abstract class PathFinding
 	 */
 	public int calculateWorldY(short node_y)
 	{
-		return L2World.MAP_MIN_Y + node_y * 128 + 48;
+		return L2World.MAP_MIN_Y + (node_y * 128) + 48;
 	}
 	
 	public String[] getStat()

@@ -23,10 +23,8 @@ import com.l2jserver.gameserver.handler.IAdminCommandHandler;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.util.GMAudit;
 
-
 /**
  * This class handles all GM commands triggered by //command
- *
  * @version $Revision: 1.3.4.2 $ $Date: 2005/03/27 15:29:29 $
  */
 public final class SendBypassBuildCmd extends L2GameClientPacket
@@ -43,15 +41,19 @@ public final class SendBypassBuildCmd extends L2GameClientPacket
 	{
 		_command = readS();
 		if (_command != null)
+		{
 			_command = _command.trim();
+		}
 	}
 	
 	@Override
 	protected void runImpl()
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
-		if(activeChar == null)
+		if (activeChar == null)
+		{
 			return;
+		}
 		
 		String command = "admin_" + _command.split(" ")[0];
 		
@@ -59,14 +61,16 @@ public final class SendBypassBuildCmd extends L2GameClientPacket
 		
 		if (ach == null)
 		{
-			if ( activeChar.isGM() )
+			if (activeChar.isGM())
+			{
 				activeChar.sendMessage("The command " + command.substring(6) + " does not exists!");
+			}
 			
 			_log.warning("No handler registered for admin command '" + command + "'");
 			return;
 		}
 		
-		if (!AdminCommandAccessRights.getInstance().hasAccess(command , activeChar.getAccessLevel()))
+		if (!AdminCommandAccessRights.getInstance().hasAccess(command, activeChar.getAccessLevel()))
 		{
 			activeChar.sendMessage("You don't have the access right to use this command!");
 			_log.warning("Character " + activeChar.getName() + " tryed to use admin command " + command + ", but have no access to it!");
@@ -74,12 +78,15 @@ public final class SendBypassBuildCmd extends L2GameClientPacket
 		}
 		
 		if (Config.GMAUDIT)
-			GMAudit.auditGMAction(activeChar.getName()+" ["+activeChar.getObjectId()+"]", _command, (activeChar.getTarget() != null?activeChar.getTarget().getName():"no-target"));
+		{
+			GMAudit.auditGMAction(activeChar.getName() + " [" + activeChar.getObjectId() + "]", _command, (activeChar.getTarget() != null ? activeChar.getTarget().getName() : "no-target"));
+		}
 		
 		ach.useAdminCommand("admin_" + _command, activeChar);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

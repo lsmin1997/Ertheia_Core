@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.communitybbs.BB;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,11 +28,11 @@ import com.l2jserver.gameserver.communitybbs.Manager.PostBBSManager;
 
 /**
  * @author Maktakien
- *
  */
 public class Post
 {
 	private static Logger _log = Logger.getLogger(Post.class.getName());
+	
 	public static class CPost
 	{
 		public int postId;
@@ -44,13 +43,15 @@ public class Post
 		public int postForumId;
 		public String postTxt;
 	}
-	private List<CPost> _post;
+	
+	private final List<CPost> _post;
+	
 	/**
 	 * @param restore
 	 * @param t
 	 */
-	//public enum ConstructorType {REPLY, CREATE };
-	public Post(String _PostOwner,int _PostOwnerID,long date,int tid,int _PostForumID,String txt)
+	// public enum ConstructorType {REPLY, CREATE };
+	public Post(String _PostOwner, int _PostOwnerID, long date, int tid, int _PostForumID, String txt)
 	{
 		_post = new FastList<CPost>();
 		CPost cp = new CPost();
@@ -65,6 +66,7 @@ public class Post
 		insertindb(cp);
 		
 	}
+	
 	public void insertindb(CPost cp)
 	{
 		Connection con = null;
@@ -92,6 +94,7 @@ public class Post
 		}
 		
 	}
+	
 	public Post(Topic t)
 	{
 		_post = new FastList<CPost>();
@@ -101,15 +104,16 @@ public class Post
 	public CPost getCPost(int id)
 	{
 		int i = 0;
-		for(CPost cp : _post)
+		for (CPost cp : _post)
 		{
-			if(i++ == id)
+			if (i++ == id)
 			{
 				return cp;
 			}
 		}
 		return null;
 	}
+	
 	public void deleteme(Topic t)
 	{
 		PostBBSManager.getInstance().delPostByTopic(t);
@@ -132,6 +136,7 @@ public class Post
 			L2DatabaseFactory.close(con);
 		}
 	}
+	
 	/**
 	 * @param t
 	 */
@@ -145,7 +150,7 @@ public class Post
 			statement.setInt(1, t.getForumID());
 			statement.setInt(2, t.getID());
 			ResultSet result = statement.executeQuery();
-			while(result.next())
+			while (result.next())
 			{
 				CPost cp = new CPost();
 				cp.postId = result.getInt("post_id");
@@ -162,13 +167,14 @@ public class Post
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.WARNING, "Data error on Post " + t.getForumID() + "/"+t.getID()+" : " + e.getMessage(), e);
+			_log.log(Level.WARNING, "Data error on Post " + t.getForumID() + "/" + t.getID() + " : " + e.getMessage(), e);
 		}
 		finally
 		{
 			L2DatabaseFactory.close(con);
 		}
 	}
+	
 	/**
 	 * @param i
 	 */

@@ -19,7 +19,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.4.2.1.2.5 $ $Date: 2005/03/27 15:29:57 $
  */
 public final class PartySmallWindowAdd extends L2GameServerPacket
@@ -42,22 +41,23 @@ public final class PartySmallWindowAdd extends L2GameServerPacket
 	{
 		writeC(0x4f);
 		writeD(_leaderId); // c3
-		writeD(_distribution);//writeD(0x04); ?? //c3
+		writeD(_distribution);// writeD(0x04); ?? //c3
 		writeD(_member.getObjectId());
 		writeS(_member.getName());
-		writeD((int) _member.getCurrentCp()); //c4
-		writeD(_member.getMaxCp()); //c4
+		writeD((int) _member.getCurrentCp()); // c4
+		writeD(_member.getMaxCp()); // c4
 		writeD((int) _member.getCurrentHp());
 		writeD(_member.getMaxVisibleHp());
 		writeD((int) _member.getCurrentMp());
 		writeD(_member.getMaxMp());
 		writeD(_member.getLevel());
 		writeD(_member.getClassId().getId());
-		writeD(0);//writeD(0x01); ??
+		writeD(0);// writeD(0x01); ??
 		writeD(0);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

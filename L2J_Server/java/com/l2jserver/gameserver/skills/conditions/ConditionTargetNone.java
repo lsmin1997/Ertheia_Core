@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionTargetNone.
- *
  * @author mkizub
  */
 public class ConditionTargetNone extends Condition
@@ -31,7 +30,8 @@ public class ConditionTargetNone extends Condition
 	{
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override

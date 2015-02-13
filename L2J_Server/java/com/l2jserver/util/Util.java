@@ -28,7 +28,6 @@ import java.nio.ByteBuffer;
 
 /**
  * This class ...
- * 
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
@@ -57,7 +56,7 @@ public class Util
 		
 		for (int i = 0; i < len; i++)
 		{
-			if (counter % 16 == 0)
+			if ((counter % 16) == 0)
 			{
 				result.append(fillHex(i, 4) + ": ");
 			}
@@ -72,7 +71,7 @@ public class Util
 				for (int a = 0; a < 16; a++)
 				{
 					int t1 = 0xFF & data[charpoint++];
-					if (t1 > 0x1f && t1 < 0x80)
+					if ((t1 > 0x1f) && (t1 < 0x80))
 					{
 						result.append((char) t1);
 					}
@@ -90,7 +89,7 @@ public class Util
 		int rest = data.length % 16;
 		if (rest > 0)
 		{
-			for (int i = 0; i < 17 - rest; i++)
+			for (int i = 0; i < (17 - rest); i++)
 			{
 				result.append("   ");
 			}
@@ -99,7 +98,7 @@ public class Util
 			for (int a = 0; a < rest; a++)
 			{
 				int t1 = 0xFF & data[charpoint++];
-				if (t1 > 0x1f && t1 < 0x80)
+				if ((t1 > 0x1f) && (t1 < 0x80))
 				{
 					result.append((char) t1);
 				}

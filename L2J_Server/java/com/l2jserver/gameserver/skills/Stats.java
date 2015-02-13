@@ -18,7 +18,6 @@ import java.util.NoSuchElementException;
 
 /**
  * Enum of basic stats.
- *
  * @author mkizub
  */
 public enum Stats
@@ -81,7 +80,7 @@ public enum Stats
 	MCRITICAL_RATE("mCritRate"),
 	EXPSP_RATE("rExp"),
 	ATTACK_CANCEL("cancel"),
-	MAGIC_FAILURE_RATE("magicFailureRate"),	
+	MAGIC_FAILURE_RATE("magicFailureRate"),
 	
 	// ACCURACY & RANGE
 	ACCURACY_COMBAT("accCombat"),
@@ -115,7 +114,7 @@ public enum Stats
 	CONFUSION("confusion"), // mob changes target, opposite to aggression/hate
 	SLEEP("sleep"), // sleep (don't move/ATTACK) until attacked
 	VALAKAS("valakas"),
-
+	
 	// VULNERABILITIES
 	AGGRESSION_VULN("aggressionVuln"),
 	BLEED_VULN("bleedVuln"),
@@ -143,7 +142,7 @@ public enum Stats
 	DARK_RES("darkRes"),
 	VALAKAS_RES("valakasRes"),
 	MAGIC_SUCCESS_RES("magicSuccRes"),
-	//BUFF_IMMUNITY("buffImmunity"), //TODO: Implement me
+	// BUFF_IMMUNITY("buffImmunity"), //TODO: Implement me
 	DEBUFF_IMMUNITY("debuffImmunity"),
 	
 	// ELEMENT POWER
@@ -153,7 +152,7 @@ public enum Stats
 	EARTH_POWER("earthPower"),
 	HOLY_POWER("holyPower"),
 	DARK_POWER("darkPower"),
-
+	
 	// PROFICIENCY
 	AGGRESSION_PROF("aggressionProf"),
 	BLEED_PROF("bleedProf"),
@@ -242,7 +241,7 @@ public enum Stats
 	SHIELD_DEFENCE_ANGLE("shieldDefAngle"),
 	
 	// Skill mastery
-	SKILL_MASTERY			("skillMastery"),
+	SKILL_MASTERY("skillMastery"),
 	
 	// Vitality
 	VITALITY_CONSUME_RATE("vitalityConsumeRate");
@@ -267,7 +266,9 @@ public enum Stats
 		for (Stats s : values())
 		{
 			if (s.getValue().equals(name))
+			{
 				return s;
+			}
 		}
 		
 		throw new NoSuchElementException("Unknown name '" + name + "' for enum BaseStats");

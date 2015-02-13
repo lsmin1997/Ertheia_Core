@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 
 import com.l2jserver.L2DatabaseFactory;
 
-
 public class SqlUtils
 {
 	private static Logger _log = Logger.getLogger(SqlUtils.class.getName());
@@ -50,13 +49,18 @@ public class SqlUtils
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			query = L2DatabaseFactory.getInstance().prepQuerySelect(new String[] { resultField }, tableName, whereClause, true);
+			query = L2DatabaseFactory.getInstance().prepQuerySelect(new String[]
+			{
+				resultField
+			}, tableName, whereClause, true);
 			
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rset = statement.executeQuery();
 			
 			if (rset.next())
+			{
 				res = rset.getInt(1);
+			}
 			
 			rset.close();
 			statement.close();
@@ -83,17 +87,24 @@ public class SqlUtils
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			query = L2DatabaseFactory.getInstance().prepQuerySelect(new String[] { resultField }, tableName, whereClause, false);
+			query = L2DatabaseFactory.getInstance().prepQuerySelect(new String[]
+			{
+				resultField
+			}, tableName, whereClause, false);
 			PreparedStatement statement = con.prepareStatement(query);
 			ResultSet rset = statement.executeQuery();
 			
 			int rows = 0;
 			
 			while (rset.next())
+			{
 				rows++;
+			}
 			
 			if (rows == 0)
+			{
 				return new Integer[0];
+			}
 			
 			res = new Integer[rows - 1];
 			
@@ -138,7 +149,9 @@ public class SqlUtils
 			
 			int rows = 0;
 			while (rset.next())
+			{
 				rows++;
+			}
 			
 			res = new Integer[rows - 1][resultFields.length];
 			
@@ -148,7 +161,9 @@ public class SqlUtils
 			while (rset.next())
 			{
 				for (int i = 0; i < resultFields.length; i++)
+				{
 					res[row][i] = rset.getInt(i + 1);
+				}
 				row++;
 			}
 			rset.close();

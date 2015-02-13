@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionLogicOr.
- *
  * @author mkizub
  */
 public class ConditionLogicOr extends Condition
@@ -29,15 +28,18 @@ public class ConditionLogicOr extends Condition
 	
 	/**
 	 * Adds the.
-	 *
 	 * @param condition the condition
 	 */
 	public void add(Condition condition)
 	{
 		if (condition == null)
+		{
 			return;
+		}
 		if (getListener() != null)
+		{
 			condition.setListener(this);
+		}
 		final int len = conditions.length;
 		final Condition[] tmp = new Condition[len + 1];
 		System.arraycopy(conditions, 0, tmp, 0, len);
@@ -47,7 +49,6 @@ public class ConditionLogicOr extends Condition
 	
 	/**
 	 * Sets the listener.
-	 *
 	 * @param listener the new listener
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#setListener(com.l2jserver.gameserver.skills.conditions.ConditionListener)
 	 */
@@ -57,19 +58,22 @@ public class ConditionLogicOr extends Condition
 		if (listener != null)
 		{
 			for (Condition c : conditions)
+			{
 				c.setListener(this);
+			}
 		}
 		else
 		{
 			for (Condition c : conditions)
+			{
 				c.setListener(null);
+			}
 		}
 		super.setListener(listener);
 	}
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -80,7 +84,9 @@ public class ConditionLogicOr extends Condition
 		for (Condition c : conditions)
 		{
 			if (c.test(env))
+			{
 				return true;
+			}
 		}
 		return false;
 	}

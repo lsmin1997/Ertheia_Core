@@ -29,7 +29,7 @@ import com.l2jserver.gameserver.model.entity.Auction;
 public class AuctionManager
 {
 	protected static final Logger _log = Logger.getLogger(AuctionManager.class.getName());
-	private List<Auction> _auctions;
+	private final List<Auction> _auctions;
 	
 	private static final String[] ITEM_INIT_DATA =
 	{
@@ -75,8 +75,44 @@ public class AuctionManager
 	
 	private static final int[] ItemInitDataId =
 	{
-		22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 36, 37, 38, 39, 40, 41, 42,
-		43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61
+		22,
+		23,
+		24,
+		25,
+		26,
+		27,
+		28,
+		29,
+		30,
+		31,
+		32,
+		33,
+		36,
+		37,
+		38,
+		39,
+		40,
+		41,
+		42,
+		43,
+		44,
+		45,
+		46,
+		47,
+		48,
+		49,
+		50,
+		51,
+		52,
+		53,
+		54,
+		55,
+		56,
+		57,
+		58,
+		59,
+		60,
+		61
 	};
 	
 	public static final AuctionManager getInstance()
@@ -106,7 +142,9 @@ public class AuctionManager
 			PreparedStatement statement = con.prepareStatement("SELECT id FROM auction ORDER BY id");
 			ResultSet rs = statement.executeQuery();
 			while (rs.next())
+			{
 				_auctions.add(new Auction(rs.getInt("id")));
+			}
 			rs.close();
 			statement.close();
 			_log.info("Loaded: " + getAuctions().size() + " auction(s)");
@@ -125,7 +163,9 @@ public class AuctionManager
 	{
 		int index = getAuctionIndex(auctionId);
 		if (index >= 0)
+		{
 			return getAuctions().get(index);
+		}
 		return null;
 	}
 	
@@ -135,8 +175,10 @@ public class AuctionManager
 		for (int i = 0; i < getAuctions().size(); i++)
 		{
 			auction = getAuctions().get(i);
-			if (auction != null && auction.getId() == auctionId)
+			if ((auction != null) && (auction.getId() == auctionId))
+			{
 				return i;
+			}
 		}
 		return -1;
 	}
@@ -153,9 +195,11 @@ public class AuctionManager
 		for (i = 0; i < ItemInitDataId.length; i++)
 		{
 			if (ItemInitDataId[i] == id)
+			{
 				break;
+			}
 		}
-		if (i >= ItemInitDataId.length || ItemInitDataId[i] != id)
+		if ((i >= ItemInitDataId.length) || (ItemInitDataId[i] != id))
 		{
 			_log.warning("Clan Hall auction not found for Id :" + id);
 			return;

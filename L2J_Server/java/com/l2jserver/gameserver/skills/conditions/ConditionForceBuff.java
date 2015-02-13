@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.skills.effects.EffectFusion;
 
 /**
  * The Class ConditionForceBuff.
- *
  * @author kombat, Forsaiken
  */
 
@@ -33,7 +32,6 @@ public final class ConditionForceBuff extends Condition
 	
 	/**
 	 * Instantiates a new condition force buff.
-	 *
 	 * @param forces the forces
 	 */
 	public ConditionForceBuff(byte[] forces)
@@ -43,7 +41,6 @@ public final class ConditionForceBuff extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -54,15 +51,19 @@ public final class ConditionForceBuff extends Condition
 		if (_forces[0] > 0)
 		{
 			L2Effect force = env.player.getFirstEffect(BATTLE_FORCE);
-			if (force == null || ((EffectFusion) force)._effect < _forces[0])
+			if ((force == null) || (((EffectFusion) force)._effect < _forces[0]))
+			{
 				return false;
+			}
 		}
 		
 		if (_forces[1] > 0)
 		{
 			L2Effect force = env.player.getFirstEffect(SPELL_FORCE);
-			if (force == null || ((EffectFusion) force)._effect < _forces[1])
+			if ((force == null) || (((EffectFusion) force)._effect < _forces[1]))
+			{
 				return false;
+			}
 		}
 		
 		return true;

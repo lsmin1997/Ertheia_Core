@@ -49,8 +49,7 @@ public final class Util
 	}
 	
 	/**
-	 * Return degree value of object 2 to the horizontal line with object 1
-	 * being the origin
+	 * Return degree value of object 2 to the horizontal line with object 1 being the origin
 	 */
 	public static double calculateAngleFrom(L2Object obj1, L2Object obj2)
 	{
@@ -58,14 +57,15 @@ public final class Util
 	}
 	
 	/**
-	 * Return degree value of object 2 to the horizontal line with object 1
-	 * being the origin
+	 * Return degree value of object 2 to the horizontal line with object 1 being the origin
 	 */
 	public final static double calculateAngleFrom(int obj1X, int obj1Y, int obj2X, int obj2Y)
 	{
 		double angleTarget = Math.toDegrees(Math.atan2(obj2Y - obj1Y, obj2X - obj1X));
 		if (angleTarget < 0)
+		{
 			angleTarget = 360 + angleTarget;
+		}
 		return angleTarget;
 	}
 	
@@ -78,7 +78,9 @@ public final class Util
 	public final static int convertDegreeToClientHeading(double degree)
 	{
 		if (degree < 0)
+		{
 			degree = 360 + degree;
+		}
 		return (int) (degree * 182.044444444);
 	}
 	
@@ -91,7 +93,9 @@ public final class Util
 	{
 		double angleTarget = Math.toDegrees(Math.atan2(obj2Y - obj1Y, obj2X - obj1X));
 		if (angleTarget < 0)
+		{
 			angleTarget = 360 + angleTarget;
+		}
 		return (int) (angleTarget * 182.044444444);
 	}
 	
@@ -99,7 +103,9 @@ public final class Util
 	{
 		double angleTarget = Math.toDegrees(Math.atan2(dy, dx));
 		if (angleTarget < 0)
+		{
 			angleTarget = 360 + angleTarget;
+		}
 		return (int) (angleTarget * 182.044444444);
 	}
 	
@@ -123,10 +129,12 @@ public final class Util
 		if (includeZAxis)
 		{
 			double dz = z1 - z2;
-			return Math.sqrt(dx * dx + dy * dy + dz * dz);
+			return Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
 		}
 		else
-			return Math.sqrt(dx * dx + dy * dy);
+		{
+			return Math.sqrt((dx * dx) + (dy * dy));
+		}
 	}
 	
 	/**
@@ -135,44 +143,48 @@ public final class Util
 	 */
 	public static double calculateDistance(L2Object obj1, L2Object obj2, boolean includeZAxis)
 	{
-		if (obj1 == null || obj2 == null)
+		if ((obj1 == null) || (obj2 == null))
+		{
 			return 1000000;
+		}
 		
 		return calculateDistance(obj1.getPosition().getX(), obj1.getPosition().getY(), obj1.getPosition().getZ(), obj2.getPosition().getX(), obj2.getPosition().getY(), obj2.getPosition().getZ(), includeZAxis);
 	}
 	
 	/**
-	 * 
 	 * @param str - the string whose first letter to capitalize
 	 * @return a string with the first letter of the {@code str} capitalized
 	 */
 	public static String capitalizeFirst(String str)
 	{
-		if (str == null || str.isEmpty())
+		if ((str == null) || str.isEmpty())
+		{
 			return str;
+		}
 		
 		final char[] arr = str.toCharArray();
 		final char c = arr[0];
 		
 		if (Character.isLetter(c))
+		{
 			arr[0] = Character.toUpperCase(c);
+		}
 		
 		return arr.toString();
 	}
 	
 	/**
-	 * (Based on ucwords() function of PHP)
-	 * 
-	 * DrHouse: still functional but must be rewritten to avoid += to concat strings
-	 *
+	 * (Based on ucwords() function of PHP) DrHouse: still functional but must be rewritten to avoid += to concat strings
 	 * @param str - the string to capitalize
 	 * @return a string with the first letter of every word in {@code str} capitalized
 	 */
 	@Deprecated
 	public static String capitalizeWords(String str)
 	{
-		if (str == null || str.isEmpty())
+		if ((str == null) || str.isEmpty())
+		{
 			return str;
+		}
 		
 		char[] charArray = str.toCharArray();
 		String result = "";
@@ -183,7 +195,9 @@ public final class Util
 		for (int i = 0; i < charArray.length; i++)
 		{
 			if (Character.isWhitespace(charArray[i]))
+			{
 				charArray[i + 1] = Character.toUpperCase(charArray[i + 1]);
+			}
 			
 			result += Character.toString(charArray[i]);
 		}
@@ -196,18 +210,28 @@ public final class Util
 	 */
 	public static boolean checkIfInRange(int range, L2Object obj1, L2Object obj2, boolean includeZAxis)
 	{
-		if (obj1 == null || obj2 == null)
+		if ((obj1 == null) || (obj2 == null))
+		{
 			return false;
+		}
 		if (obj1.getInstanceId() != obj2.getInstanceId())
+		{
 			return false;
+		}
 		if (range == -1)
+		{
 			return true; // not limited
-			
+		}
+		
 		int rad = 0;
 		if (obj1 instanceof L2Character)
+		{
 			rad += ((L2Character) obj1).getTemplate().collisionRadius;
+		}
 		if (obj2 instanceof L2Character)
+		{
 			rad += ((L2Character) obj2).getTemplate().collisionRadius;
+		}
 		
 		double dx = obj1.getX() - obj2.getX();
 		double dy = obj1.getY() - obj2.getY();
@@ -215,43 +239,47 @@ public final class Util
 		if (includeZAxis)
 		{
 			double dz = obj1.getZ() - obj2.getZ();
-			double d = dx * dx + dy * dy + dz * dz;
+			double d = (dx * dx) + (dy * dy) + (dz * dz);
 			
-			return d <= range * range + 2 * range * rad + rad * rad;
+			return d <= ((range * range) + (2 * range * rad) + (rad * rad));
 		}
 		else
 		{
-			double d = dx * dx + dy * dy;
+			double d = (dx * dx) + (dy * dy);
 			
-			return d <= range * range + 2 * range * rad + rad * rad;
+			return d <= ((range * range) + (2 * range * rad) + (rad * rad));
 		}
 	}
 	
 	/**
-	 *  Checks if object is within short (sqrt(int.max_value)) radius, not using collisionRadius.
-	 *  Faster calculation than checkIfInRange if distance is short and collisionRadius isn't needed.
-	 *  Not for long distance checks (potential teleports, far away castles etc).
+	 * Checks if object is within short (sqrt(int.max_value)) radius, not using collisionRadius. Faster calculation than checkIfInRange if distance is short and collisionRadius isn't needed. Not for long distance checks (potential teleports, far away castles etc).
 	 * @param range - the maximum range between the two objects
-	 *  @param includeZAxis - if true, check also Z axis (3-dimensional check), otherwise only 2D
+	 * @param includeZAxis - if true, check also Z axis (3-dimensional check), otherwise only 2D
 	 * @return {@code true} if objects are within specified range between each other, {@code false} otherwise
 	 */
 	public static boolean checkIfInShortRadius(int radius, L2Object obj1, L2Object obj2, boolean includeZAxis)
 	{
-		if (obj1 == null || obj2 == null)
+		if ((obj1 == null) || (obj2 == null))
+		{
 			return false;
+		}
 		if (radius == -1)
+		{
 			return true; // not limited
-			
+		}
+		
 		int dx = obj1.getX() - obj2.getX();
 		int dy = obj1.getY() - obj2.getY();
 		
 		if (includeZAxis)
 		{
 			int dz = obj1.getZ() - obj2.getZ();
-			return dx * dx + dy * dy + dz * dz <= radius * radius;
+			return ((dx * dx) + (dy * dy) + (dz * dz)) <= (radius * radius);
 		}
 		else
-			return dx * dx + dy * dy <= radius * radius;
+		{
+			return ((dx * dx) + (dy * dy)) <= (radius * radius);
+		}
 	}
 	
 	/**
@@ -293,7 +321,9 @@ public final class Util
 	public static float roundTo(float number, int numPlaces)
 	{
 		if (numPlaces <= 1)
+		{
 			return Math.round(number);
+		}
 		
 		float exponent = (float) Math.pow(10, numPlaces);
 		
@@ -301,18 +331,24 @@ public final class Util
 	}
 	
 	/**
-     * @param text - the text to check
-     * @return {@code true} if {@code text} contains only numbers, {@code false} otherwise
-     */
-    public static boolean isDigit(String text)
-    {
-        if (text == null || text.isEmpty())
-            return false;
-        for (char c : text.toCharArray())
-            if (!Character.isDigit(c))
-                return false;
-        return true;
-    }
+	 * @param text - the text to check
+	 * @return {@code true} if {@code text} contains only numbers, {@code false} otherwise
+	 */
+	public static boolean isDigit(String text)
+	{
+		if ((text == null) || text.isEmpty())
+		{
+			return false;
+		}
+		for (char c : text.toCharArray())
+		{
+			if (!Character.isDigit(c))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	/**
 	 * @param text - the text to check
@@ -320,17 +356,22 @@ public final class Util
 	 */
 	public static boolean isAlphaNumeric(String text)
 	{
-		if (text == null || text.isEmpty())
+		if ((text == null) || text.isEmpty())
+		{
 			return false;
+		}
 		for (char c : text.toCharArray())
+		{
 			if (!Character.isLetterOrDigit(c))
+			{
 				return false;
+			}
+		}
 		return true;
 	}
 	
 	/**
-	 * Format the specified digit using the digit grouping symbol "," (comma).
-	 * For example, 123456789 becomes 123,456,789.
+	 * Format the specified digit using the digit grouping symbol "," (comma). For example, 123456789 becomes 123,456,789.
 	 * @param amount - the amount of adena
 	 * @return the formatted adena amount
 	 */
@@ -343,9 +384,13 @@ public final class Util
 		while (amount > 0)
 		{
 			if (rem < 99)
+			{
 				s = '0' + s;
+			}
 			if (rem < 9)
+			{
 				s = '0' + s;
+			}
 			rem = amount % 1000;
 			s = Long.toString(rem) + "," + s;
 			amount = (amount - rem) / 1000;
@@ -361,8 +406,12 @@ public final class Util
 	public static <T> boolean contains(T[] array, T obj)
 	{
 		for (T element : array)
+		{
 			if (element == obj)
+			{
 				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -374,8 +423,12 @@ public final class Util
 	public static boolean contains(int[] array, int obj)
 	{
 		for (int element : array)
+		{
 			if (element == obj)
+			{
 				return true;
+			}
+		}
 		return false;
 	}
 }

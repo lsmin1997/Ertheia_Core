@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * @author Migi
- *
  */
 public class ExNoticePostArrived extends L2GameServerPacket
 {
@@ -36,7 +35,8 @@ public class ExNoticePostArrived extends L2GameServerPacket
 		_showAnim = showAnimation;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -47,7 +47,8 @@ public class ExNoticePostArrived extends L2GameServerPacket
 		writeD(_showAnim ? 0x01 : 0x00);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

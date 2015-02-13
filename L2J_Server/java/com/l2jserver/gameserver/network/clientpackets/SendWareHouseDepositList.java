@@ -31,12 +31,8 @@ import com.l2jserver.gameserver.network.serverpackets.StatusUpdate;
 import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 
-
 /**
- * This class ...
- *
- * 31  SendWareHouseDepositList  cd (dd)
- *
+ * This class ... 31 SendWareHouseDepositList cd (dd)
  * @version $Revision: 1.3.4.5 $ $Date: 2005/04/11 10:06:09 $
  */
 public final class SendWareHouseDepositList extends L2GameClientPacket
@@ -52,19 +48,17 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 	protected void readImpl()
 	{
 		final int count = readD();
-		if (count <= 0
-				|| count > Config.MAX_ITEM_IN_PACKET
-				|| count * BATCH_LENGTH != _buf.remaining())
+		if ((count <= 0) || (count > Config.MAX_ITEM_IN_PACKET) || ((count * BATCH_LENGTH) != _buf.remaining()))
 		{
 			return;
 		}
 		
 		_items = new WarehouseItem[count];
-		for (int i=0; i < count; i++)
+		for (int i = 0; i < count; i++)
 		{
 			int objId = readD();
 			long cnt = readQ();
-			if (objId < 1 || cnt < 0)
+			if ((objId < 1) || (cnt < 0))
 			{
 				_items = null;
 				return;
@@ -77,11 +71,15 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 	protected void runImpl()
 	{
 		if (_items == null)
+		{
 			return;
+		}
 		
 		final L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("deposit"))
 		{
@@ -91,14 +89,16 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 		
 		final ItemContainer warehouse = player.getActiveWarehouse();
 		if (warehouse == null)
+		{
 			return;
+		}
 		final boolean isPrivate = warehouse instanceof PcWarehouse;
 		
 		final L2Npc manager = player.getLastFolkNPC();
-		if ((manager == null
-				|| !manager.isWarehouse()
-				|| !manager.canInteract(player)) && !player.isGM())
+		if (((manager == null) || !manager.isWarehouse() || !manager.canInteract(player)) && !player.isGM())
+		{
 			return;
+		}
 		
 		if (!isPrivate && !player.getAccessLevel().allowTransaction())
 		{
@@ -108,13 +108,15 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 		
 		if (player.getActiveEnchantItem() != null)
 		{
-			Util.handleIllegalPlayerAction(player,"Player "+player.getName()+" tried to use enchant Exploit!", Config.DEFAULT_PUNISH);
+			Util.handleIllegalPlayerAction(player, "Player " + player.getName() + " tried to use enchant Exploit!", Config.DEFAULT_PUNISH);
 			return;
 		}
 		
 		// Alt game - Karma punishment
-		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE && player.getKarma() > 0)
+		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_USE_WAREHOUSE && (player.getKarma() > 0))
+		{
 			return;
+		}
 		
 		// Freight price from config or normal price per item slot (30)
 		final long fee = _items.length * 30;
@@ -126,17 +128,23 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 			L2ItemInstance item = player.checkItemManipulation(i.getObjectId(), i.getCount(), "deposit");
 			if (item == null)
 			{
-				_log.warning("Error depositing a warehouse object for char "+player.getName()+" (validity check)");
+				_log.warning("Error depositing a warehouse object for char " + player.getName() + " (validity check)");
 				return;
 			}
 			
 			// Calculate needed adena and slots
 			if (item.getItemId() == ADENA_ID)
+			{
 				currentAdena -= i.getCount();
+			}
 			if (!item.isStackable())
+			{
 				slots += i.getCount();
+			}
 			else if (warehouse.getItemByItemId(item.getItemId()) == null)
+			{
 				slots++;
+			}
 		}
 		
 		// Item Max Limit Check
@@ -147,7 +155,7 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 		}
 		
 		// Check if enough adena and charge the fee
-		if (currentAdena < fee || !player.reduceAdena(warehouse.getName(), fee, manager, false))
+		if ((currentAdena < fee) || !player.reduceAdena(warehouse.getName(), fee, manager, false))
 		{
 			sendPacket(SystemMessage.getSystemMessage(SystemMessageId.YOU_NOT_ENOUGH_ADENA));
 			return;
@@ -155,7 +163,9 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 		
 		// get current tradelist if any
 		if (player.getActiveTradeList() != null)
+		{
 			return;
+		}
 		
 		// Proceed to the transfer
 		InventoryUpdate playerIU = Config.FORCE_INVENTORY_UPDATE ? null : new InventoryUpdate();
@@ -165,34 +175,44 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 			L2ItemInstance oldItem = player.checkItemManipulation(i.getObjectId(), i.getCount(), "deposit");
 			if (oldItem == null)
 			{
-				_log.warning("Error depositing a warehouse object for char "+player.getName()+" (olditem == null)");
+				_log.warning("Error depositing a warehouse object for char " + player.getName() + " (olditem == null)");
 				return;
 			}
 			
 			if (!oldItem.isDepositable(isPrivate) || !oldItem.isAvailable(player, true, isPrivate))
+			{
 				continue;
+			}
 			
 			final L2ItemInstance newItem = player.getInventory().transferItem(warehouse.getName(), i.getObjectId(), i.getCount(), warehouse, player, manager);
 			if (newItem == null)
 			{
-				_log.warning("Error depositing a warehouse object for char "+player.getName()+" (newitem == null)");
+				_log.warning("Error depositing a warehouse object for char " + player.getName() + " (newitem == null)");
 				continue;
 			}
 			
 			if (playerIU != null)
 			{
-				if (oldItem.getCount() > 0 && oldItem != newItem)
+				if ((oldItem.getCount() > 0) && (oldItem != newItem))
+				{
 					playerIU.addModifiedItem(oldItem);
+				}
 				else
+				{
 					playerIU.addRemovedItem(oldItem);
+				}
 			}
 		}
 		
 		// Send updated item list to the player
 		if (playerIU != null)
+		{
 			player.sendPacket(playerIU);
+		}
 		else
+		{
 			player.sendPacket(new ItemList(player, false));
+		}
 		
 		// Update current load status on player
 		StatusUpdate su = new StatusUpdate(player);
@@ -222,7 +242,8 @@ public final class SendWareHouseDepositList extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

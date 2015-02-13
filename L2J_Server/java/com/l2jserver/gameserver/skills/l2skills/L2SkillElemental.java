@@ -25,29 +25,38 @@ import com.l2jserver.gameserver.skills.Env;
 import com.l2jserver.gameserver.skills.Formulas;
 import com.l2jserver.gameserver.templates.StatsSet;
 
-public class L2SkillElemental extends L2Skill {
+public class L2SkillElemental extends L2Skill
+{
 	
 	private final int[] _seeds;
 	private final boolean _seedAny;
 	
-	public L2SkillElemental(StatsSet set) {
+	public L2SkillElemental(StatsSet set)
+	{
 		super(set);
 		
 		_seeds = new int[3];
-		_seeds[0] = set.getInteger("seed1",0);
-		_seeds[1] = set.getInteger("seed2",0);
-		_seeds[2] = set.getInteger("seed3",0);
+		_seeds[0] = set.getInteger("seed1", 0);
+		_seeds[1] = set.getInteger("seed2", 0);
+		_seeds[2] = set.getInteger("seed3", 0);
 		
-		if (set.getInteger("seed_any",0)==1)
+		if (set.getInteger("seed_any", 0) == 1)
+		{
 			_seedAny = true;
+		}
 		else
+		{
 			_seedAny = false;
+		}
 	}
 	
 	@Override
-	public void useSkill(L2Character activeChar, L2Object[] targets) {
+	public void useSkill(L2Character activeChar, L2Object[] targets)
+	{
 		if (activeChar.isAlikeDead())
+		{
 			return;
+		}
 		
 		boolean ss = false;
 		boolean bss = false;
@@ -79,7 +88,7 @@ public class L2SkillElemental extends L2Skill {
 		// If there is no weapon equipped, check for an active summon.
 		else if (activeChar instanceof L2Summon)
 		{
-			L2Summon activeSummon = (L2Summon)activeChar;
+			L2Summon activeSummon = (L2Summon) activeChar;
 			
 			if (activeSummon.getChargedSpiritShot() == L2ItemInstance.CHARGED_BLESSED_SPIRITSHOT)
 			{
@@ -93,29 +102,39 @@ public class L2SkillElemental extends L2Skill {
 			}
 		}
 		
-		for (L2Character target: (L2Character[]) targets)
+		for (L2Character target : (L2Character[]) targets)
 		{
 			if (target.isAlikeDead())
+			{
 				continue;
+			}
 			
 			boolean charged = true;
-			if (!_seedAny){
-				for (int i=0;i<_seeds.length;i++){
-					if (_seeds[i]!=0){
-						L2Effect e = target.getFirstEffect(_seeds[i]);
-						if (e==null || !e.getInUse()){
+			if (!_seedAny)
+			{
+				for (int _seed : _seeds)
+				{
+					if (_seed != 0)
+					{
+						L2Effect e = target.getFirstEffect(_seed);
+						if ((e == null) || !e.getInUse())
+						{
 							charged = false;
 							break;
 						}
 					}
 				}
 			}
-			else {
+			else
+			{
 				charged = false;
-				for (int i=0;i<_seeds.length;i++){
-					if (_seeds[i]!=0){
-						L2Effect e = target.getFirstEffect(_seeds[i]);
-						if (e!=null && e.getInUse()){
+				for (int _seed : _seeds)
+				{
+					if (_seed != 0)
+					{
+						L2Effect e = target.getFirstEffect(_seed);
+						if ((e != null) && e.getInUse())
+						{
 							charged = true;
 							break;
 						}
@@ -131,8 +150,7 @@ public class L2SkillElemental extends L2Skill {
 			boolean mcrit = Formulas.calcMCrit(activeChar.getMCriticalHit(target, this));
 			byte shld = Formulas.calcShldUse(activeChar, target, this);
 			
-			int damage = (int)Formulas.calcMagicDam(
-					activeChar, target, this, shld, ss, bss, mcrit);
+			int damage = (int) Formulas.calcMagicDam(activeChar, target, this, shld, ss, bss, mcrit);
 			
 			if (damage > 0)
 			{

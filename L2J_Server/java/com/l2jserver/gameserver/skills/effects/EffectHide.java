@@ -26,7 +26,6 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- *
  * @author ZaKaX - nBd
  */
 public class EffectHide extends L2Effect
@@ -42,7 +41,6 @@ public class EffectHide extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -52,7 +50,6 @@ public class EffectHide extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -64,9 +61,10 @@ public class EffectHide extends L2Effect
 			activeChar.getAppearance().setInvisible();
 			activeChar.startAbnormalEffect(AbnormalEffect.STEALTH);
 			
-			if (activeChar.getAI().getNextIntention() != null
-					&& activeChar.getAI().getNextIntention().getCtrlIntention() == CtrlIntention.AI_INTENTION_ATTACK)
+			if ((activeChar.getAI().getNextIntention() != null) && (activeChar.getAI().getNextIntention().getCtrlIntention() == CtrlIntention.AI_INTENTION_ATTACK))
+			{
 				activeChar.getAI().setIntention(CtrlIntention.AI_INTENTION_IDLE);
+			}
 			
 			L2GameServerPacket del = new DeleteObject(activeChar);
 			for (L2Character target : activeChar.getKnownList().getKnownCharacters())
@@ -82,7 +80,9 @@ public class EffectHide extends L2Effect
 					}
 					
 					if (target instanceof L2PcInstance)
+					{
 						target.sendPacket(del);
+					}
 				}
 				catch (NullPointerException e)
 				{
@@ -93,7 +93,6 @@ public class EffectHide extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -103,13 +102,14 @@ public class EffectHide extends L2Effect
 		{
 			L2PcInstance activeChar = ((L2PcInstance) getEffected());
 			if (!activeChar.inObserverMode())
+			{
 				activeChar.getAppearance().setVisible();
+			}
 			activeChar.stopAbnormalEffect(AbnormalEffect.STEALTH);
 		}
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

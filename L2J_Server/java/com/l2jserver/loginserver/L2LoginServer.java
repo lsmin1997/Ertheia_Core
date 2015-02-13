@@ -38,15 +38,14 @@ import com.l2jserver.Server;
 import com.l2jserver.status.Status;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class L2LoginServer
 {
 	public static final int PROTOCOL_REV = 0x0104;
 	
 	private static L2LoginServer _instance;
-	private Logger _log = Logger.getLogger(L2LoginServer.class.getName());
+	private final Logger _log = Logger.getLogger(L2LoginServer.class.getName());
 	private GameServerListener _gameServerListener;
 	private SelectorThread<L2LoginClient> _selectorThread;
 	private Status _statusServer;
@@ -251,7 +250,7 @@ public class L2LoginServer
 				{
 					line = line.trim();
 					// check if this line isnt a comment line
-					if (line.length() > 0 && line.charAt(0) != '#')
+					if ((line.length() > 0) && (line.charAt(0) != '#'))
 					{
 						// split comments if any
 						parts = line.split("#", 2);

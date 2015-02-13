@@ -21,9 +21,7 @@ import com.l2jserver.gameserver.templates.item.L2Item;
 import com.l2jserver.gameserver.templates.item.L2Weapon;
 
 /**
- * 
  * @author DS
- *
  */
 public class Ingredient implements Cloneable
 {
@@ -41,7 +39,9 @@ public class Ingredient implements Cloneable
 		_isTaxIngredient = isTaxIngredient;
 		_maintainIngredient = maintainIngredient;
 		if (_itemId > 0)
+		{
 			_template = ItemTable.getInstance().getTemplate(_itemId);
+		}
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class Ingredient implements Cloneable
 	{
 		try
 		{
-			return (Ingredient)super.clone();
+			return (Ingredient) super.clone();
 		}
 		catch (CloneNotSupportedException e)
 		{
@@ -121,6 +121,7 @@ public class Ingredient implements Cloneable
 	{
 		return _maintainIngredient;
 	}
+	
 	public final boolean isStackable()
 	{
 		return _template == null ? true : _template.isStackable();
@@ -128,7 +129,7 @@ public class Ingredient implements Cloneable
 	
 	public final boolean isArmorOrWeapon()
 	{
-		return _template == null ? false : _template instanceof L2Armor || _template instanceof L2Weapon;
+		return _template == null ? false : (_template instanceof L2Armor) || (_template instanceof L2Weapon);
 	}
 	
 	public final int getWeight()

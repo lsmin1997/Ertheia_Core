@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * 
  * @author JIV
  */
 public final class EndScenePlayer extends L2GameClientPacket
@@ -40,12 +39,16 @@ public final class EndScenePlayer extends L2GameClientPacket
 	{
 		L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		if (_movieId == 0)
+		{
 			return;
+		}
 		if (activeChar.getMovieId() != _movieId)
 		{
-			_log.warning("Player "+getClient()+" sent EndScenePlayer with wrong movie id: "+_movieId);
+			_log.warning("Player " + getClient() + " sent EndScenePlayer with wrong movie id: " + _movieId);
 			return;
 		}
 		activeChar.setMovieId(0);
@@ -55,7 +58,8 @@ public final class EndScenePlayer extends L2GameClientPacket
 		activeChar.setIsTeleporting(false, false);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

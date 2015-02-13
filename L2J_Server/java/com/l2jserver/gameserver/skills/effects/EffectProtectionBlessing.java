@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
  * @author kerberos_20
- *
  */
 public class EffectProtectionBlessing extends L2Effect
 {
@@ -58,8 +57,9 @@ public class EffectProtectionBlessing extends L2Effect
 		// just stop this effect
 		return false;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

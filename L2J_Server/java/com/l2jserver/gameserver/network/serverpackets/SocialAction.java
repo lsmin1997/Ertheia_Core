@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:39 $
  */
 public class SocialAction extends L2GameServerPacket
@@ -26,11 +25,11 @@ public class SocialAction extends L2GameServerPacket
 	public static final int LEVEL_UP = 2122;
 	
 	private static final String _S__3D_SOCIALACTION = "[S] 27 SocialAction";
-	private int _charObjId;
-	private int _actionId;
+	private final int _charObjId;
+	private final int _actionId;
 	
 	/**
-	 * 0x3d SocialAction         dd
+	 * 0x3d SocialAction dd
 	 * @param _characters
 	 */
 	public SocialAction(L2Character cha, int actionId)
@@ -47,7 +46,8 @@ public class SocialAction extends L2GameServerPacket
 		writeD(_actionId);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

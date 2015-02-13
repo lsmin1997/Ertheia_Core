@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- * 
  * @author nBd
  */
 public class EffectDisarm extends L2Effect
@@ -33,7 +32,6 @@ public class EffectDisarm extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -43,14 +41,15 @@ public class EffectDisarm extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
 	public boolean onStart()
 	{
 		if (!(getEffected() instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
 		((L2PcInstance) getEffected()).disarmWeapons();
 		return true;
@@ -58,7 +57,6 @@ public class EffectDisarm extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -67,7 +65,6 @@ public class EffectDisarm extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -75,8 +72,9 @@ public class EffectDisarm extends L2Effect
 	{
 		return false;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

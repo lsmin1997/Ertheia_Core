@@ -31,13 +31,16 @@ public class RequestBuySellUIClose extends L2GameClientPacket
 	protected void runImpl()
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
-		if (activeChar == null || activeChar.isInventoryDisabled())
+		if ((activeChar == null) || activeChar.isInventoryDisabled())
+		{
 			return;
+		}
 		
 		activeChar.sendPacket(new ItemList(activeChar, true));
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

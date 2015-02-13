@@ -50,11 +50,10 @@ public class FaenorInterface implements EngineInterface
 	}
 	
 	/**
-	 *
 	 * Adds a new Quest Drop to an NPC
-	 *
 	 * @see com.l2jserver.gameserver.script.EngineInterface#addQuestDrop(int)
 	 */
+	@Override
 	public void addQuestDrop(int npcID, int itemID, int min, int max, int chance, String questID, String[] states)
 	{
 		L2NpcTemplate npc = npcTable.getTemplate(npcID);
@@ -73,9 +72,7 @@ public class FaenorInterface implements EngineInterface
 	}
 	
 	/**
-	 *
 	 * Adds a new Drop to an NPC
-	 *
 	 * @see com.l2jserver.gameserver.script.EngineInterface#addQuestDrop(int)
 	 */
 	public void addDrop(int npcID, int itemID, int min, int max, boolean sweep, int chance) throws NullPointerException
@@ -84,7 +81,9 @@ public class FaenorInterface implements EngineInterface
 		if (npc == null)
 		{
 			if (Config.DEBUG)
+			{
 				_log.warning("Npc doesnt Exist");
+			}
 			throw new NullPointerException();
 		}
 		L2DropData drop = new L2DropData();
@@ -97,9 +96,7 @@ public class FaenorInterface implements EngineInterface
 	}
 	
 	/**
-	 * Adds a new drop to an NPC.  If the drop is sweep, it adds it to the NPC's Sweep category
-	 * If the drop is non-sweep, it creates a new category for this drop.
-	 *
+	 * Adds a new drop to an NPC. If the drop is sweep, it adds it to the NPC's Sweep category If the drop is non-sweep, it creates a new category for this drop.
 	 * @param npc
 	 * @param drop
 	 * @param sweep
@@ -107,17 +104,23 @@ public class FaenorInterface implements EngineInterface
 	public void addDrop(L2NpcTemplate npc, L2DropData drop, boolean sweep)
 	{
 		if (sweep)
+		{
 			addDrop(npc, drop, -1);
+		}
 		else
 		{
 			int maxCategory = -1;
 			
 			if (npc.getDropData() != null)
+			{
 				for (L2DropCategory cat : npc.getDropData())
 				{
 					if (maxCategory < cat.getCategoryType())
+					{
 						maxCategory = cat.getCategoryType();
+					}
 				}
+			}
 			maxCategory++;
 			npc.addDropData(drop, maxCategory);
 		}
@@ -125,9 +128,7 @@ public class FaenorInterface implements EngineInterface
 	}
 	
 	/**
-	 * Adds a new drop to an NPC, in the specified category.  If the category does not exist,
-	 * it is created.
-	 *
+	 * Adds a new drop to an NPC, in the specified category. If the category does not exist, it is created.
 	 * @param npc
 	 * @param drop
 	 * @param sweep
@@ -146,7 +147,9 @@ public class FaenorInterface implements EngineInterface
 		}
 		List<L2DropData> questDrops = new FastList<L2DropData>();
 		if (npc.getDropData() != null)
+		{
 			for (L2DropCategory cat : npc.getDropData())
+			{
 				for (L2DropData drop : cat.getAllDrops())
 				{
 					if (drop.getQuestID() != null)
@@ -154,14 +157,18 @@ public class FaenorInterface implements EngineInterface
 						questDrops.add(drop);
 					}
 				}
+			}
+		}
 		return questDrops;
 	}
 	
+	@Override
 	public void addEventDrop(int[] items, int[] count, double chance, DateRange range)
 	{
 		EventDroplist.getInstance().addGlobalDrop(items, count, (int) (chance * L2DropData.MAX_CHANCE), range);
 	}
 	
+	@Override
 	public void onPlayerLogin(String[] message, DateRange validDateRange)
 	{
 		Announcements.getInstance().addEventAnnouncement(validDateRange, message);

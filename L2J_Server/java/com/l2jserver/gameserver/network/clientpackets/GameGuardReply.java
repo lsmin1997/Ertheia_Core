@@ -22,11 +22,9 @@ import java.util.logging.Logger;
 
 import com.l2jserver.gameserver.network.L2GameClient;
 
-
 /**
  * Format: c dddd
- *
- * @author  KenM
+ * @author KenM
  */
 public class GameGuardReply extends L2GameClientPacket
 {
@@ -35,12 +33,29 @@ public class GameGuardReply extends L2GameClientPacket
 	
 	private static final byte[] VALID =
 	{
-		(byte) 0x88, 0x40, 0x1c, (byte) 0xa7, (byte) 0x83, 0x42, (byte) 0xe9, 0x15,
-		(byte) 0xde, (byte) 0xc3, 0x68, (byte) 0xf6, 0x2d, 0x23, (byte) 0xf1, 0x3f,
-		(byte) 0xee, 0x68, 0x5b, (byte) 0xc5,
+		(byte) 0x88,
+		0x40,
+		0x1c,
+		(byte) 0xa7,
+		(byte) 0x83,
+		0x42,
+		(byte) 0xe9,
+		0x15,
+		(byte) 0xde,
+		(byte) 0xc3,
+		0x68,
+		(byte) 0xf6,
+		0x2d,
+		0x23,
+		(byte) 0xf1,
+		0x3f,
+		(byte) 0xee,
+		0x68,
+		0x5b,
+		(byte) 0xc5,
 	};
 	
-	private byte[] _reply = new byte[8];
+	private final byte[] _reply = new byte[8];
 	
 	@Override
 	protected void readImpl()
@@ -53,10 +68,10 @@ public class GameGuardReply extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		L2GameClient client = this.getClient();
+		L2GameClient client = getClient();
 		try
 		{
-			MessageDigest md = MessageDigest.getInstance( "SHA" );
+			MessageDigest md = MessageDigest.getInstance("SHA");
 			byte[] result = md.digest(_reply);
 			if (Arrays.equals(result, VALID))
 			{

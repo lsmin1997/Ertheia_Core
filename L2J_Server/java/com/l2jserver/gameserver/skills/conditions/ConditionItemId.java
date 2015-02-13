@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionItemId.
- *
  * @author mkizub
  */
 public final class ConditionItemId extends Condition
@@ -28,7 +27,6 @@ public final class ConditionItemId extends Condition
 	
 	/**
 	 * Instantiates a new condition item id.
-	 *
 	 * @param itemId the item id
 	 */
 	public ConditionItemId(int itemId)
@@ -38,7 +36,6 @@ public final class ConditionItemId extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -47,7 +44,9 @@ public final class ConditionItemId extends Condition
 	public boolean testImpl(Env env)
 	{
 		if (env.item == null)
+		{
 			return false;
+		}
 		return env.item.getItemId() == _itemId;
 	}
 }

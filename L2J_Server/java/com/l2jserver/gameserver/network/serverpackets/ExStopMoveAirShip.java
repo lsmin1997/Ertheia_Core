@@ -18,7 +18,6 @@ import com.l2jserver.gameserver.model.actor.L2Character;
 
 /**
  * @author kerberos
- *
  */
 public class ExStopMoveAirShip extends L2GameServerPacket
 {
@@ -46,7 +45,8 @@ public class ExStopMoveAirShip extends L2GameServerPacket
 		writeD(_heading);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

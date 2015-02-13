@@ -23,7 +23,6 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- * 
  * @author nBd
  */
 public class EffectCharmOfCourage extends L2Effect
@@ -43,7 +42,6 @@ public class EffectCharmOfCourage extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -58,7 +56,6 @@ public class EffectCharmOfCourage extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
@@ -78,8 +75,9 @@ public class EffectCharmOfCourage extends L2Effect
 	{
 		return false;
 	}
-
-	/* (non-Javadoc)
+	
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectFlags()
 	 */
 	@Override

@@ -22,15 +22,13 @@ import java.util.logging.Logger;
 import com.l2jserver.Config;
 
 /**
- * 
  * @author nBd
- *
  */
 public class BypassHandler
 {
 	private static Logger _log = Logger.getLogger(BypassHandler.class.getName());
 	
-	private TIntObjectHashMap<IBypassHandler> _datatable;
+	private final TIntObjectHashMap<IBypassHandler> _datatable;
 	
 	public static BypassHandler getInstance()
 	{
@@ -47,7 +45,9 @@ public class BypassHandler
 		for (String element : handler.getBypassList())
 		{
 			if (Config.DEBUG)
+			{
 				_log.log(Level.FINE, "Adding handler for command " + element);
+			}
 			
 			_datatable.put(element.toLowerCase().hashCode(), handler);
 		}
@@ -63,7 +63,9 @@ public class BypassHandler
 		}
 		
 		if (Config.DEBUG)
+		{
 			_log.log(Level.FINE, "getting handler for command: " + command + " -> " + (_datatable.get(command.hashCode()) != null));
+		}
 		
 		return _datatable.get(command.toLowerCase().hashCode());
 	}

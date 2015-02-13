@@ -24,30 +24,22 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 public class CombatFlag
 {
-	//private static final Logger _log = Logger.getLogger(CombatFlag.class.getName());
+	// private static final Logger _log = Logger.getLogger(CombatFlag.class.getName());
 	
 	protected L2PcInstance _player = null;
 	public int playerId = 0;
 	private L2ItemInstance _item = null;
 	
-	
-	private Location _location;
+	private final Location _location;
 	public L2ItemInstance itemInstance;
 	
-	private int _itemId;
-	
-	@SuppressWarnings("unused")
-	private int _heading;
-	@SuppressWarnings("unused")
-	private int _fortId;
+	private final int _itemId;
 	
 	// =========================================================
 	// Constructor
 	public CombatFlag(int fort_id, int x, int y, int z, int heading, int item_id)
 	{
-		_fortId = fort_id;
-		_location = new Location(x,y,z,heading);
-		_heading = heading;
+		_location = new Location(x, y, z, heading);
 		_itemId = item_id;
 	}
 	
@@ -55,7 +47,7 @@ public class CombatFlag
 	{
 		// Init the dropped L2ItemInstance and add it in the world as a visible object at the position where mob was last
 		L2ItemInstance i = ItemTable.getInstance().createItem("Combat", _itemId, 1, null, null);
-		i.dropMe(null, _location.getX(), _location.getY(),  _location.getZ());
+		i.dropMe(null, _location.getX(), _location.getY(), _location.getZ());
 		itemInstance = i;
 	}
 	
@@ -98,7 +90,10 @@ public class CombatFlag
 			iu.addItem(_item);
 			_player.sendPacket(iu);
 		}
-		else _player.sendPacket(new ItemList(_player, false));
+		else
+		{
+			_player.sendPacket(new ItemList(_player, false));
+		}
 		
 		// Refresh player stats
 		_player.broadcastUserInfo();

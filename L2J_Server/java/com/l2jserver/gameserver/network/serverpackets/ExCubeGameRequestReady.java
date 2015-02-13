@@ -16,7 +16,6 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (chd)
- * 
  * @author mrTJO
  */
 public class ExCubeGameRequestReady extends L2GameServerPacket
@@ -31,7 +30,8 @@ public class ExCubeGameRequestReady extends L2GameServerPacket
 		
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -42,7 +42,8 @@ public class ExCubeGameRequestReady extends L2GameServerPacket
 		writeD(0x04);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

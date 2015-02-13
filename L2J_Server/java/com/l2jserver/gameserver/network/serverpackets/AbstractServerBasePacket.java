@@ -16,9 +16,8 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * This class makes runImpl() and writeImpl() abstract for custom classes outside of this package
- *
  * @version $Revision: $ $Date: $
- * @author  galun
+ * @author galun
  */
 public abstract class AbstractServerBasePacket extends L2GameServerPacket
 {

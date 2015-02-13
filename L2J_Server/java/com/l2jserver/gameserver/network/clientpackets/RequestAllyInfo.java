@@ -22,13 +22,11 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class ...
- *
  * @version $Revision: 1479 $ $Date: 2005-11-09 00:47:42 +0100 (mer., 09 nov. 2005) $
  */
 public final class RequestAllyInfo extends L2GameClientPacket
 {
 	private static final String _C__8E_REQUESTALLYINFO = "[C] 8E RequestAllyInfo";
-	
 	
 	@Override
 	public void readImpl()
@@ -41,7 +39,9 @@ public final class RequestAllyInfo extends L2GameClientPacket
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		SystemMessage sm;
 		if (activeChar.getAllyId() == 0)
@@ -63,7 +63,9 @@ public final class RequestAllyInfo extends L2GameClientPacket
 		for (L2Clan clan : ClanTable.getInstance().getClans())
 		{
 			if (clan.getAllyId() != activeChar.getAllyId())
+			{
 				continue;
+			}
 			
 			clanCount++;
 			totalMembers += clan.getMembersCount();
@@ -88,7 +90,9 @@ public final class RequestAllyInfo extends L2GameClientPacket
 		for (L2Clan clan : ClanTable.getInstance().getClans())
 		{
 			if (clan.getAllyId() != activeChar.getAllyId())
+			{
 				continue;
+			}
 			
 			sendPacket(sm); // send head or separator
 			sm = SystemMessage.getSystemMessage(SystemMessageId.CLAN_INFO_NAME_S1);
@@ -106,7 +110,8 @@ public final class RequestAllyInfo extends L2GameClientPacket
 		sendPacket(sm);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

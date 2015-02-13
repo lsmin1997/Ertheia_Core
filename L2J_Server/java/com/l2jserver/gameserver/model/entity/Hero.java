@@ -326,9 +326,9 @@ public class Hero
 				else if (action == ACTION_CASTLE_TAKEN)
 				{
 					Castle castle = CastleManager.getInstance().getCastleById(param);
-					if(castle != null)
+					if (castle != null)
 					{
-						_diaryentry.set("action", castle.getName()+" Castle was successfuly taken");
+						_diaryentry.set("action", castle.getName() + " Castle was successfuly taken");
 					}
 				}
 				_diary.add(_diaryentry);
@@ -345,7 +345,9 @@ public class Hero
 		{
 			_log.warning("Hero System: Couldnt load Hero Diary for CharId: " + charId);
 			if (Config.DEBUG)
+			{
 				_log.log(Level.WARNING, "", e);
+			}
 		}
 		finally
 		{
@@ -396,7 +398,7 @@ public class Hero
 				{
 					String name = CharNameTable.getInstance().getNameById(charTwoId);
 					String cls = CharTemplateTable.getInstance().getClassNameById(charTwoClass);
-					if(name != null && cls != null)
+					if ((name != null) && (cls != null))
 					{
 						StatsSet fight = new StatsSet();
 						fight.set("oponent", name);
@@ -432,7 +434,7 @@ public class Hero
 				{
 					String name = CharNameTable.getInstance().getNameById(charOneId);
 					String cls = CharTemplateTable.getInstance().getClassNameById(charOneClass);
-					if(name != null && cls != null)
+					if ((name != null) && (cls != null))
 					{
 						StatsSet fight = new StatsSet();
 						fight.set("oponent", name);
@@ -481,7 +483,9 @@ public class Hero
 		{
 			_log.warning("Hero System: Couldnt load Hero fights history for CharId: " + charId);
 			if (Config.DEBUG)
+			{
 				_log.log(Level.WARNING, "", e);
+			}
 		}
 		finally
 		{
@@ -526,7 +530,7 @@ public class Hero
 		{
 			List<StatsSet> _mainlist = _herodiary.get(charid);
 			NpcHtmlMessage DiaryReply = new NpcHtmlMessage(5);
-			final String htmContent = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(),"data/html/olympiad/herodiary.htm");
+			final String htmContent = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(), "data/html/olympiad/herodiary.htm");
 			if (htmContent != null)
 			{
 				DiaryReply.setHtml(htmContent);
@@ -615,7 +619,7 @@ public class Hero
 			List<StatsSet> _list = _herofights.get(charid);
 			
 			NpcHtmlMessage FightReply = new NpcHtmlMessage(5);
-			final String htmContent = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(),"data/html/olympiad/herohistory.htm");
+			final String htmContent = HtmCache.getInstance().getHtm(activeChar.getHtmlPrefix(), "data/html/olympiad/herohistory.htm");
 			if (htmContent != null)
 			{
 				FightReply.setHtml(htmContent);
@@ -787,7 +791,7 @@ public class Hero
 		
 		updateHeroes(false);
 		
-		for(Integer charId : _heroes.keySet())
+		for (Integer charId : _heroes.keySet())
 		{
 			L2PcInstance player = L2World.getInstance().getPlayer(charId);
 			
@@ -862,8 +866,8 @@ public class Hero
 	
 	public void updateHeroes(boolean setDefault)
 	{
-		//_herofights = new FastMap<Integer, List<StatsSet>>();
-		//_herocounts = new FastMap<Integer, StatsSet>();
+		// _herofights = new FastMap<Integer, List<StatsSet>>();
+		// _herocounts = new FastMap<Integer, StatsSet>();
 		
 		Connection con = null;
 		try
@@ -1047,7 +1051,9 @@ public class Hero
 	{
 		_heroMessage.put(player.getObjectId(), message);
 		if (player.isDebug())
-			_log.info("Hero message for player: "+player.getName()+":["+player.getObjectId()+"] set to: ["+message+"]");
+		{
+			_log.info("Hero message for player: " + player.getName() + ":[" + player.getObjectId() + "] set to: [" + message + "]");
+		}
 	}
 	
 	/**
@@ -1057,7 +1063,9 @@ public class Hero
 	public void saveHeroMessage(int charId)
 	{
 		if (_heroMessage.get(charId) == null)
+		{
 			return;
+		}
 		
 		Connection con = null;
 		try
@@ -1106,12 +1114,11 @@ public class Hero
 	 */
 	public void shutdown()
 	{
-		for (int charId: _heroMessage.keySet())
+		for (int charId : _heroMessage.keySet())
 		{
 			saveHeroMessage(charId);
 		}
 	}
-	
 	
 	@SuppressWarnings("synthetic-access")
 	private static class SingletonHolder

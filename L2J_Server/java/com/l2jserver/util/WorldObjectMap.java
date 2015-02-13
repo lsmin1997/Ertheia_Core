@@ -33,7 +33,6 @@ import com.l2jserver.gameserver.model.L2Object;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.2 $ $Date: 2004/06/27 08:12:59 $
  */
 
@@ -41,7 +40,8 @@ public class WorldObjectMap<T extends L2Object> extends L2ObjectMap<T>
 {
 	Map<Integer, T> _objectMap = new FastMap<Integer, T>().shared();
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#size()
 	 */
 	@Override
@@ -50,7 +50,8 @@ public class WorldObjectMap<T extends L2Object> extends L2ObjectMap<T>
 		return _objectMap.size();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#isEmpty()
 	 */
 	@Override
@@ -59,7 +60,8 @@ public class WorldObjectMap<T extends L2Object> extends L2ObjectMap<T>
 		return _objectMap.isEmpty();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#clear()
 	 */
 	@Override
@@ -68,27 +70,34 @@ public class WorldObjectMap<T extends L2Object> extends L2ObjectMap<T>
 		_objectMap.clear();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#put(T)
 	 */
 	@Override
 	public void put(T obj)
 	{
 		if (obj != null)
+		{
 			_objectMap.put(obj.getObjectId(), obj);
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#remove(T)
 	 */
 	@Override
 	public void remove(T obj)
 	{
 		if (obj != null)
+		{
 			_objectMap.remove(obj.getObjectId());
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#get(int)
 	 */
 	@Override
@@ -97,18 +106,22 @@ public class WorldObjectMap<T extends L2Object> extends L2ObjectMap<T>
 		return _objectMap.get(id);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#contains(T)
 	 */
 	@Override
 	public boolean contains(T obj)
 	{
 		if (obj == null)
+		{
 			return false;
+		}
 		return _objectMap.get(obj.getObjectId()) != null;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.util.L2ObjectMap#iterator()
 	 */
 	@Override

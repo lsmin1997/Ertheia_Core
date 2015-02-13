@@ -22,7 +22,6 @@ import com.l2jserver.gameserver.templates.skills.L2EffectType;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
 
 /**
- * 
  * @author Gnat
  */
 public class EffectNegate extends L2Effect
@@ -46,7 +45,9 @@ public class EffectNegate extends L2Effect
 		for (int negateSkillId : skill.getNegateId())
 		{
 			if (negateSkillId != 0)
+			{
 				getEffected().stopSkillEffects(negateSkillId);
+			}
 		}
 		for (L2SkillType negateSkillType : skill.getNegateStats())
 		{
@@ -57,12 +58,16 @@ public class EffectNegate extends L2Effect
 			for (L2Effect effect : getEffected().getAllEffects())
 			{
 				if (effect == null)
+				{
 					continue;
+				}
 				
 				for (String negateAbnormalType : skill.getNegateAbnormals().keySet())
 				{
-					if (negateAbnormalType.equalsIgnoreCase(effect.getAbnormalType()) && skill.getNegateAbnormals().get(negateAbnormalType) >= effect.getAbnormalLvl())
+					if (negateAbnormalType.equalsIgnoreCase(effect.getAbnormalType()) && (skill.getNegateAbnormals().get(negateAbnormalType) >= effect.getAbnormalLvl()))
+					{
 						effect.exit();
+					}
 				}
 			}
 		}

@@ -17,7 +17,6 @@ package com.l2jserver.gameserver.templates.item;
 /**
  * Created for allow comparing different item types
  * @author DS
- *
  */
 public interface L2ItemType
 {

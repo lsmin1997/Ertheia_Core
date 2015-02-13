@@ -23,7 +23,7 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 public final class L2EnchantSkillGroup
 {
 	private final int _id;
-	private List<EnchantSkillDetail> _enchantDetails = new FastList<EnchantSkillDetail>();
+	private final List<EnchantSkillDetail> _enchantDetails = new FastList<EnchantSkillDetail>();
 	
 	public L2EnchantSkillGroup(int id)
 	{
@@ -87,10 +87,12 @@ public final class L2EnchantSkillGroup
 		{
 			return _spCost;
 		}
+		
 		public int getExpCost()
 		{
 			return _expCost;
 		}
+		
 		public int getAdenaCost()
 		{
 			return _adenaCost;
@@ -99,7 +101,9 @@ public final class L2EnchantSkillGroup
 		public byte getRate(L2PcInstance ply)
 		{
 			if (ply.getLevel() < 76)
+			{
 				return 0;
+			}
 			return _rate[ply.getLevel() - 76];
 		}
 	}

@@ -20,9 +20,9 @@ public class ExAirShipTeleportList extends L2GameServerPacket
 {
 	private static final String _S__FE_9A_EXAIRSHIPTELEPORTLIST = "[S] FE:9A ExAirShipTeleportList";
 	
-	private int _dockId;
-	private VehiclePathPoint[][] _teleports;
-	private int[] _fuelConsumption;
+	private final int _dockId;
+	private final VehiclePathPoint[][] _teleports;
+	private final int[] _fuelConsumption;
 	
 	public ExAirShipTeleportList(int dockId, VehiclePathPoint[][] teleports, int[] fuelConsumption)
 	{
@@ -56,7 +56,9 @@ public class ExAirShipTeleportList extends L2GameServerPacket
 			}
 		}
 		else
+		{
 			writeD(0);
+		}
 	}
 	
 	@Override

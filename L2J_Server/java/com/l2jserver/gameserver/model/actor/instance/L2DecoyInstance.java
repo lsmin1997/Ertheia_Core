@@ -27,20 +27,20 @@ import com.l2jserver.gameserver.skills.l2skills.L2SkillDecoy;
 import com.l2jserver.gameserver.taskmanager.DecayTaskManager;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
-
 public class L2DecoyInstance extends L2Decoy
 {
 	private int _totalLifeTime;
 	private int _timeRemaining;
 	private Future<?> _DecoyLifeTask;
 	private Future<?> _HateSpam;
+	
 	public L2DecoyInstance(int objectId, L2NpcTemplate template, L2PcInstance owner, L2Skill skill)
 	{
 		super(objectId, template, owner);
 		setInstanceType(InstanceType.L2DecoyInstance);
 		if (skill != null)
 		{
-			_totalLifeTime = ((L2SkillDecoy)skill).getTotalLifeTime();
+			_totalLifeTime = ((L2SkillDecoy) skill).getTotalLifeTime();
 		}
 		else
 		{
@@ -57,7 +57,9 @@ public class L2DecoyInstance extends L2Decoy
 	public boolean doDie(L2Character killer)
 	{
 		if (!super.doDie(killer))
+		{
 			return false;
+		}
 		if (_HateSpam != null)
 		{
 			_HateSpam.cancel(true);
@@ -82,9 +84,9 @@ public class L2DecoyInstance extends L2Decoy
 	
 	static class DecoyLifetime implements Runnable
 	{
-		private L2PcInstance _activeChar;
+		private final L2PcInstance _activeChar;
 		
-		private L2DecoyInstance _Decoy;
+		private final L2DecoyInstance _Decoy;
 		
 		DecoyLifetime(L2PcInstance activeChar, L2DecoyInstance Decoy)
 		{
@@ -92,6 +94,7 @@ public class L2DecoyInstance extends L2Decoy
 			_Decoy = Decoy;
 		}
 		
+		@Override
 		public void run()
 		{
 			try
@@ -113,9 +116,9 @@ public class L2DecoyInstance extends L2Decoy
 	
 	static class HateSpam implements Runnable
 	{
-		private L2DecoyInstance _activeChar;
+		private final L2DecoyInstance _activeChar;
 		
-		private L2Skill _skill;
+		private final L2Skill _skill;
 		
 		HateSpam(L2DecoyInstance activeChar, L2Skill Hate)
 		{
@@ -123,6 +126,7 @@ public class L2DecoyInstance extends L2Decoy
 			_skill = Hate;
 		}
 		
+		@Override
 		public void run()
 		{
 			try

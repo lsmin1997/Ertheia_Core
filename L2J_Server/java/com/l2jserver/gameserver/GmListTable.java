@@ -27,7 +27,6 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class stores references to all online game masters. (access level > 100)
- * 
  * @version $Revision: 1.2.2.1.2.7 $ $Date: 2005/04/05 19:41:24 $
  */
 public class GmListTable
@@ -35,7 +34,7 @@ public class GmListTable
 	private static Logger _log = Logger.getLogger(GmListTable.class.getName());
 	
 	/** Set(L2PcInstance>) containing all the GM in game */
-	private FastMap<L2PcInstance, Boolean> _gmList;
+	private final FastMap<L2PcInstance, Boolean> _gmList;
 	
 	public static GmListTable getInstance()
 	{
@@ -47,8 +46,12 @@ public class GmListTable
 		FastList<L2PcInstance> tmpGmList = new FastList<L2PcInstance>();
 		
 		for (FastMap.Entry<L2PcInstance, Boolean> n = _gmList.head(), end = _gmList.tail(); (n = n.getNext()) != end;)
+		{
 			if (includeHidden || !n.getValue())
+			{
 				tmpGmList.add(n.getKey());
+			}
+		}
 		
 		return tmpGmList;
 	}
@@ -58,10 +61,16 @@ public class GmListTable
 		FastList<String> tmpGmList = new FastList<String>();
 		
 		for (FastMap.Entry<L2PcInstance, Boolean> n = _gmList.head(), end = _gmList.tail(); (n = n.getNext()) != end;)
+		{
 			if (!n.getValue())
+			{
 				tmpGmList.add(n.getKey().getName());
+			}
 			else if (includeHidden)
+			{
 				tmpGmList.add(n.getKey().getName() + " (invis)");
+			}
+		}
 		
 		return tmpGmList;
 	}
@@ -77,14 +86,18 @@ public class GmListTable
 	public void addGm(L2PcInstance player, boolean hidden)
 	{
 		if (Config.DEBUG)
+		{
 			_log.fine("added gm: " + player.getName());
+		}
 		_gmList.put(player, hidden);
 	}
 	
 	public void deleteGm(L2PcInstance player)
 	{
 		if (Config.DEBUG)
+		{
 			_log.fine("deleted gm: " + player.getName());
+		}
 		
 		_gmList.remove(player);
 	}
@@ -97,7 +110,9 @@ public class GmListTable
 	{
 		FastMap.Entry<L2PcInstance, Boolean> gm = _gmList.getEntry(player);
 		if (gm != null)
+		{
 			gm.setValue(false);
+		}
 	}
 	
 	/**
@@ -108,7 +123,9 @@ public class GmListTable
 	{
 		FastMap.Entry<L2PcInstance, Boolean> gm = _gmList.getEntry(player);
 		if (gm != null)
+		{
 			gm.setValue(true);
+		}
 	}
 	
 	public boolean isGmOnline(boolean includeHidden)
@@ -116,7 +133,9 @@ public class GmListTable
 		for (FastMap.Entry<L2PcInstance, Boolean> n = _gmList.head(), end = _gmList.tail(); (n = n.getNext()) != end;)
 		{
 			if (includeHidden || !n.getValue())
+			{
 				return true;
+			}
 		}
 		
 		return false;
@@ -136,19 +155,25 @@ public class GmListTable
 			}
 		}
 		else
+		{
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.NO_GM_PROVIDING_SERVICE_NOW));
+		}
 	}
 	
 	public static void broadcastToGMs(L2GameServerPacket packet)
 	{
 		for (L2PcInstance gm : getInstance().getAllGms(true))
+		{
 			gm.sendPacket(packet);
+		}
 	}
 	
 	public static void broadcastMessageToGMs(String message)
 	{
 		for (L2PcInstance gm : getInstance().getAllGms(true))
+		{
 			gm.sendMessage(message);
+		}
 	}
 	
 	@SuppressWarnings("synthetic-access")

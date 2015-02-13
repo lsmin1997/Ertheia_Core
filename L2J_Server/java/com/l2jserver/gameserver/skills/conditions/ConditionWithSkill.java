@@ -18,8 +18,7 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionWithSkill.
- *
- * @author  Steuf
+ * @author Steuf
  */
 public class ConditionWithSkill extends Condition
 {
@@ -27,7 +26,6 @@ public class ConditionWithSkill extends Condition
 	
 	/**
 	 * Instantiates a new condition with skill.
-	 *
 	 * @param skill the skill
 	 */
 	public ConditionWithSkill(boolean skill)
@@ -35,14 +33,17 @@ public class ConditionWithSkill extends Condition
 		_skill = skill;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		if (!_skill && env.skill != null)
+		if (!_skill && (env.skill != null))
+		{
 			return false;
+		}
 		return true;
 	}
 }

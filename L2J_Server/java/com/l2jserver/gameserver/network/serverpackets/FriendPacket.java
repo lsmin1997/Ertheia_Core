@@ -16,30 +16,24 @@ import com.l2jserver.gameserver.datatables.CharNameTable;
 import com.l2jserver.gameserver.model.L2World;
 
 /**
- * Support for "Chat with Friends" dialog.
- * 
- * Add new friend or delete.
- * <BR>
+ * Support for "Chat with Friends" dialog. Add new friend or delete. <BR>
  * Format: cddSdd <BR>
  * d: action <BR>
  * d: Player Object ID <BR>
  * S: Friend Name <BR>
  * d: Online/Offline <BR>
  * d: Unknown (0 if offline)<BR>
- * 
  * @author JIV
- * 
  */
 public class FriendPacket extends L2GameServerPacket
 {
 	// private static Logger _log = Logger.getLogger(FriendList.class.getName());
 	private static final String _S__FA_FRIENDLIST = "[S] 76 FriendPacket";
-	private boolean _action, _online;
-	private int _objid;
-	private String _name;
+	private final boolean _action, _online;
+	private final int _objid;
+	private final String _name;
 	
 	/**
-	 * 
 	 * @param action - true for adding, false for remove
 	 */
 	public FriendPacket(boolean action, int objId)
@@ -64,7 +58,6 @@ public class FriendPacket extends L2GameServerPacket
 	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

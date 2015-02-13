@@ -16,14 +16,13 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * @author JIV
- *
  */
 public class ExSetPartyLooting extends L2GameServerPacket
 {
 	private static final String TYPE = "[S] FE:BF ExSetPartyLooting";
 	
-	private int _result;
-	private byte _mode;
+	private final int _result;
+	private final byte _mode;
 	
 	public ExSetPartyLooting(int result, byte mode)
 	{

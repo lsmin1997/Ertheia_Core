@@ -16,15 +16,14 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.1.2.3 $ $Date: 2005/03/27 15:29:57 $
  */
 public final class KeyPacket extends L2GameServerPacket
 {
 	private static final String _S__01_KEYPACKET = "[S] 2e KeyPacket";
 	
-	private byte[] _key;
-	private int _id;
+	private final byte[] _key;
+	private final int _id;
 	
 	public KeyPacket(byte[] key, int id)
 	{
@@ -36,7 +35,7 @@ public final class KeyPacket extends L2GameServerPacket
 	public void writeImpl()
 	{
 		writeC(0x2e);
-		writeC(_id); //0 - wrong protocol, 1 - protocol ok
+		writeC(_id); // 0 - wrong protocol, 1 - protocol ok
 		for (int i = 0; i < 8; i++)
 		{
 			writeC(_key[i]); // key
@@ -47,7 +46,8 @@ public final class KeyPacket extends L2GameServerPacket
 		writeD(0x00); // obfuscation key
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.L2GameServerPacket#getType()
 	 */
 	@Override

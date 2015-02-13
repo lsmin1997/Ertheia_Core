@@ -16,8 +16,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (ch)
- *
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public class ExRestartClient extends L2GameServerPacket
 {
@@ -27,8 +26,7 @@ public class ExRestartClient extends L2GameServerPacket
 	 * @see com.l2jserver.util.network.BaseSendablePacket.ServerBasePacket#writeImpl()
 	 */
 	@Override
-	protected
-	void writeImpl()
+	protected void writeImpl()
 	{
 		writeC(0xfe);
 		writeH(0x48);

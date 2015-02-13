@@ -32,14 +32,13 @@ import com.l2jserver.gameserver.templates.item.L2Henna;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 public class HennaTreeTable
 {
 	private static Logger _log = Logger.getLogger(HennaTreeTable.class.getName());
 	private Map<ClassId, List<L2HennaInstance>> _hennaTrees;
-	private boolean _initialized = true;
+	private final boolean _initialized = true;
 	
 	public static HennaTreeTable getInstance()
 	{
@@ -58,8 +57,8 @@ public class HennaTreeTable
 			PreparedStatement statement = con.prepareStatement("SELECT class_name, id, parent_id FROM class_list ORDER BY id");
 			ResultSet classlist = statement.executeQuery();
 			List<L2HennaInstance> list;
-			//int parentClassId;
-			//L2Henna henna;
+			// int parentClassId;
+			// L2Henna henna;
 			PreparedStatement statement2 = con.prepareStatement("SELECT class_id, symbol_id FROM henna_trees where class_id=? ORDER BY symbol_id");
 			while (classlist.next())
 			{
@@ -72,7 +71,7 @@ public class HennaTreeTable
 				while (hennatree.next())
 				{
 					int id = hennatree.getInt("symbol_id");
-					//String name = hennatree.getString("name");
+					// String name = hennatree.getString("name");
 					L2Henna template = HennaTable.getInstance().getTemplate(id);
 					if (template == null)
 					{

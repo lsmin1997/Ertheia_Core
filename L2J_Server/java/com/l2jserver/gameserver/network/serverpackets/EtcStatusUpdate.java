@@ -21,14 +21,13 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 /* Packet format: F3 XX000000 YY000000 ZZ000000 */
 
 /**
- *
- * @author  Luca Baldi
+ * @author Luca Baldi
  */
 public class EtcStatusUpdate extends L2GameServerPacket
 {
 	private static final String _S__F3_ETCSTATUSUPDATE = "[S] f9 EtcStatusUpdate";
 	
-	private L2PcInstance _activeChar;
+	private final L2PcInstance _activeChar;
 	
 	public EtcStatusUpdate(L2PcInstance activeChar)
 	{

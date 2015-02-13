@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
 /**
  * This class ...
- *
  * @version $Revision$ $Date$
  */
 public class L2SiegeNpcInstance extends L2NpcInstance
@@ -45,13 +44,15 @@ public class L2SiegeNpcInstance extends L2NpcInstance
 	public void showSiegeInfoWindow(L2PcInstance player)
 	{
 		if (validateCondition(player))
+		{
 			getCastle().getSiege().listRegisterClan(player);
+		}
 		else
 		{
 			NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
 			html.setFile(player.getHtmlPrefix(), "data/html/siege/" + getNpcId() + "-busy.htm");
-			html.replace("%castlename%",getCastle().getName());
-			html.replace("%objectId%",String.valueOf(getObjectId()));
+			html.replace("%castlename%", getCastle().getName());
+			html.replace("%objectId%", String.valueOf(getObjectId()));
 			player.sendPacket(html);
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 		}
@@ -60,7 +61,9 @@ public class L2SiegeNpcInstance extends L2NpcInstance
 	private boolean validateCondition(L2PcInstance player)
 	{
 		if (getCastle().getSiege().getIsInProgress())
-			return false;       // Busy because of siege
+		{
+			return false; // Busy because of siege
+		}
 		
 		return true;
 	}

@@ -22,8 +22,7 @@ import com.l2jserver.gameserver.model.L2Spawn;
 import com.l2jserver.gameserver.model.entity.Fort;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class ExShowFortressMapInfo extends L2GameServerPacket
 {
@@ -57,7 +56,7 @@ public class ExShowFortressMapInfo extends L2GameServerPacket
 		writeD(_fortress.getFortSize()); // barracks count
 		
 		FastList<SiegeSpawn> commanders = FortSiegeManager.getInstance().getCommanderSpawnList(_fortress.getFortId());
-		if (commanders != null && commanders.size() != 0 && _fortress.getSiege().getIsInProgress())
+		if ((commanders != null) && (commanders.size() != 0) && _fortress.getSiege().getIsInProgress())
 		{
 			switch (commanders.size())
 			{
@@ -66,9 +65,13 @@ public class ExShowFortressMapInfo extends L2GameServerPacket
 					for (SiegeSpawn spawn : commanders)
 					{
 						if (isSpawned(spawn.getNpcId()))
+						{
 							writeD(0);
+						}
 						else
+						{
 							writeD(1);
+						}
 					}
 					break;
 				}
@@ -79,11 +82,17 @@ public class ExShowFortressMapInfo extends L2GameServerPacket
 					{
 						count++;
 						if (count == 4)
+						{
 							writeD(1); // TODO: control room emulated
+						}
 						if (isSpawned(spawn.getNpcId()))
+						{
 							writeD(0);
+						}
 						else
+						{
 							writeD(1);
+						}
 					}
 					break;
 				}
@@ -91,7 +100,7 @@ public class ExShowFortressMapInfo extends L2GameServerPacket
 		}
 		else
 		{
-			for (int i = 0; i <_fortress.getFortSize(); i++)
+			for (int i = 0; i < _fortress.getFortSize(); i++)
 			{
 				writeD(0);
 			}
@@ -108,7 +117,9 @@ public class ExShowFortressMapInfo extends L2GameServerPacket
 		for (L2Spawn spawn : _fortress.getSiege().getCommanders())
 		{
 			if (spawn.getNpcid() == npcId)
+			{
 				ret = true;
+			}
 		}
 		return ret;
 	}

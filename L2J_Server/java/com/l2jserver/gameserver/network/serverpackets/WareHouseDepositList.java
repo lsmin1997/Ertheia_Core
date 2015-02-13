@@ -23,15 +23,14 @@ import com.l2jserver.gameserver.model.L2ItemInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- * 0x53 WareHouseDepositList  dh (h dddhh dhhh d)
- *
+ * 0x53 WareHouseDepositList dh (h dddhh dhhh d)
  * @version $Revision: 1.4.2.1.2.4 $ $Date: 2005/03/27 15:29:39 $
  */
 public final class WareHouseDepositList extends L2GameServerPacket
 {
 	public static final int PRIVATE = 1;
 	public static final int CLAN = 4;
-	public static final int CASTLE = 3; //not sure
+	public static final int CASTLE = 3; // not sure
 	public static final int FREIGHT = 1;
 	private static Logger _log = Logger.getLogger(WareHouseDepositList.class.getName());
 	private static final String _S__53_WAREHOUSEDEPOSITLIST = "[S] 41 WareHouseDepositList";
@@ -48,8 +47,10 @@ public final class WareHouseDepositList extends L2GameServerPacket
 		final boolean isPrivate = _whType == PRIVATE;
 		for (L2ItemInstance temp : player.getInventory().getAvailableItems(true, isPrivate))
 		{
-			if (temp != null && temp.isDepositable(isPrivate))
+			if ((temp != null) && temp.isDepositable(isPrivate))
+			{
 				_items.add(temp);
+			}
 		}
 	}
 	
@@ -57,15 +58,16 @@ public final class WareHouseDepositList extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x41);
-		/* 0x01-Private Warehouse
-		 * 0x02-Clan Warehouse
-		 * 0x03-Castle Warehouse
-		 * 0x04-Warehouse */
+		/*
+		 * 0x01-Private Warehouse 0x02-Clan Warehouse 0x03-Castle Warehouse 0x04-Warehouse
+		 */
 		writeH(_whType);
 		writeQ(_playerAdena);
 		final int count = _items.size();
 		if (Config.DEBUG)
+		{
 			_log.fine("count:" + count);
+		}
 		writeH(count);
 		
 		for (L2ItemInstance item : _items)
@@ -81,9 +83,13 @@ public final class WareHouseDepositList extends L2GameServerPacket
 			writeH(item.getEnchantLevel());
 			writeH(item.getCustomType2());
 			if (item.isAugmented())
+			{
 				writeD(item.getAugmentation().getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(item.getMana());
 			writeD(item.isTimeLimitedItem() ? (int) (item.getRemainingTime() / 1000) : -9999);
 			
@@ -102,7 +108,8 @@ public final class WareHouseDepositList extends L2GameServerPacket
 		_items.clear();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

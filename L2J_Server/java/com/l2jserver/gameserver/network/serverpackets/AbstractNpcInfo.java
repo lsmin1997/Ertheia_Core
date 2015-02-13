@@ -29,13 +29,12 @@ import com.l2jserver.gameserver.skills.AbnormalEffect;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.7.2.4.2.9 $ $Date: 2005/04/11 10:05:54 $
  */
 public abstract class AbstractNpcInfo extends L2GameServerPacket
 {
-	//   ddddddddddddddddddffffdddcccccSSddd dddddc
-	//   ddddddddddddddddddffffdddcccccSSddd dddddccffd
+	// ddddddddddddddddddffffdddcccccSSddd dddddc
+	// ddddddddddddddddddffffdddcccccSSddd dddddccffd
 	
 	private static final String _S__22_NPCINFO = "[S] 0c NpcInfo";
 	protected int _x, _y, _z, _heading;
@@ -71,7 +70,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 		_walkSpd = cha.getTemplate().baseWalkSpd;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override
@@ -85,7 +85,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 	 */
 	public static class NpcInfo extends AbstractNpcInfo
 	{
-		private L2Npc _npc;
+		private final L2Npc _npc;
 		private int _clanCrest = 0;
 		private int _allyCrest = 0;
 		private int _allyId = 0;
@@ -104,29 +104,39 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			_collisionRadius = cha.getCollisionRadius();// On every subclass
 			_isAttackable = cha.isAutoAttackable(attacker);
 			if (cha.getTemplate().serverSideName)
+			{
 				_name = cha.getName();// On every subclass
+			}
 			
 			if (Config.L2JMOD_CHAMPION_ENABLE && cha.isChampion())
+			{
 				_title = (Config.L2JMOD_CHAMP_TITLE); // On every subclass
+			}
 			else if (cha.getTemplate().serverSideTitle)
+			{
 				_title = cha.getTemplate().title; // On every subclass
+			}
 			else
+			{
 				_title = cha.getTitle(); // On every subclass
+			}
 			
-			if (Config.SHOW_NPC_LVL && _npc instanceof L2MonsterInstance)
+			if (Config.SHOW_NPC_LVL && (_npc instanceof L2MonsterInstance))
 			{
 				String t = "Lv " + cha.getLevel() + (cha.getAggroRange() > 0 ? "*" : "");
 				if (_title != null)
+				{
 					t += " " + _title;
+				}
 				
 				_title = t;
 			}
 			
 			// npc crest of owning clan/ally of castle
-			if (cha instanceof L2NpcInstance && cha.isInsideZone(L2Character.ZONE_TOWN) && (Config.SHOW_CREST_WITHOUT_QUEST || cha.getCastle().getShowNpcCrest()) && cha.getCastle().getOwnerId() != 0)
+			if ((cha instanceof L2NpcInstance) && cha.isInsideZone(L2Character.ZONE_TOWN) && (Config.SHOW_CREST_WITHOUT_QUEST || cha.getCastle().getShowNpcCrest()) && (cha.getCastle().getOwnerId() != 0))
 			{
 				int townId = TownManager.getTown(_x, _y, _z).getTownId();
-				if (townId != 33 && townId != 22)
+				if ((townId != 33) && (townId != 22))
 				{
 					L2Clan clan = ClanTable.getInstance().getClan(cha.getCastle().getOwnerId());
 					_clanCrest = clan.getCrestId();
@@ -176,12 +186,12 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeS(_name);
 			writeS(_title);
 			writeD(0x00); // Title color 0=client default
-			writeD(0x00); //pvp flag
+			writeD(0x00); // pvp flag
 			writeD(0x00); // karma
 			
 			writeD(_npc.getAbnormalEffect()); // C2
-			writeD(_clanId); //clan id
-			writeD(_clanCrest); //crest id
+			writeD(_clanId); // clan id
+			writeD(_clanCrest); // crest id
 			writeD(_allyId); // ally id
 			writeD(_allyCrest); // all crest
 			writeC(_npc.isFlying() ? 2 : 0); // C2
@@ -202,7 +212,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 	
 	public static class TrapInfo extends AbstractNpcInfo
 	{
-		private L2Trap _trap;
+		private final L2Trap _trap;
 		
 		public TrapInfo(L2Trap cha, L2Character attacker)
 		{
@@ -216,7 +226,9 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			_collisionHeight = _trap.getTemplate().fCollisionHeight;
 			_collisionRadius = _trap.getTemplate().fCollisionRadius;
 			if (cha.getTemplate().serverSideName)
+			{
 				_name = cha.getName();
+			}
 			_title = cha.getOwner() != null ? cha.getOwner().getName() : "";
 			_runSpd = _trap.getRunSpeed();
 			_walkSpd = _trap.getWalkSpeed();
@@ -255,7 +267,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeC(1);
 			writeC(_trap.isInCombat() ? 1 : 0);
 			writeC(_trap.isAlikeDead() ? 1 : 0);
-			writeC(_isSummoned ? 2 : 0); //  0=teleported  1=default   2=summoned
+			writeC(_isSummoned ? 2 : 0); // 0=teleported 1=default 2=summoned
 			writeS(_name);
 			writeS(_title);
 			writeD(0x00); // title color 0 = client default
@@ -264,8 +276,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_trap.getKarma());
 			
 			writeD(_trap.getAbnormalEffect()); // C2
-			writeD(0x00); //clan id
-			writeD(0x00); //crest id
+			writeD(0x00); // clan id
+			writeD(0x00); // crest id
 			writeD(0000); // C2
 			writeD(0000); // C2
 			writeC(0000); // C2
@@ -277,7 +289,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(0x00); // C4
 			writeD(0x00); // C6
 			writeD(0x00);
-			writeD(0);//CT1.5 Pet form and skills
+			writeD(0);// CT1.5 Pet form and skills
 			writeC(0x01);
 			writeC(0x01);
 			writeD(0x00);
@@ -289,7 +301,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 	 */
 	public static class SummonInfo extends AbstractNpcInfo
 	{
-		private L2Summon _summon;
+		private final L2Summon _summon;
 		private int _form = 0;
 		private int _val = 0;
 		
@@ -299,27 +311,41 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			_summon = cha;
 			_val = val;
 			if (_summon.isShowSummonAnimation())
-				_val = 2; //override for spawn
+			{
+				_val = 2; // override for spawn
+			}
 			
 			int npcId = cha.getTemplate().npcId;
 			
-			if (npcId == 16041 || npcId == 16042)
+			if ((npcId == 16041) || (npcId == 16042))
 			{
 				if (cha.getLevel() > 84)
+				{
 					_form = 3;
+				}
 				else if (cha.getLevel() > 79)
+				{
 					_form = 2;
+				}
 				else if (cha.getLevel() > 74)
+				{
 					_form = 1;
+				}
 			}
-			else if (npcId == 16025 || npcId == 16037)
+			else if ((npcId == 16025) || (npcId == 16037))
 			{
 				if (cha.getLevel() > 69)
+				{
 					_form = 3;
+				}
 				else if (cha.getLevel() > 64)
+				{
 					_form = 2;
+				}
 				else if (cha.getLevel() > 59)
+				{
 					_form = 1;
+				}
 			}
 			
 			// fields not set on AbstractNpcInfo
@@ -343,8 +369,10 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			if (_invisible)
 			{
 				L2PcInstance tmp = getClient().getActiveChar();
-				if (tmp != null && tmp.isGM())
+				if ((tmp != null) && tmp.isGM())
+				{
 					gmSeeInvis = true;
+				}
 			}
 			
 			writeC(0x0c);
@@ -377,7 +405,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeC(1); // always running 1=running 0=walking
 			writeC(_summon.isInCombat() ? 1 : 0);
 			writeC(_summon.isAlikeDead() ? 1 : 0);
-			writeC(_val); //  0=teleported  1=default   2=summoned
+			writeC(_val); // 0=teleported 1=default 2=summoned
 			writeS(_name);
 			writeS(_title);
 			writeD(0x01);// Title color 0=client default
@@ -387,8 +415,8 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			
 			writeD(gmSeeInvis ? _summon.getAbnormalEffect() | AbnormalEffect.STEALTH.getMask() : _summon.getAbnormalEffect());
 			
-			writeD(0x00); //clan id
-			writeD(0x00); //crest id
+			writeD(0x00); // clan id
+			writeD(0x00); // crest id
 			writeD(0000); // C2
 			writeD(0000); // C2
 			writeC(0000); // C2
@@ -400,7 +428,7 @@ public abstract class AbstractNpcInfo extends L2GameServerPacket
 			writeD(_enchantEffect); // C4
 			writeD(0x00); // C6
 			writeD(0x00);
-			writeD(_form); //CT1.5 Pet form and skills
+			writeD(_form); // CT1.5 Pet form and skills
 			writeC(0x01);
 			writeC(0x01);
 			writeD(_summon.getSpecialEffect());

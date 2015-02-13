@@ -20,8 +20,7 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * The Monster Derby Track Zone
- *
- * @author  durgus
+ * @author durgus
  */
 public class L2DerbyTrackZone extends L2ZoneType
 {

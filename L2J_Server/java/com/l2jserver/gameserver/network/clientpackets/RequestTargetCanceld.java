@@ -21,7 +21,6 @@ import com.l2jserver.gameserver.network.serverpackets.TargetUnselected;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestTargetCanceld extends L2GameClientPacket
@@ -41,7 +40,9 @@ public final class RequestTargetCanceld extends L2GameClientPacket
 	{
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (activeChar.isLockedTarget())
 		{
@@ -52,17 +53,26 @@ public final class RequestTargetCanceld extends L2GameClientPacket
 		if (_unselect == 0)
 		{
 			if (activeChar.isCastingNow() && activeChar.canAbortCast())
+			{
 				activeChar.abortCast();
+			}
 			else if (activeChar.getTarget() != null)
+			{
 				activeChar.setTarget(null);
+			}
 		}
 		else if (activeChar.getTarget() != null)
+		{
 			activeChar.setTarget(null);
+		}
 		else if (activeChar.isInAirShip())
+		{
 			activeChar.broadcastPacket(new TargetUnselected(activeChar));
+		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

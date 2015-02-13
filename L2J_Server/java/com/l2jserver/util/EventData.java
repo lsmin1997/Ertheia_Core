@@ -35,9 +35,7 @@ public class EventData
 	public LinkedList<String> kills = new LinkedList<String>();
 	public boolean eventSitForced = false;
 	
-	public EventData(int pEventX, int pEventY, int pEventZ, int pEventkarma, int pEventpvpkills,
-			int pEventpkkills, String pEventTitle, LinkedList<String> pKills,
-			boolean pEventSitForced)
+	public EventData(int pEventX, int pEventY, int pEventZ, int pEventkarma, int pEventpvpkills, int pEventpkkills, String pEventTitle, LinkedList<String> pKills, boolean pEventSitForced)
 	{
 		eventX = pEventX;
 		eventY = pEventY;

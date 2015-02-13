@@ -21,17 +21,15 @@ import com.l2jserver.gameserver.templates.item.L2Item;
 
 /**
  * The Class ConditionTargetBodyPart.
- *
  * @author mkizub
  */
 public class ConditionTargetBodyPart extends Condition
 {
 	
-	private L2Armor _armor;
+	private final L2Armor _armor;
 	
 	/**
 	 * Instantiates a new condition target body part.
-	 *
 	 * @param armor the armor
 	 */
 	public ConditionTargetBodyPart(L2Armor armor)
@@ -39,7 +37,8 @@ public class ConditionTargetBodyPart extends Condition
 		_armor = armor;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
@@ -47,7 +46,9 @@ public class ConditionTargetBodyPart extends Condition
 	{
 		// target is attacker
 		if (env.target == null)
+		{
 			return true;
+		}
 		int bodypart = env.target.getAttackingBodyPart();
 		int armor_part = _armor.getBodyPart();
 		switch (bodypart)

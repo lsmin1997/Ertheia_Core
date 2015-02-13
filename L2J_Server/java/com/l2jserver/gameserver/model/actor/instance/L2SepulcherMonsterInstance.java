@@ -25,9 +25,7 @@ import com.l2jserver.gameserver.model.quest.QuestState;
 import com.l2jserver.gameserver.network.serverpackets.NpcSay;
 import com.l2jserver.gameserver.templates.chars.L2NpcTemplate;
 
-
 /**
- * 
  * @author sandman
  */
 public class L2SepulcherMonsterInstance extends L2MonsterInstance
@@ -69,10 +67,14 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18156:
 			case 18157:
 				if (_victimSpawnKeyBoxTask != null)
+				{
 					_victimSpawnKeyBoxTask.cancel(true);
+				}
 				_victimSpawnKeyBoxTask = ThreadPoolManager.getInstance().scheduleEffect(new VictimSpawnKeyBox(this), 300000);
 				if (_victimShout != null)
+				{
 					_victimShout.cancel(true);
+				}
 				_victimShout = ThreadPoolManager.getInstance().scheduleEffect(new VictimShout(this), 5000);
 				break;
 			case 18196:
@@ -92,7 +94,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18210:
 			case 18211:
 				break;
-				
+			
 			case 18231:
 			case 18232:
 			case 18233:
@@ -107,7 +109,9 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18242:
 			case 18243:
 				if (_changeImmortalTask != null)
+				{
 					_changeImmortalTask.cancel(true);
+				}
 				_changeImmortalTask = ThreadPoolManager.getInstance().scheduleEffect(new ChangeImmortal(this), 1600);
 				
 				break;
@@ -127,7 +131,9 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	public boolean doDie(L2Character killer)
 	{
 		if (!super.doDie(killer))
+		{
 			return false;
+		}
 		
 		switch (getNpcId())
 		{
@@ -163,10 +169,12 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			case 18218:
 			case 18219:
 				if (_onDeadEventTask != null)
+				{
 					_onDeadEventTask.cancel(true);
+				}
 				_onDeadEventTask = ThreadPoolManager.getInstance().scheduleEffect(new OnDeadEvent(this), 3500);
 				break;
-				
+			
 			case 18150:
 			case 18151:
 			case 18152:
@@ -186,10 +194,12 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 					_victimShout = null;
 				}
 				if (_onDeadEventTask != null)
+				{
 					_onDeadEventTask.cancel(true);
+				}
 				_onDeadEventTask = ThreadPoolManager.getInstance().scheduleEffect(new OnDeadEvent(this), 3500);
 				break;
-				
+			
 			case 18141:
 			case 18142:
 			case 18143:
@@ -201,11 +211,13 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				if (FourSepulchersManager.getInstance().isViscountMobsAnnihilated(mysteriousBoxId))
 				{
 					if (_onDeadEventTask != null)
+					{
 						_onDeadEventTask.cancel(true);
+					}
 					_onDeadEventTask = ThreadPoolManager.getInstance().scheduleEffect(new OnDeadEvent(this), 3500);
 				}
 				break;
-				
+			
 			case 18220:
 			case 18221:
 			case 18222:
@@ -230,18 +242,22 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				if (FourSepulchersManager.getInstance().isDukeMobsAnnihilated(mysteriousBoxId))
 				{
 					if (_onDeadEventTask != null)
+					{
 						_onDeadEventTask.cancel(true);
+					}
 					_onDeadEventTask = ThreadPoolManager.getInstance().scheduleEffect(new OnDeadEvent(this), 3500);
 				}
 				break;
-				
+			
 			case 25339:
 			case 25342:
 			case 25346:
 			case 25349:
 				giveCup(killer);
 				if (_onDeadEventTask != null)
+				{
 					_onDeadEventTask.cancel(true);
+				}
 				_onDeadEventTask = ThreadPoolManager.getInstance().scheduleEffect(new OnDeadEvent(this), 8500);
 				break;
 		}
@@ -290,16 +306,16 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		L2PcInstance player = killer.getActingPlayer();
 		
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (player.getParty() != null)
 		{
 			for (L2PcInstance mem : player.getParty().getPartyMembers())
 			{
 				QuestState qs = mem.getQuestState(questId);
-				if (qs != null
-						&& (qs.isStarted() || qs.isCompleted())
-						&& mem.getInventory().getItemByItemId(oldBrooch) == null)
+				if ((qs != null) && (qs.isStarted() || qs.isCompleted()) && (mem.getInventory().getItemByItemId(oldBrooch) == null))
 				{
 					mem.addItem("Quest", cupId, 1, mem, true);
 				}
@@ -308,8 +324,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 		else
 		{
 			QuestState qs = player.getQuestState(questId);
-			if (qs != null && (qs.isStarted() || qs.isCompleted())
-					&& player.getInventory().getItemByItemId(oldBrooch) == null)
+			if ((qs != null) && (qs.isStarted() || qs.isCompleted()) && (player.getInventory().getItemByItemId(oldBrooch) == null))
 			{
 				player.addItem("Quest", cupId, 1, player, true);
 			}
@@ -318,20 +333,25 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	
 	private class VictimShout implements Runnable
 	{
-		private L2SepulcherMonsterInstance _activeChar;
+		private final L2SepulcherMonsterInstance _activeChar;
 		
 		public VictimShout(L2SepulcherMonsterInstance activeChar)
 		{
 			_activeChar = activeChar;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (_activeChar.isDead())
+			{
 				return;
+			}
 			
 			if (!_activeChar.isVisible())
+			{
 				return;
+			}
 			
 			broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), "forgive me!!"));
 		}
@@ -339,20 +359,25 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 	
 	private class VictimSpawnKeyBox implements Runnable
 	{
-		private L2SepulcherMonsterInstance _activeChar;
+		private final L2SepulcherMonsterInstance _activeChar;
 		
 		public VictimSpawnKeyBox(L2SepulcherMonsterInstance activeChar)
 		{
 			_activeChar = activeChar;
 		}
 		
+		@Override
 		public void run()
 		{
 			if (_activeChar.isDead())
+			{
 				return;
+			}
 			
 			if (!_activeChar.isVisible())
+			{
 				return;
+			}
 			
 			FourSepulchersManager.getInstance().spawnKeyBox(_activeChar);
 			broadcastPacket(new NpcSay(getObjectId(), 0, getNpcId(), "Many thanks for rescue me."));
@@ -373,6 +398,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			_activeChar = activeChar;
 		}
 		
+		@Override
 		public void run()
 		{
 			switch (_activeChar.getNpcId())
@@ -410,7 +436,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				case 18219:
 					FourSepulchersManager.getInstance().spawnKeyBox(_activeChar);
 					break;
-					
+				
 				case 18150:
 				case 18151:
 				case 18152:
@@ -421,7 +447,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				case 18157:
 					FourSepulchersManager.getInstance().spawnExecutionerOfHalisha(_activeChar);
 					break;
-					
+				
 				case 18141:
 				case 18142:
 				case 18143:
@@ -432,7 +458,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				case 18148:
 					FourSepulchersManager.getInstance().spawnMonster(_activeChar.mysteriousBoxId);
 					break;
-					
+				
 				case 18220:
 				case 18221:
 				case 18222:
@@ -456,7 +482,7 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 				case 18240:
 					FourSepulchersManager.getInstance().spawnArchonOfHalisha(_activeChar.mysteriousBoxId);
 					break;
-					
+				
 				case 25339:
 				case 25342:
 				case 25346:
@@ -476,9 +502,10 @@ public class L2SepulcherMonsterInstance extends L2MonsterInstance
 			activeChar = mob;
 		}
 		
+		@Override
 		public void run()
 		{
-			L2Skill fp = SkillTable.FrequentSkill.FAKE_PETRIFICATION.getSkill(); // Invulnerable	by petrification
+			L2Skill fp = SkillTable.FrequentSkill.FAKE_PETRIFICATION.getSkill(); // Invulnerable by petrification
 			fp.getEffects(activeChar, activeChar);
 		}
 	}

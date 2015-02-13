@@ -21,16 +21,15 @@ import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.actor.L2Character;
 import com.l2jserver.gameserver.templates.skills.L2SkillType;
 
-
 /**
  * an IItemHandler implementation has to be stateless
- *
  * @version $Revision: 1.2.2.2.2.3 $ $Date: 2005/04/03 15:55:06 $
  */
 
 public interface ISkillHandler
 {
 	public static Logger _log = Logger.getLogger(ISkillHandler.class.getName());
+	
 	/**
 	 * this is the worker method that is called when using an item.
 	 * @param activeChar

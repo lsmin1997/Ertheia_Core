@@ -34,7 +34,7 @@ public class L2SiegeSummonInstance extends L2SummonInstance
 	public void onSpawn()
 	{
 		super.onSpawn();
-		if (!getOwner().isGM() && !this.isInsideZone(L2Character.ZONE_SIEGE))
+		if (!getOwner().isGM() && !isInsideZone(L2Character.ZONE_SIEGE))
 		{
 			unSummon(getOwner());
 			getOwner().sendMessage("Summon was unsummoned because it exited siege zone");

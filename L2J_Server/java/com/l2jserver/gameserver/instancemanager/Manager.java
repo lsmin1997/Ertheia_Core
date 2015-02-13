@@ -20,6 +20,6 @@ public class Manager
 	public static void reloadAll()
 	{
 		AuctionManager.getInstance().reload();
-		//		QuestManager.getInstance().reload();
+		// QuestManager.getInstance().reload();
 	}
 }

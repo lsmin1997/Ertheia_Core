@@ -16,8 +16,7 @@ package com.l2jserver.gameserver.network.serverpackets;
 
 /**
  * Format: (ch)
- *
- * @author  -Wooden-
+ * @author -Wooden-
  */
 public class ShowPCCafeCouponShowUI extends L2GameServerPacket
 {

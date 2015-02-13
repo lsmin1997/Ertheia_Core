@@ -30,7 +30,6 @@ public class EffectCombatPointHeal extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -40,7 +39,6 @@ public class EffectCombatPointHeal extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
@@ -48,18 +46,22 @@ public class EffectCombatPointHeal extends L2Effect
 	{
 		return false;
 	}
-
+	
 	@Override
 	public boolean onStart()
 	{
 		L2Character target = getEffected();
 		if (target.isInvul())
+		{
 			return false;
+		}
 		
 		double cp = calc();
 		
 		if ((target.getCurrentCp() + cp) > target.getMaxCp())
+		{
 			cp = target.getMaxCp() - target.getCurrentCp();
+		}
 		target.setCurrentCp(cp + target.getCurrentCp());
 		
 		SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.S1_CP_WILL_BE_RESTORED);

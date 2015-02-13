@@ -21,22 +21,7 @@ import javolution.util.FastList;
 import com.l2jserver.gameserver.instancemanager.CastleManorManager.SeedProduction;
 
 /**
- * Format: c ddh[hdddhhd]
- * c - id (0xE8)
- *
- * d - money
- * d - manor id
- * h - size
- * [
- * h - item type 1
- * d - object id
- * d - item id
- * d - count
- * h - item type 2
- * h
- * d - price
- * ]
- *
+ * Format: c ddh[hdddhhd] c - id (0xE8) d - money d - manor id h - size [ h - item type 1 d - object id d - item id d - count h - item type 2 h d - price ]
  * @author l3x
  */
 
@@ -44,22 +29,24 @@ public final class BuyListSeed extends L2GameServerPacket
 {
 	private static final String _S__E8_BUYLISTSEED = "[S] e9 BuyListSeed";
 	
-	private int _manorId;
+	private final int _manorId;
 	private List<Seed> _list = null;
-	private long _money;
+	private final long _money;
 	
 	public BuyListSeed(long currentMoney, int castleId, List<SeedProduction> seeds)
 	{
 		_money = currentMoney;
 		_manorId = castleId;
 		
-		if (seeds != null && seeds.size() > 0)
+		if ((seeds != null) && (seeds.size() > 0))
 		{
 			_list = new FastList<Seed>();
 			for (SeedProduction s : seeds)
 			{
-				if (s.getCanProduce() > 0 && s.getPrice() > 0)
+				if ((s.getCanProduce() > 0) && (s.getPrice() > 0))
+				{
 					_list.add(new Seed(s.getId(), s.getCanProduce(), s.getPrice()));
+				}
 			}
 		}
 	}
@@ -72,7 +59,7 @@ public final class BuyListSeed extends L2GameServerPacket
 		writeQ(_money); // current money
 		writeD(_manorId); // manor id
 		
-		if (_list != null && _list.size() > 0)
+		if ((_list != null) && (_list.size() > 0))
 		{
 			writeH(_list.size()); // list length
 			for (Seed s : _list)
@@ -105,7 +92,9 @@ public final class BuyListSeed extends L2GameServerPacket
 			_list.clear();
 		}
 		else
+		{
 			writeH(0x00);
+		}
 		
 	}
 	

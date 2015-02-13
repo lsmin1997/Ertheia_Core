@@ -20,8 +20,7 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 
 /**
  * A landing zone
- *
- * @author  Kerberos
+ * @author Kerberos
  */
 public class L2LandingZone extends L2ZoneType
 {
@@ -34,14 +33,18 @@ public class L2LandingZone extends L2ZoneType
 	protected void onEnter(L2Character character)
 	{
 		if (character instanceof L2PcInstance)
+		{
 			character.setInsideZone(L2Character.ZONE_LANDING, true);
+		}
 	}
 	
 	@Override
 	protected void onExit(L2Character character)
 	{
 		if (character instanceof L2PcInstance)
+		{
 			character.setInsideZone(L2Character.ZONE_LANDING, false);
+		}
 	}
 	
 	/**

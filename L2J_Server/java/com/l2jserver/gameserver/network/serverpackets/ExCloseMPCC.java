@@ -15,18 +15,15 @@
 package com.l2jserver.gameserver.network.serverpackets;
 
 /**
- *
- * @author  chris_00
- *
- * close the CommandChannel Information window
- *
+ * @author chris_00 close the CommandChannel Information window
  */
 public class ExCloseMPCC extends L2GameServerPacket
 {
 	
 	private static final String _S__FE_26_EXCLOSEMPCC = "[S] FE:13 ExCloseMPCC";
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -36,7 +33,8 @@ public class ExCloseMPCC extends L2GameServerPacket
 		writeH(0x13);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

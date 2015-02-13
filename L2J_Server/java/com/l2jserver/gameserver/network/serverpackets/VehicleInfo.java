@@ -18,9 +18,8 @@ import com.l2jserver.gameserver.model.actor.instance.L2BoatInstance;
 
 /**
  * @author Maktakien
- *
  */
-public class VehicleInfo  extends L2GameServerPacket
+public class VehicleInfo extends L2GameServerPacket
 {
 	// Store some parameters here because they can be changed during broadcast
 	private final int _objId, _x, _y, _z, _heading;
@@ -34,7 +33,8 @@ public class VehicleInfo  extends L2GameServerPacket
 		_heading = boat.getHeading();
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -48,7 +48,8 @@ public class VehicleInfo  extends L2GameServerPacket
 		writeD(_heading);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

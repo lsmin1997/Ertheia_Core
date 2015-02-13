@@ -20,12 +20,12 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * @author UnAfraid
- *
  */
 public class ConditionPlayerRangeFromNpc extends Condition
 {
 	private final int _npcId;
 	private final int _radius;
+	
 	public ConditionPlayerRangeFromNpc(int npcId, int radius)
 	{
 		_npcId = npcId;
@@ -35,15 +35,19 @@ public class ConditionPlayerRangeFromNpc extends Condition
 	@Override
 	boolean testImpl(Env env)
 	{
-		if (_npcId == 0 || _radius == 0)
+		if ((_npcId == 0) || (_radius == 0))
+		{
 			return false;
+		}
 		
 		for (L2Character target : env.player.getKnownList().getKnownCharactersInRadius(_radius))
 		{
 			if (target instanceof L2Npc)
 			{
 				if (((L2Npc) target).getNpcId() == _npcId)
+				{
 					return true;
+				}
 			}
 		}
 		

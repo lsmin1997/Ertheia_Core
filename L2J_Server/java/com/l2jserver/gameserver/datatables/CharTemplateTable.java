@@ -27,9 +27,7 @@ import com.l2jserver.gameserver.templates.StatsSet;
 import com.l2jserver.gameserver.templates.chars.L2PcTemplate;
 
 /**
- * 
  * @author Unknown, Forsaiken
- *
  */
 public final class CharTemplateTable
 {
@@ -51,9 +49,7 @@ public final class CharTemplateTable
 		try
 		{
 			con = L2DatabaseFactory.getInstance().getConnection();
-			PreparedStatement statement = con.prepareStatement("SELECT * FROM class_list, char_templates, lvlupgain"
-					+ " WHERE class_list.id = char_templates.classId" + " AND class_list.id = lvlupgain.classId"
-					+ " ORDER BY class_list.id");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM class_list, char_templates, lvlupgain" + " WHERE class_list.id = char_templates.classId" + " AND class_list.id = lvlupgain.classId" + " ORDER BY class_list.id");
 			ResultSet rset = statement.executeQuery();
 			
 			int count = 0;
@@ -81,12 +77,12 @@ public final class CharTemplateTable
 				set.set("baseHpReg", 1.5);
 				set.set("baseMpReg", 0.9);
 				set.set("basePAtk", rset.getInt("p_atk"));
-				set.set("basePDef", /*classId.isMage()? 77 : 129*/rset.getInt("p_def"));
+				set.set("basePDef", /* classId.isMage()? 77 : 129 */rset.getInt("p_def"));
 				set.set("baseMAtk", rset.getInt("m_atk"));
 				set.set("baseMDef", rset.getInt("char_templates.m_def"));
 				set.set("classBaseLevel", rset.getInt("class_lvl"));
 				set.set("basePAtkSpd", rset.getInt("p_spd"));
-				set.set("baseMAtkSpd", /*classId.isMage()? 166 : 333*/rset.getInt("char_templates.m_spd"));
+				set.set("baseMAtkSpd", /* classId.isMage()? 166 : 333 */rset.getInt("char_templates.m_spd"));
 				set.set("baseCritRate", rset.getInt("char_templates.critical") / 10);
 				set.set("baseRunSpd", rset.getInt("move_spd"));
 				set.set("baseWalkSpd", 0);
@@ -146,7 +142,9 @@ public final class CharTemplateTable
 						for (L2PcTemplate pct : _templates)
 						{
 							if (pct != null)
+							{
 								pct.addItem(itemId, amount, equipped);
+							}
 						}
 					}
 					else

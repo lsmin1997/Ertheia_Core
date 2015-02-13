@@ -13,11 +13,11 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 /**
-	coded by Balancer
-	balancer@balancer.ru
-	http://balancer.ru
+ coded by Balancer
+ balancer@balancer.ru
+ http://balancer.ru
 
-	version 0.1, 2005-06-06
+ version 0.1, 2005-06-06
  */
 
 package com.l2jserver.util.lib;
@@ -38,8 +38,7 @@ public class Log
 	{
 		
 		/*
-		 * Logger _log = logs.get(cat); if(_log == null) { _log =
-		 * Logger.getLogger(cat); logs.put(cat, _log); }
+		 * Logger _log = logs.get(cat); if(_log == null) { _log = Logger.getLogger(cat); logs.put(cat, _log); }
 		 */
 		
 		String date = (new SimpleDateFormat("yy.MM.dd H:mm:ss")).format(new Date());
@@ -49,7 +48,7 @@ public class Log
 		
 		try
 		{
-			File file = new File("log/game/" + (curr != null ? curr : "" )+(cat != null ? cat : "unk") + ".txt");
+			File file = new File("log/game/" + (curr != null ? curr : "") + (cat != null ? cat : "unk") + ".txt");
 			save = new FileWriter(file, true);
 			String out = "[" + date + "] " + text + "\n";
 			save.write(out);

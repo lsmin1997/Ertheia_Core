@@ -26,14 +26,15 @@ public class ExShowSentPostList extends L2GameServerPacket
 {
 	private static final String _S__FE_AC_EXSHOWSENTPOSTLIST = "[S] FE:AC ExShowSentPostList";
 	
-	private List<Message> _outbox;
+	private final List<Message> _outbox;
 	
 	public ExShowSentPostList(int objectId)
 	{
 		_outbox = MailManager.getInstance().getOutbox(objectId);
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#writeImpl()
 	 */
 	@Override
@@ -41,8 +42,8 @@ public class ExShowSentPostList extends L2GameServerPacket
 	{
 		writeC(0xfe);
 		writeH(0xac);
-		writeD((int)(System.currentTimeMillis() / 1000));
-		if (_outbox != null && _outbox.size() > 0)
+		writeD((int) (System.currentTimeMillis() / 1000));
+		if ((_outbox != null) && (_outbox.size() > 0))
 		{
 			writeD(_outbox.size());
 			for (Message msg : _outbox)
@@ -63,7 +64,8 @@ public class ExShowSentPostList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.BasePacket#getType()
 	 */
 	@Override

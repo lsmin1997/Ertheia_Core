@@ -25,34 +25,14 @@ import com.l2jserver.loginserver.L2LoginClient;
 import com.l2jserver.loginserver.gameserverpackets.ServerStatus;
 
 /**
- * ServerList
- * Format: cc [cddcchhcdc]
- *
- * c: server list size (number of servers)
- * c: ?
- * [ (repeat for each servers)
- * c: server id (ignored by client?)
- * d: server ip
- * d: server port
- * c: age limit (used by client?)
- * c: pvp or not (used by client?)
- * h: current number of players
- * h: max number of players
- * c: 0 if server is down
- * d: 2nd bit: clock
- *    3rd bit: wont dsiplay server name
- *    4th bit: test server (used by client?)
- * c: 0 if you dont want to display brackets in front of sever name
- * ]
- *
- * Server will be considered as Good when the number of  online players
- * is less than half the maximum. as Normal between half and 4/5
- * and Full when there's more than 4/5 of the maximum number of players
+ * ServerList Format: cc [cddcchhcdc] c: server list size (number of servers) c: ? [ (repeat for each servers) c: server id (ignored by client?) d: server ip d: server port c: age limit (used by client?) c: pvp or not (used by client?) h: current number of players h: max number of players c: 0 if
+ * server is down d: 2nd bit: clock 3rd bit: wont dsiplay server name 4th bit: test server (used by client?) c: 0 if you dont want to display brackets in front of sever name ] Server will be considered as Good when the number of online players is less than half the maximum. as Normal between half
+ * and 4/5 and Full when there's more than 4/5 of the maximum number of players
  */
 public final class ServerList extends L2LoginServerPacket
 {
-	private List<ServerData> _servers;
-	private int _lastServer;
+	private final List<ServerData> _servers;
+	private final int _lastServer;
 	
 	class ServerData
 	{
@@ -102,7 +82,9 @@ public final class ServerList extends L2LoginServerPacket
 		_servers = new ArrayList<ServerData>(GameServerTable.getInstance().getRegisteredGameServers().size());
 		_lastServer = client.getLastServer();
 		for (GameServerInfo gsi : GameServerTable.getInstance().getRegisteredGameServers().values())
+		{
 			_servers.add(new ServerData(client, gsi));
+		}
 	}
 	
 	@Override

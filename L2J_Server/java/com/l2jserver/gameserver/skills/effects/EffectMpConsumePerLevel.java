@@ -29,7 +29,6 @@ public class EffectMpConsumePerLevel extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -39,18 +38,18 @@ public class EffectMpConsumePerLevel extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
 		if (getEffected().isDead())
+		{
 			return false;
+		}
 		
 		double base = calc();
-		double consume = (getEffected().getLevel() - 1) / 7.5 * base
-		* getAbnormalTime();
+		double consume = ((getEffected().getLevel() - 1) / 7.5) * base * getAbnormalTime();
 		
 		if (consume > getEffected().getCurrentMp())
 		{

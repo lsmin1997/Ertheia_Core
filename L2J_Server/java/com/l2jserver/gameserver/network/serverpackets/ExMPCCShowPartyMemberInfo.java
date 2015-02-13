@@ -19,17 +19,18 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * Format: ch d[Sdd]
- * @author  chris_00
+ * @author chris_00
  */
 public class ExMPCCShowPartyMemberInfo extends L2GameServerPacket
 {
 	private static final String _S__FE_4A_EXMPCCSHOWPARTYMEMBERINFO = "[S] FE:4b ExMPCCShowPartyMemberInfo";
-	private L2Party _party;
+	private final L2Party _party;
 	
 	public ExMPCCShowPartyMemberInfo(L2Party party)
 	{
-		this._party = party;
+		_party = party;
 	}
+	
 	/**
 	 * @see com.l2jserver.util.network.BaseSendablePacket.ServerBasePacket#writeImpl()
 	 */
@@ -39,7 +40,7 @@ public class ExMPCCShowPartyMemberInfo extends L2GameServerPacket
 		writeC(0xfe);
 		writeH(0x4b);
 		writeD(_party.getMemberCount()); // Number of Members
-		for(L2PcInstance pc : _party.getPartyMembers())
+		for (L2PcInstance pc : _party.getPartyMembers())
 		{
 			writeS(pc.getName()); // Membername
 			writeD(pc.getObjectId()); // ObjId

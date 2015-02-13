@@ -38,9 +38,9 @@ public final class RequestPetUseItem extends L2GameClientPacket
 	protected void readImpl()
 	{
 		_objectId = readD();
-		//TODO: implement me properly
-		//readQ();
-		//readD();
+		// TODO: implement me properly
+		// readQ();
+		// readD();
 	}
 	
 	@Override
@@ -90,7 +90,7 @@ public final class RequestPetUseItem extends L2GameClientPacket
 			}
 		}
 		
-		//check if the item matches the pet
+		// check if the item matches the pet
 		if (item.isEquipable())
 		{
 			// all pet items have condition
@@ -163,7 +163,8 @@ public final class RequestPetUseItem extends L2GameClientPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.clientpackets.ClientBasePacket#getType()
 	 */
 	@Override

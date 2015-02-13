@@ -19,9 +19,7 @@ import com.l2jserver.loginserver.serverpackets.GGAuth;
 import com.l2jserver.loginserver.serverpackets.LoginFail.LoginFailReason;
 
 /**
- * @author -Wooden-
- * Format: ddddd
- *
+ * @author -Wooden- Format: ddddd
  */
 public class AuthGameGuard extends L2LoginClientPacket
 {

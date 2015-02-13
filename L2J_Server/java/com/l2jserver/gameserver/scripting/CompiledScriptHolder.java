@@ -20,8 +20,7 @@ import java.io.Serializable;
 import javax.script.CompiledScript;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class CompiledScriptHolder implements Serializable
 {
@@ -101,6 +100,6 @@ public class CompiledScriptHolder implements Serializable
 	
 	public boolean matches(File f)
 	{
-		return f.lastModified() == this.getLastModified() && f.length() == this.getSize();
+		return (f.lastModified() == getLastModified()) && (f.length() == getSize());
 	}
 }

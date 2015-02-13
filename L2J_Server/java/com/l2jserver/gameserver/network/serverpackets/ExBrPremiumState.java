@@ -14,16 +14,15 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-
 /**
  * format: dc
- * @author  GodKratos
+ * @author GodKratos
  */
 public class ExBrPremiumState extends L2GameServerPacket
 {
 	private static final String _S__FE_BC_EXBRPREMIUMSTATE = "[S] FE:CD ExBrPremiumState";
-	private int _objId;
-	private int _state;
+	private final int _objId;
+	private final int _state;
 	
 	public ExBrPremiumState(int id, int state)
 	{

@@ -22,11 +22,10 @@ import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * @author -Wooden-
- *
  */
 public class PlayerInGame extends BaseRecievePacket
 {
-	private List<String> _accounts;
+	private final List<String> _accounts;
 	
 	/**
 	 * @param decrypt
@@ -34,7 +33,7 @@ public class PlayerInGame extends BaseRecievePacket
 	public PlayerInGame(byte[] decrypt)
 	{
 		super(decrypt);
-		_accounts =  new FastList<String>();
+		_accounts = new FastList<String>();
 		int size = readH();
 		for (int i = 0; i < size; i++)
 		{

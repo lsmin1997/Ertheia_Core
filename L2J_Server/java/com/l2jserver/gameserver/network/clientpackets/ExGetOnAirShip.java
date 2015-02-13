@@ -16,15 +16,9 @@ package com.l2jserver.gameserver.network.clientpackets;
 
 import java.util.logging.Logger;
 
-
 /**
- * Format: (c) dddd
- * d: dx
- * d: dy
- * d: dz
- * d: AirShip id ??
- * @author  -Wooden-
- * 
+ * Format: (c) dddd d: dx d: dy d: dz d: AirShip id ??
+ * @author -Wooden-
  */
 public class ExGetOnAirShip extends L2GameClientPacket
 {
@@ -46,10 +40,10 @@ public class ExGetOnAirShip extends L2GameClientPacket
 	@Override
 	protected void runImpl()
 	{
-		_log.info("[T1:ExGetOnAirShip] x: "+_x);
-		_log.info("[T1:ExGetOnAirShip] y: "+_y);
-		_log.info("[T1:ExGetOnAirShip] z: "+_z);
-		_log.info("[T1:ExGetOnAirShip] ship ID: "+_shipId);
+		_log.info("[T1:ExGetOnAirShip] x: " + _x);
+		_log.info("[T1:ExGetOnAirShip] y: " + _y);
+		_log.info("[T1:ExGetOnAirShip] z: " + _z);
+		_log.info("[T1:ExGetOnAirShip] ship ID: " + _shipId);
 	}
 	
 	@Override

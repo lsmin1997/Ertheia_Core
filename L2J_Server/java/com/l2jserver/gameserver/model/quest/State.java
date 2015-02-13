@@ -15,19 +15,9 @@
 package com.l2jserver.gameserver.model.quest;
 
 /**
- * @author Luis Arias;  version 2 by Fulminus
- *
- * This class merely enumerates the three necessary states for all quests:
- * CREATED: a quest state is created but the quest is not yet accepted.
- * STARTED: the player has accepted the quest.  Quest is currently in progress
- * COMPLETED: the quest has been completed.
- * 
- * In addition, this class defines two functions for lookup and inverse lookup
- * of the state given a name.  This is useful only for saving the state values
- * into the database with a more readable form and then being able to read the
- * string back and remap them to their correct states.
- * 
- * All quests have these and only these states.
+ * @author Luis Arias; version 2 by Fulminus This class merely enumerates the three necessary states for all quests: CREATED: a quest state is created but the quest is not yet accepted. STARTED: the player has accepted the quest. Quest is currently in progress COMPLETED: the quest has been
+ *         completed. In addition, this class defines two functions for lookup and inverse lookup of the state given a name. This is useful only for saving the state values into the database with a more readable form and then being able to read the string back and remap them to their correct states.
+ *         All quests have these and only these states.
  */
 public class State
 {
@@ -53,9 +43,13 @@ public class State
 	public static byte getStateId(String statename)
 	{
 		if (statename.equals("Started"))
+		{
 			return 1;
+		}
 		if (statename.equals("Completed"))
+		{
 			return 2;
+		}
 		return 0;
 	}
 }

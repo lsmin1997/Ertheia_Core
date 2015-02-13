@@ -24,7 +24,6 @@ import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
  * @author zabbix
- *
  */
 public class PartyMemberPosition extends L2GameServerPacket
 {
@@ -41,7 +40,9 @@ public class PartyMemberPosition extends L2GameServerPacket
 		for (L2PcInstance member : party.getPartyMembers())
 		{
 			if (member == null)
+			{
 				continue;
+			}
 			locations.put(member.getObjectId(), new Location(member));
 		}
 	}

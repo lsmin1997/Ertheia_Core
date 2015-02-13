@@ -51,7 +51,6 @@ import com.l2jserver.gameserver.templates.item.L2Weapon;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.2.2.2.5 $ $Date: 2005/03/27 15:29:32 $
  */
 public class L2DoorInstance extends L2Character
@@ -82,7 +81,7 @@ public class L2DoorInstance extends L2Character
 	protected final String _name;
 	private boolean _open;
 	private boolean _isCommanderDoor;
-	private boolean _unlockable;
+	private final boolean _unlockable;
 	private boolean _isAttackableDoor = false;
 	private boolean _isWall = false; // is castle wall ?
 	private boolean _ShowHp = false;
@@ -143,7 +142,9 @@ public class L2DoorInstance extends L2Character
 			synchronized (this)
 			{
 				if (_ai == null)
+				{
 					_ai = new L2DoorAI(new AIAccessor());
+				}
 				return _ai;
 			}
 		}
@@ -152,6 +153,7 @@ public class L2DoorInstance extends L2Character
 	
 	class CloseTask implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
@@ -170,6 +172,7 @@ public class L2DoorInstance extends L2Character
 	 */
 	class AutoOpenClose implements Runnable
 	{
+		@Override
 		public void run()
 		{
 			try
@@ -188,7 +191,9 @@ public class L2DoorInstance extends L2Character
 				}
 				
 				if (Config.DEBUG)
+				{
 					_log.info("Auto " + doorAction + " door ID " + _doorId + " (" + _name + ") for " + (_autoActionDelay / 60000) + " minute(s).");
+				}
 			}
 			catch (Exception e)
 			{
@@ -289,8 +294,7 @@ public class L2DoorInstance extends L2Character
 	}
 	
 	/**
-	 * @return Doors that cannot be attacked during siege
-	 * these doors will be auto opened if u take control of all commanders buildings
+	 * @return Doors that cannot be attacked during siege these doors will be auto opened if u take control of all commanders buildings
 	 */
 	public boolean getIsCommanderDoor()
 	{
@@ -318,17 +322,16 @@ public class L2DoorInstance extends L2Character
 	}
 	
 	/**
-	 * Sets the delay in milliseconds for automatic opening/closing
-	 * of this door instance.
-	 * <BR>
+	 * Sets the delay in milliseconds for automatic opening/closing of this door instance. <BR>
 	 * <B>Note:</B> A value of -1 cancels the auto open/close task.
-	 *
 	 * @param int actionDelay
 	 */
 	public void setAutoActionDelay(int actionDelay)
 	{
 		if (_autoActionDelay == actionDelay)
+		{
 			return;
+		}
 		
 		if (actionDelay > -1)
 		{
@@ -338,7 +341,9 @@ public class L2DoorInstance extends L2Character
 		else
 		{
 			if (_autoActionTask != null)
+			{
 				_autoActionTask.cancel(false);
+			}
 		}
 		
 		_autoActionDelay = actionDelay;
@@ -346,29 +351,41 @@ public class L2DoorInstance extends L2Character
 	
 	public int getDamage()
 	{
-		int dmg = 6 - (int) Math.ceil(getCurrentHp() / getMaxHp() * 6);
+		int dmg = 6 - (int) Math.ceil((getCurrentHp() / getMaxHp()) * 6);
 		if (dmg > 6)
+		{
 			return 6;
+		}
 		if (dmg < 0)
+		{
 			return 0;
+		}
 		return dmg;
 	}
 	
 	public final Castle getCastle()
 	{
 		if (_castleIndex < 0)
+		{
 			_castleIndex = CastleManager.getInstance().getCastleIndex(this);
+		}
 		if (_castleIndex < 0)
+		{
 			return null;
+		}
 		return CastleManager.getInstance().getCastles().get(_castleIndex);
 	}
 	
 	public final Fort getFort()
 	{
 		if (_fortIndex < 0)
+		{
 			_fortIndex = FortManager.getInstance().getFortIndex(this);
+		}
 		if (_fortIndex < 0)
+		{
 			return null;
+		}
 		return FortManager.getInstance().getForts().get(_fortIndex);
 	}
 	
@@ -384,50 +401,68 @@ public class L2DoorInstance extends L2Character
 	
 	public boolean isEnemy()
 	{
-		if (getCastle() != null && getCastle().getCastleId() > 0 && getCastle().getZone().isActive())
+		if ((getCastle() != null) && (getCastle().getCastleId() > 0) && getCastle().getZone().isActive())
+		{
 			return true;
-		if (getFort() != null && getFort().getFortId() > 0 && getFort().getZone().isActive() && !getIsCommanderDoor())
+		}
+		if ((getFort() != null) && (getFort().getFortId() > 0) && getFort().getZone().isActive() && !getIsCommanderDoor())
+		{
 			return true;
+		}
 		return false;
 	}
 	
 	@Override
 	public boolean isAutoAttackable(L2Character attacker)
 	{
-		if (isUnlockable() && getFort() == null)
+		if (isUnlockable() && (getFort() == null))
+		{
 			return true;
+		}
 		
 		// Doors can`t be attacked by NPCs
 		if (!(attacker instanceof L2Playable))
+		{
 			return false;
+		}
 		
 		if (getClanHall() != null)
+		{
 			return false;
+		}
 		
-		// Attackable  only during siege by everyone (not owner)
-		boolean isCastle = (getCastle() != null && getCastle().getCastleId() > 0 && getCastle().getZone().isActive());
-		boolean isFort = (getFort() != null && getFort().getFortId() > 0 && getFort().getZone().isActive() && !getIsCommanderDoor());
+		// Attackable only during siege by everyone (not owner)
+		boolean isCastle = ((getCastle() != null) && (getCastle().getCastleId() > 0) && getCastle().getZone().isActive());
+		boolean isFort = ((getFort() != null) && (getFort().getFortId() > 0) && getFort().getZone().isActive() && !getIsCommanderDoor());
 		int activeSiegeId = (getFort() != null ? getFort().getFortId() : (getCastle() != null ? getCastle().getCastleId() : 0));
 		L2PcInstance actingPlayer = attacker.getActingPlayer();
 		
 		if (TerritoryWarManager.getInstance().isTWInProgress())
 		{
 			if (TerritoryWarManager.getInstance().isAllyField(actingPlayer, activeSiegeId))
+			{
 				return false;
+			}
 			else
+			{
 				return true;
+			}
 		}
 		else if (isFort)
 		{
 			L2Clan clan = actingPlayer.getClan();
-			if (clan != null && clan == getFort().getOwnerClan())
+			if ((clan != null) && (clan == getFort().getOwnerClan()))
+			{
 				return false;
+			}
 		}
 		else if (isCastle)
 		{
 			L2Clan clan = actingPlayer.getClan();
-			if (clan != null && clan.getClanId() == getCastle().getOwnerId())
+			if ((clan != null) && (clan.getClanId() == getCastle().getOwnerId()))
+			{
 				return false;
+			}
 		}
 		return (isCastle || isFort || getIsAttackableDoor());
 	}
@@ -445,28 +480,33 @@ public class L2DoorInstance extends L2Character
 	public int getDistanceToWatchObject(L2Object object)
 	{
 		if (!(object instanceof L2PcInstance))
+		{
 			return 0;
+		}
 		return 3000;
 	}
 	
 	/**
-	 * Return the distance after which the object must be remove from _knownObject according to the type of the object.<BR><BR>
-	 *
-	 * <B><U> Values </U> :</B><BR><BR>
-	 * <li> object is a L2PcInstance : 4000</li>
-	 * <li> object is not a L2PcInstance : 0 </li><BR><BR>
-	 *
+	 * Return the distance after which the object must be remove from _knownObject according to the type of the object.<BR>
+	 * <BR>
+	 * <B><U> Values </U> :</B><BR>
+	 * <BR>
+	 * <li>object is a L2PcInstance : 4000</li> <li>object is not a L2PcInstance : 0</li><BR>
+	 * <BR>
 	 */
 	public int getDistanceToForgetObject(L2Object object)
 	{
 		if (!(object instanceof L2PcInstance))
+		{
 			return 0;
+		}
 		
 		return 4000;
 	}
 	
 	/**
-	 * Return null.<BR><BR>
+	 * Return null.<BR>
+	 * <BR>
 	 */
 	@Override
 	public L2ItemInstance getActiveWeaponInstance()
@@ -496,25 +536,33 @@ public class L2DoorInstance extends L2Character
 	public void broadcastStatusUpdate()
 	{
 		Collection<L2PcInstance> knownPlayers = getKnownList().getKnownPlayers().values();
-		if (knownPlayers == null || knownPlayers.isEmpty())
+		if ((knownPlayers == null) || knownPlayers.isEmpty())
+		{
 			return;
+		}
 		
 		StaticObject su = new StaticObject(this, false);
 		DoorStatusUpdate dsu = new DoorStatusUpdate(this);
 		OnEventTrigger oe = null;
 		if (_emitter > 0)
+		{
 			oe = new OnEventTrigger(this, getOpen());
-		//synchronized (getKnownList().getKnownPlayers())
+		}
+		// synchronized (getKnownList().getKnownPlayers())
 		{
 			for (L2PcInstance player : knownPlayers)
 			{
-				if ((getCastle() != null && getCastle().getCastleId() > 0) || (getFort() != null && getFort().getFortId() > 0 && !getIsCommanderDoor()))
+				if (((getCastle() != null) && (getCastle().getCastleId() > 0)) || ((getFort() != null) && (getFort().getFortId() > 0) && !getIsCommanderDoor()))
+				{
 					su = new StaticObject(this, true);
+				}
 				
 				player.sendPacket(su);
 				player.sendPacket(dsu);
 				if (oe != null)
+				{
 					player.sendPacket(oe);
+				}
 			}
 		}
 	}
@@ -592,10 +640,10 @@ public class L2DoorInstance extends L2Character
 		_rangeYMax = yMax;
 		_rangeZMax = zMax;
 		
-		_A = _rangeYMax * (_rangeZMax - _rangeZMin) + _rangeYMin * (_rangeZMin - _rangeZMax);
-		_B = _rangeZMin * (_rangeXMax - _rangeXMin) + _rangeZMax * (_rangeXMin - _rangeXMax);
-		_C = _rangeXMin * (_rangeYMax - _rangeYMin) + _rangeXMin * (_rangeYMin - _rangeYMax);
-		_D = -1 * (_rangeXMin * (_rangeYMax * _rangeZMax - _rangeYMin * _rangeZMax) + _rangeXMax * (_rangeYMin * _rangeZMin - _rangeYMin * _rangeZMax) + _rangeXMin * (_rangeYMin * _rangeZMax - _rangeYMax * _rangeZMin));
+		_A = (_rangeYMax * (_rangeZMax - _rangeZMin)) + (_rangeYMin * (_rangeZMin - _rangeZMax));
+		_B = (_rangeZMin * (_rangeXMax - _rangeXMin)) + (_rangeZMax * (_rangeXMin - _rangeXMax));
+		_C = (_rangeXMin * (_rangeYMax - _rangeYMin)) + (_rangeXMin * (_rangeYMin - _rangeYMax));
+		_D = -1 * ((_rangeXMin * ((_rangeYMax * _rangeZMax) - (_rangeYMin * _rangeZMax))) + (_rangeXMax * ((_rangeYMin * _rangeZMin) - (_rangeYMin * _rangeZMax))) + (_rangeXMin * ((_rangeYMin * _rangeZMax) - (_rangeYMax * _rangeZMin))));
 	}
 	
 	public int getMapRegion()
@@ -613,12 +661,14 @@ public class L2DoorInstance extends L2Character
 		FastList<L2DefenderInstance> result = new FastList<L2DefenderInstance>();
 		
 		Collection<L2Object> objs = getKnownList().getKnownObjects().values();
-		//synchronized (getKnownList().getKnownObjects())
+		// synchronized (getKnownList().getKnownObjects())
 		{
 			for (L2Object obj : objs)
 			{
 				if (obj instanceof L2DefenderInstance)
+				{
 					result.add((L2DefenderInstance) obj);
+				}
 			}
 		}
 		return result;
@@ -694,7 +744,9 @@ public class L2DoorInstance extends L2Character
 	public void reduceCurrentHp(double damage, L2Character attacker, boolean awake, boolean isDOT, L2Skill skill)
 	{
 		if (_isWall && !(attacker instanceof L2SiegeSummonInstance))
+		{
 			return;
+		}
 		
 		super.reduceCurrentHp(damage, attacker, awake, isDOT, skill);
 	}
@@ -709,13 +761,17 @@ public class L2DoorInstance extends L2Character
 	public boolean doDie(L2Character killer)
 	{
 		if (!super.doDie(killer))
+		{
 			return false;
+		}
 		
-		boolean isFort = (getFort() != null && getFort().getFortId() > 0 && getFort().getSiege().getIsInProgress()) && !getIsCommanderDoor();
-		boolean isCastle = (getCastle() != null	&& getCastle().getCastleId() > 0 && getCastle().getSiege().getIsInProgress());
+		boolean isFort = ((getFort() != null) && (getFort().getFortId() > 0) && getFort().getSiege().getIsInProgress()) && !getIsCommanderDoor();
+		boolean isCastle = ((getCastle() != null) && (getCastle().getCastleId() > 0) && getCastle().getSiege().getIsInProgress());
 		
 		if (isFort || isCastle)
+		{
 			broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.CASTLE_GATE_BROKEN_DOWN));
+		}
 		return true;
 	}
 	
@@ -723,7 +779,9 @@ public class L2DoorInstance extends L2Character
 	public void sendInfo(L2PcInstance activeChar)
 	{
 		if (_emitter > 0)
+		{
 			activeChar.sendPacket(new OnEventTrigger(this, getOpen()));
+		}
 		
 		activeChar.sendPacket(new StaticObject(this, false));
 	}

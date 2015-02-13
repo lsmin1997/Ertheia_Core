@@ -21,14 +21,13 @@ import com.l2jserver.gameserver.network.serverpackets.SiegeAttackerList;
 
 /**
  * This class ...
- *
  * @version $Revision: 1.3.4.2 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class RequestSiegeAttackerList extends L2GameClientPacket
 {
 	
 	private static final String _C__A2_RequestSiegeAttackerList = "[C] a2 RequestSiegeAttackerList";
-	//private static Logger _log = Logger.getLogger(RequestJoinParty.class.getName());
+	// private static Logger _log = Logger.getLogger(RequestJoinParty.class.getName());
 	
 	private int _castleId;
 	
@@ -42,11 +41,13 @@ public final class RequestSiegeAttackerList extends L2GameClientPacket
 	protected void runImpl()
 	{
 		Castle castle = CastleManager.getInstance().getCastleById(_castleId);
-		if (castle == null) return;
+		if (castle == null)
+		{
+			return;
+		}
 		SiegeAttackerList sal = new SiegeAttackerList(castle);
 		sendPacket(sal);
 	}
-	
 	
 	@Override
 	public String getType()

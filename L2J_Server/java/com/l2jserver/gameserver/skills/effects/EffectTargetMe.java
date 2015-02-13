@@ -25,7 +25,6 @@ import com.l2jserver.gameserver.templates.effects.EffectTemplate;
 import com.l2jserver.gameserver.templates.skills.L2EffectType;
 
 /**
- * 
  * @author -Nemesiss-
  */
 public class EffectTargetMe extends L2Effect
@@ -36,7 +35,6 @@ public class EffectTargetMe extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -46,7 +44,6 @@ public class EffectTargetMe extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -55,37 +52,43 @@ public class EffectTargetMe extends L2Effect
 		if (getEffected() instanceof L2Playable)
 		{
 			if (getEffected() instanceof L2SiegeSummonInstance)
+			{
 				return false;
+			}
 			
 			if (getEffected().getTarget() != getEffector())
 			{
 				// Target is different
 				getEffected().setTarget(getEffector());
 				if (getEffected() instanceof L2PcInstance)
+				{
 					getEffected().sendPacket(new MyTargetSelected(getEffector().getObjectId(), 0));
+				}
 			}
-			((L2Playable)getEffected()).setLockedTarget(getEffector());
+			((L2Playable) getEffected()).setLockedTarget(getEffector());
 			return true;
 		}
-		else if (getEffected() instanceof L2Attackable && !getEffected().isRaid())
+		else if ((getEffected() instanceof L2Attackable) && !getEffected().isRaid())
+		{
 			return true;
+		}
 		
 		return false;
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
 	public void onExit()
 	{
 		if (getEffected() instanceof L2Playable)
-			((L2Playable)getEffected()).setLockedTarget(null);
+		{
+			((L2Playable) getEffected()).setLockedTarget(null);
+		}
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override

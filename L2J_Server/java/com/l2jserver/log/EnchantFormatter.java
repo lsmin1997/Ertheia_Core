@@ -24,38 +24,37 @@ import com.l2jserver.gameserver.model.L2Skill;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.util.StringUtil;
 
-
 public class EnchantFormatter extends Formatter
 {
 	private static final String CRLF = "\r\n";
-	private SimpleDateFormat dateFmt = new SimpleDateFormat("dd MMM H:mm:ss");
+	private final SimpleDateFormat dateFmt = new SimpleDateFormat("dd MMM H:mm:ss");
 	
 	@Override
 	public String format(LogRecord record)
 	{
 		final Object[] params = record.getParameters();
-		final StringBuilder output = StringUtil.startAppend(30
-				+ record.getMessage().length()
-				+ (params == null ? 0 : params.length * 10), "[", dateFmt.format(new Date(record.getMillis())), "] ", record.getMessage());
+		final StringBuilder output = StringUtil.startAppend(30 + record.getMessage().length() + (params == null ? 0 : params.length * 10), "[", dateFmt.format(new Date(record.getMillis())), "] ", record.getMessage());
 		for (Object p : params)
 		{
 			if (p == null)
+			{
 				continue;
+			}
 			
 			StringUtil.append(output, ", ");
 			
 			if (p instanceof L2PcInstance)
 			{
-				L2PcInstance player = (L2PcInstance)p;
-				StringUtil.append(output, "Character:", player.getName(),
-						" ["+String.valueOf(player.getObjectId())+"] Account:",
-						player.getAccountName());
-				if (player.getClient() != null && !player.getClient().isDetached())
+				L2PcInstance player = (L2PcInstance) p;
+				StringUtil.append(output, "Character:", player.getName(), " [" + String.valueOf(player.getObjectId()) + "] Account:", player.getAccountName());
+				if ((player.getClient() != null) && !player.getClient().isDetached())
+				{
 					StringUtil.append(output, " IP:", player.getClient().getConnection().getInetAddress().getHostAddress());
+				}
 			}
 			else if (p instanceof L2ItemInstance)
 			{
-				L2ItemInstance item = (L2ItemInstance)p;
+				L2ItemInstance item = (L2ItemInstance) p;
 				if (item.getEnchantLevel() > 0)
 				{
 					StringUtil.append(output, "+", String.valueOf(item.getEnchantLevel()), " ");
@@ -65,15 +64,17 @@ public class EnchantFormatter extends Formatter
 			}
 			else if (p instanceof L2Skill)
 			{
-				L2Skill skill = (L2Skill)p;
+				L2Skill skill = (L2Skill) p;
 				if (skill.getLevel() > 100)
 				{
 					StringUtil.append(output, "+", String.valueOf(skill.getLevel() % 100), " ");
 				}
-				StringUtil.append(output, skill.getName(), "(", String.valueOf(skill.getId())," ", String.valueOf(skill.getLevel()), ")");
+				StringUtil.append(output, skill.getName(), "(", String.valueOf(skill.getId()), " ", String.valueOf(skill.getLevel()), ")");
 			}
 			else
+			{
 				StringUtil.append(output, p.toString());
+			}
 		}
 		output.append(CRLF);
 		return output.toString();

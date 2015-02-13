@@ -28,9 +28,7 @@ import com.l2jserver.gameserver.network.serverpackets.SystemMessage;
 import com.l2jserver.gameserver.util.Util;
 
 /**
- *
  * This class ...
- *
  * @version $Revision: 1.2.2.1.2.3 $ $Date: 2005/03/27 15:29:30 $
  */
 public final class TradeRequest extends L2GameClientPacket
@@ -51,7 +49,9 @@ public final class TradeRequest extends L2GameClientPacket
 	{
 		L2PcInstance player = getClient().getActiveChar();
 		if (player == null)
+		{
 			return;
+		}
 		
 		if (!player.getAccessLevel().allowTransaction())
 		{
@@ -61,7 +61,7 @@ public final class TradeRequest extends L2GameClientPacket
 		}
 		
 		L2Object target = L2World.getInstance().findObject(_objectId);
-		if (target == null || !player.getKnownList().knowsObject(target) || !(target instanceof L2PcInstance))
+		if ((target == null) || !player.getKnownList().knowsObject(target) || !(target instanceof L2PcInstance))
 		{
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.INCORRECT_TARGET));
 			return;
@@ -76,8 +76,10 @@ public final class TradeRequest extends L2GameClientPacket
 		L2PcInstance partner = (L2PcInstance) target;
 		
 		// cant trade with players from other instance except from multiverse
-		if (partner.getInstanceId() != player.getInstanceId() && player.getInstanceId() != -1)
+		if ((partner.getInstanceId() != player.getInstanceId()) && (player.getInstanceId() != -1))
+		{
 			return;
+		}
 		
 		if (partner.isInOlympiadMode() || player.isInOlympiadMode())
 		{
@@ -86,7 +88,7 @@ public final class TradeRequest extends L2GameClientPacket
 		}
 		
 		// Alt game - Karma punishment
-		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_TRADE && (player.getKarma() > 0 || partner.getKarma() > 0))
+		if (!Config.ALT_GAME_KARMA_PLAYER_CAN_TRADE && ((player.getKarma() > 0) || (partner.getKarma() > 0)))
 		{
 			player.sendMessage("Chaotic players can't use Trade.");
 			return;
@@ -98,7 +100,7 @@ public final class TradeRequest extends L2GameClientPacket
 			return;
 		}
 		
-		if (player.getPrivateStoreType() != 0 || partner.getPrivateStoreType() != 0)
+		if ((player.getPrivateStoreType() != 0) || (partner.getPrivateStoreType() != 0))
 		{
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.CANNOT_TRADE_DISCARD_DROP_ITEM_WHILE_IN_SHOPMODE));
 			return;
@@ -107,7 +109,9 @@ public final class TradeRequest extends L2GameClientPacket
 		if (player.isProcessingTransaction())
 		{
 			if (Config.DEBUG)
+			{
 				_log.fine("already trading with someone");
+			}
 			player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ALREADY_TRADING));
 			return;
 		}
@@ -115,7 +119,9 @@ public final class TradeRequest extends L2GameClientPacket
 		if (partner.isProcessingRequest() || partner.isProcessingTransaction())
 		{
 			if (Config.DEBUG)
+			{
 				_log.info("transaction already in progress.");
+			}
 			SystemMessage sm = SystemMessage.getSystemMessage(SystemMessageId.C1_IS_BUSY_TRY_LATER);
 			sm.addString(partner.getName());
 			player.sendPacket(sm);

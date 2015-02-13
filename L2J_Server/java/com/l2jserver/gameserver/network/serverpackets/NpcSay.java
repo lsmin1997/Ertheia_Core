@@ -18,16 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Kerberos
  */
 public final class NpcSay extends L2GameServerPacket
 {
 	// cddddS
 	private static final String _S__30_NPCSAY = "[S] 30 NpcSay";
-	private int _objectId;
-	private int _textType;
-	private int _npcId;
+	private final int _objectId;
+	private final int _textType;
+	private final int _npcId;
 	private String _text;
 	private int _npcString;
 	private List<String> _parameters;
@@ -39,7 +38,7 @@ public final class NpcSay extends L2GameServerPacket
 	{
 		_objectId = objectId;
 		_textType = messageType;
-		_npcId = 1000000+npcId;
+		_npcId = 1000000 + npcId;
 		_text = text;
 	}
 	
@@ -47,7 +46,7 @@ public final class NpcSay extends L2GameServerPacket
 	{
 		_objectId = objectId;
 		_textType = messageType;
-		_npcId = 1000000+npcId;
+		_npcId = 1000000 + npcId;
 		_npcString = npcString;
 	}
 	
@@ -58,7 +57,9 @@ public final class NpcSay extends L2GameServerPacket
 	public void addStringParameter(String text)
 	{
 		if (_parameters == null)
+		{
 			_parameters = new ArrayList<String>();
+		}
 		_parameters.add(text);
 	}
 	
@@ -71,18 +72,23 @@ public final class NpcSay extends L2GameServerPacket
 		writeD(_npcId);
 		writeD(_npcString);
 		if (_npcString == 0)
+		{
 			writeS(_text);
+		}
 		else
 		{
 			if (_parameters != null)
 			{
 				for (String s : _parameters)
+				{
 					writeS(s);
+				}
 			}
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

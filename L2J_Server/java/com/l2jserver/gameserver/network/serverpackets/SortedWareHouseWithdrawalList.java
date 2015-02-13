@@ -30,8 +30,7 @@ import com.l2jserver.gameserver.templates.item.L2Item;
 import com.l2jserver.gameserver.templates.item.L2WarehouseItem;
 
 /**
- * 0x42 WarehouseWithdrawalList  dh (h dddhh dhhh d)
- * 
+ * 0x42 WarehouseWithdrawalList dh (h dddhh dhhh d)
  * @version $Revision: 1.3.2.1.2.5 $ $Date: 2005/03/29 23:15:10 $
  */
 
@@ -39,8 +38,8 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 {
 	public static final int PRIVATE = 1;
 	public static final int CLAN = 2;
-	public static final int CASTLE = 3; //not sure
-	public static final int FREIGHT = 4; //not sure
+	public static final int CASTLE = 3; // not sure
+	public static final int FREIGHT = 4; // not sure
 	private static Logger _log = Logger.getLogger(SortedWareHouseWithdrawalList.class.getName());
 	private static final String _S__54_SORTEDWAREHOUSEWITHDRAWALLIST = "[S] 42 SortedWareHouseWithdrawalList";
 	private L2PcInstance _activeChar;
@@ -160,7 +159,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 					Collections.sort(_objects, new WarehouseItemNameComparator(_sortorder));
 					break;
 				case GRADE:
-					if (_itemtype == WarehouseListType.ARMOR || _itemtype == WarehouseListType.WEAPON)
+					if ((_itemtype == WarehouseListType.ARMOR) || (_itemtype == WarehouseListType.WEAPON))
 					{
 						Collections.sort(_objects, new WarehouseItemNameComparator(A2Z));
 						Collections.sort(_objects, new WarehouseItemGradeComparator(A2Z));
@@ -195,25 +194,36 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	}
 	
 	/**
-	 * This public method return the integer of the Sortorder by its name.
-	 * If you want to have another, add the Comparator and the Constant.
+	 * This public method return the integer of the Sortorder by its name. If you want to have another, add the Comparator and the Constant.
 	 * @param order
 	 * @return the integer of the sortorder or 1 as default value
 	 */
 	public static byte getOrder(String order)
 	{
 		if (order == null)
+		{
 			return A2Z;
+		}
 		else if (order.startsWith("A2Z"))
+		{
 			return A2Z;
+		}
 		else if (order.startsWith("Z2A"))
+		{
 			return Z2A;
+		}
 		else if (order.startsWith("GRADE"))
+		{
 			return GRADE;
+		}
 		else if (order.startsWith("TYPE"))
+		{
 			return TYPE;
+		}
 		else if (order.startsWith("WEAR"))
+		{
 			return WEAR;
+		}
 		else
 		{
 			try
@@ -239,12 +249,17 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 			order = sortOrder;
 		}
 		
+		@Override
 		public int compare(L2WarehouseItem o1, L2WarehouseItem o2)
 		{
-			if (o1.getType2() == L2Item.TYPE2_MONEY && o2.getType2() != L2Item.TYPE2_MONEY)
+			if ((o1.getType2() == L2Item.TYPE2_MONEY) && (o2.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? Z2A : A2Z);
-			if (o2.getType2() == L2Item.TYPE2_MONEY && o1.getType2() != L2Item.TYPE2_MONEY)
+			}
+			if ((o2.getType2() == L2Item.TYPE2_MONEY) && (o1.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? A2Z : Z2A);
+			}
 			String s1 = o1.getItemName();
 			String s2 = o2.getItemName();
 			return (order == A2Z ? s1.compareTo(s2) : s2.compareTo(s1));
@@ -266,13 +281,18 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 			rc = RecipeController.getInstance();
 		}
 		
+		@Override
 		public int compare(L2WarehouseItem o1, L2WarehouseItem o2)
 		{
-			if (o1.getType2() == L2Item.TYPE2_MONEY && o2.getType2() != L2Item.TYPE2_MONEY)
+			if ((o1.getType2() == L2Item.TYPE2_MONEY) && (o2.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? Z2A : A2Z);
-			if (o2.getType2() == L2Item.TYPE2_MONEY && o1.getType2() != L2Item.TYPE2_MONEY)
+			}
+			if ((o2.getType2() == L2Item.TYPE2_MONEY) && (o1.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? A2Z : Z2A);
-			if ((o1.isEtcItem() && o1.getItemType() == L2EtcItemType.RECIPE) && (o2.isEtcItem() && o2.getItemType() == L2EtcItemType.RECIPE))
+			}
+			if ((o1.isEtcItem() && (o1.getItemType() == L2EtcItemType.RECIPE)) && (o2.isEtcItem() && (o2.getItemType() == L2EtcItemType.RECIPE)))
 			{
 				try
 				{
@@ -280,9 +300,13 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 					L2RecipeList rp2 = rc.getRecipeByItemId(o2.getItemId());
 					
 					if (rp1 == null)
+					{
 						return (order == A2Z ? A2Z : Z2A);
+					}
 					if (rp2 == null)
+					{
 						return (order == A2Z ? Z2A : A2Z);
+					}
 					
 					Integer i1 = rp1.getLevel();
 					Integer i2 = rp2.getLevel();
@@ -315,12 +339,17 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 			order = sortOrder;
 		}
 		
+		@Override
 		public int compare(L2WarehouseItem o1, L2WarehouseItem o2)
 		{
-			if (o1.getType2() == L2Item.TYPE2_MONEY && o2.getType2() != L2Item.TYPE2_MONEY)
+			if ((o1.getType2() == L2Item.TYPE2_MONEY) && (o2.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? Z2A : A2Z);
-			if (o2.getType2() == L2Item.TYPE2_MONEY && o1.getType2() != L2Item.TYPE2_MONEY)
+			}
+			if ((o2.getType2() == L2Item.TYPE2_MONEY) && (o1.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? A2Z : Z2A);
+			}
 			Integer i1 = o1.getBodyPart();
 			Integer i2 = o2.getBodyPart();
 			return (order == A2Z ? i1.compareTo(i2) : i2.compareTo(i1));
@@ -339,12 +368,17 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 			order = sortOrder;
 		}
 		
+		@Override
 		public int compare(L2WarehouseItem o1, L2WarehouseItem o2)
 		{
-			if (o1.getType2() == L2Item.TYPE2_MONEY && o2.getType2() != L2Item.TYPE2_MONEY)
+			if ((o1.getType2() == L2Item.TYPE2_MONEY) && (o2.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? Z2A : A2Z);
-			if (o2.getType2() == L2Item.TYPE2_MONEY && o1.getType2() != L2Item.TYPE2_MONEY)
+			}
+			if ((o2.getType2() == L2Item.TYPE2_MONEY) && (o1.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? A2Z : Z2A);
+			}
 			Integer i1 = o1.getItemGrade();
 			Integer i2 = o2.getItemGrade();
 			return (order == A2Z ? i1.compareTo(i2) : i2.compareTo(i1));
@@ -352,8 +386,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	}
 	
 	/**
-	 * This Comparator will sort by Item Type. Unfortunatly this will only have a
-	 * good result if the Database Table for the ETCITEM.TYPE column is fixed!
+	 * This Comparator will sort by Item Type. Unfortunatly this will only have a good result if the Database Table for the ETCITEM.TYPE column is fixed!
 	 */
 	private static class WarehouseItemTypeComparator implements Comparator<L2WarehouseItem>
 	{
@@ -364,12 +397,17 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 			order = sortOrder;
 		}
 		
+		@Override
 		public int compare(L2WarehouseItem o1, L2WarehouseItem o2)
 		{
-			if (o1.getType2() == L2Item.TYPE2_MONEY && o2.getType2() != L2Item.TYPE2_MONEY)
+			if ((o1.getType2() == L2Item.TYPE2_MONEY) && (o2.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? Z2A : A2Z);
-			if (o2.getType2() == L2Item.TYPE2_MONEY && o1.getType2() != L2Item.TYPE2_MONEY)
+			}
+			if ((o2.getType2() == L2Item.TYPE2_MONEY) && (o1.getType2() != L2Item.TYPE2_MONEY))
+			{
 				return (order == A2Z ? A2Z : Z2A);
+			}
 			try
 			{
 				Integer i1 = o1.getItem().getMaterialType();
@@ -386,10 +424,7 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	// ========================================================================
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Weapon</li>
-	 * <li>Arrow</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Weapon</li> <li>Arrow</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -398,21 +433,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isWeapon() || item.getItem().getType2() == L2Item.TYPE2_WEAPON || (item.isEtcItem() && item.getItemType() == L2EtcItemType.ARROW) || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if (item.isWeapon() || (item.getItem().getType2() == L2Item.TYPE2_WEAPON) || (item.isEtcItem() && (item.getItemType() == L2EtcItemType.ARROW)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Armor</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Armor</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -421,21 +458,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isArmor() || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if (item.isArmor() || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Everything which is no Weapon/Armor</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Everything which is no Weapon/Armor</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -444,21 +483,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if (item.isEtcItem() || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Materials</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Materials</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -467,21 +508,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && item.getEtcItem().getItemType() == L2EtcItemType.MATERIAL || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.MATERIAL)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Recipes</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Recipes</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -490,21 +533,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && item.getEtcItem().getItemType() == L2EtcItemType.RECIPE || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.RECIPE)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Amulett</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Amulett</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -513,21 +558,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && (item.getItemName().toUpperCase().startsWith("AMULET")) || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (item.getItemName().toUpperCase().startsWith("AMULET"))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Spellbook & Dwarven Drafts</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Spellbook & Dwarven Drafts</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -536,21 +583,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && (!item.getItemName().toUpperCase().startsWith("AMULET")) || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (!item.getItemName().toUpperCase().startsWith("AMULET"))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Consumables (Potions, Shots, ...)</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Consumables (Potions, Shots, ...)</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -559,21 +608,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SCROLL || item.getEtcItem().getItemType() == L2EtcItemType.SHOT) || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && ((item.getEtcItem().getItemType() == L2EtcItemType.SCROLL) || (item.getEtcItem().getItemType() == L2EtcItemType.SHOT))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Shots</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Shots</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -582,21 +633,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && item.getEtcItem().getItemType() == L2EtcItemType.SHOT || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SHOT)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Scrolls/Potions</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Scrolls/Potions</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -605,21 +658,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && item.getEtcItem().getItemType() == L2EtcItemType.SCROLL || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SCROLL)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Seeds</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Seeds</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -628,21 +683,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem() && item.getEtcItem().getItemType() == L2EtcItemType.SEED || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && (item.getEtcItem().getItemType() == L2EtcItemType.SEED)) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>Everything which is no Weapon/Armor, Material, Recipe, Spellbook, Scroll or Shot</li>
-	 * <li>Money</li>
+	 * This method is used to limit the given Warehouse List to: <li>Everything which is no Weapon/Armor, Material, Recipe, Spellbook, Scroll or Shot</li> <li>Money</li>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -651,23 +708,23 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		List<L2WarehouseItem> _list = new FastList<L2WarehouseItem>();
 		for (L2ItemInstance item : _items)
 		{
-			if (item.isEtcItem()
-					&& (item.getEtcItem().getItemType() != L2EtcItemType.MATERIAL && item.getEtcItem().getItemType() != L2EtcItemType.RECIPE
-							&& item.getEtcItem().getItemType() != L2EtcItemType.SCROLL && item.getEtcItem().getItemType() != L2EtcItemType.SHOT) || item.getItem().getType2() == L2Item.TYPE2_MONEY)
+			if ((item.isEtcItem() && ((item.getEtcItem().getItemType() != L2EtcItemType.MATERIAL) && (item.getEtcItem().getItemType() != L2EtcItemType.RECIPE) && (item.getEtcItem().getItemType() != L2EtcItemType.SCROLL) && (item.getEtcItem().getItemType() != L2EtcItemType.SHOT))) || (item.getItem().getType2() == L2Item.TYPE2_MONEY))
 			{
 				if (_list.size() < MAX_SORT_LIST_ITEMS)
+				{
 					_list.add(new L2WarehouseItem(item));
+				}
 				else
+				{
 					continue;
+				}
 			}
 		}
 		return _list;
 	}
 	
 	/**
-	 * This method is used to limit the given Warehouse List to:
-	 * <li>no limit</li>
-	 * This may sound strange but we return the given Array as a List<L2WarehouseItem>
+	 * This method is used to limit the given Warehouse List to: <li>no limit</li> This may sound strange but we return the given Array as a List<L2WarehouseItem>
 	 * @param _items complete Warehouse List
 	 * @return limited Item List
 	 */
@@ -677,9 +734,13 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		for (L2ItemInstance item : _items)
 		{
 			if (_list.size() < MAX_SORT_LIST_ITEMS)
+			{
 				_list.add(new L2WarehouseItem(item));
+			}
 			else
+			{
 				continue;
+			}
 		}
 		return _list;
 	}
@@ -688,10 +749,9 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x42);
-		/* 0x01-Private Warehouse
-		 * 0x02-Clan Warehouse
-		 * 0x03-Castle Warehouse
-		 * 0x04-Warehouse */
+		/*
+		 * 0x01-Private Warehouse 0x02-Clan Warehouse 0x03-Castle Warehouse 0x04-Warehouse
+		 */
 		writeH(_whType);
 		writeQ(_playerAdena);
 		writeH(_objects.size());
@@ -709,9 +769,13 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 			writeH(item.getEnchantLevel());
 			writeH(item.getCustomType2());
 			if (item.isAugmented())
+			{
 				writeD(item.getAugmentationId());
+			}
 			else
+			{
 				writeD(0x00);
+			}
 			writeD(item.getMana());
 			writeD(item.getTime());
 			writeH(item.getAttackElementType());
@@ -728,7 +792,8 @@ public class SortedWareHouseWithdrawalList extends L2GameServerPacket
 		}
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.serverpackets.ServerBasePacket#getType()
 	 */
 	@Override

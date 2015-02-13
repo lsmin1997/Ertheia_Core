@@ -45,14 +45,20 @@ public final class RequestRejectPostAttachment extends L2GameClientPacket
 	public void runImpl()
 	{
 		if (!Config.ALLOW_MAIL || !Config.ALLOW_ATTACHMENTS)
+		{
 			return;
+		}
 		
 		final L2PcInstance activeChar = getClient().getActiveChar();
 		if (activeChar == null)
+		{
 			return;
+		}
 		
 		if (!getClient().getFloodProtectors().getTransaction().tryPerformAction("rejectattach"))
+		{
 			return;
+		}
 		
 		if (!activeChar.isInsideZone(ZONE_PEACE))
 		{
@@ -62,17 +68,20 @@ public final class RequestRejectPostAttachment extends L2GameClientPacket
 		
 		Message msg = MailManager.getInstance().getMessage(_msgId);
 		if (msg == null)
+		{
 			return;
+		}
 		
 		if (msg.getReceiverId() != activeChar.getObjectId())
 		{
-			Util.handleIllegalPlayerAction(activeChar,
-					"Player "+activeChar.getName()+" tried to reject not own attachment!", Config.DEFAULT_PUNISH);
+			Util.handleIllegalPlayerAction(activeChar, "Player " + activeChar.getName() + " tried to reject not own attachment!", Config.DEFAULT_PUNISH);
 			return;
 		}
 		
 		if (!msg.hasAttachments() || msg.isFourStars())
+		{
 			return;
+		}
 		
 		MailManager.getInstance().sendMessage(new Message(msg));
 		

@@ -20,7 +20,6 @@ import com.l2jserver.gameserver.skills.Env;
 
 /**
  * The Class ConditionPlayerHasFort.
- *
  * @author MrPoke
  */
 public final class ConditionPlayerHasFort extends Condition
@@ -30,7 +29,6 @@ public final class ConditionPlayerHasFort extends Condition
 	
 	/**
 	 * Instantiates a new condition player has fort.
-	 *
 	 * @param fort the fort
 	 */
 	public ConditionPlayerHasFort(int fort)
@@ -40,7 +38,6 @@ public final class ConditionPlayerHasFort extends Condition
 	
 	/**
 	 * Test impl.
-	 *
 	 * @param env the env
 	 * @return true, if successful
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
@@ -49,16 +46,22 @@ public final class ConditionPlayerHasFort extends Condition
 	public boolean testImpl(Env env)
 	{
 		if (!(env.player instanceof L2PcInstance))
+		{
 			return false;
+		}
 		
-		L2Clan clan = ((L2PcInstance)env.player).getClan();
+		L2Clan clan = ((L2PcInstance) env.player).getClan();
 		if (clan == null)
+		{
 			return _fort == 0;
+		}
 		
 		// Any fortress
 		if (_fort == -1)
+		{
 			return clan.getHasFort() > 0;
-			
-			return clan.getHasFort() == _fort;
+		}
+		
+		return clan.getHasFort() == _fort;
 	}
 }

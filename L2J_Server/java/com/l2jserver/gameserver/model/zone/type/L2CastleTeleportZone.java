@@ -22,14 +22,12 @@ import com.l2jserver.gameserver.model.zone.L2ZoneType;
 import com.l2jserver.util.Rnd;
 
 /**
- * A castle teleporter zone
- * used for Mass Gatekeepers
- *
- * @author  Kerberos
+ * A castle teleporter zone used for Mass Gatekeepers
+ * @author Kerberos
  */
 public class L2CastleTeleportZone extends L2ZoneType
 {
-	private int[] _spawnLoc;
+	private final int[] _spawnLoc;
 	private int _castleId;
 	
 	public L2CastleTeleportZone(int id)
@@ -67,7 +65,9 @@ public class L2CastleTeleportZone extends L2ZoneType
 			_spawnLoc[4] = Integer.parseInt(value);
 		}
 		else
+		{
 			super.setParameter(name, value);
+		}
 	}
 	
 	@Override
@@ -103,7 +103,9 @@ public class L2CastleTeleportZone extends L2ZoneType
 		for (L2Character temp : _characterList.values())
 		{
 			if (temp instanceof L2PcInstance)
+			{
 				players.add((L2PcInstance) temp);
+			}
 		}
 		
 		return players;
@@ -112,18 +114,26 @@ public class L2CastleTeleportZone extends L2ZoneType
 	public void oustAllPlayers()
 	{
 		if (_characterList == null)
+		{
 			return;
+		}
 		if (_characterList.isEmpty())
+		{
 			return;
+		}
 		for (L2Character character : _characterList.values())
 		{
 			if (character == null)
+			{
 				continue;
+			}
 			if (character instanceof L2PcInstance)
 			{
 				L2PcInstance player = (L2PcInstance) character;
 				if (player.isOnline())
+				{
 					player.teleToLocation(Rnd.get(_spawnLoc[0], _spawnLoc[1]), Rnd.get(_spawnLoc[2], _spawnLoc[3]), _spawnLoc[4]);
+				}
 			}
 		}
 	}

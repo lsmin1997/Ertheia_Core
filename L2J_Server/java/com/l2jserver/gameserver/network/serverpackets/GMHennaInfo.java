@@ -18,14 +18,13 @@ import com.l2jserver.gameserver.model.L2HennaInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 
 /**
- *
- * @author  KenM
+ * @author KenM
  */
 public class GMHennaInfo extends L2GameServerPacket
 {
 	private final L2PcInstance _activeChar;
 	private final L2HennaInstance[] _hennas = new L2HennaInstance[3];
-	private int _count;
+	private final int _count;
 	
 	public GMHennaInfo(L2PcInstance activeChar)
 	{
@@ -34,7 +33,7 @@ public class GMHennaInfo extends L2GameServerPacket
 		int j = 0;
 		for (int i = 0; i < 3; i++)
 		{
-			L2HennaInstance h = _activeChar.getHenna(i+1);
+			L2HennaInstance h = _activeChar.getHenna(i + 1);
 			if (h != null)
 			{
 				_hennas[j++] = h;
@@ -67,7 +66,7 @@ public class GMHennaInfo extends L2GameServerPacket
 		writeC(_activeChar.getHennaStatDEX());
 		writeC(_activeChar.getHennaStatWIT());
 		writeD(3); // slots?
-		writeD(_count); //size
+		writeD(_count); // size
 		for (int i = 0; i < _count; i++)
 		{
 			writeD(_hennas[i].getSymbolId());

@@ -36,7 +36,6 @@ public class EffectSignetNoise extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#getEffectType()
 	 */
 	@Override
@@ -46,7 +45,6 @@ public class EffectSignetNoise extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onStart()
 	 */
 	@Override
@@ -57,21 +55,24 @@ public class EffectSignetNoise extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onActionTime()
 	 */
 	@Override
 	public boolean onActionTime()
 	{
-		if (getCount() == getTotalCount() - 1)
+		if (getCount() == (getTotalCount() - 1))
+		{
 			return true; // do nothing first time
+		}
 		
 		L2PcInstance caster = (L2PcInstance) getEffector();
 		
 		for (L2Character target : _actor.getKnownList().getKnownCharactersInRadius(getSkill().getSkillRadius()))
 		{
-			if (target == null || target == caster)
+			if ((target == null) || (target == caster))
+			{
 				continue;
+			}
 			
 			if (caster.canAttackCharacter(target))
 			{
@@ -81,7 +82,9 @@ public class EffectSignetNoise extends L2Effect
 					for (L2Effect effect : effects)
 					{
 						if (effect.getSkill().isDance())
+						{
 							effect.exit();
+						}
 					}
 				}
 			}
@@ -90,13 +93,14 @@ public class EffectSignetNoise extends L2Effect
 	}
 	
 	/**
-	 * 
 	 * @see com.l2jserver.gameserver.model.L2Effect#onExit()
 	 */
 	@Override
 	public void onExit()
 	{
 		if (_actor != null)
+		{
 			_actor.deleteMe();
+		}
 	}
 }

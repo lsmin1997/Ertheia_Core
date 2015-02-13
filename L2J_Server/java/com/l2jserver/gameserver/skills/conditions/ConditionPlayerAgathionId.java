@@ -26,7 +26,6 @@ public class ConditionPlayerAgathionId extends Condition
 	
 	/**
 	 * Instantiates a new condition player agathion id.
-	 *
 	 * @param agathionId the agathion id
 	 */
 	public ConditionPlayerAgathionId(int agathionId)
@@ -34,12 +33,13 @@ public class ConditionPlayerAgathionId extends Condition
 		_agathionId = agathionId;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.l2jserver.gameserver.skills.conditions.Condition#testImpl(com.l2jserver.gameserver.skills.Env)
 	 */
 	@Override
 	public boolean testImpl(Env env)
 	{
-		return ((L2PcInstance)env.player).getAgathionId() == _agathionId;
+		return ((L2PcInstance) env.player).getAgathionId() == _agathionId;
 	}
 }
