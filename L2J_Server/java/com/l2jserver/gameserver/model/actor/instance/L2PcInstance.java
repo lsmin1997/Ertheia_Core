@@ -48,7 +48,6 @@ import java.util.logging.Level;
 
 import javolution.util.FastList;
 import javolution.util.FastMap;
-import javolution.util.FastSet;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -749,7 +748,7 @@ public final class L2PcInstance extends L2Playable
 	/** Player's cubics. */
 	private final Map<Integer, L2CubicInstance> _cubics = new ConcurrentSkipListMap<>();
 	/** Active shots. */
-	protected FastSet<Integer> _activeSoulShots = new FastSet<Integer>().shared();
+	protected Set<Integer> _activeSoulShots = ConcurrentHashMap.newKeySet();
 	
 	public final ReentrantLock soulShotLock = new ReentrantLock();
 	
@@ -9394,54 +9393,31 @@ public final class L2PcInstance extends L2Playable
 	@Override
 	public void rechargeShots(boolean physical, boolean magic)
 	{
-		L2ItemInstance item;
-		IItemHandler handler;
-		
-		if ((_activeSoulShots == null) || _activeSoulShots.isEmpty())
-		{
-			return;
-		}
-		
 		for (int itemId : _activeSoulShots)
 		{
-			item = getInventory().getItemByItemId(itemId);
-			
-			if (item != null)
-			{
-				if (magic)
-				{
-					if (item.getItem().getDefaultAction() == ActionType.SPIRITSHOT)
-					{
-						handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
-						if (handler != null)
-						{
-							handler.useItem(this, item, false);
-						}
-					}
-				}
-				
-				if (physical)
-				{
-					if (item.getItem().getDefaultAction() == ActionType.SOULSHOT)
-					{
-						handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
-						if (handler != null)
-						{
-							handler.useItem(this, item, false);
-						}
-					}
-				}
-			}
-			else
+			final L2ItemInstance item = getInventory().getItemByItemId(itemId);
+			if (item == null)
 			{
 				removeAutoSoulShot(itemId);
+				continue;
+			}
+			
+			final IItemHandler handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
+			if (handler == null)
+			{
+				continue;
+			}
+			
+			if ((magic && (item.getItem().getDefaultAction() == ActionType.SPIRITSHOT)) //
+				|| (physical && (item.getItem().getDefaultAction() == ActionType.SOULSHOT)))
+			{
+				handler.useItem(this, item, false);
 			}
 		}
 	}
 	
 	/**
-	 * Cancel autoshot for all shots matching crystaltype<BR>
-	 * {@link L2Item#getCrystalType()}
+	 * Cancel autoshot for all shots matching crystaltype {@link L2Item#getCrystalType()}.
 	 * @param crystalType int type to disable
 	 */
 	public void disableAutoShotByCrystalType(int crystalType)
