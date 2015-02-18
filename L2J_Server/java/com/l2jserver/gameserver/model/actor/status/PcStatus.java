@@ -197,30 +197,30 @@ public class PcStatus extends PlayableStatus
 					}
 				}
 			}
-		}
-		
-		if (value > 0)
-		{
-			value = getCurrentHp() - value;
-			if (value <= 0)
+			
+			if (value > 0)
 			{
-				if (getActiveChar().isInDuel())
+				value = getCurrentHp() - value;
+				if (value <= 0)
 				{
-					getActiveChar().disableAllSkills();
-					stopHpMpRegeneration();
-					attacker.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
-					attacker.sendPacket(ActionFailed.STATIC_PACKET);
-					
-					// let the DuelManager know of his defeat
-					DuelManager.getInstance().onPlayerDefeat(getActiveChar());
-					value = 1;
+					if (getActiveChar().isInDuel())
+					{
+						getActiveChar().disableAllSkills();
+						stopHpMpRegeneration();
+						attacker.getAI().setIntention(CtrlIntention.AI_INTENTION_ACTIVE);
+						attacker.sendPacket(ActionFailed.STATIC_PACKET);
+						
+						// let the DuelManager know of his defeat
+						DuelManager.getInstance().onPlayerDefeat(getActiveChar());
+						value = 1;
+					}
+					else
+					{
+						value = 0;
+					}
 				}
-				else
-				{
-					value = 0;
-				}
+				setCurrentHp(value);
 			}
-			setCurrentHp(value);
 		}
 		
 		if (getActiveChar().getCurrentHp() < 0.5)

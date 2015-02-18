@@ -14,7 +14,6 @@
  */
 package com.l2jserver.gameserver.network.clientpackets;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.logging.Logger;
 
@@ -427,22 +426,9 @@ public class EnterWorld extends L2GameClientPacket
 		
 		sendPacket(SystemMessage.getSystemMessage(SystemMessageId.WELCOME_TO_LINEAGE));
 		
-		activeChar.sendMessage(getText("VGhpcyBzZXJ2ZXIgdXNlcyBMMkosIGEgcHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg==\n"));
-		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSB0aGUgTDJKIERldiBUZWFtIGF0IGwyanNlcnZlci5jb20=\n"));
-		
-		if (Config.DISPLAY_SERVER_VERSION)
-		{
-			if (Config.SERVER_VERSION != null)
-			{
-				activeChar.sendMessage(getText("TDJKIFNlcnZlciBWZXJzaW9uOg==") + " " + Config.SERVER_VERSION);
-			}
-			
-			if (Config.DATAPACK_VERSION != null)
-			{
-				activeChar.sendMessage(getText("TDJKIERhdGFwYWNrIFZlcnNpb246") + " " + Config.DATAPACK_VERSION);
-			}
-		}
-		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxMQ==\n"));
+		activeChar.sendMessage(getText("VGhpcyBzZXJ2ZXIgdXNlcyBMMkosIGEgcHJvamVjdCBmb3VuZGVkIGJ5IEwyQ2hlZg=="));
+		activeChar.sendMessage(getText("YW5kIGRldmVsb3BlZCBieSB0aGUgTDJKIERldiBUZWFtIGF0IGwyanNlcnZlci5jb20="));
+		activeChar.sendMessage(getText("Q29weXJpZ2h0IDIwMDQtMjAxMQ=="));
 		
 		SevenSigns.getInstance().sendCurrentPeriodMsg(activeChar);
 		Announcements.getInstance().showAnnouncements(activeChar);
@@ -683,20 +669,13 @@ public class EnterWorld extends L2GameClientPacket
 	}
 	
 	/**
-	 * @param string
-	 * @return
-	 * @throws UnsupportedEncodingException
+	 * Gets the decoded string.
+	 * @param string the string to decode
+	 * @return the decoded string
 	 */
 	private String getText(String string)
 	{
-		try
-		{
-			return new String(Base64.getDecoder().decode(string), "UTF-8");
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			return null;
-		}
+		return new String(Base64.getDecoder().decode(string));
 	}
 	
 	private void loadTutorial(L2PcInstance player)

@@ -28,7 +28,7 @@ public class L2EffectPointInstance extends L2Npc
 		super(objectId, template);
 		setInstanceType(InstanceType.L2EffectPointInstance);
 		setIsInvul(false);
-		_owner = owner == null ? null : owner.getActingPlayer();
+		_owner = owner.getActingPlayer();
 		setInstanceId(owner.getInstanceId());
 	}
 	

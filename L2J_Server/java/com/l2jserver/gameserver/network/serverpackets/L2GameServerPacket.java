@@ -14,12 +14,10 @@
  */
 package com.l2jserver.gameserver.network.serverpackets;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.mmocore.network.SendablePacket;
 
-import com.l2jserver.Config;
 import com.l2jserver.gameserver.network.L2GameClient;
 
 /**
@@ -48,20 +46,16 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 		_invisible = b;
 	}
 	
-	/**
-	 * @see com.l2jserver.mmocore.network.SendablePacket#write()
-	 */
 	@Override
 	protected void write()
 	{
 		try
 		{
-			// _log.info(this.getType());
 			writeImpl();
 		}
 		catch (Exception e)
 		{
-			_log.log(Level.SEVERE, "Client: " + getClient().toString() + " - Failed writing: " + getType() + " - L2J Server Version: " + Config.SERVER_VERSION + " - DP Revision: " + Config.DATAPACK_VERSION + " ; " + e.getMessage(), e);
+			_log.severe("Client: " + getClient().toString() + " - Failed writing: " + getType() + "; " + e.getMessage());
 		}
 	}
 	
@@ -73,7 +67,7 @@ public abstract class L2GameServerPacket extends SendablePacket<L2GameClient>
 	protected abstract void writeImpl();
 	
 	/**
-	 * @return A String with this packet name for debuging purposes
+	 * @return A String with this packet name for debugging purposes
 	 */
 	public abstract String getType();
 }

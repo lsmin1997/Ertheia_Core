@@ -139,12 +139,11 @@ public class Announcements
 	
 	private void readFromDisk(File file)
 	{
-		LineNumberReader lnr = null;
-		try
+		try (LineNumberReader lnr = new LineNumberReader(new FileReader(file));)
 		{
 			int i = 0;
 			String line = null;
-			lnr = new LineNumberReader(new FileReader(file));
+			
 			while ((line = lnr.readLine()) != null)
 			{
 				StringTokenizer st = new StringTokenizer(line, "\n\r");
@@ -165,17 +164,6 @@ public class Announcements
 		catch (IOException e1)
 		{
 			_log.log(Level.SEVERE, "Error reading announcements: ", e1);
-		}
-		finally
-		{
-			try
-			{
-				lnr.close();
-			}
-			catch (Exception e2)
-			{
-				// nothing
-			}
 		}
 	}
 	

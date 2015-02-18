@@ -62,8 +62,6 @@ public final class Config
 	public static final String GENERAL_CONFIG_FILE = "./config/General.properties";
 	public static final String HEXID_FILE = "./config/hexid.txt";
 	public static final String ID_CONFIG_FILE = "./config/idfactory.properties";
-	public static final String SERVER_VERSION_FILE = "./config/l2j-version.properties";
-	public static final String DATAPACK_VERSION_FILE = "./config/l2jdp-version.properties";
 	public static final String L2JMOD_CONFIG_FILE = "./config/l2jmods.properties";
 	public static final String LOGIN_CONFIGURATION_FILE = "./config/loginserver.properties";
 	public static final String NPC_CONFIG_FILE = "./config/NPC.properties";
@@ -916,9 +914,6 @@ public final class Config
 	public static int SELECTED_NODE_ID;
 	public static int LINKED_NODE_ID;
 	public static String NEW_NODE_TYPE;
-	public static String SERVER_VERSION;
-	public static String SERVER_BUILD_DATE;
-	public static String DATAPACK_VERSION;
 	public static int PVP_NORMAL_TIME;
 	public static int PVP_PVP_TIME;
 	
@@ -1683,38 +1678,6 @@ public final class Config
 				{
 					e.printStackTrace();
 					throw new Error("Failed to Load " + CHARACTER_CONFIG_FILE + " file.");
-				}
-				
-				// Load L2J Server Version L2Properties file (if exists)
-				try
-				{
-					L2Properties serverVersion = new L2Properties();
-					is = new FileInputStream(new File(SERVER_VERSION_FILE));
-					serverVersion.load(is);
-					
-					SERVER_VERSION = serverVersion.getProperty("version", "Unsupported Custom Version.");
-					SERVER_BUILD_DATE = serverVersion.getProperty("builddate", "Undefined Date.");
-				}
-				catch (Exception e)
-				{
-					// Ignore L2Properties file if it doesnt exist
-					SERVER_VERSION = "Unsupported Custom Version.";
-					SERVER_BUILD_DATE = "Undefined Date.";
-				}
-				
-				// Load L2J Datapack Version L2Properties file (if exists)
-				try
-				{
-					L2Properties serverVersion = new L2Properties();
-					is = new FileInputStream(new File(DATAPACK_VERSION_FILE));
-					serverVersion.load(is);
-					
-					DATAPACK_VERSION = serverVersion.getProperty("version", "Unsupported Custom Version.");
-				}
-				catch (Exception e)
-				{
-					// Ignore L2Properties file if it doesnt exist
-					DATAPACK_VERSION = "Unsupported Custom Version.";
 				}
 				
 				// Load Telnet L2Properties file (if exists)

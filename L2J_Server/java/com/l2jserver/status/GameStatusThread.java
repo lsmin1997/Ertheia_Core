@@ -1207,9 +1207,6 @@ public class GameStatusThread extends Thread
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(sdf.format(cal.getTime()));
-		sb.append("\n\nL2J Server Version: " + Config.SERVER_VERSION);
-		sb.append("\nDP Revision: " + Config.DATAPACK_VERSION);
-		sb.append("\n\n");
 		sb.append(getServerStatus());
 		sb.append("\n\n");
 		sb.append("\n## Java Platform Information ##");

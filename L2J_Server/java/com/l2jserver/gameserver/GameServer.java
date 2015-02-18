@@ -175,16 +175,7 @@ public class GameServer
 		long serverLoadStart = System.currentTimeMillis();
 		
 		gameServer = this;
-		_log.finest("used mem:" + getUsedMemoryMB() + "MB");
-		
-		if (Config.SERVER_VERSION != null)
-		{
-			_log.info("L2J Server Version:    " + Config.SERVER_VERSION);
-		}
-		if (Config.DATAPACK_VERSION != null)
-		{
-			_log.info("L2J Datapack Version:  " + Config.DATAPACK_VERSION);
-		}
+		_log.finest("Used memory:" + getUsedMemoryMB() + "MB");
 		
 		_idFactory = IdFactory.getInstance();
 		

@@ -19,7 +19,6 @@ import static com.l2jserver.gameserver.ai.CtrlIntention.AI_INTENTION_ATTACK;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
 
 import javolution.util.FastList;
 
@@ -141,18 +140,7 @@ public class L2ControllableMobAI extends L2AttackableAI
 		
 		npc.setTarget(getAttackTarget());
 		
-		L2Skill[] skills = null;
-		// double dist2 = 0;
-		
-		try
-		{
-			skills = _actor.getAllSkills();
-			// dist2 = _actor.getPlanDistanceSq(getAttackTarget().getX(), getAttackTarget().getY());
-		}
-		catch (NullPointerException e)
-		{
-			_log.log(Level.WARNING, "Encountered Null Value: " + e.getMessage(), e);
-		}
+		L2Skill[] skills = _actor.getAllSkills();
 		
 		if (!_actor.isMuted())
 		{
@@ -194,28 +182,16 @@ public class L2ControllableMobAI extends L2AttackableAI
 			return;
 		}
 		
-		L2Skill[] skills = null;
-		double dist2 = 0;
-		int range = 0;
-		int max_range = 0;
-		
 		_actor.setTarget(target);
+		L2Skill[] skills = _actor.getAllSkills();
+		double dist2 = _actor.getPlanDistanceSq(target.getX(), target.getY());
+		int range = _actor.getPhysicalAttackRange() + _actor.getTemplate().collisionRadius + target.getTemplate().collisionRadius;
+		int max_range = range;
+		
 		// as a response, we put the target in a forcedattack mode
 		L2ControllableMobInstance theTarget = (L2ControllableMobInstance) target;
 		L2ControllableMobAI ctrlAi = (L2ControllableMobAI) theTarget.getAI();
 		ctrlAi.forceAttack(_actor);
-		
-		try
-		{
-			skills = _actor.getAllSkills();
-			dist2 = _actor.getPlanDistanceSq(target.getX(), target.getY());
-			range = _actor.getPhysicalAttackRange() + _actor.getTemplate().collisionRadius + target.getTemplate().collisionRadius;
-			max_range = range;
-		}
-		catch (NullPointerException e)
-		{
-			_log.log(Level.WARNING, "Encountered Null Value: " + e.getMessage(), e);
-		}
 		
 		if (!_actor.isMuted() && (dist2 > ((range + 20) * (range + 20))))
 		{
@@ -252,23 +228,11 @@ public class L2ControllableMobAI extends L2AttackableAI
 			setAlternateAI(AI_IDLE);
 		}
 		
-		L2Skill[] skills = null;
-		double dist2 = 0;
-		int range = 0;
-		int max_range = 0;
-		
-		try
-		{
-			_actor.setTarget(getForcedTarget());
-			skills = _actor.getAllSkills();
-			dist2 = _actor.getPlanDistanceSq(getForcedTarget().getX(), getForcedTarget().getY());
-			range = _actor.getPhysicalAttackRange() + _actor.getTemplate().collisionRadius + getForcedTarget().getTemplate().collisionRadius;
-			max_range = range;
-		}
-		catch (NullPointerException e)
-		{
-			_log.log(Level.WARNING, "Encountered Null Value: " + e.getMessage(), e);
-		}
+		_actor.setTarget(getForcedTarget());
+		L2Skill[] skills = _actor.getAllSkills();
+		double dist2 = _actor.getPlanDistanceSq(getForcedTarget().getX(), getForcedTarget().getY());
+		int range = _actor.getPhysicalAttackRange() + _actor.getTemplate().collisionRadius + getForcedTarget().getTemplate().collisionRadius;
+		int max_range = range;
 		
 		if (!_actor.isMuted() && (dist2 > ((range + 20) * (range + 20))))
 		{
@@ -342,23 +306,11 @@ public class L2ControllableMobAI extends L2AttackableAI
 				}
 			}
 			
-			L2Skill[] skills = null;
-			double dist2 = 0;
-			int range = 0;
-			int max_range = 0;
-			
-			try
-			{
-				_actor.setTarget(getAttackTarget());
-				skills = _actor.getAllSkills();
-				dist2 = _actor.getPlanDistanceSq(getAttackTarget().getX(), getAttackTarget().getY());
-				range = _actor.getPhysicalAttackRange() + _actor.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius;
-				max_range = range;
-			}
-			catch (NullPointerException e)
-			{
-				_log.log(Level.WARNING, "Encountered Null Value: " + e.getMessage(), e);
-			}
+			_actor.setTarget(getAttackTarget());
+			L2Skill[] skills = _actor.getAllSkills();
+			double dist2 = _actor.getPlanDistanceSq(getAttackTarget().getX(), getAttackTarget().getY());
+			int range = _actor.getPhysicalAttackRange() + _actor.getTemplate().collisionRadius + getAttackTarget().getTemplate().collisionRadius;
+			int max_range = range;
 			
 			if (!_actor.isMuted() && (dist2 > ((range + 20) * (range + 20))))
 			{
