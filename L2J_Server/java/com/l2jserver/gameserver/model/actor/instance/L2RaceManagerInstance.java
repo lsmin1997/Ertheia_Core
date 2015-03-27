@@ -18,9 +18,8 @@
  */
 package com.l2jserver.gameserver.model.actor.instance;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javolution.util.FastList;
 
 import com.l2jserver.gameserver.MonsterRace;
 import com.l2jserver.gameserver.ThreadPoolManager;
@@ -47,7 +46,6 @@ public class L2RaceManagerInstance extends L2Npc
 	public static final int LANES = 8;
 	public static final int WINDOW_START = 0;
 	
-	// private static List<Race> _history;
 	private static List<L2RaceManagerInstance> _managers;
 	protected static int _raceNumber = 4;
 	
@@ -93,16 +91,19 @@ public class L2RaceManagerInstance extends L2Npc
 		100000
 	};
 	
-	public L2RaceManagerInstance(int objectId, L2NpcTemplate template)
+	/**
+	 * Creates a race manager.
+	 * @param template the race manager NPC template
+	 */
+	public L2RaceManagerInstance(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 		setInstanceType(InstanceType.L2RaceManagerInstance);
 		if (_notInitialized)
 		{
 			_notInitialized = false;
 			
-			// _history = new FastList<>();
-			_managers = new FastList<>();
+			_managers = new ArrayList<>();
 			
 			ThreadPoolManager s = ThreadPoolManager.getInstance();
 			s.scheduleGeneralAtFixedRate(new Announcement(SystemMessageId.TICKETS_ARE_NOW_AVAILABLE_FOR_MONSTER_RACE_S1), 0, 10 * MINUTE);
@@ -125,7 +126,6 @@ public class L2RaceManagerInstance extends L2Npc
 			s.scheduleGeneralAtFixedRate(new Announcement(SystemMessageId.THE_RACE_WILL_BEGIN_IN_S1_SECOND_S), (8 * MINUTE) + (58 * SECOND), 10 * MINUTE);
 			s.scheduleGeneralAtFixedRate(new Announcement(SystemMessageId.THE_RACE_WILL_BEGIN_IN_S1_SECOND_S), (8 * MINUTE) + (59 * SECOND), 10 * MINUTE);
 			s.scheduleGeneralAtFixedRate(new Announcement(SystemMessageId.THEY_RE_OFF), 9 * MINUTE, 10 * MINUTE);
-			// */
 		}
 		_managers.add(this);
 	}

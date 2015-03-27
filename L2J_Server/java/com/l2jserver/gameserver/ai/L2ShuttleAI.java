@@ -18,7 +18,6 @@
  */
 package com.l2jserver.gameserver.ai;
 
-import com.l2jserver.gameserver.model.actor.instance.L2AirShipInstance;
 import com.l2jserver.gameserver.model.actor.instance.L2ShuttleInstance;
 import com.l2jserver.gameserver.network.serverpackets.shuttle.ExShuttleMove;
 
@@ -27,9 +26,9 @@ import com.l2jserver.gameserver.network.serverpackets.shuttle.ExShuttleMove;
  */
 public class L2ShuttleAI extends L2VehicleAI
 {
-	public L2ShuttleAI(L2AirShipInstance.AIAccessor accessor)
+	public L2ShuttleAI(L2ShuttleInstance actor)
 	{
-		super(accessor);
+		super(actor);
 	}
 	
 	@Override
@@ -38,7 +37,7 @@ public class L2ShuttleAI extends L2VehicleAI
 		if (!_actor.isMovementDisabled())
 		{
 			_clientMoving = true;
-			_accessor.moveTo(x, y, z);
+			_actor.moveToLocation(x, y, z, 0);
 			_actor.broadcastPacket(new ExShuttleMove(getActor(), x, y, z));
 		}
 	}

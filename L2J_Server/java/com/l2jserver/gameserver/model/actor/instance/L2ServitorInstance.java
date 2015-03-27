@@ -23,13 +23,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -73,9 +73,9 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 	
 	private int _referenceSkill;
 	
-	public L2ServitorInstance(int objectId, L2NpcTemplate template, L2PcInstance owner)
+	public L2ServitorInstance(L2NpcTemplate template, L2PcInstance owner)
 	{
-		super(objectId, template, owner);
+		super(template, owner);
 		setInstanceType(InstanceType.L2ServitorInstance);
 		setShowSummonAnimation(true);
 	}
@@ -102,8 +102,6 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		return 1;
 	}
 	
-	// ************************************/
-	
 	public void setExpMultiplier(float expMultiplier)
 	{
 		_expMultiplier = expMultiplier;
@@ -114,8 +112,6 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		return _expMultiplier;
 	}
 	
-	// ************************************/
-	
 	public void setItemConsume(ItemHolder item)
 	{
 		_itemConsume = item;
@@ -125,8 +121,6 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 	{
 		return _itemConsume;
 	}
-	
-	// ************************************/
 	
 	public void setItemConsumeInterval(int interval)
 	{
@@ -139,8 +133,6 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		return _consumeItemInterval;
 	}
 	
-	// ************************************/
-	
 	public void setLifeTime(int lifeTime)
 	{
 		_lifeTime = lifeTime;
@@ -152,8 +144,6 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		return _lifeTime;
 	}
 	
-	// ************************************/
-	
 	public void setLifeTimeRemaining(int time)
 	{
 		_lifeTimeRemaining = time;
@@ -163,8 +153,6 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 	{
 		return _lifeTimeRemaining;
 	}
-	
-	// ************************************/
 	
 	public void setReferenceSkill(int skillId)
 	{
@@ -191,6 +179,12 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 		
 		CharSummonTable.getInstance().removeServitor(getOwner(), getObjectId());
 		return true;
+		
+	}
+	
+	@Override
+	public void doPickupItem(L2Object object)
+	{
 		
 	}
 	
@@ -300,7 +294,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 			
 			int buff_index = 0;
 			
-			final List<Integer> storedSkills = new FastList<>();
+			final List<Integer> storedSkills = new LinkedList<>();
 			
 			// Store all effect data along with calculated remaining
 			if (storeEffects)
@@ -359,7 +353,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 						}
 						if (!SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
 						{
-							SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), new FastList<SummonEffect>());
+							SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), new CopyOnWriteArrayList<SummonEffect>());
 						}
 						
 						SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill()).add(SummonEffectsTable.getInstance().new SummonEffect(skill, info.getTime()));
@@ -415,7 +409,7 @@ public class L2ServitorInstance extends L2Summon implements Runnable
 								}
 								if (!SummonEffectsTable.getInstance().getServitorEffects(getOwner()).containsKey(getReferenceSkill()))
 								{
-									SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), new FastList<SummonEffect>());
+									SummonEffectsTable.getInstance().getServitorEffects(getOwner()).put(getReferenceSkill(), new CopyOnWriteArrayList<SummonEffect>());
 								}
 								
 								SummonEffectsTable.getInstance().getServitorEffects(getOwner()).get(getReferenceSkill()).add(SummonEffectsTable.getInstance().new SummonEffect(skill, effectCurTime));

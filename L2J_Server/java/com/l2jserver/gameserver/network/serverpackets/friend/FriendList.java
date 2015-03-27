@@ -21,9 +21,8 @@ package com.l2jserver.gameserver.network.serverpackets.friend;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 import java.util.List;
-
-import javolution.util.FastList;
 
 import com.l2jserver.L2DatabaseFactory;
 import com.l2jserver.gameserver.data.sql.impl.CharNameTable;
@@ -38,7 +37,7 @@ import com.l2jserver.gameserver.network.serverpackets.L2GameServerPacket;
  */
 public class FriendList extends L2GameServerPacket
 {
-	private final List<FriendInfo> _info;
+	private final List<FriendInfo> _info = new LinkedList<>();
 	
 	private static class FriendInfo
 	{
@@ -60,7 +59,6 @@ public class FriendList extends L2GameServerPacket
 	
 	public FriendList(L2PcInstance player)
 	{
-		_info = new FastList<>(player.getFriendList().size());
 		for (int objId : player.getFriendList())
 		{
 			String name = CharNameTable.getInstance().getNameById(objId);

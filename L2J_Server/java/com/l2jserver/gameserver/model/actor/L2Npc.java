@@ -32,6 +32,7 @@ import com.l2jserver.Config;
 import com.l2jserver.gameserver.ItemsAutoDestroy;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.cache.HtmCache;
+import com.l2jserver.gameserver.data.xml.impl.NpcData;
 import com.l2jserver.gameserver.datatables.ItemTable;
 import com.l2jserver.gameserver.datatables.NpcPersonalAIData;
 import com.l2jserver.gameserver.enums.AISkillScope;
@@ -148,6 +149,39 @@ public class L2Npc extends L2Character
 	private int _killingBlowWeaponId;
 	/** Map of summoned NPCs by this NPC. */
 	private volatile Map<Integer, L2Npc> _summonedNpcs = null;
+	
+	/**
+	 * Creates a NPC.
+	 * @param template the NPC template
+	 */
+	public L2Npc(L2NpcTemplate template)
+	{
+		// Call the L2Character constructor to set the _template of the L2Character, copy skills from template to object
+		// and link _calculators to NPC_STD_CALCULATOR
+		super(template);
+		setInstanceType(InstanceType.L2Npc);
+		initCharStatusUpdateValues();
+		
+		// initialize the "current" equipment
+		_currentLHandId = getTemplate().getLHandId();
+		_currentRHandId = getTemplate().getRHandId();
+		_currentEnchant = Config.ENABLE_RANDOM_ENCHANT_EFFECT ? Rnd.get(4, 21) : getTemplate().getWeaponEnchant();
+		
+		// initialize the "current" collisions
+		_currentCollisionHeight = getTemplate().getfCollisionHeight();
+		_currentCollisionRadius = getTemplate().getfCollisionRadius();
+		
+		setIsFlying(template.isFlying());
+	}
+	
+	/**
+	 * Creates a NPC.
+	 * @param npcId the NPC ID
+	 */
+	public L2Npc(int npcId)
+	{
+		this(NpcData.getInstance().getTemplate(npcId));
+	}
 	
 	public int getSoulShotChance()
 	{
@@ -418,35 +452,6 @@ public class L2Npc extends L2Character
 	public boolean isRandomAnimationEnabled()
 	{
 		return _isRandomAnimationEnabled;
-	}
-	
-	/**
-	 * Constructor of L2NpcInstance (use L2Character constructor).<br>
-	 * <B><U>Actions</U>:</B>
-	 * <ul>
-	 * <li>Call the L2Character constructor to set the _template of the L2Character (copy skills from template to object and link _calculators to NPC_STD_CALCULATOR)</li>
-	 * <li>Set the name of the L2Character</li>
-	 * <li>Create a RandomAnimation Task that will be launched after the calculated delay if the server allow it</li>
-	 * </ul>
-	 * @param objectId Identifier of the object to initialized
-	 * @param template The L2NpcTemplate to apply to the NPC
-	 */
-	public L2Npc(int objectId, L2NpcTemplate template)
-	{
-		// Call the L2Character constructor to set the _template of the L2Character, copy skills from template to object
-		// and link _calculators to NPC_STD_CALCULATOR
-		super(objectId, template);
-		setInstanceType(InstanceType.L2Npc);
-		initCharStatusUpdateValues();
-		
-		// initialize the "current" equipment
-		_currentLHandId = getTemplate().getLHandId();
-		_currentRHandId = getTemplate().getRHandId();
-		_currentEnchant = Config.ENABLE_RANDOM_ENCHANT_EFFECT ? Rnd.get(4, 21) : getTemplate().getWeaponEnchant();
-		
-		// initialize the "current" collisions
-		_currentCollisionHeight = getTemplate().getfCollisionHeight();
-		_currentCollisionRadius = getTemplate().getfCollisionRadius();
 	}
 	
 	@Override

@@ -19,11 +19,9 @@
 package com.l2jserver.gameserver.model.actor;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
-
-import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
@@ -54,16 +52,20 @@ import com.l2jserver.gameserver.util.Util;
 public abstract class L2Vehicle extends L2Character
 {
 	protected int _dockId = 0;
-	protected final FastList<L2PcInstance> _passengers = new FastList<>();
+	protected final List<L2PcInstance> _passengers = new CopyOnWriteArrayList<>();
 	protected Location _oustLoc = null;
 	private Runnable _engine = null;
 	
 	protected VehiclePathPoint[] _currentPath = null;
 	protected int _runState = 0;
 	
-	public L2Vehicle(int objectId, L2CharTemplate template)
+	/**
+	 * Creates an abstract vehicle.
+	 * @param template the vehicle template
+	 */
+	public L2Vehicle(L2CharTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 		setInstanceType(InstanceType.L2Vehicle);
 		setIsFlying(true);
 	}
@@ -228,19 +230,8 @@ public abstract class L2Vehicle extends L2Character
 	
 	public void oustPlayers()
 	{
-		L2PcInstance player;
-		
-		// Use iterator because oustPlayer will try to remove player from _passengers
-		final Iterator<L2PcInstance> iter = _passengers.iterator();
-		while (iter.hasNext())
-		{
-			player = iter.next();
-			iter.remove();
-			if (player != null)
-			{
-				oustPlayer(player);
-			}
-		}
+		_passengers.forEach(p -> oustPlayer(p));
+		_passengers.clear();
 	}
 	
 	public void oustPlayer(L2PcInstance player)
@@ -506,12 +497,9 @@ public abstract class L2Vehicle extends L2Character
 		return false;
 	}
 	
-	public class AIAccessor extends L2Character.AIAccessor
+	@Override
+	public void detachAI()
 	{
-		@Override
-		public void detachAI()
-		{
-		}
 	}
 	
 	@Override

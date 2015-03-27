@@ -21,11 +21,10 @@ package com.l2jserver.gameserver.network.serverpackets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.L2DatabaseFactory;
@@ -43,7 +42,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 	private final String _loginName;
 	private final int _sessionId;
 	private int _activeId;
-	private final CharSelectInfoPackage[] _characterPackages;
+	private final List<CharSelectInfoPackage> _characterPackages;
 	
 	private static final int[] PAPERDOLL_ORDER_VISUAL_ID = new int[]
 	{
@@ -78,7 +77,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 		_activeId = activeId;
 	}
 	
-	public CharSelectInfoPackage[] getCharInfo()
+	public List<CharSelectInfoPackage> getCharInfo()
 	{
 		return _characterPackages;
 	}
@@ -87,7 +86,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 	protected final void writeImpl()
 	{
 		writeC(0x09); // packet id
-		int size = _characterPackages.length;
+		int size = _characterPackages.size();
 		writeD(size); // How many char there is on this account
 		
 		// Can prevent players from creating new characters (if 0); (if 1, the client will ask if chars may be created (0x13) Response: (0x0D) )
@@ -102,9 +101,10 @@ public class CharSelectionInfo extends L2GameServerPacket
 		{
 			for (int i = 0; i < size; i++)
 			{
-				if (lastAccess < _characterPackages[i].getLastAccess())
+				final CharSelectInfoPackage charInfoPackage = _characterPackages.get(i);
+				if (lastAccess < charInfoPackage.getLastAccess())
 				{
-					lastAccess = _characterPackages[i].getLastAccess();
+					lastAccess = charInfoPackage.getLastAccess();
 					_activeId = i;
 				}
 			}
@@ -112,7 +112,7 @@ public class CharSelectionInfo extends L2GameServerPacket
 		
 		for (int i = 0; i < size; i++)
 		{
-			CharSelectInfoPackage charInfoPackage = _characterPackages[i];
+			final CharSelectInfoPackage charInfoPackage = _characterPackages.get(i);
 			
 			writeS(charInfoPackage.getName()); // char name
 			writeD(charInfoPackage.getObjectId()); // char id
@@ -212,11 +212,9 @@ public class CharSelectionInfo extends L2GameServerPacket
 		}
 	}
 	
-	private static CharSelectInfoPackage[] loadCharacterSelectInfo(String loginName)
+	private static List<CharSelectInfoPackage> loadCharacterSelectInfo(String loginName)
 	{
-		CharSelectInfoPackage charInfopackage;
-		List<CharSelectInfoPackage> characterList = new FastList<>();
-		
+		final List<CharSelectInfoPackage> characterList = new ArrayList<>();
 		try (Connection con = L2DatabaseFactory.getInstance().getConnection();
 			PreparedStatement statement = con.prepareStatement("SELECT * FROM characters WHERE account_name=? ORDER BY createDate"))
 		{
@@ -225,20 +223,20 @@ public class CharSelectionInfo extends L2GameServerPacket
 			{
 				while (charList.next())// fills the package
 				{
-					charInfopackage = restoreChar(charList);
+					CharSelectInfoPackage charInfopackage = restoreChar(charList);
 					if (charInfopackage != null)
 					{
 						characterList.add(charInfopackage);
 					}
 				}
 			}
-			return characterList.toArray(new CharSelectInfoPackage[characterList.size()]);
+			return characterList;
 		}
 		catch (Exception e)
 		{
 			_log.log(Level.WARNING, "Could not restore char info: " + e.getMessage(), e);
 		}
-		return new CharSelectInfoPackage[0];
+		return characterList;
 	}
 	
 	private static void loadCharacterSubclassInfo(CharSelectInfoPackage charInfopackage, int ObjectId, int activeClassId)

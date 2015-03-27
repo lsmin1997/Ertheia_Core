@@ -39,11 +39,16 @@ public class L2ShuttleInstance extends L2Vehicle
 {
 	private L2ShuttleData _shuttleData;
 	
-	public L2ShuttleInstance(int objectId, L2CharTemplate template)
+	public L2ShuttleInstance(L2CharTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 		setInstanceType(InstanceType.L2ShuttleInstance);
-		setAI(new L2ShuttleAI(new AIAccessor()));
+	}
+	
+	@Override
+	public L2ShuttleAI initAI()
+	{
+		return new L2ShuttleAI(this);
 	}
 	
 	public List<L2ShuttleStop> getStops()

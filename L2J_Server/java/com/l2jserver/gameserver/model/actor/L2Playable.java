@@ -21,6 +21,7 @@ package com.l2jserver.gameserver.model.actor;
 import com.l2jserver.gameserver.ai.CtrlEvent;
 import com.l2jserver.gameserver.enums.InstanceType;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
+import com.l2jserver.gameserver.model.L2Object;
 import com.l2jserver.gameserver.model.actor.instance.L2PcInstance;
 import com.l2jserver.gameserver.model.actor.knownlist.PlayableKnownList;
 import com.l2jserver.gameserver.model.actor.stat.PlayableStat;
@@ -50,17 +51,20 @@ public abstract class L2Playable extends L2Character
 	private L2PcInstance transferDmgTo = null;
 	
 	/**
-	 * Constructor of L2Playable.<br>
-	 * <B><U> Actions</U> :</B>
-	 * <ul>
-	 * <li>Call the L2Character constructor to create an empty _skills slot and link copy basic Calculator set to this L2Playable</li>
-	 * </ul>
-	 * @param objectId Identifier of the object to initialized
-	 * @param template The L2CharTemplate to apply to the L2Playable
+	 * Creates an abstract playable creature.
+	 * @param objectId the playable object ID
+	 * @param template the creature template
 	 */
 	public L2Playable(int objectId, L2CharTemplate template)
 	{
 		super(objectId, template);
+		setInstanceType(InstanceType.L2Playable);
+		setIsInvul(false);
+	}
+	
+	public L2Playable(L2CharTemplate template)
+	{
+		super(template);
 		setInstanceType(InstanceType.L2Playable);
 		setIsInvul(false);
 	}
@@ -339,6 +343,8 @@ public abstract class L2Playable extends L2Character
 	{
 		return transferDmgTo;
 	}
+	
+	public abstract void doPickupItem(L2Object object);
 	
 	public abstract int getKarma();
 	

@@ -28,9 +28,9 @@ import com.l2jserver.gameserver.network.serverpackets.commission.ExShowCommissio
  */
 public class CommissionManagerInstance extends L2Npc
 {
-	public CommissionManagerInstance(int objectId, L2NpcTemplate template)
+	public CommissionManagerInstance(L2NpcTemplate template)
 	{
-		super(objectId, template);
+		super(template);
 		setInstanceType(InstanceType.CommissionManagerInstance);
 	}
 	

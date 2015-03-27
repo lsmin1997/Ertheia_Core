@@ -90,27 +90,14 @@ public abstract class L2Summon extends L2Playable
 	};
 	// @formatter:on
 	
-	public class AIAccessor extends L2Character.AIAccessor
+	/**
+	 * Creates an abstract summon.
+	 * @param template the summon NPC template
+	 * @param owner the owner
+	 */
+	public L2Summon(L2NpcTemplate template, L2PcInstance owner)
 	{
-		public L2Summon getSummon()
-		{
-			return L2Summon.this;
-		}
-		
-		public boolean isAutoFollow()
-		{
-			return getFollowStatus();
-		}
-		
-		public void doPickupItem(L2Object object)
-		{
-			L2Summon.this.doPickupItem(object);
-		}
-	}
-	
-	public L2Summon(int objectId, L2NpcTemplate template, L2PcInstance owner)
-	{
-		super(objectId, template);
+		super(template);
 		setInstanceType(InstanceType.L2Summon);
 		setInstanceId(owner.getInstanceId()); // set instance to same as owner
 		setShowSummonAnimation(true);
@@ -189,7 +176,7 @@ public abstract class L2Summon extends L2Playable
 	@Override
 	protected L2CharacterAI initAI()
 	{
-		return new L2SummonAI(new L2Summon.AIAccessor());
+		return new L2SummonAI(this);
 	}
 	
 	@Override
@@ -531,10 +518,6 @@ public abstract class L2Summon extends L2Playable
 	public PetInventory getInventory()
 	{
 		return null;
-	}
-	
-	protected void doPickupItem(L2Object object)
-	{
 	}
 	
 	public void setRestoreSummon(boolean val)

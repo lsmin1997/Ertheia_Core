@@ -16,17 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.l2jserver.gameserver.model.actor.instance;
+package com.l2jserver.gameserver.enums;
 
-import com.l2jserver.gameserver.enums.InstanceType;
-import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
-
-public final class L2FlyRaidBossInstance extends L2RaidBossInstance
+/**
+ * @author Zealar
+ */
+public enum EffectCalculationType
 {
-	public L2FlyRaidBossInstance(int objectId, L2NpcTemplate template)
-	{
-		super(objectId, template);
-		setInstanceType(InstanceType.L2FlyRaidBossInstance);
-		setIsFlying(true);
-	}
+	DIFF,
+	PER
 }

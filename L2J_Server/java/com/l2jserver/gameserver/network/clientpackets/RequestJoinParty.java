@@ -206,8 +206,8 @@ public final class RequestJoinParty extends L2GameClientPacket
 			requestor.addRequest(request);
 			target.addRequest(request);
 			target.sendPacket(new AskJoinParty(requestor.getName(), partyDistributionType));
-			requestor.setParty(new L2Party(requestor, partyDistributionType));
-			requestor.getParty().setPendingInvitation(true);
+			
+			requestor.setPartyDistributionType(partyDistributionType);
 		}
 		else
 		{

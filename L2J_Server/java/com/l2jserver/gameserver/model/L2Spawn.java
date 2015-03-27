@@ -19,20 +19,21 @@
 package com.l2jserver.gameserver.model;
 
 import java.lang.reflect.Constructor;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javolution.util.FastList;
 
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GeoData;
 import com.l2jserver.gameserver.ThreadPoolManager;
 import com.l2jserver.gameserver.data.sql.impl.TerritoryTable;
+import com.l2jserver.gameserver.data.xml.impl.NpcData;
 import com.l2jserver.gameserver.datatables.NpcPersonalAIData;
-import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.actor.L2Attackable;
 import com.l2jserver.gameserver.model.actor.L2Npc;
 import com.l2jserver.gameserver.model.actor.templates.L2NpcTemplate;
@@ -80,8 +81,8 @@ public class L2Spawn implements IPositionable, IIdentifiable, INamable
 	private boolean _doRespawn;
 	/** If true then spawn is custom */
 	private boolean _customSpawn;
-	private static List<SpawnListener> _spawnListeners = new FastList<>();
-	private final FastList<L2Npc> _spawnedNpcs = new FastList<>();
+	private static List<SpawnListener> _spawnListeners = new CopyOnWriteArrayList<>();
+	private final Deque<L2Npc> _spawnedNpcs = new ConcurrentLinkedDeque<>();
 	private Map<Integer, Location> _lastSpawnPoints;
 	private boolean _isNoRndWalk = false; // Is no random walk
 	
@@ -145,7 +146,20 @@ public class L2Spawn implements IPositionable, IIdentifiable, INamable
 		String className = "com.l2jserver.gameserver.model.actor.instance." + _template.getType() + "Instance";
 		
 		// Create the generic constructor of L2Npc managed by this L2Spawn
-		_constructor = Class.forName(className).asSubclass(L2Npc.class).getConstructor(int.class, L2NpcTemplate.class);
+		_constructor = Class.forName(className).asSubclass(L2Npc.class).getConstructor(L2NpcTemplate.class);
+	}
+	
+	/**
+	 * Creates a spawn.
+	 * @param npcId the NPC ID
+	 * @throws ClassCastException
+	 * @throws NoSuchMethodException
+	 * @throws ClassNotFoundException
+	 * @throws SecurityException
+	 */
+	public L2Spawn(int npcId) throws SecurityException, ClassNotFoundException, NoSuchMethodException, ClassCastException
+	{
+		this(NpcData.getInstance().getTemplate(npcId));
 	}
 	
 	/**
@@ -527,7 +541,7 @@ public class L2Spawn implements IPositionable, IIdentifiable, INamable
 			}
 			
 			// Call the constructor of the L2Npc
-			L2Npc npc = _constructor.newInstance(IdFactory.getInstance().getNextId(), _template);
+			L2Npc npc = _constructor.newInstance(_template);
 			npc.setInstanceId(getInstanceId()); // Must be done before object is spawned into visible world
 			if (isSummonSpawn)
 			{
@@ -672,28 +686,19 @@ public class L2Spawn implements IPositionable, IIdentifiable, INamable
 	
 	public static void addSpawnListener(SpawnListener listener)
 	{
-		synchronized (_spawnListeners)
-		{
-			_spawnListeners.add(listener);
-		}
+		_spawnListeners.add(listener);
 	}
 	
 	public static void removeSpawnListener(SpawnListener listener)
 	{
-		synchronized (_spawnListeners)
-		{
-			_spawnListeners.remove(listener);
-		}
+		_spawnListeners.remove(listener);
 	}
 	
 	public static void notifyNpcSpawned(L2Npc npc)
 	{
-		synchronized (_spawnListeners)
+		for (SpawnListener listener : _spawnListeners)
 		{
-			for (SpawnListener listener : _spawnListeners)
-			{
-				listener.npcSpawned(npc);
-			}
+			listener.npcSpawned(npc);
 		}
 	}
 	
@@ -758,15 +763,10 @@ public class L2Spawn implements IPositionable, IIdentifiable, INamable
 	
 	public L2Npc getLastSpawn()
 	{
-		if (!_spawnedNpcs.isEmpty())
-		{
-			return _spawnedNpcs.getLast();
-		}
-		
-		return null;
+		return _spawnedNpcs.peekLast();
 	}
 	
-	public final FastList<L2Npc> getSpawnedNpcs()
+	public final Deque<L2Npc> getSpawnedNpcs()
 	{
 		return _spawnedNpcs;
 	}

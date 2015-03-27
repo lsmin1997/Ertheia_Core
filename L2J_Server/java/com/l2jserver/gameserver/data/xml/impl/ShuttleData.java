@@ -28,8 +28,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.l2jserver.gameserver.data.xml.IXmlReader;
-import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.model.Location;
 import com.l2jserver.gameserver.model.StatsSet;
 import com.l2jserver.gameserver.model.VehiclePathPoint;
@@ -38,6 +36,7 @@ import com.l2jserver.gameserver.model.actor.templates.L2CharTemplate;
 import com.l2jserver.gameserver.model.shuttle.L2ShuttleData;
 import com.l2jserver.gameserver.model.shuttle.L2ShuttleEngine;
 import com.l2jserver.gameserver.model.shuttle.L2ShuttleStop;
+import com.l2jserver.util.data.xml.IXmlReader;
 
 /**
  * @author UnAfraid
@@ -164,7 +163,7 @@ public final class ShuttleData implements IXmlReader
 	{
 		for (L2ShuttleData data : _shuttles.values())
 		{
-			final L2ShuttleInstance shuttle = new L2ShuttleInstance(IdFactory.getInstance().getNextId(), new L2CharTemplate(new StatsSet()));
+			final L2ShuttleInstance shuttle = new L2ShuttleInstance(new L2CharTemplate(new StatsSet()));
 			shuttle.setData(data);
 			shuttle.setHeading(data.getLocation().getHeading());
 			shuttle.setLocationInvisible(data.getLocation());

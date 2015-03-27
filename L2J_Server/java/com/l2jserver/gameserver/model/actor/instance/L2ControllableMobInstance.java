@@ -31,13 +31,14 @@ public class L2ControllableMobInstance extends L2MonsterInstance
 {
 	private boolean _isInvul;
 	
-	protected class ControllableAIAcessor extends AIAccessor
+	/**
+	 * Creates a controllable monster.
+	 * @param template the controllable monster NPC template
+	 */
+	public L2ControllableMobInstance(L2NpcTemplate template)
 	{
-		@Override
-		public void detachAI()
-		{
-			// do nothing, AI of controllable mobs can't be detached automatically
-		}
+		super(template);
+		setInstanceType(InstanceType.L2ControllableMobInstance);
 	}
 	
 	@Override
@@ -53,16 +54,10 @@ public class L2ControllableMobInstance extends L2MonsterInstance
 		return 500;
 	}
 	
-	public L2ControllableMobInstance(int objectId, L2NpcTemplate template)
-	{
-		super(objectId, template);
-		setInstanceType(InstanceType.L2ControllableMobInstance);
-	}
-	
 	@Override
 	protected L2CharacterAI initAI()
 	{
-		return new L2ControllableMobAI(new ControllableAIAcessor());
+		return new L2ControllableMobAI(this);
 	}
 	
 	@Override
@@ -86,5 +81,11 @@ public class L2ControllableMobInstance extends L2MonsterInstance
 		
 		setAI(null);
 		return true;
+	}
+	
+	@Override
+	public void detachAI()
+	{
+		// do nothing, AI of controllable mobs can't be detached automatically
 	}
 }

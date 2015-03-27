@@ -40,10 +40,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javolution.util.FastList;
-import javolution.util.FastMap;
-import javolution.util.WeakFastSet;
-
 import com.l2jserver.Config;
 import com.l2jserver.gameserver.GameTimeController;
 import com.l2jserver.gameserver.GeoData;
@@ -61,6 +57,7 @@ import com.l2jserver.gameserver.enums.Race;
 import com.l2jserver.gameserver.enums.ShotType;
 import com.l2jserver.gameserver.enums.Team;
 import com.l2jserver.gameserver.enums.UserInfoType;
+import com.l2jserver.gameserver.idfactory.IdFactory;
 import com.l2jserver.gameserver.instancemanager.InstanceManager;
 import com.l2jserver.gameserver.instancemanager.MapRegionManager;
 import com.l2jserver.gameserver.model.CharEffectList;
@@ -220,7 +217,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Table of Calculators containing all used calculator */
 	private Calculator[] _calculators;
 	/** Map containing all skills of this character. */
-	private final Map<Integer, Skill> _skills = new FastMap<Integer, Skill>().shared();
+	private final Map<Integer, Skill> _skills = new ConcurrentHashMap<>();
 	/** Map containing the skill reuse time stamps. */
 	private volatile Map<Integer, TimeStamp> _reuseTimeStampsSkills = null;
 	/** Map containing the item reuse time stamps. */
@@ -279,6 +276,83 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	/** Future Skill Cast */
 	protected Future<?> _skillCast;
 	protected Future<?> _skillCast2;
+	
+	/**
+	 * Creates a creature.
+	 * @param template the creature template
+	 */
+	public L2Character(L2CharTemplate template)
+	{
+		this(IdFactory.getInstance().getNextId(), template);
+	}
+	
+	/**
+	 * Constructor of L2Character.<br>
+	 * <B><U>Concept</U>:</B><br>
+	 * Each L2Character owns generic and static properties (ex : all Keltir have the same number of HP...).<br>
+	 * All of those properties are stored in a different template for each type of L2Character. Each template is loaded once in the server cache memory (reduce memory use).<br>
+	 * When a new instance of L2Character is spawned, server just create a link between the instance and the template This link is stored in <B>_template</B><br>
+	 * <B><U> Actions</U>:</B>
+	 * <ul>
+	 * <li>Set the _template of the L2Character</li>
+	 * <li>Set _overloaded to false (the character can take more items)</li>
+	 * <li>If L2Character is a L2NPCInstance, copy skills from template to object</li>
+	 * <li>If L2Character is a L2NPCInstance, link _calculators to NPC_STD_CALCULATOR</li>
+	 * <li>If L2Character is NOT a L2NPCInstance, create an empty _skills slot</li>
+	 * <li>If L2Character is a L2PcInstance or L2Summon, copy basic Calculator set to object</li>
+	 * </ul>
+	 * @param objectId Identifier of the object to initialized
+	 * @param template The L2CharTemplate to apply to the object
+	 */
+	public L2Character(int objectId, L2CharTemplate template)
+	{
+		super(objectId);
+		if (template == null)
+		{
+			throw new NullPointerException("Template is null!");
+		}
+		
+		setInstanceType(InstanceType.L2Character);
+		initCharStat();
+		initCharStatus();
+		
+		// Set its template to the new L2Character
+		_template = template;
+		
+		if (isNpc())
+		{
+			// Copy the Standard Calculators of the L2NPCInstance in _calculators
+			_calculators = NPC_STD_CALCULATOR;
+			
+			// Copy the skills of the L2NPCInstance from its template to the L2Character Instance
+			// The skills list can be affected by spell effects so it's necessary to make a copy
+			// to avoid that a spell affecting a L2NpcInstance, affects others L2NPCInstance of the same type too.
+			for (Skill skill : template.getSkills().values())
+			{
+				addSkill(skill);
+			}
+		}
+		else
+		{
+			// If L2Character is a L2PcInstance or a L2Summon, create the basic calculator set
+			_calculators = new Calculator[Stats.NUM_STATS];
+			
+			if (isSummon())
+			{
+				// Copy the skills of the L2Summon from its template to the L2Character Instance
+				// The skills list can be affected by spell effects so it's necessary to make a copy
+				// to avoid that a spell affecting a L2Summon, affects others L2Summon of the same type too.
+				for (Skill skill : template.getSkills().values())
+				{
+					addSkill(skill);
+				}
+			}
+			
+			Formulas.addFuncsToNewCharacter(this);
+		}
+		
+		setIsInvul(true);
+	}
 	
 	public final CharEffectList getEffectList()
 	{
@@ -434,74 +508,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public L2AccessLevel getAccessLevel()
 	{
 		return null;
-	}
-	
-	/**
-	 * Constructor of L2Character.<br>
-	 * <B><U>Concept</U>:</B><br>
-	 * Each L2Character owns generic and static properties (ex : all Keltir have the same number of HP...).<br>
-	 * All of those properties are stored in a different template for each type of L2Character. Each template is loaded once in the server cache memory (reduce memory use).<br>
-	 * When a new instance of L2Character is spawned, server just create a link between the instance and the template This link is stored in <B>_template</B><br>
-	 * <B><U> Actions</U>:</B>
-	 * <ul>
-	 * <li>Set the _template of the L2Character</li>
-	 * <li>Set _overloaded to false (the character can take more items)</li>
-	 * <li>If L2Character is a L2NPCInstance, copy skills from template to object</li>
-	 * <li>If L2Character is a L2NPCInstance, link _calculators to NPC_STD_CALCULATOR</li>
-	 * <li>If L2Character is NOT a L2NPCInstance, create an empty _skills slot</li>
-	 * <li>If L2Character is a L2PcInstance or L2Summon, copy basic Calculator set to object</li>
-	 * </ul>
-	 * @param objectId Identifier of the object to initialized
-	 * @param template The L2CharTemplate to apply to the object
-	 */
-	public L2Character(int objectId, L2CharTemplate template)
-	{
-		super(objectId);
-		if (template == null)
-		{
-			throw new NullPointerException("Template is null!");
-		}
-		
-		setInstanceType(InstanceType.L2Character);
-		initCharStat();
-		initCharStatus();
-		
-		// Set its template to the new L2Character
-		_template = template;
-		
-		if (isNpc())
-		{
-			// Copy the Standard Calculators of the L2NPCInstance in _calculators
-			_calculators = NPC_STD_CALCULATOR;
-			
-			// Copy the skills of the L2NPCInstance from its template to the L2Character Instance
-			// The skills list can be affected by spell effects so it's necessary to make a copy
-			// to avoid that a spell affecting a L2NpcInstance, affects others L2NPCInstance of the same type too.
-			for (Skill skill : template.getSkills().values())
-			{
-				addSkill(skill);
-			}
-		}
-		else
-		{
-			// If L2Character is a L2PcInstance or a L2Summon, create the basic calculator set
-			_calculators = new Calculator[Stats.NUM_STATS];
-			
-			if (isSummon())
-			{
-				// Copy the skills of the L2Summon from its template to the L2Character Instance
-				// The skills list can be affected by spell effects so it's necessary to make a copy
-				// to avoid that a spell affecting a L2Summon, affects others L2Summon of the same type too.
-				for (Skill skill : template.getSkills().values())
-				{
-					addSkill(skill);
-				}
-			}
-			
-			Formulas.addFuncsToNewCharacter(this);
-		}
-		
-		setIsInvul(true);
 	}
 	
 	protected void initCharStatusUpdateValues()
@@ -817,7 +823,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * </ul>
 	 * @param target The L2Character targeted
 	 */
-	protected void doAttack(L2Character target)
+	public void doAttack(L2Character target)
 	{
 		if (!_attackLock.tryLock())
 		{
@@ -1941,6 +1947,11 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				{
 					if (item.isEquipped())
 					{
+						if (item.getMana() < item.useSkillDisTime())
+						{
+							abortCast();
+							return;
+						}
 						item.decreaseMana(false, item.useSkillDisTime());
 						break;
 					}
@@ -2517,10 +2528,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		
 		stopAllEffectsExceptThoseThatLastThroughDeath();
 		
-		if (isPlayer() && (getActingPlayer().getAgathionId() != 0))
-		{
-			getActingPlayer().setAgathionId(0);
-		}
 		calculateRewards(killer);
 		
 		// Send the Server->Client packet StatusUpdate with current HP and MP to all other L2PcInstance to inform
@@ -2556,6 +2563,15 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			getAI().stopAITask();
 		}
 		return true;
+	}
+	
+	public void detachAI()
+	{
+		if (isWalker())
+		{
+			return;
+		}
+		setAI(null);
 	}
 	
 	protected void calculateRewards(L2Character killer)
@@ -2635,7 +2651,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	protected L2CharacterAI initAI()
 	{
-		return new L2CharacterAI(new AIAccessor());
+		return new L2CharacterAI(this);
 	}
 	
 	public void setAI(L2CharacterAI newAI)
@@ -2692,7 +2708,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			{
 				if (_attackByList == null)
 				{
-					_attackByList = new WeakFastSet<>(true);
+					_attackByList = ConcurrentHashMap.newKeySet();
 				}
 			}
 		}
@@ -3155,7 +3171,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 */
 	public void resetCurrentAbnormalVisualEffects()
 	{
-		final Collection<BuffInfo> passives = getEffectList().hasPassives() ? new ArrayList<>(getEffectList().getPassives().values()) : null;
+		final Collection<BuffInfo> passives = getEffectList().hasPassives() ? new ArrayList<>(getEffectList().getPassives()) : null;
 		//@formatter:off
 		final Set<AbnormalVisualEffect> abnormalVisualEffects =  Stream.concat(getEffectList().getEffects().stream(), passives != null ? passives.stream() : Stream.empty())
 			.filter(Objects::nonNull)
@@ -3452,93 +3468,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public boolean isAffectedBySkill(int skillId)
 	{
 		return _effectList.isAffectedBySkill(skillId);
-	}
-	
-	// TODO: NEED TO ORGANIZE AND MOVE TO PROPER PLACE
-	/** This class permit to the L2Character AI to obtain informations and uses L2Character method */
-	public class AIAccessor
-	{
-		/**
-		 * @return the L2Character managed by this Accessor AI.
-		 */
-		public L2Character getActor()
-		{
-			return L2Character.this;
-		}
-		
-		/**
-		 * Accessor to L2Character moveToLocation() method with an interaction area.
-		 * @param x
-		 * @param y
-		 * @param z
-		 * @param offset
-		 */
-		public void moveTo(int x, int y, int z, int offset)
-		{
-			moveToLocation(x, y, z, offset);
-		}
-		
-		/**
-		 * Accessor to L2Character moveToLocation() method without interaction area.
-		 * @param x
-		 * @param y
-		 * @param z
-		 */
-		public void moveTo(int x, int y, int z)
-		{
-			moveToLocation(x, y, z, 0);
-		}
-		
-		/**
-		 * Accessor to L2Character stopMove() method.
-		 * @param loc
-		 */
-		public void stopMove(Location loc)
-		{
-			L2Character.this.stopMove(loc);
-		}
-		
-		/**
-		 * Accessor to L2Character doAttack() method.
-		 * @param target
-		 */
-		public void doAttack(L2Character target)
-		{
-			L2Character.this.doAttack(target);
-		}
-		
-		/**
-		 * Accessor to L2Character doCast() method.
-		 * @param skill
-		 */
-		public void doCast(Skill skill)
-		{
-			L2Character.this.doCast(skill);
-		}
-		
-		/**
-		 * Create a NotifyAITask.
-		 * @param evt
-		 * @return
-		 */
-		public NotifyAITask newNotifyTask(CtrlEvent evt)
-		{
-			return new NotifyAITask(getActor(), evt);
-		}
-		
-		/**
-		 * Cancel the AI.
-		 */
-		public void detachAI()
-		{
-			// Skip character, if it is controlled by Walking Manager
-			if (isWalker())
-			{
-				return;
-			}
-			
-			setAI(null);
-		}
 	}
 	
 	/**
@@ -4464,7 +4393,6 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 		return _target;
 	}
 	
-	// called from AIAccessor only
 	/**
 	 * Calculate movement data for a move to location action and add the L2Character to movingObjects of GameTimeController (only called by AI Accessor).<br>
 	 * <B><U>Concept</U>:</B><br>
@@ -4491,7 +4419,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	 * @param z The Y position of the destination
 	 * @param offset The size of the interaction area of the L2Character targeted
 	 */
-	protected void moveToLocation(int x, int y, int z, int offset)
+	public void moveToLocation(int x, int y, int z, int offset)
 	{
 		// Get the Move Speed of the L2Charcater
 		double speed = getMoveSpeed();
@@ -5157,15 +5085,12 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 					}
 				}
 			}
+			// Launch weapon onCritical Special ability effect if available
+			if (crit && (weapon != null))
+			{
+				weapon.castOnCriticalSkill(this, target);
+			}
 		}
-		
-		// Launch weapon Special ability effect if available
-		L2Weapon activeWeapon = getActiveWeaponItem();
-		if (activeWeapon != null)
-		{
-			activeWeapon.castOnCriticalSkill(this, target);
-		}
-		
 		// Recharge any active auto-soulshot tasks for current creature.
 		rechargeShots(true, false);
 	}
@@ -5598,7 +5523,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 			int _skiprange = 0;
 			int _skipgeo = 0;
 			int _skippeace = 0;
-			List<L2Character> targetList = new FastList<>(targets.length);
+			final List<L2Object> targetList = new ArrayList<>();
 			for (L2Object target : targets)
 			{
 				if (target instanceof L2Character)
@@ -5632,7 +5557,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 							}
 						}
 					}
-					targetList.add((L2Character) target);
+					targetList.add(target);
 				}
 			}
 			if (targetList.isEmpty())
@@ -5655,7 +5580,7 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 				abortCast();
 				return;
 			}
-			mut.setTargets(targetList.toArray(new L2Character[targetList.size()]));
+			mut.setTargets(targetList.toArray(new L2Object[targetList.size()]));
 		}
 		
 		// Ensure that a cast is in progress
@@ -7092,5 +7017,25 @@ public abstract class L2Character extends L2Object implements ISkillsHolder, IDe
 	public Race getRace()
 	{
 		return getTemplate().getRace();
+	}
+	
+	public boolean isInDuel()
+	{
+		return false;
+	}
+	
+	public int getDuelId()
+	{
+		return 0;
+	}
+	
+	public byte getSiegeState()
+	{
+		return 0;
+	}
+	
+	public int getSiegeSide()
+	{
+		return 0;
 	}
 }
